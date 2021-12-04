@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {ApprearenceSection, FilterDataSection, ModelsSection, ReferenceYearSection} from './AppSubComponents/SectionComponents';
+import {AppearenceSection, FilterDataSection, ModelsSection, ReferenceYearSection} from './AppSubComponents/SectionComponents';
 import {Button} from './BasicComponents'
 
 function downloadHandler() {
@@ -8,13 +8,13 @@ function downloadHandler() {
 
 
 export default function Sidebar(props) {
-    return (<div> {props.open && 
+    return (<> {props.open && 
     (<div>
-        <ApprearenceSection />
+        <AppearenceSection />
         <ModelsSection />
         <FilterDataSection />
         <ReferenceYearSection />
         <Button text="Download" onClick={downloadHandler}/>
     </div>)
-    }</div>);
+    } </>);
 }
