@@ -2,13 +2,16 @@
 title Title
 skinparam dpi 300
 class "App" << (C,blue) component >> {
-    <<empty>>
+    empty description
+the props are just an example
+they make no sense for the
+top level component
     ==props==
-
+    #id
     ==state==
-
+    #exampleState
     ==methods==
-
+    +foo
 }
 
 
