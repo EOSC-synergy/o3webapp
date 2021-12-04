@@ -15,3 +15,5 @@ the parser.py tool is not very robust and takes a few assumptions about how your
 - The output is a plain .txt file ready to be parsed with  
 [plantuml.jar](https://plantuml.com/de/download)
 - if the parsing fails just reach out to me
+- The code is a mess, I know, please don't judge. This won't be the standard for our project
+- The idea of representing the react components with UML in a class diagram came from this guys [blog](https://zf4.biz/blog/visualizing-react)
