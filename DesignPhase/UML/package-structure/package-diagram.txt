@@ -1,0 +1,95 @@
+@startuml
+title o3as WebApp
+skinparam dpi 300
+
+package "GUI" {
+    class "App" << (C,blue) component>> {
+
+    }
+
+    class "Chart" << (C, blue) component>> {
+        ==props==
+        #options
+        #series
+        #type
+        #width
+    }
+
+}
+
+
+
+package "API" {
+
+    class "o3as" << (A, purple) api >> {
+        +fetchPlotList: array 
+        +fetchModelList: array
+        +fetchTCO_return_data
+        +fetchTCO_zm_data
+    }
+
+    class "APIFormatter" << (J, yellow) utils >> {
+        this class formats the request URL and\nperforms a request with the given models
+        ==methods==
+        +make_TCO_return_Request(min_lat: int, max_lat: int, month: array)
+        +make_TCO_zm_Request(min_lat: int, max_lat: int, month: array)
+        -formatURL
+        -makeRequest
+    }
+
+
+}
+
+package "Redux" {
+
+    class "Store" << (P, gray) provider >> {
+
+    }
+
+}
+
+package "Utils" {
+
+   
+    class "OptionsFormatter" << (J, yellow) utils >> {
+        +format_TCO_return(): object
+        +format_TCO_zm(): object
+    }
+    
+    class "pdfCreator" <<(J, yellow) utils >> {
+        this utility class allows to export\nthe current plot as a pdf file
+        ==methods==
+        + createPdfFromCurrentPlot
+        - formatBoxPlot
+        - formatLinePlot
+    }
+    
+    class "math" <<(J, yellow) utils >> {
+        
+    }
+    
+}
+
+package "node modules" {
+
+    class "pdfmake" << (N, green) library >> {
+        ==methods==
+        +createPdf()
+    } 
+
+    class "apexcharts" <<(N, green) library >> {
+
+    }
+
+}
+
+"apexcharts" <..> "Chart"
+"o3as" <..> "APIFormatter"
+"pdfCreator" <..> "pdfmake"
+"Store" <..> "App"
+"Store" <..> "OptionsFormatter"
+"App" ..> "OptionsFormatter"
+"Chart" <.. "OptionsFormatter"
+"App" o-- "Chart"
+
+@enduml
