@@ -4,6 +4,12 @@ import re
 from sre_constants import CALL
 
 WHITE_SPACES = " " * 4
+BASE_DIR = "../../example-cdoe/src"
+OUTPUT_FILE = "generated.txt"
+CONNECTION_TYPE = "o--"
+CALLBACK_TYPE   = "<.."
+
+File = namedtuple("File", ("name", "path"))
 
 class ReactComponent:
     #name, propName, props, state, callbacks, docstring
@@ -96,10 +102,6 @@ class ReactComponent:
     
 
 
-BASE_DIR = "../pse-prototype/src"
-
-File = namedtuple("File", ("name", "path"))
-
 def get_component_info(lines):
     for line in lines:
         mo = re.search(".*function\s+(\w+)\s*\((\w*)\)\s*.*", line)
@@ -165,8 +167,7 @@ for comp in components:
 for comp in components:
     comp.parseCallbacks()
 
-CONNECTION_TYPE = "o--"
-CALLBACK_TYPE   = "<.."
+
 
 def generate_connections(components):
     connections = []
@@ -197,5 +198,5 @@ diagram_txt = "\n".join((start, all_classes, all_connections, all_callbacks, end
 
 
 
-open("generated.txt", "w").write(diagram_txt)
+open(OUTPUT_FILE, "w").write(diagram_txt)
 
