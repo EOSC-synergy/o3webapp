@@ -7,6 +7,11 @@ function downloadHandler() {
 }
 
 
+/**
+ * Contains all components
+ * responsible for the modification 
+ * of the plot settings.
+ */
 export default function Sidebar(props) {
     return (<> {props.open && 
     (<div>
