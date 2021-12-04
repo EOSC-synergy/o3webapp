@@ -1,5 +1,5 @@
 ## Attention: 
-the parser.py tool is not very robust and takes a few assumptions about how your react component code is structured
+the parser.py tool is not very robust and takes a few assumptions about how your React component code is structured
 
 ## Assumptions
 - React Component needs to be in a Javascript file (.js)
