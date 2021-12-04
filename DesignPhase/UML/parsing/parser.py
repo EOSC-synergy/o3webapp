@@ -81,8 +81,9 @@ class ReactComponent:
     def parseCallbacks(self):
         # call after parent and props and methods have been parsed
         for prop in self.props:
-            if prop in self.parent.methods:
-                self.callbacks.append(prop)
+            if self.parent: # only component with parents should be considered
+                if prop in self.parent.methods:
+                    self.callbacks.append(prop)
 
     def __str__(self):
         return f"{self.name}, {self.propName}, {self.file}"
