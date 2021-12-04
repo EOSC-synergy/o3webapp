@@ -1,0 +1,16 @@
+@startuml
+title Title
+skinparam dpi 300
+class "App" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+
+    ==state==
+
+    ==methods==
+
+}
+
+
+
+@enduml
