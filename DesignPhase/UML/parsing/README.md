@@ -1,4 +1,4 @@
-## Attention: 
+## Attention
 the parser.py tool is not very robust and takes a few assumptions about how your React component code is structured
 
 ## Assumptions
@@ -10,7 +10,7 @@ the parser.py tool is not very robust and takes a few assumptions about how your
 - If existent the docstring of the component will be added as a "description" too. Make sure to use linebreaks generously so the lines don't become too long and blow up the component in the diagram
 - callbacks are only recognized if the are passed to the direct children. More layers are currently not supported, however this becomes messy very quickly and usually indicates that Redux could be a better option
 
-## General information:
+## General information
 - The path to the src/ directory of the React app and the name of the output file can be specified in the script 
 - The output is a plain .txt file ready to be parsed with  
 [plantuml.jar](https://plantuml.com/de/download)
