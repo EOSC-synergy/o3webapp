@@ -1,0 +1,1 @@
+Add components inside to auto-generate a live UML diagram from the existing strucure.
