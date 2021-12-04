@@ -4,7 +4,7 @@ import re
 from sre_constants import CALL
 
 WHITE_SPACES = " " * 4
-BASE_DIR = "../../example-cdoe/src"
+BASE_DIR = "../../example-code/src"
 OUTPUT_FILE = "generated.txt"
 CONNECTION_TYPE = "o--"
 CALLBACK_TYPE   = "<.."
@@ -131,7 +131,6 @@ for path, subdirs, files in os.walk(BASE_DIR):
         all_files.append(f)
 
 files = [f for f in all_files if f.name.endswith(".js")]
-
 
 components = [parse_file(f) for f in files]
 components = [comp for comp in components if comp] # exclude None
