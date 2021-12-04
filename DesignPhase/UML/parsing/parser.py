@@ -5,7 +5,7 @@ from sre_constants import CALL
 
 WHITE_SPACES = " " * 4
 BASE_DIR = "../../example-code/src"
-OUTPUT_FILE = "generated.txt"
+OUTPUT_FILE = "../../example-code/generated-uml/generated.txt"
 CONNECTION_TYPE = "o--"
 CALLBACK_TYPE   = "<.."
 
