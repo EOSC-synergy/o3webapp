@@ -1,22 +1,11 @@
-import React from 'react'
+import * as React from 'react';
+import {NavBar, Graph, Footer} from "./AppSubComponents"
 
-/**
- * empty description
- * the props are just an example
- * they make no sense for the
- * top level component
- */
-export default function App(props) {
+export default function App() {
 
-  const [exampleState, setExampleState] = React.useState(""); 
-
-  const foo = () => {
-    console.log("bar")
-  }
-
-  return (
-    <div className="App" id={props.id}>
-      Add components here
-    </div>
-  );
+    return (<div>
+        <NavBar />
+        <Graph />
+        <Footer />
+    </div>);
 }

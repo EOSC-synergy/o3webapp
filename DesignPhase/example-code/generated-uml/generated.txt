@@ -2,18 +2,198 @@
 title Title
 skinparam dpi 300
 class "App" << (C,blue) component >> {
-    empty description
-the props are just an example
-they make no sense for the
-top level component
+    <<empty>>
     ==props==
-    #id
+
     ==state==
-    #exampleState
+
     ==methods==
-    +foo
+
 }
 
+class "Footer" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+
+    ==state==
+
+    ==methods==
+
+}
+
+class "Graph" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+
+    ==state==
+
+    ==methods==
+
+}
+
+class "NavBar" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+
+    ==state==
+    #open
+    ==methods==
+    +drawerToggle
+}
+
+class "Sidebar" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+    #open
+    ==state==
+
+    ==methods==
+
+}
+
+class "ApprearenceSection" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+
+    ==state==
+
+    ==methods==
+
+}
+
+class "FilterDataSection" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+
+    ==state==
+
+    ==methods==
+
+}
+
+class "ModelsSection" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+
+    ==state==
+
+    ==methods==
+    +click
+}
+
+class "ReferenceYearSection" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+
+    ==state==
+
+    ==methods==
+
+}
+
+class "Button" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+    #text
+    #onClick
+    ==state==
+
+    ==methods==
+
+}
+
+class "Divider" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+    #text
+    ==state==
+
+    ==methods==
+
+}
+
+class "ListBox" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+    #items
+    #text
+    ==state==
+
+    ==methods==
+
+}
+
+class "TextBox" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+    #text
+    ==state==
+
+    ==methods==
+
+}
+
+class "MultiCheckbox" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+
+    ==state==
+
+    ==methods==
+
+}
+
+class "SingleCheckbox" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+    #text
+    ==state==
+
+    ==methods==
+
+}
+
+class "RangeSlider" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+
+    ==state==
+
+    ==methods==
+
+}
+
+class "SingleSlider" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+    #max
+    #value
+    #min
+    ==state==
+
+    ==methods==
+
+}
+App o-- Footer
+App o-- Graph
+App o-- NavBar
+NavBar o-- Sidebar
+NavBar o-- Button
+Sidebar o-- ApprearenceSection
+Sidebar o-- FilterDataSection
+Sidebar o-- ModelsSection
+Sidebar o-- ReferenceYearSection
+Sidebar o-- Button
+ApprearenceSection o-- ListBox
+ApprearenceSection o-- TextBox
+ApprearenceSection o-- RangeSlider
+FilterDataSection o-- Divider
+FilterDataSection o-- ListBox
+FilterDataSection o-- MultiCheckbox
+FilterDataSection o-- SingleCheckbox
+ModelsSection o-- Button
+ReferenceYearSection o-- ListBox
+ReferenceYearSection o-- SingleSlider
 
 
 @enduml
