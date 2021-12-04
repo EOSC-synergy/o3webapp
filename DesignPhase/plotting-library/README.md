@@ -9,3 +9,4 @@ Key features:
 - zooming is intuitive and supported by default
 - tooltips are supported
 - clear interface to address the chart, lots of options to customize plot
+- note that it may not make sense to add so many models. This was just to test whether the library can handle 100+ models.
