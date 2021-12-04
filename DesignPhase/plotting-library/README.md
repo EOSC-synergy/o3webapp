@@ -8,3 +8,4 @@ Key features:
 - original library has 11k stars on github, the React wrapper 850+
 - zooming is intuitive and supported by default
 - tooltips are supported
+- clear interface to address the chart, lots of options to customize plot
