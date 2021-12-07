@@ -2,17 +2,8 @@
 title Title
 skinparam dpi 300
 class "App" << (C,blue) component >> {
-    <<empty>>
-    ==props==
-
-    ==state==
-
-    ==methods==
-
-}
-
-class "Footer" << (C,blue) component >> {
-    <<empty>>
+    Main container of the Webapp
+Contains all GUI elements
     ==props==
 
     ==state==
@@ -22,7 +13,8 @@ class "Footer" << (C,blue) component >> {
 }
 
 class "Graph" << (C,blue) component >> {
-    <<empty>>
+    A containter for the displayed graph.
+Displays the currently selected plot.
     ==props==
 
     ==state==
@@ -32,7 +24,7 @@ class "Graph" << (C,blue) component >> {
 }
 
 class "NavBar" << (C,blue) component >> {
-    <<empty>>
+    A component for the navigation of the website.
     ==props==
 
     ==state==
@@ -42,7 +34,9 @@ class "NavBar" << (C,blue) component >> {
 }
 
 class "Sidebar" << (C,blue) component >> {
-    <<empty>>
+    Contains all components
+responsible for the modification
+of the plot settings.
     ==props==
     #open
     ==state==
@@ -51,18 +45,11 @@ class "Sidebar" << (C,blue) component >> {
 
 }
 
-class "ApprearenceSection" << (C,blue) component >> {
-    <<empty>>
-    ==props==
-
-    ==state==
-
-    ==methods==
-
-}
-
-class "FilterDataSection" << (C,blue) component >> {
-    <<empty>>
+class "Footer" << (C,blue) component >> {
+    A container for important links
+at the bottom of the Website.
+Contains links to the impressum,
+privacy policy and the terms of service
     ==props==
 
     ==state==
@@ -78,7 +65,17 @@ class "ModelsSection" << (C,blue) component >> {
     ==state==
 
     ==methods==
-    +click
+    +onBtnClick
+}
+
+class "FilterDataSection" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+
+    ==state==
+
+    ==methods==
+
 }
 
 class "ReferenceYearSection" << (C,blue) component >> {
@@ -91,11 +88,10 @@ class "ReferenceYearSection" << (C,blue) component >> {
 
 }
 
-class "Button" << (C,blue) component >> {
+class "ApprearenceSection" << (C,blue) component >> {
     <<empty>>
     ==props==
-    #text
-    #onClick
+
     ==state==
 
     ==methods==
@@ -123,10 +119,43 @@ class "ListBox" << (C,blue) component >> {
 
 }
 
+class "Button" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+    #onClick
+    #text
+    ==state==
+
+    ==methods==
+
+}
+
 class "TextBox" << (C,blue) component >> {
     <<empty>>
     ==props==
     #text
+    ==state==
+
+    ==methods==
+
+}
+
+class "RangeSlider" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+
+    ==state==
+
+    ==methods==
+
+}
+
+class "SingleSlider" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+    #min
+    #value
+    #max
     ==state==
 
     ==methods==
@@ -152,48 +181,25 @@ class "SingleCheckbox" << (C,blue) component >> {
     ==methods==
 
 }
-
-class "RangeSlider" << (C,blue) component >> {
-    <<empty>>
-    ==props==
-
-    ==state==
-
-    ==methods==
-
-}
-
-class "SingleSlider" << (C,blue) component >> {
-    <<empty>>
-    ==props==
-    #max
-    #value
-    #min
-    ==state==
-
-    ==methods==
-
-}
-App o-- Footer
 App o-- Graph
 App o-- NavBar
+App o-- Footer
 NavBar o-- Sidebar
 NavBar o-- Button
-Sidebar o-- ApprearenceSection
-Sidebar o-- FilterDataSection
 Sidebar o-- ModelsSection
+Sidebar o-- FilterDataSection
 Sidebar o-- ReferenceYearSection
 Sidebar o-- Button
-ApprearenceSection o-- ListBox
-ApprearenceSection o-- TextBox
-ApprearenceSection o-- RangeSlider
+ModelsSection o-- Button
 FilterDataSection o-- Divider
 FilterDataSection o-- ListBox
 FilterDataSection o-- MultiCheckbox
 FilterDataSection o-- SingleCheckbox
-ModelsSection o-- Button
 ReferenceYearSection o-- ListBox
 ReferenceYearSection o-- SingleSlider
+ApprearenceSection o-- ListBox
+ApprearenceSection o-- TextBox
+ApprearenceSection o-- RangeSlider
 
 
 @enduml
