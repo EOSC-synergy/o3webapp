@@ -8,9 +8,6 @@ function func() {
 export default function Selector() {
 
     return (<div>
-        <Divider text="Select Name" />
-        <TextBox text="" />
-        <Divider text="Add new models" />
         <SearchBar />
         <CheckList />
         <Button text=">>" onClick={func} />
