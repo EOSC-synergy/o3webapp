@@ -1,6 +1,6 @@
 import * as React from 'react';
-import ListBox from './inputs/ListBox';
-import SingleSlider from './inputs/Slider/SingleSlider';
+import ListBox from '../inputs/ListBox';
+import SingleSlider from '../inputs/Slider/SingleSlider';
 
 export default function ReferenceYearSection() {
     return (<div>

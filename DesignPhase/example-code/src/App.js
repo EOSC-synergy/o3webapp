@@ -1,7 +1,7 @@
 import * as React from 'react';
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
-import Graph from './views/landingPage/Graph';
+import Graph from './views/landingPage/Graph/Graph';
 
 /**
  * Main container of the Webapp
