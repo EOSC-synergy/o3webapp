@@ -1,0 +1,1 @@
+Steve is at the IMK office. He already used the O3as WebApp to plot models of the ozone layer. He is very interested in the mean and the median of the models he plotted. This sequence diagram depicts the process of adding new lines that display mean and median of the currently plotted models.
