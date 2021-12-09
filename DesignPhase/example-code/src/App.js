@@ -1,5 +1,7 @@
 import * as React from 'react';
-import {NavBar, Graph, Footer} from "./AppSubComponents"
+import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
+import Graph from './views/landingPage/Graph';
 
 /**
  * Main container of the Webapp

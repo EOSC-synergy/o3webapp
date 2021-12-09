@@ -1,5 +1,7 @@
 import * as React from 'react';
-import {ListBox, TextBox, RangeSlider} from "./BasicComponents"
+import ListBox from './inputs/ListBox';
+import TextBox from './inputs/TextBox';
+import RangeSlider from './inputs/Slider/RangeSlider';
 
 export default function ApprearenceSection() {
     return <div>

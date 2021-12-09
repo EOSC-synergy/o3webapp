@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Button from '../BasicComponents/Button';
-import Sidebar from './Sidebar';
+import Button from '../views/landingPage/SectionComponents/inputs/Button';
+import Sidebar from '../views/landingPage/Sidebar';
 
 /**
  * A component for the navigation of the website.

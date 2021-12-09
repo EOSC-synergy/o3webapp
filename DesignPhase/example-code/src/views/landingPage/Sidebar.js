@@ -1,6 +1,9 @@
 import * as React from 'react';
-import {AppearenceSection, FilterDataSection, ModelsSection, ReferenceYearSection} from './AppSubComponents/SectionComponents';
-import {Button} from './BasicComponents'
+import AppearenceSection from './SectionComponents/AppearenceSection';
+import FilterDataSection from './SectionComponents/FilterDataSection';
+import ModelsSection from './SectionComponents/ModelsSection';
+import ReferenceYearSection from './SectionComponents/ReferenceYearSection';
+import Button from './SectionComponents/inputs/Button';
 
 function downloadHandler() {
     return "TODO";

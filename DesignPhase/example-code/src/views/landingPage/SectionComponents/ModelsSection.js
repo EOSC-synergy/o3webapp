@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Button} from './BasicComponents'
+import Button from './inputs/Button'
 
 export default function ModelsSection() {
 

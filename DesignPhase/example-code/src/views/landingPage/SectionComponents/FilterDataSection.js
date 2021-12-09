@@ -1,6 +1,8 @@
 import * as React from 'react';
-import {Divider, ListBox} from './BasicComponents';
-import {MultiCheckbox, SingleCheckbox} from './BasicComponents/Checkboxes';
+import Divider from './inputs/Divider';
+import ListBox from './inputs/ListBox';
+import MultiCheckbox from './inputs/Checkboxes/MultiCheckBox';
+import SingleCheckbox from './inputs/Checkboxes/SingleCheckBox';
 
 export default function FilterDataSection() {
     return (<div>
