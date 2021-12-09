@@ -25,7 +25,7 @@ Graph->Store: useSelector(state => state.series)
 Graph<--Store: series
 Graph->apexcharts: new Chart(options, series)
 Graph<--apexcharts: rendered svg chart
-
+Steve<--Graph: user sees updated chart
 
 
 Steve->SVS: user selects median
@@ -44,6 +44,7 @@ Graph->Store: useSelector(state => state.series)
 Graph<--Store: series
 Graph->apexcharts: new Chart(options, series)
 Graph<--apexcharts: rendered svg chart
+Steve<--Graph: user sees updated chart
 
 
 @enduml
