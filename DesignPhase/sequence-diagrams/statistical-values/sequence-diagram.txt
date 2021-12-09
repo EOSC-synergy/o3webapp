@@ -17,7 +17,7 @@ Store->meanRD: reduce(state, action)
 meanRD->math: calculate_mean
 meanRD<--math: meanSeries
 
-Store<--meanRD: state
+Store<--meanRD: new state
 Graph<--Store: updateHook
 Graph->Store: useSelector(state => state.options)
 Graph<--Store: options
@@ -26,9 +26,24 @@ Graph<--Store: series
 Graph->apexcharts: new Chart(options, series)
 Graph<--apexcharts: rendered svg chart
 
+
+
 Steve->SVS: user selects median
 SVS->actions: add_percentile(0.50)
 SVS<--actions: action 
 SVS->Store: dispatch(action)
+Store->percRD: reduce(state, action)
+percRD->math: calculate_perc(0.50)
+percRD<--math: percSeries
+
+Store<--percRD: new state
+Graph<--Store: updateHook
+Graph->Store: useSelector(state => state.options)
+Graph<--Store: options
+Graph->Store: useSelector(state => state.series)
+Graph<--Store: series
+Graph->apexcharts: new Chart(options, series)
+Graph<--apexcharts: rendered svg chart
+
 
 @enduml
