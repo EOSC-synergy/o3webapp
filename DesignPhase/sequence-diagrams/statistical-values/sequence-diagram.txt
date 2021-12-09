@@ -1,0 +1,5 @@
+@startuml
+actor Steve
+participant Someone
+database "Store"
+@enduml
