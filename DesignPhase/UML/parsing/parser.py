@@ -1,11 +1,13 @@
 from collections import namedtuple
 import os
 import re
+import sys
 from sre_constants import CALL
 
 WHITE_SPACES = " " * 4
 BASE_DIR = "../../example-code/src"
 OUTPUT_FILE = "../../example-code/generated-uml/generated.txt"
+OUTPUT_CLASSES_FOLDER = "../../example-code/generated-uml/classes/"
 CONNECTION_TYPE = "o--"
 CALLBACK_TYPE   = "<.."
 
@@ -189,14 +191,26 @@ def generate_callbacks(components):
             callbacks.append(f"{comp.parent.name} \"{callback}\" {CALLBACK_TYPE} {comp.name}") # savely access comp.parent, bc otherwise there would be no callbacks
     return callbacks
 
-start = "\n".join(("@startuml", "title Title", "skinparam dpi 300"))
+start = "\n".join(("@startuml", "title Class Diagram", "skinparam dpi 300"))
 end = "\n@enduml"
 all_classes = "\n\n".join(all_uml)
 all_connections = "\n".join(generate_connections(components))
 all_callbacks = "\n".join(generate_callbacks(components))
 diagram_txt = "\n".join((start, all_classes, all_connections, all_callbacks, end))
 
+for i, item in enumerate(all_uml):
+    class_txt = "".join(("@startuml\n", item, end))
+    out_file_path = "".join((OUTPUT_CLASSES_FOLDER, str(i) ,".txt"))
+
+    open(out_file_path, "w").write(class_txt)
+
+    if(len(sys.argv) == 2 and sys.argv[1] == "img"):
+        os.system("".join(("java -jar plantuml.jar ", out_file_path)))
+
 
 
 open(OUTPUT_FILE, "w").write(diagram_txt)
+
+if(len(sys.argv) == 2 and sys.argv[1] == "img"):
+    os.system("".join(("java -jar plantuml.jar ", OUTPUT_FILE)))
 
