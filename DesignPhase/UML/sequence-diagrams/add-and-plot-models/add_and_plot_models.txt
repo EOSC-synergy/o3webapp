@@ -1,0 +1,38 @@
+@startuml
+actor User
+participant "AddGroupSection\n//Component//" as AGS #eb6134
+participant "Graph\n//Component//" as Graph #3489eb
+participant "actions\n//Redux//" as actions #808080
+database "Store\n//Redux//" as Store #808080
+participant "apexcharts\n//library//" as apexcharts #ffff00
+participant "math utils\n//library//" as math #ffff00
+participant "Formatter" as frmtr #34eb83
+participant "API" as API #ebcc34
+
+
+User->AGS: user click on add group
+AGS->AGS: user selects models
+AGS->AGS: add_group()
+AGS->Store: dispatch(action)
+Store->frmtr: reduce(state, action)
+frmtr->frmtr: check if selected models availiable
+alt model data is available
+	frmtr -> frmtr: modelData
+else model is requiered
+	frmtr->API: getModelData()
+	API-->frmtr: modelData
+end
+
+frmtr-->Store: modelData
+
+Graph<--Store: updateHook
+Graph->Store: useSelector(state => state.options)
+Graph<--Store: options
+Graph->Store: useSelector(state => state.series)
+Graph<--Store: series
+Graph->apexcharts: new Chart(options, series)
+Graph<--apexcharts: rendered chart
+
+User<--Graph: user sees updated chart
+
+@enduml
