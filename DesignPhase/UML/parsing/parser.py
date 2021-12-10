@@ -143,6 +143,7 @@ for comp in components:
     COMPONENT_MAP[comp.name] = comp
 
 all_uml = []
+all_uml_name = []
 for comp in components:
     #comp.parseProps()
     #print(comp.name)
@@ -159,6 +160,7 @@ for comp in components:
         #raise SystemError
 
     all_uml.append(comp.to_plant_uml())
+    all_uml_name.append(comp.name)
 
 # parse parents
 for comp in components:
@@ -200,17 +202,22 @@ diagram_txt = "\n".join((start, all_classes, all_connections, all_callbacks, end
 
 for i, item in enumerate(all_uml):
     class_txt = "".join(("@startuml\n", item, end))
-    out_file_path = "".join((OUTPUT_CLASSES_FOLDER, str(i) ,".txt"))
+    out_file_path = "".join((OUTPUT_CLASSES_FOLDER, all_uml_name[i] ,".txt"))
 
     open(out_file_path, "w").write(class_txt)
+    print("".join(("Generated plantuml file for the ", all_uml_name[i], " class")))
 
     if(len(sys.argv) == 2 and sys.argv[1] == "img"):
         os.system("".join(("java -jar plantuml.jar ", out_file_path)))
+        print("".join(("Generated image for the ", all_uml_name[i], " class")))
+
 
 
 
 open(OUTPUT_FILE, "w").write(diagram_txt)
+print("Generated plantuml file for the Class Diagram")
 
 if(len(sys.argv) == 2 and sys.argv[1] == "img"):
     os.system("".join(("java -jar plantuml.jar ", OUTPUT_FILE)))
+    print("Generated image for the Class Diagram")
 

@@ -112,8 +112,8 @@ class "Divider" << (C,blue) component >> {
 class "ListBox" << (C,blue) component >> {
     <<empty>>
     ==props==
-    #text
     #items
+    #text
     ==state==
 
     ==methods==
@@ -183,9 +183,9 @@ class "RangeSlider" << (C,blue) component >> {
 class "SingleSlider" << (C,blue) component >> {
     <<empty>>
     ==props==
+    #value
     #min
     #max
-    #value
     ==state==
 
     ==methods==
