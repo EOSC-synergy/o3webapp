@@ -67,7 +67,7 @@ class "ApprearenceSection" << (C,blue) component >> {
     ==state==
 
     ==methods==
-
+    +handlePlotNameChange
 }
 
 class "FilterDataSection" << (C,blue) component >> {
@@ -114,9 +114,9 @@ class "Divider" << (C,blue) component >> {
 class "ListBox" << (C,blue) component >> {
     <<empty>>
     ==props==
-    #selected
     #items
     #text
+    #selected
     ==state==
 
     ==methods==
@@ -186,9 +186,9 @@ class "RangeSlider" << (C,blue) component >> {
 class "SingleSlider" << (C,blue) component >> {
     <<empty>>
     ==props==
+    #min
     #max
     #value
-    #min
     ==state==
 
     ==methods==
