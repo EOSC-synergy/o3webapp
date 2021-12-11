@@ -7,7 +7,7 @@ Contains all GUI elements
     ==props==
 
     ==state==
-    #open
+    #openSidebar
     ==methods==
 
 }
@@ -75,7 +75,8 @@ class "FilterDataSection" << (C,blue) component >> {
     ==props==
 
     ==state==
-
+    #selectedLocation
+    #selectedMonths
     ==methods==
 
 }
@@ -83,8 +84,8 @@ class "FilterDataSection" << (C,blue) component >> {
 class "Button" << (C,blue) component >> {
     <<empty>>
     ==props==
-    #text
     #onClick
+    #text
     ==state==
 
     ==methods==
@@ -114,9 +115,9 @@ class "Divider" << (C,blue) component >> {
 class "ListBox" << (C,blue) component >> {
     <<empty>>
     ==props==
+    #selected
     #items
     #text
-    #selected
     ==state==
 
     ==methods==
@@ -187,12 +188,31 @@ class "SingleSlider" << (C,blue) component >> {
     <<empty>>
     ==props==
     #min
-    #max
     #value
+    #max
     ==state==
 
     ==methods==
 
+}
+
+class "ModelGroup" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+    #groupName
+    ==state==
+    #visibility
+    #median
+    #mean
+    #percentile
+    #derivative
+    ==methods==
+    +handleMedian
+    +handleMean
+    +handlePercentile
+    +handleDerivative
+    +handleVisibility
+    +handleEditGroup
 }
 
 class "ModelsSection" << (C,blue) component >> {
@@ -200,7 +220,7 @@ class "ModelsSection" << (C,blue) component >> {
     ==props==
 
     ==state==
-
+    #modelGroups
     ==methods==
     +onBtnClick
 }
@@ -254,6 +274,7 @@ FilterDataSection o-- SingleCheckbox
 Selector o-- Button
 Selector o-- CheckList
 Selector o-- SearchBar
+ModelGroup o-- Button
 ModelsSection o-- Button
 AddModelGroupPopUp o-- Divider
 AddModelGroupPopUp o-- Selector

@@ -8,12 +8,12 @@ import Graph from './views/landingPage/Graph/Graph';
  * Contains all GUI elements
  */
 export default function App() {
-    const [open, setOpen] = React.useState(false);
+    const [openSidebar, setOpenSidebar] = React.useState(false);
 
     return (<div>
         <NavBar />
         <Graph />
         <Footer />
-        <Sidebar open={open} />
+        <Sidebar open={openSidebar} />
     </div>);
 }
