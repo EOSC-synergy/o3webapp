@@ -7,7 +7,7 @@ Contains all GUI elements
     ==props==
 
     ==state==
-
+    #open
     ==methods==
 
 }
@@ -41,9 +41,11 @@ Displays the currently selected plot.
     ==props==
 
     ==state==
-
+    #plotData
+    #options
+    #type
     ==methods==
-
+    +getDataToDisplay
 }
 
 class "Sidebar" << (C,blue) component >> {
@@ -81,8 +83,8 @@ class "FilterDataSection" << (C,blue) component >> {
 class "Button" << (C,blue) component >> {
     <<empty>>
     ==props==
-    #onClick
     #text
+    #onClick
     ==state==
 
     ==methods==
@@ -112,6 +114,7 @@ class "Divider" << (C,blue) component >> {
 class "ListBox" << (C,blue) component >> {
     <<empty>>
     ==props==
+    #selected
     #items
     #text
     ==state==
@@ -183,9 +186,9 @@ class "RangeSlider" << (C,blue) component >> {
 class "SingleSlider" << (C,blue) component >> {
     <<empty>>
     ==props==
+    #max
     #value
     #min
-    #max
     ==state==
 
     ==methods==
@@ -227,14 +230,15 @@ class "ReferenceYearSection" << (C,blue) component >> {
     ==props==
 
     ==state==
-
+    #offsetActive
     ==methods==
-
+    +handleApplyOffset
+    +handleResetOffset
 }
 App o-- Footer
 App o-- NavBar
 App o-- Graph
-NavBar o-- Sidebar
+App o-- Sidebar
 NavBar o-- Button
 Sidebar o-- FilterDataSection
 Sidebar o-- Button
@@ -255,6 +259,7 @@ AddModelGroupPopUp o-- Divider
 AddModelGroupPopUp o-- Selector
 AddModelGroupPopUp o-- TextBox
 DownloadPopUp o-- ListBox
+ReferenceYearSection o-- Button
 ReferenceYearSection o-- ListBox
 ReferenceYearSection o-- SingleSlider
 

@@ -14,7 +14,6 @@ export default function NavBar() {
     }
     
     return (<div>
-        <Sidebar open={open} />
         <Button text="Edit Plot" onClick={drawerToggle}/>
     </div>);
 }
