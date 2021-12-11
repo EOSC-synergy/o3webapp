@@ -200,6 +200,15 @@ all_connections = "\n".join(generate_connections(components))
 all_callbacks = "\n".join(generate_callbacks(components))
 diagram_txt = "\n".join((start, all_classes, all_connections, all_callbacks, end))
 
+
+open(OUTPUT_FILE, "w").write(diagram_txt)
+print("Generated plantuml file for the Class Diagram")
+
+if(len(sys.argv) == 2 and sys.argv[1] == "img"):
+    os.system("".join(("java -DPLANTUML_LIMIT_SIZE=8192 -jar plantuml.jar ", OUTPUT_FILE)))
+    print("Generated image for the Class Diagram")
+
+    
 for i, item in enumerate(all_uml):
     class_txt = "".join(("@startuml\n", item, end))
     out_file_path = "".join((OUTPUT_CLASSES_FOLDER, all_uml_name[i] ,".txt"))
@@ -208,16 +217,11 @@ for i, item in enumerate(all_uml):
     print("".join(("Generated plantuml file for the ", all_uml_name[i], " class")))
 
     if(len(sys.argv) == 2 and sys.argv[1] == "img"):
-        os.system("".join(("java -jar plantuml.jar ", out_file_path)))
+        os.system("".join(("java -DPLANTUML_LIMIT_SIZE=8192 -jar plantuml.jar ", out_file_path)))
         print("".join(("Generated image for the ", all_uml_name[i], " class")))
 
 
 
 
-open(OUTPUT_FILE, "w").write(diagram_txt)
-print("Generated plantuml file for the Class Diagram")
 
-if(len(sys.argv) == 2 and sys.argv[1] == "img"):
-    os.system("".join(("java -jar plantuml.jar ", OUTPUT_FILE)))
-    print("Generated image for the Class Diagram")
 
