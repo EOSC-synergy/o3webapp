@@ -1,9 +1,9 @@
 import * as React from 'react';
-import AppearenceSection from './SectionComponents/AppearenceSection/AppearenceSection';
-import FilterDataSection from './SectionComponents/FilterDataSection/FilterDataSection';
-import ModelsSection from './SectionComponents/ModelsSection/ModelsSection';
-import ReferenceYearSection from './SectionComponents/ReferenceYearSection/ReferenceYearSection';
-import Button from './SectionComponents/inputs/Button';
+import AppearenceSection from './InputComponents/AppearenceSection/AppearenceSection';
+import FilterDataSection from './InputComponents/FilterDataSection/FilterDataSection';
+import ModelsSection from './InputComponents/ModelsSection/ModelsSection';
+import ReferenceYearSection from './InputComponents/ReferenceYearSection/ReferenceYearSection';
+import Button from './InputComponents/inputs/Button';
 
 /**
  * opens the downloadModal

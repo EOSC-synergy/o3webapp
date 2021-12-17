@@ -1,20 +1,17 @@
-import * as React from 'react';
-import ListBox from '../inputs/ListBox';
-import TextBox from '../inputs/TextBox';
-import RangeSlider from '../inputs/Slider/RangeSlider';
+import React, { useState } from "react";
 
-export default function ApprearenceSection() {
-    const [plotType, setPlotType] = useState("OCTS Plot")
-    const [plotName, setPlotName] = useState("Name");
+function mapNameToComponent(name) {
+    return 0;
+}
 
-    const handlePlotNameChange = (event) => {
-        setPlotName(event.target.value);
-    };
+export default function Section(props) {
+    
+    const [expanded, setExpanded] = useState(true);
+    props.components;
 
     return <div>
-        <ListBox text="Plot Type" items={["T", "O", "D", "O"]} selected={plotType} />
-        <TextBox text="Plot Name" onChange={handlePlotNameChange}/>
-        {/*<RangeSlider />*/}
-        {/*<RangeSlider />*/}
+        {props.components.array.forEach(element => {
+            mapNameToComponent(element);
+        })}
     </div>;
 }
