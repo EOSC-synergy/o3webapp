@@ -4,15 +4,17 @@ skinparam dpi 300
 
 package "GUI" {
     class "App" << (C,blue) component>> {
-
+        Symbolic representation of our app (View)
     }
 
     class "Chart" << (C, blue) component>> {
+        This component connects apexcharts to\nour app
         ==props==
         #options
         #series
         #type
         #width
+        #height
     }
 
 }
@@ -38,11 +40,12 @@ package "API" {
 package "Redux" {
 
     class "Store" << (R, gray) redux >> {
+        +apiCache
         +plotType
-        +plotData
-        +modelData
-        +SVData
-        +ReferenceData
+        +plots
+        +models
+        +statisticalValues
+        +referenceSettings
 
     }
 
@@ -62,8 +65,10 @@ package "Utils" {
 
    
     class "OptionsFormatter" << (J, yellow) utils >> {
-        +mergeModelAndSVData(modelData, SVData)
-        +updateModelData()
+        This utility class merges given data from the store\ninto one data object apexcharts expects
+        ==methods==
+        +generatePlotOptions(title, xRange, yRange)
+        +generatePlotSeries(modelData, SVData)
     }
     
     class "pdfCreator" <<(J, yellow) utils >> {
@@ -78,7 +83,7 @@ package "Utils" {
         This class performs helpful operations\non the data series
 
         ==methods==
-        +unifyDatasetsToOneDatapoint(modelData, months)
+        +unifyDatapointsToOneDatapoint(modelData, months)
         +calculateSV(modelData, statisticalValues)
     }
     
@@ -87,22 +92,30 @@ package "Utils" {
 package "node modules" {
 
     class "pdfmake" << (N, green) library >> {
+        Create pdf files on client-side
         ==methods==
         +createPdf()
     } 
 
     class "apexcharts" <<(N, green) library >> {
+        Our plotting library
+    }
 
+    class "@reduxjs/toolkit/query/react" <<(N, green) library >> {
+        An api wrapper for an api endpoint
+    }
+
+    class "react-redux" <<(N, green) library >> {
+        Redux for our app
     }
 
 }
 
 "apexcharts" <..> "Chart"
 "o3as" <..> "apiSlice"
+"apiSlice" <..> "Store"
 "pdfCreator" <..> "pdfmake"
-"Store" <..> "App"
-"Store" <..> "OptionsFormatter"
-"App" ..> "OptionsFormatter"
+"Store" <..> "Chart"
 "Chart" <.. "OptionsFormatter"
 "App" o-- "Chart"
 
