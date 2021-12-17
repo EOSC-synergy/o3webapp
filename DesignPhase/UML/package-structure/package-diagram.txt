@@ -22,28 +22,38 @@ package "GUI" {
 package "API" {
 
     class "o3as" << (A, purple) api >> {
-        +fetchPlotList: array 
-        +fetchModelList: array
-        +fetchTCO_return_data
-        +fetchTCO_zm_data
+        +/models
+        +/data/tco3_zm
+        +/data/tco3_return
+        +/plots
+        +/plots/tco3_zm
+        +/plots/tco3_return
     }
 
-    class "APIFormatter" << (J, yellow) utils >> {
-        this class formats the request URL and\nperforms a request with the given models
-        ==methods==
-        +make_TCO_return_Request(min_lat: int, max_lat: int, month: array)
-        +make_TCO_zm_Request(min_lat: int, max_lat: int, month: array)
-        -formatURL
-        -makeRequest
-    }
+    
 
 
 }
 
 package "Redux" {
 
-    class "Store" << (P, gray) provider >> {
+    class "Store" << (R, gray) redux >> {
+        +plotType
+        +plotData
+        +modelData
+        +SVData
+        +ReferenceData
 
+    }
+
+    class "apiSlice" << (R, gray) redux >> {
+        This redux wrapper performs api requests\nand handles caching
+        ==methods==
+        +getModels()
+        +getPlots()
+        +getRawPlotData(plotType, lat_min, lat_max)
+        +getBuildPlotData(plotType, lat_min, lat_max, ref_meas, ref_year)
+        
     }
 
 }
@@ -87,7 +97,7 @@ package "node modules" {
 }
 
 "apexcharts" <..> "Chart"
-"o3as" <..> "APIFormatter"
+"o3as" <..> "apiSlice"
 "pdfCreator" <..> "pdfmake"
 "Store" <..> "App"
 "Store" <..> "OptionsFormatter"
