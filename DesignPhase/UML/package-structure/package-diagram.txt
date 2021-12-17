@@ -62,8 +62,8 @@ package "Utils" {
 
    
     class "OptionsFormatter" << (J, yellow) utils >> {
-        +format_TCO_return(): object
-        +format_TCO_zm(): object
+        +mergeModelAndSVData(modelData, SVData)
+        +updateModelData()
     }
     
     class "pdfCreator" <<(J, yellow) utils >> {
@@ -78,7 +78,8 @@ package "Utils" {
         This class performs helpful operations\non the data series
 
         ==methods==
-        +unifyDatasetsToOneDatapoint()
+        +unifyDatasetsToOneDatapoint(modelData, months)
+        +calculateSV(modelData, statisticalValues)
     }
     
 }
