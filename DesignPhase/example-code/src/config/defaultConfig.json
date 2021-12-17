@@ -1,0 +1,21 @@
+{
+  "sections": [
+    {
+      "name": "Appearance",
+      "components": ["PlotTypeSelector", "PlotNameField", "XAxisSlider", "YAxisSlider"]
+    },
+    {
+      "name": "Models",
+      "components": ["ModelGroupConfigurator"]
+    },
+    {
+      "name": "Filter Data",
+      "components": ["LocationSelector", "TimeCheckboxGroup"]
+    },
+    {
+      "name": "Reference Year",
+      "component": ["ReferenceModelSelector", "ReferenceYearSlider"]
+    }
+  ]
+}
+
