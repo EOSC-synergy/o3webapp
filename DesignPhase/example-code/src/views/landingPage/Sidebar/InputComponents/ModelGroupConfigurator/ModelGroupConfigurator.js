@@ -1,7 +1,12 @@
 import React from "react";
 import AddModalGroupModal from "./AddModelGroupModal/AddModelGroupModal";
-import EditModelGroupModal from "./EditModelGroupModal/EditModelGroupModal";
+import ModelGroupCard from "./ModelGroupCard/ModelGroupCard";
 
+/**
+ * enables the user to configure models that should be visible in the plot clustered as model groups
+ * @param {*} props 
+ * @returns a jsx containing a ModelGroupModal and a ModelGroupCard and EditModelGroupModal per model group
+ */
 export default function ModelGroupConfigurator(props) {
     
     const [modelGroups, setModelGroups] = React.useState([]);
@@ -27,8 +32,8 @@ export default function ModelGroupConfigurator(props) {
     return (
         <>
             <AddModalGroupModal />
-            <EditModelGroupModal />
-            <ModelGroup />
+            <ModelGroupCard />
+            {/* <ModelGroup /> */}
         </>
     );
 }

@@ -2,6 +2,7 @@ import * as React from 'react';
 import NavBar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer/Footer";
 import Graph from './views/landingPage/Graph/Graph';
+import ErrorMessageModal from './components/ErrorMessageModal/ErrorMessageModal';
 
 /**
  * Main container of the Webapp
@@ -15,5 +16,6 @@ export default function App() {
         <Graph />
         <Footer />
         <Sidebar open={openSidebar} />
+        <ErrorMessageModal />
     </div>);
 }
