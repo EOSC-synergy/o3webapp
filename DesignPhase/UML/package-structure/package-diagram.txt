@@ -4,15 +4,17 @@ skinparam dpi 300
 
 package "GUI" {
     class "App" << (C,blue) component>> {
-
+        Symbolic representation of our app (View)
     }
 
     class "Chart" << (C, blue) component>> {
+        This component connects apexcharts to\nour app
         ==props==
         #options
         #series
         #type
         #width
+        #height
     }
 
 }
@@ -22,28 +24,39 @@ package "GUI" {
 package "API" {
 
     class "o3as" << (A, purple) api >> {
-        +fetchPlotList: array 
-        +fetchModelList: array
-        +fetchTCO_return_data
-        +fetchTCO_zm_data
+        +/models
+        +/data/tco3_zm
+        +/data/tco3_return
+        +/plots
+        +/plots/tco3_zm
+        +/plots/tco3_return
     }
 
-    class "APIFormatter" << (J, yellow) utils >> {
-        this class formats the request URL and\nperforms a request with the given models
-        ==methods==
-        +make_TCO_return_Request(min_lat: int, max_lat: int, month: array)
-        +make_TCO_zm_Request(min_lat: int, max_lat: int, month: array)
-        -formatURL
-        -makeRequest
-    }
+    
 
 
 }
 
 package "Redux" {
 
-    class "Store" << (P, gray) provider >> {
+    class "Store" << (R, gray) redux >> {
+        +apiCache
+        +plotType
+        +plots
+        +models
+        +statisticalValues
+        +referenceSettings
 
+    }
+
+    class "apiSlice" << (R, gray) redux >> {
+        This redux wrapper performs api requests\nand handles caching
+        ==methods==
+        +getModels()
+        +getPlots()
+        +getRawPlotData(plotType, lat_min, lat_max)
+        +getBuildPlotData(plotType, lat_min, lat_max, ref_meas, ref_year)
+        
     }
 
 }
@@ -52,8 +65,10 @@ package "Utils" {
 
    
     class "OptionsFormatter" << (J, yellow) utils >> {
-        +format_TCO_return(): object
-        +format_TCO_zm(): object
+        This utility class merges given data from the store\ninto one data object apexcharts expects
+        ==methods==
+        +generatePlotOptions(title, xRange, yRange)
+        +generatePlotSeries(modelData, SVData)
     }
     
     class "pdfCreator" <<(J, yellow) utils >> {
@@ -68,7 +83,8 @@ package "Utils" {
         This class performs helpful operations\non the data series
 
         ==methods==
-        +unifyDatasetsToOneDatapoint()
+        +unifyDatapointsToOneDatapoint(modelData, months)
+        +calculateSV(modelData, statisticalValues)
     }
     
 }
@@ -76,22 +92,30 @@ package "Utils" {
 package "node modules" {
 
     class "pdfmake" << (N, green) library >> {
+        Create pdf files on client-side
         ==methods==
         +createPdf()
     } 
 
     class "apexcharts" <<(N, green) library >> {
+        Our plotting library
+    }
 
+    class "@reduxjs/toolkit/query/react" <<(N, green) library >> {
+        An api wrapper for an api endpoint
+    }
+
+    class "react-redux" <<(N, green) library >> {
+        Redux for our app
     }
 
 }
 
 "apexcharts" <..> "Chart"
-"o3as" <..> "APIFormatter"
+"o3as" <..> "apiSlice"
+"apiSlice" <..> "Store"
 "pdfCreator" <..> "pdfmake"
-"Store" <..> "App"
-"Store" <..> "OptionsFormatter"
-"App" ..> "OptionsFormatter"
+"Store" <..> "Chart"
 "Chart" <.. "OptionsFormatter"
 "App" o-- "Chart"
 
