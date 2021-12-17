@@ -65,7 +65,10 @@ package "Utils" {
     }
     
     class "math" <<(J, yellow) utils >> {
-        
+        This class performs helpful operations\non the data series
+
+        ==methods==
+        +unifyDatasetsToOneDatapoint()
     }
     
 }

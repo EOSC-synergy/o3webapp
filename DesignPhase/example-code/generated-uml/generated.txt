@@ -1,5 +1,5 @@
 @startuml
-title Title
+title Class Diagram
 skinparam dpi 300
 class "App" << (C,blue) component >> {
     Main container of the Webapp
@@ -7,14 +7,16 @@ Contains all GUI elements
     ==props==
 
     ==state==
-
+    #openSidebar
     ==methods==
 
 }
 
-class "Graph" << (C,blue) component >> {
-    A containter for the displayed graph.
-Displays the currently selected plot.
+class "Footer" << (C,blue) component >> {
+    A container for important links
+at the bottom of the Website.
+Contains links to the impressum,
+privacy policy and the terms of service
     ==props==
 
     ==state==
@@ -33,6 +35,19 @@ class "NavBar" << (C,blue) component >> {
     +drawerToggle
 }
 
+class "Graph" << (C,blue) component >> {
+    A containter for the displayed graph.
+Displays the currently selected plot.
+    ==props==
+
+    ==state==
+    #plotData
+    #options
+    #type
+    ==methods==
+    +getDataToDisplay
+}
+
 class "Sidebar" << (C,blue) component >> {
     Contains all components
 responsible for the modification
@@ -45,27 +60,14 @@ of the plot settings.
 
 }
 
-class "Footer" << (C,blue) component >> {
-    A container for important links
-at the bottom of the Website.
-Contains links to the impressum,
-privacy policy and the terms of service
-    ==props==
-
-    ==state==
-
-    ==methods==
-
-}
-
-class "ModelsSection" << (C,blue) component >> {
+class "ApprearenceSection" << (C,blue) component >> {
     <<empty>>
     ==props==
 
     ==state==
 
     ==methods==
-    +onBtnClick
+    +handlePlotNameChange
 }
 
 class "FilterDataSection" << (C,blue) component >> {
@@ -73,22 +75,24 @@ class "FilterDataSection" << (C,blue) component >> {
     ==props==
 
     ==state==
-
+    #selectedLocation
+    #selectedMonths
     ==methods==
 
 }
 
-class "ReferenceYearSection" << (C,blue) component >> {
+class "Button" << (C,blue) component >> {
     <<empty>>
     ==props==
-
+    #onClick
+    #text
     ==state==
 
     ==methods==
 
 }
 
-class "ApprearenceSection" << (C,blue) component >> {
+class "CheckList" << (C,blue) component >> {
     <<empty>>
     ==props==
 
@@ -111,6 +115,7 @@ class "Divider" << (C,blue) component >> {
 class "ListBox" << (C,blue) component >> {
     <<empty>>
     ==props==
+    #selected
     #items
     #text
     ==state==
@@ -119,11 +124,20 @@ class "ListBox" << (C,blue) component >> {
 
 }
 
-class "Button" << (C,blue) component >> {
+class "SearchBar" << (C,blue) component >> {
     <<empty>>
     ==props==
-    #onClick
-    #text
+
+    ==state==
+
+    ==methods==
+
+}
+
+class "Selector" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+
     ==state==
 
     ==methods==
@@ -131,6 +145,26 @@ class "Button" << (C,blue) component >> {
 }
 
 class "TextBox" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+    #text
+    ==state==
+
+    ==methods==
+
+}
+
+class "MultiCheckbox" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+
+    ==state==
+
+    ==methods==
+
+}
+
+class "SingleCheckbox" << (C,blue) component >> {
     <<empty>>
     ==props==
     #text
@@ -162,7 +196,36 @@ class "SingleSlider" << (C,blue) component >> {
 
 }
 
-class "MultiCheckbox" << (C,blue) component >> {
+class "ModelGroup" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+    #groupName
+    ==state==
+    #visibility
+    #median
+    #mean
+    #percentile
+    #derivative
+    ==methods==
+    +handleMedian
+    +handleMean
+    +handlePercentile
+    +handleDerivative
+    +handleVisibility
+    +handleEditGroup
+}
+
+class "ModelsSection" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+
+    ==state==
+    #modelGroups
+    ==methods==
+    +onBtnClick
+}
+
+class "AddModelGroupPopUp" << (C,blue) component >> {
     <<empty>>
     ==props==
 
@@ -172,34 +235,54 @@ class "MultiCheckbox" << (C,blue) component >> {
 
 }
 
-class "SingleCheckbox" << (C,blue) component >> {
+class "DownloadPopUp" << (C,blue) component >> {
     <<empty>>
     ==props==
-    #text
+
     ==state==
 
     ==methods==
 
 }
-App o-- Graph
-App o-- NavBar
+
+class "ReferenceYearSection" << (C,blue) component >> {
+    <<empty>>
+    ==props==
+
+    ==state==
+    #offsetActive
+    ==methods==
+    +handleApplyOffset
+    +handleResetOffset
+}
 App o-- Footer
-NavBar o-- Sidebar
+App o-- NavBar
+App o-- Graph
+App o-- Sidebar
 NavBar o-- Button
-Sidebar o-- ModelsSection
 Sidebar o-- FilterDataSection
-Sidebar o-- ReferenceYearSection
 Sidebar o-- Button
-ModelsSection o-- Button
+Sidebar o-- ModelsSection
+Sidebar o-- ReferenceYearSection
+ApprearenceSection o-- ListBox
+ApprearenceSection o-- TextBox
+ApprearenceSection o-- RangeSlider
 FilterDataSection o-- Divider
 FilterDataSection o-- ListBox
 FilterDataSection o-- MultiCheckbox
 FilterDataSection o-- SingleCheckbox
+Selector o-- Button
+Selector o-- CheckList
+Selector o-- SearchBar
+ModelGroup o-- Button
+ModelsSection o-- Button
+AddModelGroupPopUp o-- Divider
+AddModelGroupPopUp o-- Selector
+AddModelGroupPopUp o-- TextBox
+DownloadPopUp o-- ListBox
+ReferenceYearSection o-- Button
 ReferenceYearSection o-- ListBox
 ReferenceYearSection o-- SingleSlider
-ApprearenceSection o-- ListBox
-ApprearenceSection o-- TextBox
-ApprearenceSection o-- RangeSlider
 
 
 @enduml
