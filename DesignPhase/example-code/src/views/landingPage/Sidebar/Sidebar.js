@@ -1,9 +1,6 @@
 import * as React from 'react';
-import AppearenceSection from './SectionComponents/AppearenceSection/AppearenceSection';
-import FilterDataSection from './SectionComponents/FilterDataSection/FilterDataSection';
-import ModelsSection from './SectionComponents/ModelsSection/ModelsSection';
-import ReferenceYearSection from './SectionComponents/ReferenceYearSection/ReferenceYearSection';
-import Button from './SectionComponents/inputs/Button';
+import Section from './Section/Section.js';
+import defaultStructure from '../../../config/defaultConfig.json';
 
 /**
  * opens the downloadModal
@@ -20,7 +17,6 @@ function openSection(i) {
     // TODO
 }
 
-
 /**
  * Contains all components
  * responsible for the modification 
@@ -29,10 +25,9 @@ function openSection(i) {
 export default function Sidebar(props) {
     return (<> {props.open && 
     (<div>
-        <AppearenceSection />
-        <ModelsSection />
-        <FilterDataSection />
-        <ReferenceYearSection />
+        {defaultStructure.forEach(s => <>
+            <Section name={defaultStructure.sections[s].name} />
+        </>)}
         <Button text="Download" onClick={openDownloadModal}/>
     </div>)
     } </>);
