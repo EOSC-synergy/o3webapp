@@ -20,7 +20,6 @@ function openSection(i) {
     // TODO
 }
 
-
 /**
  * Contains all components
  * responsible for the modification 
@@ -33,6 +32,7 @@ export default function Sidebar(props) {
         <ModelsSection />
         <FilterDataSection />
         <ReferenceYearSection />
+        
         <Button text="Download" onClick={openDownloadModal}/>
     </div>)
     } </>);
