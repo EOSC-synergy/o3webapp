@@ -1,25 +1,6 @@
 import React, { useState } from "react";
 import SeasonCheckBoxGroup from "./SeasonCheckboxGroup/SeasonCheckBoxGroup";
 
-const sesaons = [
-    {
-        name: 'Spring',
-        months: [3, 4, 5]
-    },
-    {
-        name: 'Summer',
-        months: [6, 7, 8]
-    },
-    {
-        name: 'Fall',
-        months: [9, 10, 11]
-    },
-    {
-        name: 'Winter',
-        months: [12, 1, 2]
-    }
-]
-
 /**
  * enables the user to select a month, season or the whole year
  * @param {*} props 
@@ -29,6 +10,27 @@ const sesaons = [
 export default function TimeCheckBoxGroup(props) {
     
     props.error;
+
+
+    const sesaons = [
+        {
+            name: 'Spring',
+            months: [3, 4, 5]
+        },
+        {
+            name: 'Summer',
+            months: [6, 7, 8]
+        },
+        {
+            name: 'Fall',
+            months: [9, 10, 11]
+        },
+        {
+            name: 'Winter',
+            months: [12, 1, 2]
+        }
+    ]
+
 
     // TODO: -> Redux
     const [time, setTime] = React.useState(new Array(12).fill(true));
@@ -44,11 +46,11 @@ export default function TimeCheckBoxGroup(props) {
     /**
      * selects / deselects all year
      */
-    const handleChangeAllYear = () => {
+    const handleChangeYear = () => {
         // pass
     }
 
-    const handleChangeSingleMonth = (event, month) => {
+    const handleChangeMonth = (event, month) => {
         // pass
     }
 
