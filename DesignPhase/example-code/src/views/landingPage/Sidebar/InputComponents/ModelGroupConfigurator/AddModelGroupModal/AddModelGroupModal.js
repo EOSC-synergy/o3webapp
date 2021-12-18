@@ -16,6 +16,8 @@ export default function AddModelGroupModal(props) {
     props.error;
     props.addModelGroup;
 
+    const dispatch = useDispatch()
+    
     const [checked, setChecked] = React.useState([]);
     const [left, setLeft] = React.useState(models);
     const [right, setRight] = React.useState([]);
@@ -59,11 +61,11 @@ export default function AddModelGroupModal(props) {
         setRight([]);
     };
 
-    // TODO: Redux
     const addNewGroup = () => {
         props.addModelGroup(groupName, right);
         handleAllLeft();
         setGroupName('');
+        dispatch(ADD_GROUP(groupName, someData))
         props.onClose();
     }
 

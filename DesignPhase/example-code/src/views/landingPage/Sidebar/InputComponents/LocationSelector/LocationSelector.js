@@ -1,4 +1,5 @@
 import React from "react";
+import {useDispatch} from "react-redux"
 
 const min = -90;
 const max = +90;
@@ -19,7 +20,7 @@ const availableOptions = [
  */
 export default function LocationSelector(props) {
 
-    // -> Redux
+    const dispatch = useDispatch()
     const [selectedLocations, setSelectedLocations] = React.useState(props.defaultLocation);
     props.error;
 
@@ -28,6 +29,7 @@ export default function LocationSelector(props) {
     // TODO: -> Redux
     const handleChangeLocation = (event) => {
         setLocation(event.target.value);
+        dispatch(setLocation(event.target.value))
     };
 
     return (
