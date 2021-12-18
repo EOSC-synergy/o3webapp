@@ -1,20 +1,14 @@
 import React, { useState } from "react";
-import ListBox from '../inputs/ListBox';
-import TextBox from '../inputs/TextBox';
 import defaultStructure from '../../../../config/defaultConfig.json';
-import LocationSelector from "../InputComponents/LocationSelector/LocationSelector";
+import LocationSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
 import ModelGroupConfigurator from "../InputComponents/ModelGroupConfigurator/ModelGroupConfigurator";
 import OffsetConfigurator from "../InputComponents/OffsetConfigurator/OffsetConfigurator";
 import PlotNameField from "../InputComponents/PlotNameField/PlotNameField";
-import PlotTypeSelector from "../InputComponents/PlotTypeSelector/PlotTypeSelector";
 import ReferenceYearSlider from "../InputComponents/ReferenceYearSlider/ReferenceYearSlider";
+import RegionSelector from "../InputComponents/RegionSelector/RegionSelector";
 import TimeCheckBoxGroup from "../InputComponents/TimeCheckboxGroup/TimeCheckboxGroup";
 import XAxisSlider from "../InputComponents/xAxisSlider/xAxisSlider";
 import YAxisSlider from "../InputComponents/yAxisSlider/yAxisSlider";
-
-function mapNameToComponent(name) {
-    return 0;
-}
 
 /**
  * an expandable section containing a list of inputComponents as well as a name
@@ -32,6 +26,11 @@ export default function Section(props) {
     props.expanded;
     props.onCollapseSection;
     props.onExpandSection;
+
+    // maybe better in utils? not so hidden here...
+    const mapNameToComponent = (name) => {
+        return 0;
+    }
 
     return <>
         {props.components.array.forEach(element => {
@@ -51,5 +50,6 @@ export default function Section(props) {
         <TimeCheckBoxGroup />
         <XAxisSlider />
         <YAxisSlider />
+        <RegionSelector />
     </>;
 }

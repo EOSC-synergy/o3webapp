@@ -12,15 +12,17 @@ import ReferenceYearSlider from "../ReferenceYearSlider/ReferenceYearSlider";
  */
 export default function OffsetConfigurator(props) {
     
-    props.defaultReferenceModel;
-    props.defaultReferenceYear;
+    // TODO: -> redux
+    props.currReferenceModel;
+    props.currReferenceYear;
     props.allVisibleModels;
     props.offsetVisible;
+
     props.error;
 
     return (
         <>
-            <ReferenceYearSlider defaultReferenceYear={props.defaultReferenceYear} />
+            <ReferenceYearSlider />
             <button />
         </>
     );

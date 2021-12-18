@@ -24,7 +24,7 @@ export default function LocationSelector(props) {
     const [selectedLocations, setSelectedLocations] = React.useState(props.defaultLocation);
     props.error;
 
-    props.allowMultipleRegions;     // TODO: how to cope with multiple possible regions in return / recovery plot?
+    // props.allowMultipleRegions;     // TODO: how to cope with multiple possible regions in return / recovery plot?
 
     // TODO: -> Redux
     const handleChangeLocation = (event) => {

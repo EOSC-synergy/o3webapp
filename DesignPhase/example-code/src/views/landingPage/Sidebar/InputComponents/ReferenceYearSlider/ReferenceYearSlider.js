@@ -10,9 +10,13 @@ import React, { useState } from "react";
  */
 export default function ReferenceYearSlider(props) {
 
-    props.defaultReferenceYear;
     props.min;
     props.max;
+    props.error;
+
+    // TODO -> redux
+    props.currReferenceYear;
+    props.changeReferenceYear;
 
     return (
         <>
