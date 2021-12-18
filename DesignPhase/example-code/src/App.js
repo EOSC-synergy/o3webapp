@@ -22,17 +22,21 @@ export default function App() {
         setError(null);
     }
     
-    const closeSideBar = () => {
-        setOpenSidebar(false);
+    const handleSidebarOpen = () => {
+        setOpenSidebar(true);
+    }
+
+    const handleSidebarClose = () => {
+        setOpenSidebar(true);
     }
     
 
     return (
     <>
-        <NavBar error={reportError} />
+        <NavBar error={reportError} handleSidebarOpen={handleSidebarOpen} />
         <Graph error={reportError} />
         <Footer error={reportError} />
-        <Sidebar error={reportError} open={openSidebar} onClose={closeSideBar} />
+        <Sidebar error={reportError} open={openSidebar} onClose={handleSidebarClose} />
         <ErrorMessageModal open={error !== null} message={error} onClose={closeErrorModal} />
     </>
     );

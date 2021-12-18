@@ -11,10 +11,12 @@ import React, { useState } from "react";
  */
 export default function XAxisSlider(props) {
     
-    props.defaultMin;
-    props.defaultMax;
     props.min;
     props.max;
+    props.currMin;
+    props.currMax;
+    props.changeMin;
+    props.changeMax;
     props.error;
 
     return (

@@ -1,9 +1,5 @@
 import React, { useState } from "react";
 
-function getAllAvailablePlotTypes() {
-    return null;
-}
-
 /**
  * enables the user to select a different plot type
  * @param {*} props 
@@ -11,10 +7,15 @@ function getAllAvailablePlotTypes() {
  * @returns a jsx containing a dropdown to select the plot type
  */
 export default function PlotTypeSelector(props) {
+
+    // API call -> wohin?
+    const getAllAvailablePlotTypes = () => {
+        return null;
+    }
     
-    props.default;
-    const [plotType, setPlotType] = useState("");
+    props.plotType;
     props.error;
+    props.changePlotType;
 
     return (
         <>

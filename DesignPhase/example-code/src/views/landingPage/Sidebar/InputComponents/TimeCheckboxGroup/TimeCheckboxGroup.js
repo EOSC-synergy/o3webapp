@@ -44,13 +44,24 @@ export default function TimeCheckBoxGroup(props) {
      * selects / deselects all year
      */
     const handleChangeAllYear = () => {
+        // pass
+    }
 
+    const handleChangeSingleMonth = (event, month) => {
+        // pass
     }
 
     return (
         <> 
             {sesaons.forEach((elem, idx) => {
-                <SeasonCheckBoxGroup name={elem.name} months={} key={idx} />
+                <SeasonCheckBoxGroup
+                    name={elem.name}
+                    months={elem.months}
+                    monthsSelected = {
+                        time.map((x, idx) => idx in elem.months ? x : null)
+                    }
+                    key={idx}
+                />
             })}
         </>
     );

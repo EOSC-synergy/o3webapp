@@ -11,6 +11,11 @@ import React, { useState } from "react";
  */
 export default function AddModelGroupModal(props) {
 
+    props.open;
+    props.onClose;
+    props.error;
+    props.addModelGroup;
+
     const [checked, setChecked] = React.useState([]);
     const [left, setLeft] = React.useState(models);
     const [right, setRight] = React.useState([]);
@@ -54,11 +59,12 @@ export default function AddModelGroupModal(props) {
         setRight([]);
     };
 
+    // TODO: Redux
     const addNewGroup = () => {
         props.addModelGroup(groupName, right);
         handleAllLeft();
         setGroupName('');
-        props.handleClose();
+        props.onClose();
     }
 
     const updateGroupName = (event) => {
@@ -75,14 +81,10 @@ export default function AddModelGroupModal(props) {
     }
 
     const searchData = (event) => {
-        
+
     }
 
-
-    props.onClose;
-    props.error;
-    props.addModelGroup;
-
+    // TODOD: API Call
     const getAllAvailableModels = () => {
         return null;
     }

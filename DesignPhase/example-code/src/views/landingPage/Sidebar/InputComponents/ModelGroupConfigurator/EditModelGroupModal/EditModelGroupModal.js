@@ -16,6 +16,8 @@ export default function EditModelGroupModal(props) {
     props.onClose;
     props.open;
     props.error;
+
+    // TODO: -> Redux
     props.models;
     props.name;
     props.id;
