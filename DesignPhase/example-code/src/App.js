@@ -7,12 +7,12 @@ import ErrorMessageModal from './components/ErrorMessageModal/ErrorMessageModal'
 /**
  * Main container of the Webapp
  * Contains all GUI elements
- * state.error used for error handling in event handlers (not in components)
+ * @returns a jsx containing all main components
  */
 export default function App() {
 
     const [openSidebar, setOpenSidebar] = React.useState(false);
-    const [error, setError] = React.useState(null);
+    const [error, setError] = React.useState(null);  // error is used for errors in event handler functions
 
     const reportError = (msg) => {
         setError(msg);
