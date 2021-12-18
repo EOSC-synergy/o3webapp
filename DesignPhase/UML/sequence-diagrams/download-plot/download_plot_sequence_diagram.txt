@@ -2,48 +2,61 @@
 skinparam style strictuml
 
 actor User
+participant "<<component>>\nSidebar" as NavBar #3489eb
+participant "<<component>>\nDownloadModal" as DownloadPopUp #3489eb
+participant "<<component>>\nListBox" as ListBox #3489eb
+participant "<<component>>\nGraph" as Graph #3489eb
+participant "<<library>>\napexcharts" as apexcharts #ffff00
+participant "<<library>>\npdfmake" as pdfmake #ffff00
 
 User -> NavBar: onClick()
 activate NavBar
-NavBar -> NavBar: openPopUp()
+NavBar -> NavBar: onOpenDownloadModal()
 activate NavBar
 NavBar -> DownloadPopUp: <<create>>
 activate DownloadPopUp
-note over DownloadPopUp: Wait for the User \n to select a item in \n the list box
+note over DownloadPopUp: Wait for the User \n to select a item in \n the list box and \n click on download
 DownloadPopUp -> ListBox: getSelectedValue()
 activate ListBox
 DownloadPopUp <-- ListBox: selectedFormat
 deactivate ListBox
-DownloadPopUp -> DownloadHandler: downloadPlot(selectedFormat)
-activate DownloadHandler
+DownloadPopUp -> Graph: getPlotFile(selectedFormat)
+activate Graph
 alt selectedFormat == "PNG"
 	
-	DownloadHandler -> Graph: generatePNG()
-	activate Graph
-	DownloadHandler <-- Graph: graphFile
-	deactivate Graph
+	Graph -> apexcharts: generateImg(selectedFormat)
+	activate apexcharts
+	Graph <-- apexcharts: downloadFile
+	deactivate apexcharts
 
 else selectedFormat == "SVG"
 
-	DownloadHandler -> Graph: "generateSVG()"
-	activate Graph
-	DownloadHandler <-- Graph: graphFile
-	deactivate Graph
+	Graph -> apexcharts: generateImg(selectedFormat)
+	activate apexcharts
+	Graph <-- apexcharts: downloadFile
+	deactivate apexcharts
 
 else selectedFormat == "PDF"
 
-	DownloadHandler -> Graph: generatePDF()
-	activate Graph
-	DownloadHandler <-- Graph: graphFile
-	deactivate Graph
+	Graph -> apexcharts: generateImg("SVG")
+	activate apexcharts
+	Graph <-- apexcharts: graphFile
+	deactivate apexcharts
+	Graph -> pdfmake: makePDF(graphFile)
+	activate pdfmake
+	Graph <-- pdfmake: downloadFile
+	deactivate pdfmake
+	
+	
 
 end
-DownloadHandler -> DownloadHandler: startDownload(graphFile)
-activate DownloadHandler
-DownloadHandler --> DownloadHandler
-deactivate DownloadHandler
-DownloadPopUp <-- DownloadHandler
-deactivate DownloadHandler
+
+DownloadPopUp <-- Graph: downloadFile
+DownloadPopUp -> DownloadPopUp: startDownload(downloadFile)
+activate DownloadPopUp
+DownloadPopUp --> DownloadPopUp
+deactivate DownloadPopUp
+
 NavBar <-- DownloadPopUp
 deactivate DownloadPopUp
 destroy DownloadPopUp
