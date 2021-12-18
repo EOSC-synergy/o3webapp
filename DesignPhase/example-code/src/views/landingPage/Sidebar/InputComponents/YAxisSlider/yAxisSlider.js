@@ -13,11 +13,13 @@ export default function YAxisSlider(props) {
     
     props.min;
     props.max;
+    props.error;
+
+    // TODO: -> Redux
     props.currMin;
     props.currMax;
     props.changeMin;
     props.changeMax;
-    props.error;
  
 
     return (

@@ -14,6 +14,8 @@ export default function AddModelGroupModal(props) {
     props.open;
     props.onClose;
     props.error;
+
+    // TODO: -> Redux
     props.addModelGroup;
 
     const [checked, setChecked] = React.useState([]);

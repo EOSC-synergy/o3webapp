@@ -6,7 +6,7 @@ import * as React from 'react';
  */
 export default function Graph() {
 
-    // TODO: <- redux
+    // TODO: redux ->
     const [plotData, setPlotData] = React.useState({});
     const [options, setOptions] = React.useState({});
     const [type, setType] = React.useState("line");

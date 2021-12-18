@@ -8,14 +8,16 @@ import React, { useState } from "react";
  */
 export default function PlotTypeSelector(props) {
 
-    // API call -> wohin?
+    // TODO: API call -> wohin?
     const getAllAvailablePlotTypes = () => {
         return null;
     }
     
+    // TODO: -> Redux
     props.plotType;
-    props.error;
     props.changePlotType;
+
+    props.error;
 
     return (
         <>

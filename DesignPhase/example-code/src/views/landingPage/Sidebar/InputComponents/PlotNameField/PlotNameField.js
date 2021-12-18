@@ -11,7 +11,9 @@ export default function PlotNameField(props) {
     props.default;
     props.error;
 
-    const [name, setName] = useState(name);
+    // TODO: -> redux
+    props.plotName;
+    props.changePlotName;
 
     return (
         <>

@@ -28,9 +28,10 @@ const sesaons = [
  */
 export default function TimeCheckBoxGroup(props) {
     
-    props.defaultTimeSelection;
     props.error;
-    const [time, setTime] = React.useState(new Array(12).fill(false));
+
+    // TODO: -> Redux
+    const [time, setTime] = React.useState(new Array(12).fill(true));
 
     /**
      * handles if a users wants to select / deselect a season

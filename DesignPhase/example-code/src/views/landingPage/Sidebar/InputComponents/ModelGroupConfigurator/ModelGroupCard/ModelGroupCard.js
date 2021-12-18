@@ -28,6 +28,8 @@ export default function ModelGroupCard(props) {
     props.error;
     props.id;
 
+    props.editModelGroup;
+
     return (
         <>
             <EditModelGroupModal name={props.name} id={props.id} models={props.models} />

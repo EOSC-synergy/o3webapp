@@ -22,6 +22,8 @@ export default function EditModelGroupModal(props) {
     props.name;
     props.id;
 
+    props.editModelGroup;
+
     return (
         <>
         </>

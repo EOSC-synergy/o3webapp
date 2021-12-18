@@ -36,27 +36,6 @@ export default function ModelGroupConfigurator(props) {
     //     }
     // ]
 
-
-    const [addModalVisible, setAddModalVisible] = React.useState(false);
-    const [editModalVisible, setEditModalVisible] = React.useState(false);
-    props.error;
-
-    const handleEditModalClose = () => {
-        setEditModalVisible(false);
-    }
-
-    const handleEditModalOpen = () => {
-        setEditModalVisible(true);
-    }
-
-    const handleAddModalClose = () => {
-        setAddModalVisible(false);
-    }
-
-    const handleAddModalOpen = () => {
-        setAddModalVisible(true);
-    }
-
     // TODO: Redux
     const addModelGroup = (name, models) => {
 
@@ -76,6 +55,28 @@ export default function ModelGroupConfigurator(props) {
         ) => {
         // id = index of model group in array above
     }
+
+
+    const [addModalVisible, setAddModalVisible] = React.useState(false);
+    const [editModalVisible, setEditModalVisible] = React.useState(false);
+
+    const handleEditModalClose = () => {
+        setEditModalVisible(false);
+    }
+
+    const handleEditModalOpen = () => {
+        setEditModalVisible(true);
+    }
+
+    const handleAddModalClose = () => {
+        setAddModalVisible(false);
+    }
+
+    const handleAddModalOpen = () => {
+        setAddModalVisible(true);
+    }
+
+    props.error;
 
 
     return (

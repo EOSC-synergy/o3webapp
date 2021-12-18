@@ -16,6 +16,8 @@ export default function SeasonCheckBoxGroup(props) {
     props.label;
     props.id;
     props.months;
+
+    // TODO: -> Redux
     props.monthsChecked;
     props.handleSeasonClicked;
     props.hanldeMonthClicked;
