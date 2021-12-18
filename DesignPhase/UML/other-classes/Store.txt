@@ -1,0 +1,11 @@
+@startuml
+skinparam dpi 300
+
+class "Store" << (R, gray) redux >> {
+    ~api
+    ~plot
+    ~models
+    ~statisticalValues
+    ~referenceSettings
+}
+@enduml

@@ -1,25 +1,21 @@
 @startuml
 actor Steve
-participant "StatValuesSection\n//Component//" as SVS #0000ff
-participant "Graph\n//Component//" as Graph #0000ff
-participant "actions\n//Redux//" as actions #808080
+participant "//<<Component>>//\nModelGroup" as MG #3489eb
+participant "Graph\n//Component//" as Graph #3489eb
 database "Store\n//Redux//" as Store #808080
-participant "mean\n//Reducer//" as meanRD #808080
-participant "percentile\n//Reducer//" as percRD #808080
 participant "apexcharts\n//library//" as apexcharts #ffff00
 participant "math utils\n//library//" as math #ffff00
 
-Steve->SVS: user selects mean
-SVS->actions: add_mean()
-SVS<--actions: action 
-SVS->Store: dispatch(action)
-Store->meanRD: reduce(state, action)
-meanRD->math: calculate_mean
-meanRD<--math: meanSeries
-
-Store<--meanRD: new state
+Steve->MG: user selects mean 
+activate MG
+MG->Store: dispatch(ADD_SV("all", MEAN))
+deactivate MG
 Graph<--Store: updateHook
-Graph->Store: useSelector(state => state.options)
+Graph->Store: useSelector(state => state.plotType)
+Graph->Store: useSelector(state => state.models.data)
+Graph->Store: useSelector(state => state.statisticalValues)
+Graph->Store: useSelector(state => state.referenceSettings)
+
 Graph<--Store: options
 Graph->Store: useSelector(state => state.series)
 Graph<--Store: series
@@ -45,6 +41,5 @@ Graph<--Store: series
 Graph->apexcharts: new Chart(options, series)
 Graph<--apexcharts: rendered svg chart
 Steve<--Graph: user sees updated chart
-
 
 @enduml
