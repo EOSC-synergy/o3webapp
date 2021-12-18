@@ -3,7 +3,7 @@ import React from "react";
 // const min = -90;
 // const max = +90;
 // const availableOptions = [
-//     ...
+//   ...  
 // ]
 
 /**
@@ -17,6 +17,10 @@ export default function LocationSelector(props) {
 
     const [selectedLocations, setSelectedLocations] = React.useState(props.defaultLocation);
     props.error;
+
+    const handleChangeLocation = (event) => {
+        setLocation(event.target.value);
+    };
 
     return (
         <>
