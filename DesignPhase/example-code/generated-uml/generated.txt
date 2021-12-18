@@ -14,14 +14,16 @@ class "App" << (C,blue) component >> {
     +closeSideBar
 }
 
-class "NavBar" << (C,blue) component >> {
+class "ErrorMessageModal" << (C,blue) component >> {
     
     ==props==
-
-    ==state==
+    #onClose
+    #message
     #open
+    ==state==
+
     ==methods==
-    +drawerToggle
+
 }
 
 class "Footer" << (C,blue) component >> {
@@ -34,7 +36,7 @@ class "Footer" << (C,blue) component >> {
 
 }
 
-class "ErrorMessageModal" << (C,blue) component >> {
+class "NavBar" << (C,blue) component >> {
     
     ==props==
     #open
@@ -42,8 +44,22 @@ class "ErrorMessageModal" << (C,blue) component >> {
     #message
     ==state==
 
+    ==state==
+    #open
     ==methods==
+    +drawerToggle
+}
 
+class "Graph" << (C,blue) component >> {
+    
+    ==props==
+
+    ==state==
+    #plotData
+    #options
+    #type
+    ==methods==
+    +getDataToDisplay
 }
 
 class "Sidebar" << (C,blue) component >> {
@@ -61,7 +77,7 @@ class "Sidebar" << (C,blue) component >> {
     +onExpandSection
 }
 
-class "Section" << (C,blue) component >> {
+class "DownloadModal" << (C,blue) component >> {
     
     ==props==
     #name
@@ -76,19 +92,19 @@ class "Section" << (C,blue) component >> {
 
 }
 
-class "DownloadModal" << (C,blue) component >> {
+class "LocationSelector" << (C,blue) component >> {
     
     ==props==
     #open
     #onClose
     #error
     ==state==
-
+    #selectedLocations
     ==methods==
 
 }
 
-class "OffsetConfigurator" << (C,blue) component >> {
+class "ModelGroupConfigurator" << (C,blue) component >> {
     
     ==props==
     #defaultReferenceModel
@@ -97,24 +113,32 @@ class "OffsetConfigurator" << (C,blue) component >> {
     #offsetVisible
     #allVisibleModels
     ==state==
-
+    #modelGroups
+    #addModalVisible
+    #editModalVisible
     ==methods==
-
+    +handleEditModalClose
+    +handleEditModalOpen
+    +handleAddModalClose
+    +handleAddModalOpen
+    +addModelGroup
+    +editModelGroup
 }
 
-class "ReferenceYearSlider" << (C,blue) component >> {
+class "AddModelGroupModal" << (C,blue) component >> {
     
     ==props==
-    #max
-    #defaultReferenceYear
-    #min
+    #onClose
+    #addModelGroup
+    #open
+    #error
     ==state==
 
     ==methods==
 
 }
 
-class "YAxisSlider" << (C,blue) component >> {
+class "EditModelGroupModal" << (C,blue) component >> {
     
     ==props==
     #max
@@ -128,7 +152,7 @@ class "YAxisSlider" << (C,blue) component >> {
 
 }
 
-class "PlotNameField" << (C,blue) component >> {
+class "ModelGroupCard" << (C,blue) component >> {
     
     ==props==
     #error
@@ -139,19 +163,22 @@ class "PlotNameField" << (C,blue) component >> {
 
 }
 
-class "TimeCheckBoxGroup" << (C,blue) component >> {
+class "OffsetConfigurator" << (C,blue) component >> {
     
     ==props==
+    #defaultReferenceModel
     #error
-    #defaultTimeSelection
+    #offsetVisible
+    #allVisibleModels
+    #defaultReferenceYear
     ==state==
-    #time
+
     ==methods==
     +handleChangeSeason
     +handleChangeAllYear
 }
 
-class "SeasonCheckBoxGroup" << (C,blue) component >> {
+class "PlotNameField" << (C,blue) component >> {
     
     ==props==
     #handleSeasonClicked
@@ -176,24 +203,7 @@ class "PlotTypeSelector" << (C,blue) component >> {
 
 }
 
-class "ModelGroupConfigurator" << (C,blue) component >> {
-    
-    ==props==
-    #error
-    ==state==
-    #modelGroups
-    #addModalVisible
-    #editModalVisible
-    ==methods==
-    +handleEditModalClose
-    +handleEditModalOpen
-    +handleAddModalClose
-    +handleAddModalOpen
-    +addModelGroup
-    +editModelGroup
-}
-
-class "AddModelGroupModal" << (C,blue) component >> {
+class "ReferenceYearSlider" << (C,blue) component >> {
     
     ==props==
     #open
@@ -220,7 +230,7 @@ class "AddModelGroupModal" << (C,blue) component >> {
     +getAllAvailableModels
 }
 
-class "EditModelGroupModal" << (C,blue) component >> {
+class "TimeCheckBoxGroup" << (C,blue) component >> {
     
     ==props==
     #open
@@ -230,12 +240,13 @@ class "EditModelGroupModal" << (C,blue) component >> {
     #error
     #id
     ==state==
-
+    #time
     ==methods==
-
+    +handleChangeSeason
+    +handleChangeAllYear
 }
 
-class "ModelGroupCard" << (C,blue) component >> {
+class "SeasonCheckBoxGroup" << (C,blue) component >> {
     
     ==props==
     #name
@@ -267,42 +278,49 @@ class "XAxisSlider" << (C,blue) component >> {
 
 }
 
-class "LocationSelector" << (C,blue) component >> {
+class "YAxisSlider" << (C,blue) component >> {
     
     ==props==
     #defaultLocation
     #error
     ==state==
-    #selectedLocations
+
     ==methods==
     +handleChangeLocation
 }
 
-class "Graph" << (C,blue) component >> {
+class "Section" << (C,blue) component >> {
     
     ==props==
-
+    #components
+    #name
+    #onCollapseSection
+    #error
+    #expanded
+    #onExpandSection
     ==state==
-    #plotData
-    #options
-    #type
+
     ==methods==
-    +getDataToDisplay
+
 }
-App o-- NavBar
-App o-- Footer
 App o-- ErrorMessageModal
-App o-- Sidebar
+App o-- Footer
+App o-- NavBar
 App o-- Graph
-Sidebar o-- Section
+App o-- Sidebar
 Sidebar o-- DownloadModal
 Sidebar o-- PlotTypeSelector
-Section o-- OffsetConfigurator
-Section o-- ReferenceYearSlider
-Section o-- YAxisSlider
-Section o-- PlotNameField
-Section o-- TimeCheckBoxGroup
+Sidebar o-- Section
+ModelGroupConfigurator o-- ModelGroupCard
+ModelGroupCard o-- EditModelGroupModal
+OffsetConfigurator o-- ReferenceYearSlider
+TimeCheckBoxGroup o-- SeasonCheckBoxGroup
+Section o-- LocationSelector
 Section o-- ModelGroupConfigurator
+Section o-- OffsetConfigurator
+Section o-- PlotNameField
+Section o-- ReferenceYearSlider
+Section o-- TimeCheckBoxGroup
 Section o-- XAxisSlider
 Section o-- LocationSelector
 OffsetConfigurator o-- ReferenceYearSlider

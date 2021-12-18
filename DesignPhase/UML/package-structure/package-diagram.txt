@@ -31,22 +31,16 @@ package "API" {
         +/plots/tco3_zm
         +/plots/tco3_return
     }
-
-    
-
-
 }
 
 package "Redux" {
 
     class "Store" << (R, gray) redux >> {
-        +apiCache
-        +plotType
-        +plots
+        +api
+        +plot
         +models
         +statisticalValues
         +referenceSettings
-
     }
 
     class "apiSlice" << (R, gray) redux >> {
@@ -56,7 +50,6 @@ package "Redux" {
         +getPlots()
         +getRawPlotData(plotType, lat_min, lat_max)
         +getBuildPlotData(plotType, lat_min, lat_max, ref_meas, ref_year)
-        
     }
 
 }

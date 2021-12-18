@@ -21,7 +21,7 @@ class ReactComponent:
         self.propName = propName
         self.content = open(self.file, "r", encoding="utf8").read()
         self.index = re.search(f".*function\s+{self.name}\s*\((\w*)\)\s*.*", self.content).span()[0]
-        self.docstring = "<<empty>>"
+        self.docstring = ""
         self.props = set()
         self.state = []
         self.methods = []
@@ -153,7 +153,8 @@ for comp in components:
     comp.parseMethods()
     comp.parseChildren()
     #print("\n"*5)
-    comp.parseDocstring()
+    if "noDoc" not in sys.argv:
+        comp.parseDocstring()
     #if comp.name == "App":
         
         #print(comp.docstring)
@@ -204,7 +205,7 @@ diagram_txt = "\n".join((start, all_classes, all_connections, all_callbacks, end
 open(OUTPUT_FILE, "w").write(diagram_txt)
 print("Generated plantuml file for the Class Diagram")
 
-if(len(sys.argv) == 2 and sys.argv[1] == "img"):
+if("img" in sys.argv):
     os.system("".join(("java -DPLANTUML_LIMIT_SIZE=8192 -jar plantuml.jar ", OUTPUT_FILE)))
     print("Generated image for the Class Diagram")
 
@@ -216,7 +217,7 @@ for i, item in enumerate(all_uml):
     open(out_file_path, "w").write(class_txt)
     print("".join(("Generated plantuml file for the ", all_uml_name[i], " class")))
 
-    if(len(sys.argv) == 2 and sys.argv[1] == "img"):
+    if("img" in sys.argv):
         os.system("".join(("java -DPLANTUML_LIMIT_SIZE=8192 -jar plantuml.jar ", out_file_path)))
         print("".join(("Generated image for the ", all_uml_name[i], " class")))
 
