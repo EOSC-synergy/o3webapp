@@ -1,15 +1,4 @@
 import React from "react";
-
-const min = -90;
-const max = +90;
-const availableOptions = [
-  {
-      name: "global",
-      min: 90,
-      max: -90
-  }
-]
-
 /**
  * Enables the user to choose minimum and maximum latitude
  * @param {*} props 
@@ -18,6 +7,17 @@ const availableOptions = [
  * @returns a JSX containing a dropdown and if "individual latitude band" is selected a number input field
  */
 export default function LocationSelector(props) {
+
+    const min = -90;
+    const max = +90;
+    const availableOptions = [
+    {
+        name: "global",
+        min: 90,
+        max: -90
+    }
+]
+
 
     // TODO: -> Redux
     const [selectedLocations, setSelectedLocations] = React.useState(props.defaultLocation);

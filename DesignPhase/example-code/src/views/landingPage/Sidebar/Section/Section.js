@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import defaultStructure from '../../../../config/defaultConfig.json';
-import LocationSelector from "../InputComponents/LocationSelector/LocationSelector";
+import LocationSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
 import ModelGroupConfigurator from "../InputComponents/ModelGroupConfigurator/ModelGroupConfigurator";
 import OffsetConfigurator from "../InputComponents/OffsetConfigurator/OffsetConfigurator";
 import PlotNameField from "../InputComponents/PlotNameField/PlotNameField";
 import ReferenceYearSlider from "../InputComponents/ReferenceYearSlider/ReferenceYearSlider";
+import RegionSelector from "../InputComponents/RegionSelector/RegionSelector";
 import TimeCheckBoxGroup from "../InputComponents/TimeCheckboxGroup/TimeCheckboxGroup";
 import XAxisSlider from "../InputComponents/xAxisSlider/xAxisSlider";
 import YAxisSlider from "../InputComponents/yAxisSlider/yAxisSlider";
@@ -49,5 +50,6 @@ export default function Section(props) {
         <TimeCheckBoxGroup />
         <XAxisSlider />
         <YAxisSlider />
+        <RegionSelector />
     </>;
 }
