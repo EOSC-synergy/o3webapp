@@ -14,6 +14,7 @@ import React, { useState } from "react";
 export default function SeasonCheckBoxGroup(props) {
     
     props.label;
+    props.id;
     props.months;
     props.monthsChecked;
     props.handleSeasonClicked;

@@ -12,7 +12,13 @@ export default function DownloadModal(props) {
 
     props.onClose;
     props.error;
-    
+
+
+    const allAvailableDataFormats = [];
+
+    const downloadPdf = () => {};
+    const downloadSvg = () => {};
+
     if (props.open) {
         return (<></>);
     }

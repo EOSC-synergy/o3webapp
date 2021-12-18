@@ -39,6 +39,10 @@ class "Footer" << (C,blue) component >> {
 class "NavBar" << (C,blue) component >> {
     
     ==props==
+    #open
+    #onClose
+    #message
+    ==state==
 
     ==state==
     #open
@@ -61,8 +65,8 @@ class "Graph" << (C,blue) component >> {
 class "Sidebar" << (C,blue) component >> {
     
     ==props==
-    #onClose
     #open
+    #onClose
     ==state==
     #openDownloadModal
     #expandedSection
@@ -76,9 +80,12 @@ class "Sidebar" << (C,blue) component >> {
 class "DownloadModal" << (C,blue) component >> {
     
     ==props==
-    #onClose
-    #open
+    #name
+    #onExpandSection
+    #onCollapseSection
+    #components
     #error
+    #expanded
     ==state==
 
     ==methods==
@@ -88,7 +95,8 @@ class "DownloadModal" << (C,blue) component >> {
 class "LocationSelector" << (C,blue) component >> {
     
     ==props==
-    #defaultLocation
+    #open
+    #onClose
     #error
     ==state==
     #selectedLocations
@@ -99,7 +107,11 @@ class "LocationSelector" << (C,blue) component >> {
 class "ModelGroupConfigurator" << (C,blue) component >> {
     
     ==props==
+    #defaultReferenceModel
+    #defaultReferenceYear
     #error
+    #offsetVisible
+    #allVisibleModels
     ==state==
     #modelGroups
     #addModalVisible
@@ -129,12 +141,11 @@ class "AddModelGroupModal" << (C,blue) component >> {
 class "EditModelGroupModal" << (C,blue) component >> {
     
     ==props==
-    #name
-    #id
+    #max
+    #defaultMax
+    #defaultMin
     #error
-    #models
-    #open
-    #onClose
+    #min
     ==state==
 
     ==methods==
@@ -144,15 +155,8 @@ class "EditModelGroupModal" << (C,blue) component >> {
 class "ModelGroupCard" << (C,blue) component >> {
     
     ==props==
-    #meanVisible
-    #name
-    #derivativeVisible
-    #medianVisible
-    #id
     #error
-    #models
-    #percentileVisible
-    #hidden
+    #default
     ==state==
 
     ==methods==
@@ -170,14 +174,18 @@ class "OffsetConfigurator" << (C,blue) component >> {
     ==state==
 
     ==methods==
-
+    +handleChangeSeason
+    +handleChangeAllYear
 }
 
 class "PlotNameField" << (C,blue) component >> {
     
     ==props==
-    #default
-    #error
+    #handleSeasonClicked
+    #hanldeMonthClicked
+    #months
+    #label
+    #monthsChecked
     ==state==
 
     ==methods==
@@ -187,8 +195,8 @@ class "PlotNameField" << (C,blue) component >> {
 class "PlotTypeSelector" << (C,blue) component >> {
     
     ==props==
-    #default
     #error
+    #default
     ==state==
 
     ==methods==
@@ -198,20 +206,39 @@ class "PlotTypeSelector" << (C,blue) component >> {
 class "ReferenceYearSlider" << (C,blue) component >> {
     
     ==props==
-    #max
-    #defaultReferenceYear
-    #min
+    #open
+    #onClose
+    #addModelGroup
+    #error
+    #handleClose
     ==state==
-
+    #checked
+    #left
+    #right
+    #groupName
     ==methods==
-
+    +handleToggle
+    +handleAllRight
+    +handleCheckedRight
+    +handleCheckedLeft
+    +handleAllLeft
+    +addNewGroup
+    +updateGroupName
+    +searchDataLeft
+    +searchDataRight
+    +searchData
+    +getAllAvailableModels
 }
 
 class "TimeCheckBoxGroup" << (C,blue) component >> {
     
     ==props==
-    #defaultTimeSelection
+    #open
+    #onClose
+    #name
+    #models
     #error
+    #id
     ==state==
     #time
     ==methods==
@@ -222,11 +249,15 @@ class "TimeCheckBoxGroup" << (C,blue) component >> {
 class "SeasonCheckBoxGroup" << (C,blue) component >> {
     
     ==props==
-    #label
-    #hanldeMonthClicked
-    #handleSeasonClicked
-    #months
-    #monthsChecked
+    #name
+    #medianVisible
+    #hidden
+    #models
+    #error
+    #meanVisible
+    #derivativeVisible
+    #id
+    #percentileVisible
     ==state==
 
     ==methods==
@@ -237,10 +268,10 @@ class "XAxisSlider" << (C,blue) component >> {
     
     ==props==
     #max
-    #error
     #defaultMax
-    #min
     #defaultMin
+    #error
+    #min
     ==state==
 
     ==methods==
@@ -250,15 +281,12 @@ class "XAxisSlider" << (C,blue) component >> {
 class "YAxisSlider" << (C,blue) component >> {
     
     ==props==
-    #max
+    #defaultLocation
     #error
-    #defaultMax
-    #min
-    #defaultMin
     ==state==
 
     ==methods==
-
+    +handleChangeLocation
 }
 
 class "Section" << (C,blue) component >> {
@@ -294,8 +322,12 @@ Section o-- PlotNameField
 Section o-- ReferenceYearSlider
 Section o-- TimeCheckBoxGroup
 Section o-- XAxisSlider
-Section o-- YAxisSlider
-Sidebar "onCollapseSection" <.. Section
+Section o-- LocationSelector
+OffsetConfigurator o-- ReferenceYearSlider
+TimeCheckBoxGroup o-- SeasonCheckBoxGroup
+ModelGroupConfigurator o-- ModelGroupCard
+ModelGroupCard o-- EditModelGroupModal
 Sidebar "onExpandSection" <.. Section
+Sidebar "onCollapseSection" <.. Section
 
 @enduml

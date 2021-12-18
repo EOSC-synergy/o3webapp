@@ -17,6 +17,7 @@ import EditModelGroupModal from "../EditModelGroupModal/EditModelGroupModal";
  */
 export default function ModelGroupCard(props) {
     
+    // TODO: Redux
     props.name;
     props.models;
     props.meanVisible;
@@ -29,7 +30,7 @@ export default function ModelGroupCard(props) {
 
     return (
         <>
-            <EditModelGroupModal />
+            <EditModelGroupModal name={props.name} id={props.id} models={props.models} />
         </>
     );
 }

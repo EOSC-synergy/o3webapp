@@ -26,6 +26,7 @@ export default function Sidebar(props) {
 
     const [openDownloadModal, setOpenDownloadModal] = React.useState(false);
     const [expandedSection, setExpandedSection] = React.useState(null); // -> idx of sections array
+    const [plotType, setPlotType] = React.useState(""); // -> evlt. über Redux?
 
     const onCloseDownloadModal = () => {
         setOpenDownloadModal(false);
@@ -43,12 +44,21 @@ export default function Sidebar(props) {
         setExpandedSection(i);
     }
 
+    const changePlotType = (newPlotType) => {
+        // check if newPlotType is valid
+        // update plotType
+        setPlotType(newPlotType);
+        // rerender sections -> lose current value?
+    }
+
     return (<> {props.open && 
     <>
-        <PlotTypeSelector />
-        {defaultStructure.forEach(s => <>
+        <PlotTypeSelector plotType={plotType} changePlotType={changePlotType} />
+        {/* {defaultStructure.forEach(s => <> */}
             <Section name={defaultStructure.sections[s].name} components={} />
-        </>)}
+        {/* </>)} */}
+
+        {/* Maybe into their own component? */}
         <Button text="Download" onClick={onOpenDownloadModal}/>
         <DownloadModal open={openDownloadModal} onClose={onCloseDownloadModal} />
     </>

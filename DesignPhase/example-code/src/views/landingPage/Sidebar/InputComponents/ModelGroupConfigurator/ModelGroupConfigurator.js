@@ -1,5 +1,5 @@
 import React from "react";
-import AddModalGroupModal from "./AddModelGroupModal/AddModelGroupModal";
+import AddModelGroupModal from "./AddModelGroupModal/AddModelGroupModal";
 import ModelGroupCard from "./ModelGroupCard/ModelGroupCard";
 
 /**
@@ -9,6 +9,7 @@ import ModelGroupCard from "./ModelGroupCard/ModelGroupCard";
  */
 export default function ModelGroupConfigurator(props) {
     
+    // TODO: redux
     const [modelGroups, setModelGroups] = React.useState([]);
     // modelGroups = [
     //     {
@@ -16,6 +17,8 @@ export default function ModelGroupConfigurator(props) {
     //         models: [
     //             {
     //                 name: "Something 2",
+    //                 institute: "Something elese"
+    //                 dataset: "more something"
     //                 mean: true,
     //                 derivative: true,
     //                 median: true,
@@ -25,13 +28,15 @@ export default function ModelGroupConfigurator(props) {
 
     //             }
     //         ],
-    //         hidde: false,
+    //         hidden: false,
     //         derivativeVisible: false,
     //         meanVisible: false,
     //         medianVisible: false,
     //         percentileVisible: false
     //     }
     // ]
+
+
     const [addModalVisible, setAddModalVisible] = React.useState(false);
     const [editModalVisible, setEditModalVisible] = React.useState(false);
     props.error;
@@ -52,18 +57,30 @@ export default function ModelGroupConfigurator(props) {
         setAddModalVisible(true);
     }
 
+    // TODO: Redux
     const addModelGroup = (name, models) => {
 
     }
 
-    const editModelGroup = (id, name, models) => {
+    // TODO: Redux
+    const editModelGroup = 
+        (
+            id,
+            name,
+            models,
+            hidden,
+            derivativeVisible,
+            meanVisbile,
+            medianVisible,
+            percentileVisible
+        ) => {
         // id = index of model group in array above
     }
 
 
     return (
         <>
-            <AddModalGroupModal error={error} />
+            <AddModelGroupModal error={error} />
             <ModelGroupCard error={error} />
             {/* <ModelGroup /> */}
         </>
