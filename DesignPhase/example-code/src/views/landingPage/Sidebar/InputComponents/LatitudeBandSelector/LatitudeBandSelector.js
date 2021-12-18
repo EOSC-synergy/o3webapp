@@ -1,4 +1,16 @@
 import React from "react";
+import {useDispatch} from "react-redux"
+
+const min = -90;
+const max = +90;
+const availableOptions = [
+  {
+      name: "global",
+      min: 90,
+      max: -90
+  }
+]
+
 /**
  * Enables the user to choose minimum and maximum latitude
  * @param {*} props 
@@ -8,18 +20,7 @@ import React from "react";
  */
 export default function LocationSelector(props) {
 
-    const min = -90;
-    const max = +90;
-    const availableOptions = [
-    {
-        name: "global",
-        min: 90,
-        max: -90
-    }
-]
-
-
-    // TODO: -> Redux
+    const dispatch = useDispatch()
     const [selectedLocations, setSelectedLocations] = React.useState(props.defaultLocation);
     props.error;
 
@@ -28,6 +29,7 @@ export default function LocationSelector(props) {
     // TODO: -> Redux
     const handleChangeLocation = (event) => {
         setLocation(event.target.value);
+        dispatch(setLocation(event.target.value))
     };
 
     return (
