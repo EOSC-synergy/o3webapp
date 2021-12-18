@@ -93,7 +93,8 @@ class ReactComponent:
     def to_plant_uml(self):
         
         
-        desc = WHITE_SPACES + self.docstring
+        # desc = WHITE_SPACES + self.docstring
+        desc = WHITE_SPACES
         # props
         props = "==props==\n" + "\n".join([WHITE_SPACES + "#" + prop for prop in self.props])
         state = "==state==\n" + "\n".join([WHITE_SPACES + "#" + state for state in self.state])
