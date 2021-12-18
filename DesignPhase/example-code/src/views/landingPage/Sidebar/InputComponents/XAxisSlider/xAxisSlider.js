@@ -15,6 +15,7 @@ export default function XAxisSlider(props) {
     props.defaultMax;
     props.min;
     props.max;
+    props.error;
 
     return (
         <>

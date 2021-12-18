@@ -2,18 +2,20 @@
 title Class Diagram
 skinparam dpi 300
 class "App" << (C,blue) component >> {
-    Main container of the Webapp
-Contains all GUI elements
+    
     ==props==
 
     ==state==
     #openSidebar
+    #error
     ==methods==
-
+    +reportError
+    +closeErrorModal
+    +closeSideBar
 }
 
 class "NavBar" << (C,blue) component >> {
-    A component for the navigation of the website.
+    
     ==props==
 
     ==state==
@@ -23,10 +25,7 @@ class "NavBar" << (C,blue) component >> {
 }
 
 class "Footer" << (C,blue) component >> {
-    A container for important links
-at the bottom of the Website.
-Contains links to the impressum,
-privacy policy and the terms of service
+    
     ==props==
 
     ==state==
@@ -36,14 +35,9 @@ privacy policy and the terms of service
 }
 
 class "ErrorMessageModal" << (C,blue) component >> {
-    displays an error message
-@param {*} props
-props.open -> whether the error message modal should be displayed
-props.close -> handles closing of the modal
-props.message -> error message
-@returns a jsx file containing a modal with the given error message
+    
     ==props==
-    #close
+    #onClose
     #open
     #message
     ==state==
@@ -53,10 +47,40 @@ props.message -> error message
 }
 
 class "Sidebar" << (C,blue) component >> {
-    Contains all components
-responsible for the modification
-of the plot settings.
+    
     ==props==
+    #onClose
+    #open
+    ==state==
+    #openDownloadModal
+    #expandedSection
+    ==methods==
+    +onCloseDownloadModal
+    +onOpenDownloadModal
+    +onCollapseSection
+    +onExpandSection
+}
+
+class "Section" << (C,blue) component >> {
+    
+    ==props==
+    #components
+    #name
+    #onCollapseSection
+    #error
+    #onExpandSection
+    #expanded
+    ==state==
+
+    ==methods==
+
+}
+
+class "DownloadModal" << (C,blue) component >> {
+    
+    ==props==
+    #onClose
+    #error
     #open
     ==state==
 
@@ -64,34 +88,14 @@ of the plot settings.
 
 }
 
-class "Section" << (C,blue) component >> {
-    an expandable section containing a list of inputComponents as well as a name
-@param {*} props
-props.components -> an array containing a string representation of all components that should be plotted
-props.name -> the name of the section
-@returns an accordeon that once expanded displays the components
-    ==props==
-    #name
-    #components
-    ==state==
-
-    ==methods==
-
-}
-
 class "OffsetConfigurator" << (C,blue) component >> {
-    enables the user to select a referenceYear, referenceModel and to toggle an offset according to those two inputs
-@param {*} props
-props.defaultRefernceModel -> the default value for reference model
-props.defaultReferenceYear -> the default value for reference year
-props.allVisibleModels -> all visible models to choose reference model from
-props.offsetVisible -> whether the offset is currently visible or not
-@returns a jsx containing a referenceYearSlider, a referenceModelSelector and a button to toggle the offset
+    
     ==props==
-    #defaultReferenceModel
-    #offsetVisible
     #defaultReferenceYear
+    #offsetVisible
     #allVisibleModels
+    #error
+    #defaultReferenceModel
     ==state==
 
     ==methods==
@@ -99,12 +103,7 @@ props.offsetVisible -> whether the offset is currently visible or not
 }
 
 class "ReferenceYearSlider" << (C,blue) component >> {
-    enables the user to select a reference year
-@param {*} props
-props.defaultReferenceYear -> a int containing the default reference year
-props.min -> minimum value for reference year
-props.max -> maximum value for reference year
-@returns a jsx containing a slider to select the reference year
+    
     ==props==
     #max
     #defaultReferenceYear
@@ -116,18 +115,13 @@ props.max -> maximum value for reference year
 }
 
 class "YAxisSlider" << (C,blue) component >> {
-    enables the user to zoom in and out of the y-axis
-@param {*} props
-props.defaultMin -> the default minimum value of the y-axis
-props.defaultMax -> the default maximum value of the y-axis
-props.min -> the smallest possible minimum value of the y-axis
-props.max -> the biggest possible maximum value of the y-axis
-@returns a jsx containing a range slider
+    
     ==props==
-    #defaultMin
-    #max
     #defaultMax
     #min
+    #error
+    #max
+    #defaultMin
     ==state==
 
     ==methods==
@@ -135,12 +129,10 @@ props.max -> the biggest possible maximum value of the y-axis
 }
 
 class "PlotNameField" << (C,blue) component >> {
-    enables the user to rename the plot
-@param {*} props
-props.default -> default name of the plot
-@returns a textfield to change the plotname
+    
     ==props==
     #default
+    #error
     ==state==
 
     ==methods==
@@ -148,11 +140,9 @@ props.default -> default name of the plot
 }
 
 class "TimeCheckBoxGroup" << (C,blue) component >> {
-    enables the user to select a month, season or the whole year
-@param {*} props
-props.defaultTimeSelection -> the default months that should be selected
-@returns a jsx containing a checkboxgroup per season and a "all year" checkbox
+    
     ==props==
+    #error
     #defaultTimeSelection
     ==state==
     #time
@@ -161,20 +151,13 @@ props.defaultTimeSelection -> the default months that should be selected
 }
 
 class "SeasonCheckBoxGroup" << (C,blue) component >> {
-    enables the user to select / deselect seasons
-@param {*} props
-props.label -> label of this season
-props.months -> array containing labels for this season
-props.monthsChecked -> array containing whether months of this season are clicked
-props.handleSeasonClicked -> function to handle if the whole season got selected / deselected
-props.hanldeMonthClicked -> function to handle if a month got selected / deselected
-@returns a jsx containing a checkboxgroup with given months and label
+    
     ==props==
-    #hanldeMonthClicked
-    #months
-    #handleSeasonClicked
     #monthsChecked
     #label
+    #handleSeasonClicked
+    #hanldeMonthClicked
+    #months
     ==state==
 
     ==methods==
@@ -182,12 +165,10 @@ props.hanldeMonthClicked -> function to handle if a month got selected / deselec
 }
 
 class "PlotTypeSelector" << (C,blue) component >> {
-    enables the user to select a different plot type
-@param {*} props
-props.default -> the default plot type
-@returns a jsx containing a dropdown to select the plot type
+    
     ==props==
     #default
+    #error
     ==state==
 
     ==methods==
@@ -195,27 +176,28 @@ props.default -> the default plot type
 }
 
 class "ModelGroupConfigurator" << (C,blue) component >> {
-    enables the user to configure models that should be visible in the plot clustered as model groups
-@param {*} props
-@returns a jsx containing a ModelGroupModal and a ModelGroupCard and EditModelGroupModal per model group
+    
     ==props==
-
+    #error
     ==state==
     #modelGroups
     #addModalVisible
     #editModalVisible
     ==methods==
-
+    +handleEditModalClose
+    +handleEditModalOpen
+    +handleAddModalClose
+    +handleAddModalOpen
+    +addModelGroup
+    +editModelGroup
 }
 
-class "AddModalGroupModal" << (C,blue) component >> {
-    opens a modal where the user can add a new model group
-@param {*} props
-props.close() -> function to call if modal should be closed
-props.open -> boolean whether the modal should be visible
-@returns a jsx containing a transfer list with all available models
+class "AddModelGroupModal" << (C,blue) component >> {
+    
     ==props==
-    #close
+    #onClose
+    #addModelGroup
+    #error
     #open
     ==state==
 
@@ -224,13 +206,13 @@ props.open -> boolean whether the modal should be visible
 }
 
 class "EditModelGroupModal" << (C,blue) component >> {
-    opens a modal where the user can edit an existing model group
-@param {*} props
-props.close() -> function to call if modal should be closed
-props.open -> boolean whether the modal should be visible
-@returns a jsx containing a modal with a data grid with all models from the model group
+    
     ==props==
-    #close
+    #name
+    #open
+    #onClose
+    #models
+    #error
     ==state==
 
     ==methods==
@@ -238,24 +220,16 @@ props.open -> boolean whether the modal should be visible
 }
 
 class "ModelGroupCard" << (C,blue) component >> {
-    a card containing information about the a modal group
-@param {*} props
-props.name -> name of the modal group
-props.models -> all models in this group
-meanVisbile -> whether the mean of this group is currently visible
-derivativeVisible -> whether the derivative of this group is currently visible
-percentileVisible -> whether the percentile of this group is currently visible
-medianVisible -> whether the median of this group is currently visible
-hidden -> whether the group is visible at all
-@returns a jsx containing a modal with a data grid with all models from the model group
+    
     ==props==
+    #medianVisible
     #name
     #derivativeVisible
-    #medianVisible
-    #models
-    #hidden
     #percentileVisible
     #meanVisible
+    #models
+    #error
+    #hidden
     ==state==
 
     ==methods==
@@ -263,18 +237,13 @@ hidden -> whether the group is visible at all
 }
 
 class "XAxisSlider" << (C,blue) component >> {
-    enables the user to zoom in and out of the x-axis
-@param {*} props
-props.defaultMin -> the default minimum value of the x-axis
-props.defaultMax -> the default maximum value of the x-axis
-props.min -> the smallest possible minimum value of the x-axis
-props.max -> the biggest possible maximum value of the x-axis
-@returns a jsx containing a range slider
+    
     ==props==
-    #defaultMin
-    #max
     #defaultMax
     #min
+    #error
+    #max
+    #defaultMin
     ==state==
 
     ==methods==
@@ -282,11 +251,10 @@ props.max -> the biggest possible maximum value of the x-axis
 }
 
 class "LocationSelector" << (C,blue) component >> {
-    Enables the user to choose minimum and maximum latitude
-@param {*} props
-@returns a JSX containing a dropdown and if "individual latitude band" is selected a number input field
+    
     ==props==
-
+    #error
+    #defaultLocation
     ==state==
     #selectedLocations
     ==methods==
@@ -294,8 +262,7 @@ class "LocationSelector" << (C,blue) component >> {
 }
 
 class "Graph" << (C,blue) component >> {
-    A containter for the displayed graph.
-Displays the currently selected plot.
+    
     ==props==
 
     ==state==
@@ -310,11 +277,22 @@ App o-- Footer
 App o-- ErrorMessageModal
 App o-- Sidebar
 App o-- Graph
+Sidebar o-- Section
+Sidebar o-- DownloadModal
+Sidebar o-- PlotTypeSelector
+Section o-- OffsetConfigurator
+Section o-- ReferenceYearSlider
+Section o-- YAxisSlider
+Section o-- PlotNameField
+Section o-- TimeCheckBoxGroup
+Section o-- ModelGroupConfigurator
+Section o-- XAxisSlider
+Section o-- LocationSelector
 OffsetConfigurator o-- ReferenceYearSlider
 TimeCheckBoxGroup o-- SeasonCheckBoxGroup
-ModelGroupConfigurator o-- AddModalGroupModal
 ModelGroupConfigurator o-- ModelGroupCard
 ModelGroupCard o-- EditModelGroupModal
-
+Sidebar "onCollapseSection" <.. Section
+Sidebar "onExpandSection" <.. Section
 
 @enduml

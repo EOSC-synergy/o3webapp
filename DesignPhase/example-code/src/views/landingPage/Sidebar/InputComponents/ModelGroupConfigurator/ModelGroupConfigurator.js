@@ -10,29 +10,61 @@ import ModelGroupCard from "./ModelGroupCard/ModelGroupCard";
 export default function ModelGroupConfigurator(props) {
     
     const [modelGroups, setModelGroups] = React.useState([]);
+    // modelGroups = [
+    //     {
+    //         name: "Somehting",
+    //         models: [
+    //             {
+    //                 name: "Something 2",
+    //                 mean: true,
+    //                 derivative: true,
+    //                 median: true,
+    //                 percentile: true,
+    //                 color: "XXX",
+    //                 plotStyle: "XXX",
+
+    //             }
+    //         ],
+    //         hidde: false,
+    //         derivativeVisible: false,
+    //         meanVisible: false,
+    //         medianVisible: false,
+    //         percentileVisible: false
+    //     }
+    // ]
     const [addModalVisible, setAddModalVisible] = React.useState(false);
     const [editModalVisible, setEditModalVisible] = React.useState(false);
+    props.error;
 
-    function handleEditModalClose() {
+    const handleEditModalClose = () => {
         setEditModalVisible(false);
     }
 
-    function handleEditModalOpen() {
+    const handleEditModalOpen = () => {
         setEditModalVisible(true);
     }
 
-    function handleAddModalClose() {
+    const handleAddModalClose = () => {
         setAddModalVisible(false);
     }
 
-    function handleAddModalOpen() {
+    const handleAddModalOpen = () => {
         setAddModalVisible(true);
     }
 
+    const addModelGroup = (name, models) => {
+
+    }
+
+    const editModelGroup = (id, name, models) => {
+        // id = index of model group in array above
+    }
+
+
     return (
         <>
-            <AddModalGroupModal />
-            <ModelGroupCard />
+            <AddModalGroupModal error={error} />
+            <ModelGroupCard error={error} />
             {/* <ModelGroup /> */}
         </>
     );

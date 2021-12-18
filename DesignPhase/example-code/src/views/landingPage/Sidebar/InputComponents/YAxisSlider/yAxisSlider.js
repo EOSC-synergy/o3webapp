@@ -15,6 +15,7 @@ export default function YAxisSlider(props) {
     props.defaultMax;
     props.min;
     props.max;
+    props.error;
 
     return (
         <>

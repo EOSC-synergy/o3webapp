@@ -1,20 +1,24 @@
 import React, { useState } from "react";
 import SeasonCheckBoxGroup from "./SeasonCheckboxGroup/SeasonCheckBoxGroup";
 
-/**
- * handles if a users wants to select / deselect a season
- * @param {*} event the event that triggered a function call
- * @param {*} season the season that has been clicked
- */
-const handleChangeSeason = (event, season) => {
-}
-
-/**
- * selects / deselects all year
- */
-const handleChangeAllYear = () => {
-
-}
+const sesaons = [
+    {
+        name: 'Spring',
+        months: [3, 4, 5]
+    },
+    {
+        name: 'Summer',
+        months: [6, 7, 8]
+    },
+    {
+        name: 'Fall',
+        months: [9, 10, 11]
+    },
+    {
+        name: 'Winter',
+        months: [12, 1, 2]
+    }
+]
 
 /**
  * enables the user to select a month, season or the whole year
@@ -25,11 +29,29 @@ const handleChangeAllYear = () => {
 export default function TimeCheckBoxGroup(props) {
     
     props.defaultTimeSelection;
+    props.error;
     const [time, setTime] = React.useState(new Array(12).fill(false));
+
+    /**
+     * handles if a users wants to select / deselect a season
+     * @param {*} event the event that triggered a function call
+     * @param {*} season the index of the season that has been clicked
+     */
+    const handleChangeSeason = (event, season) => {
+    }
+
+    /**
+     * selects / deselects all year
+     */
+    const handleChangeAllYear = () => {
+
+    }
 
     return (
         <> 
-            <SeasonCheckBoxGroup />
+            {sesaons.forEach((elem, idx) => {
+                <SeasonCheckBoxGroup name={elem.name} months={} key={idx} />
+            })}
         </>
     );
 }

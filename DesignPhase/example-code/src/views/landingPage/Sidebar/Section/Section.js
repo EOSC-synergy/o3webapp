@@ -2,6 +2,15 @@ import React, { useState } from "react";
 import ListBox from '../inputs/ListBox';
 import TextBox from '../inputs/TextBox';
 import defaultStructure from '../../../../config/defaultConfig.json';
+import LocationSelector from "../InputComponents/LocationSelector/LocationSelector";
+import ModelGroupConfigurator from "../InputComponents/ModelGroupConfigurator/ModelGroupConfigurator";
+import OffsetConfigurator from "../InputComponents/OffsetConfigurator/OffsetConfigurator";
+import PlotNameField from "../InputComponents/PlotNameField/PlotNameField";
+import PlotTypeSelector from "../InputComponents/PlotTypeSelector/PlotTypeSelector";
+import ReferenceYearSlider from "../InputComponents/ReferenceYearSlider/ReferenceYearSlider";
+import TimeCheckBoxGroup from "../InputComponents/TimeCheckboxGroup/TimeCheckboxGroup";
+import XAxisSlider from "../InputComponents/xAxisSlider/xAxisSlider";
+import YAxisSlider from "../InputComponents/yAxisSlider/yAxisSlider";
 
 function mapNameToComponent(name) {
     return 0;
@@ -12,17 +21,19 @@ function mapNameToComponent(name) {
  * @param {*} props 
  *  props.components -> an array containing a string representation of all components that should be plotted
  *  props.name -> the name of the section
+ *  props.error -> used for error handling
  * @returns an accordeon that once expanded displays the components
  */
 export default function Section(props) {
     
-    const [expanded, setExpanded] = useState(true);
     props.components;
     props.name;
+    props.error;
+    props.expanded;
+    props.onCollapseSection;
+    props.onExpandSection;
 
-    return <div>
-        <ListBox text="Plot Type" items={["T", "O", "D", "O"]} selected={plotType} />
-        <TextBox text="Plot Name" onChange={handlePlotNameChange}/>
+    return <>
         {props.components.array.forEach(element => {
             mapNameToComponent(element);
         })}
@@ -30,5 +41,15 @@ export default function Section(props) {
         {defaultStructure.forEach(c => <>
             {/*Components from defaultStructure*/}
         </>)}
-    </div>;
+
+        {/* For purpose of the UML Diagram */}
+        <LocationSelector />
+        <ModelGroupConfigurator />
+        <OffsetConfigurator />
+        <PlotNameField />
+        <ReferenceYearSlider />
+        <TimeCheckBoxGroup />
+        <XAxisSlider />
+        <YAxisSlider />
+    </>;
 }

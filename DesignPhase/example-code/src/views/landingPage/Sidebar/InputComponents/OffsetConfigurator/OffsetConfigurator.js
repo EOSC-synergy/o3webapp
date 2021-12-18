@@ -16,6 +16,7 @@ export default function OffsetConfigurator(props) {
     props.defaultReferenceYear;
     props.allVisibleModels;
     props.offsetVisible;
+    props.error;
 
     return (
         <>

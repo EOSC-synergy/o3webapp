@@ -14,6 +14,7 @@ export default function PlotTypeSelector(props) {
     
     props.default;
     const [plotType, setPlotType] = useState("");
+    props.error;
 
     return (
         <>
