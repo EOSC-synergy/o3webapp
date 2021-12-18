@@ -6,6 +6,7 @@ Notes on frameworks we want to use:
 - React
 - Redux (state handling)
 - Jest (testing, also mantained by Facebook)
+- React Testing Library (RTL) to test React components (recommended by React)
 - Material UI (components, a lot of input components, in our experience better documented than Bootstrap)
 - axios (API Calls)
 
