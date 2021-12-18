@@ -1,5 +1,5 @@
 import React from "react";
-import AddModalGroupModal from "./AddModelGroupModal/AddModelGroupModal";
+import AddModelGroupModal from "./AddModelGroupModal/AddModelGroupModal";
 import ModelGroupCard from "./ModelGroupCard/ModelGroupCard";
 
 /**
@@ -80,7 +80,7 @@ export default function ModelGroupConfigurator(props) {
 
     return (
         <>
-            <AddModalGroupModal error={error} />
+            <AddModelGroupModal error={error} />
             <ModelGroupCard error={error} />
             {/* <ModelGroup /> */}
         </>
