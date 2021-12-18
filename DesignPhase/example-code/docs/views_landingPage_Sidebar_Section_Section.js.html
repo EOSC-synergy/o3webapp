@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: views/landingPage/Sidebar/Section/Section.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: views/landingPage/Sidebar/Section/Section.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from "react";
+import defaultStructure from '../../../../config/defaultConfig.json';
+import LocationSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
+import ModelGroupConfigurator from "../InputComponents/ModelGroupConfigurator/ModelGroupConfigurator";
+import OffsetConfigurator from "../InputComponents/OffsetConfigurator/OffsetConfigurator";
+import PlotNameField from "../InputComponents/PlotNameField/PlotNameField";
+import ReferenceYearSlider from "../InputComponents/ReferenceYearSlider/ReferenceYearSlider";
+import RegionSelector from "../InputComponents/RegionSelector/RegionSelector";
+import TimeCheckBoxGroup from "../InputComponents/TimeCheckboxGroup/TimeCheckboxGroup";
+import XAxisSlider from "../InputComponents/XAxisSlider/XAxisSlider";
+import YAxisSlider from "../InputComponents/YAxisSlider/YAxisSlider";
+import PropTypes from 'prop-types'; 
+
+/**
+ * an expandable section containing a list of inputComponents as well as a name
+ * @param {Object} props &lt;pre>
+ *  props.components -> an array containing a string representation of all components that should be plotted
+ *  props.name -> the name of the section
+ *  props.error -> used for error handling
+ *  props.expanded -> whether this section should be expanded
+ *  props.onCollapse -> function to collapse this section
+ *  props.onExpand -> function to expand this section
+ * &lt;/pre>
+ * @returns {JSX} an accordeon that once expanded displays the components specified by the config files and the API doc
+ */
+function Section(props) {
+    
+    let i = props.components;
+    i = props.name;
+    i = props.error;
+    i = props.expanded;
+    i = props.onCollapse
+    i = props.onExpand;
+
+    /**
+     * maps a given name to a corresponding component from the ./InputComponents folder
+     * if there is no component with the given name, calls the props.error function
+     * @public
+     * @param {String} name the name of the component
+     * @returns a component from the './InputComponents
+     */
+    function mapNameToComponent(name) {
+        return 0;
+    }
+
+    return &lt;>
+        {/* {props.components.array.forEach(element => {
+            mapNameToComponent(element);
+        })}
+
+        {defaultStructure.forEach(c => &lt;> */}
+            {/*Components from defaultStructure*/}
+        {/* &lt;/>)} */}
+
+        {/* For purpose of the UML Diagram */}
+        {props.name}
+        {mapNameToComponent(props.name)}
+        &lt;LocationSelector />
+        &lt;ModelGroupConfigurator />
+        &lt;OffsetConfigurator />
+        &lt;PlotNameField />
+        &lt;ReferenceYearSlider />
+        &lt;TimeCheckBoxGroup />
+        &lt;XAxisSlider />
+        &lt;YAxisSlider />
+        &lt;RegionSelector />
+    &lt;/>;
+}
+
+Section.propTypes = {
+    name: PropTypes.string,
+}
+
+export default Section;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="InputComponents.html">InputComponents</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddModelGroupModal">AddModelGroupModal</a></li><li><a href="global.html#EditModelGroupModal">EditModelGroupModal</a></li><li><a href="global.html#ErrorMessageModal">ErrorMessageModal</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Graph">Graph</a></li><li><a href="global.html#ModelGroupCard">ModelGroupCard</a></li><li><a href="global.html#ModelGroupConfigurator">ModelGroupConfigurator</a></li><li><a href="global.html#NavBar">NavBar</a></li><li><a href="global.html#OffsetConfigurator">OffsetConfigurator</a></li><li><a href="global.html#PlotNameField">PlotNameField</a></li><li><a href="global.html#PlotTypeSelector">PlotTypeSelector</a></li><li><a href="global.html#ReferenceYearSlider">ReferenceYearSlider</a></li><li><a href="global.html#RegionSelector">RegionSelector</a></li><li><a href="global.html#SeasonCheckBoxGroup">SeasonCheckBoxGroup</a></li><li><a href="global.html#Section">Section</a></li><li><a href="global.html#Sidebar">Sidebar</a></li><li><a href="global.html#TimeCheckBoxGroup">TimeCheckBoxGroup</a></li><li><a href="global.html#XAxisSlider">XAxisSlider</a></li><li><a href="global.html#YAxisSlider">YAxisSlider</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Sat Dec 18 2021 21:31:51 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

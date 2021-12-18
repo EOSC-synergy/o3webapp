@@ -6,7 +6,7 @@ import * as React from 'react';
  * Contains links to the impressum, 
  * privacy policy and the terms of service
  */
-export default function Footer() {
+function Footer() {
 
     return (<div>
         <a href="#">Impressum</a>
@@ -14,3 +14,5 @@ export default function Footer() {
         <a href="#">Terms of Service</a>
     </div>);
 }
+
+export default Footer;

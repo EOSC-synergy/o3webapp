@@ -6,12 +6,12 @@ import * as React from 'react';
  *  props.open -> whether modal should be visible
  *  props.onClose -> handles closing the modal
  *  props.error -> enabling to report an error
- * @returns 
+ * @returns a jsx containing a modal with a dropdown to choose the file type and a download button
  */
 export default function DownloadModal(props) {
 
-    props.onClose;
-    props.error;
+    let i = props.onClose;
+    i = props.error;
 
 
     const allAvailableDataFormats = [];

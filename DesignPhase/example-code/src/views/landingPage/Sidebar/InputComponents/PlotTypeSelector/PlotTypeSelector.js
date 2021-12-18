@@ -6,7 +6,7 @@ import React, { useState } from "react";
  *  props.default -> the default plot type
  * @returns a jsx containing a dropdown to select the plot type
  */
-export default function PlotTypeSelector(props) {
+function PlotTypeSelector(props) {
 
     // TODO: API call -> wohin?
     const getAllAvailablePlotTypes = () => {
@@ -14,13 +14,15 @@ export default function PlotTypeSelector(props) {
     }
     
     // TODO: -> Redux
-    props.plotType;
-    props.changePlotType;
+    let i = props.plotType;
+    i = props.changePlotType;
 
-    props.error;
+    i = props.error;
 
     return (
         <>
         </>
     );
 }
+
+export default PlotTypeSelector;

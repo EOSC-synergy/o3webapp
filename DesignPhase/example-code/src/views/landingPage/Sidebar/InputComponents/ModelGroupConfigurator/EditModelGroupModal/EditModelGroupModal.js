@@ -11,21 +11,23 @@ import React, { useState } from "react";
  *  props.id -> id of the model group
  * @returns a jsx containing a modal with a data grid with all models from the model group
  */
-export default function EditModelGroupModal(props) {
+function EditModelGroupModal(props) {
 
-    props.onClose;
-    props.open;
-    props.error;
+    let i = props.onClose;
+    i = props.open;
+    i = props.error;
 
     // TODO: -> Redux
-    props.models;
-    props.name;
-    props.id;
+    i = props.models;
+    i = props.name;
+    i = props.id;
 
-    props.editModelGroup;
+    i = props.editModelGroup;
 
     return (
         <>
         </>
     );
 }
+
+export default EditModelGroupModal;

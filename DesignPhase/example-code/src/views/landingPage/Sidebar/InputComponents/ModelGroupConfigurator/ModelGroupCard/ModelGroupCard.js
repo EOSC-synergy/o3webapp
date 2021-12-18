@@ -15,20 +15,20 @@ import EditModelGroupModal from "../EditModelGroupModal/EditModelGroupModal";
  *  props.id -> id of the model group
  * @returns a jsx containing a modal with a data grid with all models from the model group
  */
-export default function ModelGroupCard(props) {
+function ModelGroupCard(props) {
     
     // TODO: Redux
-    props.name;
-    props.models;
-    props.meanVisible;
-    props.derivativeVisible;
-    props.percentileVisible;
-    props.medianVisible;
-    props.hidden;
-    props.error;
-    props.id;
+    let i = props.name;
+    i = props.models;
+    i = props.meanVisible;
+    i = props.derivativeVisible;
+    i = props.percentileVisible;
+    i = props.medianVisible;
+    i = props.hidden;
+    i = props.error;
+    i = props.id;
 
-    props.editModelGroup;
+    i = props.editModelGroup;
 
     return (
         <>
@@ -36,3 +36,5 @@ export default function ModelGroupCard(props) {
         </>
     );
 }
+
+export default ModelGroupCard;

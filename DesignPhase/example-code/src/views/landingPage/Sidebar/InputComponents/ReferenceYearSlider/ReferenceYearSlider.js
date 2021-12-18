@@ -8,18 +8,20 @@ import React, { useState } from "react";
  *  props.max -> maximum value for reference year
  * @returns a jsx containing a slider to select the reference year
  */
-export default function ReferenceYearSlider(props) {
+function ReferenceYearSlider(props) {
 
-    props.min;
-    props.max;
-    props.error;
+    let i = props.min;
+    i = props.max;
+    i = props.error;
 
     // TODO -> redux
-    props.currReferenceYear;
-    props.changeReferenceYear;
+    i = props.currReferenceYear;
+    i = props.changeReferenceYear;
 
     return (
         <>
         </>
     );
 }
+
+export default ReferenceYearSlider;
