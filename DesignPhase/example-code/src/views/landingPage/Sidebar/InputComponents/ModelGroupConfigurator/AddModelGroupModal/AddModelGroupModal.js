@@ -17,13 +17,9 @@ function AddModelGroupModal(props) {
     let i = props.open;
     i = props.onClose;
     i = props.error;
-
-<<<<<<< HEAD
-    props.addModelGroup;
-=======
+    
     // TODO: -> Redux
     i = props.addModelGroup;
->>>>>>> 6697fbb8953750ace31cf98d006994ad640a77ee
 
     // const dispatch = useDispatch()
     

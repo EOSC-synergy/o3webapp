@@ -2,12 +2,9 @@ import * as React from 'react';
 import Section from './Section/Section.js';
 import defaultStructure from '../../../config/defaultConfig.json';
 import DownloadModal from './DownloadModal/DownloadModal.js';
-<<<<<<< HEAD
 import { setCurrentType } from '../../../store/plotSlice.js';
-import { useDispatch } from "react-redux"
-=======
+import { useDispatch } from "react-redux";
 import PlotTypeSelector from './InputComponents/PlotTypeSelector/PlotTypeSelector.js';
->>>>>>> 6697fbb8953750ace31cf98d006994ad640a77ee
 
 /**
  * Contains all input components responsible for the modification 
@@ -20,13 +17,8 @@ import PlotTypeSelector from './InputComponents/PlotTypeSelector/PlotTypeSelecto
  */
 function Sidebar(props) {
 
-<<<<<<< HEAD
     const dispatch = useDispatch()
-
-    props.onClose;
-=======
     let i = props.onClose;
->>>>>>> 6697fbb8953750ace31cf98d006994ad640a77ee
 
     const [openDownloadModal, setOpenDownloadModal] = React.useState(false);
     const [expandedSection, setExpandedSection] = React.useState(null); // -> idx of sections array
