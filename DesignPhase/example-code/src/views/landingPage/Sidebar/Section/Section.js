@@ -10,6 +10,7 @@ import TimeCheckBoxGroup from "../InputComponents/TimeCheckboxGroup/TimeCheckbox
 import XAxisSlider from "../InputComponents/XAxisSlider/XAxisSlider";
 import YAxisSlider from "../InputComponents/YAxisSlider/YAxisSlider";
 import PropTypes from 'prop-types'; 
+import LatitudeBandSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
 
 /**
  * an expandable section containing a list of inputComponents as well as a name
@@ -55,7 +56,6 @@ function Section(props) {
         {/* For purpose of the UML Diagram */}
         {props.name}
         {mapNameToComponent(props.name)}
-        <LocationSelector />
         <ModelGroupConfigurator />
         <OffsetConfigurator />
         <PlotNameField />
@@ -64,6 +64,7 @@ function Section(props) {
         <XAxisSlider />
         <YAxisSlider />
         <RegionSelector />
+        <LatitudeBandSelector />
     </>;
 }
 

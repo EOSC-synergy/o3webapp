@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import LatitudeBandSelector from "../LatitudeBandSelector/LatitudeBandSelector";
 import LocationSelector from "../LatitudeBandSelector/LatitudeBandSelector";
 
 /**
@@ -24,7 +25,7 @@ function RegionSelector(props) {
 
     return (
         <>
-            <LocationSelector />
+            <LatitudeBandSelector />
         </>
     );
 }
