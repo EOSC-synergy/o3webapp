@@ -16,8 +16,6 @@ function SeasonCheckBoxGroup(props) {
     let i = props.label;
     i = props.id;
     i = props.months;
-
-    // TODO: -> Redux
     i = props.monthsChecked;
     i = props.handleSeasonClicked;
     i = props.hanldeMonthClicked;
