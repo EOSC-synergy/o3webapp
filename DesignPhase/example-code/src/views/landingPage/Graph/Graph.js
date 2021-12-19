@@ -10,16 +10,21 @@ import {calculatePlotSeries} from "../../../utils/math"
 export default function Graph() {
 
     const plotType = useSelector(store => store.plot.plotType)
-    const options = useSelector(store => store.plot[plotType].options)
-    const models = useSelector(store => store.models[plotType].all)
-    const seriesData = generatePlotSeries(models)
-
-    useGetRawPlotDataMutation({})
+    const plotId = useSelector(store => store.plot.plotId)
+    const options = useSelector(store => store.plot[plotId].options)
+    const models = useSelector(store => store.models[plotId].all)
     
-
-    const getDataToDisplay = () => {
-        // Gets the currently selected models which should be displayed
-    }
+    const { data, isError, error, isLoading, isSuccess } = useGetRawPlotDataMutation(
+        {
+            plotType,
+            latMin: options.latMin,
+            latMax: options.latMax,
+            modelList,
+        }
+    )
+    // display loading spinner instead of graph until isSuccess = true
+    // then load data
+    const seriesData = generatePlotSeries(models, data)
 
     return (<div>
         {/* Graph displayed with ApexCharts goes here */}

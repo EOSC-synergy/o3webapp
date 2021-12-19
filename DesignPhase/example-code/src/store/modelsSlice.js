@@ -1,14 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-    "octs": { // different plots
+    "octs": { // plot name (id)
         "all": { // model group
             name: "Somehting",
-            models: [
-                { // single model
-                    name: "Something 2",
+            modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"],
+            models: { // models is lookup table
+                "CCMI-1_ACCESS_ACCESS-CCM-refC2": { // single model
+                    // name: "Something 2",
                     institute: "Something elese",
-                    dataset: "more something",
+                    // dataset: "more something", is not stored here but instead in the api cache
                     mean: true,
                     derivative: true,
                     median: true,
@@ -16,7 +17,7 @@ const initialState = {
                     color: "XXX",
                     plotStyle: "XXX",
                 }
-            ],
+            },
             hidden: false,
             derivativeVisible: false,
             meanVisible: false,
