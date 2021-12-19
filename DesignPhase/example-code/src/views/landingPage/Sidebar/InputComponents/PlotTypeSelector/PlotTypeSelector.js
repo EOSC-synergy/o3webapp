@@ -16,13 +16,6 @@ function PlotTypeSelector(props) {
         const {data, isSuccess, isLoading, isError, error} = useGetPlotsQuery()
         // re-render component based on isLoading <-> isSuccess
     }
-    
-    /**
-     * change the current plot type
-     */
-    const changePlotType = () => {
-
-    }
 
     let i = props.reportError;
 

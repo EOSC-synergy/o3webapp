@@ -13,21 +13,16 @@ function LatitudeBandSelector(props) {
     const min = -90;
     const max = +90;
     const predefinedOptions = [
-    {
-        name: "global",
-        min: 90,
-        max: -90
-    }
+        {
+            name: "global",
+            min: 90,
+            max: -90
+        }
     ]
 
     // const dispatch = useDispatch()
-    const [selectedLocations, setSelectedLocations] = React.useState();
+    const [selectedLatitudeBandOption, setselectedLatitudeBandOption] = React.useState();
     let i = props.reportError;
-
-    const handleChangeLocation = (event) => {
-        // setSelectedLocations(event.target.value);
-        // dispatch(setSelectedLocations(event.target.value))
-    };
 
     return (
         <>

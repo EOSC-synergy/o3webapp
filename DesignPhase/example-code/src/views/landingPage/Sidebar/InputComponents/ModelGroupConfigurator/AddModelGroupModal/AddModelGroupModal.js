@@ -20,7 +20,6 @@ function AddModelGroupModal(props) {
     // const dispatch = useDispatch()
     
     const [checked, setChecked] = React.useState([]);
-    // const [left, setLeft] = React.useState(models);
     const [left, setLeft] = React.useState([]);
     const [right, setRight] = React.useState([]);
     const [groupName, setGroupName] = React.useState('');
@@ -31,7 +30,7 @@ function AddModelGroupModal(props) {
     const leftChecked = [];
     const rightChecked = [];
 
-    const handleToggle = (value) => () => {
+    const handleChangeElement = (value) => () => {
         const currentIndex = checked.indexOf(value);
         const newChecked = [...checked];
 
@@ -67,26 +66,16 @@ function AddModelGroupModal(props) {
     };
 
     const addNewGroup = () => {
-        props.addModelGroup(groupName, right);
         handleAllLeft();
         setGroupName('');
         dispatch(addedModelGroup({groupName})) // add data (modelList)
-        props.onClose();
     }
 
     const updateGroupName = (event) => {
         event.preventDefault();
     }
 
-    const searchDataLeft = (event) => {
-
-    }
-
-    const searchDataRight = (event) => {
-
-    }
-
-    const searchData = (event) => {
+    const searchData = (event, data) => {
 
     }
 
@@ -97,7 +86,7 @@ function AddModelGroupModal(props) {
 
     return (
         <>
-            {props.open && <></>}
+            {props.isOpen && <></>}
         </>
     );
 }
