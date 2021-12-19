@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {useSelector} from 'react-redux'
+import { useGetRawPlotDataMutation } from '../../../store/apiSlice';
 import {calculatePlotSeries} from "../../../utils/math"
 
 /**
@@ -12,6 +13,8 @@ export default function Graph() {
     const options = useSelector(store => store.plot[plotType].options)
     const models = useSelector(store => store.models[plotType].all)
     const seriesData = generatePlotSeries(models)
+
+    useGetRawPlotDataMutation({})
     
 
     const getDataToDisplay = () => {
