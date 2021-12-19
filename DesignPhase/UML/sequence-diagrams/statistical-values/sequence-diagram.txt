@@ -3,43 +3,51 @@ actor Steve
 participant "//<<Component>>//\nModelGroup" as MG #3489eb
 participant "Graph\n//Component//" as Graph #3489eb
 database "Store\n//Redux//" as Store #808080
+participant "//<<reducer>>//\naddStatisticalValue" as reducer #808080
 participant "apexcharts\n//library//" as apexcharts #ffff00
 participant "math utils\n//library//" as math #ffff00
+participant "//<<library>>//\nOptionsFormatter" as formatter #ffff00
+
 
 Steve->MG: user selects mean 
 activate MG
-MG->Store: dispatch(ADD_SV("all", MEAN))
+MG->Store: dispatch(addStatisticalValue({groupId: "all", sv: "mean"}))
+activate Store
 deactivate MG
+Store -> reducer: reduce(state, action)
+activate reducer
+Store <- reducer: state
+deactivate reducer
 Graph<--Store: updateHook
-Graph->Store: useSelector(state => state.plotType)
-Graph->Store: useSelector(state => state.models.data)
-Graph->Store: useSelector(state => state.statisticalValues)
-Graph->Store: useSelector(state => state.referenceSettings)
+deactivate Store
 
-Graph<--Store: options
-Graph->Store: useSelector(state => state.series)
-Graph<--Store: series
-Graph->apexcharts: new Chart(options, series)
-Graph<--apexcharts: rendered svg chart
-Steve<--Graph: user sees updated chart
+activate Graph 
+Graph->Store: selectCurrentPlotType()
+activate Store
+Graph<-Store: plotType
+deactivate Store
+Graph->Store: selectCurrentPlotSettings()
+activate Store
+Graph<-Store: plotSettings
+deactivate Store
+Graph->Store: selectCurrentModelGroupById("all")
+activate Store
+Graph<-Store: modelData
+deactivate Store
+Graph->Store: selectCurrentReferenceSettings()
+activate Store
+Graph<-Store: referenceSettings
+deactivate Store
 
 
-Steve->SVS: user selects median
-SVS->actions: add_percentile(0.50)
-SVS<--actions: action 
-SVS->Store: dispatch(action)
-Store->percRD: reduce(state, action)
-percRD->math: calculate_perc(0.50)
-percRD<--math: percSeries
-
-Store<--percRD: new state
-Graph<--Store: updateHook
-Graph->Store: useSelector(state => state.options)
-Graph<--Store: options
-Graph->Store: useSelector(state => state.series)
-Graph<--Store: series
-Graph->apexcharts: new Chart(options, series)
-Graph<--apexcharts: rendered svg chart
-Steve<--Graph: user sees updated chart
+Graph->math: calculateSV(modelData)
+activate math
+Graph<-math: statisticalValueSeries
+deactivate math
+Graph->formatter: generatePlotSeries()
+activate formatter
+Graph<-formatter: dataSeries
+deactivate formatter
+deactivate Graph
 
 @enduml
