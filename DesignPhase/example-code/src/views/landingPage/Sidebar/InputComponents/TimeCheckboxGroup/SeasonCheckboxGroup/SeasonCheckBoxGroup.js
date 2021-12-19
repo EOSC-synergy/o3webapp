@@ -17,17 +17,10 @@ function SeasonCheckBoxGroup(props) {
     i = props.id;
     i = props.months;
 
-<<<<<<< HEAD
-    // TODO: -> Redux: in parent comp gehandelt
-    props.monthsChecked;
-    props.handleSeasonClicked;
-    props.hanldeMonthClicked;
-=======
     // TODO: -> Redux
     i = props.monthsChecked;
     i = props.handleSeasonClicked;
     i = props.hanldeMonthClicked;
->>>>>>> 6697fbb8953750ace31cf98d006994ad640a77ee
 
     return (
         <> 
