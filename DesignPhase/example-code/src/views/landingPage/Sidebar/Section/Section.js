@@ -34,7 +34,7 @@ function Section(props) {
 
     /**
      * maps a given name to a corresponding component from the ./InputComponents folder
-     * if there is no component with the given name, calls the props.error function
+     * if there is no component with the given name, calls the props.reportError function
      * @public
      * @param {String} name the name of the component
      * @returns a component from the './InputComponents

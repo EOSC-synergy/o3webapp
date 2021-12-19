@@ -12,7 +12,7 @@ import CookieConsentModal from './components/CookieConsentModal/CookieConsentMod
  */
 function App() {
 
-    const [isSidebarOpen, setSidebarOpen] = React.useState(false);
+    const [isErrorModalVisibl, setErrorModalVisible] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState(null);  // if errorMessage null no error
     const [isCookieConsentModalVisible, setCookieConsentModalVisibility] = React.useState(true);
 

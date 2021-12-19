@@ -13,8 +13,6 @@ import { updatedModelGroup, addedModelGroup } from "../../../../../store/modelsS
 function ModelGroupConfigurator(props) {
     
     const dispatch = useDispatch()
-    
-    const [modelGroups, setModelGroups] = React.useState([]);
 
     const addModelGroup = (name, models) => {
         dispatch(addedModelGroup({name, models}))   
@@ -45,22 +43,22 @@ function ModelGroupConfigurator(props) {
     }
 
 
-    const [addModalVisible, setAddModalVisible] = React.useState(false);
-    const [editModalVisible, setEditModalVisible] = React.useState(false);
+    const [isAddModalVisible, setAddModalVisible] = React.useState(false);
+    const [isEditModalVisible, setEditModalVisible] = React.useState(false);
 
-    const handleEditModalClose = () => {
+    const closeEditModal = () => {
         setEditModalVisible(false);
     }
 
-    const handleEditModalOpen = () => {
+    const openEditModal = () => {
         setEditModalVisible(true);
     }
 
-    const handleAddModalClose = () => {
+    const closeAddModal = () => {
         setAddModalVisible(false);
     }
 
-    const handleAddModalOpen = () => {
+    const openAddModal = () => {
         setAddModalVisible(true);
     }
 

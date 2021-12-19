@@ -25,8 +25,6 @@ function Sidebar(props) {
     const [isDownloadModalVisible, setDownloadModalVisible] = React.useState(false);
     const [expandedSection, setExpandedSection] = React.useState(null); // -> idx of sections array
 
-    const [plotType, setPlotType] = React.useState("");
-
     // /**
     //  * Changes the plot type and updates the sidebar according to new plot type
     //  * @param {String} newPlotType 

@@ -19,7 +19,7 @@ function ModelGroupCard(props) {
 
     return (
         <>
-            <EditModelGroupModal name={props.name} id={props.id} models={props.models} />
+            <EditModelGroupModal id={props.modelGroupId} />
         </>
     );
 }
