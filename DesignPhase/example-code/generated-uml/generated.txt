@@ -6,31 +6,23 @@ class "App" << (C,blue) component >> {
     ==props==
 
     ==state==
-    #openSidebar
-    #error
+    #isSidebarOpen
+    #errorMessage
+    #isCookieConsentModalVisible
     ==methods==
     +reportError
     +closeErrorModal
     +handleSidebarOpen
     +handleSidebarClose
+    +closeCookieConsentModal
 }
 
-class "ErrorMessageModal" << (C,blue) component >> {
+class "CookieConsentModal" << (C,blue) component >> {
     
     ==props==
-    #message
-    #onClose
+    #error
     #open
-    ==state==
-
-    ==methods==
-
-}
-
-class "Footer" << (C,blue) component >> {
-    
-    ==props==
-
+    #onClose
     ==state==
 
     ==methods==
@@ -47,44 +39,125 @@ class "NavBar" << (C,blue) component >> {
 
 }
 
-class "Graph" << (C,blue) component >> {
+class "Footer" << (C,blue) component >> {
     
     ==props==
 
     ==state==
 
     ==methods==
-    +getDataToDisplay
-    +getPlotFile
+
+}
+
+class "ErrorMessageModal" << (C,blue) component >> {
+    
+    ==props==
+    #isOpen
+    #onClose
+    #message
+    ==state==
+
+    ==methods==
+
+}
+
+class "LandingPage" << (C,blue) component >> {
+    
+    ==props==
+    #reportError
+    ==state==
+    #isSidebarOpen
+    ==methods==
+    +openSidebar
+    +closeSidebar
 }
 
 class "Sidebar" << (C,blue) component >> {
     
     ==props==
+    #isOpen
     #onClose
-    #open
+    #reportError
     ==state==
-    #openDownloadModal
+    #isDownloadModalVisible
     #expandedSection
     #plotType
     ==methods==
     +changePlotType
-    +onCloseDownloadModal
-    +onOpenDownloadModal
-    +onCollapseSection
-    +onExpandSection
+    +closeDownloadModal
+    +openDownloadModal
+    +collapseSection
+    +expandSection
+}
+
+class "Section" << (C,blue) component >> {
+    
+    ==props==
+    #error
+    #reportError
+    #isExpanded
+    #onExpand
+    #onCollapse
+    #name
+    #components
+    ==state==
+
+    ==methods==
+
 }
 
 class "DownloadModal" << (C,blue) component >> {
     
     ==props==
-    #error
-    #onClose
+    #isOpen
     #open
+    #onClose
+    #reportError
     ==state==
 
     ==methods==
     +downloadImg
+}
+
+class "OffsetConfigurator" << (C,blue) component >> {
+    
+    ==props==
+    #error
+    ==state==
+
+    ==methods==
+
+}
+
+class "ReferenceYearSlider" << (C,blue) component >> {
+    
+    ==props==
+    #error
+    ==state==
+
+    ==methods==
+    +getReferenceRange
+}
+
+class "YAxisSlider" << (C,blue) component >> {
+    
+    ==props==
+    #error
+    ==state==
+
+    ==methods==
+    +onChange
+    +getPossibleRange
+}
+
+class "PlotNameField" << (C,blue) component >> {
+    
+    ==props==
+    #error
+    ==state==
+
+    ==methods==
+    +handlePlotNameChange
 }
 
 class "LatitudeBandSelector" << (C,blue) component >> {
@@ -97,6 +170,46 @@ class "LatitudeBandSelector" << (C,blue) component >> {
     #selectedLocations
     ==methods==
 
+}
+
+class "TimeCheckBoxGroup" << (C,blue) component >> {
+    
+    ==props==
+    #reportError
+    ==state==
+    #time
+    ==methods==
+    +handleChangeSeason
+    +handleChangeYear
+    +handleChangeMonth
+    +handleUpdatedSelection
+}
+
+class "SeasonCheckBoxGroup" << (C,blue) component >> {
+    
+    ==props==
+    #label
+    #months
+    #reportError
+    #id
+    #handleSeasonClicked
+    #monthsChecked
+    #hanldeMonthClicked
+    ==state==
+
+    ==methods==
+
+}
+
+class "PlotTypeSelector" << (C,blue) component >> {
+    
+    ==props==
+    #reportError
+    ==state==
+
+    ==methods==
+    +getAllAvailablePlotTypes
+    +changePlotType
 }
 
 class "ModelGroupConfigurator" << (C,blue) component >> {
@@ -119,9 +232,10 @@ class "ModelGroupConfigurator" << (C,blue) component >> {
 class "AddModelGroupModal" << (C,blue) component >> {
     
     ==props==
-    #error
     #addModelGroup
+    #isOpen
     #onClose
+    #reportError
     #open
     ==state==
     #checked
@@ -146,13 +260,10 @@ class "AddModelGroupModal" << (C,blue) component >> {
 class "EditModelGroupModal" << (C,blue) component >> {
     
     ==props==
-    #error
-    #editModelGroup
-    #id
-    #name
-    #models
+    #isOpen
+    #modelGroupId
     #onClose
-    #open
+    #reportError
     ==state==
 
     ==methods==
@@ -162,110 +273,11 @@ class "EditModelGroupModal" << (C,blue) component >> {
 class "ModelGroupCard" << (C,blue) component >> {
     
     ==props==
-    #derivativeVisible
-    #error
-    #editModelGroup
-    #hidden
-    #meanVisible
+    #modelGroupId
+    #reportError
     #id
-    #name
     #models
-    #percentileVisible
-    #medianVisible
-    ==state==
-
-    ==methods==
-
-}
-
-class "OffsetConfigurator" << (C,blue) component >> {
-    
-    ==props==
-    #error
-    #allVisibleModels
-    #currReferenceYear
-    #currReferenceModel
-    #offsetVisible
-    ==state==
-
-    ==methods==
-
-}
-
-class "PlotNameField" << (C,blue) component >> {
-    
-    ==props==
-    #plotName
-    #error
-    #default
-    #changePlotName
-    ==state==
-
-    ==methods==
-    +handlePlotNameChange
-}
-
-class "PlotTypeSelector" << (C,blue) component >> {
-    
-    ==props==
-    #changePlotType
-    #error
-    #plotType
-    ==state==
-
-    ==methods==
-    +getAllAvailablePlotTypes
-}
-
-class "ReferenceYearSlider" << (C,blue) component >> {
-    
-    ==props==
-    #error
-    #max
-    #currReferenceYear
-    #min
-    #changeReferenceYear
-    ==state==
-
-    ==methods==
-
-}
-
-class "RegionSelector" << (C,blue) component >> {
-    
-    ==props==
-    #error
-    #changeCustomRegion
-    #customRegion
-    #selectedRegions
-    ==state==
-
-    ==methods==
-    +getDefaultRegions
-}
-
-class "TimeCheckBoxGroup" << (C,blue) component >> {
-    
-    ==props==
-    #error
-    ==state==
-    #time
-    ==methods==
-    +handleChangeSeason
-    +handleChangeYear
-    +handleChangeMonth
-    +handleUpdatedSelection
-}
-
-class "SeasonCheckBoxGroup" << (C,blue) component >> {
-    
-    ==props==
-    #id
-    #handleSeasonClicked
-    #monthsChecked
-    #hanldeMonthClicked
-    #label
-    #months
+    #name
     ==state==
 
     ==methods==
@@ -276,72 +288,59 @@ class "XAxisSlider" << (C,blue) component >> {
     
     ==props==
     #error
-    #changeMin
-    #max
-    #currMin
-    #changeMax
-    #currMax
-    #min
     ==state==
 
     ==methods==
     +onChange
+    +getPossibleRange
 }
 
-class "YAxisSlider" << (C,blue) component >> {
+class "RegionSelector" << (C,blue) component >> {
     
     ==props==
     #error
-    #changeMin
-    #max
-    #currMin
-    #changeMax
-    #currMax
-    #min
-    ==state==
-
-    ==methods==
-    +onChange
-}
-
-class "Section" << (C,blue) component >> {
-    
-    ==props==
-    #components
-    #error
-    #name
-    #onExpand
-    #expanded
-    #onCollapse
     ==state==
 
     ==methods==
 
 }
-App o-- ErrorMessageModal
-App o-- Footer
+
+class "Graph" << (C,blue) component >> {
+    
+    ==props==
+
+    ==state==
+
+    ==methods==
+
+}
+App o-- CookieConsentModal
 App o-- NavBar
-App o-- Graph
+App o-- Footer
+App o-- ErrorMessageModal
 App o-- Sidebar
+App o-- Graph
+LandingPage o-- Sidebar
+LandingPage o-- Graph
+Sidebar o-- Section
 Sidebar o-- DownloadModal
 Sidebar o-- PlotTypeSelector
-Sidebar o-- Section
+Section o-- OffsetConfigurator
+Section o-- ReferenceYearSlider
+Section o-- YAxisSlider
+Section o-- PlotNameField
+Section o-- LatitudeBandSelector
+Section o-- TimeCheckBoxGroup
+Section o-- ModelGroupConfigurator
+Section o-- XAxisSlider
+Section o-- RegionSelector
+OffsetConfigurator o-- ReferenceYearSlider
+TimeCheckBoxGroup o-- SeasonCheckBoxGroup
 ModelGroupConfigurator o-- AddModelGroupModal
 ModelGroupConfigurator o-- ModelGroupCard
 ModelGroupCard o-- EditModelGroupModal
-OffsetConfigurator o-- ReferenceYearSlider
-TimeCheckBoxGroup o-- SeasonCheckBoxGroup
-Section o-- ModelGroupConfigurator
-Section o-- OffsetConfigurator
-Section o-- PlotNameField
-Section o-- ReferenceYearSlider
-Section o-- RegionSelector
-Section o-- TimeCheckBoxGroup
-Section o-- XAxisSlider
-Section o-- YAxisSlider
+RegionSelector o-- LatitudeBandSelector
 App "handleSidebarOpen" <.. NavBar
 ModelGroupConfigurator "addModelGroup" <.. AddModelGroupModal
-ModelGroupConfigurator "editModelGroup" <.. ModelGroupCard
-Sidebar "changePlotType" <.. PlotTypeSelector
 
 @enduml
