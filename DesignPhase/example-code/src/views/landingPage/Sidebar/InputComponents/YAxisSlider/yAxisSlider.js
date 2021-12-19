@@ -30,7 +30,7 @@ function YAxisSlider(props) {
     const dispatch = useDispatch()
 
     const onChange = () => {
-        dispatch(setDisplayXRange({min, max}))
+        dispatch(setDisplayXRange({currMin, currMax}))
     }
 
 

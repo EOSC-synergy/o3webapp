@@ -11,13 +11,8 @@ import SeasonCheckBoxGroup from "./SeasonCheckboxGroup/SeasonCheckBoxGroup";
  */
 function TimeCheckBoxGroup(props) {
     
-<<<<<<< HEAD
     let i = props.error;
     const dispatch = useDispatch()
-
-=======
-    
->>>>>>> 6697fbb8953750ace31cf98d006994ad640a77ee
 
     const sesaons = [
         {
