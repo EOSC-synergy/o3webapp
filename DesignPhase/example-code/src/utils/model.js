@@ -12,9 +12,6 @@
  * @property {String} colors - the color of the model used in the graph
  * @property {String} plotStyle - the plotStyle of the model used in the graph
  */
- var model = (hasCourage, hasPower, hasWisdom) => {
-    // pass
-}
 
    // modelGroups = [
     //     {

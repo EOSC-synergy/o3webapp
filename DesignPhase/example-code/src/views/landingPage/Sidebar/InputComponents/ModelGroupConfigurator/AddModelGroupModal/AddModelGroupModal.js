@@ -7,15 +7,15 @@ import { addedModelGroup, updatedModelGroup } from "../../../../../../store/mode
  * opens a modal where the user can add a new model group
  * @param {Object} props 
  * @param {function} props.onClose -> function to call if modal should be closed
- * @param {boolean} props.open -> boolean whether the modal should be visible
- * @param {function} props.error -> error handling
+ * @param {boolean} props.isOpen -> boolean whether the modal should be visible
+ * @param {function} props.reportError -> error handling
  * @returns {JSX} a jsx containing a modal with a transfer list with all available models
  */
 function AddModelGroupModal(props) {
 
-    let i = props.open;
+    let i = props.isOpen;
     i = props.onClose;
-    i = props.error;
+    i = props.reportError;
 
     // const dispatch = useDispatch()
     

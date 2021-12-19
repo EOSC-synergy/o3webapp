@@ -12,9 +12,9 @@ import CookieConsentModal from './components/CookieConsentModal/CookieConsentMod
  */
 function App() {
 
-    const [openSidebar, setOpenSidebar] = React.useState(false);
-    const [error, setError] = React.useState(null);  // error is used for errors in event handler functions
-    const [showCookieConsentModal, setShowCookieConsentModal] = React.useState(true);
+    const [isSidebarOpen, setSidebarOpen] = React.useState(false);
+    const [errorMessage, setErrorMessage] = React.useState(null);  // if errorMessage null no error
+    const [isCookieConsentModalVisible, setCookieConsentModalVisibility] = React.useState(true);
 
     const reportError = (msg) => {
         setError(msg);
@@ -32,7 +32,7 @@ function App() {
         setOpenSidebar(true);
     }
 
-    const onCloseCookieConsentModal = () => {
+    const closeCookieConsentModal = () => {
     }
     
 

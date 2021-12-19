@@ -6,11 +6,12 @@ import SeasonCheckBoxGroup from "./SeasonCheckboxGroup/SeasonCheckBoxGroup";
 /**
  * enables the user to select a month, season or the whole year
  * @param {Object} props 
+ * @param {function} props.reportError - function for error handling
  * @returns {JSX} a jsx containing a checkboxgroup per season and a "all year" checkbox
  */
 function TimeCheckBoxGroup(props) {
     
-    let i = props.error;
+    let i = props.reportError;
     const dispatch = useDispatch()
 
     const sesaons = [

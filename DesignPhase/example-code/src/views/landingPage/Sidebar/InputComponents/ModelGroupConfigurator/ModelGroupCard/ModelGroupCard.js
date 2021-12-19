@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from "react-redux"
 /**
  * a card containing information about the a modal group
  * @param {OBject} props 
- * @param {String} props.error - error function
- * @param {int} props.id -> id of the model group
+ * @param {String} props.reportError - error function
+ * @param {int} props.modelGroupId -> id of the model group
  * @returns {JSX} a jsx containing a modal with a data grid with all models from the model group
  */
 function ModelGroupCard(props) {
@@ -14,8 +14,8 @@ function ModelGroupCard(props) {
     const modelGroupData = useSelector(state => state.models[props.name])
 
     let i;
-    i = props.error;
-    i = props.id;
+    i = props.reportError;
+    i = props.modelGroupId;
 
     return (
         <>
