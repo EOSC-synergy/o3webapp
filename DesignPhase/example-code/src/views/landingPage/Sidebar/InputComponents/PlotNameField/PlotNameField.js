@@ -8,13 +8,13 @@ import { setTitle } from "../../../../../store/plotSlice";
  *  props.default -> default name of the plot
  * @returns a textfield to change the plotname
  */
-export default function PlotNameField(props) {
+function PlotNameField(props) {
     
-    props.default;
-    props.error;
+    let i = props.default;
+    i = props.error;
 
-    props.plotName;
-    props.changePlotName;
+    i = props.plotName;
+    i = props.changePlotName;
 
     const handlePlotNameChange = () => {
         dispatch(setTitle(plotName))
@@ -25,3 +25,5 @@ export default function PlotNameField(props) {
         </>
     );
 }
+
+export default PlotNameField;

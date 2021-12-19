@@ -9,21 +9,30 @@ import React, { useState } from "react";
  *  props.monthsChecked -> array containing whether months of this season are clicked
  *  props.handleSeasonClicked -> function to handle if the whole season got selected / deselected
  *  props.hanldeMonthClicked -> function to handle if a month got selected / deselected
- * @returns a jsx containing a checkboxgroup with given months and label
+ * @returns {JSX} a jsx containing a checkboxgroup with given months and label
  */
-export default function SeasonCheckBoxGroup(props) {
+function SeasonCheckBoxGroup(props) {
     
-    props.label;
-    props.id;
-    props.months;
+    let i = props.label;
+    i = props.id;
+    i = props.months;
 
+<<<<<<< HEAD
     // TODO: -> Redux: in parent comp gehandelt
     props.monthsChecked;
     props.handleSeasonClicked;
     props.hanldeMonthClicked;
+=======
+    // TODO: -> Redux
+    i = props.monthsChecked;
+    i = props.handleSeasonClicked;
+    i = props.hanldeMonthClicked;
+>>>>>>> 6697fbb8953750ace31cf98d006994ad640a77ee
 
     return (
         <> 
         </>
     );
 }
+
+export default SeasonCheckBoxGroup;

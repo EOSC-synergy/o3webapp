@@ -8,13 +8,15 @@ import React, { useState } from "react";
  *  props.message -> error message
  * @returns a jsx file containing a modal with the given error message
  */
-export default function ErrorMessageModal(props) {
+function ErrorMessageModal(props) {
     
-    props.open;
-    props.onClose;
-    props.message;
+    let i = props.open;
+    i = props.onClose;
+    i = props.message;
     
 
     return <div>
     </div>;
 }
+
+export default ErrorMessageModal;

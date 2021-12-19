@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator/AddModelGroupModal/AddModelGroupModal.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator/AddModelGroupModal/AddModelGroupModal.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from "react";
+
+/**
+ * opens a modal where the user can add a new model group
+ * @param {*} props 
+ *  props.onClose -> function to call if modal should be closed
+ *  props.open -> boolean whether the modal should be visible
+ *  props.error -> error handling
+ *  props.addModaelGroup -> function to add a model group
+ * @returns a jsx containing a modal with a transfer list with all available models
+ */
+function AddModelGroupModal(props) {
+
+    let i = props.open;
+    i = props.onClose;
+    i = props.error;
+
+    // TODO: -> Redux
+    i = props.addModelGroup;
+
+    // const dispatch = useDispatch()
+    
+    const [checked, setChecked] = React.useState([]);
+    // const [left, setLeft] = React.useState(models);
+    const [left, setLeft] = React.useState([]);
+    const [right, setRight] = React.useState([]);
+    const [groupName, setGroupName] = React.useState('');
+
+    // const leftChecked = intersection(checked, left);
+    // const rightChecked = intersection(checked, right);
+
+    const leftChecked = [];
+    const rightChecked = [];
+
+    const handleToggle = (value) => () => {
+        const currentIndex = checked.indexOf(value);
+        const newChecked = [...checked];
+
+        if (currentIndex === -1) {
+            newChecked.push(value);
+        } else {
+            newChecked.splice(currentIndex, 1);
+        }
+
+        setChecked(newChecked);
+    };
+
+    const handleAllRight = () => {
+        // setRight(right.concat(left));
+        // setLeft([]);
+    };
+
+    const handleCheckedRight = () => {
+        // setRight(right.concat(leftChecked));
+        // setLeft(not(left, leftChecked));
+        // setChecked(not(checked, leftChecked));
+    };
+
+    const handleCheckedLeft = () => {
+        // setLeft(left.concat(rightChecked));
+        // setRight(not(right, rightChecked));
+        // setChecked(not(checked, rightChecked));
+    };
+
+    const handleAllLeft = () => {
+        // setLeft(left.concat(right));
+        // setRight([]);
+    };
+
+    const addNewGroup = () => {
+        // props.addModelGroup(groupName, right);
+        // handleAllLeft();
+        // setGroupName('');
+        // dispatch(ADD_GROUP(groupName, someData))
+        // props.onClose();
+    }
+
+    const updateGroupName = (event) => {
+        // event.preventDefault();
+        // setGroupName(event.target.value);
+    }
+
+    const searchDataLeft = (event) => {
+
+    }
+
+    const searchDataRight = (event) => {
+
+    }
+
+    const searchData = (event) => {
+
+    }
+
+    // TODOD: API Call
+    const getAllAvailableModels = () => {
+        return null;
+    }
+
+    return (
+        &lt;>
+            {props.open &amp;&amp; &lt;>&lt;/>}
+        &lt;/>
+    );
+}
+
+export default AddModelGroupModal;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="InputComponents.html">InputComponents</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddModelGroupModal">AddModelGroupModal</a></li><li><a href="global.html#EditModelGroupModal">EditModelGroupModal</a></li><li><a href="global.html#ErrorMessageModal">ErrorMessageModal</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Graph">Graph</a></li><li><a href="global.html#ModelGroupCard">ModelGroupCard</a></li><li><a href="global.html#ModelGroupConfigurator">ModelGroupConfigurator</a></li><li><a href="global.html#NavBar">NavBar</a></li><li><a href="global.html#OffsetConfigurator">OffsetConfigurator</a></li><li><a href="global.html#PlotNameField">PlotNameField</a></li><li><a href="global.html#PlotTypeSelector">PlotTypeSelector</a></li><li><a href="global.html#ReferenceYearSlider">ReferenceYearSlider</a></li><li><a href="global.html#RegionSelector">RegionSelector</a></li><li><a href="global.html#SeasonCheckBoxGroup">SeasonCheckBoxGroup</a></li><li><a href="global.html#Section">Section</a></li><li><a href="global.html#Sidebar">Sidebar</a></li><li><a href="global.html#TimeCheckBoxGroup">TimeCheckBoxGroup</a></li><li><a href="global.html#XAxisSlider">XAxisSlider</a></li><li><a href="global.html#YAxisSlider">YAxisSlider</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Sat Dec 18 2021 21:31:51 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

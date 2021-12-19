@@ -12,23 +12,32 @@ import { addedModelGroup, updatedModelGroup } from "../../../../../../store/mode
  *  props.addModaelGroup -> function to add a model group
  * @returns a jsx containing a modal with a transfer list with all available models
  */
-export default function AddModelGroupModal(props) {
+function AddModelGroupModal(props) {
 
-    props.open;
-    props.onClose;
-    props.error;
+    let i = props.open;
+    i = props.onClose;
+    i = props.error;
 
+<<<<<<< HEAD
     props.addModelGroup;
+=======
+    // TODO: -> Redux
+    i = props.addModelGroup;
+>>>>>>> 6697fbb8953750ace31cf98d006994ad640a77ee
 
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
     
     const [checked, setChecked] = React.useState([]);
-    const [left, setLeft] = React.useState(models);
+    // const [left, setLeft] = React.useState(models);
+    const [left, setLeft] = React.useState([]);
     const [right, setRight] = React.useState([]);
     const [groupName, setGroupName] = React.useState('');
 
-    const leftChecked = intersection(checked, left);
-    const rightChecked = intersection(checked, right);
+    // const leftChecked = intersection(checked, left);
+    // const rightChecked = intersection(checked, right);
+
+    const leftChecked = [];
+    const rightChecked = [];
 
     const handleToggle = (value) => () => {
         const currentIndex = checked.indexOf(value);
@@ -44,25 +53,25 @@ export default function AddModelGroupModal(props) {
     };
 
     const handleAllRight = () => {
-        setRight(right.concat(left));
-        setLeft([]);
+        // setRight(right.concat(left));
+        // setLeft([]);
     };
 
     const handleCheckedRight = () => {
-        setRight(right.concat(leftChecked));
-        setLeft(not(left, leftChecked));
-        setChecked(not(checked, leftChecked));
+        // setRight(right.concat(leftChecked));
+        // setLeft(not(left, leftChecked));
+        // setChecked(not(checked, leftChecked));
     };
 
     const handleCheckedLeft = () => {
-        setLeft(left.concat(rightChecked));
-        setRight(not(right, rightChecked));
-        setChecked(not(checked, rightChecked));
+        // setLeft(left.concat(rightChecked));
+        // setRight(not(right, rightChecked));
+        // setChecked(not(checked, rightChecked));
     };
 
     const handleAllLeft = () => {
-        setLeft(left.concat(right));
-        setRight([]);
+        // setLeft(left.concat(right));
+        // setRight([]);
     };
 
     const addNewGroup = () => {
@@ -100,3 +109,5 @@ export default function AddModelGroupModal(props) {
         </>
     );
 }
+
+export default AddModelGroupModal;

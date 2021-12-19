@@ -1,14 +1,21 @@
 import React, { useState } from "react";
 import LocationSelector from "../LatitudeBandSelector/LatitudeBandSelector";
 
-export default function RegionSelector(props) {
+/**
+ * enables the user to select / deselect regions as well as entering a private region {@link LatitudeBandSelector}
 
-    props.selectedRegions;
-    props.error;
+ * @param {Object} props
+ * @param {Array} props.selectedRegions - the currently selected regions
+ * @param {Function} props.error - used to report error functions
+ * @returns {JSX} 
+ */
+function RegionSelector(props) {
 
-    // TODO -> redux: wird in parent comp gehandlet
-    props.customRegion;
-    props.changeCustomRegion;
+    let i = props.selectedRegions;
+    i = props.error;
+
+    i = props.customRegion;
+    i = props.changeCustomRegion;
 
     // TODO -> API Call: ist das in der API verfügbar? sonst in einer config json "hardcoden"
     const getDefaultRegions = () => {
@@ -21,3 +28,5 @@ export default function RegionSelector(props) {
         </>
     );
 }
+
+export default RegionSelector;

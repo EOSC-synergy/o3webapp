@@ -13,14 +13,14 @@ import { current } from "@reduxjs/toolkit";
  *  props.offsetVisible -> whether the offset is currently visible or not
  * @returns a jsx containing a referenceYearSlider, a referenceModelSelector and a button to toggle the offset
  */
-export default function OffsetConfigurator(props) {
+function OffsetConfigurator(props) {
     
-    props.currReferenceModel;
-    props.currReferenceYear;
-    props.allVisibleModels;
-    props.offsetVisible;
+    let i = props.currReferenceModel;
+    i = props.currReferenceYear;
+    i = props.allVisibleModels;
+    i = props.offsetVisible;
 
-    props.error;
+    i = props.error;
 
     const currentPlotType = selectCurrentPlotType()
     const referenceData = useSelector(state => state.reference[currentPlotType])
@@ -34,3 +34,5 @@ export default function OffsetConfigurator(props) {
         </>
     );
 }
+
+export default OffsetConfigurator;

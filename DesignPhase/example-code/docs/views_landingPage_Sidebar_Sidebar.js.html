@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: views/landingPage/Sidebar/Sidebar.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: views/landingPage/Sidebar/Sidebar.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import * as React from 'react';
+import Section from './Section/Section.js';
+import defaultStructure from '../../../config/defaultConfig.json';
+import DownloadModal from './DownloadModal/DownloadModal.js';
+import PlotTypeSelector from './InputComponents/PlotTypeSelector/PlotTypeSelector.js';
+
+/**
+ * Contains all input components responsible for the modification 
+ * of the plot settings.
+ * @param {Object} props 
+ *  props.open ->  whether sideBar should be open
+ *  props.onClose -> handles closing of the sidebar
+ *  props.error -> enables component to report an error
+ * @returns {JSX} a jsx containing a sidebar with sections containing input components, a download button and a plotType dropdown
+ */
+function Sidebar(props) {
+
+    let i = props.onClose;
+
+    const [openDownloadModal, setOpenDownloadModal] = React.useState(false);
+    const [expandedSection, setExpandedSection] = React.useState(null); // -> idx of sections array
+
+    // TODO: -> Redux?
+    const [plotType, setPlotType] = React.useState("");
+
+    /**
+     * Changes the plot type and updates the sidebar according to new plot type
+     * @param {String} newPlotType 
+     */
+    const changePlotType = (newPlotType) => {
+        // check if newPlotType is valid
+        // update plotType
+        setPlotType(newPlotType);
+        // rerender sections -> lose current value?
+    }
+
+    /**
+     * closes the download modal
+     */
+    const onCloseDownloadModal = () => {
+        setOpenDownloadModal(false);
+    }
+
+    /**
+     * shows the download modal
+     */
+    const onOpenDownloadModal = () => {
+        setOpenDownloadModal(true);
+    }
+
+    /**
+     * collapses all sections
+     */
+    const onCollapseSection = () => {
+        setExpandedSection(null);
+    }
+
+    /**
+     * expands section with id (index in section array) i
+     * collapses all other currently expanded sections
+     * @param {int} i 
+     */
+    const onExpandSection = (i) => {
+        setExpandedSection(i);
+    }
+
+    return (
+    &lt;>
+        {props.open &amp;&amp; 
+            &lt;>
+
+                &lt;PlotTypeSelector plotType={plotType} />
+
+                {defaultStructure.forEach((s, idx) =>
+                    &lt;Section
+                        name={defaultStructure.sections[s].name}
+                        open={expandedSection === idx}
+                        components={"Empty for now"}
+                        onCollapse={onCollapseSection}
+                        onExpand={onExpandSection}
+                    />
+                )}
+
+                {/* Maybe into their own component? */}
+                {/* &lt;Button text="Download" onClick={onOpenDownloadModal}/> */}
+                &lt;DownloadModal open={openDownloadModal} onClose={onCloseDownloadModal} />
+            &lt;/>
+        }
+    &lt;/>);
+}
+
+export default Sidebar;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="InputComponents.html">InputComponents</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddModelGroupModal">AddModelGroupModal</a></li><li><a href="global.html#EditModelGroupModal">EditModelGroupModal</a></li><li><a href="global.html#ErrorMessageModal">ErrorMessageModal</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Graph">Graph</a></li><li><a href="global.html#ModelGroupCard">ModelGroupCard</a></li><li><a href="global.html#ModelGroupConfigurator">ModelGroupConfigurator</a></li><li><a href="global.html#NavBar">NavBar</a></li><li><a href="global.html#OffsetConfigurator">OffsetConfigurator</a></li><li><a href="global.html#PlotNameField">PlotNameField</a></li><li><a href="global.html#PlotTypeSelector">PlotTypeSelector</a></li><li><a href="global.html#ReferenceYearSlider">ReferenceYearSlider</a></li><li><a href="global.html#RegionSelector">RegionSelector</a></li><li><a href="global.html#SeasonCheckBoxGroup">SeasonCheckBoxGroup</a></li><li><a href="global.html#Section">Section</a></li><li><a href="global.html#Sidebar">Sidebar</a></li><li><a href="global.html#TimeCheckBoxGroup">TimeCheckBoxGroup</a></li><li><a href="global.html#XAxisSlider">XAxisSlider</a></li><li><a href="global.html#YAxisSlider">YAxisSlider</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Sat Dec 18 2021 21:31:51 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

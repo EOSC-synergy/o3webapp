@@ -9,11 +9,15 @@ import SeasonCheckBoxGroup from "./SeasonCheckboxGroup/SeasonCheckBoxGroup";
  *  props.defaultTimeSelection -> the default months that should be selected
  * @returns a jsx containing a checkboxgroup per season and a "all year" checkbox
  */
-export default function TimeCheckBoxGroup(props) {
+function TimeCheckBoxGroup(props) {
     
-    props.error;
+<<<<<<< HEAD
+    let i = props.error;
     const dispatch = useDispatch()
 
+=======
+    
+>>>>>>> 6697fbb8953750ace31cf98d006994ad640a77ee
 
     const sesaons = [
         {
@@ -78,3 +82,5 @@ export default function TimeCheckBoxGroup(props) {
         </>
     );
 }
+
+export default TimeCheckBoxGroup;

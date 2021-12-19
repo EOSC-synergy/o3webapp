@@ -7,7 +7,7 @@ import {calculatePlotSeries} from "../../../utils/math"
  * A containter for the displayed graph.
  * Displays the currently selected plot.
  */
-export default function Graph() {
+function Graph(props) {
 
     const plotType = useSelector(store => store.plot.plotType)
     const plotId = useSelector(store => store.plot.plotId)
@@ -30,3 +30,5 @@ export default function Graph() {
         {/* Graph displayed with ApexCharts goes here */}
     </div>);
 }
+
+export default Graph;
