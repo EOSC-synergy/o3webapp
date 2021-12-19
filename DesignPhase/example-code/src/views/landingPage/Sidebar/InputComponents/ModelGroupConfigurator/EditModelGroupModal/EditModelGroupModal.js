@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux"
+import { updatedModelGroup } from "../../../../../../store/modelsSlice"
 
 /**
  * opens a modal where the user can edit an existing model group
@@ -13,16 +15,21 @@ import React, { useState } from "react";
  */
 export default function EditModelGroupModal(props) {
 
+    const dispatch = useDispatch()
+
     props.onClose;
     props.open;
     props.error;
 
-    // TODO: -> Redux
     props.models;
     props.name;
     props.id;
 
     props.editModelGroup;
+
+    const handleOnSave = () => {
+        dispatch(updatedModelGroup(someData))
+    }
 
     return (
         <>

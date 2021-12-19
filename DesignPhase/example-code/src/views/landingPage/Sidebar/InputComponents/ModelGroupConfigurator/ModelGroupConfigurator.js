@@ -39,12 +39,10 @@ export default function ModelGroupConfigurator(props) {
     //     }
     // ]
 
-    // TODO: Redux
     const addModelGroup = (name, models) => {
         dispatch(addedModelGroup({name, models}))   
     }
 
-    // TODO: Redux
     const editModelGroup = 
         (
             id,

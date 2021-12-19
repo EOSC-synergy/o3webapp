@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux"
+import { getModels } from "../../../../../../store/apiSlice"
+import { addedModelGroup, updatedModelGroup } from "../../../../../../store/modelsSlice"
 
 /**
  * opens a modal where the user can add a new model group
@@ -15,7 +18,6 @@ export default function AddModelGroupModal(props) {
     props.onClose;
     props.error;
 
-    // TODO: -> Redux
     props.addModelGroup;
 
     const dispatch = useDispatch()
@@ -67,13 +69,12 @@ export default function AddModelGroupModal(props) {
         props.addModelGroup(groupName, right);
         handleAllLeft();
         setGroupName('');
-        dispatch(ADD_GROUP(groupName, someData))
+        dispatch(addedModelGroup({groupName})) // add data (modelList)
         props.onClose();
     }
 
     const updateGroupName = (event) => {
         event.preventDefault();
-        setGroupName(event.target.value);
     }
 
     const searchDataLeft = (event) => {
@@ -88,9 +89,9 @@ export default function AddModelGroupModal(props) {
 
     }
 
-    // TODOD: API Call
     const getAllAvailableModels = () => {
-        return null;
+        const {data, isSuccess, isLoading, isError, error} = getModels()
+        // display spinner until loading finished
     }
 
     return (
