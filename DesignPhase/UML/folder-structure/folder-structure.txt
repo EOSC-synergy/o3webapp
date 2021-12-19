@@ -7,8 +7,8 @@
  +++ ErrorMessageModal
  +++ Footer
  +++ Navbar
- ++ services
  ++ config
+ ++ services
  +++ API
  +++ arithmetics
  ++ store
