@@ -7,14 +7,8 @@ package "GUI" {
         Symbolic representation of our app (View)
     }
 
-    class "Chart" << (C, blue) component>> {
+    class "Graph" << (C, blue) component>> {
         This component connects apexcharts to\nour app
-        ==props==
-        #options
-        #series
-        #type
-        #width
-        #height
     }
 
 }
@@ -39,13 +33,16 @@ package "Redux" {
         +api
         +plot
         +models
-        +statisticalValues
         +referenceSettings
+        ==methods==
+        dispatch()
+        useSelect()
     }
 
     class "apiSlice" << (R, gray) redux >> {
         This redux wrapper performs api requests\nand handles caching
         ==methods==
+        +getApiSpecification()
         +getModels()
         +getPlots()
         +getRawPlotData(plotType, lat_min, lat_max)
@@ -60,8 +57,8 @@ package "Utils" {
     class "OptionsFormatter" << (J, yellow) utils >> {
         This utility class merges given data from the store\ninto one data object apexcharts expects
         ==methods==
-        +generatePlotOptions(title, xRange, yRange)
-        +generatePlotSeries(modelData, SVData)
+        +generatePlotOptions(plotSettings)
+        +generatePlotSeries(modelData)
     }
     
     class "pdfCreator" <<(J, yellow) utils >> {
@@ -76,8 +73,7 @@ package "Utils" {
         This class performs helpful operations\non the data series
 
         ==methods==
-        +unifyDatapointsToOneDatapoint(modelData, months)
-        +calculateSV(modelData, statisticalValues)
+        +calculateSV(modelData)
     }
     
 }
@@ -104,12 +100,12 @@ package "node modules" {
 
 }
 
-"apexcharts" <..> "Chart"
+"apexcharts" <..> "Graph"
 "o3as" <..> "apiSlice"
 "apiSlice" <..> "Store"
 "pdfCreator" <..> "pdfmake"
-"Store" <..> "Chart"
-"Chart" <.. "OptionsFormatter"
-"App" o-- "Chart"
+"Store" <..> "Graph"
+"Graph" <.. "OptionsFormatter"
+"App" o-- "Graph"
 
 @enduml
