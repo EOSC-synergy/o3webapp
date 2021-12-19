@@ -1,0 +1,39 @@
+@startsalt
+{
+{T
+ + src
+ ++ assets
+ ++ components
+ +++ ErrorMessageModal
+ +++ Footer
+ +++ Navbar
+ ++ services
+ ++ config
+ +++ API
+ +++ arithmetics
+ ++ store
+ ++ utils
+ ++ views
+ +++ landingPage
+ ++++ Graph
+ ++++ Sidebar
+ +++++ DownloadModal
+ +++++ InputComponents
+ ++++++ LatitudeBandSelector
+ ++++++ ModelGroupConfigurator
+ +++++++ AddModelGroupModal
+ +++++++ EditModelGroupModal
+ +++++++ ModelGroupCard
+ ++++++ OffsetConfigurator
+ ++++++ PlotNameField
+ ++++++ PlotTypeSelector
+ ++++++ ReferenceYearSlider
+ ++++++ RegionSelector
+ ++++++ TimeCheckboxGroup
+ +++++++ SeasonCheckboxGroup
+ ++++++ XAxisSlider
+ ++++++ YAxisSlider
+ +++++ Section
+}
+}
+@endsalt
