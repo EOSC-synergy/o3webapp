@@ -10,24 +10,11 @@ import { setDisplayXRange } from "../../../../../store/plotSlice";
  */
 function YAxisSlider(props) {
     
-    i = props.reportError;
+    let i = props.reportError;
  
     const dispatch = useDispatch()
 
-    /**
-     * handles the change from the slider
-     * dispatches the action into redux
-     */
-    const onChange = () => {
-        dispatch(setDisplayXRange({currMin, currMax}))
-    }
-
-    /**
-     * get the smallest and biggest possible values, i.e. the end of the slider
-     */
-    const getPossibleRange = () => {
-
-    }
+    // dispatch(setDisplayXRange({currMin, currMax}))
 
 
     return (

@@ -20,9 +20,7 @@ function EditModelGroupModal(props) {
     i = props.reportError;
     i = props.modelGroupId;
 
-    const handleOnSave = () => {
-        dispatch(updatedModelGroup(someData))
-    }
+    // dispatch(updatedModelGroup(someData))
 
     return (
         <>

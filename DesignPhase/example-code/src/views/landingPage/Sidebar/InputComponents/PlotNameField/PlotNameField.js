@@ -12,13 +12,6 @@ function PlotNameField(props) {
     
     let i = props.reportError;
 
-    /**
-     * handles the change of the plot name
-     */
-    const handlePlotNameChange = () => {
-        dispatch(setTitle(plotName))
-    }
-
     return (
         <>
         </>
