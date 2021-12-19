@@ -21,10 +21,8 @@ function LatitudeBandSelector(props) {
     ]
 
     // const dispatch = useDispatch()
-    const [selectedLocations, setSelectedLocations] = React.useState(props.defaultLocation);
+    const [selectedLocations, setSelectedLocations] = React.useState();
     let i = props.reportError;
-
-    // props.allowMultipleRegions;     // TODO: how to cope with multiple possible regions in return / recovery plot?
 
     const handleChangeLocation = (event) => {
         // setSelectedLocations(event.target.value);
