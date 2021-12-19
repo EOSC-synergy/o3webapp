@@ -1,7 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
+import plotReducer from './plotSlice'
+import modelsReducer from './modelsSlice'
+import referenceReducer from './referenceSlice'
+
 
 export default configureStore({
   reducer: {
-    counter: counterReducer
+    plot: plotReducer,
+    models: modelsReducer,
+    reference: referenceReducer,
   }
 })

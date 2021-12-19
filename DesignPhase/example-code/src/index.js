@@ -4,6 +4,8 @@ import App from './App';
 import store from './store/store'
 import { Provider } from 'react-redux'
 
+// on "startup" of the app: request default values for all models
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
