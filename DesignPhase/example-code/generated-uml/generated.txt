@@ -8,19 +8,33 @@ class "App" << (C,blue) component >> {
     ==state==
     #openSidebar
     #error
+    #showCookieConsentModal
     ==methods==
     +reportError
     +closeErrorModal
     +handleSidebarOpen
     +handleSidebarClose
+    +onCloseCookieConsentModal
+}
+
+class "CookieConsentModal" << (C,blue) component >> {
+    
+    ==props==
+    #open
+    #message
+    #onClose
+    ==state==
+
+    ==methods==
+
 }
 
 class "ErrorMessageModal" << (C,blue) component >> {
     
     ==props==
+    #open
     #message
     #onClose
-    #open
     ==state==
 
     ==methods==
@@ -54,15 +68,14 @@ class "Graph" << (C,blue) component >> {
     ==state==
 
     ==methods==
-    +getDataToDisplay
     +getPlotFile
 }
 
 class "Sidebar" << (C,blue) component >> {
     
     ==props==
-    #onClose
     #open
+    #onClose
     ==state==
     #openDownloadModal
     #expandedSection
@@ -91,8 +104,8 @@ class "LatitudeBandSelector" << (C,blue) component >> {
     
     ==props==
     #defaultLocation
-    #error
     #allowMultipleRegions
+    #error
     ==state==
     #selectedLocations
     ==methods==
@@ -119,10 +132,10 @@ class "ModelGroupConfigurator" << (C,blue) component >> {
 class "AddModelGroupModal" << (C,blue) component >> {
     
     ==props==
-    #error
+    #open
     #addModelGroup
     #onClose
-    #open
+    #error
     ==state==
     #checked
     #left
@@ -146,13 +159,10 @@ class "AddModelGroupModal" << (C,blue) component >> {
 class "EditModelGroupModal" << (C,blue) component >> {
     
     ==props==
-    #error
-    #editModelGroup
-    #id
-    #name
-    #models
-    #onClose
     #open
+    #onClose
+    #error
+    #id
     ==state==
 
     ==methods==
@@ -162,16 +172,10 @@ class "EditModelGroupModal" << (C,blue) component >> {
 class "ModelGroupCard" << (C,blue) component >> {
     
     ==props==
-    #derivativeVisible
     #error
-    #editModelGroup
-    #hidden
-    #meanVisible
-    #id
     #name
     #models
-    #percentileVisible
-    #medianVisible
+    #id
     ==state==
 
     ==methods==
@@ -182,10 +186,6 @@ class "OffsetConfigurator" << (C,blue) component >> {
     
     ==props==
     #error
-    #allVisibleModels
-    #currReferenceYear
-    #currReferenceModel
-    #offsetVisible
     ==state==
 
     ==methods==
@@ -195,10 +195,7 @@ class "OffsetConfigurator" << (C,blue) component >> {
 class "PlotNameField" << (C,blue) component >> {
     
     ==props==
-    #plotName
     #error
-    #default
-    #changePlotName
     ==state==
 
     ==methods==
@@ -208,40 +205,32 @@ class "PlotNameField" << (C,blue) component >> {
 class "PlotTypeSelector" << (C,blue) component >> {
     
     ==props==
-    #changePlotType
     #error
-    #plotType
     ==state==
 
     ==methods==
     +getAllAvailablePlotTypes
+    +changePlotType
 }
 
 class "ReferenceYearSlider" << (C,blue) component >> {
     
     ==props==
     #error
-    #max
-    #currReferenceYear
-    #min
-    #changeReferenceYear
     ==state==
 
     ==methods==
-
+    +getReferenceRange
 }
 
 class "RegionSelector" << (C,blue) component >> {
     
     ==props==
     #error
-    #changeCustomRegion
-    #customRegion
-    #selectedRegions
     ==state==
 
     ==methods==
-    +getDefaultRegions
+
 }
 
 class "TimeCheckBoxGroup" << (C,blue) component >> {
@@ -260,12 +249,12 @@ class "TimeCheckBoxGroup" << (C,blue) component >> {
 class "SeasonCheckBoxGroup" << (C,blue) component >> {
     
     ==props==
-    #id
     #handleSeasonClicked
     #monthsChecked
-    #hanldeMonthClicked
     #label
     #months
+    #hanldeMonthClicked
+    #id
     ==state==
 
     ==methods==
@@ -276,48 +265,39 @@ class "XAxisSlider" << (C,blue) component >> {
     
     ==props==
     #error
-    #changeMin
-    #max
-    #currMin
-    #changeMax
-    #currMax
-    #min
     ==state==
 
     ==methods==
     +onChange
+    +getPossibleRange
 }
 
 class "YAxisSlider" << (C,blue) component >> {
     
     ==props==
     #error
-    #changeMin
-    #max
-    #currMin
-    #changeMax
-    #currMax
-    #min
     ==state==
 
     ==methods==
     +onChange
+    +getPossibleRange
 }
 
 class "Section" << (C,blue) component >> {
     
     ==props==
-    #components
     #error
-    #name
     #onExpand
-    #expanded
     #onCollapse
+    #name
+    #expanded
+    #components
     ==state==
 
     ==methods==
 
 }
+App o-- CookieConsentModal
 App o-- ErrorMessageModal
 App o-- Footer
 App o-- NavBar
@@ -330,7 +310,9 @@ ModelGroupConfigurator o-- AddModelGroupModal
 ModelGroupConfigurator o-- ModelGroupCard
 ModelGroupCard o-- EditModelGroupModal
 OffsetConfigurator o-- ReferenceYearSlider
+RegionSelector o-- LatitudeBandSelector
 TimeCheckBoxGroup o-- SeasonCheckBoxGroup
+Section o-- LatitudeBandSelector
 Section o-- ModelGroupConfigurator
 Section o-- OffsetConfigurator
 Section o-- PlotNameField
@@ -341,7 +323,5 @@ Section o-- XAxisSlider
 Section o-- YAxisSlider
 App "handleSidebarOpen" <.. NavBar
 ModelGroupConfigurator "addModelGroup" <.. AddModelGroupModal
-ModelGroupConfigurator "editModelGroup" <.. ModelGroupCard
-Sidebar "changePlotType" <.. PlotTypeSelector
 
 @enduml
