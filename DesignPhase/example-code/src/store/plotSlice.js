@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     // currently active
-    plotType: "tcm_return",
+    plotType: "tco3_zm",
     plotId: "OCTS",
     // 
     settings: {

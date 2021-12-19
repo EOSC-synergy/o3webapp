@@ -28,3 +28,5 @@ export const {
 } = referenceSlice.actions
 
 export default referenceSlice.reducer
+
+export const selectCurrentReferenceSettings = (state, plotId) => state.reference[plotId]

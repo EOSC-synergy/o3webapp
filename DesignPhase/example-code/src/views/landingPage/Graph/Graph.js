@@ -1,8 +1,9 @@
 import * as React from 'react';
 import {useSelector} from 'react-redux'
-import { useGetRawPlotDataMutation } from '../../../store/apiSlice';
+import { useGetRawPlotDataMutation } from '../../../services/API/apiSlice';
 import { selectCurrentModelGroups } from '../../../store/modelsSlice';
 import { selectCurrentPlotId, selectCurrentPlotType, selectCurrentSettings } from '../../../store/plotSlice';
+import { selectCurrentReferenceSettings } from '../../../store/referenceSlice';
 import {calculatePlotSeries} from "../../../utils/math"
 
 /**
@@ -15,6 +16,7 @@ function Graph(props) {
     const plotId = selectCurrentPlotId()
     const options = useSelector(state => selectCurrentSettings(state, plotId))
     const models = useSelector(state => selectCurrentModelGroup(state, plotId, "all"))
+    const referenceSettings = useSelector(state => selectCurrentReferenceSettings(state, plotId))
     
     const { data, isError, error, isLoading, isSuccess } = useGetRawPlotDataMutation(
         {
