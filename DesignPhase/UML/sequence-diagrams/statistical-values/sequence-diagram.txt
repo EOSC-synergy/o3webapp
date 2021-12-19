@@ -1,20 +1,31 @@
 @startuml
-actor Steve
-participant "//<<Component>>//\nModelGroup" as MG #3489eb
+skinparam style strictuml
+actor User as Steve
+participant "//<<Component>>//\nModelGroupCard" as MG #3489eb
 participant "//<<Component>>//\nGraph" as Graph #3489eb
 database "//<<Redux>>//\nStore\n" as Store #808080
+participant "//<<action>>//\naddStatisticalValue" as action #808080
 participant "//<<reducer>>//\naddStatisticalValue" as reducer #808080
-participant "//<<library>>//\napexcharts" as apexcharts #ffff00
-participant "//<<library>>//\nmath" as math #ffff00
-participant "//<<library>>//\nOptionsFormatter" as formatter #ffff00
+participant "//<<library>>//\napexcharts" as apexcharts #00af57
+participant "//<<utils>>//\nmath" as math #ffff00
+participant "//<<utils>>//\nOptionsFormatter" as formatter #ffff00
 
 
 Steve->MG: user selects mean 
 activate MG
-MG->Store: dispatch(addStatisticalValue({groupId: "all", sv: "mean"}))
-activate Store
+MG->MG: re-render
+activate MG
+MG-->MG:
 deactivate MG
+MG->action: addStatisticalValue({groupId: "all", sv: "mean"})
+activate action
+MG<-action: action
+deactivate action
+MG->Store: dispatch(action)
+deactivate MG
+activate Store
 Store -> reducer: reduce(state, action)
+
 activate reducer
 Store <- reducer: state
 deactivate reducer
@@ -44,10 +55,19 @@ Graph->math: calculateSV(modelData)
 activate math
 Graph<-math: statisticalValueSeries
 deactivate math
-Graph->formatter: generatePlotSeries()
+Graph->formatter: generatePlotSeries(modelData, statisticalValueSeries)
 activate formatter
 Graph<-formatter: dataSeries
 deactivate formatter
+Graph->formatter: generatePlotOptions(plotSettings)
+activate formatter
+Graph<-formatter: options
+deactivate formatter
+Graph->apexcharts: new Chart(plotType, dataSeries, options)
+activate apexcharts
+Graph<-apexcharts: rendered svg on DOM
+deactivate apexcharts
+Steve<--Graph: user sees updated Graph
 deactivate Graph
 
 @enduml
