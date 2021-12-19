@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux"
-import { useGetModelsQuery } from "../../../../../../store/apiSlice"
+import { useGetModelsQuery } from "../../../../../../services/API/apiSlice"
 import { addedModelGroup, updatedModelGroup } from "../../../../../../store/modelsSlice"
 
 /**
@@ -17,7 +17,7 @@ function AddModelGroupModal(props) {
     let i = props.open;
     i = props.onClose;
     i = props.error;
-    
+
     // TODO: -> Redux
     i = props.addModelGroup;
 

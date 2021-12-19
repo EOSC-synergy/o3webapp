@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     // currently active
-    plotType: "tcm_return",
+    plotType: "tco3_zm",
     plotId: "OCTS",
     // 
     settings: {
@@ -53,5 +53,7 @@ export const {
 } = plotSlice.actions
 
 export const selectCurrentPlotType = state => state.plot.plotType
+export const selectCurrentPlotId = state => state.plot.plotId
+export const selectCurrentSettings = (state, plotId) => state.plot.settings[plotId]
 
 export default plotSlice.reducer

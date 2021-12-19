@@ -50,3 +50,6 @@ export const {
 } = modelsSlice.actions
 
 export default modelsSlice.reducer
+
+export const selectCurrentModelGroups = (state, plotId) => state.models[plotId]
+export const selectCurrentModelGroup = (state, plotId, groupId) => state.models[plotId][groupId]
