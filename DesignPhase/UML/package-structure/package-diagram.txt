@@ -86,16 +86,20 @@ package "node modules" {
         +createPdf()
     } 
 
+    class "react" << (N, green) library >> {
+        Handles the view of our app
+    } 
+
     class "apexcharts" <<(N, green) library >> {
         Our plotting library
     }
 
     class "@reduxjs/toolkit/query/react" <<(N, green) library >> {
-        An api wrapper for an api endpoint
+        An api wrapper for an api endpoint (o3as)
     }
 
     class "react-redux" <<(N, green) library >> {
-        Redux for our app
+        State management of our app
     }
 
 }
@@ -104,8 +108,14 @@ package "node modules" {
 "o3as" <..> "apiSlice"
 "apiSlice" <..> "Store"
 "pdfCreator" <..> "pdfmake"
-"Store" <..> "Graph"
+"Store" <..> "App"
 "Graph" <.. "OptionsFormatter"
+"Graph" <..> "math"
+"apiSlice" <..> "@reduxjs/toolkit/query/react"
+"Store" <..> "react-redux"
+"App" <..> "react"
+
 "App" o-- "Graph"
+"App" <..> "pdfCreator" 
 
 @enduml
