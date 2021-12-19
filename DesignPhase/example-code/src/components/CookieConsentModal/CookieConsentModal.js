@@ -12,7 +12,7 @@ function CookieConsentModal(props) {
     
     let i = props.open;
     i = props.onClose;
-    i = props.message;
+    i = props.error;
     
 
     return <>
