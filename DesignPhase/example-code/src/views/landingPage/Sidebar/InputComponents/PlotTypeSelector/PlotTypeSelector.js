@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useGetPlotsQuery } from "../../../../../store/apiSlice";
+import { useGetPlotsQuery } from "../../../../../services/API/apiSlice";
 
 /**
  * enables the user to select a different plot type
