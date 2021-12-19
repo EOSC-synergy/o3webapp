@@ -7,7 +7,7 @@ import { updatedModelGroup, addedModelGroup } from "../../../../../store/modelsS
 /**
  * enables the user to configure models that should be visible in the plot clustered as model groups
  * @param {Object} props 
- * @param {function} props.error - function to report errors
+ * @param {function} props.reportError - function to report errors
  * @returns {JSX} a jsx containing a ModelGroupModal and a ModelGroupCard and EditModelGroupModal per model group
  */
 function ModelGroupConfigurator(props) {
@@ -64,13 +64,13 @@ function ModelGroupConfigurator(props) {
         setAddModalVisible(true);
     }
 
-    let i = props.error;
+    let i = props.reportError;
 
 
     return (
         <>
-            <AddModelGroupModal error={props.error} />
-            <ModelGroupCard error={props.error} />
+            <AddModelGroupModal error={props.reportError} />
+            <ModelGroupCard error={props.reportError} />
             {/* <ModelGroup /> */}
         </>
     );

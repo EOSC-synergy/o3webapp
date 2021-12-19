@@ -23,14 +23,6 @@ function App() {
     const closeErrorModal = () => {
         setError(null);
     }
-    
-    const handleSidebarOpen = () => {
-        setOpenSidebar(true);
-    }
-
-    const handleSidebarClose = () => {
-        setOpenSidebar(true);
-    }
 
     const closeCookieConsentModal = () => {
     }
@@ -41,7 +33,6 @@ function App() {
         <NavBar error={reportError} handleSidebarOpen={handleSidebarOpen} />
         <Graph error={reportError} />
         <Footer error={reportError} />
-        <Sidebar error={reportError} open={openSidebar} onClose={handleSidebarClose} />
         <ErrorMessageModal open={error !== null} message={error} onClose={closeErrorModal} />
         <CookieConsentModal open={showCookieConsentModal} onClose={onCloseCookieConsentModal} error={reportError} />
     </>

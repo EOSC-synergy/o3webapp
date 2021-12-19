@@ -6,12 +6,12 @@ import LocationSelector from "../LatitudeBandSelector/LatitudeBandSelector";
  * enables the user to select / deselect regions as well as entering a private region {@link LatitudeBandSelector}
  * @todo add redux connection
  * @param {Object} props
- * @param {function} props.error - used to report error functions
+ * @param {function} props.reportError - used to report error functions
  * @returns {JSX} 
  */
 function RegionSelector(props) {
 
-    let i = props.error;
+    let i = props.reportError;
 
     /**
      * gets default regions that are available in the return recovery plot

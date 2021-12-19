@@ -5,7 +5,7 @@ import { setLocation } from "../../../../../store/plotSlice";
 /**
  * Enables the user to choose minimum and maximum latitude
  * @param {Object} props
- * @param {function} props.error - error handling
+ * @param {function} props.reportError - error handling
  * @returns {JSX} a JSX containing a dropdown and if "individual latitude band" is selected a number input field
  */
 function LatitudeBandSelector(props) {
@@ -22,7 +22,7 @@ function LatitudeBandSelector(props) {
 
     // const dispatch = useDispatch()
     const [selectedLocations, setSelectedLocations] = React.useState(props.defaultLocation);
-    let i = props.error;
+    let i = props.reportError;
 
     // props.allowMultipleRegions;     // TODO: how to cope with multiple possible regions in return / recovery plot?
 

@@ -5,12 +5,12 @@ import { setDisplayXRange } from "../../../../../store/plotSlice";
 /**
  * enables the user to choose the range that should be visible on the x Axis of the plot
  * @param {Object} props
- * @prop {function} props.error - function for error handling
+ * @prop {function} props.reportError - function for error handling
  * @returns {JSX} a jsx containing a range slider
  */
 function XAxisSlider(props) {
 
-    let i = props.error;
+    let i = props.reportError;
     
     const dispatch = useDispatch()
 
