@@ -31,7 +31,8 @@ const modelsSlice = createSlice({
     name: "models",
     initialState,
     reducers: {
-        setModels(state, action) { },
+        updatedModelGroup(state, action) { },
+        addedModelGroup(state, action) { },
         setVisibility(state, action) { },
         setStatisticalValuesIncluded(state, action) { },
         addStatisticalValue(state, action) { },
@@ -40,7 +41,8 @@ const modelsSlice = createSlice({
 })
 
 export const { 
-    setModels,
+    updatedModelGroup,
+    addedModelGroup,
     setVisibility, 
     setStatisticalValuesIncluded, 
     addStatisticalValue, 

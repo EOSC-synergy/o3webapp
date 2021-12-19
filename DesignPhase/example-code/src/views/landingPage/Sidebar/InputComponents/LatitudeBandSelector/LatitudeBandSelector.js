@@ -1,5 +1,6 @@
 import React from "react";
-import {useDispatch} from "react-redux"
+import { useDispatch } from "react-redux"
+import { setLocation } from "../../../../../store/plotSlice";
 
 const min = -90;
 const max = +90;
@@ -26,7 +27,6 @@ export default function LocationSelector(props) {
 
     // props.allowMultipleRegions;     // TODO: how to cope with multiple possible regions in return / recovery plot?
 
-    // TODO: -> Redux
     const handleChangeLocation = (event) => {
         setLocation(event.target.value);
         dispatch(setLocation(event.target.value))

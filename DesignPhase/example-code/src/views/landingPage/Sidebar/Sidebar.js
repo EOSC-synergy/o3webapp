@@ -2,6 +2,8 @@ import * as React from 'react';
 import Section from './Section/Section.js';
 import defaultStructure from '../../../config/defaultConfig.json';
 import DownloadModal from './DownloadModal/DownloadModal.js';
+import { setCurrentType } from '../../../store/plotSlice.js';
+import { useDispatch } from "react-redux"
 
 /**
  * Contains all input components responsible for the modification 
@@ -14,18 +16,21 @@ import DownloadModal from './DownloadModal/DownloadModal.js';
  */
 export default function Sidebar(props) {
 
+    const dispatch = useDispatch()
+
     props.onClose;
 
     const [openDownloadModal, setOpenDownloadModal] = React.useState(false);
     const [expandedSection, setExpandedSection] = React.useState(null); // -> idx of sections array
 
-    // TODO: -> Redux?
+
     const [plotType, setPlotType] = React.useState("");
     // This function should probably stay here
     const changePlotType = (newPlotType) => {
         // check if newPlotType is valid
         // update plotType
         setPlotType(newPlotType);
+        dispatch(setCurrentType(newPlotType))
         // rerender sections -> lose current value?
     }
 

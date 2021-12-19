@@ -1,6 +1,8 @@
 import React from "react";
 import AddModelGroupModal from "./AddModelGroupModal/AddModelGroupModal";
 import ModelGroupCard from "./ModelGroupCard/ModelGroupCard";
+import { useDispatch } from "react-redux"
+import { updatedModelGroup, addedModelGroup } from "../../../../../store/modelsSlice";
 
 /**
  * enables the user to configure models that should be visible in the plot clustered as model groups
@@ -9,7 +11,8 @@ import ModelGroupCard from "./ModelGroupCard/ModelGroupCard";
  */
 export default function ModelGroupConfigurator(props) {
     
-    // TODO: redux
+    const dispatch = useDispatch()
+    
     const [modelGroups, setModelGroups] = React.useState([]);
     // modelGroups = [
     //     {
@@ -38,7 +41,7 @@ export default function ModelGroupConfigurator(props) {
 
     // TODO: Redux
     const addModelGroup = (name, models) => {
-
+        dispatch(addedModelGroup({name, models}))   
     }
 
     // TODO: Redux
@@ -54,6 +57,16 @@ export default function ModelGroupConfigurator(props) {
             percentileVisible
         ) => {
         // id = index of model group in array above
+        dispatch(updatedModelGroup({
+            id,
+            name,
+            models,
+            hidden,
+            derivativeVisible,
+            meanVisbile,
+            medianVisible,
+            percentileVisible
+        }))
     }
 
 
