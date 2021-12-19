@@ -1,6 +1,6 @@
 import React from "react";
 import EditModelGroupModal from "../EditModelGroupModal/EditModelGroupModal";
-
+import { useDispatch, useSelector } from "react-redux"
 
 /**
  * a card containing information about the a modal group
@@ -17,7 +17,7 @@ import EditModelGroupModal from "../EditModelGroupModal/EditModelGroupModal";
  */
 export default function ModelGroupCard(props) {
     
-    // TODO: Redux
+    const modelGroupData = useSelector(state => state.models[props.name])
     props.name;
     props.models;
     props.meanVisible;

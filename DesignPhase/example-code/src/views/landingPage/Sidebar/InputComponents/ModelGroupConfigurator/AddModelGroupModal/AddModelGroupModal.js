@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux"
-import { getModels } from "../../../../../../store/apiSlice"
+import { useGetModelsQuery } from "../../../../../../store/apiSlice"
 import { addedModelGroup, updatedModelGroup } from "../../../../../../store/modelsSlice"
 
 /**
@@ -90,7 +90,7 @@ export default function AddModelGroupModal(props) {
     }
 
     const getAllAvailableModels = () => {
-        const {data, isSuccess, isLoading, isError, error} = getModels()
+        const {data, isSuccess, isLoading, isError, error} = useGetModelsQuery()
         // display spinner until loading finished
     }
 

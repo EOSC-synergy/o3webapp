@@ -48,4 +48,6 @@ export const {
     setMonths,
 } = plotSlice.actions
 
+export const selectCurrentPlotType = state => state.plot.plotType
+
 export default plotSlice.reducer

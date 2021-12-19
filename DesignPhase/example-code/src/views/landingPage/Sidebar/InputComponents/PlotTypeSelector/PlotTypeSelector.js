@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useGetPlotsQuery } from "../../../../../store/apiSlice";
 
 /**
  * enables the user to select a different plot type
@@ -8,9 +9,9 @@ import React, { useState } from "react";
  */
 export default function PlotTypeSelector(props) {
 
-    // TODO: API call -> wohin?
     const getAllAvailablePlotTypes = () => {
-        return null;
+        const {data, isSuccess, isLoading, isError, error} = useGetPlotsQuery()
+        // re-render component based on isLoading <-> isSuccess
     }
     
     // TODO: -> Redux

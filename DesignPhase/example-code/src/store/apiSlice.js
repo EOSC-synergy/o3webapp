@@ -40,8 +40,8 @@ export const apiSlice = createApi({
 
 // Export the auto-generated hook for the query endpoints
 export const { 
-  useGetPostsQuery,
-  useGetPostQuery,
+  useGetPlotsQuery,
+  useGetModelsQuery,
   useGetBuiltPlotDataMutation,
   useGetRawPlotDataMutation,
  } = apiSlice
