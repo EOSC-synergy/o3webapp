@@ -10,6 +10,10 @@ export const apiSlice = createApi({
   
   // The "endpoints" represent operations and requests for this server
   endpoints: builder => ({
+
+    getApiSpecification: builder.query({
+      query: () => '/openapi.json'
+    }),
     
     getModels: builder.query({
       query: () => '/models'
@@ -17,6 +21,7 @@ export const apiSlice = createApi({
     getPlots: builder.query({
       query: () => '/plots'
     }),
+    
     getRawPlotData: builder.mutation({
       query: payload => ({
         // /data/tco3_return?begin=1959&end=2100&lat_min=-90&lat_max=90
@@ -40,6 +45,7 @@ export const apiSlice = createApi({
 
 // Export the auto-generated hook for the query endpoints
 export const { 
+  useGetApiSpecificationQuery,
   useGetPlotsQuery,
   useGetModelsQuery,
   useGetBuiltPlotDataMutation,
