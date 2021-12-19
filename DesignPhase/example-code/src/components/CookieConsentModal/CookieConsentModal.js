@@ -3,10 +3,10 @@ import React, { useState } from "react";
 /**
  * displays an error message
  * @param {Object} props 
- *  props.open -> whether the error message modal should be displayed
- *  props.onClose -> handles closing of the modal
- *  props.error -> error function
- * @returns a jsx file containing a modal with the given error message
+ * @param {boolen} props.open -> whether the error message modal should be displayed
+ * @param {function} props.onClose -> handles closing of the modal
+ * @param {function} props.error -> error function
+ * @returns {JSX} a jsx file containing a modal with the given error message
  */
 function CookieConsentModal(props) {
     
@@ -15,8 +15,8 @@ function CookieConsentModal(props) {
     i = props.message;
     
 
-    return <div>
-    </div>;
+    return <>
+    </>;
 }
 
-export default ErrorMessageModal;
+export default CookieConsentModal;

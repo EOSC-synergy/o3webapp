@@ -10,9 +10,9 @@ import PlotTypeSelector from './InputComponents/PlotTypeSelector/PlotTypeSelecto
  * Contains all input components responsible for the modification 
  * of the plot settings.
  * @param {Object} props 
- *  props.open ->  whether sideBar should be open
- *  props.onClose -> handles closing of the sidebar
- *  props.error -> enables component to report an error
+ * @param {boolean} props.open -  whether sideBar should be open
+ * @param {function} props.onClose - handles closing of the sidebar
+ * @param {function} props.error - enables component to report an error
  * @returns {JSX} a jsx containing a sidebar with sections containing input components, a download button and a plotType dropdown
  */
 function Sidebar(props) {

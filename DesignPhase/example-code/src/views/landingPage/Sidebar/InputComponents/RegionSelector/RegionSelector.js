@@ -4,21 +4,18 @@ import LocationSelector from "../LatitudeBandSelector/LatitudeBandSelector";
 
 /**
  * enables the user to select / deselect regions as well as entering a private region {@link LatitudeBandSelector}
-
+ * @todo add redux connection
  * @param {Object} props
- * @param {Array} props.selectedRegions - the currently selected regions
- * @param {Function} props.error - used to report error functions
+ * @param {function} props.error - used to report error functions
  * @returns {JSX} 
  */
 function RegionSelector(props) {
 
-    let i = props.selectedRegions;
-    i = props.error;
+    let i = props.error;
 
-    i = props.customRegion;
-    i = props.changeCustomRegion;
-
-    // TODO -> API Call: ist das in der API verfügbar? sonst in einer config json "hardcoden"
+    /**
+     * gets default regions that are available in the return recovery plot
+     */
     const getDefaultRegions = () => {
 
     }

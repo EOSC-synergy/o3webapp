@@ -5,9 +5,8 @@ import SeasonCheckBoxGroup from "./SeasonCheckboxGroup/SeasonCheckBoxGroup";
 
 /**
  * enables the user to select a month, season or the whole year
- * @param {*} props 
- *  props.defaultTimeSelection -> the default months that should be selected
- * @returns a jsx containing a checkboxgroup per season and a "all year" checkbox
+ * @param {Object} props 
+ * @returns {JSX} a jsx containing a checkboxgroup per season and a "all year" checkbox
  */
 function TimeCheckBoxGroup(props) {
     
@@ -33,32 +32,43 @@ function TimeCheckBoxGroup(props) {
         }
     ]
 
-
-    // TODO: -> Redux
     const currentPlotType = selectCurrentPlotType()
     const monthArray = useSelector(state => state.plot[currentPlotType].months)
     const [time, setTime] = React.useState(monthArray); //new Array(12).fill(true)
 
     /**
      * handles if a users wants to select / deselect a season
-     * @param {*} event the event that triggered a function call
-     * @param {*} season the index of the season that has been clicked
+     * @param {event} event the event that triggered a function call
+     * @param {int} seasonId the index of the season that has been clicked
      */
-    const handleChangeSeason = (event, season) => {
+    const handleChangeSeason = (event, seasonId) => {
+        // do stuff
+        handleUpdatedSelection();
     }
 
     /**
      * selects / deselects all year
      */
     const handleChangeYear = () => {
-        // pass
+        // do stuff
+        handleUpdatedSelection();
     }
 
+    /**
+     * selects / deselects a single month
+     * @param {event} event the event that triggered the function call
+     * @param {int} month the number representing the month
+     */
     const handleChangeMonth = (event, month) => {
-        // pass
+        // do stuff
+        handleUpdatedSelection();
     }
 
+    /**
+     * handles update the time selection by pushing the new value to the redux store
+     */
     const handleUpdatedSelection = () => {
+        // do stuff
         dispatch(setMonths(time))
     }
 

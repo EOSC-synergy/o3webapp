@@ -2,20 +2,21 @@ import React, { useState } from "react";
 
 /**
  * enables the user to select a reference year
- * @param {*} props 
- *  props.defaultReferenceYear -> a int containing the default reference year
- *  props.min -> minimum value for reference year
- *  props.max -> maximum value for reference year
- * @returns a jsx containing a slider to select the reference year
+ * @todo add redux connection: should min and max also be in redux?
+ * @param {Object} props 
+ * @param {function} props.error - function to handle errors
+ * @returns {JSX} a jsx containing a slider to select the reference year
  */
 function ReferenceYearSlider(props) {
 
-    let i = props.min;
-    i = props.max;
-    i = props.error;
+    let i = props.error;
 
-    i = props.currReferenceYear;
-    i = props.changeReferenceYear;
+    /**
+     * gets the smallest and biggest possible number for the reference year
+     */
+    const getReferenceRange = () => {
+
+    }
 
     return (
         <>
