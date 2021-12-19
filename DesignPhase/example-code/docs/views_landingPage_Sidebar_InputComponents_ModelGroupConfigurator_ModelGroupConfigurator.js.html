@@ -29,47 +29,25 @@
             <pre class="prettyprint source linenums"><code>import React from "react";
 import AddModelGroupModal from "./AddModelGroupModal/AddModelGroupModal";
 import ModelGroupCard from "./ModelGroupCard/ModelGroupCard";
+import { useDispatch } from "react-redux"
+import { updatedModelGroup, addedModelGroup } from "../../../../../store/modelsSlice";
 
 /**
  * enables the user to configure models that should be visible in the plot clustered as model groups
  * @param {Object} props 
- * @returns a jsx containing a ModelGroupModal and a ModelGroupCard and EditModelGroupModal per model group
+ * @param {function} props.error - function to report errors
+ * @returns {JSX} a jsx containing a ModelGroupModal and a ModelGroupCard and EditModelGroupModal per model group
  */
 function ModelGroupConfigurator(props) {
     
-    // TODO: redux
+    const dispatch = useDispatch()
+    
     const [modelGroups, setModelGroups] = React.useState([]);
-    // modelGroups = [
-    //     {
-    //         name: "Somehting",
-    //         models: [
-    //             {
-    //                 name: "Something 2",
-    //                 institute: "Something elese"
-    //                 dataset: "more something"
-    //                 mean: true,
-    //                 derivative: true,
-    //                 median: true,
-    //                 percentile: true,
-    //                 color: "XXX",
-    //                 plotStyle: "XXX",
 
-    //             }
-    //         ],
-    //         hidden: false,
-    //         derivativeVisible: false,
-    //         meanVisible: false,
-    //         medianVisible: false,
-    //         percentileVisible: false
-    //     }
-    // ]
-
-    // TODO: Redux
     const addModelGroup = (name, models) => {
-
+        dispatch(addedModelGroup({name, models}))   
     }
 
-    // TODO: Redux
     const editModelGroup = 
         (
             id,
@@ -82,6 +60,16 @@ function ModelGroupConfigurator(props) {
             percentileVisible
         ) => {
         // id = index of model group in array above
+        dispatch(updatedModelGroup({
+            id,
+            name,
+            models,
+            hidden,
+            derivativeVisible,
+            meanVisbile,
+            medianVisible,
+            percentileVisible
+        }))
     }
 
 
@@ -126,13 +114,13 @@ export default ModelGroupConfigurator;</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="InputComponents.html">InputComponents</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddModelGroupModal">AddModelGroupModal</a></li><li><a href="global.html#EditModelGroupModal">EditModelGroupModal</a></li><li><a href="global.html#ErrorMessageModal">ErrorMessageModal</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Graph">Graph</a></li><li><a href="global.html#ModelGroupCard">ModelGroupCard</a></li><li><a href="global.html#ModelGroupConfigurator">ModelGroupConfigurator</a></li><li><a href="global.html#NavBar">NavBar</a></li><li><a href="global.html#OffsetConfigurator">OffsetConfigurator</a></li><li><a href="global.html#PlotNameField">PlotNameField</a></li><li><a href="global.html#PlotTypeSelector">PlotTypeSelector</a></li><li><a href="global.html#ReferenceYearSlider">ReferenceYearSlider</a></li><li><a href="global.html#RegionSelector">RegionSelector</a></li><li><a href="global.html#SeasonCheckBoxGroup">SeasonCheckBoxGroup</a></li><li><a href="global.html#Section">Section</a></li><li><a href="global.html#Sidebar">Sidebar</a></li><li><a href="global.html#TimeCheckBoxGroup">TimeCheckBoxGroup</a></li><li><a href="global.html#XAxisSlider">XAxisSlider</a></li><li><a href="global.html#YAxisSlider">YAxisSlider</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="InputComponents.html">InputComponents</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddModelGroupModal">AddModelGroupModal</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#CookieConsentModal">CookieConsentModal</a></li><li><a href="global.html#EditModelGroupModal">EditModelGroupModal</a></li><li><a href="global.html#ErrorMessageModal">ErrorMessageModal</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Graph">Graph</a></li><li><a href="global.html#LatitudeBandSelector">LatitudeBandSelector</a></li><li><a href="global.html#ModelGroupCard">ModelGroupCard</a></li><li><a href="global.html#ModelGroupConfigurator">ModelGroupConfigurator</a></li><li><a href="global.html#NavBar">NavBar</a></li><li><a href="global.html#OffsetConfigurator">OffsetConfigurator</a></li><li><a href="global.html#PlotNameField">PlotNameField</a></li><li><a href="global.html#PlotTypeSelector">PlotTypeSelector</a></li><li><a href="global.html#ReferenceYearSlider">ReferenceYearSlider</a></li><li><a href="global.html#RegionSelector">RegionSelector</a></li><li><a href="global.html#SeasonCheckBoxGroup">SeasonCheckBoxGroup</a></li><li><a href="global.html#Section">Section</a></li><li><a href="global.html#Sidebar">Sidebar</a></li><li><a href="global.html#TimeCheckBoxGroup">TimeCheckBoxGroup</a></li><li><a href="global.html#XAxisSlider">XAxisSlider</a></li><li><a href="global.html#YAxisSlider">YAxisSlider</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Sat Dec 18 2021 21:31:51 GMT+0100 (Mitteleuropäische Normalzeit)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Sun Dec 19 2021 18:43:24 GMT+0100 (Mitteleuropäische Normalzeit)
 </footer>
 
 <script> prettyPrint(); </script>

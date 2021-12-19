@@ -3,34 +3,30 @@ import { useDispatch } from "react-redux"
 import { setDisplayXRange } from "../../../../../store/plotSlice";
 
 /**
- * enables the user to zoom in and out of the y-axis
+ * enables the user to select a range that should be diisplayed at the y axis of the plot
  * @param {Object} props 
- *  props.currMin -> the current minimum value of the y-axis
- *  props.currMax -> the current maximum value of the y-axis
- *  props.min -> the smallest possible minimum value of the y-axis
- *  props.max -> the biggest possible maximum value of the y-axis
- *  props.changeMin -> changes the minimum value displayed at the y-axis
- *  props.changeMax -> changes the maximum value displayed at the y-axis
- *  props.error -> function for error handling
- * @public
- * @returns a jsx containing a range slider
+ * @param {function} props.reportError -> function for error handling
+ * @returns {JSX} a jsx containing a range slider
  */
 function YAxisSlider(props) {
     
-    let i = props.min;
-    i = props.max;
-    i = props.error;
-
-    // TODO: -> Redux
-    i = props.currMin;
-    i = props.currMax;
-    i = props.changeMin;
-    i = props.changeMax;
+    i = props.reportError;
  
     const dispatch = useDispatch()
 
+    /**
+     * handles the change from the slider
+     * dispatches the action into redux
+     */
     const onChange = () => {
         dispatch(setDisplayXRange({currMin, currMax}))
+    }
+
+    /**
+     * get the smallest and biggest possible values, i.e. the end of the slider
+     */
+    const getPossibleRange = () => {
+
     }
 
 

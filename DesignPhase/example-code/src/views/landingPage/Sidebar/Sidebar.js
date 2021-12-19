@@ -10,52 +10,53 @@ import PlotTypeSelector from './InputComponents/PlotTypeSelector/PlotTypeSelecto
  * Contains all input components responsible for the modification 
  * of the plot settings.
  * @param {Object} props 
- *  props.open ->  whether sideBar should be open
- *  props.onClose -> handles closing of the sidebar
- *  props.error -> enables component to report an error
+ * @param {boolean} props.isOpen -  whether sideBar should be open
+ * @param {function} props.onClose - handles closing of the sidebar
+ * @param {function} props.reportError - enables component to report an error
  * @returns {JSX} a jsx containing a sidebar with sections containing input components, a download button and a plotType dropdown
  */
 function Sidebar(props) {
 
     const dispatch = useDispatch()
     let i = props.onClose;
+    i = props.reportError;
+    i = props.isOpen;
 
-    const [openDownloadModal, setOpenDownloadModal] = React.useState(false);
+    const [isDownloadModalVisible, setDownloadModalVisible] = React.useState(false);
     const [expandedSection, setExpandedSection] = React.useState(null); // -> idx of sections array
-
 
     const [plotType, setPlotType] = React.useState("");
 
-    /**
-     * Changes the plot type and updates the sidebar according to new plot type
-     * @param {String} newPlotType 
-     */
-    const changePlotType = (newPlotType) => {
-        // check if newPlotType is valid
-        // update plotType
-        setPlotType(newPlotType);
-        dispatch(setCurrentType(newPlotType))
-        // rerender sections -> lose current value?
-    }
+    // /**
+    //  * Changes the plot type and updates the sidebar according to new plot type
+    //  * @param {String} newPlotType 
+    //  */
+    // const changePlotType = (newPlotType) => {
+    //     // check if newPlotType is valid
+    //     // update plotType
+    //     setPlotType(newPlotType);
+    //     dispatch(setCurrentType(newPlotType))
+    //     // rerender sections -> lose current value?
+    // }
 
     /**
      * closes the download modal
      */
-    const onCloseDownloadModal = () => {
+    const closeDownloadModal = () => {
         setOpenDownloadModal(false);
     }
 
     /**
      * shows the download modal
      */
-    const onOpenDownloadModal = () => {
+    const openDownloadModal = () => {
         setOpenDownloadModal(true);
     }
 
     /**
      * collapses all sections
      */
-    const onCollapseSection = () => {
+    const collapseSection = () => {
         setExpandedSection(null);
     }
 
@@ -64,13 +65,13 @@ function Sidebar(props) {
      * collapses all other currently expanded sections
      * @param {int} i 
      */
-    const onExpandSection = (i) => {
+    const expandSection = (i) => {
         setExpandedSection(i);
     }
 
     return (
     <>
-        {props.open && 
+        {props.isOpen && 
             <>
 
                 <PlotTypeSelector plotType={plotType} />
