@@ -35,6 +35,8 @@ function Graph(props) {
     // display loading spinner instead of graph until isSuccess = true
     // then load data
     
+    const getDataToDisplay = () => {}
+    const getPlotFile = (imgFormat) => {}
     
     const seriesData = generatePlotSeries(models)
 

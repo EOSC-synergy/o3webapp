@@ -16,8 +16,7 @@ export default function DownloadModal(props) {
 
     const allAvailableDataFormats = [];
 
-    const downloadPdf = () => {};
-    const downloadSvg = () => {};
+    const downloadImg = (imgType) => {};
 
     if (props.open) {
         return (<></>);
