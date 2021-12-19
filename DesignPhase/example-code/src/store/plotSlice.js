@@ -53,5 +53,7 @@ export const {
 } = plotSlice.actions
 
 export const selectCurrentPlotType = state => state.plot.plotType
+export const selectCurrentPlotId = state => state.plot.plotId
+export const selectCurrentSettings = (state, plotId) => state.plot.settings[plotId]
 
 export default plotSlice.reducer

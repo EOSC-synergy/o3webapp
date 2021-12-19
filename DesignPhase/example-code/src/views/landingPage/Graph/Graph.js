@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {useSelector} from 'react-redux'
 import { useGetRawPlotDataMutation } from '../../../store/apiSlice';
+import { selectCurrentModelGroups } from '../../../store/modelsSlice';
+import { selectCurrentPlotId, selectCurrentPlotType, selectCurrentSettings } from '../../../store/plotSlice';
 import {calculatePlotSeries} from "../../../utils/math"
 
 /**
@@ -9,10 +11,10 @@ import {calculatePlotSeries} from "../../../utils/math"
  */
 function Graph(props) {
 
-    const plotType = useSelector(store => store.plot.plotType)
-    const plotId = useSelector(store => store.plot.plotId)
-    const options = useSelector(store => store.plot[plotId].options)
-    const models = useSelector(store => store.models[plotId].all)
+    const plotType = selectCurrentPlotType()
+    const plotId = selectCurrentPlotId()
+    const options = useSelector(state => selectCurrentSettings(state, plotId))
+    const models = useSelector(state => selectCurrentModelGroup(state, plotId, "all"))
     
     const { data, isError, error, isLoading, isSuccess } = useGetRawPlotDataMutation(
         {
@@ -22,9 +24,17 @@ function Graph(props) {
             modelList,
         }
     )
+    
+    if (isSuccess) {
+        // updateCurrentModelGroup with fetched data
+    }
+
+
     // display loading spinner instead of graph until isSuccess = true
     // then load data
-    const seriesData = generatePlotSeries(models, data)
+    
+    
+    const seriesData = generatePlotSeries(models)
 
     return (<div>
         {/* Graph displayed with ApexCharts goes here */}
