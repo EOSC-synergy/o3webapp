@@ -14,7 +14,6 @@ function TimeCheckBoxGroup(props) {
     let i = props.error;
     const dispatch = useDispatch()
 
-
     const sesaons = [
         {
             name: 'Spring',
