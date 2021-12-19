@@ -1,11 +1,11 @@
 @startuml
 actor Steve
 participant "//<<Component>>//\nModelGroup" as MG #3489eb
-participant "Graph\n//Component//" as Graph #3489eb
-database "Store\n//Redux//" as Store #808080
+participant "//<<Component>>//\nGraph" as Graph #3489eb
+database "//<<Redux>>//\nStore\n" as Store #808080
 participant "//<<reducer>>//\naddStatisticalValue" as reducer #808080
-participant "apexcharts\n//library//" as apexcharts #ffff00
-participant "math utils\n//library//" as math #ffff00
+participant "//<<library>>//\napexcharts" as apexcharts #ffff00
+participant "//<<library>>//\nmath" as math #ffff00
 participant "//<<library>>//\nOptionsFormatter" as formatter #ffff00
 
 
