@@ -6,11 +6,11 @@ export default function RegionSelector(props) {
     props.selectedRegions;
     props.error;
 
-    // TODO -> redux
+    // TODO -> redux: wird in parent comp gehandlet
     props.customRegion;
     props.changeCustomRegion;
 
-    // TODO -> API Call
+    // TODO -> API Call: ist das in der API verfügbar? sonst in einer config json "hardcoden"
     const getDefaultRegions = () => {
 
     }

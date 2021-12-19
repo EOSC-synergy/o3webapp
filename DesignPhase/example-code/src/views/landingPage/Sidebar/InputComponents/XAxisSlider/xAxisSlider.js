@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux"
+import { setDisplayXRange } from "../../../../../store/plotSlice";
 
 /**
  * enables the user to zoom in and out of the x-axis
@@ -15,11 +17,16 @@ export default function XAxisSlider(props) {
     props.max;
     props.error;
 
-    // TODO: -> Redux
     props.currMin;
     props.currMax;
     props.changeMin;
     props.changeMax;
+
+    const dispatch = useDispatch()
+
+    const onChange = () => {
+        dispatch(setDisplayXRange({min, max}))
+    }
     
     return (
         <>

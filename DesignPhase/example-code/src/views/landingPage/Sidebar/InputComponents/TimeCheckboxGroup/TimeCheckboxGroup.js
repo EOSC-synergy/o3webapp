@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux"
+import { selectCurrentPlotType, setMonths } from "../../../../../store/plotSlice";
 import SeasonCheckBoxGroup from "./SeasonCheckboxGroup/SeasonCheckBoxGroup";
 
 /**
@@ -10,6 +12,7 @@ import SeasonCheckBoxGroup from "./SeasonCheckboxGroup/SeasonCheckBoxGroup";
 export default function TimeCheckBoxGroup(props) {
     
     props.error;
+    const dispatch = useDispatch()
 
 
     const sesaons = [
@@ -33,7 +36,9 @@ export default function TimeCheckBoxGroup(props) {
 
 
     // TODO: -> Redux
-    const [time, setTime] = React.useState(new Array(12).fill(true));
+    const currentPlotType = selectCurrentPlotType()
+    const monthArray = useSelector(state => state.plot[currentPlotType].months)
+    const [time, setTime] = React.useState(monthArray); //new Array(12).fill(true)
 
     /**
      * handles if a users wants to select / deselect a season
@@ -52,6 +57,10 @@ export default function TimeCheckBoxGroup(props) {
 
     const handleChangeMonth = (event, month) => {
         // pass
+    }
+
+    const handleUpdatedSelection = () => {
+        dispatch(setMonths(time))
     }
 
     return (

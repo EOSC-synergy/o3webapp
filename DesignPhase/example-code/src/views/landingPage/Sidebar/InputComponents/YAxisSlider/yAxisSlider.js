@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux"
+import { setDisplayXRange } from "../../../../../store/plotSlice";
 
 /**
  * enables the user to zoom in and out of the y-axis
@@ -21,6 +23,12 @@ export default function YAxisSlider(props) {
     props.changeMin;
     props.changeMax;
  
+    const dispatch = useDispatch()
+
+    const onChange = () => {
+        dispatch(setDisplayXRange({min, max}))
+    }
+
 
     return (
         <>

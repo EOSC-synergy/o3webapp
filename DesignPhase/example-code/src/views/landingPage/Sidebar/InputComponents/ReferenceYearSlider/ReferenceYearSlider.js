@@ -14,7 +14,7 @@ export default function ReferenceYearSlider(props) {
     props.max;
     props.error;
 
-    // TODO -> redux
+    // TODO -> redux, wird in parent comp gehandlet
     props.currReferenceYear;
     props.changeReferenceYear;
 
