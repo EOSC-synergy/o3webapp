@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: views/landingPage/Sidebar/InputComponents/XAxisSlider/xAxisSlider.js</title>
+    <title>JSDoc: Source: components/CookieConsentModal/CookieConsentModal.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: views/landingPage/Sidebar/InputComponents/XAxisSlider/xAxisSlider.js</h1>
+    <h1 class="page-title">Source: components/CookieConsentModal/CookieConsentModal.js</h1>
 
     
 
@@ -27,41 +27,27 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import React, { useState } from "react";
-import { useDispatch } from "react-redux"
-import { setDisplayXRange } from "../../../../../store/plotSlice";
 
 /**
- * enables the user to choose the range that should be visible on the x Axis of the plot
- * @param {Object} props
- * @prop {function} props.error - function for error handling
- * @returns {JSX} a jsx containing a range slider
+ * displays an error message
+ * @param {Object} props 
+ * @param {boolen} props.open -> whether the error message modal should be displayed
+ * @param {function} props.onClose -> handles closing of the modal
+ * @param {function} props.error -> error function
+ * @returns {JSX} a jsx file containing a modal with the given error message
  */
-function XAxisSlider(props) {
-
-    let i = props.error;
+function CookieConsentModal(props) {
     
-    const dispatch = useDispatch()
-
-    /**
-     * handles change of the slider by pushing the new value to redux
-     */
-    const onChange = () => {
-        dispatch(setDisplayXRange({currMin, currMax}))
-    }
-
-    /**
-     * get the smallest and biggest possible values, i.e. the end of the slider
-     */
-    const getPossibleRange = () => {
-    }
+    let i = props.open;
+    i = props.onClose;
+    i = props.message;
     
-    return (
-        &lt;>
-        &lt;/>
-    );
+
+    return &lt;>
+    &lt;/>;
 }
 
-export default XAxisSlider;</code></pre>
+export default CookieConsentModal;</code></pre>
         </article>
     </section>
 

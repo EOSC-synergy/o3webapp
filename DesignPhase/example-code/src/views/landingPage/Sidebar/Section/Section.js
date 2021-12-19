@@ -10,31 +10,31 @@ import TimeCheckBoxGroup from "../InputComponents/TimeCheckboxGroup/TimeCheckbox
 import XAxisSlider from "../InputComponents/XAxisSlider/XAxisSlider";
 import YAxisSlider from "../InputComponents/YAxisSlider/YAxisSlider";
 import PropTypes from 'prop-types'; 
+import LatitudeBandSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
 
 /**
  * an expandable section containing a list of inputComponents as well as a name
- * @param {Object} props <pre>
- *  props.components -> an array containing a string representation of all components that should be plotted
- *  props.name -> the name of the section
- *  props.error -> used for error handling
- *  props.expanded -> whether this section should be expanded
- *  props.onCollapse -> function to collapse this section
- *  props.onExpand -> function to expand this section
- * </pre>
+ * @param {Object} props
+ * @param {Array of String} props.components -> an array containing a string representation of all components that should be plotted
+ * @param {String} props.name -> the name of the section
+ * @param {function} props.reportError -> used for error handling
+ * @param {boolean} props.isExpanded -> whether this section should be expanded
+ * @param {function} props.onCollapse -> function to collapse this section
+ * @param {function} props.onExpand -> function to expand this section
  * @returns {JSX} an accordeon that once expanded displays the components specified by the config files and the API doc
  */
 function Section(props) {
     
     let i = props.components;
     i = props.name;
-    i = props.error;
-    i = props.expanded;
+    i = props.reportError;
+    i = props.isExpanded;
     i = props.onCollapse
     i = props.onExpand;
 
     /**
      * maps a given name to a corresponding component from the ./InputComponents folder
-     * if there is no component with the given name, calls the props.error function
+     * if there is no component with the given name, calls the props.reportError function
      * @public
      * @param {String} name the name of the component
      * @returns a component from the './InputComponents
@@ -55,7 +55,6 @@ function Section(props) {
         {/* For purpose of the UML Diagram */}
         {props.name}
         {mapNameToComponent(props.name)}
-        <LocationSelector />
         <ModelGroupConfigurator />
         <OffsetConfigurator />
         <PlotNameField />
@@ -64,6 +63,7 @@ function Section(props) {
         <XAxisSlider />
         <YAxisSlider />
         <RegionSelector />
+        <LatitudeBandSelector />
     </>;
 }
 

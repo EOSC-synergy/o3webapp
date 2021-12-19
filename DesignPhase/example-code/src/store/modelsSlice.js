@@ -51,5 +51,5 @@ export const {
 
 export default modelsSlice.reducer
 
-export const selectCurrentModelGroups = (state, plotId) => state.models[plotId]
-export const selectCurrentModelGroup = (state, plotId, groupId) => state.models[plotId][groupId]
+export const selectCurrentModelGroups = state => state.models[state.plot.plotId]
+export const selectCurrentModelGroup = (state, groupId) => state.models[state.plot.plotId][groupId]

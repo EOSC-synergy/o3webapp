@@ -5,26 +5,21 @@ import { addedModelGroup, updatedModelGroup } from "../../../../../../store/mode
 
 /**
  * opens a modal where the user can add a new model group
- * @param {*} props 
- *  props.onClose -> function to call if modal should be closed
- *  props.open -> boolean whether the modal should be visible
- *  props.error -> error handling
- *  props.addModaelGroup -> function to add a model group
- * @returns a jsx containing a modal with a transfer list with all available models
+ * @param {Object} props 
+ * @param {function} props.onClose -> function to call if modal should be closed
+ * @param {boolean} props.isOpen -> boolean whether the modal should be visible
+ * @param {function} props.reportError -> error handling
+ * @returns {JSX} a jsx containing a modal with a transfer list with all available models
  */
 function AddModelGroupModal(props) {
 
-    let i = props.open;
+    let i = props.isOpen;
     i = props.onClose;
-    i = props.error;
-
-    // TODO: -> Redux
-    i = props.addModelGroup;
+    i = props.reportError;
 
     // const dispatch = useDispatch()
     
     const [checked, setChecked] = React.useState([]);
-    // const [left, setLeft] = React.useState(models);
     const [left, setLeft] = React.useState([]);
     const [right, setRight] = React.useState([]);
     const [groupName, setGroupName] = React.useState('');
@@ -35,7 +30,7 @@ function AddModelGroupModal(props) {
     const leftChecked = [];
     const rightChecked = [];
 
-    const handleToggle = (value) => () => {
+    const handleChangeElement = (value) => () => {
         const currentIndex = checked.indexOf(value);
         const newChecked = [...checked];
 
@@ -71,26 +66,16 @@ function AddModelGroupModal(props) {
     };
 
     const addNewGroup = () => {
-        props.addModelGroup(groupName, right);
         handleAllLeft();
         setGroupName('');
         dispatch(addedModelGroup({groupName})) // add data (modelList)
-        props.onClose();
     }
 
     const updateGroupName = (event) => {
         event.preventDefault();
     }
 
-    const searchDataLeft = (event) => {
-
-    }
-
-    const searchDataRight = (event) => {
-
-    }
-
-    const searchData = (event) => {
+    const searchData = (event, data) => {
 
     }
 
@@ -101,7 +86,7 @@ function AddModelGroupModal(props) {
 
     return (
         <>
-            {props.open && <></>}
+            {props.isOpen && <></>}
         </>
     );
 }

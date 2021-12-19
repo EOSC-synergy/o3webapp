@@ -7,37 +7,12 @@ import { updatedModelGroup, addedModelGroup } from "../../../../../store/modelsS
 /**
  * enables the user to configure models that should be visible in the plot clustered as model groups
  * @param {Object} props 
- * @returns a jsx containing a ModelGroupModal and a ModelGroupCard and EditModelGroupModal per model group
+ * @param {function} props.reportError - function to report errors
+ * @returns {JSX} a jsx containing a ModelGroupModal and a ModelGroupCard and EditModelGroupModal per model group
  */
 function ModelGroupConfigurator(props) {
     
     const dispatch = useDispatch()
-    
-    const [modelGroups, setModelGroups] = React.useState([]);
-    // modelGroups = [
-    //     {
-    //         name: "Somehting",
-    //         models: [
-    //             {
-    //                 name: "Something 2",
-    //                 institute: "Something elese"
-    //                 dataset: "more something"
-    //                 mean: true,
-    //                 derivative: true,
-    //                 median: true,
-    //                 percentile: true,
-    //                 color: "XXX",
-    //                 plotStyle: "XXX",
-
-    //             }
-    //         ],
-    //         hidden: false,
-    //         derivativeVisible: false,
-    //         meanVisible: false,
-    //         medianVisible: false,
-    //         percentileVisible: false
-    //     }
-    // ]
 
     const addModelGroup = (name, models) => {
         dispatch(addedModelGroup({name, models}))   
@@ -68,32 +43,32 @@ function ModelGroupConfigurator(props) {
     }
 
 
-    const [addModalVisible, setAddModalVisible] = React.useState(false);
-    const [editModalVisible, setEditModalVisible] = React.useState(false);
+    const [isAddModalVisible, setAddModalVisible] = React.useState(false);
+    const [isEditModalVisible, setEditModalVisible] = React.useState(false);
 
-    const handleEditModalClose = () => {
+    const closeEditModal = () => {
         setEditModalVisible(false);
     }
 
-    const handleEditModalOpen = () => {
+    const openEditModal = () => {
         setEditModalVisible(true);
     }
 
-    const handleAddModalClose = () => {
+    const closeAddModal = () => {
         setAddModalVisible(false);
     }
 
-    const handleAddModalOpen = () => {
+    const openAddModal = () => {
         setAddModalVisible(true);
     }
 
-    let i = props.error;
+    let i = props.reportError;
 
 
     return (
         <>
-            <AddModelGroupModal error={props.error} />
-            <ModelGroupCard error={props.error} />
+            <AddModelGroupModal error={props.reportError} />
+            <ModelGroupCard error={props.reportError} />
             {/* <ModelGroup /> */}
         </>
     );

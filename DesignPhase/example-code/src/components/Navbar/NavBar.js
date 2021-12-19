@@ -5,7 +5,7 @@ import * as React from 'react';
  */
 function NavBar(props) {
 
-    let i = props.handleSidebarOpen;
+    let i = props.reportError;
     
     return (<>
         
