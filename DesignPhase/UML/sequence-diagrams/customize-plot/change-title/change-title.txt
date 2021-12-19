@@ -1,0 +1,48 @@
+@startuml
+actor User
+participant "//<<Component>>//\nGraph" as Graph #3489eb
+participant "//<<Component>>//\nPlotNameField" as PlotName #3489eb
+participant "//<<MaterialDesign>>//\nTextBox" as MDTextBox #ff8080
+database "//<<Redux>>//\nStore\n" as Store #808080
+participant "//<<action>>//\nsetName" as setNameA #808080
+participant "//<<reducer>>//\nsetName" as setNameR #808080
+participant "//<<library>>//\napexcharts" as apexcharts #00af57
+participant "//<<utils>>//\nOptionsFormatter" as formatter #ffff00
+
+User -> PlotName : <<chooses title>>
+activate PlotName
+PlotName -> MDTextBox : getInput()
+activate MDTextBox
+PlotName <-- MDTextBox : plotName
+deactivate MDTextBox
+PlotName -> setNameA : setName(plotName)
+activate setNameA
+PlotName <-- setNameA : action
+deactivate setNameA
+PlotName -> Store : dispatch(action)
+deactivate PlotName
+activate Store
+Store -> setNameR : reduce(state, action)
+activate setNameR
+Store <-- setNameR : state
+deactivate setNameR
+Graph <-- Store : updateHook
+activate Graph
+Graph->Store: selectCurrentPlotType()
+Graph<--Store: plotType
+Graph->Store: selectCurrentPlotSettings()
+Graph<--Store: plotSettings
+Graph->Store: selectCurrentReferenceSettings()
+Graph<--Store: referenceSettings
+deactivate Store
+Graph->formatter: generatePlotOptions(plotSettings)
+activate formatter
+Graph<--formatter: options
+deactivate formatter
+Graph->apexcharts: new Chart(plotType, dataSeries, options)
+activate apexcharts
+Graph<--apexcharts: <<rendered svg on DOM>>
+deactivate apexcharts
+User <-- Graph : <<visual update>>
+deactivate Graph
+@enduml
