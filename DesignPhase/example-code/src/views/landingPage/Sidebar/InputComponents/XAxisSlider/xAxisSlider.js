@@ -14,19 +14,8 @@ function XAxisSlider(props) {
     
     const dispatch = useDispatch()
 
-    /**
-     * handles change of the slider by pushing the new value to redux
-     */
-    const onChange = () => {
-        dispatch(setDisplayXRange({currMin, currMax}))
-    }
+    // dispatch(setDisplayXRange({currMin, currMax}))
 
-    /**
-     * get the smallest and biggest possible values, i.e. the end of the slider
-     */
-    const getPossibleRange = () => {
-    }
-    
     return (
         <>
         </>

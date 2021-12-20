@@ -1,0 +1,78 @@
+@startuml
+skinparam dpi 300
+class "App" << (C,blue) component >> {
+    
+    ==props==
+
+    ==state==
+    #isErrorModalVisible
+    #errorMessage
+    #isCookieConsentModalVisible
+    ==methods==
+    +reportError
+    +closeErrorModal
+    +closeCookieConsentModal
+}
+
+class "CookieConsentModal" << (C,blue) component >> {
+    
+    ==props==
+    #isOpen
+    #onClose
+    #error
+    ==state==
+
+    ==methods==
+
+}
+
+class "ErrorMessageModal" << (C,blue) component >> {
+    
+    ==props==
+    #isOpen
+    #onClose
+    #message
+    ==state==
+
+    ==methods==
+
+}
+
+class "Footer" << (C,blue) component >> {
+    
+    ==props==
+
+    ==state==
+
+    ==methods==
+
+}
+
+class "NavBar" << (C,blue) component >> {
+    
+    ==props==
+    #reportError
+    ==state==
+
+    ==methods==
+
+}
+
+class "LandingPage" << (C,blue) component >> {
+    
+    ==props==
+    #reportError
+    ==state==
+    #isSidebarOpen
+    ==methods==
+    +openSidebar
+    +closeSidebar
+}
+
+App o-- CookieConsentModal
+App o-- ErrorMessageModal
+App o-- Footer
+App o-- NavBar
+App o-- LandingPage
+
+@enduml

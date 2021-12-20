@@ -1,16 +1,17 @@
 @startuml
+skinparam style strictuml
 actor User
 participant "//<<Component>>//\nAddModelGroupModel" as AGS #3489eb
 participant "//<<Component>>//\nGraph" as Graph #3489eb
 database "//<<Redux>>//\nStore\n" as Store #808080
-participant "//<<action>>//\naddModel" as action #808080
-participant "//<<reducer>>//\naddModel" as reducer #808080
-participant "//<<library>>//\napexcharts" as apexcharts #00af57
-participant "//<<utils>>//\nOptionsFormatter" as formatter #ffff00
+participant "//<<Action>>//\naddModel" as action #808080
+participant "//<<Reducer>>//\naddModel" as reducer #808080
+participant "//<<Library>>//\napexcharts" as apexcharts #00af57
+participant "//<<Utils>>//\nOptionsFormatter" as formatter #ffff00
 
 
 
-User -> AGS: user clicks on add new Model Group
+User -> AGS: <<user clicks on "Add new Model Group">>
 
 activate AGS
 AGS -> action: addNewGroup({groupId:"all", models: selectedModels})
@@ -58,8 +59,8 @@ Graph<-formatter: options
 deactivate formatter
 Graph->apexcharts: new Chart(plotType, dataSeries, options)
 activate apexcharts
-Graph<-apexcharts: rendered svg on DOM
+Graph<-apexcharts: <<rendered SVG on DOM>>
 deactivate apexcharts
-User<--Graph: user sees updated Graph
+User<--Graph: <<user sees updated graph>>
 deactivate Graph
 @enduml

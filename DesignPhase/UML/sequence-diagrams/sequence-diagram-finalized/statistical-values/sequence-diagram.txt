@@ -1,33 +1,34 @@
 @startuml
-actor User
-participant "//<<Component>>//\nAddModelGroupModel" as AGS #3489eb
+skinparam style strictuml
+actor User as Steve
+participant "//<<Component>>//\nModelGroupCard" as MG #3489eb
 participant "//<<Component>>//\nGraph" as Graph #3489eb
 database "//<<Redux>>//\nStore\n" as Store #808080
-participant "//<<action>>//\naddModel" as action #808080
-participant "//<<reducer>>//\naddModel" as reducer #808080
-participant "//<<library>>//\napexcharts" as apexcharts #00af57
-participant "//<<utils>>//\nOptionsFormatter" as formatter #ffff00
+participant "//<<Action>>//\naddStatisticalValue" as action #808080
+participant "//<<Reducer>>//\naddStatisticalValue" as reducer #808080
+participant "//<<Library>>//\napexcharts" as apexcharts #00af57
+participant "//<<Utils>>//\nmath" as math #ffff00
+participant "//<<Utils>>//\nOptionsFormatter" as formatter #ffff00
 
 
-
-User -> AGS: user clicks on add new Model Group
-
-activate AGS
-AGS -> action: addNewGroup({groupId:"all", models: selectedModels})
-
+Steve->MG: <<user selects mean>> 
+activate MG
+MG->MG: <<re-render>>
+activate MG
+MG-->MG:
+deactivate MG
+MG->action: addStatisticalValue({groupId: "all", sv: "mean"})
 activate action
-action -> AGS: action
+MG<-action: action
 deactivate action
-
-AGS -> Store: dispatch(action)
-deactivate AGS
+MG->Store: dispatch(action)
+deactivate MG
 activate Store
 Store -> reducer: reduce(state, action)
 
 activate reducer
-reducer -> Store: state
+Store <- reducer: state
 deactivate reducer
-
 Graph<--Store: updateHook
 deactivate Store
 
@@ -48,7 +49,13 @@ Graph->Store: selectCurrentReferenceSettings()
 activate Store
 Graph<-Store: referenceSettings
 deactivate Store
-Graph->formatter: generatePlotSeries(modelData)
+
+
+Graph->math: calculateSV(modelData)
+activate math
+Graph<-math: statisticalValueSeries
+deactivate math
+Graph->formatter: generatePlotSeries(modelData, statisticalValueSeries)
 activate formatter
 Graph<-formatter: dataSeries
 deactivate formatter
@@ -58,8 +65,9 @@ Graph<-formatter: options
 deactivate formatter
 Graph->apexcharts: new Chart(plotType, dataSeries, options)
 activate apexcharts
-Graph<-apexcharts: rendered svg on DOM
+Graph<-apexcharts: <<rendered SVG on DOM>>
 deactivate apexcharts
-User<--Graph: user sees updated Graph
+Steve<--Graph: <<user sees updated graph>>
 deactivate Graph
+
 @enduml
