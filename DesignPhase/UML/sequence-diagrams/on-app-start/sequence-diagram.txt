@@ -61,7 +61,8 @@ deactivate Store
 App<<-apiSlice: availableModels
 deactivate apiSlice
 
-App->>apiSlice: useGetRawPlotDataMutation(defaultValues)
+App->>apiSlice: useGetRawPlotDataMutation(availableModels, defaultRegion)
+Note over apiSlice: all available models\nare fetched for\nthe default region
 activate apiSlice
 apiSlice->api: query plotData
 activate api
