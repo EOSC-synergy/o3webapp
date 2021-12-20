@@ -1,16 +1,20 @@
 @startsalt
+skinparam dpi 300
+
 {
 {T
  + src
  ++ assets
  ++ components
  +++ ErrorMessageModal
+ +++ CookieConsentModal
  +++ Footer
  +++ Navbar
  ++ config
  ++ services
  +++ API
- +++ arithmetics
+ +++ pdf
+ +++ math
  ++ store
  ++ utils
  ++ views
