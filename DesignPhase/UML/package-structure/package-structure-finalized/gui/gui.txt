@@ -1,0 +1,14 @@
+@startuml
+skinparam dpi 300
+package "GUI" {
+    class "App" << (C,blue) component>> {
+        Symbolic representation of our app (View)
+    }
+
+    class "Graph" << (C, blue) component>> {
+        This component connects apexcharts to\nour app
+    }
+
+}
+"App" o-- "Graph"
+@enduml

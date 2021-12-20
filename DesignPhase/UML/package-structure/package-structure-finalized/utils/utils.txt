@@ -1,0 +1,15 @@
+@startuml
+skinparam dpi 300
+package "Utils" {
+
+   
+    class "OptionsFormatter" << (J, yellow) utils >> {
+        This utility class merges given data from the store\ninto one data object apexcharts expects
+        ==methods==
+        +generatePlotOptions(plotSettings)
+        +generatePlotSeries(modelData, statisticalValues)
+    }
+
+}
+
+@enduml
