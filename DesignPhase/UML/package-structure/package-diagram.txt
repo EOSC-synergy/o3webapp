@@ -36,7 +36,7 @@ package "Redux" {
         +referenceSettings
         ==methods==
         dispatch()
-        useSelect()
+        useSelector(selector)
     }
 
     class "apiSlice" << (R, gray) redux >> {
@@ -49,6 +49,48 @@ package "Redux" {
         +getBuildPlotData(plotType, lat_min, lat_max, ref_meas, ref_year)
     }
 
+    class "modelsSlice" << (R, gray) redux >> {
+        -initialState
+        +actions
+        +reducer
+        ==methods==
+        +selectCurrentModelGroups
+        +selectCurrentModelGroup
+    }
+
+    class "plotSlice" << (R, gray) redux >> {
+        -initialState
+        +actions
+        +reducer
+        ==methods==
+        +selectCurrentPlotType
+        +selectCurrentPlotId
+        +selectCurrentPlotSettings
+    }
+
+    class "referenceSettingsSlice" << (R, gray) redux >> {
+        -initialState
+        +actions
+        +reducer
+        ==methods==
+        +selectCurrentReferenceSettings
+    }
+
+}
+
+package "Services" {
+    class "pdfCreator" <<(J, yellow) utils >> {
+        this utility class allows to export\nthe current plot as a pdf file
+        ==methods==
+        + createPdfFromCurrentPlot
+    }
+
+    class "math" <<(J, yellow) utils >> {
+        This class performs helpful operations\non the data series
+
+        ==methods==
+        +calculateSV(modelData)
+    }
 }
 
 package "Utils" {
@@ -58,24 +100,9 @@ package "Utils" {
         This utility class merges given data from the store\ninto one data object apexcharts expects
         ==methods==
         +generatePlotOptions(plotSettings)
-        +generatePlotSeries(modelData)
+        +generatePlotSeries(modelData, statisticalValues)
     }
-    
-    class "pdfCreator" <<(J, yellow) utils >> {
-        this utility class allows to export\nthe current plot as a pdf file
-        ==methods==
-        + createPdfFromCurrentPlot
-        - formatBoxPlot
-        - formatLinePlot
-    }
-    
-    class "math" <<(J, yellow) utils >> {
-        This class performs helpful operations\non the data series
 
-        ==methods==
-        +calculateSV(modelData)
-    }
-    
 }
 
 package "node modules" {
@@ -104,18 +131,27 @@ package "node modules" {
 
 }
 
-"apexcharts" <..> "Graph"
+"apexcharts" <.. "Graph"
 "o3as" <..> "apiSlice"
-"apiSlice" <..> "Store"
-"pdfCreator" <..> "pdfmake"
+"apiSlice" <.. "Store"
+"modelsSlice" <.. "Store"
+"plotSlice" <.. "Store"
+"referenceSettingsSlice" <.. "Store"
+"apiSlice" <.. "App"
+"modelsSlice" <.. "App"
+"plotSlice" <.. "App"
+"referenceSettingsSlice" <.. "App"
+
+
+"pdfCreator" ..> "pdfmake"
 "Store" <..> "App"
-"Graph" <.. "OptionsFormatter"
-"Graph" <..> "math"
+"Graph" ..> "OptionsFormatter"
+"Graph" ..> "math"
 "apiSlice" <..> "@reduxjs/toolkit/query/react"
 "Store" <..> "react-redux"
 "App" <..> "react"
 
 "App" o-- "Graph"
-"App" <..> "pdfCreator" 
+"App" ..> "pdfCreator" 
 
 @enduml
