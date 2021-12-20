@@ -18,9 +18,9 @@ class "App" << (C,blue) component >> {
 class "CookieConsentModal" << (C,blue) component >> {
     
     ==props==
+    #error
     #isOpen
     #onClose
-    #error
     ==state==
 
     ==methods==
@@ -30,9 +30,9 @@ class "CookieConsentModal" << (C,blue) component >> {
 class "ErrorMessageModal" << (C,blue) component >> {
     
     ==props==
+    #message
     #isOpen
     #onClose
-    #message
     ==state==
 
     ==methods==
@@ -83,9 +83,9 @@ class "Graph" << (C,blue) component >> {
 class "Sidebar" << (C,blue) component >> {
     
     ==props==
-    #onClose
-    #isOpen
     #reportError
+    #isOpen
+    #onClose
     ==state==
     #isDownloadModalVisible
     #expandedSection
@@ -99,9 +99,9 @@ class "Sidebar" << (C,blue) component >> {
 class "DownloadModal" << (C,blue) component >> {
     
     ==props==
-    #onClose
-    #isOpen
     #reportError
+    #isOpen
+    #onClose
     ==state==
 
     ==methods==
@@ -137,9 +137,9 @@ class "ModelGroupConfigurator" << (C,blue) component >> {
 class "AddModelGroupModal" << (C,blue) component >> {
     
     ==props==
+    #reportError
     #isOpen
     #onClose
-    #reportError
     ==state==
     #checked
     #left
@@ -160,10 +160,10 @@ class "AddModelGroupModal" << (C,blue) component >> {
 class "EditModelGroupModal" << (C,blue) component >> {
     
     ==props==
-    #onClose
     #modelGroupId
-    #isOpen
     #reportError
+    #isOpen
+    #onClose
     ==state==
 
     ==methods==
@@ -173,9 +173,9 @@ class "EditModelGroupModal" << (C,blue) component >> {
 class "ModelGroupCard" << (C,blue) component >> {
     
     ==props==
+    #reportError
     #modelGroupId
     #name
-    #reportError
     ==state==
 
     ==methods==
@@ -237,7 +237,7 @@ class "TimeCheckBoxGroup" << (C,blue) component >> {
     ==props==
     #reportError
     ==state==
-    #time
+    #months
     ==methods==
     +handleChangeSeason
     +handleChangeYear
@@ -248,12 +248,12 @@ class "TimeCheckBoxGroup" << (C,blue) component >> {
 class "SeasonCheckBoxGroup" << (C,blue) component >> {
     
     ==props==
-    #label
-    #handleSeasonClicked
     #handleMonthClicked
+    #handleSeasonClicked
+    #label
+    #months
     #seasonId
     #reportError
-    #months
     ==state==
 
     ==methods==
@@ -283,12 +283,12 @@ class "YAxisSlider" << (C,blue) component >> {
 class "Section" << (C,blue) component >> {
     
     ==props==
-    #onCollapse
     #isExpanded
     #name
     #components
-    #onExpand
+    #onCollapse
     #reportError
+    #onExpand
     ==state==
 
     ==methods==

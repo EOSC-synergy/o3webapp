@@ -35,7 +35,7 @@ function TimeCheckBoxGroup(props) {
 
     const currentPlotType = selectCurrentPlotType()
     const monthArray = useSelector(state => state.plot[currentPlotType].months)
-    const [time, setTime] = React.useState(monthArray); //new Array(12).fill(true)
+    const [months, setmonths] = React.useState(monthArray); //new Array(12).fill(true)
 
     /**
      * handles if a users wants to select / deselect a season
@@ -70,7 +70,7 @@ function TimeCheckBoxGroup(props) {
      */
     const handleUpdatedSelection = () => {
         // do stuff
-        dispatch(setMonths(time))
+        dispatch(setMonths(months))
     }
 
     return (
@@ -80,7 +80,7 @@ function TimeCheckBoxGroup(props) {
                     name={elem.name}
                     months={elem.months}
                     monthsSelected = {
-                        time.map((x, idx) => idx in elem.months ? x : null)
+                        months.map((x, idx) => idx in elem.months ? x : null)
                     }
                     key={idx}
                 />
