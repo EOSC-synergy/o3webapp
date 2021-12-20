@@ -11,13 +11,6 @@ function ReferenceYearSlider(props) {
 
     let i = props.reportError;
 
-    /**
-     * gets the smallest and biggest possible number for the reference year
-     */
-    const getReferenceRange = () => {
-
-    }
-
     return (
         <>
         </>
