@@ -1,0 +1,83 @@
+@startuml
+skinparam dpi 300
+class "LandingPage" << (C,blue) component >> {
+    
+    ==props==
+    #reportError
+    ==state==
+    #isSidebarOpen
+    ==methods==
+    +openSidebar
+    +closeSidebar
+}
+
+class "Graph" << (C,blue) component >> {
+    
+    ==props==
+
+    ==state==
+
+    ==methods==
+
+}
+
+class "Sidebar" << (C,blue) component >> {
+    
+    ==props==
+    #onClose
+    #isOpen
+    #reportError
+    ==state==
+    #isDownloadModalVisible
+    #expandedSection
+    ==methods==
+    +closeDownloadModal
+    +openDownloadModal
+    +collapseSection
+    +expandSection
+}
+
+class "DownloadModal" << (C,blue) component >> {
+    
+    ==props==
+    #onClose
+    #isOpen
+    #reportError
+    ==state==
+
+    ==methods==
+    +downloadImg
+}
+
+class "PlotTypeSelector" << (C,blue) component >> {
+    
+    ==props==
+    #reportError
+    ==state==
+
+    ==methods==
+    +getAllAvailablePlotTypes
+}
+
+class "Section" << (C,blue) component >> {
+    
+    ==props==
+    #onCollapse
+    #isExpanded
+    #name
+    #components
+    #onExpand
+    #reportError
+    ==state==
+
+    ==methods==
+
+}
+
+LandingPage o-- Graph
+LandingPage o-- Sidebar
+Sidebar o-- DownloadModal
+Sidebar o-- PlotTypeSelector
+Sidebar o-- Section
+
+@enduml
