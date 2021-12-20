@@ -19,7 +19,7 @@ export default function DownloadModal(props) {
 
     const downloadImg = (imgFormat) => {};
 
-    if (props.open) {
+    if (props.isOpen) {
         return (<></>);
     }
     return (<></>);
