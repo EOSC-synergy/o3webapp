@@ -1,0 +1,28 @@
+@startuml
+skinparam dpi 300
+package "node modules" {
+
+    class "pdfmake" << (N, green) library >> {
+        Create pdf files on client-side
+        ==methods==
+        +createPdf()
+    } 
+
+    class "react" << (N, green) library >> {
+        Handles the view of our app
+    } 
+
+    class "apexcharts" <<(N, green) library >> {
+        Our plotting library
+    }
+
+    class "@reduxjs/toolkit/query/react" <<(N, green) library >> {
+        An api wrapper for an api endpoint (o3as)
+    }
+
+    class "react-redux" <<(N, green) library >> {
+        State management of our app
+    }
+
+}
+@enduml

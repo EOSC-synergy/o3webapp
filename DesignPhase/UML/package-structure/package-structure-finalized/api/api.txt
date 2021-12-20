@@ -1,0 +1,14 @@
+@startuml
+skinparam dpi 300
+package "API" {
+
+    class "o3as" << (A, purple) api >> {
+        +/models
+        +/data/tco3_zm
+        +/data/tco3_return
+        +/plots
+        +/plots/tco3_zm
+        +/plots/tco3_return
+    }
+}
+@enduml
