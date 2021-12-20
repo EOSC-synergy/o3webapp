@@ -7,15 +7,17 @@ const initialState = {
             modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"],
             models: { // models is lookup table
                 "CCMI-1_ACCESS_ACCESS-CCM-refC2": { // single model
-                    // name: "Something 2",
-                    institute: "Something elese",
-                    // dataset: "more something", is not stored here but instead in the api cache
+                    institute: "IMK",
+                    dataset: {
+                        x: [42],
+                        y: [42],
+                    },
                     mean: true,
                     derivative: true,
                     median: true,
                     percentile: true,
-                    color: "XXX",
-                    plotStyle: "XXX",
+                    color: "#000000",
+                    plotStyle: "solid",
                 }
             },
             hidden: false,
