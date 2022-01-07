@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Sidebar renders correctly 1`] = `
+<div
+  className="PrivateSwipeArea-root css-x15wq9"
+  style={
+    Object {
+      "width": 20,
+    }
+  }
+/>
+`;
+
+exports[`Sidebar renders correctly 2`] = `
+<div>
+  <div
+    class="PrivateSwipeArea-root css-x15wq9"
+    style="width: 20px;"
+  />
+</div>
+`;

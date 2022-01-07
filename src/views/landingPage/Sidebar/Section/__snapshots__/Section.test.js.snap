@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Section renders correctly from config file 1`] = `null`;
+
+exports[`Section renders correctly from config file 2`] = `null`;
+
+exports[`Section renders correctly from config file 3`] = `null`;
+
+exports[`Section renders correctly from config file 4`] = `null`;
