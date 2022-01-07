@@ -17,7 +17,7 @@ function AddModelGroupModal(props) {
     i = props.onClose;
     i = props.reportError;
 
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
     
     const [checked, setChecked] = React.useState([]);
     const [left, setLeft] = React.useState([]);
@@ -68,7 +68,7 @@ function AddModelGroupModal(props) {
     const addNewGroup = () => {
         handleAllLeft();
         setGroupName('');
-        dispatch(addedModelGroup({groupName})) // add data (modelList)
+        // dispatch(addedModelGroup({groupName})) // add data (modelList)
     }
 
     const updateGroupName = (event) => {

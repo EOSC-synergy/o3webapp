@@ -12,7 +12,7 @@ function YAxisSlider(props) {
     
     let i = props.reportError;
  
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
     // dispatch(setDisplayXRange({currMin, currMax}))
 

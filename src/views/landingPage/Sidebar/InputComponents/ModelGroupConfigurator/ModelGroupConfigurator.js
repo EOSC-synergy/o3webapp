@@ -12,10 +12,10 @@ import { updatedModelGroup, addedModelGroup } from "../../../../../store/modelsS
  */
 function ModelGroupConfigurator(props) {
     
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
     const addModelGroup = (name, models) => {
-        dispatch(addedModelGroup({name, models}))   
+        // dispatch(addedModelGroup({name, models}))   
     }
 
     const editModelGroup = 
@@ -30,16 +30,16 @@ function ModelGroupConfigurator(props) {
             percentileVisible
         ) => {
         // id = index of model group in array above
-        dispatch(updatedModelGroup({
-            id,
-            name,
-            models,
-            hidden,
-            derivativeVisible,
-            meanVisbile,
-            medianVisible,
-            percentileVisible
-        }))
+        // dispatch(updatedModelGroup({
+        //     id,
+        //     name,
+        //     models,
+        //     hidden,
+        //     derivativeVisible,
+        //     meanVisbile,
+        //     medianVisible,
+        //     percentileVisible
+        // }))
     }
 
 
