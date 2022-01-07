@@ -4,7 +4,7 @@ import { useGetRawPlotDataMutation } from '../../../services/API/apiSlice';
 import { selectCurrentModelGroups } from '../../../store/modelsSlice';
 import { selectCurrentPlotId, selectCurrentPlotType, selectCurrentSettings } from '../../../store/plotSlice';
 import { selectCurrentReferenceSettings } from '../../../store/referenceSlice';
-import {calculatePlotSeries} from "../../../utils/math"
+import {calculatePlotSeries} from "../../../services/math/math";
 
 /**
  * A containter for the displayed graph.
