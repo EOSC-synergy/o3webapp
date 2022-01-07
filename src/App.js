@@ -32,7 +32,9 @@ function App() {
     return (
     <>
         <NavBar error={reportError} />
+
         <LandingPage error={reportError} />
+
         <Footer error={reportError} />
         <ErrorMessageModal open={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />
         <CookieConsentModal open={isCookieConsentModalVisible} onClose={onCloseCookieConsentModal} error={reportError} />
