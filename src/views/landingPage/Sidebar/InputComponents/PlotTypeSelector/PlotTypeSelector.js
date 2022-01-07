@@ -21,6 +21,7 @@ function PlotTypeSelector(props) {
 
     return (
         <>
+            PlotTypeSelector
         </>
     );
 }

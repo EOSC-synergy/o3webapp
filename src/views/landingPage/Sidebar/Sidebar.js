@@ -66,7 +66,7 @@ function Sidebar(props) {
             >
 
                 <PlotTypeSelector />
-                Test
+
                 {/* {defaultStructure.map((s, idx) =>
                     <Section
                         name={defaultStructure.sections[s].name}
