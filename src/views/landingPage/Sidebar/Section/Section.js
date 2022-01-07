@@ -12,6 +12,11 @@ import YAxisSlider from "../InputComponents/YAxisSlider/YAxisSlider";
 import PropTypes from 'prop-types'; 
 import LatitudeBandSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
 import ReferenceModelSelector from "../InputComponents/ReferenceModelSelector/ReferenceModelSelector";
+import { Accordion } from '@mui/material';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 /**
  * an expandable section containing a list of inputComponents as well as a name
@@ -72,20 +77,28 @@ function Section(props) {
         } 
     }
 
-    return <>
-        <br />
-        <br />
-        <b>{props.name}</b>
-        <br />
-        {props.components.map((element, idx) => {
-            return (
-                <>
-                    {mapNameToComponent(element, idx)}
-                    <br />
-                </>
-            )
-        })}
-    </>;
+    return (
+    <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+            {props.name}
+        </AccordionSummary>
+        <AccordionDetails>
+            <>
+                {props.components.map((element, idx) => {
+                    return (
+                        <>
+                            {mapNameToComponent(element, idx)}
+                            <br />
+                        </>
+                    )
+                })}
+            </>
+        </AccordionDetails>
+    </Accordion>);
 }
 
 Section.propTypes = {
