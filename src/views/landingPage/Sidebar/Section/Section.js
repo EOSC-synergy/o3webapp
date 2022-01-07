@@ -30,17 +30,6 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
  * @returns {JSX} an accordeon that once expanded displays the components specified by the config files and the API doc
  */
 function Section(props) {
-    
-    let i = props.components;
-    i = props.key;
-    i = props.name;
-    i = props.reportError;
-    i = props.isExpanded;
-    i = props.onCollapse
-    i = props.onExpand;
-
-    console.log(props.components);
-    
 
     /**
      * maps a given name to a corresponding component from the ./InputComponents folder
@@ -73,12 +62,21 @@ function Section(props) {
             case "ReferenceModelSelector":
                 return <ReferenceModelSelector key={key} />;
             default:
-                props.reportError("Found no match for given config file");
+                if (props.reportError) {
+                    props.reportError(`Section ${props.name} found no match for an input component ${name}`);
+                }
         } 
     }
 
+    if (!props.components) {
+       if(props.reportError) {
+           props.reportError(`Section ${props.name} was provided with no components`)
+        }
+        return <></>;
+    }
+
     return (
-    <Accordion>
+    <Accordion data-testid="section">
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
