@@ -55,10 +55,6 @@ function Sidebar(props) {
         setExpandedSection(i);
     }
 
-    console.log(defaultStructure);
-    console.log(defaultStructure.sections);
-    console.log(defaultStructure);
-
     return (
     <>
         
@@ -73,16 +69,14 @@ function Sidebar(props) {
                 <PlotTypeSelector />
 
                 {defaultStructure["sections"].map((s, idx) =>
-                    <>
                     <Section
                         name={s.name}
                         key={idx}
                         open={expandedSection === idx}
-                        components={"Empty for now"}
+                        components={s.components}
                         onCollapse={collapseSection}
                         onExpand={expandSection}
                     />
-                    </>
                 )}
 
                 {/* Maybe into their own component? */}
