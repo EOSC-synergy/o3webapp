@@ -6,6 +6,7 @@ import { setCurrentType } from '../../../store/plotSlice.js';
 import { useDispatch } from "react-redux";
 import PlotTypeSelector from './InputComponents/PlotTypeSelector/PlotTypeSelector.js';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import { Button } from '@mui/material';
 
 
 
@@ -20,7 +21,7 @@ import SwipeableDrawer from '@mui/material/SwipeableDrawer';
  */
 function Sidebar(props) {
 
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
     const [isDownloadModalVisible, setDownloadModalVisible] = React.useState(false);
     const [expandedSection, setExpandedSection] = React.useState(null); // -> idx of sections array
@@ -49,16 +50,13 @@ function Sidebar(props) {
     /**
      * expands section with id (index in section array) i
      * collapses all other currently expanded sections
-     * @param {int} i 
+     * @param {int} i the section that should be expanded
      */
     const expandSection = (i) => {
         setExpandedSection(i);
     }
 
     return (
-    <>
-        
-        {props.isOpen && 
             <SwipeableDrawer
                 anchor="right"
                 open={props.isOpen}
@@ -79,13 +77,10 @@ function Sidebar(props) {
                     />
                 )}
 
-                {/* Maybe into their own component? */}
-                {/* <Button text="Download" onClick={onOpenDownloadModal}/> */}
+                <Button variant="outlined" onClick={openDownloadModal}>Download</Button>
                 <DownloadModal open={isDownloadModalVisible} onClose={closeDownloadModal} />
             </SwipeableDrawer>
-        }
-
-    </>);
+    );
 }
 
 export default Sidebar;
