@@ -29,14 +29,14 @@ function Sidebar(props) {
      * closes the download modal
      */
     const closeDownloadModal = () => {
-        setOpenDownloadModal(false);
+        setDownloadModalVisible(false);
     }
 
     /**
      * shows the download modal
      */
     const openDownloadModal = () => {
-        setOpenDownloadModal(true);
+        setDownloadModalVisible(true);
     }
 
     /**
@@ -60,21 +60,21 @@ function Sidebar(props) {
         {props.isOpen && 
             <>
 
-                <PlotTypeSelector plotType={plotType} />
+                <PlotTypeSelector />
 
                 {defaultStructure.forEach((s, idx) =>
                     <Section
                         name={defaultStructure.sections[s].name}
                         open={expandedSection === idx}
                         components={"Empty for now"}
-                        onCollapse={onCollapseSection}
-                        onExpand={onExpandSection}
+                        onCollapse={collapseSection}
+                        onExpand={expandSection}
                     />
                 )}
 
                 {/* Maybe into their own component? */}
                 {/* <Button text="Download" onClick={onOpenDownloadModal}/> */}
-                <DownloadModal open={openDownloadModal} onClose={onCloseDownloadModal} />
+                <DownloadModal open={isDownloadModalVisible} onClose={closeDownloadModal} />
             </>
         }
     </>);

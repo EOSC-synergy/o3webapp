@@ -1,9 +1,6 @@
 import * as React from 'react';
-import NavBar from "./components/NavBar/NavBar";
-import Footer from "./components/Footer/Footer";
-import Graph from './views/landingPage/Graph/Graph';
-import ErrorMessageModal from './components/ErrorMessageModal/ErrorMessageModal';
-import CookieConsentModal from './components/CookieConsentModal/CookieConsentModal';
+import Graph from './Graph/Graph';
+import Sidebar from './Sidebar/Sidebar';
 
 /**
  * main view of web page
@@ -16,20 +13,20 @@ function LandingPage(props) {
     const [isSidebarOpen, setSidebarOpen] = React.useState(false);
     
     const openSidebar = () => {
-        setOpenSidebar(true);
+        setSidebarOpen(true);
     }
 
     const closeSidebar = () => {
-        setOpenSidebar(true);
+        setSidebarOpen(true);
     }
     
 
     return (
     <>
-        <Sidebar reportError={props.reportError} open={isSidebarOpen} onClose={handleSidebarClose} />
+        <Sidebar reportError={props.reportError} open={isSidebarOpen} onClose={closeSidebar} />
         <Graph reportError={props.reportError} />
     </>
     );
 }
 
-export default App;
+export default LandingPage;

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import NavBar from "./components/Navbar/NavBar";
 import Footer from "./components/Footer/Footer";
-import Graph from './views/landingPage/Graph/Graph';
 import ErrorMessageModal from './components/ErrorMessageModal/ErrorMessageModal';
 import CookieConsentModal from './components/CookieConsentModal/CookieConsentModal';
+import LandingPage from './views/landingPage/LandigPage';
 
 /**
  * Main container of the Webapp
@@ -17,24 +17,25 @@ function App() {
     const [isCookieConsentModalVisible, setCookieConsentModalVisibility] = React.useState(true);
 
     const reportError = (msg) => {
-        setError(msg);
+        setErrorModalVisible(true);
+        setErrorMessage(msg);
     }
     
     const closeErrorModal = () => {
-        setError(null);
+        setErrorModalVisible(false);
     }
 
-    const closeCookieConsentModal = () => {
+    const onCloseCookieConsentModal = () => {
     }
     
 
     return (
     <>
-        <NavBar error={reportError} handleSidebarOpen={handleSidebarOpen} />
+        <NavBar error={reportError} />
         <LandingPage error={reportError} />
         <Footer error={reportError} />
-        <ErrorMessageModal open={error !== null} message={error} onClose={closeErrorModal} />
-        <CookieConsentModal open={showCookieConsentModal} onClose={onCloseCookieConsentModal} error={reportError} />
+        <ErrorMessageModal open={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />
+        <CookieConsentModal open={isCookieConsentModalVisible} onClose={onCloseCookieConsentModal} error={reportError} />
     </>
     );
 }

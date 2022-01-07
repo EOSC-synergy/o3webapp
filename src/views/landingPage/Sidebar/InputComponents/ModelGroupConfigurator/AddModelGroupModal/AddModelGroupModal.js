@@ -17,7 +17,7 @@ function AddModelGroupModal(props) {
     i = props.onClose;
     i = props.reportError;
 
-    // const dispatch = useDispatch()
+    const dispatch = useDispatch()
     
     const [checked, setChecked] = React.useState([]);
     const [left, setLeft] = React.useState([]);
@@ -80,7 +80,7 @@ function AddModelGroupModal(props) {
     }
 
     const getAllAvailableModels = () => {
-        const {data, isSuccess, isLoading, isError, error} = useGetModelsQuery()
+        // const {data, isSuccess, isLoading, isError, error} = useGetModelsQuery()
         // display spinner until loading finished
     }
 
