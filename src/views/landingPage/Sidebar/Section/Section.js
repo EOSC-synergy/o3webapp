@@ -11,6 +11,7 @@ import XAxisSlider from "../InputComponents/XAxisSlider/XAxisSlider";
 import YAxisSlider from "../InputComponents/YAxisSlider/YAxisSlider";
 import PropTypes from 'prop-types'; 
 import LatitudeBandSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
+import ReferenceModelSelector from "../InputComponents/ReferenceModelSelector/ReferenceModelSelector";
 
 /**
  * an expandable section containing a list of inputComponents as well as a name
@@ -32,6 +33,8 @@ function Section(props) {
     i = props.isExpanded;
     i = props.onCollapse
     i = props.onExpand;
+
+    console.log(props.components);
     
 
     /**
@@ -39,33 +42,49 @@ function Section(props) {
      * if there is no component with the given name, calls the props.reportError function
      * @public
      * @param {String} name the name of the component
+     * @param {int} key a unique key for the given input component
      * @returns a component from the './InputComponents
      */
-    function mapNameToComponent(name) {
-        return 0;
+    function mapNameToComponent(name, key) {
+        switch (name){
+            case "ModelGroupConfigurator":
+                return <ModelGroupConfigurator key={key} />;
+            case "OffsetConfigurator":
+                return <OffsetConfigurator key={key}  />;
+            case "PlotNameField":
+                return <PlotNameField key={key}  />;
+            case "ReferenceYearSlider":
+                return <ReferenceYearSlider key={key}  />;
+            case "TimeCheckBoxGroup":
+                return <TimeCheckBoxGroup key={key}  />;
+            case "XAxisSlider":
+                return <XAxisSlider key={key}  />;
+            case "YAxisSlider":
+                return <YAxisSlider key={key}  />;
+            case "RegionSelector":
+                return <RegionSelector key={key}  />;
+            case "LatitudeBandSelector":
+                return <LatitudeBandSelector key={key}  />;
+            case "ReferenceModelSelector":
+                return <ReferenceModelSelector key={key} />;
+            default:
+                props.reportError("Found no match for given config file");
+        } 
     }
 
     return <>
-        {/* {props.components.array.forEach(element => {
-            mapNameToComponent(element);
+        <br />
+        <br />
+        <b>{props.name}</b>
+        <br />
+        {props.components.map((element, idx) => {
+            return (
+                <>
+                    {mapNameToComponent(element, idx)}
+                    <br />
+                </>
+            )
         })}
-
-        {defaultStructure.forEach(c => <> */}
-            {/*Components from defaultStructure*/}
-        {/* </>)} */}
-
-        {/* For purpose of the UML Diagram */}
-        {props.name}
-        {mapNameToComponent(props.name)}
-        <ModelGroupConfigurator />
-        <OffsetConfigurator />
-        <PlotNameField />
-        <ReferenceYearSlider />
-        <TimeCheckBoxGroup />
-        <XAxisSlider />
-        <YAxisSlider />
-        <RegionSelector />
-        <LatitudeBandSelector />
     </>;
 }
 
