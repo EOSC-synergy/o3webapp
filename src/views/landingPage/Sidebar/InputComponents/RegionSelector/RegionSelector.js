@@ -22,6 +22,7 @@ function RegionSelector(props) {
 
     return (
         <>
+            RegionSelector
             <LatitudeBandSelector />
         </>
     );

@@ -76,6 +76,7 @@ function TimeCheckBoxGroup(props) {
 
     return (
         <> 
+            TimeCheckBoxGroup
             {sesaons.forEach((elem, idx) => {
                 <SeasonCheckBoxGroup
                     name={elem.name}

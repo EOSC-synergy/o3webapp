@@ -38,6 +38,7 @@ function Graph(props) {
     // const seriesData = generatePlotSeries(models)
 
     return (<div>
+        Graph
         {/* Graph displayed with ApexCharts goes here */}
     </div>);
 }

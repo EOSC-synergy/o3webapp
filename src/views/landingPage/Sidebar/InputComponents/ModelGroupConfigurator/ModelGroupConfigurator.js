@@ -67,6 +67,7 @@ function ModelGroupConfigurator(props) {
 
     return (
         <>
+            ModelGroupConfigurator
             <AddModelGroupModal error={props.reportError} />
             <ModelGroupCard error={props.reportError} />
             {/* <ModelGroup /> */}

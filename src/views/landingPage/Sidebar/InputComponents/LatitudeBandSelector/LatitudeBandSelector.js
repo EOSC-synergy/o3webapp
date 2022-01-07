@@ -26,6 +26,7 @@ function LatitudeBandSelector(props) {
 
     return (
         <>
+        LatitudeBandSelector
         </>
     );
 }
