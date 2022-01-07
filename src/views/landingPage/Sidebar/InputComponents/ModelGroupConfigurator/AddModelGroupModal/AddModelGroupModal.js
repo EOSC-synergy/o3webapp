@@ -86,6 +86,7 @@ function AddModelGroupModal(props) {
 
     return (
         <>
+            AddModelGroupModal
             {props.isOpen && <></>}
         </>
     );

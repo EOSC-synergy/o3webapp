@@ -18,6 +18,7 @@ function XAxisSlider(props) {
 
     return (
         <>
+        XAxisSlider
         </>
     );
 }

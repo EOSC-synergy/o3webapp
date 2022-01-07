@@ -20,7 +20,8 @@ function OffsetConfigurator(props) {
     // handle changes: dispatch actions accordingly
 
     return (
-        <>
+        <>  
+            OffsetConfigurator
             <ReferenceYearSlider />
             <button />
         </>

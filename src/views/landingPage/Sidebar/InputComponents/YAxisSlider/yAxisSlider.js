@@ -19,6 +19,7 @@ function YAxisSlider(props) {
 
     return (
         <>
+        YAxisSlider
         </>
     );
 }
