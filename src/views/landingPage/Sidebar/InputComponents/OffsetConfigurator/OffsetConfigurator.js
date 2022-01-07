@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ReferenceYearSlider from "../ReferenceYearSlider/ReferenceYearSlider";
-import { useDispatch, useSelector } from "react-redux"
+// import { useDispatch, useSelector } from "react-redux"
 import { selectCurrentPlotType } from "../../../../../store/plotSlice";
 import { current } from "@reduxjs/toolkit";
 
@@ -14,8 +14,8 @@ function OffsetConfigurator(props) {
     
     let i = props.reportError;
 
-    const currentPlotType = selectCurrentPlotType()
-    const referenceData = useSelector(state => state.reference[currentPlotType])
+    // const currenceDatPlotType = selectCurrentPlotType()
+    // const referenta = useSelector(state => state.reference[currentPlotType])
 
     // handle changes: dispatch actions accordingly
 

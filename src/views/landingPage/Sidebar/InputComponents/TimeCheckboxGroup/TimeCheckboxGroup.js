@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux"
-import { selectCurrentPlotType, setMonths } from "../../../../../store/plotSlice";
+// import { useDispatch, useSelector } from "react-redux"
+// import { selectCurrentPlotType, setMonths } from "../../../../../store/plotSlice";
 import SeasonCheckBoxGroup from "./SeasonCheckboxGroup/SeasonCheckBoxGroup";
 
 /**
@@ -12,7 +12,7 @@ import SeasonCheckBoxGroup from "./SeasonCheckboxGroup/SeasonCheckBoxGroup";
 function TimeCheckBoxGroup(props) {
     
     let i = props.reportError;
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
     const sesaons = [
         {
@@ -33,8 +33,9 @@ function TimeCheckBoxGroup(props) {
         }
     ]
 
-    const currentPlotType = selectCurrentPlotType()
-    const monthArray = useSelector(state => state.plot[currentPlotType].months)
+    // const currentPlotType = selectCurrentPlotType()
+    // const monthArray = useSelector(state => state.plot[currentPlotType].months)
+    const monthArray = [];
     const [months, setmonths] = React.useState(monthArray); //new Array(12).fill(true)
 
     /**
@@ -70,7 +71,7 @@ function TimeCheckBoxGroup(props) {
      */
     const handleUpdatedSelection = () => {
         // do stuff
-        dispatch(setMonths(months))
+        // dispatch(setMonths(months))
     }
 
     return (

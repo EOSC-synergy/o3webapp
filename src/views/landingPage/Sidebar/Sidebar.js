@@ -8,6 +8,7 @@ import PlotTypeSelector from './InputComponents/PlotTypeSelector/PlotTypeSelecto
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 
 
+
 /**
  * Contains all input components responsible for the modification 
  * of the plot settings.
@@ -54,6 +55,10 @@ function Sidebar(props) {
         setExpandedSection(i);
     }
 
+    console.log(defaultStructure);
+    console.log(defaultStructure.sections);
+    console.log(defaultStructure);
+
     return (
     <>
         
@@ -67,15 +72,18 @@ function Sidebar(props) {
 
                 <PlotTypeSelector />
 
-                {/* {defaultStructure.map((s, idx) =>
+                {defaultStructure["sections"].map((s, idx) =>
+                    <>
                     <Section
-                        name={defaultStructure.sections[s].name}
+                        name={s.name}
+                        key={idx}
                         open={expandedSection === idx}
                         components={"Empty for now"}
                         onCollapse={collapseSection}
                         onExpand={expandSection}
                     />
-                )} */}
+                    </>
+                )}
 
                 {/* Maybe into their own component? */}
                 {/* <Button text="Download" onClick={onOpenDownloadModal}/> */}
