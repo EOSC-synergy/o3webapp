@@ -17,13 +17,11 @@ const colors = data.map(modelObj => colourNameToHex(modelObj.plotstyle.color))
 const strokes = data.map(modelObj => convertToStrokeStyle(modelObj.plotstyle.linestyle))
 const lineWidth = data.map(el => 2) // default is 2
 
-console.log(settings)
 settings.options.xaxis.categories.push(...yearsOnXAxis)
 settings.options.colors.push(...colors)
 settings.options.stroke.dashArray.push(...strokes)
 settings.options.stroke.width.push(...lineWidth)
 settings.series.push(...ySeries)
-console.log(settings)
 
 /**
  * A containter for the displayed graph.
