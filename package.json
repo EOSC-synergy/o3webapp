@@ -9,8 +9,6 @@
     "@mui/material": "^5.2.7",
     "@mui/styled-engine": "^5.2.6",
     "@reduxjs/toolkit": "^1.7.0",
-    "@testing-library/jest-dom": "^5.16.0",
-    "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "clean-jsdoc-theme": "^3.3.1",
     "install": "^0.13.0",
@@ -48,6 +46,10 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
+    "@types/jest": "^27.4.0",
+    "jest": "^26.6.0",
     "jsdoc": "^3.6.7",
     "webpack": "^4.44.2"
   }
