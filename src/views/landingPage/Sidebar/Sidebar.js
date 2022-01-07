@@ -5,6 +5,8 @@ import DownloadModal from './DownloadModal/DownloadModal.js';
 import { setCurrentType } from '../../../store/plotSlice.js';
 import { useDispatch } from "react-redux";
 import PlotTypeSelector from './InputComponents/PlotTypeSelector/PlotTypeSelector.js';
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+
 
 /**
  * Contains all input components responsible for the modification 
@@ -18,9 +20,6 @@ import PlotTypeSelector from './InputComponents/PlotTypeSelector/PlotTypeSelecto
 function Sidebar(props) {
 
     const dispatch = useDispatch()
-    let i = props.onClose;
-    i = props.reportError;
-    i = props.isOpen;
 
     const [isDownloadModalVisible, setDownloadModalVisible] = React.useState(false);
     const [expandedSection, setExpandedSection] = React.useState(null); // -> idx of sections array
@@ -57,12 +56,18 @@ function Sidebar(props) {
 
     return (
     <>
+        
         {props.isOpen && 
-            <>
+            <SwipeableDrawer
+                anchor="right"
+                open={props.isOpen}
+                onClose={props.onClose}
+                onOpen={props.onOpen}
+            >
 
                 <PlotTypeSelector />
-
-                {defaultStructure.forEach((s, idx) =>
+                Test
+                {/* {defaultStructure.map((s, idx) =>
                     <Section
                         name={defaultStructure.sections[s].name}
                         open={expandedSection === idx}
@@ -70,13 +75,14 @@ function Sidebar(props) {
                         onCollapse={collapseSection}
                         onExpand={expandSection}
                     />
-                )}
+                )} */}
 
                 {/* Maybe into their own component? */}
                 {/* <Button text="Download" onClick={onOpenDownloadModal}/> */}
                 <DownloadModal open={isDownloadModalVisible} onClose={closeDownloadModal} />
-            </>
+            </SwipeableDrawer>
         }
+
     </>);
 }
 

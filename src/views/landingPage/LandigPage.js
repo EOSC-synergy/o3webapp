@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Graph from './Graph/Graph';
 import Sidebar from './Sidebar/Sidebar';
+import Button from '@mui/material/Button';
 
 /**
  * main view of web page
@@ -17,13 +18,14 @@ function LandingPage(props) {
     }
 
     const closeSidebar = () => {
-        setSidebarOpen(true);
+        setSidebarOpen(false);
     }
     
 
     return (
     <>
-        <Sidebar reportError={props.reportError} open={isSidebarOpen} onClose={closeSidebar} />
+        <Button  variant="outlined" onClick={openSidebar}>Open Sidebar (Dev)</Button>
+        <Sidebar reportError={props.reportError} isOpen={isSidebarOpen} onClose={closeSidebar} onOpen={openSidebar} />
         <Graph reportError={props.reportError} />
     </>
     );
