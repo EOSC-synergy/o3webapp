@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import { useGetRawPlotDataMutation } from '../../../services/API/apiSlice';
 import { selectCurrentModelGroups } from '../../../store/modelsSlice';
-import { selectCurrentPlotId, selectCurrentPlotType, selectCurrentSettings } from '../../../store/plotSlice';
+import { selectPlotTitle, setTitle } from '../../../store/plotSlice';
 import { selectCurrentReferenceSettings } from '../../../store/referenceSlice';
 import {calculatePlotSeries} from "../../../services/math/math";
 
@@ -12,33 +12,16 @@ import {calculatePlotSeries} from "../../../services/math/math";
  */
 function Graph(props) {
 
-    // const plotType = selectCurrentPlotType()
-    // const plotId = selectCurrentPlotId()
-    // const options = useSelector(state => selectCurrentSettings(state, plotId))
-    // const models = useSelector(state => selectCurrentModelGroup(state, plotId, "all"))
-    // const referenceSettings = useSelector(state => selectCurrentReferenceSettings(state, plotId))
-    
-    // const { data, isError, error, isLoading, isSuccess } = useGetRawPlotDataMutation(
-    //     {
-    //         plotType,
-    //         latMin: options.latMin,
-    //         latMax: options.latMax,
-    //         modelList,
-    //     }
-    // )
-    
-    // if (isSuccess) {
-    //     // updateCurrentModelGroup with fetched data
-    // }
-
-
-    // // display loading spinner instead of graph until isSuccess = true
-    // // then load data
-    
-    // const seriesData = generatePlotSeries(models)
+    const title = useSelector(selectPlotTitle)
+    const dispatch = useDispatch()
 
     return (<div>
-        Graph
+        Graph: {title}
+        <br />
+        <button onClick={() => {
+            console.log("dispatch")
+            dispatch(setTitle({title: new Date().toISOString()}))
+        }}>Change Title</button>
         {/* Graph displayed with ApexCharts goes here */}
     </div>);
 }
