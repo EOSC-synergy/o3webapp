@@ -50,18 +50,35 @@ const plotSlice = createSlice({
     name: "plot",
     initialState,
     reducers: {
-        setActivePlotId(state, action) {
-            const { plotId } = action.payload
-            state.plotId = plotId
+        setActivePlotId(state, action) { // e.g. dispatch(setActivePlotId({id: "tco3_zm"}))
+            const { id } = action.payload
+            state.plotId = id
         }, 
-        setTitle(state, action) { 
+        setTitle(state, action) { // e.g. dispatch(setActivePlotId({title: "OCTS Plot"}))
             const { title } = action.payload
             state.settings[state.plotId].title = title
         },
-        setLocation(state, action) { },
-        setDisplayXRange(state, action) { },
-        setDisplayYRange(state, action) { },
-        setMonths(state, action) { },
+        setLocation(state, action) { 
+            const {minLat, maxLat} = action.payload
+            const location = state.settings[state.plotId].location
+            location.minLat = minLat
+            location.maxLat = maxLat
+        },
+        setDisplayXRange(state, action) { 
+            const {minX, maxX} = action.payload
+            const displayXRange = state.settings[state.plotId].displayXRange
+            setDisplayXRange.minX = minX
+            setDisplayXRange.maxX = maxX
+        },
+        setDisplayYRange(state, action) { 
+            const {minY, maxY} = action.payload
+            const displayYRange = state.settings[state.plotId].displayYRange
+            setDisplayYRange.minY = minY
+            setDisplayYRange.maxY = maxY
+        },
+        setMonths(state, action) { 
+            state.settings[state.plotId].months = action.payload.months
+        },
     }   
 })
 
