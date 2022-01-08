@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { styled, useTheme } from '@mui/material/styles';
 import Section from './Section/Section.js';
 import defaultStructure from '../../../config/defaultConfig.json';
 import DownloadModal from './DownloadModal/DownloadModal.js';
@@ -7,7 +8,7 @@ import { useDispatch } from "react-redux";
 import PlotTypeSelector from './InputComponents/PlotTypeSelector/PlotTypeSelector.js';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import { Button } from '@mui/material';
-
+import Box from '@mui/material/Box';
 
 
 /**
@@ -20,6 +21,8 @@ import { Button } from '@mui/material';
  * @returns {JSX} a jsx containing a sidebar with sections containing input components, a download button and a plotType dropdown
  */
 function Sidebar(props) {
+
+    const theme = useTheme();
 
     // const dispatch = useDispatch()
 
@@ -62,24 +65,33 @@ function Sidebar(props) {
                 open={props.isOpen}
                 onClose={props.onClose}
                 onOpen={props.onOpen}
+                variant="persistent"
+                sx= {{
+                    width: 400,
+                    maxWidth: "100vw",
+                    flexShrink: 0,
+                    '& .MuiDrawer-paper': {
+                        width: 400,
+                        maxWidth: "100vw",
+                    },
+                }}
             >
+                    <PlotTypeSelector />
 
-                <PlotTypeSelector />
+                    {defaultStructure["sections"].map((s, idx) =>
+                        <Section
+                            name={s.name}
+                            key={idx}
+                            open={expandedSection === idx}
+                            components={s.components}
+                            onCollapse={collapseSection}
+                            onExpand={expandSection}
+                        />
+                    )}
 
-                {defaultStructure["sections"].map((s, idx) =>
-                    <Section
-                        name={s.name}
-                        key={idx}
-                        open={expandedSection === idx}
-                        components={s.components}
-                        onCollapse={collapseSection}
-                        onExpand={expandSection}
-                    />
-                )}
-
-                <Button variant="outlined" onClick={openDownloadModal}>Download</Button>
-                <DownloadModal open={isDownloadModalVisible} onClose={closeDownloadModal} />
-            </SwipeableDrawer>
+                    <Button variant="outlined" onClick={openDownloadModal}>Download</Button>
+                    <DownloadModal open={isDownloadModalVisible} onClose={closeDownloadModal} />
+        </SwipeableDrawer>
     );
 }
 

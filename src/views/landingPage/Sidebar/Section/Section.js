@@ -12,7 +12,7 @@ import YAxisSlider from "../InputComponents/YAxisSlider/YAxisSlider";
 import PropTypes from 'prop-types'; 
 import LatitudeBandSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
 import ReferenceModelSelector from "../InputComponents/ReferenceModelSelector/ReferenceModelSelector";
-import { Accordion } from '@mui/material';
+import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
@@ -76,13 +76,18 @@ function Section(props) {
     }
 
     return (
-    <Accordion data-testid="section">
+    <Accordion
+        data-testid="section"
+        sx={{
+            maxWidth: "100vw"
+        }}
+    >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-            {props.name}
+            <Typography>{props.name}</Typography>
         </AccordionSummary>
         <AccordionDetails>
             <>
