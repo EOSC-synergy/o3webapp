@@ -8,8 +8,16 @@ import { useDispatch } from "react-redux";
 import PlotTypeSelector from './InputComponents/PlotTypeSelector/PlotTypeSelector.js';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import { Button } from '@mui/material';
-import Box from '@mui/material/Box';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
 
+
+export const DrawerHeader = styled('div')(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
+  }));
 
 /**
  * Contains all input components responsible for the modification 
@@ -76,6 +84,11 @@ function Sidebar(props) {
                     },
                 }}
             >
+                <DrawerHeader>
+                    <IconButton onClick={props.onClose}>
+                        <CloseIcon />
+                    </IconButton>
+                </DrawerHeader>
                     <PlotTypeSelector />
 
                     {defaultStructure["sections"].map((s, idx) =>
