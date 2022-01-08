@@ -1,14 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-    // currently active
-    plotType: "tco3_zm",
-    plotId: "OCTS",
-    // 
+    // currently active plot
+    plotId: "tco3_zm",
+    // maps plotids to their settings
     settings: {
-        "OCTS": {
-            type: "tco3_zm",
-            title: "example title",
+        "tco3_zm": {
+            name: "OCTS", // should show up in the drop down menu
+            title: "OCTS Plot", // the title shown in the apexcharts generated chart
             location: {
                 minLat: -90,
                 maxLat: 90
@@ -22,9 +21,22 @@ const initialState = {
                 maxY: 400,
             },
             months: [
-                3,
-                4,
-                5,
+                1
+            ],
+        },
+        "tco3_return": {
+            name: "Return/Recovery",
+            title: "Return/Recovery Plot",
+            location: { // custom user defined region
+                minLat: -90,
+                maxLat: 90
+            },
+            displayYRange: {
+                minY: 200,
+                maxY: 400,
+            },
+            months: [
+                1
             ],
         }
     }
