@@ -13,11 +13,25 @@ function LandingPage(props) {
 
     const [isSidebarOpen, setSidebarOpen] = React.useState(false);
     
-    const openSidebar = () => {
+    const openSidebar = (event) => {
+        if (
+            event &&
+            event.type === 'keydown' &&
+            (event.key === 'Tab' || event.key === 'Shift')
+          ) {
+            return;
+          }
         setSidebarOpen(true);
     }
 
-    const closeSidebar = () => {
+    const closeSidebar = (event) => {
+        if (
+            event &&
+            event.type === 'keydown' &&
+            (event.key === 'Tab' || event.key === 'Shift')
+          ) {
+            return;
+          }
         setSidebarOpen(false);
     }
     
