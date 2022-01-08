@@ -31,6 +31,10 @@ const initialState = {
                 minLat: -90,
                 maxLat: 90
             },
+            displayXRange: {
+                minX: 0,
+                maxX: 0,
+            },
             displayYRange: {
                 minY: 200,
                 maxY: 400,
@@ -64,8 +68,13 @@ export const {
     setMonths,
 } = plotSlice.actions
 
-export const selectCurrentPlotType = state => state.plot.plotType
-export const selectCurrentPlotId = state => state.plot.plotId
-export const selectCurrentSettings = state => state.plot.settings[state.plot.plotId]
+// select the current active settings
+export const selectPlotId = state => state.plot.plotId
+export const selectPlotName = state => state.plot.settings[state.plot.plotId].name
+export const selectPlotTitle = state => state.plot.settings[state.plot.plotId].title
+export const selectPlotLocation = state => state.plot.settings[state.plot.plotId].location
+export const selectPlotXRange = state => state.plot.settings[state.plot.plotId].displayXRange
+export const selectPlotYRange = state => state.plot.settings[state.plot.plotId].displayYRange
+export const selectPlotMonths = state => state.plot.settings[state.plot.plotId].months
 
 export default plotSlice.reducer
