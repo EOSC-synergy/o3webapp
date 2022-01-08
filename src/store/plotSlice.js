@@ -50,8 +50,14 @@ const plotSlice = createSlice({
     name: "plot",
     initialState,
     reducers: {
-        setCurrentType(state, action) { }, // change active plot
-        setTitle(state, action) { },
+        setActivePlotId(state, action) {
+            const { plotId } = action.payload
+            state.plotId = plotId
+        }, 
+        setTitle(state, action) { 
+            const { title } = action.payload
+            state.settings[state.plotId].title = title
+        },
         setLocation(state, action) { },
         setDisplayXRange(state, action) { },
         setDisplayYRange(state, action) { },
@@ -60,7 +66,7 @@ const plotSlice = createSlice({
 })
 
 export const {
-    setCurrentType,
+    setActivePlotId,
     setTitle,
     setLocation,
     setDisplayXRange,
