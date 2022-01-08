@@ -3,7 +3,7 @@ import NavBar from "./components/Navbar/NavBar";
 import Footer from "./components/Footer/Footer";
 import ErrorMessageModal from './components/ErrorMessageModal/ErrorMessageModal';
 import CookieConsentModal from './components/CookieConsentModal/CookieConsentModal';
-import LandingPage from './views/landingPage/LandigPage';
+import LandingPage from './views/landingPage/LandingPage';
 
 /**
  * Main container of the Webapp
