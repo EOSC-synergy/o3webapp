@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { styled, useTheme } from '@mui/material/styles';
 import defaultStructure from '../../../../config/defaultConfig.json';
 import LocationSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
 import ModelGroupConfigurator from "../InputComponents/ModelGroupConfigurator/ModelGroupConfigurator";
@@ -12,11 +13,65 @@ import YAxisSlider from "../InputComponents/YAxisSlider/YAxisSlider";
 import PropTypes from 'prop-types'; 
 import LatitudeBandSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
 import ReferenceModelSelector from "../InputComponents/ReferenceModelSelector/ReferenceModelSelector";
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
+import MuiAccordion from '@mui/material/Accordion';
+import MuiAccordionSummary from '@mui/material/AccordionSummary';
+import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+
+
+
+// custom Accordion components are 
+// inspired by: https://mui.com/components/accordion/#customization 
+ 
+/**
+ * custom Accordion component
+ */
+const Accordion = styled((props) => (
+    <MuiAccordion disableGutters elevation={0} square {...props} />
+  ))(({ theme }) => ({
+    border: `1px solid ${theme.palette.divider}`,
+    '&:not(:last-child)': {
+      borderBottom: 0,
+    },
+    '&:before': {
+      display: 'none',
+    },
+  }));
+  
+/**
+ * custom Accordion summary component
+ */
+const AccordionSummary = styled((props) => (
+    <MuiAccordionSummary
+      expandIcon={<ArrowForwardIosIcon sx={{ fontSize: '0.9rem' }} />}
+      {...props}
+    />
+  ))(({ theme }) => ({
+    backgroundColor:
+      theme.palette.mode === 'dark'
+        ? 'rgba(255, 255, 255, .05)'
+        : 'rgba(0, 0, 0, .03)',
+    flexDirection: 'row-reverse',
+    '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
+      transform: 'rotate(0deg)',
+    },
+    '& .MuiAccordionSummary-expandIconWrapper': {
+        transform: 'rotate(-90deg)',
+      },
+    '& .MuiAccordionSummary-content': {
+      marginLeft: theme.spacing(1),
+    },
+  }));
+  
+/**
+ * custom AccordionDetails component
+ */
+const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+    padding: theme.spacing(2),
+    borderTop: '1px solid rgba(0, 0, 0, .125)',
+  }));
 
 /**
  * an expandable section containing a list of inputComponents as well as a name
@@ -76,36 +131,47 @@ function Section(props) {
     }
 
     return (
-    <Accordion
-        data-testid="section"
-        sx={{
-            maxWidth: "100vw"
-        }}
-    >
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
+        <Accordion
+            data-testid="section"
+            sx={{
+                maxWidth: "100vw"       // make sure accordion is not wider than the full screen
+            }}
+            expanded={props.isExpanded}
+            onChange={props.isExpanded ? props.onCollapse : props.onExpand}
         >
-            <Typography>{props.name}</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-            <>
-                {props.components.map((element, idx) => {
-                    return (
-                        <>
-                            {mapNameToComponent(element, idx)}
-                            <br />
-                        </>
-                    )
-                })}
-            </>
-        </AccordionDetails>
-    </Accordion>);
+            <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+            >
+                <Typography>{
+                (props.name     // check if props.name exists
+                    && (typeof props.name === 'string' || props.name instanceof String))  // and whether its a string (https://stackoverflow.com/questions/4059147/check-if-a-variable-is-a-string-in-javascript)
+                    && props.name.toUpperCase()}
+                </Typography>
+            </AccordionSummary>
+
+            <AccordionDetails>
+                <>
+                    {props.components.map((element, idx) => {
+                        return (
+                            <>
+                                {mapNameToComponent(element, idx)}
+                            </>
+                        )
+                    })}
+                </>
+            </AccordionDetails>
+        </Accordion>);
 }
 
 Section.propTypes = {
-    name: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    reportError: PropTypes.func.isRequired,
+    components: PropTypes.arrayOf(PropTypes.string).isRequired,
+    isExpanded: PropTypes.bool.isRequired,
+    onCollapse: PropTypes.func,
+    onExpand: PropTypes.func
 }
 
 export default Section;

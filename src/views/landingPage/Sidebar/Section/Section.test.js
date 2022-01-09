@@ -34,7 +34,7 @@ it('Section reports error if invalid component is entered', () => {
 it('Section renders the given name', () => {
     const name = "Test";
     render(<Section components={["LatitudeBandSelector"]} name={name} />);
-    expect(screen.getByTestId('section')).toHaveTextContent(name);
+    expect(screen.getByTestId('section')).toHaveTextContent(name.toUpperCase());
 })
 
 
