@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit";
 
-const STATISTICAL_VALUES = ["mean", "median", "derivative", "percentile"]
+const STATISTICAL_VALUES = ["mean", "median", "derivative", "percentile"];
 
 const initialState = {
     // currently active plot
@@ -81,35 +81,35 @@ const modelsSlice = createSlice({
         updatedModelGroup(state, action) { },
         addedModelGroup(state, action) { },
         setVisibility(state, action) { 
-            const { groupID, modelID, isVisible } = action.payload
-            const activeSettings = state.settings[state.plotId]
-            const activeModel = activeSettings[groupID].models[modelID]
+            const { groupID, modelID, isVisible } = action.payload;
+            const activeSettings = state.settings[state.plotId];
+            const activeModel = activeSettings[groupID].models[modelID];
             if (activeModel === undefined) {
-                throw `tried to access model with modelID "${modelID}" that is not yet defined!`
+                throw `tried to access model with modelID "${modelID}" that is not yet defined!`;
             } 
-            activeModel.isVisible = isVisible
+            activeModel.isVisible = isVisible;
         },
-        setStatisticalValuesIncluded(state, action) { 
+        setStatisticalValuesIncluded(state, action) { // this is for an individual model
             // svType has to be a string of the form: 
             // mean | derivative | median | percentile
             const { groupID, modelID, svType, isIncluded } = action.payload;
             const activeSettings = state.settings[state.plotId];
-            const activeModel = activeSettings[groupID].models[modelID]
+            const activeModel = activeSettings[groupID].models[modelID];
             if (activeModel === undefined) {
-                throw `tried to access model with modelID "${modelID}" that is not yet defined!`
+                throw `tried to access model with modelID "${modelID}" that is not yet defined!`;
             }
             if (STATISTICAL_VALUES.includes(svType)) { // svType doesn't represent a valid statistical value
-                throw `tried to set statistial value "${svType}" that is not a valid statistical value (${STATISTICAL_VALUES.join("|")})`
+                throw `tried to set statistial value "${svType}" that is not a valid statistical value (${STATISTICAL_VALUES.join("|")})`;
             }
-            activeModel[svType] = isIncluded
+            activeModel[svType] = isIncluded;
         },
-        setStatisticalValueForGroup(state, action) { 
-            const { groupID, svType, isIncluded } = action.payload
+        setStatisticalValueForGroup(state, action) { // this is for an entire group
+            const { groupID, svType, isIncluded } = action.payload;
             const activeSettings = state.settings[state.plotId];
             if (STATISTICAL_VALUES.includes(svType)) { // svType doesn't represent a valid statistical value
-                throw `tried to set statistial value "${svType}" that is not a valid statistical value (${STATISTICAL_VALUES.join("|")})`
+                throw `tried to set statistial value "${svType}" that is not a valid statistical value (${STATISTICAL_VALUES.join("|")})`;
             }
-            activeSettings[groupID].visibileSV[svType] = isIncluded
+            activeSettings[groupID].visibileSV[svType] = isIncluded;
         },
     }
 })
@@ -120,9 +120,9 @@ export const {
     setVisibility, 
     setStatisticalValuesIncluded, 
     setStatisticalValueForGroup
-} = modelsSlice.actions
+} = modelsSlice.actions;
 
-export default modelsSlice.reducer
+export default modelsSlice.reducer;
 
-export const selectCurrentModelGroups = state => state.models[state.plot.plotId]
-export const selectCurrentModelGroup = (state, groupId) => state.models[state.plot.plotId][groupId]
+export const selectCurrentModelGroups = state => state.models[state.plot.plotId];
+export const selectCurrentModelGroup = (state, groupId) => state.models[state.plot.plotId][groupId];
