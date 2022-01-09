@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 
+const STATISTICAL_VALUES = ["mean", "median", "derivative", "percentile"]
+
 const initialState = {
     // currently active plot
     plotId: "tco3_zm",
@@ -29,10 +31,12 @@ const initialState = {
                     }
                 },
                 hidden: false, // show/hide complete group
-                derivativeVisible: false,
-                meanVisible: false,
-                medianVisible: false,
-                percentileVisible: false
+                visibileSV: { // lookup table so the reducer impl. can be more convenient
+                    mean: true,
+                    derivative: true,
+                    median: true,
+                    percentile: true,
+                }
             }
         },
         "tco3_return": {
@@ -56,10 +60,12 @@ const initialState = {
                     }
                 },
                 hidden: false, // show/hide complete group
-                derivativeVisible: false,
-                meanVisible: false,
-                medianVisible: false,
-                percentileVisible: false
+                visibileSV: { // lookup table so the reducer impl. can be more convenient
+                    mean: true,
+                    derivative: true,
+                    median: true,
+                    percentile: true,
+                }
             }
         }
     }
@@ -92,13 +98,19 @@ const modelsSlice = createSlice({
             if (activeModel === undefined) {
                 throw `tried to access model with modelID "${modelID}" that is not yet defined!`
             }
-            if (activeModel[svType] === undefined) { // svType doesn't represent a valid statistical value
-                throw `tried to set statistial value "${svType}" that is not a valid statistical value`
+            if (STATISTICAL_VALUES.includes(svType)) { // svType doesn't represent a valid statistical value
+                throw `tried to set statistial value "${svType}" that is not a valid statistical value (${STATISTICAL_VALUES.join("|")})`
             }
             activeModel[svType] = isIncluded
         },
-        addStatisticalValue(state, action) { },
-        removeStatisticalValue(state, action) { },
+        setStatisticalValueForGroup(state, action) { 
+            const { groupID, svType, isIncluded } = action.payload
+            const activeSettings = state.settings[state.plotId];
+            if (STATISTICAL_VALUES.includes(svType)) { // svType doesn't represent a valid statistical value
+                throw `tried to set statistial value "${svType}" that is not a valid statistical value (${STATISTICAL_VALUES.join("|")})`
+            }
+            activeSettings[groupID].visibileSV[svType] = isIncluded
+        },
     }
 })
 
@@ -107,8 +119,7 @@ export const {
     addedModelGroup,
     setVisibility, 
     setStatisticalValuesIncluded, 
-    addStatisticalValue, 
-    removeStatisticalValue 
+    setStatisticalValueForGroup
 } = modelsSlice.actions
 
 export default modelsSlice.reducer
