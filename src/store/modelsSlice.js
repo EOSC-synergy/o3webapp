@@ -78,7 +78,9 @@ const modelsSlice = createSlice({
         // set models
         // add models
 
-        updatedModelGroup(state, action) { },
+        addModels(state, action) { }, // expects groupID, list of models 
+        removeModels(state, action) { }, // expects groupdID, list of models
+        updatedModelGroup(state, action) { }, // implementing this requires more knowledge about the UI
         addedModelGroup(state, action) { },
         setVisibility(state, action) { 
             const { groupID, modelID, isVisible } = action.payload;
@@ -115,6 +117,8 @@ const modelsSlice = createSlice({
 })
 
 export const { 
+    addModels,
+    removeModels,
     updatedModelGroup,
     addedModelGroup,
     setVisibility, 
