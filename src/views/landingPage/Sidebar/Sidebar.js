@@ -83,9 +83,13 @@ function Sidebar(props) {
                         maxWidth: "100vw",
                     },
                 }}
+                data-testid="sidebar"
             >
                 <DrawerHeader>
-                    <IconButton onClick={props.onClose}>
+                    <IconButton
+                        onClick={props.onClose}
+                        data-testid="sidebarClose"
+                    >
                         <CloseIcon />
                     </IconButton>
                 </DrawerHeader>
