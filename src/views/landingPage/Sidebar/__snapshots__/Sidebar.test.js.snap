@@ -3,6 +3,7 @@
 exports[`Sidebar renders correctly 1`] = `
 <div
   className="MuiDrawer-root MuiDrawer-docked css-19iwfmc-MuiDrawer-docked"
+  data-testid="sidebar"
 >
   <div
     className="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiDrawer-paper MuiDrawer-paperAnchorRight MuiDrawer-paperAnchorDockedRight css-18sg6k4-MuiPaper-root-MuiDrawer-paper"
@@ -18,6 +19,7 @@ exports[`Sidebar renders correctly 1`] = `
     >
       <button
         className="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+        data-testid="sidebarClose"
         disabled={false}
         onBlur={[Function]}
         onContextMenu={[Function]}
@@ -403,6 +405,7 @@ exports[`Sidebar renders correctly 2`] = `
 <div>
   <div
     class="MuiDrawer-root MuiDrawer-docked css-19iwfmc-MuiDrawer-docked"
+    data-testid="sidebar"
   >
     <div
       class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiDrawer-paper MuiDrawer-paperAnchorRight MuiDrawer-paperAnchorDockedRight css-18sg6k4-MuiPaper-root-MuiDrawer-paper"
@@ -412,6 +415,7 @@ exports[`Sidebar renders correctly 2`] = `
       >
         <button
           class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+          data-testid="sidebarClose"
           tabindex="0"
           type="button"
         >

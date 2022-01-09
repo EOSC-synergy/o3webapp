@@ -26,10 +26,7 @@ it('Sidebar renders correctly', () => {
 
 // expect there to be a download button
 it('Sidebar has a download button', () => {
-    render(<Sidebar />)
+    render(<Sidebar />);
     const download = screen.getByText(/Download/i);
     expect(download).not.toBeDisabled();
-    userEvent.click(download);
-    // test for when download button is clicked
-    // TODO
 })
