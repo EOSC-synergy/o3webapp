@@ -78,8 +78,50 @@ const modelsSlice = createSlice({
         // set models
         // add models
 
-        addModels(state, action) { }, // expects groupID, list of models 
-        removeModels(state, action) { }, // expects groupdID, list of models
+        addModels(state, action) { 
+            const { groupId, newModelList }  = action.payload;
+            const activeSettings = state.settings[state.plotId];
+            const selectedGroup = activeSettings[groupId];
+            const activeModelList = selectedGroup.modelList;
+
+            if (selectedGroup === undefined) {
+                throw `Tried to access model-group with groupID "${groupId}" that is not yet defined!`;
+            }
+
+            // Add model to modelList if it is not already included
+            for (var i = 0; i < newModelList.length; i++) {
+                if (activeModelList.indexOf(newModelList[i]) !== -1) {
+                    continue;
+                }
+
+                activeModelList.push(newModelList[i]);
+            }
+
+            // ---------------------------------------------------------
+            // TODO: Add Model information to the model lookup table
+            // ---------------------------------------------------------
+
+
+        }, // expects groupID, list of models 
+        removeModels(state, action) { 
+            const { groupId, removeModelList }  = action.payload;
+            const activeSettings = state.settings[state.plotId];
+            const selectedGroup = activeSettings[groupId];
+            const activeModelList = selectedGroup.modelList;
+
+            if (selectedGroup === undefined) {
+                throw `Tried to access model-group with groupID "${groupId}" that is not yet defined!`;
+            }
+
+            for (var i = 0; i < removeModelList.length; i++) {
+                // Remove model from modelList
+                activeModelList = activeModelList.filter(item => item !== removeModelList[i]);
+
+                // Delete model object from models
+                delete selectedGroup.models[removeModelList[i]];
+            }
+
+        }, // expects groupdID, list of models
         updatedModelGroup(state, action) { }, // implementing this requires more knowledge about the UI
         addedModelGroup(state, action) { },
         setVisibility(state, action) { 
