@@ -18,6 +18,7 @@ function LatitudeBandSelector(props) {
     const min = -90;
     const max = +90;
 
+    const latitudeBandsGlobalIndex = 6;
     const latitudeBandsLatitudeBandIndex = 7;
     const latitudeBandsCustomIndex = 8;
     const cols = 4;
@@ -63,11 +64,12 @@ function LatitudeBandSelector(props) {
                         value={latitudeBand}
                         label="LatitudeBand"
                         onChange={handleChangeLatitudeBand}
+                        defaultValue={latitudeBandsGlobalIndex}
                     >
                         {
                             // maps all latitude bands from constants.js to ´MenuItem´s
                             latitudeBands.map(
-                                (s, idx) => <MenuItem value={idx}>{s.description}</MenuItem>
+                                (s, idx) => <MenuItem key={idx} value={idx}>{s.description}</MenuItem>
                             )
                         }
                     </Select>
