@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux"
 import { setLocation } from "../../../../../store/plotSlice";
 import {Box, Divider, FormControl, Grid, InputLabel, MenuItem, Select, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
+import { latitudeBands } from "../../../../../utils/constants";
 
 /**
  * Enables the user to choose minimum and maximum latitude
@@ -16,6 +17,11 @@ function LatitudeBandSelector(props) {
 
     const min = -90;
     const max = +90;
+
+    const latitudeBandsLatitudeBandIndex = 7;
+    const latitudeBandsCustomIndex = 8;
+    const cols = 4;
+    /*
     const predefinedOptions = [
         {
             name: "global",
@@ -23,6 +29,7 @@ function LatitudeBandSelector(props) {
             max: -90
         }
     ]
+    */
 
     // const dispatch = useDispatch()
     const [latitudeBand, setLatitudeBand] = React.useState();
@@ -39,10 +46,10 @@ function LatitudeBandSelector(props) {
     };
 
     const locationToTextField = (latitudeBand) => {
-        if (latitudeBand === 9) {
+        if (latitudeBand === latitudeBandsLatitudeBandIndex) {
+            return ["lat min", "lat max"];
+        } else if (latitudeBand === latitudeBandsCustomIndex) {
             return ["long", "lat"];
-        } else if (latitudeBand === 8) {
-            return ["lat min", "lat max"]
         }
     }
     return (
@@ -57,28 +64,25 @@ function LatitudeBandSelector(props) {
                         label="LatitudeBand"
                         onChange={handleChangeLatitudeBand}
                     >
-                        <MenuItem value={1}>Southern Hemisphere (SH) Polar (90–60°S)</MenuItem>
-                        <MenuItem value={2}>SH Mid-Latitudes (60–35°S)</MenuItem>
-                        <MenuItem value={3}>Tropics (20°S–20°N)</MenuItem>
-                        <MenuItem value={4}>Northern Hemisphere (NH) Mid-Latitudes (35–60°N)</MenuItem>
-                        <MenuItem value={5}>NH Polar (60–90°N)</MenuItem>
-                        <MenuItem value={6}>Near-Global (60°S–60°N)</MenuItem>
-                        <MenuItem value={7}>Global (90°S–90°N)</MenuItem>
-                        <MenuItem value={8}>Latitude Band</MenuItem>
-                        <MenuItem value={9}>Custom</MenuItem>
+                        {
+                            // maps all latitude bands from constants.js to ´MenuItem´s
+                            latitudeBands.map(
+                                (s, idx) => <MenuItem value={idx}>{s.description}</MenuItem>
+                            )
+                        }
                     </Select>
                     <InputLabel id="latitudeBandSelectorLabel">Latitude Band</InputLabel>
                     {
-                        (latitudeBand === 8 || latitudeBand === 9) &&
+                        (latitudeBand === latitudeBandsLatitudeBandIndex || latitudeBand === latitudeBandsCustomIndex) &&
                         <Grid container direction="row" style={{paddingTop: '1.5em'}} justifyContent="center" alignItems="center">
 
-                            <Grid item xs={4}>
+                            <Grid item xs={cols}>
                                 <Typography>
                                     {locationToTextField(latitudeBand)[0]}
                                 </Typography>
                             </Grid>
 
-                            <Grid item xs={8}>
+                            <Grid item xs={2 * cols}>
                                 <TextField
                                     id="textField1" // maybe change name?
                                     label={locationToTextField(latitudeBand)[0]}
@@ -94,10 +98,10 @@ function LatitudeBandSelector(props) {
                                     helperText={(textFieldValue1 < min || textFieldValue1 > max) ? `value must be between ${min} and ${max}` : " "}
                                 />
                             </Grid>
-                            <Grid item xs={4}>
+                            <Grid item xs={cols}>
                                 <Typography>{locationToTextField(latitudeBand)[1]}</Typography>
                             </Grid>
-                            <Grid item xs={8}>
+                            <Grid item xs={2 * cols}>
                                 <TextField
                                     id="textField2" // maybe change name?
                                     label={locationToTextField(latitudeBand)[1]}
