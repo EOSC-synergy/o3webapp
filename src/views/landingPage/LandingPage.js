@@ -13,18 +13,21 @@ function LandingPage(props) {
 
     const [isSidebarOpen, setSidebarOpen] = React.useState(false);
     
-    const openSidebar = (event) => {
-        if (
-            event &&
-            event.type === 'keydown' &&
-            (event.key === 'Tab' || event.key === 'Shift')
-          ) {
-            return;
-          }
+    /**
+     * Function to open sidebar
+     */
+    const openSidebar = () => {
         setSidebarOpen(true);
     }
 
+    /**
+     * Function to close sidebar,
+     * if the user does not currently try to navigate the sidebar
+     * @param {event} event the event that triggered the call of this function
+     */
     const closeSidebar = (event) => {
+        // for accessibility do not close sidebar if users 
+        // try to navigate sidebar using Tab or Shift
         if (
             event &&
             event.type === 'keydown' &&
