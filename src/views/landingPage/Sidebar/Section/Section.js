@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { styled, useTheme } from '@mui/material/styles';
-import defaultStructure from '../../../../config/defaultConfig.json';
 import LocationSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
 import ModelGroupConfigurator from "../InputComponents/ModelGroupConfigurator/ModelGroupConfigurator";
 import OffsetConfigurator from "../InputComponents/OffsetConfigurator/OffsetConfigurator";
