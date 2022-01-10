@@ -155,9 +155,9 @@ function Section(props) {
                 <>
                     {props.components.map((element, idx) => {
                         return (
-                            <>
+                            <React.Fragment key={idx}>
                                 {mapNameToComponent(element, idx)}
-                            </>
+                            </React.Fragment>
                         )
                     })}
                 </>
