@@ -11,8 +11,10 @@ import { Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 
-
-export const DrawerHeader = styled('div')(({ theme }) => ({
+/**
+ * Defining a drawerheader section at the beginning of a drawer
+ */
+const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     ...theme.mixins.toolbar,
