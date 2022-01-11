@@ -18,6 +18,7 @@ import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { components } from "../../../../utils/constants";
 
 
 
@@ -81,7 +82,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
  * @param {boolean} props.isExpanded -> whether this section should be expanded
  * @param {function} props.onCollapse -> function to collapse this section
  * @param {function} props.onExpand -> function to expand this section
- * @returns {JSX} an accordeon that once expanded displays the components specified by the config files and the API doc
+ * @returns {JSX.Element} an accordion that once expanded displays the components specified by the config files and the API doc
  */
 function Section(props) {
 
@@ -95,28 +96,28 @@ function Section(props) {
      */
     function mapNameToComponent(name, key) {
         switch (name){
-            case "ModelGroupConfigurator":
-                return <ModelGroupConfigurator key={key} />;
-            case "OffsetConfigurator":
-                return <OffsetConfigurator key={key}  />;
-            case "PlotNameField":
-                return <PlotNameField key={key}  />;
-            case "ReferenceYearSlider":
-                return <ReferenceYearSlider key={key}  />;
-            case "TimeCheckBoxGroup":
-                return <TimeCheckBoxGroup key={key}  />;
-            case "XAxisSlider":
-                return <XAxisSlider key={key}  />;
-            case "YAxisSlider":
-                return <YAxisSlider key={key}  />;
-            case "RegionSelector":
-                return <RegionSelector key={key}  />;
-            case "LatitudeBandSelector":
+            case components[0].description:
                 return <LatitudeBandSelector key={key}  />;
-            case "ReferenceModelSelector":
-                return <ReferenceModelSelector key={key} />;
-            case "LocationSelector":
+            case components[1].description:
                 return <LocationSelector key={key} />
+            case components[2].description:
+                return <ModelGroupConfigurator key={key} />;
+            case components[3].description:
+                return <OffsetConfigurator key={key}  />;
+            case components[4].description:
+                return <PlotNameField key={key}  />;
+            case components[5].description:
+                return <ReferenceModelSelector key={key} />;
+            case components[6].description:
+                return <ReferenceYearSlider key={key}  />;
+            case components[7].description:
+                return <RegionSelector key={key}  />;
+            case components[8].description:
+                return <TimeCheckBoxGroup key={key}  />;
+            case components[9].description:
+                return <XAxisSlider key={key}  />;
+            case components[10].description:
+                return <YAxisSlider key={key}  />;
             default:
                 if (props.reportError) {
                     props.reportError(`Section ${props.name} found no match for an input component ${name}`);
