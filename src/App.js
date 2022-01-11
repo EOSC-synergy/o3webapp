@@ -1,5 +1,5 @@
 import * as React from 'react';
-import NavBar from "./components/NavBar/NavBar";
+import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Graph from './views/landingPage/Graph/Graph';
 import ErrorMessageModal from './components/ErrorMessageModal/ErrorMessageModal';
@@ -17,11 +17,12 @@ function App() {
     const [isCookieConsentModalVisible, setCookieConsentModalVisibility] = React.useState(true);
 
     const reportError = (msg) => {
-        setError(msg);
+        setErrorMessage(msg);
+        setErrorModalVisible(true);
     }
     
     const closeErrorModal = () => {
-        setError(null);
+        setErrorModalVisible(false);
     }
 
     const closeCookieConsentModal = () => {
@@ -30,11 +31,11 @@ function App() {
 
     return (
     <>
-        <NavBar error={reportError} handleSidebarOpen={handleSidebarOpen} />
-        <LandingPage error={reportError} />
+        <Navbar error={reportError} />
+        {/* <LandingPage error={reportError} />
         <Footer error={reportError} />
         <ErrorMessageModal open={error !== null} message={error} onClose={closeErrorModal} />
-        <CookieConsentModal open={showCookieConsentModal} onClose={onCloseCookieConsentModal} error={reportError} />
+        <CookieConsentModal open={showCookieConsentModal} onClose={onCloseCookieConsentModal} error={reportError} /> */}
     </>
     );
 }
