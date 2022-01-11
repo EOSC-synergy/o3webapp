@@ -5,14 +5,17 @@ import {Box, Divider, FormControl, Grid, InputLabel, MenuItem, Select, TextField
 import Typography from "@mui/material/Typography";
 
 /**
- * enables the user to rename the plot
+ * Enables the user to rename the plot
  * @param {Object} props 
  * @param {function} props.reportError - function for error handling
  * @returns {JSX} a textfield to change the plotname
  */
 function PlotNameField(props) {
     
+    // The title that should be displayed above the TextField
     const componentTitle = "PLOT NAME";
+
+    // The label displayed inside the TextField while nothing is typed in
     const textFieldLabel = "New Plot Name";
 
     return ( <>
