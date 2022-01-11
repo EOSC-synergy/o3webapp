@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux"
  */
 function ModelGroupCard(props) {
     
-    const modelGroupData = useSelector(state => state.models[props.name])
+    // const modelGroupData = useSelector(state => state.models[props.name])
 
     let i;
     i = props.reportError;

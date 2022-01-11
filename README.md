@@ -13,3 +13,13 @@ Notes on frameworks we want to use:
 Configuration can be done in the config file
 The default config specifies where to put certain fields, if after calling the API it is necessary to place them somewhere.
 Special config files for endpoints can be specified.
+
+To run tests with showing test coverage run:
+```
+    npm run test -- --coverage .
+```
+
+To generate docs run:
+```
+    npm run docs
+```

@@ -10,11 +10,11 @@
     },
     {
       "name": "Filter Data",
-      "components": ["LocationSelector", "TimeCheckboxGroup"]
+      "components": ["LatitudeBandSelector", "TimeCheckBoxGroup"]
     },
     {
       "name": "Reference Year",
-      "component": ["ReferenceModelSelector", "ReferenceYearSlider"]
+      "components": ["ReferenceModelSelector", "ReferenceYearSlider"]
     }
   ]
 }

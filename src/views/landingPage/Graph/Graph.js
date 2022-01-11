@@ -4,7 +4,7 @@ import { useGetRawPlotDataMutation } from '../../../services/API/apiSlice';
 import { selectCurrentModelGroups } from '../../../store/modelsSlice';
 import { selectCurrentPlotId, selectCurrentPlotType, selectCurrentSettings } from '../../../store/plotSlice';
 import { selectCurrentReferenceSettings } from '../../../store/referenceSlice';
-import {calculatePlotSeries} from "../../../utils/math"
+import {calculatePlotSeries} from "../../../services/math/math";
 
 /**
  * A containter for the displayed graph.
@@ -12,32 +12,33 @@ import {calculatePlotSeries} from "../../../utils/math"
  */
 function Graph(props) {
 
-    const plotType = selectCurrentPlotType()
-    const plotId = selectCurrentPlotId()
-    const options = useSelector(state => selectCurrentSettings(state, plotId))
-    const models = useSelector(state => selectCurrentModelGroup(state, plotId, "all"))
-    const referenceSettings = useSelector(state => selectCurrentReferenceSettings(state, plotId))
+    // const plotType = selectCurrentPlotType()
+    // const plotId = selectCurrentPlotId()
+    // const options = useSelector(state => selectCurrentSettings(state, plotId))
+    // const models = useSelector(state => selectCurrentModelGroup(state, plotId, "all"))
+    // const referenceSettings = useSelector(state => selectCurrentReferenceSettings(state, plotId))
     
-    const { data, isError, error, isLoading, isSuccess } = useGetRawPlotDataMutation(
-        {
-            plotType,
-            latMin: options.latMin,
-            latMax: options.latMax,
-            modelList,
-        }
-    )
+    // const { data, isError, error, isLoading, isSuccess } = useGetRawPlotDataMutation(
+    //     {
+    //         plotType,
+    //         latMin: options.latMin,
+    //         latMax: options.latMax,
+    //         modelList,
+    //     }
+    // )
     
-    if (isSuccess) {
-        // updateCurrentModelGroup with fetched data
-    }
+    // if (isSuccess) {
+    //     // updateCurrentModelGroup with fetched data
+    // }
 
 
-    // display loading spinner instead of graph until isSuccess = true
-    // then load data
+    // // display loading spinner instead of graph until isSuccess = true
+    // // then load data
     
-    const seriesData = generatePlotSeries(models)
+    // const seriesData = generatePlotSeries(models)
 
     return (<div>
+        Graph
         {/* Graph displayed with ApexCharts goes here */}
     </div>);
 }

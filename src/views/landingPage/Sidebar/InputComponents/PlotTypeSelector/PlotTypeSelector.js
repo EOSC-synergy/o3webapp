@@ -13,7 +13,7 @@ function PlotTypeSelector(props) {
      * gets all available plot types
      */
     const getAllAvailablePlotTypes = () => {
-        const {data, isSuccess, isLoading, isError, error} = useGetPlotsQuery()
+        // const {data, isSuccess, isLoading, isError, error} = useGetPlotsQuery()
         // re-render component based on isLoading <-> isSuccess
     }
 
@@ -21,6 +21,7 @@ function PlotTypeSelector(props) {
 
     return (
         <>
+            PlotTypeSelector
         </>
     );
 }

@@ -1,9 +1,9 @@
 import * as React from 'react';
-import NavBar from "./components/NavBar/NavBar";
+import NavBar from "./components/Navbar/NavBar";
 import Footer from "./components/Footer/Footer";
-import Graph from './views/landingPage/Graph/Graph';
 import ErrorMessageModal from './components/ErrorMessageModal/ErrorMessageModal';
 import CookieConsentModal from './components/CookieConsentModal/CookieConsentModal';
+import LandingPage from './views/landingPage/LandingPage';
 
 /**
  * Main container of the Webapp
@@ -16,25 +16,40 @@ function App() {
     const [errorMessage, setErrorMessage] = React.useState(null);  // if errorMessage null no error
     const [isCookieConsentModalVisible, setCookieConsentModalVisibility] = React.useState(true);
 
+    /**
+     * function to report an error from other components
+     * automatically opens errorModal
+     * @param {string} msg the message of the reported error
+     */
     const reportError = (msg) => {
-        setError(msg);
+        setErrorModalVisible(true);
+        setErrorMessage(msg);
     }
     
+    /**
+     * closes the error modal
+     */
     const closeErrorModal = () => {
-        setError(null);
+        setErrorModalVisible(false);
     }
 
-    const closeCookieConsentModal = () => {
+    /**
+     * closes the cookie consent modal
+     */
+    const onCloseCookieConsentModal = () => {
+        setCookieConsentModalVisibility(false);
     }
     
 
     return (
     <>
-        <NavBar error={reportError} handleSidebarOpen={handleSidebarOpen} />
+        <NavBar error={reportError} />
+
         <LandingPage error={reportError} />
+
         <Footer error={reportError} />
-        <ErrorMessageModal open={error !== null} message={error} onClose={closeErrorModal} />
-        <CookieConsentModal open={showCookieConsentModal} onClose={onCloseCookieConsentModal} error={reportError} />
+        <ErrorMessageModal open={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />
+        <CookieConsentModal open={isCookieConsentModalVisible} onClose={onCloseCookieConsentModal} error={reportError} />
     </>
     );
 }

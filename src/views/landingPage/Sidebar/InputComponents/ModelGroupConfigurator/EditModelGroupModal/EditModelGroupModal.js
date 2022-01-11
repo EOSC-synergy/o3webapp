@@ -13,7 +13,7 @@ import { updatedModelGroup } from "../../../../../../store/modelsSlice"
  */
 function EditModelGroupModal(props) {
 
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
     let i = props.onClose;
     i = props.isOpen;
@@ -24,6 +24,7 @@ function EditModelGroupModal(props) {
 
     return (
         <>
+        EditModelGroupModal
         </>
     );
 }

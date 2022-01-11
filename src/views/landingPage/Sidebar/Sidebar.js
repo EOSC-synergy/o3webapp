@@ -1,10 +1,25 @@
 import * as React from 'react';
+import { styled, useTheme } from '@mui/material/styles';
 import Section from './Section/Section.js';
 import defaultStructure from '../../../config/defaultConfig.json';
 import DownloadModal from './DownloadModal/DownloadModal.js';
 import { setCurrentType } from '../../../store/plotSlice.js';
 import { useDispatch } from "react-redux";
 import PlotTypeSelector from './InputComponents/PlotTypeSelector/PlotTypeSelector.js';
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import { Button } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
+
+/**
+ * Defining a drawerheader section at the beginning of a drawer
+ */
+const DrawerHeader = styled('div')(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
+  }));
 
 /**
  * Contains all input components responsible for the modification 
@@ -17,10 +32,9 @@ import PlotTypeSelector from './InputComponents/PlotTypeSelector/PlotTypeSelecto
  */
 function Sidebar(props) {
 
-    const dispatch = useDispatch()
-    let i = props.onClose;
-    i = props.reportError;
-    i = props.isOpen;
+    const theme = useTheme();
+
+    // const dispatch = useDispatch()
 
     const [isDownloadModalVisible, setDownloadModalVisible] = React.useState(false);
     const [expandedSection, setExpandedSection] = React.useState(null); // -> idx of sections array
@@ -29,14 +43,14 @@ function Sidebar(props) {
      * closes the download modal
      */
     const closeDownloadModal = () => {
-        setOpenDownloadModal(false);
+        setDownloadModalVisible(false);
     }
 
     /**
      * shows the download modal
      */
     const openDownloadModal = () => {
-        setOpenDownloadModal(true);
+        setDownloadModalVisible(true);
     }
 
     /**
@@ -49,35 +63,55 @@ function Sidebar(props) {
     /**
      * expands section with id (index in section array) i
      * collapses all other currently expanded sections
-     * @param {int} i 
+     * @param {int} i the section that should be expanded
      */
     const expandSection = (i) => {
         setExpandedSection(i);
     }
 
     return (
-    <>
-        {props.isOpen && 
-            <>
+            <SwipeableDrawer
+                anchor="right"
+                open={props.isOpen}
+                onClose={props.onClose}
+                onOpen={props.onOpen}
+                variant="persistent"
+                sx= {{
+                    width: 400,
+                    maxWidth: "100vw",
+                    flexShrink: 0,
+                    '& .MuiDrawer-paper': {
+                        width: 400,
+                        maxWidth: "100vw",
+                    },
+                }}
+                data-testid="sidebar"
+            >
+                <DrawerHeader>
+                    <IconButton
+                        onClick={props.onClose}
+                        data-testid="sidebarClose"
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                </DrawerHeader>
+                    <PlotTypeSelector />
 
-                <PlotTypeSelector plotType={plotType} />
+                    {defaultStructure["sections"].map((s, idx) =>
+                        <Section
+                            name={s.name}
+                            key={idx}
+                            open={expandedSection === idx}
+                            components={s.components}
+                            onCollapse={collapseSection}
+                            onExpand={expandSection}
+                        />
+                    )}
 
-                {defaultStructure.forEach((s, idx) =>
-                    <Section
-                        name={defaultStructure.sections[s].name}
-                        open={expandedSection === idx}
-                        components={"Empty for now"}
-                        onCollapse={onCollapseSection}
-                        onExpand={onExpandSection}
-                    />
-                )}
-
-                {/* Maybe into their own component? */}
-                {/* <Button text="Download" onClick={onOpenDownloadModal}/> */}
-                <DownloadModal open={openDownloadModal} onClose={onCloseDownloadModal} />
-            </>
-        }
-    </>);
+                    <Button sx={{marginLeft: "10%", marginTop: "1em", width: "80%"}} variant="outlined" onClick={openDownloadModal}>Download</Button>
+                    <DownloadModal open={isDownloadModalVisible} onClose={closeDownloadModal} />
+        </SwipeableDrawer>
+    );
 }
 
 export default Sidebar;

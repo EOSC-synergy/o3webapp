@@ -68,7 +68,7 @@ function AddModelGroupModal(props) {
     const addNewGroup = () => {
         handleAllLeft();
         setGroupName('');
-        dispatch(addedModelGroup({groupName})) // add data (modelList)
+        // dispatch(addedModelGroup({groupName})) // add data (modelList)
     }
 
     const updateGroupName = (event) => {
@@ -80,12 +80,13 @@ function AddModelGroupModal(props) {
     }
 
     const getAllAvailableModels = () => {
-        const {data, isSuccess, isLoading, isError, error} = useGetModelsQuery()
+        // const {data, isSuccess, isLoading, isError, error} = useGetModelsQuery()
         // display spinner until loading finished
     }
 
     return (
         <>
+            AddModelGroupModal
             {props.isOpen && <></>}
         </>
     );
