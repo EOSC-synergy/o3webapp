@@ -84,7 +84,7 @@ test('should return the initial state', () => {
     );
 });
 
-/*
+
 test('should remove the model list of the current plot', () => {
     
     const removeModelList = ["modelA", "modelB", "modelC"]
@@ -116,7 +116,6 @@ test('should remove the model list of the current plot', () => {
     ).toEqual(expected);
 
 });
-*/
 
 test('should add the model list of the current plot', () => {
     const previousState = {
