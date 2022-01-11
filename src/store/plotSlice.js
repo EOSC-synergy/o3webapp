@@ -58,32 +58,126 @@ const plotSlice = createSlice({
     name: "plot",
     initialState,
     reducers: {
-        setActivePlotId(state, action) { // e.g. dispatch(setActivePlotId({id: "tco3_zm"}))
-            const { id } = action.payload
-            state.plotId = id
+        
+        /**
+         * This reducer accepts an action object returned from setActivePlotId()
+         *     e.g. dispatch(setActivePlotId({id: "tco3_zm"}))     
+         * and calculates the new state based on the action and the action 
+         * data given in action.payload.
+         * 
+         * In this case the active plotId is set to the given string.
+         * 
+         * @param {object} state the current store state of: state/plot
+         * @param {object} action accepts the action returned from setActivePlotId()
+         * @param {object} action.payload the payload is an object containg the given data
+         * @param {string} action.payload.plotId a string that contains the new plot id
+         */
+        setActivePlotId(state, action) {
+            const { plotId } = action.payload
+            state.plotId = plotId
         }, 
-        setTitle(state, action) { // e.g. dispatch(setActivePlotId({title: "OCTS Plot"}))
+
+        /**
+         * This reducer accepts an action object returned from setTitle()
+         *     e.g. dispatch(setTitle({title: "OCTS Plot Title"}))     
+         * and calculates the new state based on the action and the action 
+         * data given in action.payload.
+         * 
+         * In this case the current plot title is set to the given string.
+         * 
+         * @param {object} state the current store state of: state/plot
+         * @param {object} action accepts the action returned from setTitle()
+         * @param {object} action.payload the payload is an object containg the given data
+         * @param {string} action.payload.id a string that contains the new plot title
+         */
+        setTitle(state, action) {
             const { title } = action.payload
             state.settings[state.plotId].title = title
         },
+
+        /**
+         * This reducer accepts an action object returned from setLocation()
+         *     e.g. dispatch(setLocation({minLat: -90, maxLat: 90}))     
+         * and calculates the new state based on the action and the action 
+         * data given in action.payload.
+         * 
+         * In this case the current plot location is set with the provided
+         * new latitude values.
+         * 
+         * @param {object} state the current store state of: state/plot
+         * @param {object} action accepts the action returned from setTitle()
+         * @param {object} action.payload the payload is an object containg the given data
+         * @param {number} action.payload.minLat a number specifying the minimum latitude
+         * @param {number} action.payload.maxLat a number specifying the maximum latitude
+         */
         setLocation(state, action) { 
             const {minLat, maxLat} = action.payload
             const location = state.settings[state.plotId].location
             location.minLat = minLat
             location.maxLat = maxLat
         },
+
+        /**
+         * This reducer accepts an action object returned from setDisplayXRange()
+         *     e.g. dispatch(setDisplayXRange({minX: 1960, maxX: 2100}))     
+         * and calculates the new state based on the action and the action 
+         * data given in action.payload.
+         * 
+         * In this case the current displayXRange is updated with the given min and max 
+         * x values.
+         * 
+         * NOTE: this might not be useful for each plot (e.g. the Return/Recovery plot
+         *       because this plot uses a categorial x-axis)
+         *       however it is most convenient to provide a uniform action interface.
+         * 
+         * @param {object} state the current store state of: state/plot
+         * @param {object} action accepts the action returned from setDisplayXRange()
+         * @param {object} action.payload the payload is an object containg the given data
+         * @param {number} action.payload.minX a number specifying the start of the x range
+         * @param {number} action.payload.maxX a number specifying the end of the x range
+         */
         setDisplayXRange(state, action) { 
             const {minX, maxX} = action.payload
             const displayXRange = state.settings[state.plotId].displayXRange
             displayXRange.minX = minX
             displayXRange.maxX = maxX
         },
+
+        /**
+         * This reducer accepts an action object returned from setDisplayYRange()
+         *     e.g. dispatch(setDisplayYRange({minY: 200, maxY: 400}))     
+         * and calculates the new state based on the action and the action 
+         * data given in action.payload.
+         * 
+         * In this case the current displayYRange is updated with the given min and max 
+         * y values.
+         * 
+         * @param {object} state the current store state of: state/plot
+         * @param {object} action accepts the action returned from setDisplayYRange()
+         * @param {object} action.payload the payload is an object containg the given data
+         * @param {number} action.payload.minY a number specifying the start of the y range
+         * @param {number} action.payload.maxY a number specifying the end of the y range
+         */
         setDisplayYRange(state, action) { 
             const {minY, maxY} = action.payload
             const displayYRange = state.settings[state.plotId].displayYRange
             displayYRange.minY = minY
             displayYRange.maxY = maxY
         },
+
+        /**
+         * This reducer accepts an action object returned from setMonths()
+         *     e.g. dispatch(setMonths({months: [3, 4, 5]}))     
+         * and calculates the new state based on the action and the action 
+         * data given in action.payload.
+         * 
+         * In this case the current selected months are updated to the given array.
+         * 
+         * @param {object} state the current store state of: state/plot
+         * @param {object} action accepts the action returned from setMonths()
+         * @param {object} action.payload the payload is an object containg the given data
+         * @param {array} action.payload.months an array of integers describing the new months
+         */
         setMonths(state, action) { 
             state.settings[state.plotId].months = action.payload.months
         },
@@ -173,7 +267,7 @@ export const selectPlotYRange = state => state.plot.settings[state.plot.plotId].
  * from the store.
  * 
  * @param {object} state the global redux state
- * @returns {array} array of strings describing the current selected months
+ * @returns {array} array of integers describing the current selected months
  */
 
 export const selectPlotMonths = state => state.plot.settings[state.plot.plotId].months
