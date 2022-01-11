@@ -200,9 +200,7 @@ test('should update that the given model in the given group is now included in t
                 all: {
                     models: {
                         modelA: {
-                            visibileSV: {
-                                mean: false
-                            }
+                            mean: false
                         }
                     }
                 }
@@ -217,9 +215,7 @@ test('should update that the given model in the given group is now included in t
                 all: {
                     models: {
                         modelA: {
-                            visibileSV: {
-                                mean: true
-                            }
+                            mean: true
                         }
                     }
                 }
@@ -231,6 +227,43 @@ test('should update that the given model in the given group is now included in t
         reducer(
             previousState, // use initial state 
             setStatisticalValueIncluded({groupID: "all", modelID: "modelA", svType: "mean", isIncluded: true})
+        )
+    ).toEqual(
+        expected
+    );
+});
+
+test('should update that the given model in the given group is now included in the given SV', () => {
+    const previousState = {
+        plotId: "tco3_zm",
+        settings: {
+            tco3_zm: {
+                all: {
+                    visibileSV: {
+                        mean: false
+                    }
+                }
+            }
+        }
+    };
+
+    const expected = { // Expect the new state to have the updated visibility of modelA
+        plotId: "tco3_zm",
+        settings: {
+            tco3_zm: {
+                all: {
+                    visibileSV: {
+                        mean: true
+                    }
+                }
+            }
+        }
+    };
+    
+    expect(
+        reducer(
+            previousState, // use initial state 
+            setStatisticalValueForGroup({groupID: "all", svType: "mean", isIncluded: true})
         )
     ).toEqual(
         expected
