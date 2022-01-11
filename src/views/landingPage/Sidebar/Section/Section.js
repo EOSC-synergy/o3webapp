@@ -115,6 +115,8 @@ function Section(props) {
                 return <LatitudeBandSelector key={key}  />;
             case "ReferenceModelSelector":
                 return <ReferenceModelSelector key={key} />;
+            case "LocationSelector":
+                return <LocationSelector key={key} />
             default:
                 if (props.reportError) {
                     props.reportError(`Section ${props.name} found no match for an input component ${name}`);
