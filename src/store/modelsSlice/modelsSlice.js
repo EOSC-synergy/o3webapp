@@ -106,14 +106,18 @@ const modelsSlice = createSlice({
          * @param {object} state the current store state of: state/plot
          * @param {object} action accepts the action returned from addModels()
          * @param {object} action.payload the payload is an object containg the given data
-         * @param {string} action.payload.groupdId a string specifying the group to which the data should be added
+         * @param {string} action.payload.groupId a string specifying the group to which the data should be added
          * @param {array} action.payload.newModelList an array of strings specifying the models that should be added
          */
         addModels(state, action) { 
             const { groupId, newModelList }  = action.payload;
             const activeSettings = state.settings[state.plotId];
+            console.log("===")
+            //console.log(state.settings[state.plotId]["all"][])
+            console.log("===")
             const selectedGroup = activeSettings[groupId];
             const activeModelList = selectedGroup.modelList;
+
 
             if (selectedGroup === undefined) {
                 throw `Tried to access model-group with groupID "${groupId}" that is not yet defined!`;

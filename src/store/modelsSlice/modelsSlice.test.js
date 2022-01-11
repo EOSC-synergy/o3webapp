@@ -1,6 +1,12 @@
 import reducer, 
 {
-
+    addModels,
+    removeModels,
+    updatedModelGroup,  // not impl. yet
+    addedModelGroup,    // not impl. yet
+    setVisibility, 
+    setStatisticalValueIncluded, 
+    setStatisticalValueForGroup
 } from "./modelsSlice"
 
 const definedInitialState = {
@@ -75,5 +81,120 @@ const definedInitialState = {
 test('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual(
       definedInitialState // Expect initial state to be the defined initial state
+    );
+});
+
+test('should update the model list of the current plot', () => {
+    const previousState = {
+        plotId: "tco3_zm",
+        settings: {
+            "tco3_zm": {  
+                all: {
+                    modelList: [],
+                }
+            }
+        }
+    };
+
+    const newModels = ["modelA", "modelB", "modelC"]
+
+    const expected = {
+        plotId: "tco3_zm",
+        settings: {
+            "tco3_zm": {  
+                "all": {
+                    modelList: newModels,
+                }
+            }
+        }
+    };
+
+    expect(
+        reducer(previousState, addModels({groupId: "all", newModelList: newModels}))
+    ).toEqual(expected);
+
+});
+
+
+test('should update the visibility of the given model in the given group', () => {
+    const previousState = {
+        plotId: "tco3_zm",
+        settings: {
+            tco3_zm: {
+                all: {
+                    models: {
+                        modelA: {
+                            isVisible: true
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    const expected = { // Expect the new state to have the updated visibility of modelA
+        plotId: "tco3_zm",
+        settings: {
+            tco3_zm: {
+                all: {
+                    models: {
+                        modelA: {
+                            isVisible: false
+                        }
+                    }
+                }
+            }
+        }
+    };
+    
+    expect(
+        reducer(
+            previousState, // use initial state 
+            setVisibility({groupID: "all", modelID: "modelA", isVisible: false})
+        )
+    ).toEqual(
+        expected
+    );
+});
+
+
+test('should update the visibility of the given model in the given group', () => {
+    const previousState = {
+        plotId: "tco3_zm",
+        settings: {
+            tco3_zm: {
+                all: {
+                    models: {
+                        modelA: {
+                            isVisible: true
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    const expected = { // Expect the new state to have the updated visibility of modelA
+        plotId: "tco3_zm",
+        settings: {
+            tco3_zm: {
+                all: {
+                    models: {
+                        modelA: {
+                            isVisible: false
+                        }
+                    }
+                }
+            }
+        }
+    };
+    
+    expect(
+        reducer(
+            previousState, // use initial state 
+            setVisibility({groupID: "all", modelID: "modelA", isVisible: false})
+        )
+    ).toEqual(
+        expected
     );
 });
