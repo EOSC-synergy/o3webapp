@@ -9,6 +9,9 @@ const STATISTICAL_VALUES = ["mean", "median", "derivative", "percentile"];
 /**
  * The initial state of the modelSlice defines the data structure in the 
  * store. Each plot has its own data i.e. have separate model(groups).
+ * 
+ * IF you change this initial state you have to adapt the first test in the
+ * corresponding test file, that tests the initial state.
  */
 const initialState = {
     // currently active plot

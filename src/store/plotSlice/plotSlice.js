@@ -3,6 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 /**
  * The initial state of the plotSlice defines the data structure in the 
  * store. Each plot has its own settings i.e. title, location etc.
+ * 
+ * IF you change this initial state you have to adapt the first test in the
+ * corresponding test file, that tests the initial state.
  */
 const initialState = {
     
