@@ -20,6 +20,7 @@ import { FormHelperText } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { InputBase } from '@mui/material';
 import models from './models.json';
+import CircularProgress from '@mui/material/CircularProgress';
 
 // TODO: move to utils
 function not(a, b) {
@@ -53,8 +54,8 @@ function AddModelGroupModal(props) {
     const [groupName, setGroupName] = React.useState('');
 
     // Omly needed for development
-    const [models, setModels] = React.useState([]);
-    const [isLoading, setIsLoading] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState(true);
+    // setLeft(models);
 
     const leftChecked = intersection(checked, left);
     const rightChecked = intersection(checked, right);
@@ -137,11 +138,13 @@ function AddModelGroupModal(props) {
     const getAllAvailableModels = () => {
         // const {data, isSuccess, isLoading, isError, error} = useGetModelsQuery()
         // display spinner until loading finished
-        sleep(3000).then(() => {
-            setModels(models);
+        sleep(2000).then(() => {
+            setLeft(models);
             setIsLoading(false);
         });
     }
+
+    getAllAvailableModels();
 
     const SearchIconWrapper = styled('div')(({ theme }) => ({
         padding: theme.spacing(0, 2),
@@ -226,12 +229,12 @@ function AddModelGroupModal(props) {
                 <Card sx={style}>
                     <CardContent>
                         <Typography variant="h6">Add new model group</Typography>
-                        <Divider>Select name</Divider>
+                        <Divider><Typography>Select name</Typography></Divider>
                         <Grid container spacing={1} style={{width:"100%", justifyContent:"center"}}>
                             <TextField value={groupName} onChange={updateGroupName} variant="standard" label="" />
                         </Grid>
                         <br/>
-                        <Divider>Add new Models</Divider>
+                        <Divider><Typography>Add new Models</Typography></Divider>
                         <Box id="modal-modal-description" sx={{ mt: 2 }}>
                             <Grid container spacing={2} justifyContent="center" alignItems="center">
                                 <Grid item xs={5}>
@@ -245,7 +248,12 @@ function AddModelGroupModal(props) {
                                         inputProps={{ 'aria-label': 'search' }}
                                         />
                                     </Search>
-                                    {customList(left)}
+                                    {
+                                    isLoading ? 
+                                        <CircularProgress />
+                                    :
+                                        customList(left)
+                                    }
                                 </Grid>
                                 <Grid item xs={2}>
                                     <Grid container direction="column" alignItems="center">
