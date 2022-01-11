@@ -52,4 +52,8 @@ function LandingPage(props) {
     );
 }
 
+LandingPage.propTypes = {
+    reportError: PropTypes.func,
+}
+
 export default LandingPage;
