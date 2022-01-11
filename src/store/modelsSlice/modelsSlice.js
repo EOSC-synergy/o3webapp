@@ -265,10 +265,10 @@ const modelsSlice = createSlice({
             if (activeModel === undefined) {
                 throw `tried to access model with modelID "${modelID}" that is not yet defined!`;
             }
-            if (STATISTICAL_VALUES.includes(svType)) { // svType doesn't represent a valid statistical value
+            if (!STATISTICAL_VALUES.includes(svType)) { // svType doesn't represent a valid statistical value
                 throw `tried to set statistial value "${svType}" that is not a valid statistical value (${STATISTICAL_VALUES.join("|")})`;
             }
-            activeModel[svType] = isIncluded;
+            activeModel.visibileSV[svType] = isIncluded;
         },
 
         /**

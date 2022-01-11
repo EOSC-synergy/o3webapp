@@ -84,7 +84,41 @@ test('should return the initial state', () => {
     );
 });
 
-test('should update the model list of the current plot', () => {
+/*
+test('should remove the model list of the current plot', () => {
+    
+    const removeModelList = ["modelA", "modelB", "modelC"]
+    
+    const previousState = {
+        plotId: "tco3_zm",
+        settings: {
+            "tco3_zm": {  
+                all: {
+                    modelList: removeModelList,
+                }
+            }
+        }
+    };
+
+    const expected = {
+        plotId: "tco3_zm",
+        settings: {
+            "tco3_zm": {  
+                "all": {
+                    modelList: [],
+                }
+            }
+        }
+    };
+
+    expect(
+        reducer(previousState, removeModels({groupId: "all", removeModelList: removeModelList}))
+    ).toEqual(expected);
+
+});
+*/
+
+test('should add the model list of the current plot', () => {
     const previousState = {
         plotId: "tco3_zm",
         settings: {
@@ -158,7 +192,7 @@ test('should update the visibility of the given model in the given group', () =>
 });
 
 
-test('should update the visibility of the given model in the given group', () => {
+test('should update that the given model in the given group is now included in the given SV', () => {
     const previousState = {
         plotId: "tco3_zm",
         settings: {
@@ -166,7 +200,9 @@ test('should update the visibility of the given model in the given group', () =>
                 all: {
                     models: {
                         modelA: {
-                            isVisible: true
+                            visibileSV: {
+                                mean: false
+                            }
                         }
                     }
                 }
@@ -181,7 +217,9 @@ test('should update the visibility of the given model in the given group', () =>
                 all: {
                     models: {
                         modelA: {
-                            isVisible: false
+                            visibileSV: {
+                                mean: true
+                            }
                         }
                     }
                 }
@@ -192,7 +230,7 @@ test('should update the visibility of the given model in the given group', () =>
     expect(
         reducer(
             previousState, // use initial state 
-            setVisibility({groupID: "all", modelID: "modelA", isVisible: false})
+            setStatisticalValueIncluded({groupID: "all", modelID: "modelA", svType: "mean", isIncluded: true})
         )
     ).toEqual(
         expected
