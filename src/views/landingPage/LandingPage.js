@@ -2,6 +2,7 @@ import * as React from 'react';
 import Graph from './Graph/Graph';
 import Sidebar from './Sidebar/Sidebar';
 import Button from '@mui/material/Button';
+import PropTypes from "prop-types";
 
 /**
  * main view of web page
