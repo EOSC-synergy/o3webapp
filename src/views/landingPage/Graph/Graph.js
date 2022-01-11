@@ -8,7 +8,7 @@ import { convertToStrokeStyle, colourNameToHex } from "../../../utils/optionsFor
  * Static generation of the years on the x-axis, this will be fetched from the
  * api later
  */
-const yearsOnXAxis = [...Array(141).keys()].map(value => `${value + 1960}`)
+const yearsOnXAxis = [...Array(20).keys()].map(value => `${value + 2000}`)
 /**
  * Transforming the data from default-data.json, this data will be fetched 
  * from the api later
