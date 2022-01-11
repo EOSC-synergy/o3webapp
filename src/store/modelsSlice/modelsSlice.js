@@ -268,7 +268,7 @@ const modelsSlice = createSlice({
             if (!STATISTICAL_VALUES.includes(svType)) { // svType doesn't represent a valid statistical value
                 throw `tried to set statistial value "${svType}" that is not a valid statistical value (${STATISTICAL_VALUES.join("|")})`;
             }
-            activeModel.visibileSV[svType] = isIncluded;
+            activeModel[svType] = isIncluded;
         },
 
         /**
@@ -292,7 +292,7 @@ const modelsSlice = createSlice({
         setStatisticalValueForGroup(state, action) { // this is for an entire group
             const { groupID, svType, isIncluded } = action.payload;
             const activeSettings = state.settings[state.plotId];
-            if (STATISTICAL_VALUES.includes(svType)) { // svType doesn't represent a valid statistical value
+            if (!STATISTICAL_VALUES.includes(svType)) { // svType doesn't represent a valid statistical value
                 throw `tried to set statistial value "${svType}" that is not a valid statistical value (${STATISTICAL_VALUES.join("|")})`;
             }
             activeSettings[groupID].visibileSV[svType] = isIncluded;
