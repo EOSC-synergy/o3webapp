@@ -90,6 +90,9 @@ const modelsSlice = createSlice({
 
         /**
          * This reducer accepts an action object returned from addModels()
+         *     e.g. dispatch(addModels(
+         *          {newModelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"]}
+         *      ))
          * and calculates the new state based on the action and the action 
          * data given in action.payload.
          * 
@@ -136,6 +139,9 @@ const modelsSlice = createSlice({
 
         /**
          * This reducer accepts an action object returned from removeModels()
+         *      e.g. dispatch(removeModels(
+         *          {removeModelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"]}
+         *      ))
          * and calculates the new state based on the action and the action 
          * data given in action.payload.
          * 
@@ -170,6 +176,7 @@ const modelsSlice = createSlice({
 
         /**
          * This reducer accepts an action object returned from updateModelGroup()
+         *      e.g. dispatch(updateModelGroup({}))
          * and calculates the new state based on the action and the action 
          * data given in action.payload.
          * 
@@ -183,6 +190,7 @@ const modelsSlice = createSlice({
         
         /**
          * This reducer accepts an action object returned from addModelGroup()
+         *       e.g. dispatch(addModelGroup({}))
          * and calculates the new state based on the action and the action 
          * data given in action.payload.
          * 
@@ -196,6 +204,9 @@ const modelsSlice = createSlice({
 
         /**
          * This reducer accepts an action object returned from setVisibility()
+         *       e.g. dispatch(setVisibility(
+         *          {groupID: "all", modelID: "CCMI-1_ACCESS_ACCESS-CCM-refC2", isVisible: false}
+         *       ))
          * and calculates the new state based on the action and the action 
          * data given in action.payload.
          * 
@@ -221,6 +232,9 @@ const modelsSlice = createSlice({
 
         /**
          * This reducer accepts an action object returned from setStatisticalValuesIncluded()
+         *      e.g. dispatch(setVisibility(
+         *          {groupID: "all", modelID: "CCMI-1_ACCESS_ACCESS-CCM-refC2", svType: "mean", isIncluded: true}
+         *       ))
          * and calculates the new state based on the action and the action 
          * data given in action.payload.
          * 
@@ -252,6 +266,9 @@ const modelsSlice = createSlice({
 
         /**
          * This reducer accepts an action object returned from setStatisticalValueForGroup()
+         *      e.g. dispatch(setStatisticalValueForGroup(
+         *          {groupID: "all", svType: "median", isIncluded: true}
+         *      ))
          * and calculates the new state based on the action and the action 
          * data given in action.payload.
          * 
