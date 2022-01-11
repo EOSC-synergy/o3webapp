@@ -5,6 +5,35 @@ import {Box, Divider, FormControl, Grid, InputLabel, MenuItem, Select, TextField
 import Typography from "@mui/material/Typography";
 import { latitudeBands } from "../../../../../utils/constants";
 
+const min = -90;
+const max = +90;
+const cols = 4;
+
+const customLatitudeBandInput = (label, value, onChange) => {
+    return (
+        <>
+            <Grid item xs={cols}>
+                <Typography>{label}</Typography>
+            </Grid>
+            <Grid item xs={2 * cols}>
+                <TextField
+                    id={label}
+                    label={label}
+                    type="number"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    variant="standard"
+                    size="small"
+                    value={value}
+                    onChange={onChange}
+                    error={(value < min || value > max)}
+                    helperText={(value < min || value > max) ? `value must be between ${min} and ${max}` : " "}
+                />
+            </Grid>
+        </>);
+}
+
 /**
  * Enables the user to choose minimum and maximum latitude
  * @param {Object} props
@@ -12,16 +41,6 @@ import { latitudeBands } from "../../../../../utils/constants";
  * @returns {JSX.Element} a JSX containing a dropdown and if "individual latitude band" is selected a number input field
  */
 function LatitudeBandSelector(props) {
-
-    let i = props.reportError;
-
-    const min = -90;
-    const max = +90;
-
-    const latitudeBandsGlobalIndex = 6;
-    const latitudeBandsLatitudeBandIndex = 7;
-    const latitudeBandsCustomIndex = 8;
-    const cols = 4;
     /*
     const predefinedOptions = [
         {
@@ -33,26 +52,28 @@ function LatitudeBandSelector(props) {
     */
 
     // const dispatch = useDispatch()
-    const [latitudeBand, setLatitudeBand] = React.useState();
+    const [latitudeBand, setLatitudeBand] = React.useState([0, 0]);
+    const [isCustomizable, setIsCustomizable] = React.useState(false);
+
     const handleChangeLatitudeBand = (event) => {
-        setLatitudeBand(event.target.value);
-    };
-    const [textFieldValue1, setTextFieldValue1] = React.useState();
-    const handleChangeTextFieldValue1 = (event) => {
-        setTextFieldValue1(event.target.value);
-    };
-    const [textFieldValue2, setTextFieldValue2] = React.useState();
-    const handleChangeTextFieldValue2 = (event) => {
-        setTextFieldValue2(event.target.value);
+        if (event.target.value === 'custom') {
+            setIsCustomizable(true);
+        } else {
+            setLatitudeBand(event.target.value);
+            setIsCustomizable(false);
+        }
     };
 
-    const locationToTextField = (latitudeBand) => {
-        if (latitudeBand === latitudeBandsLatitudeBandIndex) {
-            return ["lat min", "lat max"];
-        } else if (latitudeBand === latitudeBandsCustomIndex) {
-            return ["long", "lat"];
+    const handleChangeLatitudeBandSingleElement = (event, idx) => {
+        if (idx < latitudeBand.length || idx > 0) {
+            let latitudeBandCopy = [...latitudeBand];
+            latitudeBandCopy[idx] = event.target.value;
+            setLatitudeBand(latitudeBandCopy);
         }
-    }
+    };
+
+    console.log(latitudeBands);
+
     return (
         <>
             <Divider>LATITUDE BAND</Divider>
@@ -61,65 +82,25 @@ function LatitudeBandSelector(props) {
                     <Select
                         labelId="latitudeBandSelectorLabel"
                         id="latitudeBandSelector"
-                        value={latitudeBand}
+                        value={isCustomizable ? 'custom' : latitudeBand}
                         label="LatitudeBand"
                         onChange={handleChangeLatitudeBand}
-                        defaultValue={latitudeBandsGlobalIndex}
+                        defaultValue={[-90, 90]}
                     >
                         {
                             // maps all latitude bands from constants.js to ´MenuItem´s
                             latitudeBands.map(
-                                (s, idx) => <MenuItem key={idx} value={idx}>{s.description}</MenuItem>
+                                (s, idx) => <MenuItem key={idx} value={s.value}>{s.text.description}</MenuItem>
                             )
                         }
                     </Select>
                     <InputLabel id="latitudeBandSelectorLabel">Latitude Band</InputLabel>
                     {
-                        (latitudeBand === latitudeBandsLatitudeBandIndex || latitudeBand === latitudeBandsCustomIndex) &&
-                        <Grid container direction="row" style={{paddingTop: '1.5em'}} justifyContent="center" alignItems="center">
-
-                            <Grid item xs={cols}>
-                                <Typography>
-                                    {locationToTextField(latitudeBand)[0]}
-                                </Typography>
-                            </Grid>
-
-                            <Grid item xs={2 * cols}>
-                                <TextField
-                                    id="textField1" // maybe change name?
-                                    label={locationToTextField(latitudeBand)[0]}
-                                    type="number"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    variant="standard"
-                                    size="small"
-                                    value={textFieldValue1}
-                                    onChange={handleChangeTextFieldValue1}
-                                    error={(textFieldValue1 < min || textFieldValue1 > max)}
-                                    helperText={(textFieldValue1 < min || textFieldValue1 > max) ? `value must be between ${min} and ${max}` : " "}
-                                />
-                            </Grid>
-                            <Grid item xs={cols}>
-                                <Typography>{locationToTextField(latitudeBand)[1]}</Typography>
-                            </Grid>
-                            <Grid item xs={2 * cols}>
-                                <TextField
-                                    id="textField2" // maybe change name?
-                                    label={locationToTextField(latitudeBand)[1]}
-                                    type="number"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    variant="standard"
-                                    size="small"
-                                    value={textFieldValue2}
-                                    onChange={handleChangeTextFieldValue2}
-                                    error={(textFieldValue2 < min || textFieldValue2 > max)}
-                                    helperText={(textFieldValue2 < min || textFieldValue2 > max) ? `value must be between ${min} and ${max}` : " "}
-                                />
-                            </Grid>
-                        </Grid>
+                        isCustomizable &&
+                        <> 
+                            {customLatitudeBandInput('lat min', latitudeBand[0], (event) => handleChangeLatitudeBandSingleElement(event, 0))}
+                            {customLatitudeBandInput('lat max', latitudeBand[1], (event) => handleChangeLatitudeBandSingleElement(event, 1))}
+                        </>
                     }
 
                 </FormControl>
