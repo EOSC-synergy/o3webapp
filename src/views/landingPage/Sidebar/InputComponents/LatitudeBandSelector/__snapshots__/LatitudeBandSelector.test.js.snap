@@ -9,7 +9,11 @@ Array [
     <span
       className="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
     >
-      LATITUDE BAND
+      <p
+        className="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+      >
+        LATITUDE BAND
+      </p>
     </span>
   </div>,
   <div
@@ -35,7 +39,14 @@ Array [
           role="button"
           tabIndex={0}
         >
-          Global (90°S–90°N)
+          <span
+            className="notranslate"
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "&#8203;",
+              }
+            }
+          />
         </div>
         <input
           aria-hidden={true}
@@ -45,7 +56,7 @@ Array [
           onChange={[Function]}
           required={false}
           tabIndex={-1}
-          value={6}
+          value="0,0"
         />
         <svg
           aria-hidden={true}
