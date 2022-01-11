@@ -25,8 +25,7 @@ import LatitudeBandSelector from "../InputComponents/LatitudeBandSelector/Latitu
  */
 function Section(props) {
     
-    let i = props.components;
-    i = props.sectionId
+    let i = props.sectionId
     i = props.name;
     i = props.reportError;
     i = props.isExpanded;
