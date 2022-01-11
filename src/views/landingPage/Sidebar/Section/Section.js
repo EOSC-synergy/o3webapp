@@ -18,7 +18,7 @@ import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { components } from "../../../../utils/constants";
+import { LBS_Symbol, LS_Symbol, MGC_Symbol, OC_Symbol, PNF_Symbol, RMS_Symbol, RYS_Symbol, RS_Symbol, TCG_Symbol, XAS_Symbol, YAS_Symbol } from "../../../../utils/constants";
 
 
 
@@ -96,27 +96,27 @@ function Section(props) {
      */
     function mapNameToComponent(name, key) {
         switch (name){
-            case components[0].description:
+            case LBS_Symbol.description:
                 return <LatitudeBandSelector key={key}  />;
-            case components[1].description:
+            case LS_Symbol.description:
                 return <LocationSelector key={key} />
-            case components[2].description:
+            case MGC_Symbol.description:
                 return <ModelGroupConfigurator key={key} />;
-            case components[3].description:
+            case OC_Symbol.description:
                 return <OffsetConfigurator key={key}  />;
-            case components[4].description:
+            case PNF_Symbol.description:
                 return <PlotNameField key={key}  />;
-            case components[5].description:
+            case RMS_Symbol.description:
                 return <ReferenceModelSelector key={key} />;
-            case components[6].description:
+            case RYS_Symbol.description:
                 return <ReferenceYearSlider key={key}  />;
-            case components[7].description:
+            case RS_Symbol.description:
                 return <RegionSelector key={key}  />;
-            case components[8].description:
+            case TCG_Symbol.description:
                 return <TimeCheckBoxGroup key={key}  />;
-            case components[9].description:
+            case XAS_Symbol.description:
                 return <XAxisSlider key={key}  />;
-            case components[10].description:
+            case YAS_Symbol.description:
                 return <YAxisSlider key={key}  />;
             default:
                 if (props.reportError) {
