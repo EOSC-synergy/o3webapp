@@ -165,20 +165,12 @@ const modelsSlice = createSlice({
             const { groupId, removeModelList }  = action.payload;
             const activeSettings = state.settings[state.plotId];
             const selectedGroup = activeSettings[groupId];
-            const activeModelList = selectedGroup.modelList;
 
             if (selectedGroup === undefined) {
                 throw `Tried to access model-group with groupID "${groupId}" that is not yet defined!`;
             }
 
-            for (var i = 0; i < removeModelList.length; i++) {
-                // Remove model from modelList
-                activeModelList = activeModelList.filter(item => item !== removeModelList[i]);
-
-                // Delete model object from models
-                delete selectedGroup.models[removeModelList[i]];
-            }
-
+            selectedGroup.modelList = selectedGroup.modelList.filter(item => !removeModelList.includes(item))
         },
 
         /**
