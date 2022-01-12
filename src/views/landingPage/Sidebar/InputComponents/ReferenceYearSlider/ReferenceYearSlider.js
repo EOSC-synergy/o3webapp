@@ -36,11 +36,11 @@ function ReferenceYearSlider(props) {
                     onChange={handleChange}
                     input={<OutlinedInput label="Reference Model" />}
                     defaultValue={1}
-                    value={1}
+                    value={model}
                 >
                     {models.map((elem, idx) => {
                         return (
-                            <MenuItem key={idx} value={1}>
+                            <MenuItem key={idx} value={elem}>
                                 {elem}
                             </MenuItem>
                         )
