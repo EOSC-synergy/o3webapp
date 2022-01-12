@@ -38,12 +38,22 @@ function TimeCheckBoxGroup(props) {
         handleUpdatedSelection();
     }
 
-    const Season = ({name, months, key}) => (
+    const handleSeasonChecked = (seasonId) => {
+        // Dispatch season checked;
+    }
+
+    const handleMonthChecked = (monthId) => {
+        // Dispatch month checked
+    }
+
+    const Season = ({name, months, seasonId}) => (
         <Grid item xs={6}>
             <SeasonCheckBoxGroup
                 label = {name.description}
                 months = {months}
-                key={key}
+                seasonId={seasonId}
+                handleSeasonClicked = {handleSeasonChecked}
+                handleMonthClicked = {handleMonthChecked}
             />
         </Grid>
     );

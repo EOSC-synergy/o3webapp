@@ -55,16 +55,16 @@ export const seasons = [
 ] */
 
 /** Stores the season Winter and its corresponding months. */
-export const Winter = { name: Symbol("Winter"), months: [1, 2, 3], key: 0 }
+export const Winter = { name: Symbol("Winter"), months: [1, 2, 3], seasonId: 0 }
 
 /** Stores the season Spring and its corresponding months. */
-export const Spring = { name: Symbol("Spring"), months: [4, 5, 6], key:1 }
+export const Spring = { name: Symbol("Spring"), months: [4, 5, 6], seasonId: 1 }
 
 /** Stores the season Summer and its corresponding months. */
-export const Summer = { name: Symbol("Summer"), months: [7, 8, 9], key:2 }
+export const Summer = { name: Symbol("Summer"), months: [7, 8, 9], seasonId: 2 }
 
 /** Stores the season Autumn and its corresponding months. */
-export const Autumn = { name: Symbol("Autumn"), months: [10, 11, 12], key:3 }
+export const Autumn = { name: Symbol("Autumn"), months: [10, 11, 12], seasonId: 3 }
 
 /** Stores all the months in short form. (first three letters) */
 export const months = [

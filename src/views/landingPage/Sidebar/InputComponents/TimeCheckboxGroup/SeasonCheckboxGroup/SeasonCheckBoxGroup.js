@@ -14,11 +14,11 @@ import { months } from "../../../../../../utils/constants";
  * @returns {JSX} a jsx containing a checkbox-group with given months and label
  */
 function SeasonCheckBoxGroup(props) {
-
-    const [monthsBool, setMonthsBool] = React.useState(new Array(months.length).fill(false))
+    const numMonthsInSeason = 3;
+    const [monthsBool, setMonthsBool] = React.useState(new Array(numMonthsInSeason).fill(false))
 
     const changeMonthBoolArray = (idx) => {
-        let arr = monthsBool;
+        let arr = [...monthsBool];
         arr[idx] = !arr[idx];
         return arr;
     }
@@ -41,23 +41,11 @@ function SeasonCheckBoxGroup(props) {
         handleUpdatedSelection();
     }
 
-    /**
-     * selects / deselects a single month
-     * //@param {event} event the event that triggered the function call
-     * @param {int} idx the number representing the month
-     */
-    const handleChangeMonth = (idx) => {
-        setMonthsBool(changeMonthBoolArray(idx));
-        console.log(monthsBool);
-        console.log(monthsBool[idx]);
-        handleUpdatedSelection();
-    }
 
-    const monthsChecked = (monthsList) => {
-        let all = monthsBool[monthsList[0]];
-        if (all === false) return all;
-        for (let i = monthsList[1]; i < monthsList[monthsList.length]; i++) {
-            if (monthsBool[i] === false) {
+    const monthsChecked = () => {
+        let all = true;
+        for (let i = 0; i < monthsBool.length; i++) {
+            if (!monthsBool[i]) {
                 all = false;
                 break;
             }
@@ -65,15 +53,27 @@ function SeasonCheckBoxGroup(props) {
         return all;
     }
 
-    const monthsIndeterminate = (monthsList) => {
-        let some = monthsBool[monthsList[0]];
-        for (let i = monthsList[1]; i < monthsList[monthsList.length]; i++) {
-            if (monthsBool[i] !== some) {
-                some = true;
-                break;
+    const monthsIndeterminate = () => {
+        let count = 0;
+        for (let i = 0; i < monthsBool.length; i++) {
+            if (monthsBool[i]) {
+                count++;
             }
         }
-        return some;
+        return ((count > 0 && count < numMonthsInSeason));
+    }
+
+    const seasonChecked = () => {
+        setMonthsBool(new Array(numMonthsInSeason).fill(!monthsChecked()))
+    }
+
+    const monthChecked = (monthId) => {
+        
+        let index = monthId - (props.seasonId * numMonthsInSeason) - 1;
+        console.log(index)
+        let newMonths = [...monthsBool];
+        newMonths[index] = !monthsBool[index];
+        setMonthsBool(newMonths);
     }
 
     return (
@@ -82,9 +82,14 @@ function SeasonCheckBoxGroup(props) {
                 label={props.label}
                 control={
                     <Checkbox
-                        indeterminate={monthsIndeterminate(props.months)}
-                        checked={monthsChecked(props.months)}
-                        onChange={(event) => handleChangeSeason(props.key)}
+                        indeterminate={monthsIndeterminate()}
+                        checked={monthsChecked()}
+                        onChange={(event) => {
+                                props.handleSeasonClicked(props.seasonId)
+                                seasonChecked()
+                            }
+                        }
+
                     />
                 }
             />
@@ -94,7 +99,14 @@ function SeasonCheckBoxGroup(props) {
                         (idx >= props.months[0] - 1 && idx <= props.months[props.months.length - 1] - 1) &&
                         <FormControlLabel
                             label={m.description}
-                            control={<Checkbox checked={monthsBool[idx]} onChange={(event) => handleChangeMonth(idx)} />}
+                            control={<Checkbox 
+                                checked={monthsBool[(idx + 1) - props.months[0]]} 
+                                onChange={(event) => {
+                                        props.handleMonthClicked(idx + 1);
+                                        monthChecked(idx + 1);
+                                    } 
+                                }/>
+                            }
                         />
                     }
                     </React.Fragment>))
