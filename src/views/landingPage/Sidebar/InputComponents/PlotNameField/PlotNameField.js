@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux"
 import { setTitle } from "../../../../../store/plotSlice";
-import {Box, Divider, FormControl, Grid, InputLabel, MenuItem, Select, TextField} from "@mui/material";
+import {Box, Divider, FormControl, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 
 /**
