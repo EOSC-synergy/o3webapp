@@ -112,9 +112,6 @@ const modelsSlice = createSlice({
         addModels(state, action) { 
             const { groupId, newModelList }  = action.payload;
             const activeSettings = state.settings[state.plotId];
-            console.log("===")
-            //console.log(state.settings[state.plotId]["all"][])
-            console.log("===")
             const selectedGroup = activeSettings[groupId];
             const activeModelList = selectedGroup.modelList;
 
