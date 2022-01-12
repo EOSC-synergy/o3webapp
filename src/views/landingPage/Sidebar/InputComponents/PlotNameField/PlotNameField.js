@@ -20,7 +20,7 @@ function PlotNameField(props) {
 
      
     // Dispatcher to dispatch the plot name change action
-    const dispatch = useDispatch();
+    //const dispatch = useDispatch();
 
     // Handles the change if the text in TextField is modified
     const handleChange = (event) => {
