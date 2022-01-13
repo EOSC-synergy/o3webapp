@@ -1,12 +1,8 @@
 import * as React from 'react';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import EditIcon from '@mui/icons-material/Edit';
-import { styled, useTheme } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import { indigo } from '@mui/material/colors';
-import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
