@@ -2,7 +2,7 @@ import React from "react";
 import AddModelGroupModal from "./AddModelGroupModal/AddModelGroupModal";
 import ModelGroupCard from "./ModelGroupCard/ModelGroupCard";
 import { useDispatch } from "react-redux"
-import { updatedModelGroup, addedModelGroup } from "../../../../../store/modelsSlice";
+import { updatedModelGroup, addedModelGroup } from "../../../../../store/modelsSlice/modelsSlice";
 
 /**
  * enables the user to configure models that should be visible in the plot clustered as model groups
