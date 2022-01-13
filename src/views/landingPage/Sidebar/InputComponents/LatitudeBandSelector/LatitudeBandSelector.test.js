@@ -23,15 +23,15 @@ describe('LatitudeBandSelector component', () => {
         const tree = renderer.create(wrapper).toJSON();
         expect(tree).toMatchSnapshot();
     });
-
+    /*
     it('should update `isCustomizable` state', () => {
         let wrapped = mount(<LatitudeBandSelector />);
-        //console.log(wrapper.debug());
-        //console.log(wrapped.debug());
         let wrappedFind = wrapped.find('#latitudeBandSelector');
-        console.log(wrappedFind.debug());
-        wrappedFind.at(0).simulate('change', { target: { value: 'custom' } });
-        //expect(wrapped.find('customLatitudeBandInput').at(0));
-        //expect(wrapped.find('customLatitudeBandInput').at(1));
+        //console.log(wrappedFind.debug());
+        wrappedFind.first().props().onChange({ target: { value: 'custom' } });
+        wrappedFind.first().simulate('change', { target: { value: 'custom' } });
+        expect(wrapped.find('customLatitudeBandInput').at(0));
+        expect(wrapped.find('customLatitudeBandInput').at(1));
     });
+     */
 });
