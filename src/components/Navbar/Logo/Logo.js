@@ -7,11 +7,11 @@ import Typography from '@mui/material/Typography';
 /**
  * The link that provides the image logo
  */
-const logoSrc = "https://o3as.data.kit.edu/img/logos/o3as-logo.svg";
+export const logoSrc = "https://o3as.data.kit.edu/img/logos/o3as-logo.svg";
 /**
  * The link to the O3AS Webapp
  */
-const O3ASLink = "#";
+export const O3ASLink = "#";
 
 /**
  * Returns a logo from O3AS and the text "O3AS Webapp"
@@ -25,10 +25,11 @@ const Logo = (props) => {
             href={O3ASLink}
             sx={{ flexGrow: 1, textDecoration: 'inherit', color: 'inherit', display: props.display, minWidth: "70%" }}
             noWrap
+            data-testid="logo-container"
         >   
             <Grid container sx={{ alignItems: "center", margin: '0.5em', marginLeft: '2em'}}>
-                <img style={{height: '5em', margin: '0.5em'}} src={logoSrc} />
-                <Typography variant="h6" noWrap>
+                <img data-testid="logo-image" style={{height: '5em', margin: '0.5em'}} src={logoSrc} alt={"logo"} />
+                <Typography variant="h6" noWrap data-testid="logo-text">
                     O3AS Webapp
                 </Typography>
             </Grid>
