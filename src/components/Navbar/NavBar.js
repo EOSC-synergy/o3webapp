@@ -10,6 +10,9 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Logo from './Logo/Logo';
 
+/**
+ * The pages and corresponding links that should be visible in the menu
+ */
 const pages = [
     {
         label: "About O3AS",
@@ -34,6 +37,9 @@ const displayExpanded = { xs: 'none', md: 'flex' }
  */
 function Navbar(props) {
 
+    /**
+     * whether the menu (when the navbar collapsed) is currently visible
+     */
     const [anchorElNav, setAnchorElNav] = React.useState(null);
 
     const handleOpenNavMenu = (event) => {
@@ -48,9 +54,7 @@ function Navbar(props) {
         <AppBar position="fixed" sx={{bgcolor: indigo[500]}}>
             <Toolbar disableGutters>
                 {/* EXPANDED */}
-                {/* Logo for expanded Navbar */}
                 <Logo display={displayExpanded} />
-                 {/* Menu for expanded Navbar */}
                  <Box sx={{ flexGrow: 1, display: displayExpanded }}>
                     {pages.map((page, idx) => (
                     <Button
@@ -63,11 +67,10 @@ function Navbar(props) {
                 </Box>
 
                 {/* COLLAPSED */}
-                {/* Menu for collapsed Navbar */}
                 <Box sx={{ flexGrow: 1, display: displayCollapsed }}>
                     <IconButton
                         size="large"
-                        aria-label="Menu"
+                        aria-label="menu"
                         aria-controls="menu-appbar"
                         aria-haspopup="true"
                         onClick={handleOpenNavMenu}
@@ -103,12 +106,15 @@ function Navbar(props) {
                     ))}
                     </Menu>
                 </Box>
-                {/* Logo for collapsed Navbar */}
                 <Logo display={displayCollapsed} />
 
         </Toolbar>
                     
     </AppBar>);
-}
+};
+
+Navbar.propTypes = {
+
+};
 
 export default Navbar;
