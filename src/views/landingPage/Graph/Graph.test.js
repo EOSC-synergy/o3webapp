@@ -1,7 +1,6 @@
 import Graph from './Graph'
 import '@testing-library/jest-dom'
-import { render, screen } from '@testing-library/react'
-import ReactApexChart from "react-apexcharts";
+import { render } from '@testing-library/react'
 
 jest.mock('react-apexcharts', () => {
     return {
@@ -16,7 +15,5 @@ jest.mock('apexcharts', () => ({ exec: jest.fn(() => { return new Promise((resol
 
 test.only('Renders OK', async () => {
     const { container } = render(<Graph />);
-    //screen.debug();
     expect(container).toMatchSnapshot();
-    //expect(await screen.findByText('OCTS Plot')).toBeInTheDocument();
 });
