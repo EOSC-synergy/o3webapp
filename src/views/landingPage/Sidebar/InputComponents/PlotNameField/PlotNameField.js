@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux"
 import { setTitle } from "../../../../../store/plotSlice/plotSlice";
+import { Divider, Typography, Box, FormControl, TextField} from '@mui/material';
 
 /**
  * Enables the user to rename the plot
