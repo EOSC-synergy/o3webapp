@@ -1,6 +1,7 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { InputBase } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
+import React from 'react';
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2),
@@ -46,9 +47,55 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
+const fullTextSearch = (elem, searchStr) => {
+    const elemVals = Object.values(elem)
+    return elemVals.reduce((prev, curr) => {
+        if (prev) return true;
+        return String(curr).toLowerCase().includes(searchStr.toLowerCase()) // String(...)
+    }, false)
+}
 
-export default function SearchBar() {
+/**
+ * Searches for occurences of a string in an array. 
+ * Eeach item in the array that has the searchString as a substring is a valid search result.
+ * 
+ * @param {*} array holds the items that are searched
+ * @param {*} searchString specifies what should be searched for
+ * @returns {array} containing the indices of all elements in the array where the searchString matched
+ */
+const performSearch = (array, searchString) => {
+    console.log(searchString)
+    let arrayMappedToIndices = array.map(
+        (elem, index) => ({index, value: elem})
+    )
+    arrayMappedToIndices = arrayMappedToIndices.filter(
+        ({index, value}) => fullTextSearch(value, searchString)
+    )
+    
+    return arrayMappedToIndices.map(({index, value}) => index)
+}
 
+/**
+ * A searchbar component that is used for searching a string in a data array
+ 
+ * @param {*} props 
+ * @param {array} props.inputArray todo
+ * @param {function} props.foundIndicesCallback todo
+ * @returns {JSX} a pretty searchbar component
+ */
+export default function SearchBar(props) {
+
+    const { inputArray, foundIndicesCallback } = props;
+
+    const [input, setInput] = React.useState("");
+
+    const handleInputChange = (event) => {
+        const newInput = event.target.value
+        
+        setInput(newInput);
+        foundIndicesCallback(performSearch(inputArray, newInput));
+    }
+    
     return (
     <Search>
         <SearchIconWrapper>
@@ -57,6 +104,8 @@ export default function SearchBar() {
         <StyledInputBase
             placeholder="Search…"
             inputProps={{ 'aria-label': 'search' }}
+            value={input}
+            onChange={handleInputChange}
         />
     </Search>
     )

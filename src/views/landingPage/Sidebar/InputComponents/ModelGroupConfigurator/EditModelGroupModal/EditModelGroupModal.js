@@ -5,6 +5,36 @@ import { Modal, Card, Button, Grid } from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
 import models from "./models"
 import SearchBar from "../SearchBar/SearchBar";
+import { styled } from '@mui/material/styles';
+
+const StyledDataGrid = styled(DataGrid)(({theme}) => ({
+    height: "85%",
+    marginTop: "3%",
+}));
+
+const StyledSearchBar= styled(SearchBar)(({theme}) => ({
+    width: "35%",
+}));
+
+
+const rows = [];
+const regex= /([a-z]|[A-Z]|[0-9]|-)*/g;
+
+for(let i = 0; i < models.length; i++) {
+    const model = models[i];
+    const info = model.match(regex);
+    rows.push({
+        'model': info[0],
+        'institute': info[2],
+        'dataset + model': info[4],
+        'id': i,
+        'include in median': "included",
+        'include in mean': 'included',
+        'include in percentile': 'included',
+        'include in derivative': 'included',
+        'visible': 'Yes'
+    })
+}
 
 /**
  * opens a modal where the user can edit an existing model group
@@ -24,6 +54,8 @@ function EditModelGroupModal(props) {
     i = props.reportError;
     i = props.modelGroupId;
 
+    const [filteredRows, setFilteredRows] = React.useState(rows);
+
     // dispatch(updatedModelGroup(someData))
 
     const cardStyle = {
@@ -38,26 +70,7 @@ function EditModelGroupModal(props) {
         p: 4,
     };
 
-    const modelSlice = models
-
-    let rows = [];
-    let regex= /([a-z]|[A-Z]|[0-9]|-)*/g;
-
-    for(let i = 0; i < modelSlice.length; i++) {
-        let model = modelSlice[i];
-        let info = model.match(regex);
-        rows.push({
-            'model': info[0],
-            'institute': info[2],
-            'dataset + model': info[4],
-            'id': i,
-            'include in median': "included",
-            'include in mean': 'included',
-            'include in percentile': 'included',
-            'include in derivative': 'included',
-            'visible': 'Yes'
-        })
-    }
+    
     //const makeRepeated = (arr, repeats) => Array.from({ length: repeats }, () => arr).flat();
 
     //rows = makeRepeated(rows, 10);
@@ -109,6 +122,9 @@ function EditModelGroupModal(props) {
           }
     ];
 
+    const foundIndices = (indexArray) => {
+        setFilteredRows(indexArray.map(idx => rows[idx])); // translates indices into selected rows
+    }
 
     return (
         <>
@@ -121,10 +137,13 @@ function EditModelGroupModal(props) {
                 aria-describedby="modal-modal-description"
             >
                 <Card sx={cardStyle}>
-                    <SearchBar />
-                    <div style={{height: "85%", marginTop: "3%"}}>
-                        <DataGrid 
-                            rows={rows}
+                    
+                    <StyledSearchBar 
+                        inputArray={rows}
+                        foundIndicesCallback={foundIndices}
+                    />
+                    <StyledDataGrid 
+                            rows={filteredRows}
                             columns={columns}
                             pageSize={100}
                             rowsPerPageOptions={[5]}
@@ -133,8 +152,8 @@ function EditModelGroupModal(props) {
                             disableSelectionOnClick
                             disableColumnMenu
                             disableColumnSelector
-                        />
-                    </div>
+                    />
+                    
                     <Grid container alignItems="flex-end" justifyContent="flex-end">
                         <Button onClick={props.onClose} size="small" style={{marginRight: "2em"}}>Close Modal</Button>
                     </Grid>
