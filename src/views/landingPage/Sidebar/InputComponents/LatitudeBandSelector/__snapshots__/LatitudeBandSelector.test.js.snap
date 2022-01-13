@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component renders correctly from config file 1`] = `
+Array [
+  <div
+    className="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-1ws8119-MuiDivider-root"
+    role="separator"
+  >
+    <span
+      className="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
+    >
+      <p
+        className="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+      >
+        LATITUDE BAND
+      </p>
+    </span>
+  </div>,
+  <div
+    className="MuiBox-root css-1n3sbe4"
+  >
+    <div
+      className="MuiFormControl-root css-q8hpuo-MuiFormControl-root"
+    >
+      <div
+        className="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+        onClick={[Function]}
+      >
+        <div
+          aria-expanded="false"
+          aria-haspopup="listbox"
+          aria-labelledby="latitudeBandSelectorLabel latitudeBandSelector"
+          className="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+          id="latitudeBandSelector"
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onMouseDown={[Function]}
+          role="button"
+          tabIndex={0}
+        >
+          <span
+            className="notranslate"
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "&#8203;",
+              }
+            }
+          />
+        </div>
+        <input
+          aria-hidden={true}
+          className="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+          disabled={false}
+          onAnimationStart={[Function]}
+          onChange={[Function]}
+          required={false}
+          tabIndex={-1}
+          value="0,0"
+        />
+        <svg
+          aria-hidden={true}
+          className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+          data-testid="ArrowDropDownIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M7 10l5 5 5-5z"
+          />
+        </svg>
+        <fieldset
+          aria-hidden={true}
+          className="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+        >
+          <legend
+            className="css-1z7n62"
+          >
+            <span>
+              LatitudeBand
+            </span>
+          </legend>
+        </fieldset>
+      </div>
+      <label
+        className="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary MuiFormLabel-filled css-1kty9di-MuiFormLabel-root-MuiInputLabel-root"
+        data-shrink={true}
+        id="latitudeBandSelectorLabel"
+      >
+        Latitude Band
+      </label>
+    </div>
+  </div>,
+]
+`;
