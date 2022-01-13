@@ -3,14 +3,35 @@ import ReactDOM from 'react-dom';
 import LatitudeBandSelector from './LatitudeBandSelector';
 import renderer from 'react-test-renderer';
 import "@testing-library/jest-dom/extend-expect";
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+import {shallow, configure, mount} from 'enzyme';
 
-it('Component renders without crashing', () => {
-    const div = document.createElement('div');
-    ReactDOM.render(<LatitudeBandSelector />, div);
-});
+describe('LatitudeBandSelector component', () => {
+    configure({adapter: new Adapter()});
+    let wrapper;
+    beforeEach(() => {
+        wrapper = shallow(<LatitudeBandSelector />);
+    });
 
-// Snapshot test
-it('Component renders correctly from config file', () => {
-    const tree = renderer.create(<LatitudeBandSelector />).toJSON();
-    expect(tree).toMatchSnapshot();
+    it('should render without crashing', () => {
+        const div = document.createElement('div');
+        ReactDOM.render(wrapper, div);
+    });
+
+    // Snapshot test
+    it('should render correctly from config file', () => {
+        const tree = renderer.create(wrapper).toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+
+    it('should update `isCustomizable` state', () => {
+        let wrapped = mount(<LatitudeBandSelector />);
+        //console.log(wrapper.debug());
+        //console.log(wrapped.debug());
+        let wrappedFind = wrapped.find('#latitudeBandSelector');
+        console.log(wrappedFind.debug());
+        wrappedFind.at(0).simulate('change', { target: { value: 'custom' } });
+        //expect(wrapped.find('customLatitudeBandInput').at(0));
+        //expect(wrapped.find('customLatitudeBandInput').at(1));
+    });
 });

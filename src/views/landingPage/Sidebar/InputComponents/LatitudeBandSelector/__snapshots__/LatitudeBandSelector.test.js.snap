@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Component renders correctly from config file 1`] = `
+exports[`LatitudeBandSelector component should render correctly from config file 1`] = `
 Array [
   <div
     className="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-1ws8119-MuiDivider-root"
@@ -56,7 +56,7 @@ Array [
           onChange={[Function]}
           required={false}
           tabIndex={-1}
-          value="0,0"
+          value="-90,90"
         />
         <svg
           aria-hidden={true}
