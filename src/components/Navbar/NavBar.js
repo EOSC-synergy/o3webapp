@@ -13,7 +13,7 @@ import Logo from './Logo/Logo';
 /**
  * The pages and corresponding links that should be visible in the menu
  */
-const pages = [
+export const pages = [
     {
         label: "About O3AS",
         href: "https://o3as.data.kit.edu/"
@@ -51,18 +51,19 @@ function Navbar(props) {
     };
 
     return (
-        <AppBar position="fixed" sx={{bgcolor: indigo[500]}}>
-            <Toolbar disableGutters>
+        <AppBar position="fixed" sx={{bgcolor: indigo[500]}} data-testid="Navbar">
+            <Toolbar disableGutters data-testid="Toolbar_Navbar">
                 {/* EXPANDED */}
-                <Logo display={displayExpanded} />
-                 <Box sx={{ flexGrow: 1, display: displayExpanded }}>
+                <Logo display={displayExpanded} data-testid="navbar-logo-expanded" />
+                 <Box sx={{ flexGrow: 1, display: displayExpanded }} data-testid="navbar-menu-expanded" >
                     {pages.map((page, idx) => (
-                    <Button
-                        key={idx}
-                        sx={{ my: 2, color: 'white', display: 'block' }}
-                    >
-                        <a href={page.href} style={{textDecoration: 'inherit', color: 'inherit'}}>{page.label}</a>
-                    </Button>
+                        <Button
+                            key={idx}
+                            sx={{ my: 2, color: 'white', display: 'block' }}
+                            data-testid={`navbar-expanded-menu-option-${page.label}`}
+                        >
+                            <a href={page.href} style={{textDecoration: 'inherit', color: 'inherit'}}>{page.label}</a>
+                        </Button>
                     ))}
                 </Box>
 
@@ -95,18 +96,20 @@ function Navbar(props) {
                         sx={{
                             display: { xs: 'block', md: 'none' },
                         }}
+                        data-testid="navbar-menu-collapsed"
                     >
                     {pages.map((page, idx) => (
                         <MenuItem
                             key={idx}
                             sx={{ my: 2, display: 'block' }}
+                            data-testid={`navbar-collapsed-menu-option-${page.label}`}
                         >
                             <a href={page.href} style={{textDecoration: 'inherit', color: 'inherit'}}>{page.label}</a>
                         </MenuItem>
                     ))}
                     </Menu>
                 </Box>
-                <Logo display={displayCollapsed} />
+                <Logo display={displayCollapsed} data-testid="navbar-logo-collapsed" />
 
         </Toolbar>
                     
