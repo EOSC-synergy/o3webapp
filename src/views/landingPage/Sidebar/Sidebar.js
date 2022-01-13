@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { styled, useTheme } from '@mui/material/styles';
 import Section from './Section/Section.js';
 import defaultStructure from '../../../config/defaultConfig.json';
 import DownloadModal from './DownloadModal/DownloadModal.js';
@@ -7,8 +8,18 @@ import { useDispatch } from "react-redux";
 import PlotTypeSelector from './InputComponents/PlotTypeSelector/PlotTypeSelector.js';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import { Button } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
 
-
+/**
+ * Defining a drawerheader section at the beginning of a drawer
+ */
+const DrawerHeader = styled('div')(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
+  }));
 
 /**
  * Contains all input components responsible for the modification 
@@ -20,6 +31,8 @@ import { Button } from '@mui/material';
  * @returns {JSX} a jsx containing a sidebar with sections containing input components, a download button and a plotType dropdown
  */
 function Sidebar(props) {
+
+    const theme = useTheme();
 
     // const dispatch = useDispatch()
 
@@ -62,24 +75,42 @@ function Sidebar(props) {
                 open={props.isOpen}
                 onClose={props.onClose}
                 onOpen={props.onOpen}
+                variant="persistent"
+                sx= {{
+                    width: 400,
+                    maxWidth: "100vw",
+                    flexShrink: 0,
+                    '& .MuiDrawer-paper': {
+                        width: 400,
+                        maxWidth: "100vw",
+                    },
+                }}
+                data-testid="sidebar"
             >
+                <DrawerHeader>
+                    <IconButton
+                        onClick={props.onClose}
+                        data-testid="sidebarClose"
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                </DrawerHeader>
+                    <PlotTypeSelector />
 
-                <PlotTypeSelector />
+                    {defaultStructure["sections"].map((s, idx) =>
+                        <Section
+                            name={s.name}
+                            key={idx}
+                            open={expandedSection === idx}
+                            components={s.components}
+                            onCollapse={collapseSection}
+                            onExpand={expandSection}
+                        />
+                    )}
 
-                {defaultStructure["sections"].map((s, idx) =>
-                    <Section
-                        name={s.name}
-                        key={idx}
-                        open={expandedSection === idx}
-                        components={s.components}
-                        onCollapse={collapseSection}
-                        onExpand={expandSection}
-                    />
-                )}
-
-                <Button variant="outlined" onClick={openDownloadModal}>Download</Button>
-                <DownloadModal open={isDownloadModalVisible} onClose={closeDownloadModal} />
-            </SwipeableDrawer>
+                    <Button sx={{marginLeft: "10%", marginTop: "1em", width: "80%"}} variant="outlined" onClick={openDownloadModal}>Download</Button>
+                    <DownloadModal open={isDownloadModalVisible} onClose={closeDownloadModal} />
+        </SwipeableDrawer>
     );
 }
 
