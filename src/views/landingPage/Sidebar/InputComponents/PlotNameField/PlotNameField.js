@@ -19,7 +19,7 @@ function PlotNameField(props) {
     const textFieldLabel = "New Plot Name";
 
     // The max. length of the plot name
-    const PLOT_NAME_MAX_LEN = 30;
+    const PLOT_NAME_MAX_LEN = 40;
      
     // Dispatcher to dispatch the plot name change action
     //const dispatch = useDispatch();
@@ -27,9 +27,9 @@ function PlotNameField(props) {
     // Handles the change if the text in TextField is modified
     const handleChange = (event) => {
         if (event.target.value.length > PLOT_NAME_MAX_LEN) {
-            event.target.value = event.target.value.slice(0, PLOT_NAME_MAX_LEN - 1);
+            event.target.value = event.target.value.slice(0, PLOT_NAME_MAX_LEN);
         }
-        
+
         // TODO
         // dispatch(setTitle({title: event.target.value}));
     }
