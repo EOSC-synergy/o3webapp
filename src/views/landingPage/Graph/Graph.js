@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {useDispatch, useSelector} from 'react-redux'
 import { useGetRawPlotDataMutation } from '../../../services/API/apiSlice';
-import { selectCurrentModelGroups } from '../../../store/modelsSlice';
-import { selectPlotId, selectPlotTitle, setTitle, setActivePlotId } from '../../../store/plotSlice';
+import { selectCurrentModelGroups } from '../../../store/modelsSlice/modelsSlice';
+import { selectPlotId, selectPlotTitle, setTitle, setActivePlotId } from '../../../store/plotSlice/plotSlice';
 import { selectCurrentReferenceSettings } from '../../../store/referenceSlice';
 import {calculatePlotSeries} from "../../../services/math/math";
 

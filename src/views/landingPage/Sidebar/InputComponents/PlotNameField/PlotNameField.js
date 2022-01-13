@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux"
-import { setTitle } from "../../../../../store/plotSlice";
+import { setTitle } from "../../../../../store/plotSlice/plotSlice";
 
 /**
  * enables the user to rename the plot

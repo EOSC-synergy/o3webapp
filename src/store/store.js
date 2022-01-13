@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
-import plotReducer from './plotSlice'
-import modelsReducer from './modelsSlice'
+import plotReducer from './plotSlice/plotSlice'
+import modelsReducer from './modelsSlice/modelsSlice'
 import referenceReducer from './referenceSlice'
 
 
