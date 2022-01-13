@@ -1,21 +1,24 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux"
 import { updatedModelGroup } from "../../../../../../store/modelsSlice"
-import { Modal, Card, Button, Grid } from "@mui/material";
+import { Modal, Card, Button, Grid, Checkbox } from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
 import models from "./models"
 import SearchBar from "../SearchBar/SearchBar";
 import { styled } from '@mui/material/styles';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import DoneIcon from '@mui/icons-material/Done';
+import CancelIcon from '@mui/icons-material/Cancel';
+import ClearIcon from '@mui/icons-material/Clear';
+
+import { Typography } from "@mui/material";
 
 const StyledDataGrid = styled(DataGrid)(({theme}) => ({
-    height: "85%",
+    height: "65%",
     marginTop: "3%",
 }));
-
-const StyledSearchBar= styled(SearchBar)(({theme}) => ({
-    width: "35%",
-}));
-
 
 const rows = [];
 const regex= /([a-z]|[A-Z]|[0-9]|-)*/g;
@@ -28,11 +31,11 @@ for(let i = 0; i < models.length; i++) {
         'institute': info[2],
         'dataset + model': info[4],
         'id': i,
-        'include in median': "included",
-        'include in mean': 'included',
-        'include in percentile': 'included',
-        'include in derivative': 'included',
-        'visible': 'Yes'
+        'include in median': false,
+        'include in mean': false,
+        'include in percentile': false,
+        'include in derivative': false,
+        'visible': false
     })
 }
 
@@ -63,12 +66,32 @@ function EditModelGroupModal(props) {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: '90%',
-        height: '80%',
+        width: '65%',
+        height: '75%',
         bgcolor: "#FFFFFF",
         boxShadow: 24,
         p: 4,
     };
+
+    const handleMedianChecked = () => {
+
+    }
+
+    const handleMeanChecked = () => {
+
+    }
+
+    const handleDerivativeChecked = () => {
+
+    }
+
+    const handlePercentileChecked = () => {
+
+    }
+
+    const handleVilibleChecked = () => {
+
+    }
 
     
     //const makeRepeated = (arr, repeats) => Array.from({ length: repeats }, () => arr).flat();
@@ -77,49 +100,106 @@ function EditModelGroupModal(props) {
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 90, hide: true },
-        { field: 'model', headerName: 'Model', width: 90 },
+        { field: 'model', headerName: 'Model', width: 120 },
         {
           field: 'institute',
           headerName: 'Institute',
-          width: 90,
+          width: 150,
           editable: true,
         },
         {
           field: 'dataset + model',
-          headerName: 'Dataset + model',
-          width: 200,
+          headerName: 'Dataset and Model',
+          width: 225,
           editable: true,
         },
         {
             field: 'include in median',
-            headerName: 'median',
-            width: 90,
-            editable: true,
+            headerName: 'Median',
+            sortable: false,
+            width: 120,
+            disableClickEventBubbling: true,
+            renderCell: (params) => {
+                return (
+                    <div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
+                        <Checkbox onClick={handleMedianChecked}/>
+                    </div>
+                );
+             }
           },
           {
             field: 'include in mean',
-            headerName: 'mean',
-            width: 90,
-            editable: true,
+            headerName: 'Mean',
+            sortable: false,
+            width: 120,
+            disableClickEventBubbling: true,
+            renderCell: (params) => {
+                return (
+                    <div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
+                        <Checkbox onClick={handleMeanChecked}/>
+                    </div>
+                );
+             }
           },
           {
             field: 'include in derivative',
-            headerName: 'derivative',
+            headerName: 'Derivative',
+            sortable: false,
             width: 120,
-            editable: true,
+            disableClickEventBubbling: true,
+            renderCell: (params) => {
+                return (
+                    <div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
+                        <Checkbox onClick={handleDerivativeChecked}/>
+                    </div>
+                );
+             }
           },
           {
             field: 'include in percentile',
-            headerName: 'percentile',
+            headerName: 'Percentile',
             width: 120,
-            editable: true,
+            sortable: false,
+            disableClickEventBubbling: true,
+            renderCell: (params) => {
+                return (
+                    <div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
+                        <Checkbox onClick={handlePercentileChecked}/>
+                    </div>
+                );
+             }
           },
           {
             field: 'visible',
-            headerName: 'visible',
-            width: 90,
-            editable: true,
-          }
+            headerName: 'Visible',
+            sortable: false,
+            width: 120,
+            disableClickEventBubbling: true,
+            renderCell: (params) => {
+                return (
+                    <div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
+                        <Checkbox onClick={handleVilibleChecked} />
+                    </div>
+                );
+             }
+          },
+          {
+            field: 'delete',
+            headerName: 'Delete',
+            sortable: false,
+            width: 120,
+            disableClickEventBubbling: true,
+            renderCell: (params) => {
+                return (
+                    <div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
+                        <IconButton aria-label="delete" color={"error"}>
+                            <DeleteIcon />
+                        </IconButton>
+                    </div>
+                );
+             }
+          },
+
     ];
 
     const foundIndices = (indexArray) => {
@@ -137,15 +217,25 @@ function EditModelGroupModal(props) {
                 aria-describedby="modal-modal-description"
             >
                 <Card sx={cardStyle}>
-                    
-                    <StyledSearchBar 
-                        inputArray={rows}
-                        foundIndicesCallback={foundIndices}
-                    />
+                    <Grid container alignItems="flex-end" justifyContent="right" style={{marginBottom: "1%"}}>
+                        
+                        <IconButton aria-label="delete" color={"success"} size="large">
+                            <DoneIcon fontSize="large"/>
+                        </IconButton>
+                        <IconButton onClick={props.onClose} aria-label="delete" color={"error"} size="large">
+                            <ClearIcon fontSize="large"/>
+                        </IconButton>
+                    </Grid>
+                    <div style={{width: "95%"}}>
+                        <SearchBar 
+                            inputArray={rows}
+                            foundIndicesCallback={foundIndices}
+                        />
+                    </div>
                     <StyledDataGrid 
                             rows={filteredRows}
                             columns={columns}
-                            pageSize={100}
+                            pageSize={10}
                             rowsPerPageOptions={[5]}
                             // hideFooter
                             // autoHeight
@@ -154,8 +244,10 @@ function EditModelGroupModal(props) {
                             disableColumnSelector
                     />
                     
-                    <Grid container alignItems="flex-end" justifyContent="flex-end">
-                        <Button onClick={props.onClose} size="small" style={{marginRight: "2em"}}>Close Modal</Button>
+                    <Grid container alignItems="center" justifyContent="center">
+                        <IconButton aria-label="delete" color={"success"} size="large">
+                            <AddIcon fontSize="large"/>
+                        </IconButton>
                     </Grid>
                 </Card>
 
