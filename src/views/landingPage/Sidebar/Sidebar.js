@@ -3,7 +3,7 @@ import { styled, useTheme } from '@mui/material/styles';
 import Section from './Section/Section.js';
 import defaultStructure from '../../../config/defaultConfig.json';
 import DownloadModal from './DownloadModal/DownloadModal.js';
-import { setCurrentType } from '../../../store/plotSlice.js';
+import { setCurrentType } from '../../../store/plotSlice/plotSlice';
 import { useDispatch } from "react-redux";
 import PlotTypeSelector from './InputComponents/PlotTypeSelector/PlotTypeSelector.js';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';

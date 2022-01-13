@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux"
-import { setLocation } from "../../../../../store/plotSlice";
+import { setLocation } from "../../../../../store/plotSlice/plotSlice";
 
 /**
  * Enables the user to choose minimum and maximum latitude
