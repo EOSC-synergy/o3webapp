@@ -14,18 +14,42 @@ function ReferenceYearSlider(props) {
 
     let i = props.reportError;
 
+
+        /** model: The currently selected reference model.
+         * setModel: The function which adjusts the SelectionBar after selecting a model. 
+        */
         const [model, setModel] = React.useState([]);
       
-        const handleChange = (event) => {
+
+        /** Handles the change of the reference model selection if it's is modified.*/
+        const handleChangeForRefModel = (event) => {
           const {
             target: { value },
           } = event;
           setModel(
-            // On autofill we get a stringified value.
             typeof value === 'string' ? value.split(',') : value,
           );
+            // TODO
+            //dispatch(setModel({title: event.target.value}));
         };
-    
+        
+
+        
+        /** Handles the change of the reference year slider if it's is modified.*/
+        const handleChangeForRefYear = (event) => {
+            const {
+              target: { value },
+            } = event;
+            //setModel(
+            //  typeof value === 'string' ? value.split(',') : value,
+           // );
+              // TODO
+              //dispatch(setYear({title: event.target.value}));
+          };
+      
+
+       
+
     return (
         <>
          <FormControl sx={{ m: 1, width: '100%' }}>
@@ -33,7 +57,7 @@ function ReferenceYearSlider(props) {
                     labelId="locationSelectLabel"
                     id="locationSelect"
                     label="Reference Model"
-                    onChange={handleChange}
+                    onChange={handleChangeForRefModel}
                     input={<OutlinedInput label="Reference Model" />}
                     defaultValue={1}
                     value={model}
@@ -59,6 +83,7 @@ function ReferenceYearSlider(props) {
                         step={1}
                         min={1950}
                         max={2100}
+                        onChange={handleChangeForRefYear}
                         valueLabelDisplay="on"
                         size="small"
                         track={false}
