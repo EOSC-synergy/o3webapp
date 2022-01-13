@@ -4,7 +4,8 @@ import Footer from "./components/Footer/Footer";
 import ErrorMessageModal from './components/ErrorMessageModal/ErrorMessageModal';
 import CookieConsentModal from './components/CookieConsentModal/CookieConsentModal';
 import LandingPage from './views/landingPage/LandingPage';
-import EditModelGroupModal from './views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator/EditModelGroupModal/temp';
+import EditModelGroupModal from './views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator/EditModelGroupModal/EditModelGroupModal';
+
 
 /**
  * Main container of the Webapp
