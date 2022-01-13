@@ -40,15 +40,12 @@ function ReferenceYearSlider(props) {
             const {
               target: { value },
             } = event;
-            //setModel(
-            //  typeof value === 'string' ? value.split(',') : value,
-           // );
+
               // TODO
               //dispatch(setYear({title: event.target.value}));
           };
       
-
-       
+     
 
     return (
         <>
