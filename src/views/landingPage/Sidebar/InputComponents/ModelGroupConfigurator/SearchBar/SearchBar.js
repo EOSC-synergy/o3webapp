@@ -42,7 +42,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
       transition: theme.transitions.create('width'),
       width: '100%',
       [theme.breakpoints.up('md')]: {
-        width: '20ch',
+        width: '50ch',
       },
     },
 }));
@@ -64,7 +64,6 @@ const fullTextSearch = (elem, searchStr) => {
  * @returns {array} containing the indices of all elements in the array where the searchString matched
  */
 const performSearch = (array, searchString) => {
-    console.log(searchString)
     let arrayMappedToIndices = array.map(
         (elem, index) => ({index, value: elem})
     )
