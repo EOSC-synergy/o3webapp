@@ -12,16 +12,16 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-
+import Logo from './Logo/Logo';
 
 const pages = [
     {
-        label: "API",
-        href: "https://api.o3as.fedcloud.eu/api/v1/ui/"
-    },
-    {
         label: "About O3AS",
         href: "https://o3as.data.kit.edu/"
+    },
+    {
+        label: "API",
+        href: "https://api.o3as.fedcloud.eu/api/v1/ui/"
     },
     {
         label: "Legal",
@@ -29,52 +29,8 @@ const pages = [
     }
 ];
 
-const LogoCollapsedNavbar = () => {
-    return(<>
-        <Link
-            href="#"
-            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-            component="div"
-            noWrap
-        >
-            <img style={{height: '5em', margin: '0.5em'}} src="https://o3as.data.kit.edu/img/logos/o3as-logo.svg" />
-        </Link>
-        <Link
-            href="#"
-            underline="none"
-            variant="h6"
-            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, textDecoration: 'inherit', color: 'inherit'  }}
-        >
-            <Typography variant="h6" noWrap sx={{ flexGrow: 1 }} component="div">
-                O3AS Webapp
-            </Typography>
-        </Link>
-    </>);
-}
-
-const LogoExpandedNavbar  = () => {
-    return(<>
-        <Link
-            href="#"
-            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-            component="div"
-            noWrap
-        >
-            <img style={{height: '5em', margin: '0.5em'}} src="https://o3as.data.kit.edu/img/logos/o3as-logo.svg" />
-        </Link>
-        <Link
-            href="#"
-            underline="none"
-            variant="h6"
-            sx={{ mr: 2, display: { xs: 'none', md: 'flex' }, textDecoration: 'inherit', color: 'inherit' }}
-        >
-            <Typography variant="h6" noWrap sx={{ flexGrow: 1 }} component="div">
-                O3AS Webapp
-            </Typography>
-        </Link>
-    </>);
-}
-
+const displayCollapsed = { xs: 'flex', md: 'none' };
+const displayExpanded = { xs: 'none', md: 'flex' }
 
 
 /**
@@ -95,11 +51,27 @@ function Navbar(props) {
     return (
         <AppBar position="fixed" sx={{bgcolor: indigo[500]}}>
             <Toolbar disableGutters>
-                <LogoExpandedNavbar />
-                <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                {/* EXPANDED */}
+                {/* Logo for expanded Navbar */}
+                <Logo display={displayExpanded} />
+                 {/* Menu for expanded Navbar */}
+                 <Box sx={{ flexGrow: 1, display: displayExpanded }}>
+                    {pages.map((page, idx) => (
+                    <Button
+                        key={idx}
+                        sx={{ my: 2, color: 'white', display: 'block' }}
+                    >
+                        <a href={page.href} style={{textDecoration: 'inherit', color: 'inherit'}}>{page.label}</a>
+                    </Button>
+                    ))}
+                </Box>
+
+                {/* COLLAPSED */}
+                {/* Menu for collapsed Navbar */}
+                <Box sx={{ flexGrow: 1, display: displayCollapsed }}>
                     <IconButton
                         size="large"
-                        aria-label="account of current user"
+                        aria-label="Menu"
                         aria-controls="menu-appbar"
                         aria-haspopup="true"
                         onClick={handleOpenNavMenu}
@@ -135,22 +107,12 @@ function Navbar(props) {
                     ))}
                     </Menu>
                 </Box>
-                <LogoCollapsedNavbar />
-                <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                    {pages.map((page) => (
-                    <Button
-                        key={page}
-                        sx={{ my: 2, color: 'white', display: 'block' }}
-                    >
-                        <a href={page.href} style={{textDecoration: 'inherit', color: 'inherit'}}>{page.label}</a>
-                    </Button>
-                    ))}
-                </Box>
+                {/* Logo for collapsed Navbar */}
+                <Logo display={displayCollapsed} />
 
         </Toolbar>
                     
-        </AppBar>
-    );
+    </AppBar>);
 }
 
 export default Navbar;
