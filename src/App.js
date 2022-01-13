@@ -56,8 +56,8 @@ function App() {
         <NavBar error={reportError} />
 
         <LandingPage error={reportError} />
-        <EditModelGroupModal open={isEditVisible} error={reportError} onClose={closeEditModal} />
-        <button onChange={openEditModal}>Open Edit Model Group</button>
+        <EditModelGroupModal isOpen={isEditVisible} error={reportError} onClose={closeEditModal} />
+        <button onClick={openEditModal}>Open Edit Model Group</button>
 
         <Footer error={reportError} />
         <ErrorMessageModal open={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />
