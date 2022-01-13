@@ -95,6 +95,11 @@ test('should remove the model list of the current plot', () => {
             "tco3_zm": {  
                 all: {
                     modelList: removeModelList,
+                    models: {
+                        modelA: "dataA",
+                        modelB: "dataB",
+                        modelC: "dataC",
+                    }
                 }
             }
         }
@@ -106,6 +111,9 @@ test('should remove the model list of the current plot', () => {
             "tco3_zm": {  
                 "all": {
                     modelList: [],
+                    models: {
+                        // expect lookup table to be empty
+                    }
                 }
             }
         }

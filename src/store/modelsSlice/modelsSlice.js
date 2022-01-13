@@ -168,6 +168,9 @@ const modelsSlice = createSlice({
             }
 
             selectedGroup.modelList = selectedGroup.modelList.filter(item => !removeModelList.includes(item))
+            removeModelList.forEach(
+                model => delete selectedGroup.models[model]
+            )
         },
 
         /**
