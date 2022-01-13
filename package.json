@@ -47,6 +47,7 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/dom": "^8.11.1",
     "jsdoc": "^3.6.7",
     "webpack": "^4.44.2"
   }
