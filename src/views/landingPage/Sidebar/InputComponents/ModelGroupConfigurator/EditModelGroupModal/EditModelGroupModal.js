@@ -4,6 +4,7 @@ import { updatedModelGroup } from "../../../../../../store/modelsSlice"
 import { Modal, Card, Button, Grid } from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
 import models from "./models"
+import SearchBar from "../SearchBar/SearchBar";
 
 /**
  * opens a modal where the user can edit an existing model group
@@ -31,13 +32,13 @@ function EditModelGroupModal(props) {
         left: '50%',
         transform: 'translate(-50%, -50%)',
         width: '90%',
-        height: '75%',
+        height: '80%',
         bgcolor: "#FFFFFF",
         boxShadow: 24,
         p: 4,
     };
 
-    const modelSlice = models.slice(0, 20);
+    const modelSlice = models
 
     let rows = [];
     let regex= /([a-z]|[A-Z]|[0-9]|-)*/g;
@@ -57,9 +58,9 @@ function EditModelGroupModal(props) {
             'visible': 'Yes'
         })
     }
-    const makeRepeated = (arr, repeats) => Array.from({ length: repeats }, () => arr).flat();
+    //const makeRepeated = (arr, repeats) => Array.from({ length: repeats }, () => arr).flat();
 
-    rows = makeRepeated(rows, 10);
+    //rows = makeRepeated(rows, 10);
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 90, hide: true },
@@ -73,7 +74,7 @@ function EditModelGroupModal(props) {
         {
           field: 'dataset + model',
           headerName: 'Dataset + model',
-          width: 90,
+          width: 200,
           editable: true,
         },
         {
@@ -91,13 +92,13 @@ function EditModelGroupModal(props) {
           {
             field: 'include in derivative',
             headerName: 'derivative',
-            width: 90,
+            width: 120,
             editable: true,
           },
           {
             field: 'include in percentile',
             headerName: 'percentile',
-            width: 90,
+            width: 120,
             editable: true,
           },
           {
@@ -120,17 +121,20 @@ function EditModelGroupModal(props) {
                 aria-describedby="modal-modal-description"
             >
                 <Card sx={cardStyle}>
-                    <DataGrid 
-                        rows={rows}
-                        columns={columns}
-                        pageSize={100}
-                        rowsPerPageOptions={[5]}
-                        //hideFooter
-                        // autoHeight
-                        disableSelectionOnClick
-                        disableColumnMenu
-                        disableColumnSelector
-                    />
+                    <SearchBar />
+                    <div style={{height: "85%", marginTop: "3%"}}>
+                        <DataGrid 
+                            rows={rows}
+                            columns={columns}
+                            pageSize={100}
+                            rowsPerPageOptions={[5]}
+                            // hideFooter
+                            // autoHeight
+                            disableSelectionOnClick
+                            disableColumnMenu
+                            disableColumnSelector
+                        />
+                    </div>
                     <Grid container alignItems="flex-end" justifyContent="flex-end">
                         <Button onClick={props.onClose} size="small" style={{marginRight: "2em"}}>Close Modal</Button>
                     </Grid>
