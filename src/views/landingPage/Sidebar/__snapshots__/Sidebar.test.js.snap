@@ -49,7 +49,79 @@ exports[`Sidebar renders correctly 1`] = `
         </svg>
       </button>
     </div>
-    PlotTypeSelector
+    <div
+      className="MuiFormControl-root css-q8hpuo-MuiFormControl-root"
+      data-testid="plotTypeSelectorForm"
+    >
+      <label
+        className="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+        data-shrink={false}
+        data-testid="plotTypeSelector"
+        id="plotTypeLabel"
+      >
+        Plot Type
+      </label>
+      <div
+        className="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+        onClick={[Function]}
+      >
+        <div
+          aria-expanded="false"
+          aria-haspopup="listbox"
+          aria-labelledby="plotTypeLabel plotType"
+          className="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+          id="plotType"
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onMouseDown={[Function]}
+          role="button"
+          tabIndex={0}
+        >
+          <span
+            className="notranslate"
+            dangerouslySetInnerHTML={
+              Object {
+                "__html": "&#8203;",
+              }
+            }
+          />
+        </div>
+        <input
+          aria-hidden={true}
+          className="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+          disabled={false}
+          onAnimationStart={[Function]}
+          onChange={[Function]}
+          required={false}
+          tabIndex={-1}
+          value=""
+        />
+        <svg
+          aria-hidden={true}
+          className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+          data-testid="ArrowDropDownIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M7 10l5 5 5-5z"
+          />
+        </svg>
+        <fieldset
+          aria-hidden={true}
+          className="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+        >
+          <legend
+            className="css-173wfxe"
+          >
+            <span>
+              Plot Type
+            </span>
+          </legend>
+        </fieldset>
+      </div>
+    </div>
     <div
       className="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
       data-testid="section"
@@ -123,7 +195,58 @@ exports[`Sidebar renders correctly 1`] = `
               <div
                 className="MuiAccordionDetails-root css-ta84vm-MuiAccordionDetails-root"
               >
-                PlotNameField
+                <div
+                  className="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-1ws8119-MuiDivider-root"
+                  role="separator"
+                >
+                  <span
+                    className="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
+                  >
+                    <p
+                      className="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                    >
+                      PLOT NAME
+                    </p>
+                  </span>
+                </div>
+                <div
+                  className="MuiBox-root css-1c0g717"
+                >
+                  <div
+                    className="MuiFormControl-root css-q8hpuo-MuiFormControl-root"
+                  >
+                    <div
+                      className="MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
+                    >
+                      <label
+                        className="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-standard MuiFormLabel-root MuiFormLabel-colorPrimary css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root"
+                        data-shrink={false}
+                        htmlFor="standard-basic"
+                        id="standard-basic-label"
+                      >
+                        New Plot Name
+                      </label>
+                      <div
+                        className="MuiInput-root MuiInput-underline MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-1480iag-MuiInputBase-root-MuiInput-root"
+                        onClick={[Function]}
+                      >
+                        <input
+                          aria-invalid={false}
+                          autoFocus={false}
+                          className="MuiInput-input MuiInputBase-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
+                          disabled={false}
+                          id="standard-basic"
+                          onAnimationStart={[Function]}
+                          onBlur={[Function]}
+                          onChange={[Function]}
+                          onFocus={[Function]}
+                          required={false}
+                          type="text"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 XAxisSlider
                 YAxisSlider
               </div>
@@ -430,9 +553,72 @@ exports[`Sidebar renders correctly 2`] = `
               d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
             />
           </svg>
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
         </button>
       </div>
-      PlotTypeSelector
+      <div
+        class="MuiFormControl-root css-q8hpuo-MuiFormControl-root"
+        data-testid="plotTypeSelectorForm"
+      >
+        <label
+          class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+          data-shrink="false"
+          data-testid="plotTypeSelector"
+          id="plotTypeLabel"
+        >
+          Plot Type
+        </label>
+        <div
+          class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+        >
+          <div
+            aria-expanded="false"
+            aria-haspopup="listbox"
+            aria-labelledby="plotTypeLabel plotType"
+            class="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+            id="plotType"
+            role="button"
+            tabindex="0"
+          >
+            <span
+              class="notranslate"
+            >
+              ​
+            </span>
+          </div>
+          <input
+            aria-hidden="true"
+            class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+            tabindex="-1"
+            value=""
+          />
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+            data-testid="ArrowDropDownIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M7 10l5 5 5-5z"
+            />
+          </svg>
+          <fieldset
+            aria-hidden="true"
+            class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              class="css-173wfxe"
+            >
+              <span>
+                Plot Type
+              </span>
+            </legend>
+          </fieldset>
+        </div>
+      </div>
       <div
         class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
         data-testid="section"
@@ -489,7 +675,51 @@ exports[`Sidebar renders correctly 2`] = `
                 <div
                   class="MuiAccordionDetails-root css-ta84vm-MuiAccordionDetails-root"
                 >
-                  PlotNameField
+                  <div
+                    class="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-1ws8119-MuiDivider-root"
+                    role="separator"
+                  >
+                    <span
+                      class="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                      >
+                        PLOT NAME
+                      </p>
+                    </span>
+                  </div>
+                  <div
+                    class="MuiBox-root css-1c0g717"
+                  >
+                    <div
+                      class="MuiFormControl-root css-q8hpuo-MuiFormControl-root"
+                    >
+                      <div
+                        class="MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
+                      >
+                        <label
+                          class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-standard MuiFormLabel-root MuiFormLabel-colorPrimary css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root"
+                          data-shrink="false"
+                          for="standard-basic"
+                          id="standard-basic-label"
+                        >
+                          New Plot Name
+                        </label>
+                        <div
+                          class="MuiInput-root MuiInput-underline MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-1480iag-MuiInputBase-root-MuiInput-root"
+                        >
+                          <input
+                            aria-invalid="false"
+                            class="MuiInput-input MuiInputBase-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
+                            id="standard-basic"
+                            type="text"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   XAxisSlider
                   YAxisSlider
                 </div>
@@ -697,6 +927,9 @@ exports[`Sidebar renders correctly 2`] = `
         type="button"
       >
         Download
+        <span
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+        />
       </button>
     </div>
   </div>

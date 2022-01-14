@@ -29,6 +29,7 @@ exports[`PlotTypeSelector renders correctly 1`] = `
         <span
           class="notranslate"
         >
+          ​
         </span>
       </div>
       <input
