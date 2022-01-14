@@ -73,8 +73,12 @@ function EditModelGroupModal(props) {
         p: 4,
     };
 
-    const handleMedianChecked = () => {
-
+    const [medianVisible, setMedianVisible] = React.useState(Array(filteredRows.length).fill(false));
+    const handleMedianChecked = (id) => {
+        let medianVisibleCopy = [...medianVisible]
+        medianVisibleCopy[id] = !medianVisibleCopy[id]
+        setMedianVisible(medianVisibleCopy);
+        console.log(medianVisible);
     }
 
     const handleMeanChecked = () => {
@@ -122,7 +126,7 @@ function EditModelGroupModal(props) {
             renderCell: (params) => {
                 return (
                     <div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
-                        <Checkbox onClick={handleMedianChecked}/>
+                        <Checkbox checked={medianVisible[params.row.id]} onClick={() => handleMedianChecked(params.row.id)}/>
                     </div>
                 );
              }
