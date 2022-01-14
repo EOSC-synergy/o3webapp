@@ -12,30 +12,24 @@ import { styled, useTheme } from '@mui/material/styles';
 function Footer (props) {
     let theme = useTheme();
     return (
-        // <Grid
-    //             spacing={1}
-    //             container
-    //             direction="row"
-    //             justifyContent="center"
-    //             alignItems="center"
-    //             sx={{backgroundColor: theme.palette.grey[200], paddingBottom: "0.5em", alignText:"center"}}
-    //         >
-    //             <Grid item xs={3} style={{alignText:"center"}}>
-    //                 <Link>Impressum</Link>
-    //             </Grid>
-    //             <Grid item xs={3} style={{alignText:"center"}}>
-    //                 <Link>Privacy Policy</Link>
-    //             </Grid>
-    //             <Grid item xs={3} style={{alignText:"center"}}>
-    //                 <Link>Terms of Service</Link>
-    //             </Grid>
-    //         </Grid>
-    <div>
-    <a href="#">Impressum</a>
-    <a href="#">Privacy Policy</a>
-    <a href="#">Terms of Service</a>
-</div>
-
+        <Grid
+                spacing={1}
+                container
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+                sx={{backgroundColor: theme.palette.grey[200], paddingBottom: "0.5em", alignText:"center"}}
+            >
+                <Grid item xs={3} style={{alignText:"center"}}>
+                    <Link>Impressum</Link>
+                </Grid>
+                <Grid item xs={3} style={{alignText:"center"}}>
+                    <Link>Privacy Policy</Link>
+                </Grid>
+                <Grid item xs={3} style={{alignText:"center"}}>
+                    <Link>Terms of Service</Link>
+                </Grid>
+            </Grid>
     );
 }
 
