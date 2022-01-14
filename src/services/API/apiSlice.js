@@ -1,7 +1,7 @@
-// Import the RTK Query methods from the React-specific entry point
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import axios from 'axios';
 
 // Define our single API slice object
+/*
 export const apiSlice = createApi({
   // The cache reducer expects to be added at `state.api` (already default - this is optional)
   reducerPath: 'api',
@@ -51,3 +51,41 @@ export const {
   useGetBuiltPlotDataMutation,
   useGetRawPlotDataMutation,
  } = apiSlice
+
+ */
+
+const baseURL = "https://api.o3as.fedcloud.eu/api/v1";
+
+const timeoutVal = 5000;
+
+const getFromAPI = (endpoint) => {
+    return axios.get(baseURL + endpoint, { timeout: timeoutVal });
+}
+
+const postAtAPI = (endpoint, data) => {
+    return axios.post(baseURL + endpoint, { data }, { timeout: timeoutVal });
+}
+
+export const getPlotTypes = () => {
+  return getFromAPI("/data");
+};
+
+export const postData = (plotType, data) => {
+    return postAtAPI(
+        `/data/${plotType}`,
+        { data }
+    );
+}
+
+export const getModels = (plotType, select) => {
+    return getFromAPI(`/models?ptype=${plotType}&select=${select}`);
+}
+
+export const postModelsPlotStyle = (plotType) => {
+    return postAtAPI(
+        '/models/plotstyle',
+        {
+            ptype: plotType
+        }
+    );
+}

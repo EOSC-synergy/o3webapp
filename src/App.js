@@ -24,6 +24,7 @@ function App() {
     const reportError = (msg) => {
         setErrorModalVisible(true);
         setErrorMessage(msg);
+        console.log(msg);
     }
     
     /**
@@ -45,7 +46,7 @@ function App() {
     <>
         <NavBar error={reportError} />
 
-        <LandingPage error={reportError} />
+        <LandingPage reportError={reportError} />
 
         <Footer error={reportError} />
         <ErrorMessageModal open={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />

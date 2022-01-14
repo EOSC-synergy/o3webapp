@@ -95,7 +95,7 @@ function Sidebar(props) {
                         <CloseIcon />
                     </IconButton>
                 </DrawerHeader>
-                    <PlotTypeSelector />
+                    <PlotTypeSelector reportError={ props.reportError }/>
 
                     {defaultStructure["sections"].map((s, idx) =>
                         <Section
