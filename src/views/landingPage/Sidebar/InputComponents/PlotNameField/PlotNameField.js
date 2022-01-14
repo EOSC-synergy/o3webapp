@@ -2,6 +2,8 @@ import React from "react";
 import { useDispatch } from "react-redux"
 import { setTitle } from "../../../../../store/plotSlice/plotSlice";
 import { Divider, Typography, Box, FormControl, TextField} from '@mui/material';
+import { useSelector } from 'react-redux';
+import { selectPlotTitle } from "../../../../../store/plotSlice/plotSlice";
 
 /**
  * Enables the user to rename the plot
@@ -21,16 +23,18 @@ function PlotNameField(props) {
     const PLOT_NAME_MAX_LEN = 40;
      
     // /** Dispatcher to dispatch the plot name change action. */
-    //const dispatch = useDispatch();
+    const dispatch = useDispatch();
+
+    /** The current plot title from the store */
+    const plotTitle = useSelector(selectPlotTitle);
 
     /** Handles the change if the text in TextField is modified. */
     const handleChange = (event) => {
         if (event.target.value.length > PLOT_NAME_MAX_LEN) {
             event.target.value = event.target.value.slice(0, PLOT_NAME_MAX_LEN);
-        }
+        } 
 
-        // TODO
-        // dispatch(setTitle({title: event.target.value}));
+        dispatch(setTitle({title: event.target.value}));
     }
     
 
@@ -38,9 +42,9 @@ function PlotNameField(props) {
         <Divider><Typography>{componentTitle}</Typography></Divider>
         <Box sx={{paddingLeft: '8%', paddingRight: '8%', paddingTop: '3%', paddingBottom: '3%'}}>
             <FormControl sx={{width: '100%' }}>
-                <TextField id="standard-basic" label={textFieldLabel} variant="standard" onChange={handleChange} />
+                <TextField id="standard-basic" label={textFieldLabel} value={plotTitle} variant="standard" onChange={handleChange} />
             </FormControl>
-        </Box>
+        </Box> 
         </>
     );
 }

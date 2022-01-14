@@ -3,6 +3,8 @@ import Chart from "react-apexcharts"
 import data from "./default-data.json"
 import settings from "./default-settings.json"
 import { convertToStrokeStyle, colourNameToHex } from "../../../utils/optionsFormatter"
+import { selectPlotTitle } from '../../../store/plotSlice/plotSlice';
+import { useSelector } from 'react-redux';
 
 /**
  * Static generation of the years on the x-axis, this will be fetched from the
@@ -51,12 +53,14 @@ settings.series.push(...ySeries)
  *          the apexcharts library
  */
 function Graph(props) {
+    settings.options.title.text = useSelector(selectPlotTitle);
+    const copySettings = JSON.parse(JSON.stringify(settings)); 
 
     return (<>
         {/* for the OCTS Plot */}
         <Chart
-                options={settings.options}
-                series={settings.series}
+                options={copySettings.options}
+                series={copySettings.series}
                 type={"line"}
                 height={"600px"}
             />
