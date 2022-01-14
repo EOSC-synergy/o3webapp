@@ -32,9 +32,9 @@ function App() {
     return (
     <>
         <Navbar error={reportError} />
-        {/* <LandingPage error={reportError} />
+        {/* <LandingPage error={reportError} /> */}
         <Footer error={reportError} />
-        <ErrorMessageModal open={error !== null} message={error} onClose={closeErrorModal} />
+        {/* <ErrorMessageModal open={error !== null} message={error} onClose={closeErrorModal} />
         <CookieConsentModal open={showCookieConsentModal} onClose={onCloseCookieConsentModal} error={reportError} /> */}
     </>
     );
