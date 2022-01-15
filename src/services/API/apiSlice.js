@@ -65,16 +65,17 @@ const apiSlice = createSlice({
     extraReducers(builder) {
         builder
           .addCase(fetchModels.pending, (state, action) => {
-            state.status = 'loading';
+            state.models.status = 'loading';
           })
           .addCase(fetchModels.fulfilled, (state, action) => {
-            state.status = 'success';
+            state.models.status = 'success';
             state.models.data = action.payload;
           })
           .addCase(fetchModels.rejected, (state, action) => {
-            state.status = 'error';
-            state.error = action.error.message;
+            state.models.status = 'error';
+            state.models.error = action.error.message;
           })
       },
 });
-// reducer(state, action) => newState
+
+export default apiSlice.reducer;
