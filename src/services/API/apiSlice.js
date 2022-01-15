@@ -48,8 +48,18 @@ export const fetchModels = createAsyncThunk('api/fetchModels', async () => {
     return response.data;
 });
 
+export const fetchPlotTypes = createAsyncThunk('api/fetchPlotTypes', async () => {
+    const response = await getPlotTypes();
+    return response.data;
+});
+
 const initialState = {
     models: {
+        status: "idle",
+        error: null,
+        data: [],
+    },
+    plotTypes: {
         status: "idle",
         error: null,
         data: [],
@@ -64,18 +74,31 @@ const apiSlice = createSlice({
     },
     extraReducers(builder) {
         builder
-          .addCase(fetchModels.pending, (state, action) => {
-            state.models.status = 'loading';
-          })
-          .addCase(fetchModels.fulfilled, (state, action) => {
-            state.models.status = 'success';
-            state.models.data = action.payload;
-          })
-          .addCase(fetchModels.rejected, (state, action) => {
-            state.models.status = 'error';
-            state.models.error = action.error.message;
-          })
-      },
+            // fetch models
+            .addCase(fetchModels.pending, (state, action) => {
+                state.models.status = 'loading';
+            })
+            .addCase(fetchModels.fulfilled, (state, action) => {
+                state.models.status = 'success';
+                state.models.data = action.payload;
+            })
+            .addCase(fetchModels.rejected, (state, action) => {
+                state.models.status = 'error';
+                state.models.error = action.error.message;
+            })
+            // fetch plotTypes
+            .addCase(fetchPlotTypes.pending, (state, action) => {
+                state.plotTypes.status = 'loading';
+            })
+            .addCase(fetchPlotTypes.fulfilled, (state, action) => {
+                state.plotTypes.status = 'success';
+                state.plotTypes.data = action.payload;
+            })
+            .addCase(fetchPlotTypes.rejected, (state, action) => {
+                state.plotTypes.status = 'error';
+                state.plotTypes.error = action.error.message;
+            })
+    },
 });
 
 export default apiSlice.reducer;
