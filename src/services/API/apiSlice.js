@@ -5,6 +5,13 @@ const baseURL = "https://api.o3as.fedcloud.eu/api/v1";
 
 const timeoutVal = 5000;
 
+export const REQUEST_STATE = {
+    idle,
+    loading,
+    success,
+    error
+}
+
 const getFromAPI = (endpoint) => {
     return axios.get(baseURL + endpoint, { timeout: timeoutVal });
 }
@@ -55,12 +62,12 @@ export const fetchPlotTypes = createAsyncThunk('api/fetchPlotTypes', async () =>
 
 const initialState = {
     models: {
-        status: "idle",
+        status: REQUEST_STATE.idle,
         error: null,
         data: [],
     },
     plotTypes: {
-        status: "idle",
+        status: REQUEST_STATE.idle,
         error: null,
         data: [],
     },
@@ -76,26 +83,26 @@ const apiSlice = createSlice({
         builder
             // fetch models
             .addCase(fetchModels.pending, (state, action) => {
-                state.models.status = 'loading';
+                state.models.status = REQUEST_STATE.loading;
             })
             .addCase(fetchModels.fulfilled, (state, action) => {
-                state.models.status = 'success';
+                state.models.status = REQUEST_STATE.success;
                 state.models.data = action.payload;
             })
             .addCase(fetchModels.rejected, (state, action) => {
-                state.models.status = 'error';
+                state.models.status = REQUEST_STATE.error;
                 state.models.error = action.error.message;
             })
             // fetch plotTypes
             .addCase(fetchPlotTypes.pending, (state, action) => {
-                state.plotTypes.status = 'loading';
+                state.plotTypes.status = REQUEST_STATE.loading;
             })
             .addCase(fetchPlotTypes.fulfilled, (state, action) => {
-                state.plotTypes.status = 'success';
+                state.plotTypes.status = REQUEST_STATE.success;
                 state.plotTypes.data = action.payload;
             })
             .addCase(fetchPlotTypes.rejected, (state, action) => {
-                state.plotTypes.status = 'error';
+                state.plotTypes.status = REQUEST_STATE.error;
                 state.plotTypes.error = action.error.message;
             })
     },
