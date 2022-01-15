@@ -9,6 +9,9 @@ import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import { getPlotTypes } from '../../../../../services/API/apiSlice';
 import { sleep } from '../../../../../utils/mock_dev';
+import { useDispatch, useSelector } from "react-redux";
+import { selectPlotId, setActivePlotId } from "../../../../../store/plotSlice/plotSlice";
+import { REQUEST_STATE } from "../../../../../services/API/apiSlice"
 
 
 /**
@@ -19,19 +22,9 @@ import { sleep } from '../../../../../utils/mock_dev';
  */
 function PlotTypeSelector(props) {
 
-    // for dev reasons, should eventually be moved to the redux / API module
-    /**
-     * @todo move to redux eventually
-     */
-    const [plotType, setPlotType] = React.useState('');
-    /**
-     * @todo move to redux eventually
-     */
-    const [isLoading, setIsLoading] = React.useState(true);
-    /**
-     * @todo move to redux eventually
-     */
-    const [plotTypes, setPlotTypes] = React.useState([]);
+    const dispatch = useDispatch();
+    const plotTypesRequestData = useSelector(state => state.api.plotTypes);
+    const plotType = useSelector(selectPlotId);
 
     const successHTTPCode = 200;
 
@@ -41,20 +34,34 @@ function PlotTypeSelector(props) {
      * @todo connect with redux store
      */
     const changePlotType = (event) => {
-        setPlotType(event.target.value);
+        //console.log(event.target.value);
+        dispatch(setActivePlotId({plotId: event.target.value}))
     }
 
-    getPlotTypes()
-        .then((response) => {
-            if (response.status !== successHTTPCode) {
-                props.reportError(`Cannot receive plot type data: ${response.statusText}`);
-            }
-            setPlotTypes(response.data);
-            setIsLoading(false);
-        })
-        .catch(error => {
-            props.reportError(error.code + "\n" + error.message + "\n" + error.stack);
-        });
+    let dropdownData;
+    if (plotTypesRequestData.status === REQUEST_STATE.loading 
+        || plotTypesRequestData.status === REQUEST_STATE.idle) {
+        dropdownData = (<Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}
+                        >
+                            <CircularProgress />
+                        </Box>);
+    } else if (plotTypesRequestData.status === REQUEST_STATE.success) {
+        dropdownData = (
+            plotTypesRequestData.data.map((name, idx) => {
+                return (
+                    <MenuItem key={idx} value={name}>{name}</MenuItem>
+                )
+            })
+        )
+    } else if (plotTypesRequestData.status === REQUEST_STATE.error) {
+        props.reportError(plotTypesRequestData.error.message);
+    }
+    
     return (
         <FormControl sx={{ width: '100%' }} data-testid="plotTypeSelectorForm">
             <InputLabel id="plotTypeLabel" data-testid="plotTypeSelector">Plot Type</InputLabel>
@@ -66,22 +73,7 @@ function PlotTypeSelector(props) {
                 onChange={changePlotType}
             >
                 {
-                isLoading ? 
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}
-                    >
-                        <CircularProgress />
-                    </Box>
-                :
-                    plotTypes.map((name, idx) => {
-                        return (
-                            <MenuItem key={idx} value={name}>{name}</MenuItem>
-                        )
-                    })
+                    dropdownData
                 }
             </Select>
         </FormControl>
