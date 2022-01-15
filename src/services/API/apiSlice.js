@@ -6,10 +6,10 @@ const baseURL = "https://api.o3as.fedcloud.eu/api/v1";
 const timeoutVal = 5000;
 
 export const REQUEST_STATE = {
-    idle,
-    loading,
-    success,
-    error
+    idle: "idle",
+    loading: "loading",
+    success: "success",
+    error: "error",
 }
 
 const getFromAPI = (endpoint) => {
