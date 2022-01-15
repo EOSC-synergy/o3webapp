@@ -26,8 +26,6 @@ function PlotTypeSelector(props) {
     const plotTypesRequestData = useSelector(state => state.api.plotTypes);
     const plotType = useSelector(selectPlotId);
 
-    const successHTTPCode = 200;
-
     /**
      * mocks a call to the redux store to change the plot type
      * @param {event} event the event that called this function
@@ -59,7 +57,7 @@ function PlotTypeSelector(props) {
             })
         )
     } else if (plotTypesRequestData.status === REQUEST_STATE.error) {
-        props.reportError(plotTypesRequestData.error.message);
+        props.reportError(plotTypesRequestData.error);
     }
     
     return (
