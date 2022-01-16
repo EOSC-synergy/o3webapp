@@ -105,7 +105,6 @@ function Sidebar(props) {
                             components={s.components}
                             onCollapse={collapseSection}
                             onExpand={expandSection}
-                            isExpanded={false}
                         />
                     )}
 
