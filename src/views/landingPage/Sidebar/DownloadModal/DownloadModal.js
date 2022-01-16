@@ -18,9 +18,8 @@ export default function DownloadModal(props) {
      * The style of the DownloadModal.
      *
      * @type {{
-     *          boxShadow: number, transform: string, pr: number, pb: number,
-     *          top: string, bgColor: *, pt: number, left: string, width: string,
-     *          position: string, pl: number
+     *          p: number, boxShadow: number, transform: string, top: string,
+     *          bgColor: *, left: string, width: string, position: string
      *       }} the props
      */
     const style = {
@@ -31,10 +30,7 @@ export default function DownloadModal(props) {
         width: '50%',
         bgColor: useTheme().palette.grey[200],
         boxShadow: 24,
-        pl: 5,
-        pr: 2,
-        pt: 8,
-        pb: 5,
+        p: 5,
     };
 
     /**
@@ -69,12 +65,18 @@ export default function DownloadModal(props) {
                 onClose={props.onClose}
             >
                 <Card sx={style}>
-                    <Grid container>
-                        <Grid item xs={3}>
-                            <Typography variant={"h6"} sx={{mt: -1}}>Choose file format:</Typography>
+                    <Grid
+                        container
+                        spacing={5}
+                        justifyContent="center"
+                        alignItems="center"
+                    >
+                        <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
+                            <Typography variant={"h6"}>Choose file format:</Typography>
                         </Grid>
-                        <Grid xs={6}>
-                            <FormControl style={{width: "100%"}} sx={{mt: -3}}>
+                        <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                            <FormControl style={{width: "100%", minWidth: 150}}>
+                                <InputLabel id="formatSelectLabel">format</InputLabel>
                                 <Select
                                     labelId="formatSelectLabel"
                                     id="formatSelection"
@@ -83,16 +85,15 @@ export default function DownloadModal(props) {
                                     onChange={changeFileFormat}
                                 >
                                     {
-                                        fileFormats.map(
-                                            (elem, idx) => <MenuItem key={idx}>{elem.description}</MenuItem>
+                                        fileFormats.map((elem, idx) =>
+                                            <MenuItem key={idx} value={elem.description}>{elem.description}</MenuItem>
                                         )
                                     }
                                 </Select>
-                                <InputLabel id="formatSelectLabel">format</InputLabel>
                             </FormControl>
                         </Grid>
-                        <Grid xs={3}>
-                            <Button sx={{mx: 5, mt: -2}} variant="outlined" onClick={downloadPlot}>
+                        <Grid item xs={12} sm={12} md={3} lg={3} xl={3}>
+                            <Button variant="outlined" onClick={downloadPlot}>
                                 <Typography>Download</Typography>
                             </Button>
                         </Grid>
