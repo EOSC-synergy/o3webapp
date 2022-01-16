@@ -49,17 +49,15 @@ function PlotTypeSelector(props) {
                             <CircularProgress />
                         </Box>);
     } else if (plotTypesRequestData.status === REQUEST_STATE.success) {
-        dropdownData = (
-            plotTypesRequestData.data.map((name, idx) => {
+        dropdownData = plotTypesRequestData.data.map((name, idx) => {
                 return (
                     <MenuItem key={idx} value={name}>{name}</MenuItem>
                 )
-            })
-        )
+        });
     } else if (plotTypesRequestData.status === REQUEST_STATE.error) {
         props.reportError(plotTypesRequestData.error);
     }
-    
+
     return (
         <FormControl sx={{ width: '100%' }} data-testid="plotTypeSelectorForm">
             <InputLabel id="plotTypeLabel" data-testid="plotTypeSelector">Plot Type</InputLabel>
