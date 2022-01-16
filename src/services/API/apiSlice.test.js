@@ -42,6 +42,39 @@ describe("fetchModels thunk", () => {
         await store.dispatch(fetchModels());
 
         expect(store.getState(state => state.api)).toEqual(expected);
-    });    
+    });
+
+    it('updates store accordingly after rejected request', async () => {
+        const store = configureStore({
+            reducer: {
+                api: reducer,
+            },
+        });
+
+        const errorMessage = "Timeout of API";
+
+        const expected = {
+            api: {
+                models: {
+                    status: REQUEST_STATE.error,
+                    error: errorMessage,
+                    data: [],
+                },
+                plotTypes: {
+                    status: REQUEST_STATE.idle,
+                    error: null,
+                    data: [],
+                },
+            },
+        };
+
+        axios.get.mockReturnValue(Promise.reject(errorMessage));
+        
+        await store.dispatch(fetchModels());
+
+        expect(store.getState(state => state.api)).toEqual(expected);
+    });
+    
+
     
 });
