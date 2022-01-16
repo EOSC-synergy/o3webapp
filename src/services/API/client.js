@@ -42,13 +42,3 @@ export const postModelsPlotStyle = (plotType) => {
         }
     );
 }
-
-export const fetchModels = createAsyncThunk('api/fetchModels', async () => {
-    const response = await getModels();
-    return response.data;
-});
-
-export const fetchPlotTypes = createAsyncThunk('api/fetchPlotTypes', async () => {
-    const response = await getPlotTypes();
-    return response.data;
-});

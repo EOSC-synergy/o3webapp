@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { getModels, getPlotTypes } from "./client";
 
 export const REQUEST_STATE = {
     idle: "idle",
@@ -6,6 +7,16 @@ export const REQUEST_STATE = {
     success: "success",
     error: "error",
 }
+
+export const fetchModels = createAsyncThunk('api/fetchModels', async () => {
+    const response = await getModels();
+    return response.data;
+});
+
+export const fetchPlotTypes = createAsyncThunk('api/fetchPlotTypes', async () => {
+    const response = await getPlotTypes();
+    return response.data;
+});
 
 const initialState = {
     models: {
