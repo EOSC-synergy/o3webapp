@@ -6,6 +6,7 @@ import { seasons } from "../../../../../utils/constants";
 import {Box, Checkbox, Divider, FormControlLabel, Grid} from "@mui/material";
 import { Winter, Spring, Summer, Autumn } from "../../../../../utils/constants";
 import Typography from "@mui/material/Typography";
+import { useSelector } from "react-redux";
 
 /**
  * enables the user to select a month, season or the whole year
@@ -19,7 +20,7 @@ function TimeCheckBoxGroup(props) {
     // const dispatch = useDispatch()
 
     // const currentPlotType = selectCurrentPlotType()
-    // const monthArray = useSelector(state => state.plot[currentPlotType].months)
+    const monthArray = []; //useSelector(state => state.settings["OCTS"].months);
 
 
     /**
@@ -43,20 +44,32 @@ function TimeCheckBoxGroup(props) {
     }
 
     const handleMonthChecked = (monthId) => {
+        if (monthArray.includes(monthId)) {
+            monthArray.filter((m) => m !== monthId);
+        } else {
+            monthArray.push(monthId);
+        }
         // Dispatch month checked
     }
 
-    const Season = ({name, months, seasonId}) => (
-        <Grid item xs={6}>
+    const Season = ({name, months, seasonId}) => {
+
+        let a = []
+        for (let i = 0; i < months.length; i++) {
+            a.push({monthId: months[i], checked: monthArray.includes(months[i])})
+        }
+        
+
+        return (<Grid item xs={6}>
             <SeasonCheckBoxGroup
                 label = {name.description}
-                months = {months}
-                seasonId={seasonId}
+                months = {a}
+                seasonId= {seasonId}
                 handleSeasonClicked = {handleSeasonChecked}
                 handleMonthClicked = {handleMonthChecked}
             />
-        </Grid>
-    );
+        </Grid>);
+    }
 
     return (
         <>
