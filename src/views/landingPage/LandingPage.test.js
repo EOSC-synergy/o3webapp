@@ -7,6 +7,14 @@ import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import { queryByTestId } from '@testing-library/dom';
 
+jest.mock('react-apexcharts', () => {
+  return {
+    __esModule: true,
+    default: () => {
+      return <div />
+    },
+  }
+})
 
 it('LandingPage renders without crashing', () => {
   const div = document.createElement('div');
