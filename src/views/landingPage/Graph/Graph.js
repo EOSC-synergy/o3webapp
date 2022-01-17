@@ -3,6 +3,12 @@ import Chart from "react-apexcharts"
 import data from "./default-data.json"
 import settings from "./default-settings.json"
 import { convertToStrokeStyle, colourNameToHex } from "../../../utils/optionsFormatter"
+import {useSelector} from 'react-redux'
+import { useGetRawPlotDataMutation } from '../../../services/API/apiSlice';
+import { selectCurrentModelGroups } from '../../../store/modelsSlice/modelsSlice';
+import { selectCurrentPlotId, selectCurrentPlotType, selectCurrentSettings } from '../../../store/plotSlice/plotSlice';
+import { selectCurrentReferenceSettings } from '../../../store/referenceSlice';
+// import {calculatePlotSeries} from "../../../utils/math"
 
 /**
  * Static generation of the years on the x-axis, this will be fetched from the

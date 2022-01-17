@@ -1,5 +1,5 @@
 import * as React from 'react';
-import NavBar from "./components/Navbar/NavBar";
+import Navbar from "./components/Navbar/NavBar";
 import Footer from "./components/Footer/Footer";
 import ErrorMessageModal from './components/ErrorMessageModal/ErrorMessageModal';
 import CookieConsentModal from './components/CookieConsentModal/CookieConsentModal';
@@ -22,8 +22,8 @@ function App() {
      * @param {string} msg the message of the reported error
      */
     const reportError = (msg) => {
-        setErrorModalVisible(true);
         setErrorMessage(msg);
+        setErrorModalVisible(true);
     }
     
     /**
@@ -42,15 +42,13 @@ function App() {
     
 
     return (
-    <>
-        <NavBar error={reportError} />
-
-        <LandingPage error={reportError} />
-
+    <div style={{minHeight: "100vh", display: 'flex', flexDirection: 'column'}}>
+        <Navbar error={reportError} />
+        <LandingPage error={reportError} /> 
         <Footer error={reportError} />
-        <ErrorMessageModal open={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />
-        <CookieConsentModal open={isCookieConsentModalVisible} onClose={onCloseCookieConsentModal} error={reportError} />
-    </>
+        {/* <ErrorMessageModal open={error !== null} message={error} onClose={closeErrorModal} />
+        <CookieConsentModal open={showCookieConsentModal} onClose={onCloseCookieConsentModal} error={reportError} /> */}
+    </div>
     );
 }
 
