@@ -85,8 +85,9 @@ describe('plot type selector test', () => {
         fireEvent.mouseDown(trigger);
 
         const options = getAllByRole('option');
-        expect(options[0]).toEqual("tco3_zm");
-        expect(options[1]).toEqual("tco3_return");
+        expect(options[0].textContent).toEqual("tco3_zm");
+        expect(options[1].textContent).toEqual("tco3_return");
+
     });
 
     it('should update the clicked value in the store', () => {
