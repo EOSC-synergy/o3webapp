@@ -68,13 +68,13 @@ describe('plot type selector test', () => {
 
         const RETURNED_OPTIONS = ["tco3_zm", "tco3_return"];
         
-        spy.mockReturnValue( // mock api request
+        spy.mockReturnValueOnce( // mock api request
             { 
                 status: REQUEST_STATE.success,
                 data: RETURNED_OPTIONS,
                 error: null,
             }
-        );
+        ).mockReturnValueOnce(RETURNED_OPTIONS[0]);
         
         const { getByRole, getAllByRole } = render(<Provider store={store}>
             <PlotTypeSelector reportError={() => {}} />
@@ -96,13 +96,13 @@ describe('plot type selector test', () => {
         
         const RETURNED_OPTIONS = ["tco3_zm", "tco3_return"];
 
-        spy.mockReturnValue( // mock api request
+        spy.mockReturnValueOnce( // mock api request
             { 
                 status: REQUEST_STATE.success,
                 data: RETURNED_OPTIONS,
                 error: null,
             }
-        );
+        ).mockReturnValueOnce(RETURNED_OPTIONS[0]);
     
         
         expect(store.getState().plot.plotId).toEqual(RETURNED_OPTIONS[0]); // default in store
