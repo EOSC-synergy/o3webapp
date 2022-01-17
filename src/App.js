@@ -45,13 +45,13 @@ function App() {
 
     return (
     <>
-        <NavBar error={reportError} />
+        <NavBar reportError={reportError} />
 
-        <LandingPage error={reportError} />
+        <LandingPage reportError={reportError} />
 
-        <Footer error={reportError} />
+        <Footer reportError={reportError} />
         <ErrorMessageModal isOpen={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />
-        <CookieConsentModal open={isCookieConsentModalVisible} onClose={onCloseCookieConsentModal} error={reportError} />
+        <CookieConsentModal isOpen={isCookieConsentModalVisible} onClose={onCloseCookieConsentModal} error={reportError} />
     </>
     );
 }

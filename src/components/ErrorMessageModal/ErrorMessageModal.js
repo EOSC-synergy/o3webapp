@@ -42,16 +42,21 @@ export default function ErrorMessageModal(props) {
                         >
                             <IoCloseCircleOutline color="white" size={100} />
                         </Grid>
-                        <Grid item xs={12} sm={12} md={6} lg={6} xl={6} key="message" sx={{px: 5, pt: 5}}>
+                        <Grid
+                            item
+                            xs={12} sm={12} md={6} lg={6} xl={6}
+                            key="message"
+                            sx={{px: 5, pt: 5}}>
                             <Typography variant="h3" sx={{textAlign: "center"}}>Ooops!</Typography>
                             <br />
-                            <Typography>{"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."}</Typography>
+                            <Typography>{props.message}</Typography>
                         </Grid>
                         <Grid
                             item
                             xs={12} sm={12} md={6} lg={6} xl={6}
                             key="button"
-                            sx={{px: 5, pb: 5}}>
+                            sx={{px: 5, pb: 5, display: "flex", justifyContent: "right"}}
+                        >
                             <Button onClick={props.onClose}>Close</Button>
                         </Grid>
                     </Grid>
