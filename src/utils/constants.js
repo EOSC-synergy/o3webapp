@@ -32,6 +32,7 @@ export const XAS_Symbol = Symbol("XAxisSlider");
 /** Stores the name of the YAxisSlider component as a Symbol. */
 export const YAS_Symbol = Symbol("YAxisSlider");
 // LatitudeBandSelector.js
+/** Stores the latitude bands and its min/max values */
 export const latitudeBands = [
     {
         text: Symbol("Southern Hemisphere (SH) Polar (90–60°S)"),
@@ -59,7 +60,7 @@ export const latitudeBands = [
     },
     {
         text: Symbol("Global (90°S–90°N)"),
-        value: [90, -90]
+        value: [-90, 90]
     },
     {
         text: Symbol("Custom"),
