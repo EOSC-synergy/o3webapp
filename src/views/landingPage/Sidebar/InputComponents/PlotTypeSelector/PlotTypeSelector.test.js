@@ -2,7 +2,9 @@ import { fetchPlotTypes, REQUEST_STATE } from "../../../../../services/API/apiSl
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PlotTypeSelector from './PlotTypeSelector';
-import { render, fireEvent, within } from '@testing-library/react';
+import { render, fireEvent, within, getByTestId } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import {screen} from '@testing-library/dom';
 import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
 import { createTestStore } from '../../../../../store/store'
@@ -122,7 +124,28 @@ describe('plot type selector test', () => {
         expect(store.getState().plot.plotId).toEqual(RETURNED_OPTIONS[1]); // after selection
     });
 
+    it('should display a spinner while loading', () => {
+        const spy = jest.spyOn(redux, 'useSelector')
+
+        spy.mockReturnValueOnce( // mock api request
+            { 
+                status: REQUEST_STATE.loading,
+                data: [],
+                error: null,
+            }
+        ).mockReturnValueOnce("tco3_zm");
+    
+        
+        const { getByRole, getAllByRole } = render(<Provider store={store}>
+            <PlotTypeSelector reportError={() => {}} />
+        </Provider>);
+        
+        const trigger = getByRole('button');
+        fireEvent.mouseDown(trigger);
+
+        const options = getAllByRole('option');
+        const loader = screen.getByTestId("plotTypeSelectorLoading");
+        expect(loader).toBeInTheDocument();
+    });
+
 });
-
-
-test.todo("check circular waiting is rendered");

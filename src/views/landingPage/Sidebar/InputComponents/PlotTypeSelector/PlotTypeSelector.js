@@ -46,7 +46,7 @@ function PlotTypeSelector(props) {
                                 alignItems: 'center'
                             }}
                         >
-                            <CircularProgress />
+                            <CircularProgress data-testid="plotTypeSelectorLoading"/>
                         </Box>);
     } else if (plotTypesRequestData.status === REQUEST_STATE.success) {
         dropdownData = plotTypesRequestData.data.map((name, idx) => {
