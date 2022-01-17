@@ -8,7 +8,7 @@ import "@testing-library/jest-dom/extend-expect";
 
 it('Section renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<Section />, div);
+  ReactDOM.render(<Section isExpanded={false}/>, div);
 });
 
 // report error if no components are entered
@@ -16,7 +16,7 @@ it('Section reports error if no components are passed to render', () => {
     const reportError = jest.fn();
     const name = "1";
     const div = document.createElement('div');
-    ReactDOM.render(<Section reportError={reportError} name={name} />, div);
+    ReactDOM.render(<Section reportError={reportError} name={name} isExpanded={false}/>, div);
     expect(reportError).toHaveBeenCalledWith(`Section ${name} was provided with no components`)
 })
 
@@ -26,14 +26,14 @@ it('Section reports error if invalid component is entered', () => {
     const name = "1";
     const compName = "blob";
     const div = document.createElement('div');
-    ReactDOM.render(<Section reportError={reportError} components={[compName]} name={name} />, div);
+    ReactDOM.render(<Section reportError={reportError} components={[compName]} name={name} isExpanded={false}/>, div);
     expect(reportError).toHaveBeenCalledWith(`Section ${name} found no match for an input component ${compName}`)
 })
 
 // renders props.name
 it('Section renders the given name', () => {
     const name = "Test";
-    render(<Section components={["LatitudeBandSelector"]} name={name} />);
+    render(<Section components={["LatitudeBandSelector"]} name={name} isExpanded={false}/>);
     expect(screen.getByTestId('section')).toHaveTextContent(name.toUpperCase());
 })
 
@@ -42,7 +42,7 @@ it('Section renders the given name', () => {
 it('Section renders correctly from config file', () => {
     for (let section in defaultStructure.sections) {
         const tree = renderer
-            .create(<Section name={section.name} reportError={() => {}} components={section.components} />)
+            .create(<Section name={section.name} reportError={() => {}} components={section.components} isExpanded={false}/>)
             .toJSON();
         expect(tree).toMatchSnapshot();
     }
