@@ -9,13 +9,13 @@ import { useGetPlotsQuery } from "../../../../../services/API/apiSlice";
  */
 function PlotTypeSelector(props) {
 
-    /**
-     * gets all available plot types
-     */
-    const getAllAvailablePlotTypes = () => {
-        const {data, isSuccess, isLoading, isError, error} = useGetPlotsQuery()
-        // re-render component based on isLoading <-> isSuccess
-    }
+    // /**
+    //  * gets all available plot types
+    //  */
+    // const getAllAvailablePlotTypes = () => {
+    //     const {data, isSuccess, isLoading, isError, error} = useGetPlotsQuery()
+    //     // re-render component based on isLoading <-> isSuccess
+    // }
 
     let i = props.reportError;
 
