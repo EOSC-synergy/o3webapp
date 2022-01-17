@@ -64,18 +64,17 @@ describe('plot type selector test', () => {
     });
 
     it('should render all the returned data from the api', () => {
-        const spy = jest.spyOn(redux, 'useSelector')
+        const spy = jest.spyOn(redux, 'useSelector');
+
+        const RETURNED_OPTIONS = ["tco3_zm", "tco3_return"];
         
         spy.mockReturnValue( // mock api request
             { 
                 status: REQUEST_STATE.success,
-                data: ["tco3_zm", "tco3_return"],
+                data: RETURNED_OPTIONS,
                 error: null,
             }
         );
-    
-        
-        expect(store.getState().plot.plotId).toEqual("tco3_zm");
         
         const { getByRole, getAllByRole } = render(<Provider store={store}>
             <PlotTypeSelector reportError={() => {}} />
@@ -85,24 +84,28 @@ describe('plot type selector test', () => {
         fireEvent.mouseDown(trigger);
 
         const options = getAllByRole('option');
-        expect(options[0].textContent).toEqual("tco3_zm");
-        expect(options[1].textContent).toEqual("tco3_return");
 
+        expect(options.length).toEqual(RETURNED_OPTIONS.length);
+        for (let i; i < options.length; ++i) {
+            expect(options[i].textContent).toEqual(RETURNED_OPTIONS[i]);
+        }
     });
 
     it('should update the clicked value in the store', () => {
         const spy = jest.spyOn(redux, 'useSelector')
         
+        const RETURNED_OPTIONS = ["tco3_zm", "tco3_return"];
+
         spy.mockReturnValue( // mock api request
             { 
                 status: REQUEST_STATE.success,
-                data: ["tco3_zm", "tco3_return"],
+                data: RETURNED_OPTIONS,
                 error: null,
             }
         );
     
         
-        expect(store.getState().plot.plotId).toEqual("tco3_zm");
+        expect(store.getState().plot.plotId).toEqual(RETURNED_OPTIONS[0]); // default in store
         
         const { getByRole, getAllByRole } = render(<Provider store={store}>
             <PlotTypeSelector reportError={() => {}} />
@@ -116,12 +119,10 @@ describe('plot type selector test', () => {
         act(() => {
             options[1].click(); // click on second option (tco3_return)
         });
-        expect(store.getState().plot.plotId).toEqual("tco3_return");
+        expect(store.getState().plot.plotId).toEqual(RETURNED_OPTIONS[1]); // after selection
     });
 
 });
 
 
-test.todo("check that all options from O3As API are rendered");
 test.todo("check circular waiting is rendered");
-test.todo("check select expands");
