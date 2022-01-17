@@ -4,6 +4,8 @@ import Footer from "./components/Footer/Footer";
 import ErrorMessageModal from './components/ErrorMessageModal/ErrorMessageModal';
 import CookieConsentModal from './components/CookieConsentModal/CookieConsentModal';
 import LandingPage from './views/landingPage/LandingPage';
+import PropTypes from "prop-types";
+import PlotTypeSelector from "./views/landingPage/Sidebar/InputComponents/PlotTypeSelector/PlotTypeSelector";
 
 /**
  * Main container of the Webapp
@@ -25,7 +27,7 @@ function App() {
         setErrorModalVisible(true);
         setErrorMessage(msg);
     }
-    
+
     /**
      * closes the error modal
      */
@@ -39,7 +41,7 @@ function App() {
     const onCloseCookieConsentModal = () => {
         setCookieConsentModalVisibility(false);
     }
-    
+
 
     return (
     <>
@@ -48,7 +50,7 @@ function App() {
         <LandingPage error={reportError} />
 
         <Footer error={reportError} />
-        <ErrorMessageModal open={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />
+        <ErrorMessageModal isOpen={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />
         <CookieConsentModal open={isCookieConsentModalVisible} onClose={onCloseCookieConsentModal} error={reportError} />
     </>
     );
