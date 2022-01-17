@@ -21,6 +21,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import { InputBase } from '@mui/material';
 import models from './models.json';
 import CircularProgress from '@mui/material/CircularProgress';
+import CardHeader from '@mui/material/CardHeader';
+import SearchBar from "../Searchbar/SearchBar";
 
 // TODO: move to utils
 function not(a, b) {
@@ -32,6 +34,10 @@ function intersection(a, b) {
     return a.filter((value) => b.indexOf(value) !== -1);
 }
 
+function union(a, b) {
+    return [...a, ...not(b, a)];
+  }
+
 /**
  * opens a modal where the user can add a new model group
  * @param {Object} props 
@@ -42,58 +48,48 @@ function intersection(a, b) {
  */
 function AddModelGroupModal(props) {
 
-    let i = props.isOpen;
-    i = props.onClose;
-    i = props.reportError;
-
-    // const dispatch = useDispatch()
-    
     const [checked, setChecked] = React.useState([]);
     const [left, setLeft] = React.useState([]);
     const [right, setRight] = React.useState([]);
     const [groupName, setGroupName] = React.useState('');
 
+
     // Omly needed for development
     const [isLoading, setIsLoading] = React.useState(true);
-    // setLeft(models);
 
+    const numberOfChecked = (items) => intersection(checked, items).length;
     const leftChecked = intersection(checked, left);
     const rightChecked = intersection(checked, right);
 
     const handleChangeElement = (value) => () => {
         const currentIndex = checked.indexOf(value);
         const newChecked = [...checked];
-
+    
         if (currentIndex === -1) {
-            newChecked.push(value);
+          newChecked.push(value);
         } else {
-            newChecked.splice(currentIndex, 1);
+          newChecked.splice(currentIndex, 1);
         }
-
+    
         setChecked(newChecked);
     };
 
     const StyledInputBase = styled(InputBase)(({ theme }) => ({
         color: 'inherit',
         '& .MuiInputBase-input': {
-          padding: theme.spacing(1, 1, 1, 0),
-          // vertical padding + font size from searchIcon
-          paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-          transition: theme.transitions.create('width'),
-          width: '100%',
-          [theme.breakpoints.up('md')]: {
+            padding: theme.spacing(1, 1, 1, 0),
+            // vertical padding + font size from searchIcon
+            paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+            transition: theme.transitions.create('width'),
+            width: '100%',
+            [theme.breakpoints.up('md')]: {
             width: '20ch',
-          },
+            },
         },
-      }));
+    }));
 
-
-    const handleAllRight = () => {
-        setRight(right.concat(left));
-        setLeft([]);
-    };
-
-    const handleCheckedRight = () => {
+    const handleCheckedRight = (event) => {
+        event.preventDefault();
         setRight(right.concat(leftChecked));
         setLeft(not(left, leftChecked));
         setChecked(not(checked, leftChecked));
@@ -105,19 +101,10 @@ function AddModelGroupModal(props) {
         setChecked(not(checked, rightChecked));
     };
 
-    const handleAllLeft = () => {
-        setLeft(left.concat(right));
-        setRight([]);
-    };
-
     const addNewGroup = () => {
-        handleAllLeft();
-        setGroupName('');
-        // dispatch(addedModelGroup({groupName})) // add data (modelList)
-    }
-
-    const updateGroupName = (event) => {
-        event.preventDefault();
+        // handleAllLeft();
+        // setGroupName('');
+        // // dispatch(addedModelGroup({groupName})) // add data (modelList)
     }
 
     const searchData = (event, data) => {
@@ -139,69 +126,79 @@ function AddModelGroupModal(props) {
         // const {data, isSuccess, isLoading, isError, error} = useGetModelsQuery()
         // display spinner until loading finished
         sleep(2000).then(() => {
-            setLeft(models);
-            setIsLoading(false);
+            if (isLoading) {
+                setLeft(models);
+                setIsLoading(false);
+            }
         });
     }
-
     getAllAvailableModels();
 
-    const SearchIconWrapper = styled('div')(({ theme }) => ({
-        padding: theme.spacing(0, 2),
-        height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }));
+    const handleToggleAll = (items) => () => {
+        if (numberOfChecked(items) === items.length) {
+          setChecked(not(checked, items));
+        } else {
+          setChecked(union(checked, items));
+        }
+      };
 
-      const Search = styled('div')(({ theme }) => ({
-        position: 'relative',
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: alpha(theme.palette.common.white, 0.15),
-        '&:hover': {
-          backgroundColor: alpha(theme.palette.common.white, 0.25),
-        },
-        marginRight: theme.spacing(2),
-        marginLeft: 0,
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-          marginLeft: theme.spacing(3),
-          width: 'auto',
-        },
-      }));
-
-      const customList = (items) => (
-        <Paper sx={{ width: '100%', height: 230, overflow: 'auto' }}>
-          <List dense component="div" role="list">
+    const customList = (title, items) => (
+        <Card>
+        <CardHeader
+            sx={{ px: 2, py: 1 }}
+            avatar={
+            <Checkbox
+                onClick={handleToggleAll(items)}
+                checked={numberOfChecked(items) === items.length && items.length !== 0}
+                indeterminate={
+                numberOfChecked(items) !== items.length && numberOfChecked(items) !== 0
+                }
+                disabled={items.length === 0}
+                inputProps={{
+                'aria-label': 'all items selected',
+                }}
+            />
+            }
+            title={`${numberOfChecked(items)}/${items.length} selected`}
+        />
+        <Divider />
+        <List
+            sx={{
+            width: 200,
+            height: 230,
+            bgcolor: 'background.paper',
+            overflow: 'auto',
+            }}
+            dense
+            component="div"
+            role="list"
+        >
             {items.map((value) => {
-              const labelId = `transfer-list-item-${value}-label`;
-    
-              return (
-                <ListItem
-                  key={value}
-                  role="listitem"
-                  button
-                  onClick={handleChangeElement(value)}
-                >
-                  <ListItemIcon>
-                    <Checkbox
-                      checked={checked.indexOf(value) !== -1}
-                      tabIndex={-1}
-                      disableRipple
-                      inputProps={{
-                        'aria-labelledby': labelId,
-                      }}
-                    />
-                  </ListItemIcon>
-                  <ListItemText id={labelId} primary={value} />
-                </ListItem>
-              );
+            const labelId = `transfer-list-all-item-${value}-label`;
+
+                return (
+                    <ListItem
+                    key={value}
+                    role="listitem"
+                    button
+                    onClick={handleChangeElement(value)}
+                    >
+                    <ListItemIcon>
+                        <Checkbox
+                        checked={checked.indexOf(value) !== -1}
+                        tabIndex={-1}
+                        disableRipple
+                        inputProps={{
+                            'aria-labelledby': labelId,
+                        }}
+                        />
+                    </ListItemIcon>
+                    <ListItemText id={labelId} primary={`List item ${value + 1}`} />
+                    </ListItem>
+                );
             })}
-            <ListItem />
-          </List>
-        </Paper>
+        </List>
+    </Card>
     );
 
     const theme = useTheme();
@@ -216,57 +213,44 @@ function AddModelGroupModal(props) {
         p: 4,
       };
 
+    const updateGroupName = (event) => {
+        setGroupName(event.target.value);
+    }
+
     return (
-        <>
-            {props.isOpen &&
-             
-             <Modal
-                open={props.isOpen}
-                onClose={props.onClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Card sx={style}>
-                    <CardContent>
-                        <Typography variant="h6">Add new model group</Typography>
-                        <Divider><Typography>Select name</Typography></Divider>
-                        <Grid container spacing={1} style={{width:"100%", justifyContent:"center"}}>
-                            <TextField value={groupName} onChange={updateGroupName} variant="standard" label="" />
-                        </Grid>
-                        <br/>
-                        <Divider><Typography>Add new Models</Typography></Divider>
-                        <Box id="modal-modal-description" sx={{ mt: 2 }}>
-                            <Grid container spacing={2} justifyContent="center" alignItems="center">
-                                <Grid item xs={5}>
-                                    <Typography>All available models</Typography>
-                                    <Search>
-                                        <SearchIconWrapper>
-                                        <SearchIcon />
-                                        </SearchIconWrapper>
-                                        <StyledInputBase
-                                        placeholder="Search…"
-                                        inputProps={{ 'aria-label': 'search' }}
-                                        />
-                                    </Search>
-                                    {
-                                    isLoading ? 
-                                        <CircularProgress />
-                                    :
-                                        customList(left)
-                                    }
-                                </Grid>
-                                <Grid item xs={2}>
-                                    <Grid container direction="column" alignItems="center">
-                                    <Button
-                                        sx={{ my: 0.5 }}
-                                        variant="outlined"
-                                        size="small"
-                                        onClick={handleAllRight}
-                                        disabled={left.length === 0}
-                                        aria-label="move all right"
-                                    >
-                                        ≫
-                                    </Button>
+        <Modal
+            open={props.isOpen}
+            onClose={props.onClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <Card sx={style}>
+                <CardHeader
+                    title="Add a new model group"
+                />
+                <CardContent>
+                    <TextField
+                        label="Name of the group"
+                        defaultValue={groupName}
+                        helperText="The name will only appear in the legend of the exported plot."
+                        variant="standard"
+                        onBlur={updateGroupName}
+                    />
+                    <Box id="modal-modal-description" sx={{ mt: 2 }}>
+                        <SearchBar />
+                        <Grid container spacing={2} justifyContent="center" alignItems="center">
+                            <Grid item xs={5}>
+                                <Typography>All available models</Typography>
+                                {/* <SearchBar /> */}
+                                {
+                                isLoading ? 
+                                    <CircularProgress />
+                                :
+                                    customList("All available models" ,left)
+                                }
+                            </Grid>
+                            <Grid item xs={2}>
+                                <Grid container direction="column" alignItems="center">
                                     <Button
                                         sx={{ my: 0.5 }}
                                         variant="outlined"
@@ -287,41 +271,21 @@ function AddModelGroupModal(props) {
                                     >
                                         &lt;
                                     </Button>
-                                    <Button
-                                        sx={{ my: 0.5 }}
-                                        variant="outlined"
-                                        size="small"
-                                        onClick={handleAllLeft}
-                                        disabled={right.length === 0}
-                                        aria-label="move all left"
-                                    >
-                                        ≪
-                                    </Button>
-                                    </Grid>
-                                </Grid>
-                                <Grid item xs={5}>
-                                    <Typography>Currently plotted models</Typography>
-                                    <Search>
-                                        <SearchIconWrapper>
-                                        <SearchIcon />
-                                        </SearchIconWrapper>
-                                        <StyledInputBase
-                                        placeholder="Search…"
-                                        inputProps={{ 'aria-label': 'search' }}
-                                        />
-                                    </Search>
-                                    {customList(right)}
                                 </Grid>
                             </Grid>
-                        </Box>
-                    </CardContent>
-                    <CardActions sx={{justifyContent: "flex-end"}}>
-                        <Button onClick={addNewGroup} size="small">Add group</Button>
-                    </CardActions>
-                </Card>
-            </Modal>
-        }
-        </>
+                            <Grid item xs={5}>
+                                <Typography>Models in {groupName ? groupName : "your group"}</Typography>
+                                {/* <SearchBar /> */}
+                                {customList("currently chosen models", right)}
+                            </Grid>
+                        </Grid>
+                    </Box>
+                </CardContent>
+                <CardActions sx={{justifyContent: "flex-end"}}>
+                    <Button onClick={addNewGroup} size="small">Add group</Button>
+                </CardActions>
+            </Card>
+        </Modal>
     );
 }
 
