@@ -62,9 +62,9 @@ function LatitudeBandSelector(props) {
 
     // const dispatch = useDispatch()
     /***
-     * the value of the currently selected latatide band or the entered custom latitude band
+     * the value of the currently selected latitude band or the entered custom latitude band
      */
-    const [latitudeBand, setLatitudeBand] = React.useState();
+    const [latitudeBand, setLatitudeBand] = React.useState(defaultValue);
     /**
      * whether the user selected to enter a custom latitude band
      */
