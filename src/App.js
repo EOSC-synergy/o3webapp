@@ -1,5 +1,5 @@
 import * as React from 'react';
-import NavBar from "./components/NavBar/NavBar";
+import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import LandingPage from './views/landingPage/LandingPage';
 import ErrorMessageModal from './components/ErrorMessageModal/ErrorMessageModal';
@@ -31,7 +31,7 @@ function App() {
 
     return (
     <>
-        <NavBar error={reportError} />
+        <Navbar error={reportError} />
         <LandingPage error={reportError} />
         <Footer error={reportError} />
         <ErrorMessageModal open={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />
