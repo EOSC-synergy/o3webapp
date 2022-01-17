@@ -27,29 +27,41 @@ export const links = [
 function Footer (props) {
     let theme = useTheme();
     return (
-        <div 
+        <div
             style={{
-                position: 'absolute',
-                bottom: 0,
-                width: '100vw',
-                backgroundColor: theme.palette.grey[200],
-                textAlign: 'center',
-                paddingTop: '1.5em',
-                paddingBottom: '1.5em'
-        }}>
+                width: '100vw'
+            }}
+        >
+
             <Grid
                 spacing={3}
                 container
                 direction="row"
                 justifyContent="center"
                 alignItems="center"
-            >
+                data-testid="footer-grid-container"
+                sx={{
+                    position: 'absolute',
+                    bottom: 0,
+                    backgroundColor: theme.palette.grey[200],
+                    textAlign: 'center',
+                    paddingTop: '1.5em',
+                    paddingBottom: '1.5em',
+                    marginRight: 0
+                }}>
                 {links.map((x, idx) => {
-                return (
-                    <Grid item sm={12 / links.length} style={{alignText:"center"}} key={idx}>
-                        <Link href={x.href}><Typography>{x.label}</Typography></Link>
-                    </Grid>
-                );
+                    return (
+                        <Grid
+                            item
+                            sm={12 / links.length}
+                            style={{alignText:"center"}} key={idx}
+                            data-testid={`footer-grid-item-${links.label}`}
+                        >
+                            <Link href={x.href} data-testid={`footer-link-${links.label}`}>
+                                <Typography>{x.label}</Typography>
+                            </Link>
+                        </Grid>
+                    );
                 })}
             </Grid>
         </div>
