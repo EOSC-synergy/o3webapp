@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import LandingPage from './LandingPage';
-import renderer from 'react-test-renderer';
 import {render, screen} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import { queryByTestId } from '@testing-library/dom';
+import { Provider } from "react-redux";
+import { createTestStore } from '../../store/store';
 
 jest.mock('react-apexcharts', () => {
   return {
@@ -16,15 +17,24 @@ jest.mock('react-apexcharts', () => {
   }
 })
 
-it('LandingPage renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<LandingPage reportError={() => {}} />, div);
-});
+let store;
+describe('test LandingPage component', () => {
+  beforeEach(() => {
+    store = createTestStore();
+  });
 
-// Snapshot test
-it('LandingPage renders correctly', () => {
-    const treeClosed = renderer
-        .create(<LandingPage reportError={() => {}} />)
-        .toJSON();
-    expect(treeClosed).toMatchSnapshot();
+  it('LandingPage renders without crashing', () => {
+    const div = document.createElement('div');
+    ReactDOM.render(<Provider store={store}>
+      <LandingPage reportError={() => {}} />
+      </Provider>, div);
+  });
+  
+  // Snapshot test
+  it('LandingPage renders correctly', () => {
+      const { container } = render(<Provider store={store}>
+            <LandingPage reportError={() => {}} />
+          </Provider>);
+      expect(container).toMatchSnapshot();
+  });
 });
