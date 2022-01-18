@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux"
+import { updatedModelGroup } from "../../../../../../store/modelsSlice/modelsSlice"
+
 /**
  * opens a modal where the user can edit an existing model group
  * @param {Object} props 
