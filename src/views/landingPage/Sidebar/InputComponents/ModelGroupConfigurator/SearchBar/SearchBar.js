@@ -67,7 +67,6 @@ export default function SearchBar(props) {
 
     const handleInputChange = (event) => {
         const newInput = event.target.value
-        
         setInput(newInput);
         foundIndicesCallback(performSearch(inputArray, newInput));
     }
