@@ -71,6 +71,9 @@ export default function DownloadModal(props) {
                         justifyContent="center"
                         alignItems="center"
                     >
+                        <Grid item xs={12} sm={12} md={12} lg={12} xl={12} key="heading" sx={{textAlign: "center"}}>
+                            <Typography variant={"h3"}>Download plot</Typography>
+                        </Grid>
                         <Grid item xs={12} sm={12} md={3} lg={3} xl={3} key="text">
                             <Typography variant={"h6"}>Choose file format:</Typography>
                         </Grid>
@@ -104,6 +107,7 @@ export default function DownloadModal(props) {
     );
 }
 
+// only needed for testing
 DownloadModal.defaultProps = {
     isOpen: false,
 }
