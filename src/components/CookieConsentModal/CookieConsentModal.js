@@ -11,7 +11,7 @@ import { BiCookie } from "react-icons/bi";
  * @param {function} props.onClose -> handles closing of the modal
  * @returns {JSX.Element} a jsx file containing the modal
  */
-export default function ErrorMessageModal(props) {
+export default function CookieConsentModal(props) {
 
     /**
      * The style of the modal
@@ -66,4 +66,9 @@ export default function ErrorMessageModal(props) {
             </Modal>
         </>
     );
+}
+
+// only needed for testing
+CookieConsentModal.defaultProps = {
+    isOpen: false,
 }
