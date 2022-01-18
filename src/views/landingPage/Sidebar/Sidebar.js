@@ -69,6 +69,8 @@ function Sidebar(props) {
         setExpandedSection(i);
     }
 
+    
+
     return (
             <SwipeableDrawer
                 anchor="right"
@@ -95,7 +97,7 @@ function Sidebar(props) {
                         <CloseIcon />
                     </IconButton>
                 </DrawerHeader>
-                    <PlotTypeSelector />
+                    <PlotTypeSelector reportError={ props.reportError }/>
 
                     {defaultStructure["sections"].map((s, idx) =>
                         <Section
@@ -105,6 +107,7 @@ function Sidebar(props) {
                             components={s.components}
                             onCollapse={collapseSection}
                             onExpand={expandSection}
+                            reportError={props.reportError}
                         />
                     )}
 

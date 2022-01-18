@@ -7,55 +7,24 @@ import InputLabel from '@mui/material/InputLabel';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
+import { getPlotTypes } from '../../../../../services/API/apiSlice';
 import { sleep } from '../../../../../utils/mock_dev';
+import { useDispatch, useSelector } from "react-redux";
+import { selectPlotId, setActivePlotId } from "../../../../../store/plotSlice/plotSlice";
+import { REQUEST_STATE } from "../../../../../services/API/apiSlice"
 
 
 /**
  * enables the user to select a different plot type
  * @param {Object} props 
  * @param {function} props.reportError - function for error handling
- * @returns {JSX} a jsx containing a dropdown to select the plot type
+ * @returns {JSX.Element} a jsx containing a dropdown to select the plot type
  */
 function PlotTypeSelector(props) {
 
-    // for dev reasons, should eventually be moved to the redux / API module
-    /**
-     * @todo move to redux eventually
-     */
-    const [plotType, setPlotType] = React.useState('');
-    /**
-     * @todo move to redux eventually
-    */
-    const [isLoading, setIsLoading] = React.useState(true);
-    /**
-     * @todo move to redux eventually
-     */
-    const [plotTypes, setPlotTypes] = React.useState([]);
-
-
-
-    /**
-     * mocks a function to get all available plot types
-     * @todo connect with redux store
-     */
-    const getAllAvailablePlotTypes = () => {
-        // const {data, isSuccess, isLoading, isError, error} = useGetPlotsQuery()
-        // re-render component based on isLoading <-> isSuccess
-
-        // for dev reasons simulating response
-        // if api call fails, an error wil be evoked by the API module -> does not need to be handled here
-        sleep(3000).then(() => {
-            setPlotTypes([
-                "tco3_zm",
-                "tco3_return"
-            ]);
-            setIsLoading(false);
-        });
-        let err = undefined;
-        if (err) {
-            props.reportError(err.message);
-        }
-    }
+    const dispatch = useDispatch();
+    const plotTypesRequestData = useSelector(state => state.api.plotTypes);
+    const plotType = useSelector(selectPlotId);
 
     /**
      * mocks a call to the redux store to change the plot type
@@ -63,12 +32,34 @@ function PlotTypeSelector(props) {
      * @todo connect with redux store
      */
     const changePlotType = (event) => {
-        setPlotType(event.target.value);
+        //console.log(event.target.value);
+        dispatch(setActivePlotId({plotId: event.target.value}))
+    }
+
+    let dropdownData;
+    if (plotTypesRequestData.status === REQUEST_STATE.loading 
+        || plotTypesRequestData.status === REQUEST_STATE.idle) {
+        dropdownData = (<Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}
+                        >
+                            <CircularProgress data-testid="plotTypeSelectorLoading"/>
+                        </Box>);
+    } else if (plotTypesRequestData.status === REQUEST_STATE.success) {
+        dropdownData = plotTypesRequestData.data.map((name, idx) => {
+                return (
+                    <MenuItem key={idx} value={name}>{name}</MenuItem>
+                )
+        });
+    } else if (plotTypesRequestData.status === REQUEST_STATE.error) {
+        props.reportError(plotTypesRequestData.error);
     }
 
     return (
         <FormControl sx={{ width: '100%' }} data-testid="plotTypeSelectorForm">
-            {getAllAvailablePlotTypes()}
             <InputLabel id="plotTypeLabel" data-testid="plotTypeSelector">Plot Type</InputLabel>
             <Select
                 labelId="plotTypeLabel"
@@ -78,22 +69,7 @@ function PlotTypeSelector(props) {
                 onChange={changePlotType}
             >
                 {
-                isLoading ? 
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}
-                    >
-                        <CircularProgress />
-                    </Box>
-                :
-                    plotTypes.map((name, idx) => {
-                        return (
-                            <MenuItem key={idx} value={name}>{name}</MenuItem>
-                        )
-                    })
+                    dropdownData
                 }
             </Select>
         </FormControl>
