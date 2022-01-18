@@ -67,6 +67,7 @@ export default function ErrorMessageModal(props) {
     );
 }
 
+// only needed for testing
 ErrorMessageModal.defaultProps = {
     isOpen: false,
 }
