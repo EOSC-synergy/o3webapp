@@ -38,18 +38,21 @@ function App() {
     /**
      * closes the cookie consent modal
      */
-    const onCloseCookieConsentModal = () => {
-        setCookieConsentModalVisibility(false);
+    const onCloseCookieConsentModal = (event, reason) => {
+        if (reason !== 'backdropClick') {
+            setCookieConsentModalVisibility(false);
+            // store accepting cookies
+        }
     }
 
 
     return (
     <div style={{minHeight: "100vh", display: 'flex', flexDirection: 'column'}}>
-        <Navbar reportError={reportError} />
-        <LandingPage reportError={reportError} /> 
-        <Footer reportError={reportError} />
-        {/* <ErrorMessageModal open={error !== null} message={error} onClose={closeErrorModal} />
-        <CookieConsentModal open={showCookieConsentModal} onClose={onCloseCookieConsentModal} error={reportError} /> */}
+        <Navbar error={reportError} />
+        <LandingPage error={reportError} /> 
+        <Footer error={reportError} />
+        {/*<ErrorMessageModal open={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />*/}
+        <CookieConsentModal isOpen={isCookieConsentModalVisible} onClose={onCloseCookieConsentModal} />
     </div>
     );
 }
