@@ -36,8 +36,11 @@ function App() {
     /**
      * closes the cookie consent modal
      */
-    const onCloseCookieConsentModal = () => {
-        setCookieConsentModalVisibility(false);
+    const onCloseCookieConsentModal = (event, reason) => {
+        if (reason !== 'backdropClick') {
+            setCookieConsentModalVisibility(false);
+            // store accepting cookies
+        }
     }
     
 
@@ -46,8 +49,8 @@ function App() {
         <Navbar error={reportError} />
         <LandingPage error={reportError} /> 
         <Footer error={reportError} />
-        <ErrorMessageModal open={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />
-        <CookieConsentModal open={isCookieConsentModalVisible} onClose={onCloseCookieConsentModal} />
+        {/*<ErrorMessageModal open={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />*/}
+        <CookieConsentModal isOpen={isCookieConsentModalVisible} onClose={onCloseCookieConsentModal} />
     </div>
     );
 }
