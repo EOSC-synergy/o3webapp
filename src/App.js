@@ -46,8 +46,8 @@ function App() {
         <Navbar error={reportError} />
         <LandingPage error={reportError} /> 
         <Footer error={reportError} />
-        {/* <ErrorMessageModal open={error !== null} message={error} onClose={closeErrorModal} />
-        <CookieConsentModal open={showCookieConsentModal} onClose={onCloseCookieConsentModal} error={reportError} /> */}
+        <ErrorMessageModal open={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />
+        <CookieConsentModal open={isCookieConsentModalVisible} onClose={onCloseCookieConsentModal} />
     </div>
     );
 }
