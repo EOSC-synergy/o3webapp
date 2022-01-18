@@ -17,8 +17,6 @@
     "apexcharts": "^3.33.0",
     "clean-jsdoc-theme": "^3.3.1",
     "enzyme": "^3.11.0",
-    "enzyme-adapter-react-15": "^1.4.3",
-    "enzyme-adapter-react-16": "^1.15.6",
     "install": "^0.13.0",
     "joi": "^17.5.0",
     "mui": "^0.0.1",
