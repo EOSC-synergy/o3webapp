@@ -48,9 +48,9 @@ function App() {
 
     return (
     <div style={{minHeight: "100vh", display: 'flex', flexDirection: 'column'}}>
-        <Navbar error={reportError} />
-        <LandingPage error={reportError} /> 
-        <Footer error={reportError} />
+        <Navbar reportError={reportError} />
+        <LandingPage reportError={reportError} /> 
+        <Footer reportError={reportError} />
         {/*<ErrorMessageModal open={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />*/}
         <CookieConsentModal isOpen={isCookieConsentModalVisible} onClose={onCloseCookieConsentModal} />
     </div>
