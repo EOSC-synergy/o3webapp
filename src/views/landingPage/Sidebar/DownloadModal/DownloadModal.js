@@ -107,6 +107,7 @@ export default function DownloadModal(props) {
     );
 }
 
+// only needed for testing
 DownloadModal.defaultProps = {
     isOpen: false,
 }
