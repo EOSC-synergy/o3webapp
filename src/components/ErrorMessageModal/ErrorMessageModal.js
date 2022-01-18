@@ -1,10 +1,10 @@
 import React from "react";
 import {useTheme} from "@mui/material/styles";
-import {Button, Card, FormControl, Grid, Modal, Typography} from "@mui/material";
+import {Button, Card, Grid, Modal, Typography} from "@mui/material";
 import { IoCloseCircleOutline } from "react-icons/io5";
 
 /**
- * displays an error message
+ * Displays an error message.
  * @param {Object} props 
  * @param {boolean} props.isOpen -> whether the error message modal should be displayed
  * @param {function} props.onClose -> handles closing of the modal
@@ -13,6 +13,11 @@ import { IoCloseCircleOutline } from "react-icons/io5";
  */
 export default function ErrorMessageModal(props) {
 
+    /**
+     * The style of the modal.
+     *
+     * @type {{boxShadow: number, transform: string, top: string, bgColor: *, left: string, minWidth: string, position: string}}
+     */
     const style = {
         position: 'absolute',
         top: '50%',
