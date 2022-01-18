@@ -23,7 +23,6 @@ export default function ErrorMessageModal(props) {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        minWidth: '30%',
         bgColor: useTheme().palette.grey[200],
         boxShadow: 24,
     };
@@ -41,7 +40,6 @@ export default function ErrorMessageModal(props) {
                     >
                         <Grid
                             item
-                            xs={12} sm={12} md={12} lg={12} xl={12}
                             key="header"
                             sx={{backgroundColor:"#e85e6c", display: "flex", justifyContent: "center", py: 5}}
                         >
@@ -49,7 +47,6 @@ export default function ErrorMessageModal(props) {
                         </Grid>
                         <Grid
                             item
-                            xs={12} sm={12} md={6} lg={6} xl={6}
                             key="message"
                             sx={{px: 5, pt: 5}}>
                             <Typography variant="h3" sx={{textAlign: "center"}}>Ooops!</Typography>
@@ -58,7 +55,6 @@ export default function ErrorMessageModal(props) {
                         </Grid>
                         <Grid
                             item
-                            xs={12} sm={12} md={6} lg={6} xl={6}
                             key="button"
                             sx={{px: 5, pb: 5, display: "flex", justifyContent: "right"}}
                         >
