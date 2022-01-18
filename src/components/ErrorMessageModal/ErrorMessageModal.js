@@ -18,7 +18,7 @@ export default function ErrorMessageModal(props) {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: '30%',
+        minWidth: '30%',
         bgColor: useTheme().palette.grey[200],
         boxShadow: 24,
     };
