@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-test.todo('some test to be written in the future');
-=======
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Footer from './Footer';
@@ -31,4 +28,3 @@ it('renders all menu buttons in the expanded menu', () => {
         expect(footerLinks[i]).toHaveTextContent(textContent);
     }
 });
->>>>>>> feat_footer+navbar_#12#13
