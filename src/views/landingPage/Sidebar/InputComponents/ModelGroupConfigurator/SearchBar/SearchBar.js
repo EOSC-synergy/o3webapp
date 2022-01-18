@@ -48,12 +48,22 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const fullTextSearch = (elem, searchStr) => {
-    const elemVals = Object.values(elem)
-    return elemVals.reduce((prev, curr) => {
-        if (prev) return true;
-        return String(curr).toLowerCase().includes(searchStr.toLowerCase()) // String(...)
-    }, false)
-}
+    if (typeof elem === "object") {
+        const elemVals = Object.values(elem);
+        
+        for (let value of elemVals) {
+            if (String(value).toLowerCase().includes(searchStr.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+        
+    } else if (typeof elem === "string") {
+        return elem.toLowerCase().includes(searchStr.toLowerCase());
+    } else {
+        throw new Error("fullTextSearch only supports objects and string to search in");
+    };
+};
 
 /**
  * Searches for occurences of a string in an array. 
