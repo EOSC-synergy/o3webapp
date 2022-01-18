@@ -2,6 +2,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { InputBase } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import React from 'react';
+import { performSearch } from '../../../../../../utils/textSearch';
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2),
@@ -47,42 +48,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const fullTextSearch = (elem, searchStr) => {
-    if (typeof elem === "object") {
-        const elemVals = Object.values(elem);
-        
-        for (let value of elemVals) {
-            if (String(value).toLowerCase().includes(searchStr.toLowerCase())) {
-                return true;
-            }
-        }
-        return false;
-        
-    } else if (typeof elem === "string") {
-        return elem.toLowerCase().includes(searchStr.toLowerCase());
-    } else {
-        throw new Error("fullTextSearch only supports objects and string to search in");
-    };
-};
 
-/**
- * Searches for occurences of a string in an array. 
- * Eeach item in the array that has the searchString as a substring is a valid search result.
- * 
- * @param {*} array holds the items that are searched
- * @param {*} searchString specifies what should be searched for
- * @returns {array} containing the indices of all elements in the array where the searchString matched
- */
-const performSearch = (array, searchString) => {
-    let arrayMappedToIndices = array.map(
-        (elem, index) => ({index, value: elem})
-    )
-    arrayMappedToIndices = arrayMappedToIndices.filter(
-        ({index, value}) => fullTextSearch(value, searchString)
-    )
-    
-    return arrayMappedToIndices.map(({index, value}) => index)
-}
+
 
 /**
  * A searchbar component that is used for searching a string in a data array
@@ -112,7 +79,7 @@ export default function SearchBar(props) {
         </SearchIconWrapper>
         <StyledInputBase
             placeholder="Search…"
-            inputProps={{ 'aria-label': 'search' }}
+            inputProps={{ 'aria-label': 'search', 'alt': 'Searchbar', 'data-testid': 'SearchbarInput'}}
             value={input}
             onChange={handleInputChange}
         />
