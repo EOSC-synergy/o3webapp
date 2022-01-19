@@ -23,6 +23,7 @@ import models from './models.json';
 import CircularProgress from '@mui/material/CircularProgress';
 import CardHeader from '@mui/material/CardHeader';
 import SearchBar from "../Searchbar/SearchBar";
+import { convertModelName } from "../../../../../../utils/ModelNameConverter";
 
 // TODO: move to utils
 function not(a, b) {
@@ -73,20 +74,6 @@ function AddModelGroupModal(props) {
     
         setChecked(newChecked);
     };
-
-    const StyledInputBase = styled(InputBase)(({ theme }) => ({
-        color: 'inherit',
-        '& .MuiInputBase-input': {
-            padding: theme.spacing(1, 1, 1, 0),
-            // vertical padding + font size from searchIcon
-            paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-            transition: theme.transitions.create('width'),
-            width: '100%',
-            [theme.breakpoints.up('md')]: {
-            width: '20ch',
-            },
-        },
-    }));
 
     const handleCheckedRight = (event) => {
         event.preventDefault();
@@ -142,7 +129,7 @@ function AddModelGroupModal(props) {
         }
       };
 
-    const customList = (title, items) => (
+    const customList = (items) => (
         <Card>
         <CardHeader
             sx={{ px: 2, py: 1 }}
@@ -164,7 +151,7 @@ function AddModelGroupModal(props) {
         <Divider />
         <List
             sx={{
-            width: 200,
+            width: "100%",
             height: 230,
             bgcolor: 'background.paper',
             overflow: 'auto',
@@ -173,27 +160,27 @@ function AddModelGroupModal(props) {
             component="div"
             role="list"
         >
-            {items.map((value) => {
+            {items.map((value, idx) => {
             const labelId = `transfer-list-all-item-${value}-label`;
-
+            let model = convertModelName(value);
                 return (
                     <ListItem
-                    key={value}
-                    role="listitem"
-                    button
-                    onClick={handleChangeElement(value)}
+                        key={value}
+                        role="listitem"
+                        button
+                        onClick={handleChangeElement(value)}
                     >
                     <ListItemIcon>
                         <Checkbox
-                        checked={checked.indexOf(value) !== -1}
-                        tabIndex={-1}
-                        disableRipple
-                        inputProps={{
-                            'aria-labelledby': labelId,
-                        }}
+                            checked={checked.indexOf(value) !== -1}
+                            tabIndex={-1}
+                            disableRipple
+                            inputProps={{
+                                'aria-labelledby': labelId,
+                            }}
                         />
                     </ListItemIcon>
-                    <ListItemText id={labelId} primary={`List item ${value + 1}`} />
+                    <ListItemText id={labelId} primary={model.name} secondary={`institute: ${model.institute}\nproject: ${model.project}`} />
                     </ListItem>
                 );
             })}
@@ -241,12 +228,11 @@ function AddModelGroupModal(props) {
                         <Grid container spacing={2} justifyContent="center" alignItems="center">
                             <Grid item xs={5}>
                                 <Typography>All available models</Typography>
-                                {/* <SearchBar /> */}
                                 {
-                                isLoading ? 
-                                    <CircularProgress />
-                                :
-                                    customList("All available models" ,left)
+                                    isLoading ? 
+                                        <CircularProgress />
+                                    :
+                                        customList(left)
                                 }
                             </Grid>
                             <Grid item xs={2}>
@@ -275,8 +261,12 @@ function AddModelGroupModal(props) {
                             </Grid>
                             <Grid item xs={5}>
                                 <Typography>Models in {groupName ? groupName : "your group"}</Typography>
-                                {/* <SearchBar /> */}
-                                {customList("currently chosen models", right)}
+                                {
+                                    isLoading ? 
+                                        <CircularProgress />
+                                    :
+                                        customList(right)
+                                }
                             </Grid>
                         </Grid>
                     </Box>
