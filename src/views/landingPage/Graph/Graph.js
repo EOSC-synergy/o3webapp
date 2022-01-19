@@ -4,11 +4,9 @@ import data from "./default-data.json"
 import settings from "./default-settings.json"
 import { convertToStrokeStyle, colourNameToHex } from "../../../utils/optionsFormatter"
 import {useSelector} from 'react-redux'
-import { useGetRawPlotDataMutation } from '../../../services/API/apiSlice';
-import { selectCurrentModelGroups } from '../../../store/modelsSlice/modelsSlice';
-import { selectCurrentPlotId, selectCurrentPlotType, selectCurrentSettings } from '../../../store/plotSlice/plotSlice';
-import { selectCurrentReferenceSettings } from '../../../store/referenceSlice';
-// import {calculatePlotSeries} from "../../../utils/math"
+import { selectPlotId } from '../../../store/plotSlice/plotSlice';
+import { selectRawDataForPlot } from '../../../services/API/apiSlice';
+import { Spinner } from '../../../components/Spinner/Spinner';
 
 /**
  * Static generation of the years on the x-axis, this will be fetched from the
@@ -58,13 +56,20 @@ settings.series.push(...ySeries)
  */
 function Graph(props) {
 
+    const plotId = useSelector(selectPlotId);
+    const activeData = useSelector(state => selectRawDataForPlot(state, plotId));
+
+    if (activeData === null) {
+        return <Spinner text={"loading data"} size={"8em"}></Spinner>
+    }
+
     return (<>
         {/* for the OCTS Plot */}
         <Chart
                 options={settings.options}
                 series={settings.series}
                 type={"line"}
-                height={"600px"}
+                height={"60%"}
             />
         
     </>);
