@@ -1,6 +1,7 @@
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import SeasonCheckBoxGroup from './SeasonCheckBoxGroup';
+import { NUM_MONTHS_IN_SEASON } from '../../../../../../utils/constants';
 
 
 it('renders without crashing', () => {
@@ -35,6 +36,25 @@ it('renders correctly', () => {
 
     />);
     expect(container).toMatchSnapshot();
+})
+
+it('renders month checkboxes correctly', () => {
+    const dummyFunc = () => {};
+    const dummyObj = [
+        {monthId: 1, checked: false},
+        {monthId: 2, checked: false},
+        {monthId: 3, checked: false}
+    ]
+    const { getByTestId } = render(<SeasonCheckBoxGroup 
+        label="" 
+        handleSeasonClicked={dummyFunc}
+        handleMonthClicked={dummyFunc}
+        months={dummyObj}
+
+    />);
+    for(let i = 0; i < NUM_MONTHS_IN_SEASON; i++) {
+        expect(getByTestId("Checkbox" + i)).toBeInTheDocument();
+    }
 })
 
 it('selects a month correctly', () => {

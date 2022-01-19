@@ -62,12 +62,12 @@ function TimeCheckBoxGroup(props) {
      * Handles the change if the "All Year"-Checkbox is clicked (selected/deselected).
      */
     const handleYearChecked = () => {
-        let shouldBeSelected = true;
+        let shouldBeSelected = false;
         for (let i = 0; i < NUM_MONTHS; i++) {
-            if (!selectedMonths.includes(i + 1)) shouldBeSelected = false;
+            if (!selectedMonths.includes(i + 1)) shouldBeSelected = true;
         }
         const monthCpy = [];
-        if (!shouldBeSelected) {
+        if (shouldBeSelected) {
             for (let i = 0; i < NUM_MONTHS; i++) {
                 monthCpy.push(i + 1);
             }
@@ -84,7 +84,7 @@ function TimeCheckBoxGroup(props) {
      * @param {int} seasonId The id of the season that was clicked
      */
     const handleSeasonChecked = (seasonId) => {
-        // Dispatch season checked;
+        
         let monthCpy = [...selectedMonths];
         const monthsInSeason = [];
         let shouldBeSelected = false;
@@ -104,11 +104,10 @@ function TimeCheckBoxGroup(props) {
                 }
             }
         } else {
-            
             monthCpy = monthCpy.filter((m) => !monthsInSeason.includes(m));
-            
         }
 
+        // Dispatch season checked
         dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
     }
 
@@ -133,21 +132,20 @@ function TimeCheckBoxGroup(props) {
      * 
      * @param {Object} param            The parameter object representing a season
      * @param {String} param.name       The season name
-     * @param {String} param.months     An array of monthId's of the months included in this season
-     * @param {String} param.seasonId   The id of this season
+     * @param {Array of int} param.months     An array of monthId's of the months included in this season
+     * @param {int} param.seasonId   The id of this season
      * @returns {JSX}                   A preconfigured SeasonCheckbox
      */
     const toSeasonCheckbox = ({name, months, seasonId}) => {
-        const a = []
+        const monthsInSeason = []
         for (let i = 0; i < months.length; i++) {
-            a.push({monthId: months[i], checked: selectedMonths.includes(months[i])})
+            monthsInSeason.push({monthId: months[i], checked: selectedMonths.includes(months[i])})
         }
-        
 
         return (<Grid item xs={6}>
             <SeasonCheckBoxGroup
                 label = {name.description}
-                months = {a}
+                months = {monthsInSeason}
                 seasonId= {seasonId}
                 handleSeasonClicked = {handleSeasonChecked}
                 handleMonthClicked = {handleMonthChecked}
@@ -162,7 +160,14 @@ function TimeCheckBoxGroup(props) {
                 <Box sx={{paddingLeft: '8%', paddingRight: '8%', alignItems: "center", display: "flex", flexDirection: "column"}}>
                     <FormControlLabel
                         label="All year"
-                        control={<Checkbox onClick={handleYearChecked} checked={isEveryMonthChecked()} indeterminate={isIndeterminate()}/>}
+                        control={
+                            <Checkbox 
+                                inputProps={{'data-testid':"CheckboxAllYear"}} 
+                                onClick={handleYearChecked} 
+                                checked={isEveryMonthChecked()} 
+                                indeterminate={isIndeterminate()}
+                            />
+                        }
                     />
                     <Grid container>
                         <Grid item container>
