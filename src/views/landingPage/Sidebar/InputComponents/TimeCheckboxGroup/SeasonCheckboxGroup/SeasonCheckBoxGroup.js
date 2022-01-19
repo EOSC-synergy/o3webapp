@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {Box, Checkbox, FormControlLabel} from "@mui/material";
-import { months } from "../../../../../../utils/constants";
+import { months, NUM_MONTHS_IN_SEASON } from "../../../../../../utils/constants";
 
 
 /**
@@ -14,32 +14,6 @@ import { months } from "../../../../../../utils/constants";
  * @returns {JSX} a jsx containing a checkbox-group with given months and label
  */
 function SeasonCheckBoxGroup(props) {
-    const numMonthsInSeason = 3;
-    const [monthsBool, setMonthsBool] = React.useState(new Array(numMonthsInSeason).fill(false))
-
-    const changeMonthBoolArray = (idx) => {
-        let arr = [...monthsBool];
-        arr[idx] = !arr[idx];
-        return arr;
-    }
-
-    /**
-     * handles update the time selection by pushing the new value to the redux store
-     */
-    const handleUpdatedSelection = () => {
-        // do stuff
-        // dispatch(setMonths(months))
-    }
-
-    /**
-     * handles if a users wants to select / deselect a season
-     * @param {event} event the event that triggered a function call
-     * @param {int} seasonId the index of the season that has been clicked
-     */
-    const handleChangeSeason = (event, seasonId) => {
-        // do stuff
-        handleUpdatedSelection();
-    }
 
 
     const monthsChecked = () => {
@@ -55,25 +29,12 @@ function SeasonCheckBoxGroup(props) {
 
     const monthsIndeterminate = () => {
         let count = 0;
-        for (let i = 0; i < monthsBool.length; i++) {
-            if (monthsBool[i]) {
+        for (let i = 0; i < props.months.length; i++) {
+            if (props.months[i].checked) {
                 count++;
             }
         }
-        return ((count > 0 && count < numMonthsInSeason));
-    }
-
-    const seasonChecked = () => {
-        setMonthsBool(new Array(numMonthsInSeason).fill(!monthsChecked()))
-    }
-
-    const monthChecked = (monthId) => {
-        
-        let index = monthId - (props.seasonId * numMonthsInSeason) - 1;
-        console.log(index)
-        let newMonths = [...monthsBool];
-        newMonths[index] = !monthsBool[index];
-        setMonthsBool(newMonths);
+        return ((count > 0 && count < NUM_MONTHS_IN_SEASON));
     }
 
     return (
@@ -84,11 +45,7 @@ function SeasonCheckBoxGroup(props) {
                     <Checkbox
                         indeterminate={monthsIndeterminate()}
                         checked={monthsChecked()}
-                        onChange={(event) => {
-                                props.handleSeasonClicked(props.seasonId)
-                                //seasonChecked()
-                            }
-                        }
+                        onChange={(event) => props.handleSeasonClicked(props.seasonId)}
 
                     />
                 }
@@ -99,13 +56,11 @@ function SeasonCheckBoxGroup(props) {
                         (idx >= props.months[0].monthId - 1 && idx <= props.months[props.months.length - 1].monthId - 1) &&
                         <FormControlLabel
                             label={m.description}
-                            control={<Checkbox 
-                                checked={props.months[(idx + 1) - props.months[0].monthId].checked} 
-                                onChange={(event) => {
-                                        props.handleMonthClicked(idx + 1);
-                                        //monthChecked(idx + 1);
-                                    } 
-                                }/>
+                            control={
+                                <Checkbox 
+                                    checked={props.months[(idx + 1) - props.months[0].monthId].checked} 
+                                    onChange={(event) => props.handleMonthClicked(idx + 1) }
+                                />
                             }
                         />
                     }
