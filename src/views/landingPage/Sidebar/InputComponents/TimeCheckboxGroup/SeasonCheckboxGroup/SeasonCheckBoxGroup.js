@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {Box, Checkbox, FormControlLabel} from "@mui/material";
 import { months, NUM_MONTHS_IN_SEASON } from "../../../../../../utils/constants";
 
@@ -16,7 +16,12 @@ import { months, NUM_MONTHS_IN_SEASON } from "../../../../../../utils/constants"
 function SeasonCheckBoxGroup(props) {
 
 
-    const monthsChecked = () => {
+    /**
+     * Checks if every month in this season is checked.
+     * 
+     * @returns True if every month in this season is checked
+     */
+    const isEveryMonthChecked = () => {
         let all = true;
         for (let i = 0; i < props.months.length; i++) {
             if (!props.months[i].checked) {
@@ -27,7 +32,12 @@ function SeasonCheckBoxGroup(props) {
         return all;
     }
 
-    const monthsIndeterminate = () => {
+    /**
+     * Checks if the SeasonCheckbox should be displayed as indeterminate.
+     * 
+     * @returns True if the SeasonCheckbox should be displayed as indeterminate
+     */
+    const isIndeterminate = () => {
         let count = 0;
         for (let i = 0; i < props.months.length; i++) {
             if (props.months[i].checked) {
@@ -43,9 +53,9 @@ function SeasonCheckBoxGroup(props) {
                 label={props.label}
                 control={
                     <Checkbox
-                        indeterminate={monthsIndeterminate()}
-                        checked={monthsChecked()}
-                        onChange={(event) => props.handleSeasonClicked(props.seasonId)}
+                        indeterminate={isIndeterminate()}
+                        checked={isEveryMonthChecked()}
+                        onChange={() => props.handleSeasonClicked(props.seasonId)}
 
                     />
                 }
@@ -53,13 +63,13 @@ function SeasonCheckBoxGroup(props) {
             <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
                 {months.map((m, idx) =>
                     (<React.Fragment key={idx}> {
-                        (idx >= props.months[0].monthId - 1 && idx <= props.months[props.months.length - 1].monthId - 1) &&
+                        ((idx + 1) >= props.months[0].monthId && (idx + 1) <= props.months[props.months.length - 1].monthId) &&
                         <FormControlLabel
                             label={m.description}
                             control={
                                 <Checkbox 
                                     checked={props.months[(idx + 1) - props.months[0].monthId].checked} 
-                                    onChange={(event) => props.handleMonthClicked(idx + 1) }
+                                    onChange={() => props.handleMonthClicked(idx + 1) }
                                 />
                             }
                         />
