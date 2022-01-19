@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux"
-import { setDisplayXRange } from "../../../../../store/plotSlice";
+import { setDisplayXRange } from "../../../../../store/plotSlice/plotSlice";
 
 /**
  * enables the user to select a range that should be diisplayed at the y axis of the plot

@@ -1,0 +1,161 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Component renders correctly from config file 1`] = `
+Array [
+  <div
+    className="MuiFormControl-root css-78me8v-MuiFormControl-root"
+  >
+    <div
+      className="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+      onClick={[Function]}
+    >
+      <div
+        aria-expanded="false"
+        aria-haspopup="listbox"
+        aria-labelledby="locationSelectLabel locationSelect"
+        className="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+        id="locationSelect"
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        SBUV_GSFC_merged-SAT-ozone
+      </div>
+      <input
+        aria-hidden={true}
+        className="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+        disabled={false}
+        onAnimationStart={[Function]}
+        onChange={[Function]}
+        required={false}
+        tabIndex={-1}
+        value={1}
+      />
+      <svg
+        aria-hidden={true}
+        className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+        data-testid="ArrowDropDownIcon"
+        focusable="false"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M7 10l5 5 5-5z"
+        />
+      </svg>
+      <fieldset
+        aria-hidden={true}
+        className="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+      >
+        <legend
+          className="css-1z7n62"
+        >
+          <span>
+            Reference Model
+          </span>
+        </legend>
+      </fieldset>
+    </div>
+    <label
+      className="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary MuiFormLabel-filled css-1kty9di-MuiFormLabel-root-MuiInputLabel-root"
+      data-shrink={true}
+      id="locationSelectLabel"
+    >
+      Reference Model
+    </label>
+  </div>,
+  <div
+    className="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
+  >
+    <div
+      className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-gj1fbr-MuiGrid-root"
+    >
+      <p
+        className="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+      >
+        Reference year:
+      </p>
+    </div>
+    <div
+      className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8 css-vok43g-MuiGrid-root"
+    >
+      <span
+        className="MuiSlider-colorPrimary MuiSlider-sizeSmall MuiSlider-root MuiSlider-trackFalse css-53tbrc-MuiSlider-root"
+        onMouseDown={[Function]}
+      >
+        <span
+          className="MuiSlider-rail css-14pt78w-MuiSlider-rail"
+        />
+        <span
+          className="MuiSlider-track css-1vjujtc-MuiSlider-track"
+          style={
+            Object {
+              "left": "0%",
+              "width": "20%",
+            }
+          }
+        />
+        <span
+          className="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeSmall MuiSlider-thumb css-14gf62f-MuiSlider-thumb"
+          data-index={0}
+          onMouseLeave={[Function]}
+          onMouseOver={[Function]}
+          style={
+            Object {
+              "left": "20%",
+              "pointerEvents": undefined,
+            }
+          }
+        >
+          <input
+            aria-orientation="horizontal"
+            aria-valuemax={2100}
+            aria-valuemin={1950}
+            aria-valuenow={1980}
+            data-index={0}
+            disabled={false}
+            max={2100}
+            min={1950}
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            step={1}
+            style={
+              Object {
+                "border": 0,
+                "clip": "rect(0 0 0 0)",
+                "direction": "ltr",
+                "height": "100%",
+                "margin": -1,
+                "overflow": "hidden",
+                "padding": 0,
+                "position": "absolute",
+                "whiteSpace": "nowrap",
+                "width": "100%",
+              }
+            }
+            type="range"
+            value={1980}
+          />
+          <span
+            aria-hidden={true}
+            className="MuiSlider-valueLabelOpen MuiSlider-valueLabel css-gdpt3b-MuiSlider-valueLabel"
+          >
+            <span
+              className="MuiSlider-valueLabelCircle"
+            >
+              <span
+                className="MuiSlider-valueLabelLabel"
+              >
+                1980
+              </span>
+            </span>
+          </span>
+        </span>
+      </span>
+    </div>
+  </div>,
+]
+`;

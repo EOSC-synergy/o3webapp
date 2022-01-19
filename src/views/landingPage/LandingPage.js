@@ -39,7 +39,6 @@ function LandingPage(props) {
         setSidebarOpen(false);
     }
     
-
     return (
     <React.Fragment
       data-testid="landingPage"

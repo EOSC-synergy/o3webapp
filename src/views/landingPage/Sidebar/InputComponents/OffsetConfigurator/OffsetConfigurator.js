@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReferenceYearSlider from "../ReferenceYearSlider/ReferenceYearSlider";
 // import { useDispatch, useSelector } from "react-redux"
-import { selectCurrentPlotType } from "../../../../../store/plotSlice";
+import { selectCurrentPlotType } from "../../../../../store/plotSlice/plotSlice";
 import { current } from "@reduxjs/toolkit";
 
 /**
