@@ -69,6 +69,8 @@ function Sidebar(props) {
         setExpandedSection(i);
     }
 
+    
+
     return (
             <SwipeableDrawer
                 anchor="right"
@@ -95,7 +97,7 @@ function Sidebar(props) {
                         <CloseIcon />
                     </IconButton>
                 </DrawerHeader>
-                    <PlotTypeSelector />
+                    <PlotTypeSelector reportError={ props.reportError }/>
 
                     {defaultStructure["sections"].map((s, idx) =>
                         <Section
@@ -105,11 +107,12 @@ function Sidebar(props) {
                             components={s.components}
                             onCollapse={collapseSection}
                             onExpand={expandSection}
+                            reportError={props.reportError}
                         />
                     )}
 
                     <Button sx={{marginLeft: "10%", marginTop: "1em", width: "80%"}} variant="outlined" onClick={openDownloadModal}>Download</Button>
-                    <DownloadModal open={isDownloadModalVisible} onClose={closeDownloadModal} />
+                    <DownloadModal isOpen={isDownloadModalVisible} onClose={closeDownloadModal} />
         </SwipeableDrawer>
     );
 }
