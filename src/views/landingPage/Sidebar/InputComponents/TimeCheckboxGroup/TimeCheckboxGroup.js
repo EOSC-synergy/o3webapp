@@ -73,7 +73,7 @@ function TimeCheckBoxGroup(props) {
             }
         }
 
-        
+
         dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
     }
 

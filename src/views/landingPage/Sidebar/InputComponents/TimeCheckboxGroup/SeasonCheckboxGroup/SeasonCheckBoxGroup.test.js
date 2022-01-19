@@ -14,6 +14,7 @@ it('renders without crashing', () => {
 
     render(<SeasonCheckBoxGroup 
         label="" 
+        seasonId={0}
         handleSeasonClicked={dummyFunc}
         handleMonthClicked={dummyFunc}
         months={dummyObj}
@@ -30,6 +31,7 @@ it('renders correctly', () => {
     ]
     const { container } = render(<SeasonCheckBoxGroup 
         label="" 
+        seasonId={0}
         handleSeasonClicked={dummyFunc}
         handleMonthClicked={dummyFunc}
         months={dummyObj}
@@ -46,14 +48,15 @@ it('renders month checkboxes correctly', () => {
         {monthId: 3, checked: false}
     ]
     const { getByTestId } = render(<SeasonCheckBoxGroup 
-        label="" 
+        label=""
+        seasonId={0} 
         handleSeasonClicked={dummyFunc}
         handleMonthClicked={dummyFunc}
         months={dummyObj}
 
     />);
     for(let i = 0; i < NUM_MONTHS_IN_SEASON; i++) {
-        expect(getByTestId("CheckboxMonth" + i)).toBeInTheDocument();
+        expect(getByTestId("CheckboxMonth" + (i + 1) )).toBeInTheDocument();
     }
 })
 
@@ -67,12 +70,13 @@ it('selects a month correctly', () => {
     ]
     const { getByTestId } = render(<SeasonCheckBoxGroup 
         label="" 
+        seasonId={0}
         handleSeasonClicked={dummyFunc}
         handleMonthClicked={jestFunc}
         months={dummyObj}
 
     />);
-    const checkbox = getByTestId("CheckboxMonth0");
+    const checkbox = getByTestId("CheckboxMonth1");
     fireEvent.click(checkbox);
 
     expect(jestFunc).toHaveBeenCalledTimes(1);
@@ -89,12 +93,36 @@ it('selects a season correctly', () => {
     ]
     const { getByTestId } = render(<SeasonCheckBoxGroup 
         label="" 
+        seasonId={0}
         handleSeasonClicked={jestFunc}
         handleMonthClicked={dummyFunc}
         months={dummyObj}
 
     />);
-    const checkbox = getByTestId("CheckboxSeason");
+    const checkbox = getByTestId("CheckboxSeasonNum0");
+    fireEvent.click(checkbox);
+
+    expect(jestFunc).toHaveBeenCalledTimes(1);
+
+})
+
+it('selects a season correctly', () => {
+    const jestFunc = jest.fn();
+    const dummyFunc = () => {};
+    const dummyObj = [
+        {monthId: 1, checked: false},
+        {monthId: 2, checked: false},
+        {monthId: 3, checked: false}
+    ]
+    const { getByTestId } = render(<SeasonCheckBoxGroup 
+        label="" 
+        seasonId={0}
+        handleSeasonClicked={jestFunc}
+        handleMonthClicked={dummyFunc}
+        months={dummyObj}
+
+    />);
+    const checkbox = getByTestId("CheckboxSeasonNum0");
     fireEvent.click(checkbox);
 
     expect(jestFunc).toHaveBeenCalledTimes(1);

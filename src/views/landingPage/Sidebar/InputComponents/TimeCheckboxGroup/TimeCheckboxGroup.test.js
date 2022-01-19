@@ -2,8 +2,13 @@ import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-redux'
 import TimeCheckBoxGroup from './TimeCheckboxGroup';
-import store from "../../../../../store/store";
-import { NUM_MONTHS, NUM_MONTHS_IN_SEASON } from '../../../../../utils/constants';
+import { NUM_MONTHS } from '../../../../../utils/constants';
+import { createTestStore } from "../../../../../store/store"
+
+let store
+beforeEach(() => {
+    store = createTestStore();
+})
 
 it('renders without crashing', () => {
     render(<>
@@ -32,22 +37,60 @@ it('renders all checkbox groups correctly', () => {
         </Provider>
         </>);
     
-    for (let i = 0; i < (NUM_MONTHS_IN_SEASON); i++) {
-        expect(getByTestId("CheckboxMonth" + i)).toBeInTheDocument()
+    for (let i = 0; i < (NUM_MONTHS); i++) {
+        expect(getByTestId("CheckboxMonth" + (i + 1))).toBeInTheDocument();
     }
 
-    expect(getByTestId("CheckboxAllYear")).toBeInTheDocument()
+    expect(getByTestId("CheckboxAllYear")).toBeInTheDocument();
     
 })
 
-it('renders all checkbox groups correctly', () => {
+it('selects a month correctly', () => {
+    
     
     const { getByTestId } = render(<>
         <Provider store={store}>
             <TimeCheckBoxGroup />
         </Provider>
         </>);
+    
+    expect(store.getState().plot.settings.tco3_zm.months).toEqual([1]); // assert: if it fails the initial state may have changed
+    fireEvent.click(getByTestId("CheckboxMonth2"));
+    expect(store.getState().plot.settings.tco3_zm.months).toEqual([1, 2]);
+    fireEvent.click(getByTestId("CheckboxMonth2"));
+    expect(store.getState().plot.settings.tco3_zm.months).toEqual([1]);
+    
+})
 
-    expect(getByTestId("CheckboxAllYear")).toBeInTheDocument()
+
+it('selects a season correctly', () => {
+    
+    const { getByTestId } = render(<>
+        <Provider store={store}>
+            <TimeCheckBoxGroup />
+        </Provider>
+        </>);
+    
+    expect(store.getState().plot.settings.tco3_zm.months).toEqual([1]); // assert: if it fails the initial state may have changed
+    fireEvent.click(getByTestId("CheckboxSeasonNum0"));
+    expect(store.getState().plot.settings.tco3_zm.months).toEqual([1, 2, 3]);
+    fireEvent.click(getByTestId("CheckboxSeasonNum0"));
+    expect(store.getState().plot.settings.tco3_zm.months).toEqual([]);
+    
+})
+
+it('selects the "All Year" checkbox correctly', () => {
+    
+    const { getByTestId } = render(<>
+        <Provider store={store}>
+            <TimeCheckBoxGroup />
+        </Provider>
+        </>);
+    
+    expect(store.getState().plot.settings.tco3_zm.months).toEqual([1]); // assert: if it fails the initial state may have changed
+    fireEvent.click(getByTestId("CheckboxAllYear"));
+    expect(store.getState().plot.settings.tco3_zm.months).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+    fireEvent.click(getByTestId("CheckboxAllYear"));
+    expect(store.getState().plot.settings.tco3_zm.months).toEqual([]);
     
 })

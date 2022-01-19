@@ -72,7 +72,7 @@ exports[`renders correctly 1`] = `
                   <input
                     class="PrivateSwitchBase-input css-1m9pwf3"
                     data-indeterminate="true"
-                    data-testid="CheckboxSeason"
+                    data-testid="CheckboxSeasonNum0"
                     type="checkbox"
                   />
                   <svg
@@ -110,7 +110,7 @@ exports[`renders correctly 1`] = `
                       checked=""
                       class="PrivateSwitchBase-input css-1m9pwf3"
                       data-indeterminate="false"
-                      data-testid="CheckboxMonth0"
+                      data-testid="CheckboxMonth1"
                       type="checkbox"
                     />
                     <svg
@@ -144,7 +144,7 @@ exports[`renders correctly 1`] = `
                     <input
                       class="PrivateSwitchBase-input css-1m9pwf3"
                       data-indeterminate="false"
-                      data-testid="CheckboxMonth1"
+                      data-testid="CheckboxMonth2"
                       type="checkbox"
                     />
                     <svg
@@ -178,7 +178,7 @@ exports[`renders correctly 1`] = `
                     <input
                       class="PrivateSwitchBase-input css-1m9pwf3"
                       data-indeterminate="false"
-                      data-testid="CheckboxMonth2"
+                      data-testid="CheckboxMonth3"
                       type="checkbox"
                     />
                     <svg
@@ -229,7 +229,7 @@ exports[`renders correctly 1`] = `
                   <input
                     class="PrivateSwitchBase-input css-1m9pwf3"
                     data-indeterminate="false"
-                    data-testid="CheckboxSeason"
+                    data-testid="CheckboxSeasonNum1"
                     type="checkbox"
                   />
                   <svg
@@ -269,7 +269,7 @@ exports[`renders correctly 1`] = `
                     <input
                       class="PrivateSwitchBase-input css-1m9pwf3"
                       data-indeterminate="false"
-                      data-testid="CheckboxMonth3"
+                      data-testid="CheckboxMonth4"
                       type="checkbox"
                     />
                     <svg
@@ -303,7 +303,7 @@ exports[`renders correctly 1`] = `
                     <input
                       class="PrivateSwitchBase-input css-1m9pwf3"
                       data-indeterminate="false"
-                      data-testid="CheckboxMonth4"
+                      data-testid="CheckboxMonth5"
                       type="checkbox"
                     />
                     <svg
@@ -337,7 +337,7 @@ exports[`renders correctly 1`] = `
                     <input
                       class="PrivateSwitchBase-input css-1m9pwf3"
                       data-indeterminate="false"
-                      data-testid="CheckboxMonth5"
+                      data-testid="CheckboxMonth6"
                       type="checkbox"
                     />
                     <svg
@@ -389,7 +389,7 @@ exports[`renders correctly 1`] = `
                   <input
                     class="PrivateSwitchBase-input css-1m9pwf3"
                     data-indeterminate="false"
-                    data-testid="CheckboxSeason"
+                    data-testid="CheckboxSeasonNum2"
                     type="checkbox"
                   />
                   <svg
@@ -432,7 +432,7 @@ exports[`renders correctly 1`] = `
                     <input
                       class="PrivateSwitchBase-input css-1m9pwf3"
                       data-indeterminate="false"
-                      data-testid="CheckboxMonth6"
+                      data-testid="CheckboxMonth7"
                       type="checkbox"
                     />
                     <svg
@@ -466,7 +466,7 @@ exports[`renders correctly 1`] = `
                     <input
                       class="PrivateSwitchBase-input css-1m9pwf3"
                       data-indeterminate="false"
-                      data-testid="CheckboxMonth7"
+                      data-testid="CheckboxMonth8"
                       type="checkbox"
                     />
                     <svg
@@ -500,7 +500,7 @@ exports[`renders correctly 1`] = `
                     <input
                       class="PrivateSwitchBase-input css-1m9pwf3"
                       data-indeterminate="false"
-                      data-testid="CheckboxMonth8"
+                      data-testid="CheckboxMonth9"
                       type="checkbox"
                     />
                     <svg
@@ -545,7 +545,7 @@ exports[`renders correctly 1`] = `
                   <input
                     class="PrivateSwitchBase-input css-1m9pwf3"
                     data-indeterminate="false"
-                    data-testid="CheckboxSeason"
+                    data-testid="CheckboxSeasonNum3"
                     type="checkbox"
                   />
                   <svg
@@ -591,7 +591,7 @@ exports[`renders correctly 1`] = `
                     <input
                       class="PrivateSwitchBase-input css-1m9pwf3"
                       data-indeterminate="false"
-                      data-testid="CheckboxMonth9"
+                      data-testid="CheckboxMonth10"
                       type="checkbox"
                     />
                     <svg
@@ -625,7 +625,7 @@ exports[`renders correctly 1`] = `
                     <input
                       class="PrivateSwitchBase-input css-1m9pwf3"
                       data-indeterminate="false"
-                      data-testid="CheckboxMonth10"
+                      data-testid="CheckboxMonth11"
                       type="checkbox"
                     />
                     <svg
@@ -659,7 +659,7 @@ exports[`renders correctly 1`] = `
                     <input
                       class="PrivateSwitchBase-input css-1m9pwf3"
                       data-indeterminate="false"
-                      data-testid="CheckboxMonth11"
+                      data-testid="CheckboxMonth12"
                       type="checkbox"
                     />
                     <svg
