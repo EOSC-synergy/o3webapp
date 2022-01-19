@@ -3,6 +3,7 @@ import { InputBase } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import React from 'react';
 import { performSearch } from '../../../../../../utils/textSearch';
+import PropTypes from 'prop-types';
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2),
@@ -53,6 +54,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 /**
  * A searchbar component that is used for searching a string in a data array
+ * that either contains strings or objects. If the array contains objects the
+ * values of these objects are searched.
  
  * @param {*} props 
  * @param {array} props.inputArray todo
@@ -84,5 +87,9 @@ export default function SearchBar(props) {
         />
     </Search>
     )
+};
 
+SearchBar.propTypes = {
+  inputArray: PropTypes.array.isRequired,
+  foundIndicesCallback: PropTypes.func.isRequired,
 }
