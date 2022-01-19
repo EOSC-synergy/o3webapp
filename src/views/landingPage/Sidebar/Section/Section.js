@@ -105,7 +105,7 @@ function Section(props) {
             case OC_Symbol.description:
                 return <OffsetConfigurator key={key}  />;
             case PNF_Symbol.description:
-                return <PlotNameField key={key}  />;
+                return <PlotNameField key={key} reportError={props.reportError} />;
             case RMS_Symbol.description:
                 return <ReferenceModelSelector key={key} />;
             case RYS_Symbol.description:

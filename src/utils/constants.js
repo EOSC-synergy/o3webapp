@@ -61,3 +61,8 @@ export const latitudeBands = [
 
 // DownloadModal.js
 export const fileFormats = [ Symbol("pdf"), Symbol("png") ];
+
+// PlotNameField.js
+
+/** The max. length of the plot name */
+export const PLOT_NAME_MAX_LEN = 40;
