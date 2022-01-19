@@ -61,3 +61,15 @@ export const latitudeBands = [
 
 // DownloadModal.js
 export const fileFormats = [ Symbol("pdf"), Symbol("png") ];
+
+
+// ReferenceYearSlider.js
+
+/** Default year value for the ReferenceYearSlider.*/
+export const REF_SLIDER_DEFAULT_YEAR = 1980;
+
+/** Minimum choosable year value for the ReferenceYearSlider.*/
+export const REF_SLIDER_MIN_YEAR = 1950;
+
+/** Minimum choosable year value for the ReferenceYearSlider.*/
+export const REF_SLIDER_MAX_YEAR = 2100;
