@@ -17,7 +17,7 @@ export const getPlotTypes = () => {
   return getFromAPI("/data");
 };
 
-export const postData = (plotType, data) => {
+export const postData = (plotType, data) => { // TODO: remove?
     return postAtAPI(
         `/data/${plotType}`,
         { data }
@@ -40,5 +40,23 @@ export const postModelsPlotStyle = (plotType) => {
         {
             ptype: plotType
         }
+    );
+}
+
+/**
+ * 
+ * @param {*} plotType 
+ * @param {*} latMin 
+ * @param {*} latMax 
+ * @param {*} months 
+ * @param {*} startYear 
+ * @param {*} endYear 
+ * @param {*} modelList 
+ * @returns 
+ */
+export const getRawData = (plotType, latMin, latMax, months, startYear, endYear, modelList) => {
+    return postAtAPI(
+        `/data/${plotType}?begin=${startYear}&end=${endYear}&month=${months.join(",")}&lat_min=${latMin}&lat_max=${latMax}`,
+        { modelList }
     );
 }

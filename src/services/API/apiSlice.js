@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getModels, getPlotTypes } from "./client";
+import { getModels, getPlotTypes, getRawData } from "./client";
 
 /**
  * This object models an "enum" in JavaScript. Each of the values is used
@@ -37,6 +37,10 @@ export const fetchModels = createAsyncThunk('api/fetchModels', async () => {
 export const fetchPlotTypes = createAsyncThunk('api/fetchPlotTypes', async () => {
     const response = await getPlotTypes();
     return response.data;
+});
+
+export const fetchRawPlotData = createAsyncThunk('api/fetchRawPlotData', async (arg, thunkAPI) => {
+    const response = await getRawData();
 });
 
 /**
