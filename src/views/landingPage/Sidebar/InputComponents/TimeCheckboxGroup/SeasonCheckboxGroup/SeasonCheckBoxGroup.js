@@ -1,17 +1,19 @@
 import React from "react";
 import {Box, Checkbox, FormControlLabel} from "@mui/material";
 import { months, NUM_MONTHS_IN_SEASON } from "../../../../../../utils/constants";
+import PropTypes from 'prop-types';
 
 
 /**
  * Enables the user to select/deselect seasons.
+ * 
  * @param {Object} props
  * @param {String} props.label - label of this season
  * @param {int} props.seasonId - the id of the season
  * @param {Array of Object: {int, boolean}} props.months - array containing the months with monthId and selected status.
  * @param {function} props.handleSeasonClicked - function to handle if the whole season got selected / deselected
  * @param {function} props.handleMonthClicked - function to handle if a month got selected / deselected
- * @param {function} props.reportError -
+ * @param {function} props.reportError - a function to report an error
  * @returns {JSX} a jsx containing a checkbox-group with given months and label
  */
 function SeasonCheckBoxGroup(props) {
@@ -82,6 +84,18 @@ function SeasonCheckBoxGroup(props) {
             </Box>
         </div>
     );
+}
+
+/**
+ * Prop Types of the SeasonCheckBoxGroup
+ */
+SeasonCheckBoxGroup.propTypes = {
+    label: PropTypes.string.isRequired,
+    seasonId: PropTypes.number.isRequired,
+    months: PropTypes.array.isRequired,
+    handleMonthClicked: PropTypes.func.isRequired,
+    handleSeasonClicked: PropTypes.func.isRequired,
+    reportError: PropTypes.func.isRequired
 }
 
 export default SeasonCheckBoxGroup;

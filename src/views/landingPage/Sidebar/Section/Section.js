@@ -113,7 +113,7 @@ function Section(props) {
             case RS_Symbol.description:
                 return <RegionSelector key={key}  />;
             case TCG_Symbol.description:
-                return <TimeCheckBoxGroup key={key}  />;
+                return <TimeCheckBoxGroup key={key}  reportError={props.reportError}/>;
             case XAS_Symbol.description:
                 return <XAxisSlider key={key}  />;
             case YAS_Symbol.description:

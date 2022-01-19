@@ -18,6 +18,7 @@ it('renders without crashing', () => {
         handleSeasonClicked={dummyFunc}
         handleMonthClicked={dummyFunc}
         months={dummyObj}
+        reportError={dummyFunc}
 
     />);
 }) 
@@ -35,6 +36,7 @@ it('renders correctly', () => {
         handleSeasonClicked={dummyFunc}
         handleMonthClicked={dummyFunc}
         months={dummyObj}
+        reportError={dummyFunc}
 
     />);
     expect(container).toMatchSnapshot();
@@ -53,6 +55,7 @@ it('renders month checkboxes correctly', () => {
         handleSeasonClicked={dummyFunc}
         handleMonthClicked={dummyFunc}
         months={dummyObj}
+        reportError={dummyFunc}
 
     />);
     for(let i = 0; i < NUM_MONTHS_IN_SEASON; i++) {
@@ -74,6 +77,7 @@ it('selects a month correctly', () => {
         handleSeasonClicked={dummyFunc}
         handleMonthClicked={jestFunc}
         months={dummyObj}
+        reportError={dummyFunc}
 
     />);
     const checkbox = getByTestId("CheckboxMonth1");
@@ -97,6 +101,7 @@ it('selects a season correctly', () => {
         handleSeasonClicked={jestFunc}
         handleMonthClicked={dummyFunc}
         months={dummyObj}
+        reportError={dummyFunc}
 
     />);
     const checkbox = getByTestId("CheckboxSeasonNum0");
@@ -120,6 +125,7 @@ it('selects a season correctly', () => {
         handleSeasonClicked={jestFunc}
         handleMonthClicked={dummyFunc}
         months={dummyObj}
+        reportError={dummyFunc}
 
     />);
     const checkbox = getByTestId("CheckboxSeasonNum0");

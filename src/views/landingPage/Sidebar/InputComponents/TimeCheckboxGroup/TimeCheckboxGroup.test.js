@@ -13,7 +13,7 @@ beforeEach(() => {
 it('renders without crashing', () => {
     render(<>
         <Provider store={store}>
-            <TimeCheckBoxGroup />
+            <TimeCheckBoxGroup reportError={() => {}} />
         </Provider>
         </>)
 }) 
@@ -22,7 +22,7 @@ it('renders correctly', () => {
     
     const { container } = render(<>
         <Provider store={store}>
-            <TimeCheckBoxGroup />
+            <TimeCheckBoxGroup reportError={() => {}} />
         </Provider>
         </>);
     
@@ -33,7 +33,7 @@ it('renders all checkbox groups correctly', () => {
     
     const { getByTestId } = render(<>
         <Provider store={store}>
-            <TimeCheckBoxGroup />
+            <TimeCheckBoxGroup reportError={() => {}} />
         </Provider>
         </>);
     
@@ -50,7 +50,7 @@ it('selects a month correctly', () => {
     
     const { getByTestId } = render(<>
         <Provider store={store}>
-            <TimeCheckBoxGroup />
+            <TimeCheckBoxGroup reportError={() => {}} />
         </Provider>
         </>);
     
@@ -67,7 +67,7 @@ it('selects a season correctly', () => {
     
     const { getByTestId } = render(<>
         <Provider store={store}>
-            <TimeCheckBoxGroup />
+            <TimeCheckBoxGroup reportError={() => {}} />
         </Provider>
         </>);
     
@@ -83,7 +83,7 @@ it('selects the "All Year" checkbox correctly', () => {
     
     const { getByTestId } = render(<>
         <Provider store={store}>
-            <TimeCheckBoxGroup />
+            <TimeCheckBoxGroup reportError={() => {}}/>
         </Provider>
         </>);
     

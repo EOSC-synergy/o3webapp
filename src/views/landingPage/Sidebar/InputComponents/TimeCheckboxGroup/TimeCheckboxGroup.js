@@ -5,6 +5,7 @@ import { Winter, Spring, Summer, Autumn, NUM_MONTHS_IN_SEASON, NUM_MONTHS } from
 import Typography from "@mui/material/Typography";
 import { useSelector, useDispatch } from "react-redux";
 import { selectPlotMonths, setMonths } from "../../../../../store/plotSlice/plotSlice";
+import PropTypes from 'prop-types';
 
 /**
  * enables the user to select a month, season or the whole year
@@ -149,6 +150,7 @@ function TimeCheckBoxGroup(props) {
                 seasonId= {seasonId}
                 handleSeasonClicked = {handleSeasonChecked}
                 handleMonthClicked = {handleMonthChecked}
+                reportError={props.reportError}
             />
         </Grid>);
     }
@@ -183,6 +185,13 @@ function TimeCheckBoxGroup(props) {
             </Typography>
         </>
     );
+}
+
+/**
+ * Prop Types of the TimeCheckBoxGroup
+ */
+TimeCheckBoxGroup.propTypes = {
+    reportError: PropTypes.func.isRequired
 }
 
 export default TimeCheckBoxGroup;
