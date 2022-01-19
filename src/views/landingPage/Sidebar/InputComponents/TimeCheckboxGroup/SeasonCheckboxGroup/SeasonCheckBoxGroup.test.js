@@ -73,10 +73,9 @@ it('selects a month correctly', () => {
 
     />);
     const checkbox = getByTestId("CheckboxMonth0");
-    fireEvent.change(checkbox, {target: {value: true}});
+    fireEvent.click(checkbox);
 
-    //TODO
-    //expect(jestFunc).toHaveBeenCalledTimes(1);
+    expect(jestFunc).toHaveBeenCalledTimes(1);
 
 })
 
@@ -95,10 +94,9 @@ it('selects a season correctly', () => {
         months={dummyObj}
 
     />);
-    const checkbox = getByTestId("CheckboxMonth0");
-    fireEvent.change(checkbox, {target: {value: true}});
+    const checkbox = getByTestId("CheckboxSeason");
+    fireEvent.click(checkbox);
 
-    //TODO
-    //expect(jestFunc).toHaveBeenCalledTimes(1);
+    expect(jestFunc).toHaveBeenCalledTimes(1);
 
 })

@@ -32,9 +32,21 @@ it('renders all checkbox groups correctly', () => {
         </Provider>
         </>);
     
-    //for (let i = 0; i < (NUM_MONTHS/NUM_MONTHS_IN_SEASON); i++) {
-    //    expect(getByTestId("CheckboxSeason" + i)).toBeInTheDocument()
-    //}
+    for (let i = 0; i < (NUM_MONTHS_IN_SEASON); i++) {
+        expect(getByTestId("CheckboxMonth" + i)).toBeInTheDocument()
+    }
+
+    expect(getByTestId("CheckboxAllYear")).toBeInTheDocument()
+    
+})
+
+it('renders all checkbox groups correctly', () => {
+    
+    const { getByTestId } = render(<>
+        <Provider store={store}>
+            <TimeCheckBoxGroup />
+        </Provider>
+        </>);
 
     expect(getByTestId("CheckboxAllYear")).toBeInTheDocument()
     

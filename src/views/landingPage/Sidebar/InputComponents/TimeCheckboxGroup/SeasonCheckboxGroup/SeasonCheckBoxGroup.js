@@ -7,6 +7,7 @@ import { months, NUM_MONTHS_IN_SEASON } from "../../../../../../utils/constants"
  * Enables the user to select/deselect seasons.
  * @param {Object} props
  * @param {String} props.label - label of this season
+ * @param {int} props.seasonId - the id of the season
  * @param {Array of Object: {int, boolean}} props.months - array containing the months with monthId and selected status.
  * @param {function} props.handleSeasonClicked - function to handle if the whole season got selected / deselected
  * @param {function} props.handleMonthClicked - function to handle if a month got selected / deselected
@@ -48,7 +49,7 @@ function SeasonCheckBoxGroup(props) {
     }
 
     return (
-        <>
+        <div data-test-id={`CheckboxSeason${props.seasonId}`}>
             <FormControlLabel
                 label={props.label}
                 control={
@@ -79,7 +80,7 @@ function SeasonCheckBoxGroup(props) {
                     </React.Fragment>))
                 }
             </Box>
-        </>
+        </div>
     );
 }
 
