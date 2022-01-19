@@ -152,53 +152,9 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                 <div
                   class="MuiAccordionDetails-root css-ta84vm-MuiAccordionDetails-root"
                 >
-                  <div
-                    class="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-1ws8119-MuiDivider-root"
-                    role="separator"
-                  >
-                    <span
-                      class="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
-                    >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
-                      >
-                        PLOT NAME
-                      </p>
-                    </span>
-                  </div>
-                  <div
-                    class="MuiBox-root css-1c0g717"
-                  >
-                    <div
-                      class="MuiFormControl-root css-q8hpuo-MuiFormControl-root"
-                    >
-                      <div
-                        class="MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
-                      >
-                        <label
-                          class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-standard MuiFormLabel-root MuiFormLabel-colorPrimary css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root"
-                          data-shrink="false"
-                          for="standard-basic"
-                          id="standard-basic-label"
-                        >
-                          New Plot Name
-                        </label>
-                        <div
-                          class="MuiInput-root MuiInput-underline MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-1480iag-MuiInputBase-root-MuiInput-root"
-                        >
-                          <input
-                            aria-invalid="false"
-                            class="MuiInput-input MuiInputBase-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
-                            id="standard-basic"
-                            type="text"
-                            value=""
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  XAxisSlider
-                  YAxisSlider
+                   \`props.ReportError\` not defined 
+                   \`props.ReportError\` not defined 
+                   \`props.ReportError\` not defined 
                 </div>
               </div>
             </div>
@@ -261,9 +217,7 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                 <div
                   class="MuiAccordionDetails-root css-ta84vm-MuiAccordionDetails-root"
                 >
-                  ModelGroupConfigurator
-                  AddModelGroupModal
-                  EditModelGroupModal
+                   \`props.ReportError\` not defined 
                 </div>
               </div>
             </div>
@@ -326,84 +280,8 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                 <div
                   class="MuiAccordionDetails-root css-ta84vm-MuiAccordionDetails-root"
                 >
-                  <div
-                    class="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-1ws8119-MuiDivider-root"
-                    role="separator"
-                  >
-                    <span
-                      class="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
-                    >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
-                      >
-                        LATITUDE BAND
-                      </p>
-                    </span>
-                  </div>
-                  <div
-                    class="MuiBox-root css-1n3sbe4"
-                  >
-                    <div
-                      class="MuiFormControl-root css-q8hpuo-MuiFormControl-root"
-                    >
-                      <div
-                        class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
-                      >
-                        <div
-                          aria-expanded="false"
-                          aria-haspopup="listbox"
-                          aria-labelledby="latitudeBandSelectorLabel latitudeBandSelector"
-                          class="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
-                          id="latitudeBandSelector"
-                          role="button"
-                          tabindex="0"
-                        >
-                          <span
-                            class="notranslate"
-                          >
-                            ​
-                          </span>
-                        </div>
-                        <input
-                          aria-hidden="true"
-                          class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
-                          tabindex="-1"
-                          value="0,0"
-                        />
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
-                          data-testid="ArrowDropDownIcon"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M7 10l5 5 5-5z"
-                          />
-                        </svg>
-                        <fieldset
-                          aria-hidden="true"
-                          class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
-                        >
-                          <legend
-                            class="css-1z7n62"
-                          >
-                            <span>
-                              LatitudeBand
-                            </span>
-                          </legend>
-                        </fieldset>
-                      </div>
-                      <label
-                        class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary MuiFormLabel-filled css-1sumxir-MuiFormLabel-root-MuiInputLabel-root"
-                        data-shrink="true"
-                        id="latitudeBandSelectorLabel"
-                      >
-                        Latitude Band
-                      </label>
-                    </div>
-                  </div>
-                  TimeCheckBoxGroup
+                   \`props.ReportError\` not defined 
+                   \`props.ReportError\` not defined 
                 </div>
               </div>
             </div>
@@ -466,127 +344,8 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                 <div
                   class="MuiAccordionDetails-root css-ta84vm-MuiAccordionDetails-root"
                 >
-                  ReferenceModelSelector
-                  <div
-                    class="MuiFormControl-root css-78me8v-MuiFormControl-root"
-                  >
-                    <div
-                      class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
-                    >
-                      <div
-                        aria-expanded="false"
-                        aria-haspopup="listbox"
-                        aria-labelledby="locationSelectLabel locationSelect"
-                        class="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
-                        id="locationSelect"
-                        role="button"
-                        tabindex="0"
-                      >
-                        <span
-                          class="notranslate"
-                        >
-                          ​
-                        </span>
-                      </div>
-                      <input
-                        aria-hidden="true"
-                        class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
-                        tabindex="-1"
-                        value=""
-                      />
-                      <svg
-                        aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
-                        data-testid="ArrowDropDownIcon"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          d="M7 10l5 5 5-5z"
-                        />
-                      </svg>
-                      <fieldset
-                        aria-hidden="true"
-                        class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
-                      >
-                        <legend
-                          class="css-173wfxe"
-                        >
-                          <span>
-                            Reference Model
-                          </span>
-                        </legend>
-                      </fieldset>
-                    </div>
-                    <label
-                      class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
-                      data-shrink="false"
-                      id="locationSelectLabel"
-                    >
-                      Reference Model
-                    </label>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-gj1fbr-MuiGrid-root"
-                    >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
-                      >
-                        Reference year:
-                      </p>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8 css-vok43g-MuiGrid-root"
-                    >
-                      <span
-                        class="MuiSlider-colorPrimary MuiSlider-sizeSmall MuiSlider-root MuiSlider-trackFalse css-53tbrc-MuiSlider-root"
-                      >
-                        <span
-                          class="MuiSlider-rail css-14pt78w-MuiSlider-rail"
-                        />
-                        <span
-                          class="MuiSlider-track css-1vjujtc-MuiSlider-track"
-                          style="left: 0%; width: 20%;"
-                        />
-                        <span
-                          class="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeSmall MuiSlider-thumb css-14gf62f-MuiSlider-thumb"
-                          data-index="0"
-                          style="left: 20%;"
-                        >
-                          <input
-                            aria-orientation="horizontal"
-                            aria-valuemax="2100"
-                            aria-valuemin="1950"
-                            aria-valuenow="1980"
-                            data-index="0"
-                            max="2100"
-                            min="1950"
-                            step="1"
-                            style="border: 0px; height: 100%; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 100%; direction: ltr;"
-                            type="range"
-                            value="1980"
-                          />
-                          <span
-                            aria-hidden="true"
-                            class="MuiSlider-valueLabelOpen MuiSlider-valueLabel css-gdpt3b-MuiSlider-valueLabel"
-                          >
-                            <span
-                              class="MuiSlider-valueLabelCircle"
-                            >
-                              <span
-                                class="MuiSlider-valueLabelLabel"
-                              >
-                                1980
-                              </span>
-                            </span>
-                          </span>
-                        </span>
-                      </span>
-                    </div>
-                  </div>
+                   \`props.ReportError\` not defined 
+                   \`props.ReportError\` not defined 
                 </div>
               </div>
             </div>
@@ -759,53 +518,9 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                 <div
                   class="MuiAccordionDetails-root css-ta84vm-MuiAccordionDetails-root"
                 >
-                  <div
-                    class="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-1ws8119-MuiDivider-root"
-                    role="separator"
-                  >
-                    <span
-                      class="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
-                    >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
-                      >
-                        PLOT NAME
-                      </p>
-                    </span>
-                  </div>
-                  <div
-                    class="MuiBox-root css-1c0g717"
-                  >
-                    <div
-                      class="MuiFormControl-root css-q8hpuo-MuiFormControl-root"
-                    >
-                      <div
-                        class="MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
-                      >
-                        <label
-                          class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-standard MuiFormLabel-root MuiFormLabel-colorPrimary css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root"
-                          data-shrink="false"
-                          for="standard-basic"
-                          id="standard-basic-label"
-                        >
-                          New Plot Name
-                        </label>
-                        <div
-                          class="MuiInput-root MuiInput-underline MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-1480iag-MuiInputBase-root-MuiInput-root"
-                        >
-                          <input
-                            aria-invalid="false"
-                            class="MuiInput-input MuiInputBase-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
-                            id="standard-basic"
-                            type="text"
-                            value=""
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  XAxisSlider
-                  YAxisSlider
+                   \`props.ReportError\` not defined 
+                   \`props.ReportError\` not defined 
+                   \`props.ReportError\` not defined 
                 </div>
               </div>
             </div>
@@ -868,9 +583,7 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                 <div
                   class="MuiAccordionDetails-root css-ta84vm-MuiAccordionDetails-root"
                 >
-                  ModelGroupConfigurator
-                  AddModelGroupModal
-                  EditModelGroupModal
+                   \`props.ReportError\` not defined 
                 </div>
               </div>
             </div>
@@ -933,84 +646,8 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                 <div
                   class="MuiAccordionDetails-root css-ta84vm-MuiAccordionDetails-root"
                 >
-                  <div
-                    class="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-1ws8119-MuiDivider-root"
-                    role="separator"
-                  >
-                    <span
-                      class="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
-                    >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
-                      >
-                        LATITUDE BAND
-                      </p>
-                    </span>
-                  </div>
-                  <div
-                    class="MuiBox-root css-1n3sbe4"
-                  >
-                    <div
-                      class="MuiFormControl-root css-q8hpuo-MuiFormControl-root"
-                    >
-                      <div
-                        class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
-                      >
-                        <div
-                          aria-expanded="false"
-                          aria-haspopup="listbox"
-                          aria-labelledby="latitudeBandSelectorLabel latitudeBandSelector"
-                          class="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
-                          id="latitudeBandSelector"
-                          role="button"
-                          tabindex="0"
-                        >
-                          <span
-                            class="notranslate"
-                          >
-                            ​
-                          </span>
-                        </div>
-                        <input
-                          aria-hidden="true"
-                          class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
-                          tabindex="-1"
-                          value="0,0"
-                        />
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
-                          data-testid="ArrowDropDownIcon"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M7 10l5 5 5-5z"
-                          />
-                        </svg>
-                        <fieldset
-                          aria-hidden="true"
-                          class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
-                        >
-                          <legend
-                            class="css-1z7n62"
-                          >
-                            <span>
-                              LatitudeBand
-                            </span>
-                          </legend>
-                        </fieldset>
-                      </div>
-                      <label
-                        class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary MuiFormLabel-filled css-1sumxir-MuiFormLabel-root-MuiInputLabel-root"
-                        data-shrink="true"
-                        id="latitudeBandSelectorLabel"
-                      >
-                        Latitude Band
-                      </label>
-                    </div>
-                  </div>
-                  TimeCheckBoxGroup
+                   \`props.ReportError\` not defined 
+                   \`props.ReportError\` not defined 
                 </div>
               </div>
             </div>
@@ -1073,127 +710,8 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                 <div
                   class="MuiAccordionDetails-root css-ta84vm-MuiAccordionDetails-root"
                 >
-                  ReferenceModelSelector
-                  <div
-                    class="MuiFormControl-root css-78me8v-MuiFormControl-root"
-                  >
-                    <div
-                      class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
-                    >
-                      <div
-                        aria-expanded="false"
-                        aria-haspopup="listbox"
-                        aria-labelledby="locationSelectLabel locationSelect"
-                        class="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
-                        id="locationSelect"
-                        role="button"
-                        tabindex="0"
-                      >
-                        <span
-                          class="notranslate"
-                        >
-                          ​
-                        </span>
-                      </div>
-                      <input
-                        aria-hidden="true"
-                        class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
-                        tabindex="-1"
-                        value=""
-                      />
-                      <svg
-                        aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
-                        data-testid="ArrowDropDownIcon"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          d="M7 10l5 5 5-5z"
-                        />
-                      </svg>
-                      <fieldset
-                        aria-hidden="true"
-                        class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
-                      >
-                        <legend
-                          class="css-173wfxe"
-                        >
-                          <span>
-                            Reference Model
-                          </span>
-                        </legend>
-                      </fieldset>
-                    </div>
-                    <label
-                      class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
-                      data-shrink="false"
-                      id="locationSelectLabel"
-                    >
-                      Reference Model
-                    </label>
-                  </div>
-                  <div
-                    class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
-                  >
-                    <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-gj1fbr-MuiGrid-root"
-                    >
-                      <p
-                        class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
-                      >
-                        Reference year:
-                      </p>
-                    </div>
-                    <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8 css-vok43g-MuiGrid-root"
-                    >
-                      <span
-                        class="MuiSlider-colorPrimary MuiSlider-sizeSmall MuiSlider-root MuiSlider-trackFalse css-53tbrc-MuiSlider-root"
-                      >
-                        <span
-                          class="MuiSlider-rail css-14pt78w-MuiSlider-rail"
-                        />
-                        <span
-                          class="MuiSlider-track css-1vjujtc-MuiSlider-track"
-                          style="left: 0%; width: 20%;"
-                        />
-                        <span
-                          class="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeSmall MuiSlider-thumb css-14gf62f-MuiSlider-thumb"
-                          data-index="0"
-                          style="left: 20%;"
-                        >
-                          <input
-                            aria-orientation="horizontal"
-                            aria-valuemax="2100"
-                            aria-valuemin="1950"
-                            aria-valuenow="1980"
-                            data-index="0"
-                            max="2100"
-                            min="1950"
-                            step="1"
-                            style="border: 0px; height: 100%; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 100%; direction: ltr;"
-                            type="range"
-                            value="1980"
-                          />
-                          <span
-                            aria-hidden="true"
-                            class="MuiSlider-valueLabelOpen MuiSlider-valueLabel css-gdpt3b-MuiSlider-valueLabel"
-                          >
-                            <span
-                              class="MuiSlider-valueLabelCircle"
-                            >
-                              <span
-                                class="MuiSlider-valueLabelLabel"
-                              >
-                                1980
-                              </span>
-                            </span>
-                          </span>
-                        </span>
-                      </span>
-                    </div>
-                  </div>
+                   \`props.ReportError\` not defined 
+                   \`props.ReportError\` not defined 
                 </div>
               </div>
             </div>
