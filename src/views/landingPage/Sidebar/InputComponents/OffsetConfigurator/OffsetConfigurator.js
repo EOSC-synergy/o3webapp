@@ -14,8 +14,8 @@ function OffsetConfigurator(props) {
     
     let i = props.reportError;
 
-    const currentPlotType = selectCurrentPlotType()
-    const referenceData = useSelector(state => state.reference[currentPlotType])
+    // const currentPlotType = selectCurrentPlotType()
+    // const referenceData = useSelector(state => state.reference[currentPlotType])
 
     // handle changes: dispatch actions accordingly
 
