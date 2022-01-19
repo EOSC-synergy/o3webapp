@@ -58,6 +58,20 @@ const initialState = {
         error: null,
         data: [],
     },
+    plotSpecific: {
+        tco3_zm: {
+            active: null,
+            cachedRequests: {
+
+            }
+        },
+        tco3_return: {
+            active: null,
+            cachedRequests: {
+
+            }
+        },
+    },
 };
 
 /**
