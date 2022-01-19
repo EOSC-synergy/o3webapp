@@ -25,10 +25,11 @@ export const fullTextSearch = (elem, searchStr) => {
 };
 
 /**
- * Searches for occurences of a string in an array. 
+ * Searches for occurences of a string in an array. Searches either 
+ * the strings in the array or the values of given objects.
  * Eeach item in the array that has the searchString as a substring is a valid search result.
  * 
- * @param {*} array holds the items that are searched
+ * @param {array of string|object} array holds the items that are searched
  * @param {*} searchString specifies what should be searched for
  * @returns {array} containing the indices of all elements in the array where the searchString matched
  */
