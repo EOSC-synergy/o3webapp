@@ -1,8 +1,5 @@
-import React, { useState } from "react";
-// import { useDispatch, useSelector } from "react-redux"
-// import { selectCurrentPlotType, setMonths } from "../../../../../store/plotSlice";
+import React from "react";
 import SeasonCheckBoxGroup from "./SeasonCheckboxGroup/SeasonCheckBoxGroup";
-import { seasons } from "../../../../../utils/constants";
 import {Box, Checkbox, Divider, FormControlLabel, Grid} from "@mui/material";
 import { Winter, Spring, Summer, Autumn, NUM_MONTHS_IN_SEASON, NUM_MONTHS } from "../../../../../utils/constants";
 import Typography from "@mui/material/Typography";
@@ -17,25 +14,44 @@ import { selectPlotMonths, setMonths } from "../../../../../store/plotSlice/plot
  */
 function TimeCheckBoxGroup(props) {
     
+    /**
+     * A dispatch function to dispatch actions to the redux store.
+     */
     const dispatch = useDispatch()
 
-    /** Array of Months */
-    const monthArray = useSelector(selectPlotMonths);
+    /** 
+     * An array containing the selected months.
+     * 
+     * Examples:
+     * If e.g. January is selected the array would have the following form: [1]
+     * If e.g. February and December are selected the array would look as follows: [2, 12]
+     */
+    const selectedMonths = useSelector(selectPlotMonths);
 
+    /**
+     * Checks if every month is selected.
+     * 
+     * @returns True if all months are selected
+     */
     const isEveryMonthChecked = () => {
         let isChecked = true;
         for (let i = 0; i < NUM_MONTHS; i++) {
-            if(!monthArray.includes(i + 1)) {
+            if(!selectedMonths.includes(i + 1)) {
                 isChecked = false;
             }
         }
         return isChecked;
     }
 
+    /**
+     * Checks if the "All Year"-Checkbox should be displayed as indeterminate.
+     * 
+     * @returns True if the checkbox should be displayed as indeterminate
+     */
     const isIndeterminate = () => {
         let indetCount = 0;
         for (let i = 0; i < NUM_MONTHS; i++) {
-            if(!monthArray.includes(i + 1)) {
+            if(!selectedMonths.includes(i + 1)) {
                 indetCount++;
             }
         }
@@ -43,12 +59,12 @@ function TimeCheckBoxGroup(props) {
     }
 
     /**
-     * selects / deselects all year
+     * Handles the change if the "All Year"-Checkbox is clicked (selected/deselected).
      */
     const handleYearChecked = () => {
         let shouldBeSelected = true;
         for (let i = 0; i < NUM_MONTHS; i++) {
-            if (!monthArray.includes(i + 1)) shouldBeSelected = false;
+            if (!selectedMonths.includes(i + 1)) shouldBeSelected = false;
         }
         const monthCpy = [];
         if (!shouldBeSelected) {
@@ -61,9 +77,15 @@ function TimeCheckBoxGroup(props) {
         dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
     }
 
+
+    /**
+     * Handles the change if a season is clicked (selected/deselected).
+     * 
+     * @param {int} seasonId The id of the season that was clicked
+     */
     const handleSeasonChecked = (seasonId) => {
         // Dispatch season checked;
-        let monthCpy = [...monthArray];
+        let monthCpy = [...selectedMonths];
         const monthsInSeason = [];
         let shouldBeSelected = false;
 
@@ -90,8 +112,13 @@ function TimeCheckBoxGroup(props) {
         dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
     }
 
+    /**
+     * Handles the change if a month is clicked (selected/deselected).
+     * 
+     * @param {*} monthId The id of the month that was clicked
+     */
     const handleMonthChecked = (monthId) => {
-        let monthCpy = [...monthArray]
+        let monthCpy = [...selectedMonths]
         if (monthCpy.includes(monthId)) {
             monthCpy = monthCpy.filter((m) => m !== monthId);
         } else {
@@ -101,14 +128,19 @@ function TimeCheckBoxGroup(props) {
         dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
     }
 
-    const isAllChecked = (prev, curr) => {
-        return prev + curr;
-    }
-
-    const Season = ({name, months, seasonId}) => {
+    /**
+     * Constructs a SeasonCheckbox for a given season
+     * 
+     * @param {Object} param            The parameter object representing a season
+     * @param {String} param.name       The season name
+     * @param {String} param.months     An array of monthId's of the months included in this season
+     * @param {String} param.seasonId   The id of this season
+     * @returns {JSX}                   A preconfigured SeasonCheckbox
+     */
+    const toSeasonCheckbox = ({name, months, seasonId}) => {
         const a = []
         for (let i = 0; i < months.length; i++) {
-            a.push({monthId: months[i], checked: monthArray.includes(months[i])})
+            a.push({monthId: months[i], checked: selectedMonths.includes(months[i])})
         }
         
 
@@ -134,12 +166,12 @@ function TimeCheckBoxGroup(props) {
                     />
                     <Grid container>
                         <Grid item container>
-                            {Season(Winter)}
-                            {Season(Spring)}
+                            {toSeasonCheckbox(Winter)}
+                            {toSeasonCheckbox(Spring)}
                         </Grid>
                         <Grid item container>
-                            {Season(Summer)}
-                            {Season(Autumn)}
+                            {toSeasonCheckbox(Summer)}
+                            {toSeasonCheckbox(Autumn)}
                         </Grid>
                     </Grid>
                 </Box>
