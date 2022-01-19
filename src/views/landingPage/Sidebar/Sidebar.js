@@ -3,7 +3,7 @@ import { styled, useTheme } from '@mui/material/styles';
 import Section from './Section/Section.js';
 import defaultStructure from '../../../config/defaultConfig.json';
 import DownloadModal from './DownloadModal/DownloadModal.js';
-import { setCurrentType } from '../../../store/plotSlice.js';
+import { setCurrentType } from '../../../store/plotSlice/plotSlice';
 import { useDispatch } from "react-redux";
 import PlotTypeSelector from './InputComponents/PlotTypeSelector/PlotTypeSelector.js';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
@@ -11,8 +11,10 @@ import { Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 
-
-export const DrawerHeader = styled('div')(({ theme }) => ({
+/**
+ * Defining a drawerheader section at the beginning of a drawer
+ */
+const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     ...theme.mixins.toolbar,
@@ -67,6 +69,8 @@ function Sidebar(props) {
         setExpandedSection(i);
     }
 
+    
+
     return (
             <SwipeableDrawer
                 anchor="right"
@@ -93,7 +97,7 @@ function Sidebar(props) {
                         <CloseIcon />
                     </IconButton>
                 </DrawerHeader>
-                    <PlotTypeSelector />
+                    <PlotTypeSelector reportError={ props.reportError }/>
 
                     {defaultStructure["sections"].map((s, idx) =>
                         <Section
@@ -103,11 +107,12 @@ function Sidebar(props) {
                             components={s.components}
                             onCollapse={collapseSection}
                             onExpand={expandSection}
+                            reportError={props.reportError}
                         />
                     )}
 
                     <Button sx={{marginLeft: "10%", marginTop: "1em", width: "80%"}} variant="outlined" onClick={openDownloadModal}>Download</Button>
-                    <DownloadModal open={isDownloadModalVisible} onClose={closeDownloadModal} />
+                    <DownloadModal isOpen={isDownloadModalVisible} onClose={closeDownloadModal} />
         </SwipeableDrawer>
     );
 }

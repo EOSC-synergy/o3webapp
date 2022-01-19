@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { styled, useTheme } from '@mui/material/styles';
-import defaultStructure from '../../../../config/defaultConfig.json';
 import LocationSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
 import ModelGroupConfigurator from "../InputComponents/ModelGroupConfigurator/ModelGroupConfigurator";
 import OffsetConfigurator from "../InputComponents/OffsetConfigurator/OffsetConfigurator";
@@ -19,6 +18,7 @@ import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { LBS_Symbol, LS_Symbol, MGC_Symbol, OC_Symbol, PNF_Symbol, RMS_Symbol, RYS_Symbol, RS_Symbol, TCG_Symbol, XAS_Symbol, YAS_Symbol } from "../../../../utils/constants";
 
 
 
@@ -82,7 +82,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
  * @param {boolean} props.isExpanded -> whether this section should be expanded
  * @param {function} props.onCollapse -> function to collapse this section
  * @param {function} props.onExpand -> function to expand this section
- * @returns {JSX} an accordeon that once expanded displays the components specified by the config files and the API doc
+ * @returns {JSX.Element} an accordion that once expanded displays the components specified by the config files and the API doc
  */
 function Section(props) {
 
@@ -95,39 +95,50 @@ function Section(props) {
      * @returns a component from the './InputComponents
      */
     function mapNameToComponent(name, key) {
-        switch (name){
-            case "ModelGroupConfigurator":
-                return <ModelGroupConfigurator key={key} />;
-            case "OffsetConfigurator":
-                return <OffsetConfigurator key={key}  />;
-            case "PlotNameField":
-                return <PlotNameField key={key}  />;
-            case "ReferenceYearSlider":
-                return <ReferenceYearSlider key={key}  />;
-            case "TimeCheckBoxGroup":
-                return <TimeCheckBoxGroup key={key}  />;
-            case "XAxisSlider":
-                return <XAxisSlider key={key}  />;
-            case "YAxisSlider":
-                return <YAxisSlider key={key}  />;
-            case "RegionSelector":
-                return <RegionSelector key={key}  />;
-            case "LatitudeBandSelector":
-                return <LatitudeBandSelector key={key}  />;
-            case "ReferenceModelSelector":
-                return <ReferenceModelSelector key={key} />;
-            default:
-                if (props.reportError) {
+
+        if ('reportError' in props && typeof props.reportError === 'function') {
+            switch (name){
+                case LBS_Symbol.description:
+                    return <LatitudeBandSelector key={key } reportError={props.reportError}/>;
+                case LS_Symbol.description:
+                    return <LocationSelector key={key} reportError={props.reportError}/>
+                case MGC_Symbol.description:
+                    return <ModelGroupConfigurator key={key} reportError={props.reportError}/>;
+                case OC_Symbol.description:
+                    return <OffsetConfigurator key={key} reportError={props.reportError} />;
+                case PNF_Symbol.description:
+                    return <PlotNameField key={key} reportError={props.reportError} />;
+                case RMS_Symbol.description:
+                    return <ReferenceModelSelector key={key} reportError={props.reportError}/>;
+                case RYS_Symbol.description:
+                    return <ReferenceYearSlider key={key} reportError={props.reportError} />;
+                case RS_Symbol.description:
+                    return <RegionSelector key={key} reportError={props.reportError} />;
+                case TCG_Symbol.description:
+                    return <TimeCheckBoxGroup key={key} reportError={props.reportError} />;
+                case XAS_Symbol.description:
+                    return <XAxisSlider key={key} reportError={props.reportError} />;
+                case YAS_Symbol.description:
+                    return <YAxisSlider key={key} reportError={props.reportError} />;
+                default:
                     props.reportError(`Section ${props.name} found no match for an input component ${name}`);
-                }
-        } 
+            }
+        } else {
+            return(
+                <> `props.ReportError` not defined </>
+            );
+        }
     }
 
     if (!props.components) {
-       if(props.reportError) {
-           props.reportError(`Section ${props.name} was provided with no components`)
-        }
-        return <></>;
+       if('reportError' in props && typeof props.reportError === 'function') {
+           props.reportError(`Section ${props.name} was provided with no components`);
+           return <></>;
+        } else {
+           return(
+               <> `props.ReportError` not defined </>
+           );
+       }
     }
 
     return (
@@ -155,9 +166,9 @@ function Section(props) {
                 <>
                     {props.components.map((element, idx) => {
                         return (
-                            <>
+                            <React.Fragment key={idx}>
                                 {mapNameToComponent(element, idx)}
-                            </>
+                            </React.Fragment>
                         )
                     })}
                 </>

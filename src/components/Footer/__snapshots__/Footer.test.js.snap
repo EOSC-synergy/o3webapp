@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<DocumentFragment>
+  <div
+    style="width: 100vw;"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-12picvk-MuiGrid-root"
+      data-testid="footer-grid-container"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-4 css-kgs8gf-MuiGrid-root"
+        data-testid="footer-grid-item-undefined"
+      >
+        <a
+          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1iwtne7-MuiTypography-root-MuiLink-root"
+          data-testid="footer-link-undefined"
+          href="https://o3as.data.kit.edu/policies/terms-of-use.html"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+          >
+            Terms of Use
+          </p>
+        </a>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-4 css-kgs8gf-MuiGrid-root"
+        data-testid="footer-grid-item-undefined"
+      >
+        <a
+          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1iwtne7-MuiTypography-root-MuiLink-root"
+          data-testid="footer-link-undefined"
+          href="https://o3as.data.kit.edu/policies/privacy-policy.html"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+          >
+            Privacy Policy
+          </p>
+        </a>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-4 css-kgs8gf-MuiGrid-root"
+        data-testid="footer-grid-item-undefined"
+      >
+        <a
+          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1iwtne7-MuiTypography-root-MuiLink-root"
+          data-testid="footer-link-undefined"
+          href="https://o3as.data.kit.edu/policies/how-to-acknowledge.html"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+          >
+            How to Acknowledge
+          </p>
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

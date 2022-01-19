@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux"
 import { useGetModelsQuery } from "../../../../../../services/API/apiSlice"
-import { addedModelGroup, updatedModelGroup } from "../../../../../../store/modelsSlice"
+import { addedModelGroup, updatedModelGroup } from "../../../../../../store/modelsSlice/modelsSlice"
 
 /**
  * opens a modal where the user can add a new model group

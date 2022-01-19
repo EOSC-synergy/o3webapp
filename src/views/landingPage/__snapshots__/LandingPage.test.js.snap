@@ -1,67 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LandingPage renders correctly 1`] = `
-Array [
+exports[`test LandingPage component LandingPage renders correctly 1`] = `
+<div>
   <button
-    className="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root  css-1rwt2y5-MuiButtonBase-root-MuiButton-root"
-    disabled={false}
-    onBlur={[Function]}
-    onClick={[Function]}
-    onContextMenu={[Function]}
-    onDragLeave={[Function]}
-    onFocus={[Function]}
-    onKeyDown={[Function]}
-    onKeyUp={[Function]}
-    onMouseDown={[Function]}
-    onMouseLeave={[Function]}
-    onMouseUp={[Function]}
-    onTouchEnd={[Function]}
-    onTouchMove={[Function]}
-    onTouchStart={[Function]}
-    tabIndex={0}
+    class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root  css-1rwt2y5-MuiButtonBase-root-MuiButton-root"
+    tabindex="0"
     type="button"
   >
     Open Sidebar (Dev)
-  </button>,
+    <span
+      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+    />
+  </button>
   <div
-    className="MuiDrawer-root MuiDrawer-docked css-19iwfmc-MuiDrawer-docked"
+    class="MuiDrawer-root MuiDrawer-docked css-19iwfmc-MuiDrawer-docked"
     data-testid="sidebar"
   >
     <div
-      className="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiDrawer-paper MuiDrawer-paperAnchorRight MuiDrawer-paperAnchorDockedRight css-18sg6k4-MuiPaper-root-MuiDrawer-paper"
-      style={
-        Object {
-          "pointerEvents": "",
-          "visibility": "hidden",
-        }
-      }
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiDrawer-paper MuiDrawer-paperAnchorRight MuiDrawer-paperAnchorDockedRight css-18sg6k4-MuiPaper-root-MuiDrawer-paper"
+      style="visibility: hidden; webkit-transform: translateX(1024px); transform: translateX(1024px);"
     >
       <div
-        className="css-cfiwj7"
+        class="css-cfiwj7"
       >
         <button
-          className="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
           data-testid="sidebarClose"
-          disabled={false}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onContextMenu={[Function]}
-          onDragLeave={[Function]}
-          onFocus={[Function]}
-          onKeyDown={[Function]}
-          onKeyUp={[Function]}
-          onMouseDown={[Function]}
-          onMouseLeave={[Function]}
-          onMouseUp={[Function]}
-          onTouchEnd={[Function]}
-          onTouchMove={[Function]}
-          onTouchStart={[Function]}
-          tabIndex={0}
+          tabindex="0"
           type="button"
         >
           <svg
-            aria-hidden={true}
-            className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
             data-testid="CloseIcon"
             focusable="false"
             viewBox="0 0 24 24"
@@ -70,49 +40,99 @@ Array [
               d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
             />
           </svg>
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
         </button>
       </div>
-      PlotTypeSelector
       <div
-        className="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
+        class="MuiFormControl-root css-q8hpuo-MuiFormControl-root"
+        data-testid="plotTypeSelectorForm"
+      >
+        <label
+          class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary MuiFormLabel-filled css-1sumxir-MuiFormLabel-root-MuiInputLabel-root"
+          data-shrink="true"
+          data-testid="plotTypeSelector"
+          id="plotTypeLabel"
+        >
+          Plot Type
+        </label>
+        <div
+          class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+        >
+          <div
+            aria-expanded="false"
+            aria-haspopup="listbox"
+            aria-labelledby="plotTypeLabel plotType"
+            class="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+            id="plotType"
+            role="button"
+            tabindex="0"
+          >
+            <span
+              class="notranslate"
+            >
+              ​
+            </span>
+          </div>
+          <input
+            aria-hidden="true"
+            class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+            tabindex="-1"
+            value="tco3_zm"
+          />
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+            data-testid="ArrowDropDownIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M7 10l5 5 5-5z"
+            />
+          </svg>
+          <fieldset
+            aria-hidden="true"
+            class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              class="css-1z7n62"
+            >
+              <span>
+                Plot Type
+              </span>
+            </legend>
+          </fieldset>
+        </div>
+      </div>
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
         data-testid="section"
       >
         <div
           aria-controls="panel1a-content"
-          aria-expanded={false}
-          className="MuiButtonBase-root MuiAccordionSummary-root css-1icm36a-MuiButtonBase-root-MuiAccordionSummary-root"
+          aria-expanded="false"
+          class="MuiButtonBase-root MuiAccordionSummary-root css-1icm36a-MuiButtonBase-root-MuiAccordionSummary-root"
           id="panel1a-header"
-          onBlur={[Function]}
-          onClick={[Function]}
-          onContextMenu={[Function]}
-          onDragLeave={[Function]}
-          onFocus={[Function]}
-          onKeyDown={[Function]}
-          onKeyUp={[Function]}
-          onMouseDown={[Function]}
-          onMouseLeave={[Function]}
-          onMouseUp={[Function]}
-          onTouchEnd={[Function]}
-          onTouchMove={[Function]}
-          onTouchStart={[Function]}
           role="button"
-          tabIndex={0}
+          tabindex="0"
         >
           <div
-            className="MuiAccordionSummary-content css-1betqn-MuiAccordionSummary-content"
+            class="MuiAccordionSummary-content css-1betqn-MuiAccordionSummary-content"
           >
             <p
-              className="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
             >
               APPEARANCE
             </p>
           </div>
           <div
-            className="MuiAccordionSummary-expandIconWrapper css-yw020d-MuiAccordionSummary-expandIconWrapper"
+            class="MuiAccordionSummary-expandIconWrapper css-yw020d-MuiAccordionSummary-expandIconWrapper"
           >
             <svg
-              aria-hidden={true}
-              className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
               data-testid="ExpandMoreIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -124,29 +144,69 @@ Array [
           </div>
         </div>
         <div
-          className="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
-          style={
-            Object {
-              "minHeight": "0px",
-            }
-          }
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+          style="min-height: 0px;"
         >
           <div
-            className="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
           >
             <div
-              className="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
             >
               <div
                 aria-labelledby="panel1a-header"
-                className="MuiAccordion-region"
+                class="MuiAccordion-region"
                 id="panel1a-content"
                 role="region"
               >
                 <div
-                  className="MuiAccordionDetails-root css-ta84vm-MuiAccordionDetails-root"
+                  class="MuiAccordionDetails-root css-ta84vm-MuiAccordionDetails-root"
                 >
-                  PlotNameField
+                  <div
+                    class="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-1ws8119-MuiDivider-root"
+                    role="separator"
+                  >
+                    <span
+                      class="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                      >
+                        PLOT NAME
+                      </p>
+                    </span>
+                  </div>
+                  <div
+                    class="MuiBox-root css-1c0g717"
+                  >
+                    <div
+                      class="MuiFormControl-root css-q8hpuo-MuiFormControl-root"
+                    >
+                      <div
+                        class="MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
+                      >
+                        <label
+                          class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-standard MuiFormLabel-root MuiFormLabel-colorPrimary css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root"
+                          data-shrink="false"
+                          for="standard-basic"
+                          id="standard-basic-label"
+                        >
+                          New Plot Name
+                        </label>
+                        <div
+                          class="MuiInput-root MuiInput-underline MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-1480iag-MuiInputBase-root-MuiInput-root"
+                        >
+                          <input
+                            aria-invalid="false"
+                            class="MuiInput-input MuiInputBase-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
+                            id="standard-basic"
+                            type="text"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   XAxisSlider
                   YAxisSlider
                 </div>
@@ -156,45 +216,32 @@ Array [
         </div>
       </div>
       <div
-        className="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
         data-testid="section"
       >
         <div
           aria-controls="panel1a-content"
-          aria-expanded={false}
-          className="MuiButtonBase-root MuiAccordionSummary-root css-1icm36a-MuiButtonBase-root-MuiAccordionSummary-root"
+          aria-expanded="false"
+          class="MuiButtonBase-root MuiAccordionSummary-root css-1icm36a-MuiButtonBase-root-MuiAccordionSummary-root"
           id="panel1a-header"
-          onBlur={[Function]}
-          onClick={[Function]}
-          onContextMenu={[Function]}
-          onDragLeave={[Function]}
-          onFocus={[Function]}
-          onKeyDown={[Function]}
-          onKeyUp={[Function]}
-          onMouseDown={[Function]}
-          onMouseLeave={[Function]}
-          onMouseUp={[Function]}
-          onTouchEnd={[Function]}
-          onTouchMove={[Function]}
-          onTouchStart={[Function]}
           role="button"
-          tabIndex={0}
+          tabindex="0"
         >
           <div
-            className="MuiAccordionSummary-content css-1betqn-MuiAccordionSummary-content"
+            class="MuiAccordionSummary-content css-1betqn-MuiAccordionSummary-content"
           >
             <p
-              className="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
             >
               MODELS
             </p>
           </div>
           <div
-            className="MuiAccordionSummary-expandIconWrapper css-yw020d-MuiAccordionSummary-expandIconWrapper"
+            class="MuiAccordionSummary-expandIconWrapper css-yw020d-MuiAccordionSummary-expandIconWrapper"
           >
             <svg
-              aria-hidden={true}
-              className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
               data-testid="ExpandMoreIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -206,27 +253,23 @@ Array [
           </div>
         </div>
         <div
-          className="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
-          style={
-            Object {
-              "minHeight": "0px",
-            }
-          }
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+          style="min-height: 0px;"
         >
           <div
-            className="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
           >
             <div
-              className="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
             >
               <div
                 aria-labelledby="panel1a-header"
-                className="MuiAccordion-region"
+                class="MuiAccordion-region"
                 id="panel1a-content"
                 role="region"
               >
                 <div
-                  className="MuiAccordionDetails-root css-ta84vm-MuiAccordionDetails-root"
+                  class="MuiAccordionDetails-root css-ta84vm-MuiAccordionDetails-root"
                 >
                   ModelGroupConfigurator
                   AddModelGroupModal
@@ -238,45 +281,32 @@ Array [
         </div>
       </div>
       <div
-        className="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
         data-testid="section"
       >
         <div
           aria-controls="panel1a-content"
-          aria-expanded={false}
-          className="MuiButtonBase-root MuiAccordionSummary-root css-1icm36a-MuiButtonBase-root-MuiAccordionSummary-root"
+          aria-expanded="false"
+          class="MuiButtonBase-root MuiAccordionSummary-root css-1icm36a-MuiButtonBase-root-MuiAccordionSummary-root"
           id="panel1a-header"
-          onBlur={[Function]}
-          onClick={[Function]}
-          onContextMenu={[Function]}
-          onDragLeave={[Function]}
-          onFocus={[Function]}
-          onKeyDown={[Function]}
-          onKeyUp={[Function]}
-          onMouseDown={[Function]}
-          onMouseLeave={[Function]}
-          onMouseUp={[Function]}
-          onTouchEnd={[Function]}
-          onTouchMove={[Function]}
-          onTouchStart={[Function]}
           role="button"
-          tabIndex={0}
+          tabindex="0"
         >
           <div
-            className="MuiAccordionSummary-content css-1betqn-MuiAccordionSummary-content"
+            class="MuiAccordionSummary-content css-1betqn-MuiAccordionSummary-content"
           >
             <p
-              className="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
             >
               FILTER DATA
             </p>
           </div>
           <div
-            className="MuiAccordionSummary-expandIconWrapper css-yw020d-MuiAccordionSummary-expandIconWrapper"
+            class="MuiAccordionSummary-expandIconWrapper css-yw020d-MuiAccordionSummary-expandIconWrapper"
           >
             <svg
-              aria-hidden={true}
-              className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
               data-testid="ExpandMoreIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -288,29 +318,101 @@ Array [
           </div>
         </div>
         <div
-          className="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
-          style={
-            Object {
-              "minHeight": "0px",
-            }
-          }
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+          style="min-height: 0px;"
         >
           <div
-            className="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
           >
             <div
-              className="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
             >
               <div
                 aria-labelledby="panel1a-header"
-                className="MuiAccordion-region"
+                class="MuiAccordion-region"
                 id="panel1a-content"
                 role="region"
               >
                 <div
-                  className="MuiAccordionDetails-root css-ta84vm-MuiAccordionDetails-root"
+                  class="MuiAccordionDetails-root css-ta84vm-MuiAccordionDetails-root"
                 >
-                  LatitudeBandSelector
+                  <div
+                    class="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-1ws8119-MuiDivider-root"
+                    role="separator"
+                  >
+                    <span
+                      class="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                      >
+                        LATITUDE BAND
+                      </p>
+                    </span>
+                  </div>
+                  <div
+                    class="MuiBox-root css-1n3sbe4"
+                  >
+                    <div
+                      class="MuiFormControl-root css-q8hpuo-MuiFormControl-root"
+                    >
+                      <div
+                        class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+                      >
+                        <div
+                          aria-expanded="false"
+                          aria-haspopup="listbox"
+                          aria-labelledby="latitudeBandSelectorLabel latitudeBandSelector"
+                          class="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+                          id="latitudeBandSelector"
+                          role="button"
+                          tabindex="0"
+                        >
+                          <span
+                            class="notranslate"
+                          >
+                            ​
+                          </span>
+                        </div>
+                        <input
+                          aria-hidden="true"
+                          class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                          tabindex="-1"
+                          value="-90,90"
+                        />
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+                          data-testid="ArrowDropDownIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M7 10l5 5 5-5z"
+                          />
+                        </svg>
+                        <fieldset
+                          aria-hidden="true"
+                          class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                        >
+                          <legend
+                            class="css-1z7n62"
+                          >
+                            <span>
+                              LatitudeBand
+                            </span>
+                          </legend>
+                        </fieldset>
+                      </div>
+                      <label
+                        class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary MuiFormLabel-filled css-1sumxir-MuiFormLabel-root-MuiInputLabel-root"
+                        data-shrink="true"
+                        id="latitudeBandSelectorLabel"
+                      >
+                        Latitude Band
+                      </label>
+                    </div>
+                  </div>
                   TimeCheckBoxGroup
                 </div>
               </div>
@@ -319,45 +421,32 @@ Array [
         </div>
       </div>
       <div
-        className="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
         data-testid="section"
       >
         <div
           aria-controls="panel1a-content"
-          aria-expanded={false}
-          className="MuiButtonBase-root MuiAccordionSummary-root css-1icm36a-MuiButtonBase-root-MuiAccordionSummary-root"
+          aria-expanded="false"
+          class="MuiButtonBase-root MuiAccordionSummary-root css-1icm36a-MuiButtonBase-root-MuiAccordionSummary-root"
           id="panel1a-header"
-          onBlur={[Function]}
-          onClick={[Function]}
-          onContextMenu={[Function]}
-          onDragLeave={[Function]}
-          onFocus={[Function]}
-          onKeyDown={[Function]}
-          onKeyUp={[Function]}
-          onMouseDown={[Function]}
-          onMouseLeave={[Function]}
-          onMouseUp={[Function]}
-          onTouchEnd={[Function]}
-          onTouchMove={[Function]}
-          onTouchStart={[Function]}
           role="button"
-          tabIndex={0}
+          tabindex="0"
         >
           <div
-            className="MuiAccordionSummary-content css-1betqn-MuiAccordionSummary-content"
+            class="MuiAccordionSummary-content css-1betqn-MuiAccordionSummary-content"
           >
             <p
-              className="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
             >
               REFERENCE YEAR
             </p>
           </div>
           <div
-            className="MuiAccordionSummary-expandIconWrapper css-yw020d-MuiAccordionSummary-expandIconWrapper"
+            class="MuiAccordionSummary-expandIconWrapper css-yw020d-MuiAccordionSummary-expandIconWrapper"
           >
             <svg
-              aria-hidden={true}
-              className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
               data-testid="ExpandMoreIcon"
               focusable="false"
               viewBox="0 0 24 24"
@@ -369,30 +458,145 @@ Array [
           </div>
         </div>
         <div
-          className="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
-          style={
-            Object {
-              "minHeight": "0px",
-            }
-          }
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+          style="min-height: 0px;"
         >
           <div
-            className="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
           >
             <div
-              className="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
             >
               <div
                 aria-labelledby="panel1a-header"
-                className="MuiAccordion-region"
+                class="MuiAccordion-region"
                 id="panel1a-content"
                 role="region"
               >
                 <div
-                  className="MuiAccordionDetails-root css-ta84vm-MuiAccordionDetails-root"
+                  class="MuiAccordionDetails-root css-ta84vm-MuiAccordionDetails-root"
                 >
                   ReferenceModelSelector
-                  ReferenceYearSlider
+                  <div
+                    class="MuiFormControl-root css-78me8v-MuiFormControl-root"
+                  >
+                    <div
+                      class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+                    >
+                      <div
+                        aria-expanded="false"
+                        aria-haspopup="listbox"
+                        aria-labelledby="locationSelectLabel locationSelect"
+                        class="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+                        id="locationSelect"
+                        role="button"
+                        tabindex="0"
+                      >
+                        <span
+                          class="notranslate"
+                        >
+                          ​
+                        </span>
+                      </div>
+                      <input
+                        aria-hidden="true"
+                        class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                        tabindex="-1"
+                        value=""
+                      />
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+                        data-testid="ArrowDropDownIcon"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M7 10l5 5 5-5z"
+                        />
+                      </svg>
+                      <fieldset
+                        aria-hidden="true"
+                        class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                      >
+                        <legend
+                          class="css-173wfxe"
+                        >
+                          <span>
+                            Reference Model
+                          </span>
+                        </legend>
+                      </fieldset>
+                    </div>
+                    <label
+                      class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+                      data-shrink="false"
+                      id="locationSelectLabel"
+                    >
+                      Reference Model
+                    </label>
+                  </div>
+                  <div
+                    class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-gj1fbr-MuiGrid-root"
+                    >
+                      <p
+                        class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                      >
+                        Reference year:
+                      </p>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8 css-vok43g-MuiGrid-root"
+                    >
+                      <span
+                        class="MuiSlider-colorPrimary MuiSlider-sizeSmall MuiSlider-root MuiSlider-trackFalse css-53tbrc-MuiSlider-root"
+                      >
+                        <span
+                          class="MuiSlider-rail css-14pt78w-MuiSlider-rail"
+                        />
+                        <span
+                          class="MuiSlider-track css-1vjujtc-MuiSlider-track"
+                          style="left: 0%; width: 20%;"
+                        />
+                        <span
+                          class="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeSmall MuiSlider-thumb css-14gf62f-MuiSlider-thumb"
+                          data-index="0"
+                          style="left: 20%;"
+                        >
+                          <input
+                            aria-orientation="horizontal"
+                            aria-valuemax="2100"
+                            aria-valuemin="1950"
+                            aria-valuenow="1980"
+                            data-index="0"
+                            max="2100"
+                            min="1950"
+                            step="1"
+                            style="border: 0px; height: 100%; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 100%; direction: ltr;"
+                            type="range"
+                            value="1980"
+                          />
+                          <span
+                            aria-hidden="true"
+                            class="MuiSlider-valueLabelOpen MuiSlider-valueLabel css-gdpt3b-MuiSlider-valueLabel"
+                          >
+                            <span
+                              class="MuiSlider-valueLabelCircle"
+                            >
+                              <span
+                                class="MuiSlider-valueLabelLabel"
+                              >
+                                1980
+                              </span>
+                            </span>
+                          </span>
+                        </span>
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -400,30 +604,17 @@ Array [
         </div>
       </div>
       <button
-        className="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root  css-126gm7o-MuiButtonBase-root-MuiButton-root"
-        disabled={false}
-        onBlur={[Function]}
-        onClick={[Function]}
-        onContextMenu={[Function]}
-        onDragLeave={[Function]}
-        onFocus={[Function]}
-        onKeyDown={[Function]}
-        onKeyUp={[Function]}
-        onMouseDown={[Function]}
-        onMouseLeave={[Function]}
-        onMouseUp={[Function]}
-        onTouchEnd={[Function]}
-        onTouchMove={[Function]}
-        onTouchStart={[Function]}
-        tabIndex={0}
+        class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root  css-126gm7o-MuiButtonBase-root-MuiButton-root"
+        tabindex="0"
         type="button"
       >
         Download
+        <span
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+        />
       </button>
     </div>
-  </div>,
-  <div>
-    Graph
-  </div>,
-]
+  </div>
+  <div />
+</div>
 `;
