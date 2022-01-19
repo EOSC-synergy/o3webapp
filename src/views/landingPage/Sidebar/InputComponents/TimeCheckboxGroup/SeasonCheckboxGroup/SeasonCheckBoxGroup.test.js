@@ -53,7 +53,7 @@ it('renders month checkboxes correctly', () => {
 
     />);
     for(let i = 0; i < NUM_MONTHS_IN_SEASON; i++) {
-        expect(getByTestId("Checkbox" + i)).toBeInTheDocument();
+        expect(getByTestId("CheckboxMonth" + i)).toBeInTheDocument();
     }
 })
 
@@ -72,7 +72,30 @@ it('selects a month correctly', () => {
         months={dummyObj}
 
     />);
-    const checkbox = getByTestId("Checkbox0");
+    const checkbox = getByTestId("CheckboxMonth0");
+    fireEvent.change(checkbox, {target: {value: true}});
+
+    //TODO
+    //expect(jestFunc).toHaveBeenCalledTimes(1);
+
+})
+
+it('selects a season correctly', () => {
+    const jestFunc = jest.fn();
+    const dummyFunc = () => {};
+    const dummyObj = [
+        {monthId: 1, checked: false},
+        {monthId: 2, checked: false},
+        {monthId: 3, checked: false}
+    ]
+    const { getByTestId } = render(<SeasonCheckBoxGroup 
+        label="" 
+        handleSeasonClicked={jestFunc}
+        handleMonthClicked={dummyFunc}
+        months={dummyObj}
+
+    />);
+    const checkbox = getByTestId("CheckboxMonth0");
     fireEvent.change(checkbox, {target: {value: true}});
 
     //TODO

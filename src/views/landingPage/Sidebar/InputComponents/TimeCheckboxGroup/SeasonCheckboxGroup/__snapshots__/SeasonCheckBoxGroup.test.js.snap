@@ -11,6 +11,7 @@ exports[`renders correctly 1`] = `
       <input
         class="PrivateSwitchBase-input css-1m9pwf3"
         data-indeterminate="false"
+        data-testid="CheckboxSeason"
         type="checkbox"
       />
       <svg
@@ -45,7 +46,7 @@ exports[`renders correctly 1`] = `
         <input
           class="PrivateSwitchBase-input css-1m9pwf3"
           data-indeterminate="false"
-          data-testid="Checkbox0"
+          data-testid="CheckboxMonth0"
           type="checkbox"
         />
         <svg
@@ -79,7 +80,7 @@ exports[`renders correctly 1`] = `
         <input
           class="PrivateSwitchBase-input css-1m9pwf3"
           data-indeterminate="false"
-          data-testid="Checkbox1"
+          data-testid="CheckboxMonth1"
           type="checkbox"
         />
         <svg
@@ -113,7 +114,7 @@ exports[`renders correctly 1`] = `
         <input
           class="PrivateSwitchBase-input css-1m9pwf3"
           data-indeterminate="false"
-          data-testid="Checkbox2"
+          data-testid="CheckboxMonth2"
           type="checkbox"
         />
         <svg

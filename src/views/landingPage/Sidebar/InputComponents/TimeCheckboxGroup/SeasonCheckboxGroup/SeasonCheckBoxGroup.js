@@ -53,6 +53,7 @@ function SeasonCheckBoxGroup(props) {
                 label={props.label}
                 control={
                     <Checkbox
+                        inputProps={{'data-testid':"CheckboxSeason"}}
                         indeterminate={isIndeterminate()}
                         checked={isEveryMonthChecked()}
                         onChange={() => props.handleSeasonClicked(props.seasonId)}
@@ -68,7 +69,7 @@ function SeasonCheckBoxGroup(props) {
                             label={m.description}
                             control={
                                 <Checkbox 
-                                    inputProps={{'data-testid':"Checkbox" + idx}}
+                                    inputProps={{'data-testid':"CheckboxMonth" + idx}}
                                     checked={props.months[(idx + 1) - props.months[0].monthId].checked} 
                                     onChange={() => props.handleMonthClicked(idx + 1) }
                                 />
