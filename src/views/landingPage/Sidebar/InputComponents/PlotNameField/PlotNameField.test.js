@@ -1,14 +1,29 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PlotNameField from './PlotNameField';
+import { render, fireEvent } from '@testing-library/react';
+import { createTestStore } from '../../../../../store/store';
 
-console.error = jest.fn();
-
-
-test('PlotNameField renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<PlotNameField />, div);
+let store;
+beforeEach(() => {
+  store = createTestStore();
 });
+
+
+it('renders without crashing', () => {
+  render(<Provider store={store}><PlotNameField /></Provider>);
+});
+
+it('renders correctly', () => {
+  const { container } = render(<Provider store={store}><PlotNameField /></Provider>);
+  expect(container).toMatchSnapshot();
+});
+
+it('renders the input of the sarchbar', () => {
+  const { getByTestId } = render(<Provider store={store}><PlotNameField /></Provider>);
+  const input = getByTestId("PlotNameField");
+  expect(input).toBeInTheDocument();
+});
+
 
 
 

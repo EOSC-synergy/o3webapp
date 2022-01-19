@@ -42,7 +42,7 @@ function PlotNameField(props) {
         <Divider><Typography>{componentTitle}</Typography></Divider>
         <Box sx={{paddingLeft: '8%', paddingRight: '8%', paddingTop: '3%', paddingBottom: '3%'}}>
             <FormControl sx={{width: '100%' }}>
-                <TextField id="standard-basic" label={textFieldLabel} value={plotTitle} variant="standard" onChange={handleChange} />
+                <TextField data-test-id="PlotNameField" id="standard-basic" label={textFieldLabel} value={plotTitle} variant="standard" onChange={handleChange} />
             </FormControl>
         </Box> 
         </>
