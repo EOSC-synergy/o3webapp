@@ -39,8 +39,17 @@ export const fetchPlotTypes = createAsyncThunk('api/fetchPlotTypes', async () =>
     return response.data;
 });
 
-export const fetchRawPlotData = createAsyncThunk('api/fetchRawPlotData', async (arg, thunkAPI) => {
-    const response = await getRawData();
+/**
+ * This thunk action creator generates an action on call that can be dispatched
+ * against the store to start a fetch of the required raw plot data.
+ */
+export const fetchRawPlotData = createAsyncThunk('api/fetchRawPlotData', 
+    // dispatch loading action?
+
+    async ({ plotType, latMin, latMax, months, startYear, endYear, modelList }, thunkAPI) => {
+    const plotId = thunkAPI.getState().plot.plotId; // store current calling plotId
+    const response = await getRawData(plotType, latMin, latMax, months, startYear, endYear, modelList);
+    return {data: response.data, plotId: plotId};
 });
 
 /**
@@ -65,7 +74,7 @@ const initialState = {
     plotSpecific: {
         tco3_zm: {
             active: null,
-            cachedRequests: {
+            cachedRequests: { // we need to cache: min,max, months (year span, [modellist])
 
             }
         },
@@ -110,15 +119,30 @@ const apiSlice = createSlice({
                 state.models.status = REQUEST_STATE.error;
                 state.models.error = action.error.message;
             })
+
             // fetch plotTypes
             .addCase(fetchPlotTypes.pending, (state, action) => {
-                state.plotTypes.status = REQUEST_STATE.loading;
+                
             })
             .addCase(fetchPlotTypes.fulfilled, (state, action) => {
                 state.plotTypes.status = REQUEST_STATE.success;
                 state.plotTypes.data = action.payload;
             })
             .addCase(fetchPlotTypes.rejected, (state, action) => {
+                state.plotTypes.status = REQUEST_STATE.error;
+                state.plotTypes.error = action.error.message;
+            })
+
+            // fetch plotTypes
+            .addCase(fetchRawPlotData.pending, (state, action) => {
+                const plotId = null; // get it????
+                state.plotSpecific[plotId]
+            })
+            .addCase(fetchRawPlotData.fulfilled, (state, action) => {
+                state.plotTypes.status = REQUEST_STATE.success;
+                state.plotTypes.data = action.payload;
+            })
+            .addCase(fetchRawPlotData.rejected, (state, action) => {
                 state.plotTypes.status = REQUEST_STATE.error;
                 state.plotTypes.error = action.error.message;
             })
@@ -131,3 +155,5 @@ const apiSlice = createSlice({
  * the above defined actions wouldn't trigger state updates.
  */
 export default apiSlice.reducer;
+
+export const selectRawDataForPlot = (state, plotId) => state.api.plotSpecific[plotId].active
