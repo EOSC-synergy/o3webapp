@@ -17,6 +17,7 @@ function App() {
     const [isErrorModalVisible, setErrorModalVisible] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState(null);  // if errorMessage null no error
     const [isCookieConsentModalVisible, setCookieConsentModalVisibility] = React.useState(true);
+    const [errorMessages, setErrorMessages] = React.useState([]);
 
     /**
      * function to report an error from other components
@@ -24,6 +25,15 @@ function App() {
      * @param {string} msg the message of the reported error
      */
     const reportError = (msg) => {
+        for (let i = 0; i < errorMessages.length; i++) {
+            if (errorMessages[i] === msg) {
+                return;
+            }
+        }
+        let copy = errorMessages;
+        copy.push(msg);
+        setErrorMessages(copy);
+
         setErrorMessage(msg);
         setErrorModalVisible(true);
     }
@@ -51,7 +61,7 @@ function App() {
         <Navbar reportError={reportError} />
         <LandingPage reportError={reportError} /> 
         <Footer reportError={reportError} />
-        {/*<ErrorMessageModal open={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />*/}
+        <ErrorMessageModal isOpen={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />
         <CookieConsentModal isOpen={isCookieConsentModalVisible} onClose={onCloseCookieConsentModal} />
     </div>
     );

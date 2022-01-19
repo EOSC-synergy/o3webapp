@@ -95,41 +95,50 @@ function Section(props) {
      * @returns a component from the './InputComponents
      */
     function mapNameToComponent(name, key) {
-        switch (name){
-            case LBS_Symbol.description:
-                return <LatitudeBandSelector key={key}  />;
-            case LS_Symbol.description:
-                return <LocationSelector key={key} />
-            case MGC_Symbol.description:
-                return <ModelGroupConfigurator key={key} />;
-            case OC_Symbol.description:
-                return <OffsetConfigurator key={key}  />;
-            case PNF_Symbol.description:
-                return <PlotNameField key={key}  />;
-            case RMS_Symbol.description:
-                return <ReferenceModelSelector key={key} />;
-            case RYS_Symbol.description:
-                return <ReferenceYearSlider key={key}  />;
-            case RS_Symbol.description:
-                return <RegionSelector key={key}  />;
-            case TCG_Symbol.description:
-                return <TimeCheckBoxGroup key={key}  />;
-            case XAS_Symbol.description:
-                return <XAxisSlider key={key}  />;
-            case YAS_Symbol.description:
-                return <YAxisSlider key={key}  />;
-            default:
-                if (props.reportError) {
+
+        if ('reportError' in props && typeof props.reportError === 'function') {
+            switch (name){
+                case LBS_Symbol.description:
+                    return <LatitudeBandSelector key={key } reportError={props.reportError}/>;
+                case LS_Symbol.description:
+                    return <LocationSelector key={key} reportError={props.reportError}/>
+                case MGC_Symbol.description:
+                    return <ModelGroupConfigurator key={key} reportError={props.reportError}/>;
+                case OC_Symbol.description:
+                    return <OffsetConfigurator key={key} reportError={props.reportError} />;
+                case PNF_Symbol.description:
+                    return <PlotNameField key={key} reportError={props.reportError} />;
+                case RMS_Symbol.description:
+                    return <ReferenceModelSelector key={key} reportError={props.reportError}/>;
+                case RYS_Symbol.description:
+                    return <ReferenceYearSlider key={key} reportError={props.reportError} />;
+                case RS_Symbol.description:
+                    return <RegionSelector key={key} reportError={props.reportError} />;
+                case TCG_Symbol.description:
+                    return <TimeCheckBoxGroup key={key} reportError={props.reportError} />;
+                case XAS_Symbol.description:
+                    return <XAxisSlider key={key} reportError={props.reportError} />;
+                case YAS_Symbol.description:
+                    return <YAxisSlider key={key} reportError={props.reportError} />;
+                default:
                     props.reportError(`Section ${props.name} found no match for an input component ${name}`);
-                }
-        } 
+            }
+        } else {
+            return(
+                <> `props.ReportError` not defined </>
+            );
+        }
     }
 
     if (!props.components) {
-       if(props.reportError) {
-           props.reportError(`Section ${props.name} was provided with no components`)
-        }
-        return <></>;
+       if('reportError' in props && typeof props.reportError === 'function') {
+           props.reportError(`Section ${props.name} was provided with no components`);
+           return <></>;
+        } else {
+           return(
+               <> `props.ReportError` not defined </>
+           );
+       }
     }
 
     return (
