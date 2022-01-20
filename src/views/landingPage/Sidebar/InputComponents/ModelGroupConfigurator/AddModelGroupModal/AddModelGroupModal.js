@@ -22,7 +22,7 @@ import CardHeader from '@mui/material/CardHeader';
 import SearchBar from "../Searchbar/SearchBar";
 import { convertModelName } from "../../../../../../utils/ModelNameConverter";
 import { union, not, intersection } from "../../../../../../utils/arrayOperations";
-
+import CloseIcon from '@mui/icons-material/Close';
 
 /**
  * opens a modal where the user can add a new model group
@@ -60,8 +60,7 @@ function AddModelGroupModal(props) {
         setChecked(newChecked);
     };
 
-    const handleCheckedRight = (event) => {
-        event.preventDefault();
+    const handleCheckedRight = () => {
         setRight(right.concat(leftChecked));
         setLeft(not(left, leftChecked));
         setChecked(not(checked, leftChecked));
@@ -71,6 +70,14 @@ function AddModelGroupModal(props) {
         setLeft(left.concat(rightChecked));
         setRight(not(right, rightChecked));
         setChecked(not(checked, rightChecked));
+    };
+
+    const handleToggleAll = (items) => () => {
+        if (numberOfChecked(items) === items.length) {
+            setChecked(not(checked, items));
+        } else {
+            setChecked(union(checked, items));
+        }
     };
 
     const addNewGroup = () => {
@@ -106,32 +113,24 @@ function AddModelGroupModal(props) {
     }
     getAllAvailableModels();
 
-    const handleToggleAll = (items) => () => {
-        if (numberOfChecked(items) === items.length) {
-          setChecked(not(checked, items));
-        } else {
-          setChecked(union(checked, items));
-        }
-      };
-
-    const customList = (items) => (
+    const customList = (models) => (
         <Card>
         <CardHeader
             sx={{ px: 2, py: 1 }}
             avatar={
             <Checkbox
-                onClick={handleToggleAll(items)}
-                checked={numberOfChecked(items) === items.length && items.length !== 0}
+                onClick={handleToggleAll(models)}
+                checked={numberOfChecked(models) === models.length && models.length !== 0}
                 indeterminate={
-                numberOfChecked(items) !== items.length && numberOfChecked(items) !== 0
+                    numberOfChecked(models) !== models.length && numberOfChecked(models) !== 0
                 }
-                disabled={items.length === 0}
+                disabled={models.length === 0}
                 inputProps={{
-                'aria-label': 'all items selected',
+                    'aria-label': 'all items selected',
                 }}
             />
             }
-            title={`${numberOfChecked(items)}/${items.length} selected`}
+            title={`${numberOfChecked(models)}/${models.length} selected`}
         />
         <Divider />
         <List
@@ -145,29 +144,29 @@ function AddModelGroupModal(props) {
             component="div"
             role="list"
         >
-            {items.map((value, idx) => {
-            const labelId = `transfer-list-all-item-${value}-label`;
-            let model = convertModelName(value);
-                return (
-                    <ListItem
-                        key={value}
-                        role="listitem"
-                        button
-                        onClick={handleChangeElement(value)}
-                    >
-                    <ListItemIcon>
-                        <Checkbox
-                            checked={checked.indexOf(value) !== -1}
-                            tabIndex={-1}
-                            disableRipple
-                            inputProps={{
-                                'aria-labelledby': labelId,
-                            }}
-                        />
-                    </ListItemIcon>
-                    <ListItemText id={labelId} primary={model.name} secondary={`institute: ${model.institute}\nproject: ${model.project}`} />
-                    </ListItem>
-                );
+            {models.map((modelId, idx) => {
+                const labelId = `transfer-list-all-item-${modelId}-label`;
+                let model = convertModelName(modelId);
+                    return (
+                        <ListItem
+                            key={idx}
+                            role="listitem"
+                            button
+                            onClick={handleChangeElement(modelId)}
+                        >
+                        <ListItemIcon>
+                            <Checkbox
+                                checked={checked.indexOf(modelId) !== -1}
+                                tabIndex={-1}
+                                disableRipple
+                                inputProps={{
+                                    'aria-labelledby': labelId,
+                                }}
+                            />
+                        </ListItemIcon>
+                        <ListItemText id={labelId} primary={model.name} secondary={`institute: ${model.institute}\nproject: ${model.project}`} />
+                        </ListItem>
+                    );
             })}
         </List>
     </Card>
@@ -199,6 +198,11 @@ function AddModelGroupModal(props) {
             <Card sx={style}>
                 <CardHeader
                     title="Add a new model group"
+                    action={
+                        <IconButton onClick={props.onClose} aria-label="close">
+                            <CloseIcon />
+                        </IconButton>
+                    }
                 />
                 <CardContent>
                     <TextField
