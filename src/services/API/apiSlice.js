@@ -180,7 +180,7 @@ const apiSlice = createSlice({
             .addCase(fetchRawRejected, (state, action) => {
                 const { error, plotId, cacheKey } = action.payload;
                 const storage = state.plotSpecific[plotId].cachedRequests[cacheKey];
-                storage.status = REQUEST_STATE.rejected;
+                storage.status = REQUEST_STATE.error;
                 storage.error = error;
             })
     },
@@ -193,4 +193,14 @@ const apiSlice = createSlice({
  */
 export default apiSlice.reducer;
 
-export const selectRawDataForPlot = (state, plotId) => state.api.plotSpecific[plotId].active
+export const selectActiveRawDataForPlot = (state, plotId) => {
+    const plotSpecificSection = state.api.plotSpecific[plotId];
+    const activeCacheKey = plotSpecificSection.active;
+    if (activeCacheKey === null) { // no data is present yet, return dummy to indicate loading!
+        return {
+            status: REQUEST_STATE.loading,
+        };
+    };
+
+    return plotSpecificSection.cachedRequests[activeCacheKey];
+}
