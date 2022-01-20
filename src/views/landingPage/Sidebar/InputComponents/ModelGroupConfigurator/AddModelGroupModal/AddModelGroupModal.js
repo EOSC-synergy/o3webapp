@@ -3,7 +3,7 @@ import React, { useState } from "react";
 // import { useGetModelsQuery } from "../../../../../../services/API/apiSlice"
 // import { addedModelGroup, updatedModelGroup } from "../../../../../../store/modelsSlice";
 import { styled, useTheme, alpha } from '@mui/material/styles';
-import { CardContent, Divider, FormControl, IconButton, Modal, TextField } from '@mui/material';
+import { CardActionArea, CardContent, Divider, FormControl, IconButton, Modal, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
@@ -23,6 +23,7 @@ import SearchBar from "../Searchbar/SearchBar";
 import { convertModelName } from "../../../../../../utils/ModelNameConverter";
 import { union, not, intersection } from "../../../../../../utils/arrayOperations";
 import CloseIcon from '@mui/icons-material/Close';
+import Alert from "@mui/material/Alert";
 
 /**
  * opens a modal where the user can add a new model group
@@ -35,8 +36,9 @@ import CloseIcon from '@mui/icons-material/Close';
 function AddModelGroupModal(props) {
 
     const [checked, setChecked] = React.useState([]);
-    const [left, setLeft] = React.useState([]);
+    const [allModels, setAllModels] = React.useState([]);
     const [right, setRight] = React.useState([]);
+    const [visible, setVisible] = React.useState([]);
     const [groupName, setGroupName] = React.useState('');
 
 
@@ -44,8 +46,11 @@ function AddModelGroupModal(props) {
     const [isLoading, setIsLoading] = React.useState(true);
 
     const numberOfChecked = (items) => intersection(checked, items).length;
+    const left = not(allModels, right);
     const leftChecked = intersection(checked, left);
     const rightChecked = intersection(checked, right);
+    const leftVisible = intersection(visible, left);
+    const rightVisible = intersection(visible, right);
 
     const handleChangeElement = (value) => () => {
         const currentIndex = checked.indexOf(value);
@@ -62,12 +67,12 @@ function AddModelGroupModal(props) {
 
     const handleCheckedRight = () => {
         setRight(right.concat(leftChecked));
-        setLeft(not(left, leftChecked));
+        // setLeft(not(left, leftChecked));
         setChecked(not(checked, leftChecked));
     };
 
     const handleCheckedLeft = () => {
-        setLeft(left.concat(rightChecked));
+        // setLeft(left.concat(rightChecked));
         setRight(not(right, rightChecked));
         setChecked(not(checked, rightChecked));
     };
@@ -86,8 +91,15 @@ function AddModelGroupModal(props) {
         // // dispatch(addedModelGroup({groupName})) // add data (modelList)
     }
 
-    const searchData = (event, data) => {
-
+    const setCurrentlyVisibleModelsByIndex = (indices) => {
+        let newFilteredModelsIdx = [];
+        for (let idx in indices) {
+            if (idx > 0 && idx < allModels.length) {
+                newFilteredModelsIdx.push(allModels[idx]);
+            }
+        }
+        console.log(newFilteredModelsIdx);
+        setVisible(newFilteredModelsIdx);
     }
 
     /**
@@ -104,73 +116,86 @@ function AddModelGroupModal(props) {
     const getAllAvailableModels = () => {
         // const {data, isSuccess, isLoading, isError, error} = useGetModelsQuery()
         // display spinner until loading finished
-        sleep(2000).then(() => {
+        sleep(1000).then(() => {
             if (isLoading) {
-                setLeft(models);
+                setVisible(models);
                 setIsLoading(false);
+                setAllModels(models);
             }
         });
     }
     getAllAvailableModels();
 
-    const customList = (models) => (
-        <Card>
-        <CardHeader
-            sx={{ px: 2, py: 1 }}
-            avatar={
-            <Checkbox
-                onClick={handleToggleAll(models)}
-                checked={numberOfChecked(models) === models.length && models.length !== 0}
-                indeterminate={
-                    numberOfChecked(models) !== models.length && numberOfChecked(models) !== 0
-                }
-                disabled={models.length === 0}
-                inputProps={{
-                    'aria-label': 'all items selected',
-                }}
-            />
-            }
-            title={`${numberOfChecked(models)}/${models.length} selected`}
-        />
-        <Divider />
-        <List
-            sx={{
-            width: "100%",
-            height: 230,
-            bgcolor: 'background.paper',
-            overflow: 'auto',
-            }}
-            dense
-            component="div"
-            role="list"
-        >
-            {models.map((modelId, idx) => {
-                const labelId = `transfer-list-all-item-${modelId}-label`;
-                let model = convertModelName(modelId);
-                    return (
-                        <ListItem
-                            key={idx}
-                            role="listitem"
-                            button
-                            onClick={handleChangeElement(modelId)}
-                        >
-                        <ListItemIcon>
-                            <Checkbox
-                                checked={checked.indexOf(modelId) !== -1}
-                                tabIndex={-1}
-                                disableRipple
-                                inputProps={{
-                                    'aria-labelledby': labelId,
-                                }}
-                            />
-                        </ListItemIcon>
-                        <ListItemText id={labelId} primary={model.name} secondary={`institute: ${model.institute}\nproject: ${model.project}`} />
-                        </ListItem>
-                    );
-            })}
-        </List>
-    </Card>
-    );
+    const customList = (models, modelsChecked, modelsVisible) => {
+        const modelsCheckedInvisible = intersection(not(models, modelsVisible), modelsChecked);
+        return (
+            <Card>
+                <CardHeader
+                    sx={{ px: 2, py: 1 }}
+                    avatar={
+                        <Checkbox
+                            onClick={handleToggleAll(modelsVisible)}
+                            checked={numberOfChecked(modelsVisible) === modelsVisible.length && modelsVisible.length !== 0}
+                            indeterminate={
+                                numberOfChecked(modelsVisible) !== modelsVisible.length && numberOfChecked(modelsVisible) !== 0
+                            }
+                            disabled={modelsVisible.length === 0}
+                            inputProps={{
+                                'aria-label': 'all items selected',
+                            }}
+                        />
+                    }
+                    title={`${numberOfChecked(modelsVisible)}/${modelsVisible.length} selected`}
+                />
+                <Divider />
+                <List
+                    sx={{
+                        width: "100%",
+                        height: 230,
+                        bgcolor: 'background.paper',
+                        overflow: 'auto',
+                    }}
+                    dense
+                    component="div"
+                    role="list"
+                >
+                    {modelsVisible.map((modelId, idx) => {
+                        const labelId = `transfer-list-all-item-${modelId}-label`;
+                        let model = convertModelName(modelId);
+                            return (
+                                <ListItem
+                                    key={idx}
+                                    role="listitem"
+                                    button
+                                    onClick={handleChangeElement(modelId)}
+                                >
+                                <ListItemIcon>
+                                    <Checkbox
+                                        checked={checked.indexOf(modelId) !== -1}
+                                        tabIndex={-1}
+                                        disableRipple
+                                        inputProps={{
+                                            'aria-labelledby': labelId,
+                                        }}
+                                    />
+                                </ListItemIcon>
+                                <ListItemText id={labelId} primary={model.name} secondary={`institute: ${model.institute}\nproject: ${model.project}`} />
+                                </ListItem>
+                            );
+                    })}
+                </List>
+                    {
+                        modelsCheckedInvisible
+                        &&
+                        modelsCheckedInvisible.length > 0 
+                        &&
+                        <Alert severity="warning">
+                            Currently {modelsCheckedInvisible.length} hidden model{modelsCheckedInvisible.length > 1 ? 's are' : ' is'} checked.
+                        </Alert>
+                    }
+            </Card>
+        );
+    }   
 
     const theme = useTheme();
     const style = {
@@ -213,18 +238,18 @@ function AddModelGroupModal(props) {
                         onBlur={updateGroupName}
                     />
                     <Box id="modal-modal-description" sx={{ mt: 2 }}>
-                        <SearchBar />
+                        <SearchBar inputArray={allModels} foundIndicesCallback={setCurrentlyVisibleModelsByIndex} />
                         <Grid container spacing={2} justifyContent="center" alignItems="center">
-                            <Grid item xs={5}>
+                            <Grid item sm={5}>
                                 <Typography>All available models</Typography>
                                 {
                                     isLoading ? 
                                         <CircularProgress />
                                     :
-                                        customList(left)
+                                        customList(left, leftChecked, leftVisible)
                                 }
                             </Grid>
-                            <Grid item xs={2}>
+                            <Grid item sm={2}>
                                 <Grid container direction="column" alignItems="center">
                                     <Button
                                         sx={{ my: 0.5 }}
@@ -248,13 +273,13 @@ function AddModelGroupModal(props) {
                                     </Button>
                                 </Grid>
                             </Grid>
-                            <Grid item xs={5}>
+                            <Grid item sm={5}>
                                 <Typography>Models in {groupName ? groupName : "your group"}</Typography>
                                 {
                                     isLoading ? 
                                         <CircularProgress />
                                     :
-                                        customList(right)
+                                        customList(right, rightChecked, rightVisible)
                                 }
                             </Grid>
                         </Grid>
