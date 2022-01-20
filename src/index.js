@@ -25,6 +25,8 @@ store.dispatch(fetchRawData(
   }
 ));
 
+//https://api.o3as.fedcloud.eu/api/v1/data/tco3_zm?begin=1959&end=2100&month=1,2,3&lat_min=-90&lat_max=90
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

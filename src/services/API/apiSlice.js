@@ -66,7 +66,7 @@ export const fetchRawData = ({ plotId, plotType, latMin, latMax, months, startYe
       
       return getRawData(plotType, latMin, latMax, months, startYear, endYear, modelList).then(  
         response => dispatch(fetchRawSuccess({data: response.data, plotId})),
-        error => dispatch(fetchRawRejected({error, plotId}))
+        error => console.log(error)//dispatch(fetchRawRejected({error, plotId}))
       );
       
     };
