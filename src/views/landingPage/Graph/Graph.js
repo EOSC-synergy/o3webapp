@@ -6,7 +6,7 @@ import { convertToStrokeStyle, colourNameToHex } from "../../../utils/optionsFor
 import {useSelector} from 'react-redux'
 import { useGetRawPlotDataMutation } from '../../../services/API/apiSlice';
 import { selectCurrentModelGroups } from '../../../store/modelsSlice/modelsSlice';
-import { selectCurrentPlotId, selectCurrentPlotType, selectCurrentSettings } from '../../../store/plotSlice/plotSlice';
+import { selectCurrentPlotId, selectCurrentPlotType, selectCurrentSettings, selectPlotTitle } from '../../../store/plotSlice/plotSlice';
 import { selectCurrentReferenceSettings } from '../../../store/referenceSlice';
 // import {calculatePlotSeries} from "../../../utils/math"
 
@@ -57,12 +57,14 @@ settings.series.push(...ySeries)
  *          the apexcharts library
  */
 function Graph(props) {
+    settings.options.title.text = useSelector(selectPlotTitle);
+    const copySettings = JSON.parse(JSON.stringify(settings)); 
 
     return (<>
         {/* for the OCTS Plot */}
         <Chart
-                options={settings.options}
-                series={settings.series}
+                options={copySettings.options}
+                series={copySettings.series}
                 type={"line"}
                 height={"600px"}
             />
