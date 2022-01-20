@@ -15,7 +15,7 @@ return {
     months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 
     startYear: 1960, 
     endYear: 2100, 
-    modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"], // not all models for faster testing!
+    modelList: modelList.slice(0, 4), // not all models for faster testing!
 }
 };
 
