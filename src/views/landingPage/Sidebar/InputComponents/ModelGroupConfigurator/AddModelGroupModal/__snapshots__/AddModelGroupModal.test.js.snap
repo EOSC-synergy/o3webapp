@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test addModelGroupModal rendering renders correctly when closed 1`] = `<div />`;
+
+exports[`test addModelGroupModal rendering renders correctly when open 1`] = `
+<div
+  aria-hidden="true"
+/>
+`;
