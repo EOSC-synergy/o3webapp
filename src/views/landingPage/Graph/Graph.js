@@ -5,8 +5,9 @@ import settings from "./default-settings.json"
 import { convertToStrokeStyle, colourNameToHex } from "../../../utils/optionsFormatter"
 import {useSelector} from 'react-redux'
 import { selectPlotId } from '../../../store/plotSlice/plotSlice';
-import { selectRawDataForPlot } from '../../../services/API/apiSlice';
+import { REQUEST_STATE, selectActiveRawDataForPlot } from '../../../services/API/apiSlice';
 import { Spinner } from '../../../components/Spinner/Spinner';
+import { Typography } from '@mui/material';
 
 /**
  * Static generation of the years on the x-axis, this will be fetched from the
@@ -57,10 +58,13 @@ settings.series.push(...ySeries)
 function Graph(props) {
 
     const plotId = useSelector(selectPlotId);
-    const activeData = useSelector(state => selectRawDataForPlot(state, plotId));
+    const activeData = useSelector(state => selectActiveRawDataForPlot(state, plotId));
 
-    if (activeData === null) {
+    if (activeData.status === REQUEST_STATE.loading) {
         return <Spinner text={"loading data"} size={"8em"}></Spinner>
+    } else if (activeData.status === REQUEST_STATE.error) {
+        props.reportError(activeData.error);
+        return <Typography>An error occurred, please try to reload the site</Typography>;
     }
 
     return (<>
