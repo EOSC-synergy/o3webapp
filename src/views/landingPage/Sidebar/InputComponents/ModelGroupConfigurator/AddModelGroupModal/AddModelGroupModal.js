@@ -24,6 +24,7 @@ import { convertModelName } from "../../../../../../utils/ModelNameConverter";
 import { union, not, intersection } from "../../../../../../utils/arrayOperations";
 import CloseIcon from '@mui/icons-material/Close';
 import Alert from "@mui/material/Alert";
+import LooksOneIcon from '@mui/icons-material/LooksOne';
 
 /**
  * opens a modal where the user can add a new model group
@@ -40,6 +41,7 @@ function AddModelGroupModal(props) {
     const [right, setRight] = React.useState([]);
     const [visible, setVisible] = React.useState([]);
     const [groupName, setGroupName] = React.useState('');
+    const theme = useTheme();
 
 
     // Omly needed for development
@@ -86,8 +88,7 @@ function AddModelGroupModal(props) {
     };
 
     const addNewGroup = () => {
-        // handleAllLeft();
-        // setGroupName('');
+        props.onClose();
         // // dispatch(addedModelGroup({groupName})) // add data (modelList)
     }
 
@@ -98,7 +99,6 @@ function AddModelGroupModal(props) {
                 newFilteredModelsIdx.push(allModels[idx]);
             }
         }
-        console.log(newFilteredModelsIdx);
         setVisible(newFilteredModelsIdx);
     }
 
@@ -197,7 +197,6 @@ function AddModelGroupModal(props) {
         );
     }   
 
-    const theme = useTheme();
     const style = {
         position: 'absolute',
         top: '50%',
@@ -207,6 +206,8 @@ function AddModelGroupModal(props) {
         bgcolor: theme.palette.grey[200],
         boxShadow: 24,
         p: 4,
+        overflow: 'auto',
+        maxHeight: "100vh"
       };
 
     const updateGroupName = (event) => {
@@ -230,17 +231,23 @@ function AddModelGroupModal(props) {
                     }
                 />
                 <CardContent>
-                    <TextField
-                        label="Name of the group"
-                        defaultValue={groupName}
-                        helperText="The name will only appear in the legend of the exported plot."
-                        variant="standard"
-                        onBlur={updateGroupName}
-                    />
+                    <Grid container alignItems="center" justifyContent="center" style={{marginBottom: '2em'}}>
+                        <TextField
+                            defaultValue={groupName}
+                            helperText="The name will only appear in the legend of the exported plot."
+                            variant="standard"
+                            onBlur={updateGroupName}
+                            sx={{marginBottom: '0.5em', marginLeft: '0.5em'}}
+                            placeholder="Your group"
+                        />
+                    </Grid>
+                    <Divider>
+                        <Typography> Select Models</Typography>
+                    </Divider>
                     <Box id="modal-modal-description" sx={{ mt: 2 }}>
                         <SearchBar inputArray={allModels} foundIndicesCallback={setCurrentlyVisibleModelsByIndex} />
-                        <Grid container spacing={2} justifyContent="center" alignItems="center">
-                            <Grid item sm={5}>
+                        <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ marginTop: '0.5em' }}>
+                            <Grid item sm={5} xs={12}>
                                 <Typography>All available models</Typography>
                                 {
                                     isLoading ? 
@@ -249,7 +256,7 @@ function AddModelGroupModal(props) {
                                         customList(left, leftChecked, leftVisible)
                                 }
                             </Grid>
-                            <Grid item sm={2}>
+                            <Grid item sm={2} xs={12}>
                                 <Grid container direction="column" alignItems="center">
                                     <Button
                                         sx={{ my: 0.5 }}
@@ -273,7 +280,7 @@ function AddModelGroupModal(props) {
                                     </Button>
                                 </Grid>
                             </Grid>
-                            <Grid item sm={5}>
+                            <Grid item sm={5} xs={12}>
                                 <Typography>Models in {groupName ? groupName : "your group"}</Typography>
                                 {
                                     isLoading ? 
@@ -286,7 +293,7 @@ function AddModelGroupModal(props) {
                     </Box>
                 </CardContent>
                 <CardActions sx={{justifyContent: "flex-end"}}>
-                    <Button onClick={addNewGroup} size="small">Add group</Button>
+                    <Button onClick={addNewGroup} variant="contained">Add group</Button>
                 </CardActions>
             </Card>
         </Modal>
