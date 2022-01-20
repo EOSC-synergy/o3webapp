@@ -52,21 +52,26 @@ export const fetchRawPlotData = createAsyncThunk('api/fetchRawPlotData',
     return {data: response.data, plotId: plotId};
 });
 
+const generateCacheKey = (latMin, latMax, months) => {
+    return `lat_min=${latMin}&lat_min=${latMax}&months=${months.join(',')}`;
+}
+
 const fetchRawPending =  createAction("api/fetchRawPlotData/pending");
 const fetchRawSuccess =  createAction("api/fetchRawPlotData/success");
 const fetchRawRejected = createAction("api/fetchRawPlotData/rejected");
 
-
 export const fetchRawData = ({ plotId, plotType, latMin, latMax, months, startYear, endYear, modelList }) => {
+    const cacheKey = generateCacheKey(latMin, latMax, months);
+
     return (dispatch) => {     
       // Initial action dispatched
-      dispatch(fetchRawPending({plotId}));
+      dispatch(fetchRawPending({plotId, cacheKey}));
 
       // Return promise with success and failure actions
       
       return getRawData(plotType, latMin, latMax, months, startYear, endYear, modelList).then(  
-        response => dispatch(fetchRawSuccess({data: response.data, plotId})),
-        error => dispatch(fetchRawRejected({error: error.message, plotId}))
+        response => dispatch(fetchRawSuccess({data: response.data, plotId, cacheKey})),
+        error => dispatch(fetchRawRejected({error: error.message, plotId, cacheKey}))
       );
       
     };
