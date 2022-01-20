@@ -3,7 +3,7 @@ import React, { useState } from "react";
 // import { useGetModelsQuery } from "../../../../../../services/API/apiSlice"
 // import { addedModelGroup, updatedModelGroup } from "../../../../../../store/modelsSlice";
 import { useTheme } from '@mui/material/styles';
-import { CardContent, Divider, FormControl, IconButton, Modal, TextField } from '@mui/material';
+import { CardContent, Divider, IconButton, Modal, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
@@ -13,7 +13,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
-import Paper from '@mui/material/Paper';
 import { Card } from '@mui/material';
 import CardActions from '@mui/material/CardActions';
 import models from '../../../../../../utils/models.json';
@@ -386,7 +385,7 @@ function AddModelGroupModal(props) {
 AddModelGroupModal.propTypes = {
     reportError: PropTypes.func,
     onClose: PropTypes.func.isRequired,
-    open: PropTypes.bool.isRequired
+    isOpen: PropTypes.bool.isRequired
 }
 
 
