@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux"
-import { setDisplayXRange } from "../../../../../store/plotSlice/plotSlice";
+import { useDispatch, useSelector } from "react-redux"
+import { setDisplayYRange, selectPlotYRange } from "../../../../../store/plotSlice/plotSlice";
+import {Slider, Typography, Grid} from "@mui/material";
 
 /**
  * enables the user to select a range that should be diisplayed at the y axis of the plot
@@ -10,17 +11,32 @@ import { setDisplayXRange } from "../../../../../store/plotSlice/plotSlice";
  */
 function YAxisSlider(props) {
     
-    let i = props.reportError;
- 
-    // const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
-    // dispatch(setDisplayXRange({currMin, currMax}))
+    const {minY, maxY} = useSelector(selectPlotYRange);
+
+    const handleChange = (event) => {
+        const val = event.target.value;
+        dispatch(setDisplayYRange({minY: val[0], maxY: val[1]}));
+    }
 
 
     return (
-        <>
-        YAxisSlider
-        </>
+        <Grid container sx={{width: "90%", marginLeft: "auto", marginRight: "auto", marginTop: "3%"}}>
+            <Grid item xs={3}>
+                <Typography>Y-Axis:</Typography>
+            </Grid>
+            <Grid item xs={9}>
+                <Slider
+                    step={1}
+                    size="small"
+                    max={600}
+                    min={0}
+                    value={[minY, maxY]}
+                    onChange={handleChange}
+                />
+            </Grid>
+        </Grid> 
     );
 }
 
