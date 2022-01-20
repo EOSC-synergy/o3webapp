@@ -19,7 +19,7 @@ import CardActions from '@mui/material/CardActions';
 import { FormHelperText } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { InputBase } from '@mui/material';
-import models from './models.json';
+import models from '../../../../../../utils/models.json';
 import CircularProgress from '@mui/material/CircularProgress';
 import CardHeader from '@mui/material/CardHeader';
 import SearchBar from "../Searchbar/SearchBar";
