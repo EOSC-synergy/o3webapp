@@ -1,6 +1,10 @@
 export function mergeModelDataAndSettings(modelData, modelSettings) {
     
-}
+};
+
+export function formatDataBasedOnPlotId(data, plotId) {
+    
+};
 
 export function colourNameToHex(colour)
 {
@@ -33,16 +37,16 @@ export function colourNameToHex(colour)
         return colours[colour.toLowerCase()];
 
     return false;
-}
+};
 
 export function convertToStrokeStyle(apiStyle) {
     const styles = {
         "solid": 0,
         "dotted": 1,
         "dashed": 3,
-    }
+    };
 
     if (typeof styles[apiStyle.toLowerCase()] != 'undefined')
         return styles[apiStyle.toLowerCase()];
     return false;
-}
+};
