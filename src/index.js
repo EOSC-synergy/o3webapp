@@ -4,12 +4,26 @@ import App from './App';
 import store from './store/store'
 import { Provider } from 'react-redux'
 import "./index.css"
-import { fetchModels, fetchPlotTypes } from './services/API/apiSlice';
+import { fetchModels, fetchPlotTypes, fetchRawData } from './services/API/apiSlice';
 
 // on "startup" of the app: request default values for all models
 
 store.dispatch(fetchModels());
 store.dispatch(fetchPlotTypes());
+store.dispatch(fetchRawData(
+  {
+    plotId: "tco3_zm",
+    plotType: "tco3_zm",
+    latMin: "-90", 
+    latMax: "90", 
+    months: [1,2,3], 
+    startYear: 1960, 
+    endYear: 2100, 
+    modelList: [
+      "CCMI-1_ACCESS_ACCESS-CCM-refC2"
+    ],
+  }
+));
 
 ReactDOM.render(
   <React.StrictMode>

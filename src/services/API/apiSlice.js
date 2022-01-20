@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import { getModels, getPlotTypes, getRawData } from "./client";
 
 /**
@@ -51,6 +51,26 @@ export const fetchRawPlotData = createAsyncThunk('api/fetchRawPlotData',
     const response = await getRawData(plotType, latMin, latMax, months, startYear, endYear, modelList);
     return {data: response.data, plotId: plotId};
 });
+
+const fetchRawPending =  createAction("api/fetchRawPlotData/pending");
+const fetchRawSuccess =  createAction("api/fetchRawPlotData/success");
+const fetchRawRejected = createAction("api/fetchRawPlotData/rejected");
+
+
+export const fetchRawData = ({ plotId, plotType, latMin, latMax, months, startYear, endYear, modelList }) => {
+    return (dispatch) => {     
+      // Initial action dispatched
+      dispatch(fetchRawPending({plotId}));
+
+      // Return promise with success and failure actions
+      
+      return getRawData(plotType, latMin, latMax, months, startYear, endYear, modelList).then(  
+        response => dispatch(fetchRawSuccess({data: response.data, plotId})),
+        error => dispatch(fetchRawRejected({error, plotId}))
+      );
+      
+    };
+  };
 
 /**
  * This initial state describes how the data fetched from the api is stored in this
@@ -134,17 +154,14 @@ const apiSlice = createSlice({
             })
 
             // fetch plotTypes
-            .addCase(fetchRawPlotData.pending, (state, action) => {
-                const plotId = null; // get it????
-                state.plotSpecific[plotId]
+            .addCase(fetchRawPending, (state, action) => {
+                console.log(action);
             })
-            .addCase(fetchRawPlotData.fulfilled, (state, action) => {
-                state.plotTypes.status = REQUEST_STATE.success;
-                state.plotTypes.data = action.payload;
+            .addCase(fetchRawSuccess, (state, action) => {
+                console.log(action);
             })
-            .addCase(fetchRawPlotData.rejected, (state, action) => {
-                state.plotTypes.status = REQUEST_STATE.error;
-                state.plotTypes.error = action.error.message;
+            .addCase(fetchRawRejected, (state, action) => {
+                console.log(action);
             })
     },
 });
