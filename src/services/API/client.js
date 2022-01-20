@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const baseURL = "https://api.o3as.fedcloud.eu/api/v1";
 
-const timeoutVal = 5000;
+const timeoutVal = 60 * 1000; // 1 min at least (fetching the models took 29s)
 
 
 const getFromAPI = (endpoint) => {
