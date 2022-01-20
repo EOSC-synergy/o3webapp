@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Grid, Typography, Slider, MenuItem } from "@mui/material";
 import models from "./models.json";
 import { Select, InputLabel, OutlinedInput, FormControl } from "@mui/material";
+import PropTypes from 'prop-types'; 
 
 /**
  * enables the user to select a reference year
@@ -16,7 +17,13 @@ function ReferenceYearSlider(props) {
   /** model: The currently selected reference model.
    * setModel: The function which adjusts the SelectionBar after selecting a model.
    */
-  const [model, setModel] = React.useState([]);
+
+  // /** Dispatcher to dispatch the plot name change action. */
+  const dispatch = useDispatch();
+
+
+  /** The current model which is selected. */
+  const model = models[1];
 
   /** Default year value for the Slider.*/
   const defaultYear = 1980;
@@ -29,12 +36,17 @@ function ReferenceYearSlider(props) {
 
   /** Handles the change of the reference model selection if it's is modified.*/
   const handleChangeForRefModel = (event) => {
+
+    if (event.target.value !== null) {
+          return
+    } 
+
     const {
       target: { value },
     } = event;
     setModel(typeof value === "string" ? value.split(",") : value);
-    // TODO
-    //dispatch(setModel({title: event.target.value}));
+
+    dispatch(setRefModel({title: event.target.value}));
   };
 
   /** Handles the change of the reference year slider if it's is modified.*/
