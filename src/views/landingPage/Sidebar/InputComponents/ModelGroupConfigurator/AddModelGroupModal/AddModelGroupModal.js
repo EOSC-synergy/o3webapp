@@ -179,7 +179,7 @@ function AddModelGroupModal(props) {
     const getAllAvailableModels = () => {
         // const {data, isSuccess, isLoading, isError, error} = useGetModelsQuery()
         // display spinner until loading finished
-        sleep(1000).then(() => {
+        sleep(0).then(() => {
             if (isLoading) {
                 setVisible(models);
                 setIsLoading(false);
@@ -247,6 +247,7 @@ function AddModelGroupModal(props) {
                                         inputProps={{
                                             'aria-labelledby': labelId,
                                         }}
+                                        data-testid={`AddModelGroupModal-transfer-list-item-${labelId}-checkbox`}
                                     />
                                 </ListItemIcon>
                                 <ListItemText id={labelId} primary={model.name} secondary={`institute: ${model.institute}\nproject: ${model.project}`} />
@@ -306,7 +307,7 @@ function AddModelGroupModal(props) {
                 <CardHeader
                     title="Add a new model group"
                     action={
-                        <IconButton onClick={closeWithChanges} aria-label="close">
+                        <IconButton onClick={closeWithChanges} aria-label="close" data-testid="addModelGroupModal-close-button">
                             <CloseIcon />
                         </IconButton>
                     }
@@ -332,7 +333,7 @@ function AddModelGroupModal(props) {
                                 <Typography>All available models</Typography>
                                 {
                                     isLoading ? 
-                                        <CircularProgress />
+                                        <CircularProgress data-testid="AddModelGroupModal-spinner-left" />
                                     :
                                         customList(left, leftChecked, leftVisible)
                                 }
@@ -346,6 +347,7 @@ function AddModelGroupModal(props) {
                                         onClick={handleCheckedRight}
                                         disabled={leftChecked.length === 0}
                                         aria-label="move selected right"
+                                        data-testid="AddModelGroupModal-button-move-allChecked-right"
                                     >
                                         &gt;
                                     </Button>
@@ -356,6 +358,7 @@ function AddModelGroupModal(props) {
                                         onClick={handleCheckedLeft}
                                         disabled={rightChecked.length === 0}
                                         aria-label="move selected left"
+                                        data-testid="AddModelGroupModal-button-move-allChecked-left"
                                     >
                                         &lt;
                                     </Button>
@@ -365,7 +368,7 @@ function AddModelGroupModal(props) {
                                 <Typography>Models in {groupName ? groupName : "your group"}</Typography>
                                 {
                                     isLoading ? 
-                                        <CircularProgress />
+                                        <CircularProgress data-testid="AddModelGroupModal-spinner-right" />
                                     :
                                         customList(right, rightChecked, rightVisible)
                                 }
