@@ -57,9 +57,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
  * that either contains strings or objects. If the array contains objects the
  * values of these objects are searched.
  
- * @param {*} props 
- * @param {array} props.inputArray todo
- * @param {function} props.foundIndicesCallback todo
+ * @param {*} props holds all props passed to the component
+ * @param {array} props.inputArray an array of either only strings or only objects.
+ *                                 The input typed in the searchbar is used as a search
+ *                                 string. If an array of objects is passed the values of
+ *                                 each object are searched.
+ * @param {function} props.foundIndicesCallback this function is called with an array 
+ *                                              containing the indices that matched the 
+ *                                              search string. The function is called after the
+ *                                              search is performed.
  * @returns {JSX} a pretty searchbar component
  */
 export default function SearchBar(props) {
