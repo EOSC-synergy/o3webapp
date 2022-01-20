@@ -2,9 +2,13 @@ import React from "react";
 import { useDispatch } from "react-redux"
 import { setTitle } from "../../../../../store/plotSlice/plotSlice";
 import { Divider, Typography, Box, FormControl, TextField} from '@mui/material';
+import { useSelector } from 'react-redux';
+import { selectPlotTitle } from "../../../../../store/plotSlice/plotSlice";
+import PropTypes from 'prop-types';
+import { PLOT_NAME_MAX_LEN } from "../../../../../utils/constants"
 
 /**
- * Enables the user to rename the plot
+ * Enables the user to rename and change the plot title.
  * @param {Object} props 
  * @param {function} props.reportError - function for error handling
  * @returns {JSX} a textfield to change the plotname
@@ -16,21 +20,20 @@ function PlotNameField(props) {
 
     /** The label displayed inside the TextField while nothing is typed in. */
     const textFieldLabel = "New Plot Name";
-
-    /** The max. length of the plot name */
-    const PLOT_NAME_MAX_LEN = 40;
      
     // /** Dispatcher to dispatch the plot name change action. */
-    //const dispatch = useDispatch();
+    const dispatch = useDispatch();
+
+    /** The current plot title from the store */
+    const plotTitle = useSelector(selectPlotTitle);
 
     /** Handles the change if the text in TextField is modified. */
     const handleChange = (event) => {
         if (event.target.value.length > PLOT_NAME_MAX_LEN) {
             event.target.value = event.target.value.slice(0, PLOT_NAME_MAX_LEN);
-        }
+        } 
 
-        // TODO
-        // dispatch(setTitle({title: event.target.value}));
+        dispatch(setTitle({title: event.target.value}));
     }
     
 
@@ -38,11 +41,15 @@ function PlotNameField(props) {
         <Divider><Typography>{componentTitle}</Typography></Divider>
         <Box sx={{paddingLeft: '8%', paddingRight: '8%', paddingTop: '3%', paddingBottom: '3%'}}>
             <FormControl sx={{width: '100%' }}>
-                <TextField id="standard-basic" label={textFieldLabel} variant="standard" onChange={handleChange} />
+                <TextField data-testid="plot-field" id="standard-basic" label={textFieldLabel} value={plotTitle} variant="standard" onChange={handleChange} />
             </FormControl>
-        </Box>
+        </Box> 
         </>
     );
+}
+
+PlotNameField.propTypes = {
+    reportError: PropTypes.func.isRequired
 }
 
 export default PlotNameField;

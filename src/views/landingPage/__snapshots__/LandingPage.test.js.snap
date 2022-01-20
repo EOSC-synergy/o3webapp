@@ -378,7 +378,7 @@ exports[`test LandingPage component LandingPage renders correctly 1`] = `
                           aria-hidden="true"
                           class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
                           tabindex="-1"
-                          value="0,0"
+                          value="-90,90"
                         />
                         <svg
                           aria-hidden="true"
