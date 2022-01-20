@@ -147,7 +147,7 @@ const apiSlice = createSlice({
 
             // fetch plotTypes
             .addCase(fetchPlotTypes.pending, (state, action) => {
-                
+                state.plotTypes.status = REQUEST_STATE.loading;
             })
             .addCase(fetchPlotTypes.fulfilled, (state, action) => {
                 state.plotTypes.status = REQUEST_STATE.success;
