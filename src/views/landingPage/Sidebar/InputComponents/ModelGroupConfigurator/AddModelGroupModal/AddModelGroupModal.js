@@ -24,6 +24,7 @@ import { convertModelName } from "../../../../../../utils/ModelNameConverter";
 import { union, not, intersection } from "../../../../../../utils/arrayOperations";
 import CloseIcon from '@mui/icons-material/Close';
 import Alert from "@mui/material/Alert";
+import PropTypes from 'prop-types'; 
 
 /**
  * opens a modal where the user can add a new model group
@@ -380,5 +381,13 @@ function AddModelGroupModal(props) {
         </Modal>
     );
 }
+
+
+AddModelGroupModal.propTypes = {
+    reportError: PropTypes.func,
+    onClose: PropTypes.func.isRequired,
+    open: PropTypes.bool.isRequired
+}
+
 
 export default AddModelGroupModal;
