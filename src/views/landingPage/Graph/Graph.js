@@ -8,6 +8,7 @@ import { selectPlotId } from '../../../store/plotSlice/plotSlice';
 import { REQUEST_STATE, selectActiveRawDataForPlot } from '../../../services/API/apiSlice';
 import { Spinner } from '../../../components/Spinner/Spinner';
 import { Typography } from '@mui/material';
+import { formatDataBasedOnPlotId } from "../../../utils/optionsFormatter";
 
 /**
  * Static generation of the years on the x-axis, this will be fetched from the
@@ -45,6 +46,20 @@ settings.options.stroke.dashArray.push(...strokes)
 settings.options.stroke.width.push(...lineWidth)
 settings.series.push(...ySeries)
 
+const prepareData = () => {
+    const transformedData = formatDataBasedOnPlotId(data, plotId);
+    // calculate statistical values
+    // merge model settings
+    // merge statistical values
+    
+}
+
+const renderCorrectChartComponent = (plotId, data) => {
+    
+    // mapping: from plotId to chart type required (apexcharts component)
+    // select compmonent: return comp, this gets rendered in Graph if data is there
+}
+
 /**
  * Currently there is no dynamic data linking. The graph will always
  * render the data from default-data.json in this folder. This is
@@ -60,23 +75,24 @@ function Graph(props) {
     const plotId = useSelector(selectPlotId);
     const activeData = useSelector(state => selectActiveRawDataForPlot(state, plotId));
 
-    if (activeData.status === REQUEST_STATE.loading) {
+    if (activeData.status === REQUEST_STATE.loading || activeData.status === REQUEST_STATE.idle) {
         return <Spinner text={"loading data"} size={"8em"}></Spinner>
+
     } else if (activeData.status === REQUEST_STATE.error) {
         props.reportError(activeData.error);
         return <Typography>An error occurred, please try to reload the site</Typography>;
-    }
 
-    return (<>
-        {/* for the OCTS Plot */}
-        <Chart
-                options={settings.options}
-                series={settings.series}
-                type={"line"}
-                height={"60%"}
-            />
-        
-    </>);
+    } else if (activeData.status === REQUEST_STATE.success) {
+        return <Chart
+            options={settings.options}
+            series={settings.series}
+            type={"line"}
+            height={"60%"}
+        />
+    };
+
+    // this "case" should not happen
+    return <Typography>CRITICAL: an internal error occurred that shouldn't happen!</Typography>;
 }
 
 export default Graph;
