@@ -16,28 +16,13 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import { Card } from '@mui/material';
 import CardActions from '@mui/material/CardActions';
-import { FormHelperText } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import { InputBase } from '@mui/material';
 import models from '../../../../../../utils/models.json';
 import CircularProgress from '@mui/material/CircularProgress';
 import CardHeader from '@mui/material/CardHeader';
 import SearchBar from "../Searchbar/SearchBar";
 import { convertModelName } from "../../../../../../utils/ModelNameConverter";
+import { union, not, intersection } from "../../../../../../utils/arrayOperations";
 
-// TODO: move to utils
-function not(a, b) {
-    return a.filter((value) => b.indexOf(value) === -1);
-}
-
-// TODO: move to utils
-function intersection(a, b) {
-    return a.filter((value) => b.indexOf(value) !== -1);
-}
-
-function union(a, b) {
-    return [...a, ...not(b, a)];
-  }
 
 /**
  * opens a modal where the user can add a new model group
