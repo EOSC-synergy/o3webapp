@@ -22,6 +22,52 @@ export const XAS_Symbol = Symbol("XAxisSlider");
 /** Stores the name of the YAxisSlider component as a Symbol. */
 export const YAS_Symbol = Symbol("YAxisSlider");
 
+// TimeCheckboxGroup.js
+/** Stores the seasons and the corresponding months */
+/*
+export const seasons = [
+    {
+        name: 'Spring',
+        months: [3, 4, 5]
+    },
+    {
+        name: 'Summer',
+        months: [6, 7, 8]
+    },
+    {
+        name: 'Fall',
+        months: [9, 10, 11]
+    },
+    {
+        name: 'Winter',
+        months: [12, 1, 2]
+    }
+] */
+
+/** Stores the season Winter and its corresponding months. */
+export const Winter = { name: Symbol("Winter"), months: [1, 2, 3], seasonId: 0 }
+
+/** Stores the season Spring and its corresponding months. */
+export const Spring = { name: Symbol("Spring"), months: [4, 5, 6], seasonId: 1 }
+
+/** Stores the season Summer and its corresponding months. */
+export const Summer = { name: Symbol("Summer"), months: [7, 8, 9], seasonId: 2 }
+
+/** Stores the season Autumn and its corresponding months. */
+export const Autumn = { name: Symbol("Autumn"), months: [10, 11, 12], seasonId: 3 }
+
+/** Stores all the months in short form. (first three letters) */
+export const months = [
+    Symbol("Jan"), Symbol("Feb"), Symbol("Mar"), Symbol("Apr"),
+    Symbol("May"), Symbol("Jun"), Symbol("Jul"), Symbol("Aug"),
+    Symbol("Sep"), Symbol("Oct"), Symbol("Nov"), Symbol("Dec")
+]
+/** Stores the ammount of months in a season */
+export const NUM_MONTHS_IN_SEASON = 3;
+
+/** Stores the ammount of months in a year */
+export const NUM_MONTHS = 12;
+
 // LatitudeBandSelector.js
 /** Stores the latitude bands and its min/max values */
 export const latitudeBands = [
