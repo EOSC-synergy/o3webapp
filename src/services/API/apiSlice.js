@@ -158,15 +158,30 @@ const apiSlice = createSlice({
                 state.plotTypes.error = action.error.message;
             })
 
-            // fetch plotTypes
+            // fetch raw data
             .addCase(fetchRawPending, (state, action) => {
-                console.log(action);
+                const { plotId, cacheKey } = action.payload;
+                const plotSpecificSection = state.plotSpecific[plotId];
+                
+                plotSpecificSection.cachedRequests[cacheKey] = {
+                    status: REQUEST_STATE.loading,
+                    error: null,
+                    data: [],
+                };
+                plotSpecificSection.active = cacheKey; 
+                // select this request after initialization
             })
             .addCase(fetchRawSuccess, (state, action) => {
-                console.log(action);
+                const { data, plotId, cacheKey } = action.payload;
+                const storage = state.plotSpecific[plotId].cachedRequests[cacheKey];
+                storage.status = REQUEST_STATE.success;
+                storage.data = data; // TODO: transform?
             })
             .addCase(fetchRawRejected, (state, action) => {
-                console.log(action);
+                const { error, plotId, cacheKey } = action.payload;
+                const storage = state.plotSpecific[plotId].cachedRequests[cacheKey];
+                storage.status = REQUEST_STATE.rejected;
+                storage.error = error;
             })
     },
 });
