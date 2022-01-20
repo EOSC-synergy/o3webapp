@@ -10,19 +10,13 @@ const getFromAPI = (endpoint) => {
 }
 
 const postAtAPI = (endpoint, data) => {
-    return axios.post(baseURL + endpoint, { data }, { timeout: timeoutVal });
+    // dont pack "data" in an object, the api accepts only an array of values (e.g. model list)
+    return axios.post(baseURL + endpoint, data, { timeout: timeoutVal }); 
 }
 
 export const getPlotTypes = () => {
   return getFromAPI("/data");
 };
-
-export const postData = (plotType, data) => { // TODO: remove?
-    return postAtAPI(
-        `/data/${plotType}`,
-        { data }
-    );
-}
 
 export const getModels = (plotType, select) => {
     const hasPlotType = typeof plotType !== "undefined";
@@ -58,6 +52,6 @@ export const postModelsPlotStyle = (plotType) => {
 export const getRawData = (plotType, latMin, latMax, months, startYear, endYear, modelList) => {
     return postAtAPI(
         `/data/${plotType}?begin=${startYear}&end=${endYear}&month=${months.join(",")}&lat_min=${latMin}&lat_max=${latMax}`,
-        { modelList }
+        modelList
     );
 }
