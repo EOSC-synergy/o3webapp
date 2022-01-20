@@ -2,8 +2,8 @@ import React, { useState } from "react";
 // import { useDispatch } from "react-redux"
 // import { useGetModelsQuery } from "../../../../../../services/API/apiSlice"
 // import { addedModelGroup, updatedModelGroup } from "../../../../../../store/modelsSlice";
-import { styled, useTheme, alpha } from '@mui/material/styles';
-import { CardActionArea, CardContent, Divider, FormControl, IconButton, Modal, TextField } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import { CardContent, Divider, FormControl, IconButton, Modal, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
@@ -24,7 +24,6 @@ import { convertModelName } from "../../../../../../utils/ModelNameConverter";
 import { union, not, intersection } from "../../../../../../utils/arrayOperations";
 import CloseIcon from '@mui/icons-material/Close';
 import Alert from "@mui/material/Alert";
-import LooksOneIcon from '@mui/icons-material/LooksOne';
 
 /**
  * opens a modal where the user can add a new model group
@@ -36,10 +35,27 @@ import LooksOneIcon from '@mui/icons-material/LooksOne';
  */
 function AddModelGroupModal(props) {
 
+    /**
+     * Array containing all currently checked models
+     */
     const [checked, setChecked] = React.useState([]);
-    const [allModels, setAllModels] = React.useState([]);
+    /**
+     * Array containing all current models
+     */
+    const [allModels, setAllModels] = React.useState([]);   // could be taken from redux store
+    /**
+     * Array containing all models, that are currently plotted in the right transfer list
+     * -> models that should eventually be added
+     */
     const [right, setRight] = React.useState([]);
+    /**
+     * Array containing all models that should currently be visibile
+     * because of the search function those might differ from all models
+     */
     const [visible, setVisible] = React.useState([]);
+    /**
+     * The currently enetered group name
+     */
     const [groupName, setGroupName] = React.useState('');
     const theme = useTheme();
 
@@ -47,13 +63,40 @@ function AddModelGroupModal(props) {
     // Omly needed for development
     const [isLoading, setIsLoading] = React.useState(true);
 
-    const numberOfChecked = (items) => intersection(checked, items).length;
+    /**
+     * Returns how many models in the provided array are currently checked
+     * @param {Array} models models to check
+     * @returns the number of checked models in models
+     */
+    const numberOfChecked = (models) => intersection(checked, models).length;
+    /**
+     * All models that are currently on the left side
+     * -> all models that are not currently on the right side are on the left side
+     */
     const left = not(allModels, right);
+    /**
+     * An array containing all models that are currently on the left side and are checked
+     */
     const leftChecked = intersection(checked, left);
+    /**
+     * An array containing all models that are currently on the right side and are checked
+     */
     const rightChecked = intersection(checked, right);
+    /**
+     * An array containing all models that are currently on the left side and are visible
+     */
     const leftVisible = intersection(visible, left);
+    /**
+     * An array containing all models that are currently on the right side and are visible
+     */
     const rightVisible = intersection(visible, right);
 
+    /**
+     * Toggles one element
+     * i.e. checks the element if it had not been checked before
+     * and unchecks it if it has been checked
+     * @param {String} value the id of the model that has been clicked
+     */
     const handleChangeElement = (value) => () => {
         const currentIndex = checked.indexOf(value);
         const newChecked = [...checked];
@@ -63,22 +106,15 @@ function AddModelGroupModal(props) {
         } else {
           newChecked.splice(currentIndex, 1);
         }
-    
         setChecked(newChecked);
     };
 
-    const handleCheckedRight = () => {
-        setRight(right.concat(leftChecked));
-        // setLeft(not(left, leftChecked));
-        setChecked(not(checked, leftChecked));
-    };
-
-    const handleCheckedLeft = () => {
-        // setLeft(left.concat(rightChecked));
-        setRight(not(right, rightChecked));
-        setChecked(not(checked, rightChecked));
-    };
-
+    /**
+     * Toggles whole list of elements
+     * i.e. checks all if one element in items has not been checked before
+     * and unchecks all if all elements in items have been checked
+     * @param {Array} items array containing model ids to check / uncheck
+     */
     const handleToggleAll = (items) => () => {
         if (numberOfChecked(items) === items.length) {
             setChecked(not(checked, items));
@@ -87,11 +123,34 @@ function AddModelGroupModal(props) {
         }
     };
 
+    /**
+     * moves all checked models from the right list to the left and unchecks them
+     * -> appends all leftChecked models to the right array and removes them from the checked array
+     */
+    const handleCheckedRight = () => {
+        setRight(right.concat(leftChecked));
+        setChecked(not(checked, leftChecked));
+    };
+
+    /**
+     * moves all checked models from the left to right and unchecks them
+     * -> removes all rightChecked models from the right and checked array
+     */
+    const handleCheckedLeft = () => {
+        setRight(not(right, rightChecked));
+        setChecked(not(checked, rightChecked));
+    };
+
     const addNewGroup = () => {
         props.onClose();
         // // dispatch(addedModelGroup({groupName})) // add data (modelList)
     }
 
+    /**
+     * sets the currently visible models by a provided array of indices
+     * ! overwrites old visibilities
+     * @param {Array} indices array of indices that should be currently visible
+     */
     const setCurrentlyVisibleModelsByIndex = (indices) => {
         let newFilteredModelsIdx = [];
         for (let idx in indices) {
@@ -113,6 +172,10 @@ function AddModelGroupModal(props) {
     }
     
 
+    /**
+     * gets all currently available models
+     * @todo place redux connection here
+     */
     const getAllAvailableModels = () => {
         // const {data, isSuccess, isLoading, isError, error} = useGetModelsQuery()
         // display spinner until loading finished
@@ -126,6 +189,13 @@ function AddModelGroupModal(props) {
     }
     getAllAvailableModels();
 
+    /**
+     * renders a custom transfer list component with provided lists
+     * @param {Array} models array of modelIDs that belong to the list
+     * @param {Array} modelsChecked array of modelIDs that are currently checked
+     * @param {Array} modelsVisible array of modelIDS that are currently visible
+     * @returns {JSX.Element} a Card containing a custom transfer list and a warning if checked models are currently not visible
+     */
     const customList = (models, modelsChecked, modelsVisible) => {
         const modelsCheckedInvisible = intersection(not(models, modelsVisible), modelsChecked);
         return (
@@ -210,22 +280,33 @@ function AddModelGroupModal(props) {
         maxHeight: "100vh"
       };
 
+    /**
+     * updates the current group name
+     * @param {event} event the event that called this function
+     */
     const updateGroupName = (event) => {
         setGroupName(event.target.value);
+    }
+
+    /**
+     * @todo open a "discard changes?" popup here
+     */
+    const closeWithChanges = () => {
+        props.onClose();
     }
 
     return (
         <Modal
             open={props.isOpen}
-            onClose={props.onClose}
+            onClose={closeWithChanges}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
-        >
+        >   
             <Card sx={style}>
                 <CardHeader
                     title="Add a new model group"
                     action={
-                        <IconButton onClick={props.onClose} aria-label="close">
+                        <IconButton onClick={closeWithChanges} aria-label="close">
                             <CloseIcon />
                         </IconButton>
                     }
