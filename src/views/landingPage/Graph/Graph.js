@@ -70,6 +70,7 @@ const renderCorrectChartComponent = (plotId, data) => {
             series={settings.series}
             type={"line"}
             height={"60%"}
+            width={"95%"}
         />
     } else if (plotId === "tco3_return") {
         return <Typography>To be implemented...</Typography>
