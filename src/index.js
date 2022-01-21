@@ -15,7 +15,7 @@ return {
     months: [1], 
     startYear: 1960, 
     endYear: 2100, 
-    modelList: modelList.slice(0, 4), // not all models for faster testing!
+    modelList: modelList.slice(0, 50), // not all models for faster testing!
 }
 };
 
