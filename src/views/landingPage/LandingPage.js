@@ -40,15 +40,13 @@ function LandingPage(props) {
     }
     
     return (
-    <React.Fragment
-      data-testid="landingPage"
-    >
+    <div data-testid="landingPage">
 
         <Button variant="outlined" onClick={openSidebar}>Open Sidebar (Dev)</Button>
         <Sidebar reportError={props.reportError} isOpen={isSidebarOpen} onClose={closeSidebar} onOpen={openSidebar} />
         <Graph reportError={props.reportError} />
 
-    </React.Fragment>
+    </div>
     );
 }
 
