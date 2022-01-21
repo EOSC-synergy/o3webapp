@@ -156,34 +156,32 @@ function TimeCheckBoxGroup(props) {
     }
 
     return (
-        <>
-            <Typography>
-                <Divider>TIME</Divider>
-                <Box sx={{paddingLeft: '8%', paddingRight: '8%', alignItems: "center", display: "flex", flexDirection: "column"}}>
-                    <FormControlLabel
-                        label="All year"
-                        control={
-                            <Checkbox 
-                                inputProps={{'data-testid':"CheckboxAllYear"}} 
-                                onClick={handleYearChecked} 
-                                checked={isEveryMonthChecked()} 
-                                indeterminate={isIndeterminate()}
-                            />
-                        }
-                    />
-                    <Grid container>
-                        <Grid item container>
-                            {toSeasonCheckbox(Winter)}
-                            {toSeasonCheckbox(Spring)}
-                        </Grid>
-                        <Grid item container>
-                            {toSeasonCheckbox(Summer)}
-                            {toSeasonCheckbox(Autumn)}
-                        </Grid>
+        <div style={{marginTop: "5%"}}>
+            <Divider>TIME</Divider>
+            <Box sx={{paddingLeft: '8%', paddingRight: '8%', alignItems: "center", display: "flex", flexDirection: "column"}}>
+                <FormControlLabel
+                    label="All year"
+                    control={
+                        <Checkbox 
+                            inputProps={{'data-testid':"CheckboxAllYear"}} 
+                            onClick={handleYearChecked} 
+                            checked={isEveryMonthChecked()} 
+                            indeterminate={isIndeterminate()}
+                        />
+                    }
+                />
+                <Grid container>
+                    <Grid item container>
+                        {toSeasonCheckbox(Winter)}
+                        {toSeasonCheckbox(Spring)}
                     </Grid>
-                </Box>
-            </Typography>
-        </>
+                    <Grid item container>
+                        {toSeasonCheckbox(Summer)}
+                        {toSeasonCheckbox(Autumn)}
+                    </Grid>
+                </Grid>
+            </Box>
+        </div>
     );
 }
 

@@ -2,8 +2,8 @@
 
 exports[`renders correctly 1`] = `
 <div>
-  <p
-    class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+  <div
+    style="margin-top: 5%;"
   >
     <div
       class="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-1ws8119-MuiDivider-root"
@@ -689,6 +689,6 @@ exports[`renders correctly 1`] = `
         </div>
       </div>
     </div>
-  </p>
+  </div>
 </div>
 `;
