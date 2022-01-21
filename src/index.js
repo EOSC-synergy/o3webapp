@@ -12,7 +12,7 @@ return {
     plotType: "tco3_zm",
     latMin: "-90", 
     latMax: "90", 
-    months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 
+    months: [1], 
     startYear: 1960, 
     endYear: 2100, 
     modelList: modelList.slice(0, 4), // not all models for faster testing!
