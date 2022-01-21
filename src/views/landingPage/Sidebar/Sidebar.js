@@ -102,11 +102,11 @@ function Sidebar(props) {
                     {defaultStructure["sections"].map((s, idx) =>
                         <Section
                             name={s.name}
-                            key={idx}
-                            open={expandedSection === idx}
+                            key={idx}    
+                            isExpanded={idx === expandedSection}                     
                             components={s.components}
-                            onCollapse={collapseSection}
-                            onExpand={expandSection}
+                            onCollapse={() => collapseSection(idx)}
+                            onExpand={() => expandSection(idx)}
                             reportError={props.reportError}
                         />
                     )}
