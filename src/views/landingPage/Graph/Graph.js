@@ -46,18 +46,35 @@ settings.options.stroke.dashArray.push(...strokes)
 settings.options.stroke.width.push(...lineWidth)
 settings.series.push(...ySeries)
 
-const prepareData = () => {
+const prepareData = (data, plotId) => {
     const transformedData = formatDataBasedOnPlotId(data, plotId);
     // calculate statistical values
     // merge model settings
     // merge statistical values
-    
+    return transformedData;
 }
 
 const renderCorrectChartComponent = (plotId, data) => {
-    
     // mapping: from plotId to chart type required (apexcharts component)
     // select compmonent: return comp, this gets rendered in Graph if data is there
+    if (plotId === "tco3_zm") {
+        const transformed = prepareData(data, plotId);
+        settings.options.stroke.width = transformed.lineWidth;
+        settings.options.stroke.dashArray = transformed.strokes;
+        settings.series = transformed.ySeries;
+        settings.options.xaxis.categories = transformed.xAxis;
+        settings.options.colors = transformed.colors;
+        console.log(settings.series)
+        return <Chart
+            options={settings.options}
+            series={settings.series}
+            type={"line"}
+            height={"60%"}
+        />
+    } else if (plotId === "tco3_return") {
+        return <Typography>To be implemented...</Typography>
+    }
+    
 }
 
 /**
@@ -83,12 +100,15 @@ function Graph(props) {
         return <Typography>An error occurred, please try to reload the site</Typography>;
 
     } else if (activeData.status === REQUEST_STATE.success) {
-        return <Chart
+        return renderCorrectChartComponent(plotId, activeData.data);
+        /*
+        <Chart
             options={settings.options}
             series={settings.series}
             type={"line"}
             height={"60%"}
         />
+        */
     };
 
     // this "case" should not happen
