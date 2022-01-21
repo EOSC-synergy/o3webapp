@@ -25,7 +25,7 @@ const referenceSlice = createSlice({
   name: "reference",
   initialState,
   reducers: {
-      
+
     /**
      * This reducer accepts an action object returned from setActivePlotId()
      *     e.g. dispatch(setActivePlotId({id: "tco3_zm"}))
@@ -135,6 +135,18 @@ export const {
  * the above defined actions wouldn't trigger state updates.
  */
 export default referenceSlice.reducer;
+
+
+/**
+ * This selectors allows components to select the current plot id
+ * from the store. The plot id is a string using the same naming as the
+ * o3as api e.g. tco3_zm or tco3_return
+ * 
+ * @param {object} state the global redux state
+ * @returns {string} the current active plot id
+ */
+ export const selectPlotId = state => state.reference.plotId;
+
 
 /**
  * This selectors allows components to select the current reference year
