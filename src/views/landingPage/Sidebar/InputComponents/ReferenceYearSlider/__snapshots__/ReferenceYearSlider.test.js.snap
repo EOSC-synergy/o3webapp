@@ -1,42 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Component renders correctly from config file 1`] = `
-Array [
+<div>
   <div
-    className="MuiFormControl-root css-78me8v-MuiFormControl-root"
+    class="MuiFormControl-root css-78me8v-MuiFormControl-root"
   >
     <div
-      className="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
-      onClick={[Function]}
+      class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
     >
       <div
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-labelledby="locationSelectLabel locationSelect"
-        className="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+        class="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
         id="locationSelect"
-        onBlur={[Function]}
-        onFocus={[Function]}
-        onKeyDown={[Function]}
-        onMouseDown={[Function]}
         role="button"
-        tabIndex={0}
+        tabindex="0"
       >
-        SBUV_GSFC_merged-SAT-ozone
+        <span
+          class="notranslate"
+        >
+          ​
+        </span>
       </div>
       <input
-        aria-hidden={true}
-        className="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
-        disabled={false}
-        onAnimationStart={[Function]}
-        onChange={[Function]}
-        required={false}
-        tabIndex={-1}
-        value={1}
+        aria-hidden="true"
+        class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+        tabindex="-1"
+        value=""
       />
       <svg
-        aria-hidden={true}
-        className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+        aria-hidden="true"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
         data-testid="ArrowDropDownIcon"
         focusable="false"
         viewBox="0 0 24 24"
@@ -46,11 +41,11 @@ Array [
         />
       </svg>
       <fieldset
-        aria-hidden={true}
-        className="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+        aria-hidden="true"
+        class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
       >
         <legend
-          className="css-1z7n62"
+          class="css-173wfxe"
         >
           <span>
             Reference Model
@@ -59,95 +54,65 @@ Array [
       </fieldset>
     </div>
     <label
-      className="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary MuiFormLabel-filled css-1kty9di-MuiFormLabel-root-MuiInputLabel-root"
-      data-shrink={true}
+      class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+      data-shrink="false"
       id="locationSelectLabel"
     >
       Reference Model
     </label>
-  </div>,
+  </div>
   <div
-    className="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
+    class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
   >
     <div
-      className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-gj1fbr-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-gj1fbr-MuiGrid-root"
     >
       <p
-        className="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
       >
         Reference year:
       </p>
     </div>
     <div
-      className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8 css-vok43g-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8 css-vok43g-MuiGrid-root"
     >
       <span
-        className="MuiSlider-colorPrimary MuiSlider-sizeSmall MuiSlider-root MuiSlider-trackFalse css-53tbrc-MuiSlider-root"
-        onMouseDown={[Function]}
+        class="MuiSlider-colorPrimary MuiSlider-sizeSmall MuiSlider-root MuiSlider-trackFalse css-53tbrc-MuiSlider-root"
       >
         <span
-          className="MuiSlider-rail css-14pt78w-MuiSlider-rail"
+          class="MuiSlider-rail css-14pt78w-MuiSlider-rail"
         />
         <span
-          className="MuiSlider-track css-1vjujtc-MuiSlider-track"
-          style={
-            Object {
-              "left": "0%",
-              "width": "20%",
-            }
-          }
+          class="MuiSlider-track css-1vjujtc-MuiSlider-track"
+          style="left: 0%; width: 20%;"
         />
         <span
-          className="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeSmall MuiSlider-thumb css-14gf62f-MuiSlider-thumb"
-          data-index={0}
-          onMouseLeave={[Function]}
-          onMouseOver={[Function]}
-          style={
-            Object {
-              "left": "20%",
-              "pointerEvents": undefined,
-            }
-          }
+          class="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeSmall MuiSlider-thumb css-14gf62f-MuiSlider-thumb"
+          data-index="0"
+          style="left: 20%;"
         >
           <input
             aria-orientation="horizontal"
-            aria-valuemax={2100}
-            aria-valuemin={1950}
-            aria-valuenow={1980}
-            data-index={0}
-            disabled={false}
-            max={2100}
-            min={1950}
-            onBlur={[Function]}
-            onChange={[Function]}
-            onFocus={[Function]}
-            step={1}
-            style={
-              Object {
-                "border": 0,
-                "clip": "rect(0 0 0 0)",
-                "direction": "ltr",
-                "height": "100%",
-                "margin": -1,
-                "overflow": "hidden",
-                "padding": 0,
-                "position": "absolute",
-                "whiteSpace": "nowrap",
-                "width": "100%",
-              }
-            }
+            aria-valuemax="2100"
+            aria-valuemin="1950"
+            aria-valuenow="1980"
+            data-index="0"
+            max="2100"
+            min="1950"
+            step="1"
+            style="border: 0px; height: 100%; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 100%; direction: ltr;"
             type="range"
-            value={1980}
+            value="1980"
           />
           <span
-            aria-hidden={true}
-            className="MuiSlider-valueLabelOpen MuiSlider-valueLabel css-gdpt3b-MuiSlider-valueLabel"
+            aria-hidden="true"
+            class="MuiSlider-valueLabelOpen MuiSlider-valueLabel css-gdpt3b-MuiSlider-valueLabel"
           >
             <span
-              className="MuiSlider-valueLabelCircle"
+              class="MuiSlider-valueLabelCircle"
             >
               <span
-                className="MuiSlider-valueLabelLabel"
+                class="MuiSlider-valueLabelLabel"
               >
                 1980
               </span>
@@ -156,6 +121,6 @@ Array [
         </span>
       </span>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
