@@ -58,7 +58,7 @@ export default function ErrorMessageModal(props) {
                             key="button"
                             sx={{px: 5, pb: 5, display: "flex", justifyContent: "right"}}
                         >
-                            <Button onClick={props.onClose}>Close</Button>
+                            <Button onClick={props.onClose}>Dismiss</Button>
                         </Grid>
                     </Grid>
                 </Card>
