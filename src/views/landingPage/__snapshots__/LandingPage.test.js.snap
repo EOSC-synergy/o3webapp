@@ -615,16 +615,6 @@ exports[`test LandingPage component LandingPage renders correctly 1`] = `
       </button>
     </div>
   </div>
-  <div
-    class="spinner"
-  >
-    <h4>
-      loading data
-    </h4>
-    <div
-      class="loader"
-      style="height: 8em; width: 8em;"
-    />
-  </div>
+  <div />
 </div>
 `;
