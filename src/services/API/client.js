@@ -15,7 +15,7 @@ const postAtAPI = (endpoint, data) => {
 }
 
 export const getPlotTypes = () => {
-  return getFromAPI("/data");
+  return getFromAPI("/plots");
 };
 
 export const getModels = (plotType, select) => {
@@ -49,9 +49,9 @@ export const postModelsPlotStyle = (plotType) => {
  * @param {*} modelList 
  * @returns 
  */
-export const getRawData = (plotType, latMin, latMax, months, startYear, endYear, modelList) => {
+export const getPlotData = (plotType, latMin, latMax, months, modelList, startYear="1959", endYear="2100", refModel="SBUV_GSFC_merged-SAT-ozone", refYear="1980") => {
     return postAtAPI(
-        `/data/${plotType}?begin=${startYear}&end=${endYear}&month=${months.join(",")}&lat_min=${latMin}&lat_max=${latMax}`,
+        `/plots/${plotType}?begin=${startYear}&end=${endYear}&month=${months.join(",")}&lat_min=${latMin}&lat_max=${latMax}&ref_meas=${refModel}&ref_year=${refYear}`,
         modelList
     );
 }

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
-import { getModels, getPlotTypes, getRawData } from "./client";
+import { getModels, getPlotTypes, getPlotData } from "./client";
 
 /**
  * This object models an "enum" in JavaScript. Each of the values is used
@@ -48,7 +48,7 @@ export const fetchRawPlotData = createAsyncThunk('api/fetchRawPlotData',
 
     async ({ plotType, latMin, latMax, months, startYear, endYear, modelList }, thunkAPI) => {
     const plotId = thunkAPI.getState().plot.plotId; // store current calling plotId
-    const response = await getRawData(plotType, latMin, latMax, months, startYear, endYear, modelList);
+    const response = await getPlotData(plotType, latMin, latMax, months, startYear, endYear, modelList);
     return {data: response.data, plotId: plotId};
 });
 
@@ -69,7 +69,7 @@ export const fetchRawData = ({ plotId, plotType, latMin, latMax, months, startYe
 
       // Return promise with success and failure actions
       
-      return getRawData(plotType, latMin, latMax, months, startYear, endYear, modelList).then(  
+      return getPlotData(plotType, latMin, latMax, months, modelList, startYear, endYear).then(  
         response => dispatch(fetchRawSuccess({data: response.data, plotId, cacheKey})),
         error => dispatch(fetchRawRejected({error: error.message, plotId, cacheKey}))
       );
