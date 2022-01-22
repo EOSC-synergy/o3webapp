@@ -4,7 +4,7 @@ import App from './App';
 import store from './store/store'
 import { Provider } from 'react-redux'
 import "./index.css"
-import { fetchModels, fetchPlotTypes, fetchRawData } from './services/API/apiSlice';
+import { fetchModels, fetchPlotData, fetchPlotTypes } from './services/API/apiSlice';
 
 const getOptions = (modelList) => {
 return {
@@ -12,15 +12,17 @@ return {
     plotType: "tco3_zm",
     latMin: "-90", 
     latMax: "90", 
-    months: [1], 
+    months: [1, 2, 3], 
     startYear: 1960, 
     endYear: 2100, 
     modelList: modelList.slice(0, 50), // not all models for faster testing!
+    refYear: 1980,
+    refModel: "SBUV_GSFC_merged-SAT-ozone",
 }
 };
 
 const reloadInitialData = () => {
-    store.dispatch(fetchRawData(
+    store.dispatch(fetchPlotData(
         getOptions(store.getState().api.models.data)
     )); 
 }

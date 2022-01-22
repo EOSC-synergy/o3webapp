@@ -52,26 +52,26 @@ export const fetchRawPlotData = createAsyncThunk('api/fetchRawPlotData',
     return {data: response.data, plotId: plotId};
 });
 
-const generateCacheKey = (latMin, latMax, months) => {
-    return `lat_min=${latMin}&lat_min=${latMax}&months=${months.join(',')}`;
+const generateCacheKey = ({ latMin, latMax, months, refModel, refYear }) => {
+    return `lat_min=${latMin}&lat_min=${latMax}&months=${months.join(',')}&ref_meas=${refModel}&ref_year`;
 }
 
-const fetchRawPending =  createAction("api/fetchRawPlotData/pending");
-const fetchRawSuccess =  createAction("api/fetchRawPlotData/success");
-const fetchRawRejected = createAction("api/fetchRawPlotData/rejected");
+const fetchPlotDataPending =  createAction("api/fetchPlotData/pending");
+const fetchPlotDataSuccess =  createAction("api/fetchPlotData/success");
+const fetchPlotDataRejected = createAction("api/fetchPlotData/rejected");
 
-export const fetchRawData = ({ plotId, plotType, latMin, latMax, months, startYear, endYear, modelList }) => {
-    const cacheKey = generateCacheKey(latMin, latMax, months);
+export const fetchPlotData = ({ plotId, plotType, latMin, latMax, months, startYear, endYear, modelList, refModel, refYear }) => {
+    const cacheKey = generateCacheKey({ latMin, latMax, months, refModel, refYear });
 
     return (dispatch) => {     
       // Initial action dispatched
-      dispatch(fetchRawPending({plotId, cacheKey}));
+      dispatch(fetchPlotDataPending({plotId, cacheKey}));
 
       // Return promise with success and failure actions
       
-      return getPlotData(plotType, latMin, latMax, months, modelList, startYear, endYear).then(  
-        response => dispatch(fetchRawSuccess({data: response.data, plotId, cacheKey})),
-        error => dispatch(fetchRawRejected({error: error.message, plotId, cacheKey}))
+      return getPlotData({plotType, latMin, latMax, months, modelList, startYear, endYear, refModel, refYear}).then(  
+        response => dispatch(fetchPlotDataSuccess({data: response.data, plotId, cacheKey})),
+        error => dispatch(fetchPlotDataRejected({error: error.message, plotId, cacheKey}))
       );
       
     };
@@ -99,7 +99,7 @@ const initialState = {
     plotSpecific: {
         tco3_zm: {
             active: null,
-            cachedRequests: { // we need to cache: min,max, months (year span, [modellist])
+            cachedRequests: { // we need to cache: min,max, months, reference year and model
 
             }
         },
@@ -159,7 +159,7 @@ const apiSlice = createSlice({
             })
 
             // fetch raw data
-            .addCase(fetchRawPending, (state, action) => {
+            .addCase(fetchPlotDataPending, (state, action) => {
                 const { plotId, cacheKey } = action.payload;
                 const plotSpecificSection = state.plotSpecific[plotId];
                 
@@ -171,13 +171,13 @@ const apiSlice = createSlice({
                 plotSpecificSection.active = cacheKey; 
                 // select this request after initialization
             })
-            .addCase(fetchRawSuccess, (state, action) => {
+            .addCase(fetchPlotDataSuccess, (state, action) => {
                 const { data, plotId, cacheKey } = action.payload;
                 const storage = state.plotSpecific[plotId].cachedRequests[cacheKey];
                 storage.status = REQUEST_STATE.success;
                 storage.data = data; // TODO: transform?
             })
-            .addCase(fetchRawRejected, (state, action) => {
+            .addCase(fetchPlotDataRejected, (state, action) => {
                 const { error, plotId, cacheKey } = action.payload;
                 const storage = state.plotSpecific[plotId].cachedRequests[cacheKey];
                 storage.status = REQUEST_STATE.error;
