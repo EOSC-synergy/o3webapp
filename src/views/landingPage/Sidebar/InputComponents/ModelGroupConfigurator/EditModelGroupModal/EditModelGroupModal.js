@@ -78,6 +78,7 @@ function EditModelGroupModal(props) {
     const [meanVisible, setMeanVisible] =               React.useState(Array(filteredRows.length).fill(false));
     const [derivativeVisible, setDerivativeVisible] =   React.useState(Array(filteredRows.length).fill(false));
     const [percentileVisible, setPercentileVisible] =   React.useState(Array(filteredRows.length).fill(false));
+    const [currentSelectedIds, setCurrentSelectedIds] = React.useState([]);
 
 
     const handleMedianChecked = (id) => {
@@ -107,6 +108,7 @@ function EditModelGroupModal(props) {
     const handleVisibleChecked = () => {
 
     }
+
 
     
     //const makeRepeated = (arr, repeats) => Array.from({ length: repeats }, () => arr).flat();
@@ -228,10 +230,25 @@ function EditModelGroupModal(props) {
                             Modify Selected Rows: 
                         </Typography>
                         <Grid container direction="row">
-                            <Button variant="outlined" startIcon={<CheckBoxIcon />} onClick={() => setMeanVisible(Array(105).fill(true))}>
+                            <Button variant="outlined" startIcon={<CheckBoxIcon />} onClick={() => {
+                                    const meanVisibleCopy = [...meanVisible];
+                                    currentSelectedIds.forEach(
+                                        id => {meanVisibleCopy[id] = true;}
+                                    )
+                                    setMeanVisible(meanVisibleCopy);
+                            }}>
                                 Mean
                             </Button>
-                            <Button variant="outlined" startIcon={<CheckBoxOutlineBlankIcon />} onClick={() => setMeanVisible(Array(105).fill(false))}>
+                            <Button variant="outlined" startIcon={<CheckBoxOutlineBlankIcon />} onClick={() => {
+                                    const meanVisibleCopy = [...meanVisible];
+                                    //console.log(currentSelectedIds)
+                                    currentSelectedIds.forEach(
+                                        id => {meanVisibleCopy[id] = false;}
+                                    )
+                                    setMeanVisible(meanVisibleCopy);
+                                    console.log(meanVisibleCopy);
+
+                            }}>
                                 Mean
                             </Button>
                             
@@ -268,7 +285,7 @@ function EditModelGroupModal(props) {
                                   selectedIDs.has(row.id.toString())
                                 );
                                 */
-                                console.log(selectedIDs);
+                                setCurrentSelectedIds([...selectedIDs]);
                               }}
                     />
                     
