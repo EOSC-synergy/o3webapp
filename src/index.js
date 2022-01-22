@@ -6,42 +6,29 @@ import { Provider } from 'react-redux'
 import "./index.css"
 import { fetchModels, fetchPlotData, fetchPlotTypes } from './services/API/apiSlice';
 
-const getOptions = (modelList) => {
-return {
-    plotId: "tco3_zm",
-    plotType: "tco3_zm",
-    latMin: "-90", 
-    latMax: "90", 
-    months: [1, 2, 3], 
-    startYear: 1960, 
-    endYear: 2100, 
-    modelList: modelList.slice(0, 50), // not all models for faster testing!
-    refYear: 1980,
-    refModel: "SBUV_GSFC_merged-SAT-ozone",
-}
-};
-
 const reloadInitialData = () => {
-    store.dispatch(fetchPlotData(
-        getOptions(store.getState().api.models.data)
-    )).then(
-        store.dispatch(
-        fetchPlotData(
-            getOptions(store.getState().api.models.data)
-        )
-    )); 
+    store.dispatch(fetchPlotData({
+        plotId: "tco3_zm",
+        plotType: "tco3_zm",
+        latMin: "-90", 
+        latMax: "90", 
+        months: [1, 2, 3], 
+        startYear: 1960, 
+        endYear: 2100, 
+        modelList: store.getState().api.models.data.slice(0, 1), // not all models for faster testing!
+        refYear: 1980,
+        refModel: "SBUV_GSFC_merged-SAT-ozone",
+    }));
 }
 
 // on "startup" of the app: request default values for all models
 store.dispatch(fetchModels())
     .then(() => {
         if (store.getState().api.models.error === null) {
-            reloadInitialData();       
+            reloadInitialData(); // after fetching models fetch some data for the plot     
         }
     });
 store.dispatch(fetchPlotTypes());
-
-//https://api.o3as.fedcloud.eu/api/v1/data/tco3_zm?begin=1959&end=2100&month=1,2,3&lat_min=-90&lat_max=90
 
 ReactDOM.render(
 <React.StrictMode>
