@@ -40,19 +40,6 @@ export const fetchPlotTypes = createAsyncThunk('api/fetchPlotTypes', async () =>
 });
 
 /**
- * This thunk action creator generates an action on call that can be dispatched
- * against the store to start a fetch of the required raw plot data.
- */
-export const fetchRawPlotData = createAsyncThunk('api/fetchRawPlotData', 
-    // dispatch loading action?
-
-    async ({ plotType, latMin, latMax, months, startYear, endYear, modelList }, thunkAPI) => {
-    const plotId = thunkAPI.getState().plot.plotId; // store current calling plotId
-    const response = await getPlotData(plotType, latMin, latMax, months, startYear, endYear, modelList);
-    return {data: response.data, plotId: plotId};
-});
-
-/**
  * This function concatenates all given information into a string serving as an identifier
  * for cached requests in the store.
  * 
@@ -69,21 +56,28 @@ const generateCacheKey = ({ latMin, latMax, months, refModel, refYear }) => {
 
 /**
  * This action creator generates an action that is dispatched against the store 
- * when the request of the data is started. The payload contains the plotId.
+ * when the request of the data is started. The payload contains the plotId and the cacheKey.
  */
 const fetchPlotDataPending =  createAction("api/fetchPlotData/pending");
 /**
  * This action creator generates an action that is dispatched against the store 
- * when the request of the data succeded. The payload object contains the data and 
+ * when the request of the data succeded. The payload object contains the data, the cacheKey and 
  * the plotId.
  */
 const fetchPlotDataSuccess =  createAction("api/fetchPlotData/success");
 /**
  * This action creator generates an action that is dispatched against the store 
  * when the request of the data failed. The playload object contains the 
- * error message and the plotId.
+ * error message, the cacheKey and the plotId.
  */
 const fetchPlotDataRejected = createAction("api/fetchPlotData/rejected");
+/**
+ * This action creator generates an action that is dispatched against the store 
+ * when the requested data is already in the cache and only needs to be selected.
+ * The payload contains the plotId and the cacheKey.
+ */
+const selectExistingPlotData = createAction("api/selectPlotData");
+
 
 /**
  * This async thunk creator allows to generate a data fetching action that can be dispatched 
@@ -103,17 +97,33 @@ const fetchPlotDataRejected = createAction("api/fetchPlotData/rejected");
 export const fetchPlotData = ({ plotId, latMin, latMax, months, startYear, endYear, modelList, refModel, refYear }) => {
     const cacheKey = generateCacheKey({ latMin, latMax, months, refModel, refYear });
 
-    return (dispatch) => {     
-      // Initial action dispatched
-      dispatch(fetchPlotDataPending({plotId, cacheKey}));
+    return (dispatch, getState) => {
+        // it shouldn't reload the same request if the data is already present (previous successful request) or 
+        // if the request is already loading
+        const cachedRequest = getState().api.plotSpecific[plotId].cachedRequests[cacheKey];
+        
+        if (typeof cachedRequest === "undefined") {
+            // do nothing
+        } else if (cachedRequest.status === REQUEST_STATE.loading) {
+            // do nothing, request is already loading
+            return; 
+            // to consider later: maybe replace this with a Promise.reject if 
+            // we want to rely on the .then() chaining later
+        } else if (cachedRequest.status === REQUEST_STATE.success) {
+            dispatch(selectExistingPlotData({plotId, cacheKey}));
+            return Promise.resolve(); // request is already satisfied
+        }
+        
+        // Initial action dispatched
+        dispatch(fetchPlotDataPending({plotId, cacheKey}));
 
-      // Return promise with success and failure actions
-      
-      return getPlotData({plotId, latMin, latMax, months, modelList, startYear, endYear, refModel, refYear}).then(  
-        response => dispatch(fetchPlotDataSuccess({data: response.data, plotId, cacheKey})),
-        error => dispatch(fetchPlotDataRejected({error: error.message, plotId, cacheKey}))
-      );
-      
+        // Return promise with success and failure actions
+        
+        return getPlotData({plotId, latMin, latMax, months, modelList, startYear, endYear, refModel, refYear}).then(  
+            response => dispatch(fetchPlotDataSuccess({data: response.data, plotId, cacheKey})),
+            error => dispatch(fetchPlotDataRejected({error: error.message, plotId, cacheKey}))
+        );
+        
     };
 };
 
@@ -222,6 +232,12 @@ const apiSlice = createSlice({
                 storage.status = REQUEST_STATE.error;
                 storage.error = error;
             })
+
+            // select existing data from cache
+            .addCase(selectExistingPlotData, (state, action) => {
+                const { plotId, cacheKey } = action.payload;
+                state.plotSpecific[plotId].active = cacheKey; // update by chaning the active value to the existing cachekey
+            })
     },
 });
 
@@ -239,7 +255,7 @@ export default apiSlice.reducer;
  * 
  * @param {object} state the state, handed by redux
  * @param {string} plotId identifies the plot
- * @returns the current active data for the 
+ * @returns the current active data for the active plot
  */
 export const selectActivePlotData = (state, plotId) => {
     const plotSpecificSection = state.api.plotSpecific[plotId];
