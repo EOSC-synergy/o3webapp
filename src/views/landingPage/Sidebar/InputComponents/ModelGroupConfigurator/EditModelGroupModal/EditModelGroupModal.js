@@ -10,6 +10,8 @@ import AddIcon from '@mui/icons-material/Add';
 import DoneIcon from '@mui/icons-material/Done';
 import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 
 import { Typography } from "@mui/material";
 
@@ -221,6 +223,33 @@ function EditModelGroupModal(props) {
                             foundIndicesCallback={foundIndices}
                         />
                     </div>
+                    <Grid container direction="row"> 
+                        <Typography>
+                            Modify Selected Rows: 
+                        </Typography>
+                        <Grid container direction="row">
+                            <Button variant="outlined" startIcon={<CheckBoxIcon />} onClick={() => setMeanVisible(Array(105).fill(true))}>
+                                Mean
+                            </Button>
+                            <Button variant="outlined" startIcon={<CheckBoxOutlineBlankIcon />} onClick={() => setMeanVisible(Array(105).fill(false))}>
+                                Mean
+                            </Button>
+                            
+                            <Button variant="outlined" startIcon={<CheckBoxIcon />}>
+                                Median
+                            </Button>
+                            <Button variant="outlined" startIcon={<CheckBoxOutlineBlankIcon />}>
+                                Median
+                            </Button>
+                            <Button variant="outlined" startIcon={<CheckBoxIcon />}>
+                                Derivative
+                            </Button>
+                            <Button variant="outlined" startIcon={<CheckBoxOutlineBlankIcon />}>
+                                Derivative
+                            </Button>
+                            
+                        </Grid>
+                    </Grid>
                     <StyledDataGrid 
                             rows={filteredRows}
                             columns={columns}
@@ -232,13 +261,18 @@ function EditModelGroupModal(props) {
                             //disableColumnMenu
                             //disableColumnSelector
                             checkboxSelection
+                            onSelectionModelChange={(ids) => {
+                                const selectedIDs = new Set(ids);
+                                /*
+                                const selectedRowData = rows.filter((row) =>
+                                  selectedIDs.has(row.id.toString())
+                                );
+                                */
+                                console.log(selectedIDs);
+                              }}
                     />
                     
-                    <Grid container alignItems="center" justifyContent="center">
-                        <Button variant="outlined" startIcon={<DeleteIcon />}>
-                            Delete
-                        </Button>
-                    </Grid>
+                    
                 </Card>
 
             </Modal>
