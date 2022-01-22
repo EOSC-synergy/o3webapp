@@ -1,6 +1,7 @@
-import reducer, { fetchModels, fetchPlotTypes, REQUEST_STATE } from "./apiSlice";
+import reducer, { fetchModels, fetchPlotData, fetchPlotDataPending, fetchPlotTypes, generateCacheKey, REQUEST_STATE } from "./apiSlice";
 import axios from 'axios';
 import { configureStore } from "@reduxjs/toolkit";
+import { createTestStore } from "../../store/store";
 
 jest.mock('axios');
 
@@ -181,4 +182,53 @@ describe("tests the REQUEST_STATE enum", () => {
     expect(REQUEST_STATE.idle).toEqual("idle");
     expect(REQUEST_STATE.error).toEqual("error");
     expect(REQUEST_STATE.success).toEqual("success");
-})
+});
+
+/*
+describe("tests the action creators of fetchPlotData", () => {
+    
+    console.log("a" + fetchPlotDataPending);
+    expect(fetchPlotDataPending({plotId: "tco3_zm", cacheKey: "key"})).toEqual({
+        type: "api/fetchPlotData/pending",
+        plotId: "tco3_zm", 
+        cacheKey: "key",
+    });
+});
+*/
+
+let store;
+describe('tests fetchPlotData thunk action creator', () => {
+    const exampleRequestData = {
+        plotId: "tco3_zm",
+        latMin: -90, 
+        latMax: 90, 
+        months: [1], 
+        startYear: 1959, 
+        endYear: 2100, 
+        modelList: ["modelX", "modelY"], 
+        refModel: "modelRed", 
+        refYear: 1980,
+    };
+    const exampleCacheKey = generateCacheKey(exampleRequestData);
+
+    beforeEach(() => {
+        store = createTestStore();
+    });
+
+    it('should dispatch a loading status', () => {
+        axios.post.mockResolvedValue({data: {}});
+        store.dispatch(fetchPlotData(exampleRequestData));
+
+        const plotSpecificSection = store.getState().api.plotSpecific["tco3_zm"];
+        expect(plotSpecificSection.active).toEqual(exampleCacheKey);
+        expect(plotSpecificSection.cachedRequests[exampleCacheKey]).toEqual({
+            data: [],
+            error: null,
+            status: REQUEST_STATE.loading,
+        });
+
+
+    });
+
+
+});
