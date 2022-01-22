@@ -52,8 +52,19 @@ export const fetchRawPlotData = createAsyncThunk('api/fetchRawPlotData',
     return {data: response.data, plotId: plotId};
 });
 
+/**
+ * This function concatenates all given information into a string serving as an identifier
+ * for cached requests in the store.
+ * 
+ * @param {int} obj.latMin specifies the minimum latitude
+ * @param {int} obj.latMax specifies the maximum latitude
+ * @param {array of int} obj.months represents the selected months
+ * @param {string} obj.refModel the reference model to "normalize the data"
+ * @param {int} obj.refYear the reference year to "normalize the data"
+ * @returns the generated string
+ */
 const generateCacheKey = ({ latMin, latMax, months, refModel, refYear }) => {
-    return `lat_min=${latMin}&lat_min=${latMax}&months=${months.join(',')}&ref_meas=${refModel}&ref_year`;
+    return `lat_min=${latMin}&lat_min=${latMax}&months=${months.join(',')}&ref_meas=${refModel}&ref_year=${refYear}`;
 }
 
 /**
@@ -80,7 +91,7 @@ const fetchPlotDataRejected = createAction("api/fetchPlotData/rejected");
  * 
  * @param {string} obj.plotType a string describing the plot - has to be the offical plot name (e.g. tco3_zm)
  * @param {int} obj.latMin specifies the minimum latitude
- * @param {int} obj.latMax specifies specifying the maximum latitude
+ * @param {int} obj.latMax specifies the maximum latitude
  * @param {array of int} obj.months represents the selected months
  * @param {array of string} obj.modelList lists the desired models
  * @param {int} obj.startYear from which point the data should start
