@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux"
-import { updatedModelGroup } from "../../../../../../store/modelsSlice"
 import { Modal, Card, Button, Grid, Checkbox } from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
 import models from "./models"
 import SearchBar from "../SearchBar/SearchBar";
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import DoneIcon from '@mui/icons-material/Done';
-import CancelIcon from '@mui/icons-material/Cancel';
 import ClearIcon from '@mui/icons-material/Clear';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import { Typography } from "@mui/material";
 
@@ -39,6 +37,16 @@ for(let i = 0; i < models.length; i++) {
     })
 }
 
+function CustomCheckbox(props) {
+    return (
+        <div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
+            <Checkbox checked={props.isChecked} onClick={props.handleChecked}/>
+        </div>
+    );
+}
+
+const MemoizedCheckbox = React.memo(CustomCheckbox);
+
 /**
  * opens a modal where the user can edit an existing model group
  * @param {Object} props 
@@ -50,16 +58,7 @@ for(let i = 0; i < models.length; i++) {
  */
 function EditModelGroupModal(props) {
 
-    // const dispatch = useDispatch()
-
-    let i = props.onClose;
-    i = props.isOpen;
-    i = props.reportError;
-    i = props.modelGroupId;
-
     const [filteredRows, setFilteredRows] = React.useState(rows);
-
-    // dispatch(updatedModelGroup(someData))
 
     const cardStyle = {
         position: 'absolute',
@@ -73,27 +72,37 @@ function EditModelGroupModal(props) {
         p: 4,
     };
 
-    const [medianVisible, setMedianVisible] = React.useState(Array(filteredRows.length).fill(false));
+    const [medianVisible, setMedianVisible] =           React.useState(Array(filteredRows.length).fill(false));
+    const [meanVisible, setMeanVisible] =               React.useState(Array(filteredRows.length).fill(false));
+    const [derivativeVisible, setDerivativeVisible] =   React.useState(Array(filteredRows.length).fill(false));
+    const [percentileVisible, setPercentileVisible] =   React.useState(Array(filteredRows.length).fill(false));
+
+
     const handleMedianChecked = (id) => {
         let medianVisibleCopy = [...medianVisible]
         medianVisibleCopy[id] = !medianVisibleCopy[id]
         setMedianVisible(medianVisibleCopy);
-        console.log(medianVisible);
     }
 
-    const handleMeanChecked = () => {
-
+    const handleMeanChecked = (id) => {
+        let meanVisibleCopy = [...meanVisible]
+        meanVisibleCopy[id] = !meanVisibleCopy[id]
+        setMeanVisible(meanVisibleCopy);
     }
 
-    const handleDerivativeChecked = () => {
-
+    const handleDerivativeChecked = (id) => {
+        let derivativeVisibleCopy = [...derivativeVisible]
+        derivativeVisibleCopy[id] = !derivativeVisibleCopy[id]
+        setDerivativeVisible(derivativeVisibleCopy);
     }
 
-    const handlePercentileChecked = () => {
-
+    const handlePercentileChecked = (id) => {
+        let percentileVisibleCopy = [...percentileVisible]
+        percentileVisibleCopy[id] = !percentileVisibleCopy[id]
+        setPercentileVisible(percentileVisibleCopy);
     }
 
-    const handleVilibleChecked = () => {
+    const handleVisibleChecked = () => {
 
     }
 
@@ -125,9 +134,7 @@ function EditModelGroupModal(props) {
             disableClickEventBubbling: true,
             renderCell: (params) => {
                 return (
-                    <div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
-                        <Checkbox checked={medianVisible[params.row.id]} onClick={() => handleMedianChecked(params.row.id)}/>
-                    </div>
+                    <MemoizedCheckbox isChecked={medianVisible[params.row.id]} handleChecked={() => handleMedianChecked(params.row.id)}/>
                 );
              }
           },
@@ -139,9 +146,7 @@ function EditModelGroupModal(props) {
             disableClickEventBubbling: true,
             renderCell: (params) => {
                 return (
-                    <div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
-                        <Checkbox onClick={handleMeanChecked}/>
-                    </div>
+                    <MemoizedCheckbox isChecked={meanVisible[params.row.id]} handleChecked={() => handleMeanChecked(params.row.id)}/>
                 );
              }
           },
@@ -153,9 +158,7 @@ function EditModelGroupModal(props) {
             disableClickEventBubbling: true,
             renderCell: (params) => {
                 return (
-                    <div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
-                        <Checkbox onClick={handleDerivativeChecked}/>
-                    </div>
+                    <MemoizedCheckbox isChecked={derivativeVisible[params.row.id]} handleChecked={() => handleDerivativeChecked(params.row.id)}/>
                 );
              }
           },
@@ -167,9 +170,7 @@ function EditModelGroupModal(props) {
             disableClickEventBubbling: true,
             renderCell: (params) => {
                 return (
-                    <div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
-                        <Checkbox onClick={handlePercentileChecked}/>
-                    </div>
+                    <MemoizedCheckbox isChecked={percentileVisible[params.row.id]} handleChecked={() => handlePercentileChecked(params.row.id)}/>
                 );
              }
           },
@@ -182,23 +183,7 @@ function EditModelGroupModal(props) {
             renderCell: (params) => {
                 return (
                     <div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
-                        <Checkbox onClick={handleVilibleChecked} />
-                    </div>
-                );
-             }
-          },
-          {
-            field: 'delete',
-            headerName: 'Delete',
-            sortable: false,
-            width: 120,
-            disableClickEventBubbling: true,
-            renderCell: (params) => {
-                return (
-                    <div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
-                        <IconButton aria-label="delete" color={"error"}>
-                            <DeleteIcon />
-                        </IconButton>
+                        <Checkbox onClick={handleVisibleChecked} />
                     </div>
                 );
              }
@@ -243,15 +228,16 @@ function EditModelGroupModal(props) {
                             rowsPerPageOptions={[5]}
                             // hideFooter
                             // autoHeight
-                            disableSelectionOnClick
-                            disableColumnMenu
-                            disableColumnSelector
+                            //disableSelectionOnClick
+                            //disableColumnMenu
+                            //disableColumnSelector
+                            checkboxSelection
                     />
                     
                     <Grid container alignItems="center" justifyContent="center">
-                        <IconButton aria-label="delete" color={"success"} size="large">
-                            <AddIcon fontSize="large"/>
-                        </IconButton>
+                        <Button variant="outlined" startIcon={<DeleteIcon />}>
+                            Delete
+                        </Button>
                     </Grid>
                 </Card>
 
