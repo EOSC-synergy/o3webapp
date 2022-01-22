@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import { useGetPlotsQuery } from "../../../../../services/API/apiSlice";
 import PropTypes from "prop-types";
 import Select from '@mui/material/Select';
@@ -32,7 +32,6 @@ function PlotTypeSelector(props) {
      * @todo connect with redux store
      */
     const changePlotType = (event) => {
-        //console.log(event.target.value);
         dispatch(setActivePlotId({plotId: event.target.value}))
     }
 
@@ -54,9 +53,13 @@ function PlotTypeSelector(props) {
                     <MenuItem key={idx} value={name}>{name}</MenuItem>
                 )
         });
-    } else if (plotTypesRequestData.status === REQUEST_STATE.error) {
-        props.reportError(plotTypesRequestData.error);
-    }
+    } 
+
+    useEffect(() => {
+        if (plotTypesRequestData.status === REQUEST_STATE.error) {
+            props.reportError(plotTypesRequestData.error);
+        }
+    });
 
     return (
         <FormControl sx={{ width: '100%' }} data-testid="plotTypeSelectorForm">
