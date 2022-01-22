@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import Chart from "react-apexcharts"
 import data from "./default-data.json"
 import settings from "./default-settings.json"
@@ -92,11 +92,19 @@ function Graph(props) {
     const plotId = useSelector(selectPlotId);
     const activeData = useSelector(state => selectActivePlotData(state, plotId));
 
+    useEffect(() => { 
+        // note: this is important, because we should only "propagate" the error to the top
+        // if this component has finished rendering, causing no <em>side effects</em> in
+        // its rendering process 
+        if (activeData.status === REQUEST_STATE.error) {
+            props.reportError(activeData.error);
+        }
+    })
+
     if (activeData.status === REQUEST_STATE.loading || activeData.status === REQUEST_STATE.idle) {
         return <Spinner text={"loading data"} size={"8em"}></Spinner>
 
     } else if (activeData.status === REQUEST_STATE.error) {
-        props.reportError(activeData.error);
         return <Typography>An error occurred, please try to reload the site</Typography>;
 
     } else if (activeData.status === REQUEST_STATE.success) {
