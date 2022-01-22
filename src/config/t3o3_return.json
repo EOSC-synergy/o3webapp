@@ -1,8 +1,8 @@
 {
   "sections": [
     {
-      "name": "Appearance",
-      "components": ["LocationSelector"]
+      "name": "Filter Data",
+      "components": ["RegionSelector", "TimeCheckBoxGroup"]
     }
   ]
 }
