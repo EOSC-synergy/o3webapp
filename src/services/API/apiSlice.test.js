@@ -215,6 +215,12 @@ describe('tests fetchPlotData thunk action creator', () => {
         store = createTestStore();
     });
 
+    it('should generate the correct cacheKey', () => {
+        expect(
+            generateCacheKey({latMin: -90, latMax: 90, months: [1,2], refModel: "modelRef", refYear: 420})
+        ).toEqual("lat_min=-90&lat_min=90&months=1,2&ref_meas=modelRef&ref_year=420");
+    })
+
     it('should dispatch a loading status', () => {
         axios.post.mockResolvedValue({data: {}});
         store.dispatch(fetchPlotData(exampleRequestData));
@@ -226,9 +232,6 @@ describe('tests fetchPlotData thunk action creator', () => {
             error: null,
             status: REQUEST_STATE.loading,
         });
-
-
     });
-
 
 });
