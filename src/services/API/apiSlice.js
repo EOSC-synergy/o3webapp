@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getModels, getPlotTypes } from "./client";
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
+import { getModels, getPlotTypes, getPlotData } from "./client";
 
 /**
  * This object models an "enum" in JavaScript. Each of the values is used
@@ -40,6 +40,95 @@ export const fetchPlotTypes = createAsyncThunk('api/fetchPlotTypes', async () =>
 });
 
 /**
+ * This function concatenates all given information into a string serving as an identifier
+ * for cached requests in the store.
+ * 
+ * @param {int} obj.latMin specifies the minimum latitude
+ * @param {int} obj.latMax specifies the maximum latitude
+ * @param {array of int} obj.months represents the selected months
+ * @param {string} obj.refModel the reference model to "normalize the data"
+ * @param {int} obj.refYear the reference year to "normalize the data"
+ * @returns the generated string
+ */
+export const generateCacheKey = ({ latMin, latMax, months, refModel, refYear }) => {
+    return `lat_min=${latMin}&lat_min=${latMax}&months=${months.join(',')}&ref_meas=${refModel}&ref_year=${refYear}`;
+}
+
+/**
+ * This action creator generates an action that is dispatched against the store 
+ * when the request of the data is started. The payload contains the plotId and the cacheKey.
+ */
+const fetchPlotDataPending =  createAction("api/fetchPlotData/pending");
+/**
+ * This action creator generates an action that is dispatched against the store 
+ * when the request of the data succeded. The payload object contains the data, the cacheKey and 
+ * the plotId.
+ */
+const fetchPlotDataSuccess =  createAction("api/fetchPlotData/success");
+/**
+ * This action creator generates an action that is dispatched against the store 
+ * when the request of the data failed. The playload object contains the 
+ * error message, the cacheKey and the plotId.
+ */
+const fetchPlotDataRejected = createAction("api/fetchPlotData/rejected");
+/**
+ * This action creator generates an action that is dispatched against the store 
+ * when the requested data is already in the cache and only needs to be selected.
+ * The payload contains the plotId and the cacheKey.
+ */
+const selectExistingPlotData = createAction("api/selectPlotData");
+
+
+/**
+ * This async thunk creator allows to generate a data fetching action that can be dispatched 
+ * against the store to start fetching new plot data from the api. 
+ * 
+ * @param {string} obj.plotType a string describing the plot - has to be the offical plot name (e.g. tco3_zm)
+ * @param {int} obj.latMin specifies the minimum latitude
+ * @param {int} obj.latMax specifies the maximum latitude
+ * @param {array of int} obj.months represents the selected months
+ * @param {array of string} obj.modelList lists the desired models
+ * @param {int} obj.startYear from which point the data should start
+ * @param {int} obj.endYear until which point the data is required
+ * @param {string} obj.refModel the reference model to "normalize the data"
+ * @param {int} obj.refYear the reference year to "normalize the data"
+ * @returns the async thunk action
+ */
+export const fetchPlotData = ({ plotId, latMin, latMax, months, startYear, endYear, modelList, refModel, refYear }) => {
+    const cacheKey = generateCacheKey({ latMin, latMax, months, refModel, refYear });
+
+    return (dispatch, getState) => {
+        // it shouldn't reload the same request if the data is already present (previous successful request) or 
+        // if the request is already loading
+        const cachedRequest = getState().api.plotSpecific[plotId].cachedRequests[cacheKey];
+        
+        if (typeof cachedRequest === "undefined") {
+            // do nothing
+        } else if (cachedRequest.status === REQUEST_STATE.loading) {
+            // do nothing, request is already loading
+            return; 
+            // to consider later: maybe replace this with a Promise.reject if 
+            // we want to rely on the .then() chaining later
+        } else if (cachedRequest.status === REQUEST_STATE.success) {
+            dispatch(selectExistingPlotData({plotId, cacheKey}));
+            return Promise.resolve(); // request is already satisfied
+        }
+        
+        // Initial action dispatched
+        dispatch(fetchPlotDataPending({plotId, cacheKey}));
+
+        // Return promise with success and failure actions
+        
+        return getPlotData({plotId, latMin, latMax, months, modelList, startYear, endYear, refModel, refYear})
+            .then(  
+                response => dispatch(fetchPlotDataSuccess({data: response.data, plotId, cacheKey})),
+                error => dispatch(fetchPlotDataRejected({error: error.message, plotId, cacheKey})),
+            );
+        
+    };
+};
+
+/**
  * This initial state describes how the data fetched from the api is stored in this
  * slice of the redux store.
  * 
@@ -57,6 +146,20 @@ const initialState = {
         status: REQUEST_STATE.idle,
         error: null,
         data: [],
+    },
+    plotSpecific: {
+        tco3_zm: {
+            active: null,
+            cachedRequests: { // we need to cache: min,max, months, reference year and model
+
+            }
+        },
+        tco3_return: {
+            active: null,
+            cachedRequests: {
+
+            }
+        },
     },
 };
 
@@ -92,6 +195,7 @@ const apiSlice = createSlice({
                 state.models.status = REQUEST_STATE.error;
                 state.models.error = action.error.message;
             })
+
             // fetch plotTypes
             .addCase(fetchPlotTypes.pending, (state, action) => {
                 state.plotTypes.status = REQUEST_STATE.loading;
@@ -104,6 +208,37 @@ const apiSlice = createSlice({
                 state.plotTypes.status = REQUEST_STATE.error;
                 state.plotTypes.error = action.error.message;
             })
+
+            // fetch plot data
+            .addCase(fetchPlotDataPending, (state, action) => {
+                const { plotId, cacheKey } = action.payload;
+                const plotSpecificSection = state.plotSpecific[plotId];
+                
+                plotSpecificSection.cachedRequests[cacheKey] = {
+                    status: REQUEST_STATE.loading,
+                    error: null,
+                    data: [],
+                };
+                plotSpecificSection.active = cacheKey; // select this request after dispatching it
+            })
+            .addCase(fetchPlotDataSuccess, (state, action) => {
+                const { data, plotId, cacheKey } = action.payload;
+                const storage = state.plotSpecific[plotId].cachedRequests[cacheKey];
+                storage.status = REQUEST_STATE.success;
+                storage.data = data; // Consider for later: transforming might optimize performance
+            })
+            .addCase(fetchPlotDataRejected, (state, action) => {
+                const { error, plotId, cacheKey } = action.payload;
+                const storage = state.plotSpecific[plotId].cachedRequests[cacheKey];
+                storage.status = REQUEST_STATE.error;
+                storage.error = error;
+            })
+
+            // select existing data from cache
+            .addCase(selectExistingPlotData, (state, action) => {
+                const { plotId, cacheKey } = action.payload;
+                state.plotSpecific[plotId].active = cacheKey; // update by chaning the active value to the existing cachekey
+            })
     },
 });
 
@@ -113,3 +248,24 @@ const apiSlice = createSlice({
  * the above defined actions wouldn't trigger state updates.
  */
 export default apiSlice.reducer;
+
+/**
+ * This selectors allows components (=> the graph) to "listen" for the active plot data
+ * of the current selected plot. That means whenever this data is about to change, e.g. because
+ * a new fetch request is dispatched, the component rerenders.
+ * 
+ * @param {object} state the state, handed by redux
+ * @param {string} plotId identifies the plot
+ * @returns the current active data for the active plot
+ */
+export const selectActivePlotData = (state, plotId) => {
+    const plotSpecificSection = state.api.plotSpecific[plotId];
+    const activeCacheKey = plotSpecificSection.active;
+    if (activeCacheKey === null) { // no data is present yet, return dummy to indicate loading!
+        return {
+            status: REQUEST_STATE.loading,
+        };
+    };
+
+    return plotSpecificSection.cachedRequests[activeCacheKey];
+}

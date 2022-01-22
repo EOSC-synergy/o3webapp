@@ -1,6 +1,32 @@
 export function mergeModelDataAndSettings(modelData, modelSettings) {
     
-}
+};
+
+export function formatDataBasedOnPlotId(data, plotId) {
+    if (plotId === "tco3_zm") {
+        const xAxis = [...Array(141).keys()].map(value => `${value + 1960}`) // 1960 - 2100 //modelData[0].x.map(string => string.substring(0,4)) // turn to years only
+        //console.log(modelData)
+        // transform time series of each model obj
+        const ySeries = data.map(modelObj => {        
+                return {
+                    name: modelObj.model,
+                    data: modelObj.y.map(number => number.toFixed(2)),
+                }
+            }
+        );
+        const colors = data.map(modelObj => colourNameToHex(modelObj.plotstyle.color))
+        const strokes = data.map(modelObj => convertToStrokeStyle(modelObj.plotstyle.linestyle))
+        const lineWidth = data.map(el => 2) // default is 2
+        
+        return {
+            xAxis,
+            ySeries,
+            colors,
+            strokes,
+            lineWidth,
+        };
+    };
+};
 
 export function colourNameToHex(colour)
 {
@@ -33,16 +59,16 @@ export function colourNameToHex(colour)
         return colours[colour.toLowerCase()];
 
     return false;
-}
+};
 
 export function convertToStrokeStyle(apiStyle) {
     const styles = {
         "solid": 0,
         "dotted": 1,
         "dashed": 3,
-    }
+    };
 
     if (typeof styles[apiStyle.toLowerCase()] != 'undefined')
         return styles[apiStyle.toLowerCase()];
     return false;
-}
+};

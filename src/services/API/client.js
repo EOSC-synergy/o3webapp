@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const baseURL = "https://api.o3as.fedcloud.eu/api/v1";
 
-const timeoutVal = 5000;
+const timeoutVal = 60 * 1000; // 1 min at least (fetching the models took 29s)
 
 
 const getFromAPI = (endpoint) => {
@@ -10,19 +10,13 @@ const getFromAPI = (endpoint) => {
 }
 
 const postAtAPI = (endpoint, data) => {
-    return axios.post(baseURL + endpoint, { data }, { timeout: timeoutVal });
+    // dont pack "data" in an object, the api accepts only an array of values (e.g. model list)
+    return axios.post(baseURL + endpoint, data, { timeout: timeoutVal }); 
 }
 
 export const getPlotTypes = () => {
-  return getFromAPI("/data");
+  return getFromAPI("/plots");
 };
-
-export const postData = (plotType, data) => {
-    return postAtAPI(
-        `/data/${plotType}`,
-        { data }
-    );
-}
 
 export const getModels = (plotType, select) => {
     const hasPlotType = typeof plotType !== "undefined";
@@ -40,5 +34,29 @@ export const postModelsPlotStyle = (plotType) => {
         {
             ptype: plotType
         }
+    );
+}
+
+/**
+ * Performs a request to /plots/plotId to fetch the plot data from the api formatted with the given parameters.
+ * 
+ * @param {string} obj.plotId a string describing the plot - has to be the offical plot name (e.g. tco3_zm)
+ * @param {int} obj.latMin specifies the minimum latitude
+ * @param {int} obj.latMax specifies specifying the maximum latitude
+ * @param {array of int} obj.months represents the selected months
+ * @param {array of string} obj.modelList lists the desired models
+ * @param {int} obj.startYear from which point the data should start
+ * @param {int} obj.endYear until which point the data is required
+ * @param {string} obj.refModel the reference model to "normalize the data"
+ * @param {int} obj.refYear the reference year to "normalize the data"
+ * @returns the request promise from axios
+ */
+export const getPlotData = ({plotId, latMin, latMax, months, modelList, startYear, endYear, refModel, refYear}) => {
+    if (months.length === 0) {
+        throw new Error("requesting with an empty array will be rejected by the api");
+    }
+    return postAtAPI(
+        `/plots/${plotId}?begin=${startYear}&end=${endYear}&month=${months.join(",")}&lat_min=${latMin}&lat_max=${latMax}&ref_meas=${refModel}&ref_year=${refYear}`,
+        modelList
     );
 }
