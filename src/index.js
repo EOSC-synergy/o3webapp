@@ -24,6 +24,11 @@ return {
 const reloadInitialData = () => {
     store.dispatch(fetchPlotData(
         getOptions(store.getState().api.models.data)
+    )).then(
+        store.dispatch(
+        fetchPlotData(
+            getOptions(store.getState().api.models.data)
+        )
     )); 
 }
 
