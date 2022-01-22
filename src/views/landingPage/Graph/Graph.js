@@ -64,7 +64,6 @@ const renderCorrectChartComponent = (plotId, data) => {
         settings.series = transformed.ySeries;
         settings.options.xaxis.categories = transformed.xAxis;
         settings.options.colors = transformed.colors;
-        console.log(settings.series)
         return <Chart
             options={settings.options}
             series={settings.series}
