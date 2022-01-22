@@ -60,7 +60,22 @@ const fetchPlotDataPending =  createAction("api/fetchPlotData/pending");
 const fetchPlotDataSuccess =  createAction("api/fetchPlotData/success");
 const fetchPlotDataRejected = createAction("api/fetchPlotData/rejected");
 
-export const fetchPlotData = ({ plotId, plotType, latMin, latMax, months, startYear, endYear, modelList, refModel, refYear }) => {
+/**
+ * This async thunk creator allows to generate a data fetching action that can be dispatched 
+ * against the store to start fetching new plot data from the api. 
+ * 
+ * @param {string} obj.plotType a string describing the plot - has to be the offical plot name (e.g. tco3_zm)
+ * @param {int} obj.latMin specifies the minimum latitude
+ * @param {int} obj.latMax specifies specifying the maximum latitude
+ * @param {array of int} obj.months represents the selected months
+ * @param {array of string} obj.modelList lists the desired models
+ * @param {int} obj.startYear from which point the data should start
+ * @param {int} obj.endYear until which point the data is required
+ * @param {string} obj.refModel the reference model to "normalize the data"
+ * @param {int} obj.refYear the reference year to "normalize the data"
+ * @returns the async thunk action
+ */
+export const fetchPlotData = ({ plotId, latMin, latMax, months, startYear, endYear, modelList, refModel, refYear }) => {
     const cacheKey = generateCacheKey({ latMin, latMax, months, refModel, refYear });
 
     return (dispatch) => {     
@@ -69,13 +84,13 @@ export const fetchPlotData = ({ plotId, plotType, latMin, latMax, months, startY
 
       // Return promise with success and failure actions
       
-      return getPlotData({plotType, latMin, latMax, months, modelList, startYear, endYear, refModel, refYear}).then(  
+      return getPlotData({plotId, latMin, latMax, months, modelList, startYear, endYear, refModel, refYear}).then(  
         response => dispatch(fetchPlotDataSuccess({data: response.data, plotId, cacheKey})),
         error => dispatch(fetchPlotDataRejected({error: error.message, plotId, cacheKey}))
       );
       
     };
-  };
+};
 
 /**
  * This initial state describes how the data fetched from the api is stored in this
@@ -158,7 +173,7 @@ const apiSlice = createSlice({
                 state.plotTypes.error = action.error.message;
             })
 
-            // fetch raw data
+            // fetch plot data
             .addCase(fetchPlotDataPending, (state, action) => {
                 const { plotId, cacheKey } = action.payload;
                 const plotSpecificSection = state.plotSpecific[plotId];
@@ -168,14 +183,13 @@ const apiSlice = createSlice({
                     error: null,
                     data: [],
                 };
-                plotSpecificSection.active = cacheKey; 
-                // select this request after initialization
+                plotSpecificSection.active = cacheKey; // select this request after dispatching it
             })
             .addCase(fetchPlotDataSuccess, (state, action) => {
                 const { data, plotId, cacheKey } = action.payload;
                 const storage = state.plotSpecific[plotId].cachedRequests[cacheKey];
                 storage.status = REQUEST_STATE.success;
-                storage.data = data; // TODO: transform?
+                storage.data = data; // Consider for later: transforming might optimize performance
             })
             .addCase(fetchPlotDataRejected, (state, action) => {
                 const { error, plotId, cacheKey } = action.payload;
@@ -193,6 +207,15 @@ const apiSlice = createSlice({
  */
 export default apiSlice.reducer;
 
+/**
+ * This selectors allows components (=> the graph) to "listen" for the active plot data
+ * of the current selected plot. That means whenever this data is about to change, e.g. because
+ * a new fetch request is dispatched, the component rerenders.
+ * 
+ * @param {object} state the state, handed by redux
+ * @param {string} plotId identifies the plot
+ * @returns the current active data for the 
+ */
 export const selectActivePlotData = (state, plotId) => {
     const plotSpecificSection = state.api.plotSpecific[plotId];
     const activeCacheKey = plotSpecificSection.active;

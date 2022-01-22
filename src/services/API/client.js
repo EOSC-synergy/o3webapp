@@ -38,22 +38,22 @@ export const postModelsPlotStyle = (plotType) => {
 }
 
 /**
- * Performs a request to /plots/plotType to fetch the plot data from the api formatted with the given parameters.
+ * Performs a request to /plots/plotId to fetch the plot data from the api formatted with the given parameters.
  * 
- * @param {string} plotType a string describing the plot - has to be the offical plot name (e.g. tco3_zm)
- * @param {int} latMin specifies the minimum latitude
- * @param {int} latMax specifies specifying the maximum latitude
- * @param {array of int} months represents the selected months
- * @param {array of string} modelList lists the desired models
- * @param {int} startYear from which point the data should start
- * @param {int} endYear until which point the data is required
- * @param {string} refModel the reference model to "normalize the data"
- * @param {int} refYear the reference year to "normalize the data"
+ * @param {string} obj.plotId a string describing the plot - has to be the offical plot name (e.g. tco3_zm)
+ * @param {int} obj.latMin specifies the minimum latitude
+ * @param {int} obj.latMax specifies specifying the maximum latitude
+ * @param {array of int} obj.months represents the selected months
+ * @param {array of string} obj.modelList lists the desired models
+ * @param {int} obj.startYear from which point the data should start
+ * @param {int} obj.endYear until which point the data is required
+ * @param {string} obj.refModel the reference model to "normalize the data"
+ * @param {int} obj.refYear the reference year to "normalize the data"
  * @returns the request promise from axios
  */
-export const getPlotData = ({plotType, latMin, latMax, months, modelList, startYear, endYear, refModel, refYear}) => {
+export const getPlotData = ({plotId, latMin, latMax, months, modelList, startYear, endYear, refModel, refYear}) => {
     return postAtAPI(
-        `/plots/${plotType}?begin=${startYear}&end=${endYear}&month=${months.join(",")}&lat_min=${latMin}&lat_max=${latMax}&ref_meas=${refModel}&ref_year=${refYear}`,
+        `/plots/${plotId}?begin=${startYear}&end=${endYear}&month=${months.join(",")}&lat_min=${latMin}&lat_max=${latMax}&ref_meas=${refModel}&ref_year=${refYear}`,
         modelList
     );
 }
