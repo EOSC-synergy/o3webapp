@@ -3,8 +3,8 @@ import Graph from './Graph/Graph';
 import Sidebar from './Sidebar/Sidebar';
 import Button from '@mui/material/Button';
 import PropTypes from "prop-types";
-import { FormControl } from '@mui/material';
-import { width } from '@mui/system';
+import { FormControl, Grid } from '@mui/material';
+import { height, width } from '@mui/system';
 
 /**
  * main view of web page
@@ -42,19 +42,16 @@ function LandingPage(props) {
     }
     
     return (
-    <div data-testid="landingPage" style={{width: "100%"}}>
-
-        
-        <Sidebar reportError={props.reportError} isOpen={isSidebarOpen} onClose={closeSidebar} onOpen={openSidebar} />
-        <Button variant="outlined" onClick={openSidebar} style={{width: "100%"}}>Open Sidebar (Dev)</Button>
-        <div style={{
-          position: "absolute", left: "50%", top: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "95%"
-        }}>
+    <div data-testid="landingPage" style={{width: "100%"}}> 
+      <Sidebar reportError={props.reportError} isOpen={isSidebarOpen} onClose={closeSidebar} onOpen={openSidebar} />
+      <Button variant="outlined" onClick={openSidebar} style={{width: "100%"}}>Open Sidebar (Dev)</Button>
+  
+      <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+        <div style={{width: "95%"}}>
           <Graph reportError={props.reportError} />
         </div>
-
+      </div>
+      
     </div>
     );
 }
