@@ -1,4 +1,4 @@
-import {getModels, postData} from './client';
+import {getModels, getPlotTypes, postData} from './client';
 import * as axios from 'axios';
 
 jest.mock('axios');
@@ -18,12 +18,13 @@ describe("Testing the getModels function", () => {
 
     });
 });
-describe("Testing the postData function", () => {
+
+describe("tests the getPlotTypes function", () => {
     it('should format the url correctly', async () => {
         let url;
-        await postData("tco3_zm");
-        url = axios.post.mock.calls[0][0];
-        expect(url).toEqual("https://api.o3as.fedcloud.eu/api/v1/data/tco3_zm");
+        await getPlotTypes();
+        url = axios.get.mock.calls[0][0];
+        expect(url).toEqual("https://api.o3as.fedcloud.eu/api/v1/plots");
 
     });
 });
