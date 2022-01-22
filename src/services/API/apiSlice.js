@@ -56,8 +56,22 @@ const generateCacheKey = ({ latMin, latMax, months, refModel, refYear }) => {
     return `lat_min=${latMin}&lat_min=${latMax}&months=${months.join(',')}&ref_meas=${refModel}&ref_year`;
 }
 
+/**
+ * This action creator generates an action that is dispatched against the store 
+ * when the request of the data is started. The payload contains the plotId.
+ */
 const fetchPlotDataPending =  createAction("api/fetchPlotData/pending");
+/**
+ * This action creator generates an action that is dispatched against the store 
+ * when the request of the data succeded. The payload object contains the data and 
+ * the plotId.
+ */
 const fetchPlotDataSuccess =  createAction("api/fetchPlotData/success");
+/**
+ * This action creator generates an action that is dispatched against the store 
+ * when the request of the data failed. The playload object contains the 
+ * error message and the plotId.
+ */
 const fetchPlotDataRejected = createAction("api/fetchPlotData/rejected");
 
 /**
