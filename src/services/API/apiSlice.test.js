@@ -32,6 +32,16 @@ describe("fetchModels async thunk", () => {
                     error: null,
                     data: [],
                 },
+                plotSpecific: {
+                    tco3_zm: {
+                        active: null,
+                        cachedRequests: { }
+                    },
+                    tco3_return: {
+                        active: null,
+                        cachedRequests: { }
+                    },
+                },
             },
         };
 
@@ -60,6 +70,16 @@ describe("fetchModels async thunk", () => {
                     status: REQUEST_STATE.idle,
                     error: null,
                     data: [],
+                },
+                plotSpecific: {
+                    tco3_zm: {
+                        active: null,
+                        cachedRequests: { }
+                    },
+                    tco3_return: {
+                        active: null,
+                        cachedRequests: { }
+                    },
                 },
             },
         };
@@ -98,6 +118,16 @@ describe("fetchModels async thunk", () => {
                     error: null,
                     data: mockedReturnedData,
                 },
+                plotSpecific: {
+                    tco3_zm: {
+                        active: null,
+                        cachedRequests: { }
+                    },
+                    tco3_return: {
+                        active: null,
+                        cachedRequests: { }
+                    },
+                },
             },
         };
 
@@ -126,6 +156,16 @@ describe("fetchModels async thunk", () => {
                     status: REQUEST_STATE.error,
                     error: errorMessage,
                     data: [],
+                },
+                plotSpecific: {
+                    tco3_zm: {
+                        active: null,
+                        cachedRequests: { }
+                    },
+                    tco3_return: {
+                        active: null,
+                        cachedRequests: { }
+                    },
                 },
             },
         };
