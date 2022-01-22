@@ -4,7 +4,7 @@ import { configureStore } from "@reduxjs/toolkit";
 
 jest.mock('axios');
 
-describe("fetchModels async thunk", () => {
+describe("tests fetchModels async thunk", () => {
     it('creates the action types', () => {
         expect(fetchModels.pending.type).toBe('api/fetchModels/pending')
         expect(fetchModels.fulfilled.type).toBe('api/fetchModels/fulfilled')
@@ -90,7 +90,7 @@ describe("fetchModels async thunk", () => {
     });    
 });
 
-describe("fetchModels async thunk", () => {
+describe("tests fetchPlotTypes async thunk", () => {
     it('creates the action types', () => {    
         expect(fetchPlotTypes.pending.type).toBe('api/fetchPlotTypes/pending')
         expect(fetchPlotTypes.fulfilled.type).toBe('api/fetchPlotTypes/fulfilled')
@@ -175,3 +175,10 @@ describe("fetchModels async thunk", () => {
         expect(store.getState(state => state.api)).toEqual(expected);
     });    
 });
+
+describe("tests the REQUEST_STATE enum", () => {
+    expect(REQUEST_STATE.loading).toEqual("loading");
+    expect(REQUEST_STATE.idle).toEqual("idle");
+    expect(REQUEST_STATE.error).toEqual("error");
+    expect(REQUEST_STATE.success).toEqual("success");
+})
