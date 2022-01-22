@@ -38,18 +38,20 @@ export const postModelsPlotStyle = (plotType) => {
 }
 
 /**
- * TODO TOMMY
+ * Performs a request to /plots/plotType to fetch the plot data from the api formatted with the given parameters.
  * 
- * @param {*} plotType 
- * @param {*} latMin 
- * @param {*} latMax 
- * @param {*} months 
- * @param {*} startYear 
- * @param {*} endYear 
- * @param {*} modelList 
- * @returns 
+ * @param {string} plotType a string describing the plot - has to be the offical plot name (e.g. tco3_zm)
+ * @param {int} latMin specifies the minimum latitude
+ * @param {int} latMax specifies specifying the maximum latitude
+ * @param {array of int} months represents the selected months
+ * @param {array of string} modelList lists the desired models
+ * @param {int} startYear from which point the data should start
+ * @param {int} endYear until which point the data is required
+ * @param {string} refModel the reference model to "normalize the data"
+ * @param {int} refYear the reference year to "normalize the data"
+ * @returns the request promise from axios
  */
-export const getPlotData = (plotType, latMin, latMax, months, modelList, startYear="1959", endYear="2100", refModel="SBUV_GSFC_merged-SAT-ozone", refYear="1980") => {
+export const getPlotData = ({plotType, latMin, latMax, months, modelList, startYear, endYear, refModel, refYear}) => {
     return postAtAPI(
         `/plots/${plotType}?begin=${startYear}&end=${endYear}&month=${months.join(",")}&lat_min=${latMin}&lat_max=${latMax}&ref_meas=${refModel}&ref_year=${refYear}`,
         modelList
