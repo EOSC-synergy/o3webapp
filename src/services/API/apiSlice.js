@@ -193,7 +193,7 @@ const apiSlice = createSlice({
  */
 export default apiSlice.reducer;
 
-export const selectActiveRawDataForPlot = (state, plotId) => {
+export const selectActivePlotData = (state, plotId) => {
     const plotSpecificSection = state.api.plotSpecific[plotId];
     const activeCacheKey = plotSpecificSection.active;
     if (activeCacheKey === null) { // no data is present yet, return dummy to indicate loading!

@@ -5,7 +5,7 @@ import settings from "./default-settings.json"
 import { convertToStrokeStyle, colourNameToHex } from "../../../utils/optionsFormatter"
 import {useSelector} from 'react-redux'
 import { selectPlotId } from '../../../store/plotSlice/plotSlice';
-import { REQUEST_STATE, selectActiveRawDataForPlot } from '../../../services/API/apiSlice';
+import { REQUEST_STATE, selectActivePlotData } from '../../../services/API/apiSlice';
 import { Spinner } from '../../../components/Spinner/Spinner';
 import { Typography } from '@mui/material';
 import { formatDataBasedOnPlotId } from "../../../utils/optionsFormatter";
@@ -91,7 +91,7 @@ const renderCorrectChartComponent = (plotId, data) => {
 function Graph(props) {
 
     const plotId = useSelector(selectPlotId);
-    const activeData = useSelector(state => selectActiveRawDataForPlot(state, plotId));
+    const activeData = useSelector(state => selectActivePlotData(state, plotId));
 
     if (activeData.status === REQUEST_STATE.loading || activeData.status === REQUEST_STATE.idle) {
         return <Spinner text={"loading data"} size={"8em"}></Spinner>
