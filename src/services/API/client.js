@@ -52,6 +52,9 @@ export const postModelsPlotStyle = (plotType) => {
  * @returns the request promise from axios
  */
 export const getPlotData = ({plotId, latMin, latMax, months, modelList, startYear, endYear, refModel, refYear}) => {
+    if (months.length === 0) {
+        throw new Error("requesting with an empty array will be rejected by the api");
+    }
     return postAtAPI(
         `/plots/${plotId}?begin=${startYear}&end=${endYear}&month=${months.join(",")}&lat_min=${latMin}&lat_max=${latMax}&ref_meas=${refModel}&ref_year=${refYear}`,
         modelList
