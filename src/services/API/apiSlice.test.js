@@ -1,4 +1,4 @@
-import reducer, { fetchModels, fetchPlotData, fetchPlotDataPending, fetchPlotTypes, generateCacheKey, REQUEST_STATE } from "./apiSlice";
+import reducer, { fetchModels, fetchPlotData, fetchPlotDataPending, fetchPlotTypes, generateCacheKey, REQUEST_STATE, selectActivePlotData } from "./apiSlice";
 import axios from 'axios';
 import { configureStore } from "@reduxjs/toolkit";
 import { createTestStore } from "../../store/store";
@@ -234,4 +234,35 @@ describe('tests fetchPlotData thunk action creator', () => {
         });
     });
 
+});
+
+describe('testing selectors', () => {
+    it('should return a dummy loading object if now active data is present', () => {
+        const previousState = {
+            api: {
+                plotSpecific: {
+                    tco3_return: {
+                        active: null,
+                    }
+                }
+            }
+        }
+        expect(selectActivePlotData(previousState, "tco3_return")).toEqual({status: REQUEST_STATE.loading});
+    });
+
+    it('should return the correct data from the cache if data is present', () => {
+        const previousState = {
+            api: {
+                plotSpecific: {
+                    tco3_return: {
+                        active: "key",
+                        cachedRequests: {
+                            "key": "precious data",
+                        }
+                    }
+                }
+            }
+        }
+        expect(selectActivePlotData(previousState, "tco3_return")).toEqual("precious data");
+    });
 });
