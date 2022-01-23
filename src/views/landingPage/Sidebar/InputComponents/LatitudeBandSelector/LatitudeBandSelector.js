@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux"
 import { setLocation } from "../../../../../store/plotSlice/plotSlice";
-import {Box, Divider, FormControl, Grid, InputLabel, MenuItem, Select, TextField} from "@mui/material";
+import {Box, Divider, Grid, MenuItem, Select, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { latitudeBands } from "../../../../../utils/constants";
 import PropTypes from 'prop-types'; 
@@ -101,32 +101,29 @@ function LatitudeBandSelector(props) {
         <>
             <Divider><Typography>LATITUDE BAND</Typography></Divider>
             <Box sx={{paddingLeft: '8%', paddingRight: '8%', paddingTop: '3%'}}>
-                <FormControl sx={{width: '100%' }}>
-                    <Select
-                        labelId="latitudeBandSelectorLabel"
-                        id="latitudeBandSelector"
-                        value={isCustomizable ? 'custom' : latitudeBand}
-                        label="LatitudeBand"
-                        onChange={handleChangeLatitudeBand}
-                        defaultValue={defaultValue}
-                    >
-                        {
-                            // maps all latitude bands from constants.js to ´MenuItem´s
-                            latitudeBands.map(
-                                (s, idx) => <MenuItem key={idx} value={s.value}>{s.text.description}</MenuItem>
-                            )
-                        }
-                    </Select>
-                    <InputLabel id="latitudeBandSelectorLabel">Latitude Band</InputLabel>
+                <Select
+                    sx={{width: '100%' }}
+                       labelId="latitudeBandSelectorLabel"
+                    id="latitudeBandSelector"
+                    value={isCustomizable ? 'custom' : latitudeBand}
+                    label="LatitudeBand"
+                    onChange={handleChangeLatitudeBand}
+                    defaultValue={defaultValue}
+                >
                     {
-                        isCustomizable &&
-                        <> 
-                            {customLatitudeBandInput('lat min', latitudeBand[0], (event) => handleChangeLatitudeBandSingleElement(event, 0))}
-                            {customLatitudeBandInput('lat max', latitudeBand[1], (event) => handleChangeLatitudeBandSingleElement(event, 1))}
-                        </>
+                        // maps all latitude bands from constants.js to ´MenuItem´s
+                        latitudeBands.map(
+                            (s, idx) => <MenuItem key={idx} value={s.value}>{s.text.description}</MenuItem>
+                        )
                     }
-
-                </FormControl>
+                </Select>
+                {
+                    isCustomizable &&
+                    <>
+                        {customLatitudeBandInput('lat min', latitudeBand[0], (event) => handleChangeLatitudeBandSingleElement(event, 0))}
+                        {customLatitudeBandInput('lat max', latitudeBand[1], (event) => handleChangeLatitudeBandSingleElement(event, 1))}
+                    </>
+                }
             </Box>
         </>
     );
