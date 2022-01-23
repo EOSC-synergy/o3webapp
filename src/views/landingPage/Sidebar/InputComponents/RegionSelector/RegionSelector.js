@@ -1,6 +1,6 @@
 import React from "react";
 import LatitudeBandSelector from "../LatitudeBandSelector/LatitudeBandSelector";
-import {Box, Checkbox, FormControlLabel, Grid} from "@mui/material";
+import {Box, Checkbox, FormControlLabel} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {selectPlotRegions, setRegions} from "../../../../../store/plotSlice/plotSlice";
 
