@@ -29,14 +29,14 @@ function RegionSelector(props) {
     /**
      * Handles the change if a region is clicked (selected/deselected).
      *
-     * @param {*} regionId The id of the region that was clicked
+     * @param {number} regionIdx The index of the region that was clicked.
      */
-    const handleRegionChecked = (regionId) => {
+    const handleRegionChecked = (regionIdx) => {
         let regionCpy = [...selectedRegions];
-        if (regionCpy.includes(regionId)) {
-            regionCpy = regionCpy.filter((m) => m !== regionId);
+        if (regionCpy.includes(regionIdx)) {
+            regionCpy = regionCpy.filter((m) => m !== regionIdx);
         } else {
-            regionCpy.push(regionId);
+            regionCpy.push(regionIdx);
         }
         // Dispatch region checked
         dispatch(setRegions({ regions: regionCpy.sort((a, b) => a - b)}));
@@ -44,16 +44,17 @@ function RegionSelector(props) {
 
     /**
      * Gets default regions that are available in the return recovery plot.
+     * @todo connect to api
      */
     const getDefaultRegions = () => {
-        return ["test1", "test2", "test3"];
+        return ["test1", "test21231", "test3123123123"];
     }
 
     return (
         <>
             <LatitudeBandSelector />
 
-            <Box sx={{paddingLeft: '8%', paddingRight: '8%', alignItems: "center", display: "flex", flexDirection: "column"}}>
+            <Box sx={{paddingLeft: '8%', paddingRight: '8%', alignItems: "left", display: "flex", flexDirection: "column"}}>
                 {
                     getDefaultRegions().map((r, idx) => (
                         <React.Fragment key={idx}>
@@ -61,7 +62,7 @@ function RegionSelector(props) {
                                 label={r}
                                 control={
                                     <Checkbox
-                                        checked={selectedRegions.includes(getDefaultRegions()[idx])}
+                                        checked={selectedRegions.includes(idx)}
                                         onClick={() => handleRegionChecked(idx) }
                                     />
                                 }

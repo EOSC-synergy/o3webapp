@@ -50,7 +50,7 @@ const initialState = {
                 1
             ],
             regions: [
-                1
+                0
             ],
         }
     }
