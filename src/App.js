@@ -4,6 +4,7 @@ import Footer from "./components/Footer/Footer";
 import LandingPage from './views/landingPage/LandingPage';
 import ErrorMessageModal from './components/ErrorMessageModal/ErrorMessageModal';
 import CookieConsentModal from './components/CookieConsentModal/CookieConsentModal';
+import DiscardChangesModal from './components/DiscardChangesModal/DiscardChangesModal';
 
 /**
  * Main container of the Webapp
@@ -27,15 +28,27 @@ function App() {
 
     const closeCookieConsentModal = () => {
     }
+
+    const [isDiscardChangesModalVisible, setDiscardChangesModalVisible] = React.useState(false);
+
+    const openDiscardChangesModal = () => {
+        setDiscardChangesModalVisible(true);
+    };
+  
+    const closeDiscardChangesModal = () => {
+        setDiscardChangesModalVisible(false);
+    };
     
 
     return (
     <>
-        <Navbar error={reportError} />
+        {/* <Navbar error={reportError} />
         <LandingPage error={reportError} />
         <Footer error={reportError} />
         <ErrorMessageModal open={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />
-        <CookieConsentModal open={isCookieConsentModalVisible} onClose={closeCookieConsentModal} error={reportError} />
+        <CookieConsentModal open={isCookieConsentModalVisible} onClose={closeCookieConsentModal} error={reportError} /> */}
+        <button onClick={openDiscardChangesModal}>Dev</button>
+        <DiscardChangesModal open={isDiscardChangesModalVisible} />
     </>
     );
 }
