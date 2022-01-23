@@ -48,7 +48,7 @@ function App() {
         <ErrorMessageModal open={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />
         <CookieConsentModal open={isCookieConsentModalVisible} onClose={closeCookieConsentModal} error={reportError} /> */}
         <button onClick={openDiscardChangesModal}>Dev</button>
-        <DiscardChangesModal open={isDiscardChangesModalVisible} />
+        <DiscardChangesModal isOpen={isDiscardChangesModalVisible} />
     </>
     );
 }
