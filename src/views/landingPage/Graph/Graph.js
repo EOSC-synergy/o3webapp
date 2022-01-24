@@ -111,8 +111,8 @@ function Graph(props) {
         // get options
         const {series, colors} = generateSeries({plotId, data: activeData.data}); // at first without sv, without excluded models
         const options = getOptions({plotId, colors});
-        console.log(settings.series)
-        console.log(series)
+        //console.log(settings.series)
+        //console.log(series)
         return renderChartWithSettings({plotId, options, series: series}); // settings.series
     };
 

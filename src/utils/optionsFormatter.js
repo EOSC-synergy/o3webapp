@@ -1,11 +1,24 @@
 import { Typography } from "@mui/material"
 import Chart from "react-apexcharts"
+import { q25, q75, median } from "../services/math/math"
 
 const APEXCHART_PLOT_TYPE = {
     tco3_zm: "line",
-    tco_3return: "boxPlot"
+    tco3_return: "boxPlot"
     // vrom3?
 }
+
+// TODO extract to constants ?
+const ANTARCTIC = "Antarctic(Oct)"
+const SH_MID = "SH mid-lat"
+const NH_MID = "NH mid-lat"
+const TROPICS = "Tropics"
+const ARCTIC = "Arctic(Mar)"
+const NEAR_GLOBAL = "Near global"
+const GLOBAL = "Global"
+const USER_REGION = "User region"
+const ALL = [ANTARCTIC, SH_MID, NH_MID, TROPICS, ARCTIC, NEAR_GLOBAL, GLOBAL, USER_REGION];
+
 
 export const preTransformApiData = ({plotId, data}) => {
     if (plotId === "tco3_zm" || plotId === "tco3_return") {
@@ -45,6 +58,38 @@ export function renderChartWithSettings({plotId, series, options}) {
     return <Chart options={options} series={series} type={APEXCHART_PLOT_TYPE[plotId]} height={"400p"}/>
 }
 
+function calculateBoxPlotValues(data) {
+    const staticData = {}
+	for (let region of ALL) {
+		staticData[region] = []
+	}
+
+    for (const [model, modelData] of Object.entries(data)) {
+
+        for (let xypair of modelData.data) {
+            
+            staticData[xypair.x].push(xypair.y);
+        }
+
+    }
+    console.log(staticData)
+
+    const boxPlotValues = {}
+	for (let region of ALL) {
+		staticData[region].sort()
+		const arr = staticData[region]
+		boxPlotValues[region] = []
+		boxPlotValues[region].push(
+			arr[0],
+			q25(arr),
+			median(arr),
+			q75(arr),
+			arr[arr.length - 1]
+		)
+	}
+    console.log(boxPlotValues)
+    return boxPlotValues
+}
 
 export function generateSeries({plotId, data}) {
     // return color, line width, dash array if lineplot
@@ -61,6 +106,61 @@ export function generateSeries({plotId, data}) {
                 colourNameToHex(modelData.plotStyle.color)
             )
 
+        }
+    } else if (plotId === "tco3_return") {
+        const boxPlotValues = calculateBoxPlotValues(data);
+        series.push({
+                name: 'box',
+                type: 'boxPlot',
+        
+                data: [
+                {
+                    x: ANTARCTIC,
+                    y: boxPlotValues[ANTARCTIC] // min, q1, median, q3, max
+                },
+                
+                {
+                    x: SH_MID,
+                    y: boxPlotValues[SH_MID] // all sh mid lat values etc.
+                },
+                {
+                    x: NH_MID,
+                    y: boxPlotValues[NH_MID] // all sh mid lat values etc.
+                },
+                {
+                    x: TROPICS,
+                    y: boxPlotValues[TROPICS]
+                },
+                {
+                    x: ARCTIC,
+                    y: boxPlotValues[ARCTIC]
+                },
+                {
+                    x: NEAR_GLOBAL,
+                    y: boxPlotValues[NEAR_GLOBAL]
+                },
+                {
+                    x: GLOBAL,
+                    y: boxPlotValues[GLOBAL]
+                },
+                {
+                    x: USER_REGION,
+                    y: boxPlotValues[USER_REGION],
+                },
+                ]
+            }
+        )
+
+
+        for (const [model, modelData] of Object.entries(data)) {
+            series.push({
+                name: model,
+                data: modelData.data,
+                type: "scatter",
+            });
+            colors.push(
+                colourNameToHex(modelData.plotStyle.color)
+            )
         }
     }
     return {series, colors};
