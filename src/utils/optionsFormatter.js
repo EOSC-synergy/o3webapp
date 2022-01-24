@@ -1,3 +1,31 @@
+import { Typography } from "@mui/material"
+
+const APEXCHART_PLOT_TYPE = {
+    tco3_zm: "line",
+    tco_3return: "boxPlot"
+    // vrom3?
+}
+
+/**
+ * This function renders the correct apexcharts element, depending on the passed
+ * plotId.
+ * 
+ * @param {string} obj.plotId specifies what plot should be rendered
+ * @param {array} obj.series stores the data for the chart in the format that is expected by apexcharts
+ * @param {object} obj.options holds the information about the graph (has to be the format that is expected by apexcharts)
+ * @returns 
+ */
+export function renderChartWithSettings({plotId, series, options}) {
+    if (plotId === "tco3_zm") {
+        return <Chart options={options} series={series} type={APEXCHART_PLOT_TYPE[plotId]} height={"400p"}/>
+    } else if (plotId === "tco3_return") {
+        return <ReactApexChart options={options} series={settings.series} type={APEXCHART_PLOT_TYPE[plotId]} height={"400px"}/>
+    } else {
+        return <Typography>{`A plot for "${plotId} is currently not supported."`}</Typography>
+    }
+}
+
+
 export function mergeModelDataAndSettings(modelData, modelSettings) {
     
 };
