@@ -8,7 +8,7 @@ const APEXCHART_PLOT_TYPE = {
 }
 
 export const preTransformApiData = ({plotId, data}) => {
-    if (plotId === "tco3_zm") {
+    if (plotId === "tco3_zm" || plotId === "tco3_return") {
         const lookUpTable = {};
         for (let datum of data) {
             // top structure
@@ -26,9 +26,7 @@ export const preTransformApiData = ({plotId, data}) => {
             }
         }
         return lookUpTable;
-    } else if (plotId === "tco3_return") {
-        // TODO
-    }
+    };
 }
 
 /**
