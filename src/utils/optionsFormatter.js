@@ -7,6 +7,30 @@ const APEXCHART_PLOT_TYPE = {
     // vrom3?
 }
 
+export const preTransformApiData = ({plotId, data}) => {
+    if (plotId === "tco3_zm") {
+        const lookUpTable = {};
+        for (let datum of data) {
+            // top structure
+            lookUpTable[datum.model] = {
+                plotStyle: datum.plotstyle,
+                data: [] 
+            };
+
+            // fill data
+            for (let index in datum.x) {
+                lookUpTable[datum.model].data.push({
+                    x: datum.x[index],
+                    y: datum.y[index],
+                });
+            }
+        }
+        return lookUpTable;
+    } else if (plotId === "tco3_return") {
+        // TODO
+    }
+}
+
 /**
  * This function renders the correct apexcharts element, depending on the passed
  * plotId.

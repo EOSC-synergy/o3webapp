@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import { getModels, getPlotTypes, getPlotData } from "./client";
+import { preTransformApiData } from "../../utils/optionsFormatter";
 
 /**
  * This object models an "enum" in JavaScript. Each of the values is used
@@ -225,7 +226,7 @@ const apiSlice = createSlice({
                 const { data, plotId, cacheKey } = action.payload;
                 const storage = state.plotSpecific[plotId].cachedRequests[cacheKey];
                 storage.status = REQUEST_STATE.success;
-                storage.data = data; // Consider for later: transforming might optimize performance
+                storage.data = preTransformApiData({plotId, data});
             })
             .addCase(fetchPlotDataRejected, (state, action) => {
                 const { error, plotId, cacheKey } = action.payload;
