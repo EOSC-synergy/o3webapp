@@ -1314,7 +1314,7 @@ exports[`test LandingPage component LandingPage renders correctly 1`] = `
                           aria-hidden="true"
                           class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
                           tabindex="-1"
-                          value="-90,90"
+                          value=""
                         />
                         <svg
                           aria-hidden="true"
@@ -1439,9 +1439,13 @@ exports[`test LandingPage component LandingPage renders correctly 1`] = `
       />
     </button>
     <div
-      style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 95%;"
+      style="display: flex; justify-content: center; align-items: center;"
     >
-      <div />
+      <div
+        style="width: 95%;"
+      >
+        <div />
+      </div>
     </div>
   </div>
 </div>
