@@ -68,9 +68,10 @@ function ModelGroupConfigurator(props) {
 
     return (
         <>
+            <ModelGroupCard modelGroupId={1} error={props.reportError} />
+            <ModelGroupCard modelGroupId={2} error={props.reportError} />
             <Button varian="outlined" onClick={openAddModal}>Open Add Model Group Modal (Dev)</Button>
             <AddModelGroupModal isOpen={isAddModalVisible} onClose={closeAddModal} error={props.reportError} />
-            {/* <ModelGroupCard error={props.reportError} /> */}
             {/* <ModelGroup /> */}
         </>
     );
