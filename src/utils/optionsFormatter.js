@@ -72,7 +72,7 @@ function calculateBoxPlotValues(data) {
         }
 
     }
-    console.log(staticData)
+    //console.log(staticData)
 
     const boxPlotValues = {}
 	for (let region of ALL) {
@@ -87,7 +87,7 @@ function calculateBoxPlotValues(data) {
 			arr[arr.length - 1]
 		)
 	}
-    console.log(boxPlotValues)
+    //console.log(boxPlotValues)
     return boxPlotValues
 }
 
@@ -99,6 +99,7 @@ export function generateSeries({plotId, data}) {
     if (plotId === "tco3_zm") {
         for (const [model, modelData] of Object.entries(data)) {
             series.push({
+                //type: "line",
                 name: model,
                 data: modelData.data,
             });
@@ -165,12 +166,14 @@ export function generateSeries({plotId, data}) {
     }
     return {series, colors};
 }
-
+let c = 0;
 export function getOptions({plotId, colors}) {
+    console.log(c)
     if (plotId === "tco3_zm") {
-        return {
+        console.log("tco3_zm_opt")
+        return Object.assign({}, {
             chart: {
-                id: "OCTS",
+                id: "penis" + c++,
                 animations: {
                     enabled: false,
                     easing: "linear"
@@ -197,10 +200,11 @@ export function getOptions({plotId, colors}) {
                 shared: false,
             },
             colors: colors, // TODO
-            /*"stroke": {
-                "width": [], // TODO
-                "dashArray": [] // TODO
-            },*/
+            stroke: {
+                curve: "smooth",
+                //width: [], // TODO
+                //dashArray: [] // TODO
+            },
             title: {
                 text: "OCTS Plot", // todo
                 align: "center",
@@ -211,14 +215,20 @@ export function getOptions({plotId, colors}) {
                     fontFamily:  "undefined",
                     color:  "#263238"
                 }
-            }
-        };
+            },
+            /*markers: {
+
+            }*/
+        });
+        
     } else if (plotId === "tco3_return") {
-        return {
+        console.log("tco3_return_opt")
+        return Object.assign({}, {
             xaxis: {
                 //type: "category", // remove if it doenst work
             },
             chart: {
+              id: "tco3_return" + c++,
               type: 'boxPlot',
               height: 350,
               animations: {
@@ -247,12 +257,12 @@ export function getOptions({plotId, colors}) {
               }
             },
             legend: {
-                show: false,
+                show: true,
             },
             
             markers: {
               size: 5,
-              colors: ["#f00", ...colors],
+              colors: [undefined, ...colors],
               strokeColors: '#fff',
               strokeWidth: 0,
               strokeOpacity: 0.2, //?
@@ -272,7 +282,7 @@ export function getOptions({plotId, colors}) {
               },
             }
             
-        };
+        });
     }    
 }
 

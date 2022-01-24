@@ -267,6 +267,7 @@ export const selectActivePlotData = (state, plotId) => {
             status: REQUEST_STATE.loading,
         };
     };
+    console.log(plotSpecificSection.cachedRequests[activeCacheKey])
 
     return plotSpecificSection.cachedRequests[activeCacheKey];
 }
