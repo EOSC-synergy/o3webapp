@@ -46,58 +46,78 @@ export function renderChartWithSettings({plotId, series, options}) {
 }
 
 
+export function generateSeries({plotId, data}) {
+    // return color, line width, dash array if lineplot
+    // else: 
+    const series = [];
+    const colors = [];
+    if (plotId === "tco3_zm") {
+        for (const [model, modelData] of Object.entries(data)) {
+            series.push({
+                name: model,
+                data: modelData.data,
+            });
+            colors.push(
+                colourNameToHex(modelData.plotStyle.color)
+            )
+
+        }
+    }
+    return {series, colors};
+}
+
 export function getOptions({plotId, colors}) {
     if (plotId === "tco3_zm") {
         return {
-            xaxis: {
-                type: "numeric",
-            },
-            "chart": {
-                "id": "OCTS",
-                "animations": {
-                    "enabled": false,
-                    "easing": "linear"
+            chart: {
+                id: "OCTS",
+                animations: {
+                    enabled: false,
+                    easing: "linear"
                 },
-                "toolbar": {
+                toolbar: {
                     "show": true,
                     "tools":{
                         "download": true 
                     }
                 },
-                "zoom": {
-                    "enabled": true,
-                    "type": "xy"
+                zoom: {
+                    enabled: true,
+                    type: "xy",
                 }
             },
-            "legend": {
-                "show": false
+            legend: {
+                show: true,
             },
-            "dataLabels": {
-                "enabled": false
+            dataLabels: {
+                enabled: false,
             },
-            "tooltip": {
-                "enabled": true,
-                "shared": false
+            tooltip: {
+                enabled: true,
+                shared: false,
             },
-            "colors": colors, // TODO
+            colors: colors, // TODO
             /*"stroke": {
                 "width": [], // TODO
                 "dashArray": [] // TODO
             },*/
-            "title": {
-                "text": "OCTS Plot", // todo
-                "align": "center",
-                "floating": false,
-                "style": {
-                    "fontSize":  "30px",
-                    "fontWeight":  "bold",
-                    "fontFamily":  "undefined",
-                    "color":  "#263238"
+            title: {
+                text: "OCTS Plot", // todo
+                align: "center",
+                floating: false,
+                style: {
+                    fontSize:  "30px",
+                    fontWeight:  "bold",
+                    fontFamily:  "undefined",
+                    color:  "#263238"
                 }
             }
         };
     } else if (plotId === "tco3_return") {
         return {
+            xaxis: {
+                //type: "category", // remove if it doenst work
+            },
             chart: {
               type: 'boxPlot',
               height: 350,
@@ -153,9 +173,7 @@ export function getOptions({plotId, colors}) {
             }
             
         };
-    }
-
-    
+    }    
 }
 
 

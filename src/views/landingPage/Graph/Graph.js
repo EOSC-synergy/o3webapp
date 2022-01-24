@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Chart from "react-apexcharts"
 import data from "./default-data.json"
 import settings from "./default-settings.json"
-import { convertToStrokeStyle, colourNameToHex, renderChartWithSettings, getOptions } from "../../../utils/optionsFormatter"
+import { convertToStrokeStyle, colourNameToHex, renderChartWithSettings, getOptions, generateSeries } from "../../../utils/optionsFormatter"
 import {useSelector} from 'react-redux'
 import { selectPlotId } from '../../../store/plotSlice/plotSlice';
 import { REQUEST_STATE, selectActivePlotData } from '../../../services/API/apiSlice';
@@ -109,9 +109,11 @@ function Graph(props) {
 
     } else if (activeData.status === REQUEST_STATE.success) {
         // get options
-        const options = getOptions({plotId, colors: settings.options.color});
-        const series = null;
-        return renderChartWithSettings({plotId, options, series: settings.series});
+        const {series, colors} = generateSeries({plotId, data: activeData.data}); // at first without sv, without excluded models
+        const options = getOptions({plotId, colors});
+        console.log(settings.series)
+        console.log(series)
+        return renderChartWithSettings({plotId, options, series: series}); // settings.series
     };
 
     // this "case" should not happen
