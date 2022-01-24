@@ -49,6 +49,9 @@ const initialState = {
             months: [
                 1
             ],
+            regions: [
+                0
+            ],
         }
     }
 };
@@ -178,12 +181,30 @@ const plotSlice = createSlice({
          * 
          * @param {object} state the current store state of: state/plot
          * @param {object} action accepts the action returned from setMonths()
-         * @param {object} action.payload the payload is an object containg the given data
+         * @param {object} action.payload the payload is an object containing the given data
          * @param {array} action.payload.months an array of integers describing the new months
          */
         setMonths(state, action) { 
             state.settings[state.plotId].months = action.payload.months;
         },
+
+        /**
+         * This reducer accepts an action object returned from setRegions()
+         *     e.g. dispatch(setRegions({regions: [3, 4, 5]}))
+         * and calculates the new state based on the action and the action
+         * data given in action.payload.
+         *
+         * In this case the current selected regions are updated to the given array.
+         *
+         * @param {object} state the current store state of: state/plot
+         * @param {object} action accepts the action returned from setRegions()
+         * @param {object} action.payload the payload is an object containing the given data
+         * @param {array} action.payload.regions an array of integers describing the new regions
+         */
+        setRegions(state, action) {
+            state.settings[state.plotId].regions = action.payload.regions;
+        },
+
     }   
 })
 
@@ -199,6 +220,7 @@ export const {
     setDisplayXRange,
     setDisplayYRange,
     setMonths,
+    setRegions,
 } = plotSlice.actions
 
 /**
@@ -209,7 +231,7 @@ export const {
 export default plotSlice.reducer;
 
 /**
- * This selectors allows components to select the current plot id
+ * This selector allows components to select the current plot id
  * from the store. The plot id is a string using the same naming as the
  * o3as api e.g. tco3_zm or tco3_return
  * 
@@ -219,7 +241,7 @@ export default plotSlice.reducer;
 export const selectPlotId = state => state.plot.plotId;
 
 /**
- * This selectors allows components to select the current plot name
+ * This selector allows components to select the current plot name
  * from the store. The plot name is the humand readable version specifying 
  * the plot e.g. OCTS or Return/Recovery
  * 
@@ -229,7 +251,7 @@ export const selectPlotId = state => state.plot.plotId;
 export const selectPlotName = state => state.plot.settings[state.plot.plotId].name;
 
 /**
- * This selectors allows components to select the current plot title
+ * This selector allows components to select the current plot title
  * from the store.
  * 
  * @param {object} state the global redux state
@@ -238,8 +260,8 @@ export const selectPlotName = state => state.plot.settings[state.plot.plotId].na
 export const selectPlotTitle = state => state.plot.settings[state.plot.plotId].title;
 
 /**
- * This selectors allows components to select the current plot location
- * from the store. The location is an object containg a minLat and maxLat attribute.
+ * This selector allows components to select the current plot location
+ * from the store. The location is an object containing a minLat and maxLat attribute.
  * 
  * @param {object} state the global redux state
  * @returns {object} holds the current location that includes a minLat and maxLat attribute.  
@@ -247,7 +269,7 @@ export const selectPlotTitle = state => state.plot.settings[state.plot.plotId].t
 export const selectPlotLocation = state => state.plot.settings[state.plot.plotId].location;
 
 /**
- * This selectors allows components to select the current x range
+ * This selector allows components to select the current x range
  * from the store.
  * 
  * @param {object} state the global redux state
@@ -256,7 +278,7 @@ export const selectPlotLocation = state => state.plot.settings[state.plot.plotId
 export const selectPlotXRange = state => state.plot.settings[state.plot.plotId].displayXRange;
 
 /**
- * This selectors allows components to select the current y range
+ * This selector allows components to select the current y range
  * from the store.
  * 
  * @param {object} state the global redux state
@@ -266,7 +288,7 @@ export const selectPlotXRange = state => state.plot.settings[state.plot.plotId].
 export const selectPlotYRange = state => state.plot.settings[state.plot.plotId].displayYRange;
 
 /**
- * This selectors allows components to select the current selected months
+ * This selector allows components to select the current selected months
  * from the store.
  * 
  * @param {object} state the global redux state
@@ -274,3 +296,12 @@ export const selectPlotYRange = state => state.plot.settings[state.plot.plotId].
  */
 
 export const selectPlotMonths = state => state.plot.settings[state.plot.plotId].months;
+
+/**
+ * This selector allows components to select the current selected regions
+ * from the store.
+ *
+ * @param {object} state the global redux state
+ * @returns {array} array of integers describing the current selected regions
+ */
+export const selectPlotRegions = state => state.plot.settings[state.plot.plotId].regions;
