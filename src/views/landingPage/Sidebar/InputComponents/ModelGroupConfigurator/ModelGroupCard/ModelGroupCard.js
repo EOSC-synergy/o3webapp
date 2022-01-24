@@ -10,6 +10,19 @@ import EditModelGroupModal from "../EditModelGroupModal/EditModelGroupModal";
 import PropTypes from 'prop-types';
 
 /**
+ * Function to get the model group name by id provided in props
+ * @todo insert redux call here or make groupName a prop
+ */
+export const getGroupName = (modelGroupId) => {
+    switch(modelGroupId) {
+        case 1:
+            return "refC2 models";
+        case 2:
+            return "Cmam models";
+    }
+}
+
+/**
  * a card containing information about the a modal group
  * @param {OBject} props 
  * @param {String} props.reportError - error function
@@ -19,19 +32,6 @@ import PropTypes from 'prop-types';
 function ModelGroupCard(props) {
     
     // const modelGroupData = useSelector(state => state.models[props.name])
-
-    /**
-     * Function to get the model group name by id provided in props
-     * @todo insert redux call here or make groupName a prop
-     */
-    const getGroupName = (modelGroupId) => {
-        switch(modelGroupId) {
-            case 1:
-                return "refC2 models";
-            case 2:
-                return "Cmam models";
-        }
-    }
 
     /**
      * States declared for implementing design
@@ -129,10 +129,13 @@ function ModelGroupCard(props) {
                     <Grid item xs={6} sx={{paddingLeft: '1em'}}>
                         <FormControlLabel
                             label="median"
+                            id="ModelGroupCoard-toggle-median-label"
                             control={
                                 <Checkbox
                                     onChange={toggleModelGroupMedianVisibility}
                                     checked={isModelGroupMedianVisible}
+                                    id="ModelGroupCoard-toggle-median-checkbox"
+                                    labelId="ModelGroupCoard-toggle-median-label"
                                 />
                             }
                         />
@@ -140,10 +143,13 @@ function ModelGroupCard(props) {
                     <Grid item xs={6} sx={{paddingLeft: '1em'}}>
                         <FormControlLabel
                             label="mean"
+                            id="ModelGroupCoard-toggle-mean-label"
                             control={
                                 <Checkbox
                                     onChange={toggleModelGroupMeanVisibility}
                                     checked={isModelGroupMeanVisible}
+                                    id="ModelGroupCoard-toggle-mean-checkbox"
+                                    labelId="ModelGroupCoard-toggle-mean-label"
                                 />
                             }
                         />
@@ -153,10 +159,13 @@ function ModelGroupCard(props) {
                     <Grid item xs={6} sx={{paddingLeft: '1em'}}>
                         <FormControlLabel
                             label="percentile"
+                            id="ModelGroupCoard-toggle-percentile-label"
                             control={
                                 <Checkbox
                                     onChange={toggleModelGroupPercentileVisibility}
                                     checked={isModelGroupPercentileVisible}
+                                    id="ModelGroupCoard-toggle-percentile-checkbox"
+                                    labelId="ModelGroupCoard-toggle-percentile-label"
                                 />
                             }
                         />                    
@@ -164,10 +173,13 @@ function ModelGroupCard(props) {
                     <Grid item xs={6} sx={{paddingLeft: '1em'}}>
                         <FormControlLabel
                             label="derivative"
+                            id="ModelGroupCoard-toggle-derivative-label"
                             control={
                                 <Checkbox
                                     onChange={toggleModelGroupDerivativeVisibility}
                                     checked={isModelGroupDerivativeVisible}
+                                    id="ModelGroupCoard-toggle-derivative-checkbox"
+                                    labelId="ModelGroupCoard-toggle-derivative-label"
                                 />
                             }
                         /> 
