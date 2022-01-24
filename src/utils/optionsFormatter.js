@@ -1,4 +1,5 @@
 import { Typography } from "@mui/material"
+import Chart from "react-apexcharts"
 
 const APEXCHART_PLOT_TYPE = {
     tco3_zm: "line",
@@ -16,13 +17,10 @@ const APEXCHART_PLOT_TYPE = {
  * @returns 
  */
 export function renderChartWithSettings({plotId, series, options}) {
-    if (plotId === "tco3_zm") {
-        return <Chart options={options} series={series} type={APEXCHART_PLOT_TYPE[plotId]} height={"400p"}/>
-    } else if (plotId === "tco3_return") {
-        return <ReactApexChart options={options} series={settings.series} type={APEXCHART_PLOT_TYPE[plotId]} height={"400px"}/>
-    } else {
+    if (typeof APEXCHART_PLOT_TYPE[plotId] === "undefined") {
         return <Typography>{`A plot for "${plotId} is currently not supported."`}</Typography>
     }
+    return <Chart options={options} series={series} type={APEXCHART_PLOT_TYPE[plotId]} height={"400p"}/>
 }
 
 
