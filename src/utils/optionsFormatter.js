@@ -24,10 +24,11 @@ export function renderChartWithSettings({plotId, series, options}) {
 }
 
 
-export function getOptions() {
-    return {
-            "xaxis": {
-                "categories": [] // TODO: x axis
+export function getOptions({plotId, colors}) {
+    if (plotId === "tco3_zm") {
+        return {
+            xaxis: {
+                type: "numeric",
             },
             "chart": {
                 "id": "OCTS",
@@ -56,11 +57,11 @@ export function getOptions() {
                 "enabled": true,
                 "shared": false
             },
-            "colors": [], // TODO
-            "stroke": {
+            "colors": colors, // TODO
+            /*"stroke": {
                 "width": [], // TODO
                 "dashArray": [] // TODO
-            },
+            },*/
             "title": {
                 "text": "OCTS Plot", // todo
                 "align": "center",
@@ -72,7 +73,67 @@ export function getOptions() {
                     "color":  "#263238"
                 }
             }
-        }
+        };
+    } else if (plotId === "tco3_return") {
+        return {
+            chart: {
+              type: 'boxPlot',
+              height: 350,
+              animations: {
+                  enabled: false, // disable animations
+              },
+              zoom: {
+                  enabled: true,
+                  type: 'xy',
+              }
+            },
+            colors: ['#008FFB', ...colors], // todo
+            title: {
+              text: 'TCO RETURN',
+              align: 'center'
+            },
+            tooltip: {
+              shared: false,
+              intersect: true
+            },
+            plotOptions: {
+              boxPlot: {
+                colors: {
+                  upper: '#5C4742',
+                  lower: '#A5978B'
+                }
+              }
+            },
+            legend: {
+                show: false,
+            },
+            
+            markers: {
+              size: 5,
+              colors: ["#f00", ...colors],
+              strokeColors: '#fff',
+              strokeWidth: 0,
+              strokeOpacity: 0.2, //?
+              strokeDashArray: 0, //?
+              fillOpacity: 0.7,
+              discrete: [],
+              //shape: [undefined, "circle", "square"], // circle or square
+              radius: 1,
+              offsetX: 0, // interesting
+              offsetY: 0,
+              //onClick: (event) => {alert("click")},
+              onDblClick: undefined,
+              showNullDataPoints: true,
+              hover: {
+                  size: 10,
+                    sizeOffset: 10,
+              },
+            }
+            
+        };
+    }
+
+    
 }
 
 
