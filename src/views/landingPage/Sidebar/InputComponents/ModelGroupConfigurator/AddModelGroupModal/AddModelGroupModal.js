@@ -18,7 +18,7 @@ import CardActions from '@mui/material/CardActions';
 import models from '../../../../../../utils/models.json';
 import CircularProgress from '@mui/material/CircularProgress';
 import CardHeader from '@mui/material/CardHeader';
-import SearchBar from "../SearchBar/SearchBar";
+import Searchbar from "../Searchbar/Searchbar";
 import { convertModelName } from "../../../../../../utils/ModelNameConverter";
 import { union, not, intersection } from "../../../../../../utils/arrayOperations";
 import CloseIcon from '@mui/icons-material/Close';
@@ -327,7 +327,7 @@ function AddModelGroupModal(props) {
                         <Typography> Select Models</Typography>
                     </Divider>
                     <Box id="modal-modal-description" sx={{ mt: 2 }}>
-                        <SearchBar inputArray={allModels} foundIndicesCallback={setCurrentlyVisibleModelsByIndex} />
+                        <Searchbar inputArray={allModels} foundIndicesCallback={setCurrentlyVisibleModelsByIndex} />
                         <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ marginTop: '0.5em' }}>
                             <Grid item sm={5} xs={12}>
                                 <Typography>All available models</Typography>
