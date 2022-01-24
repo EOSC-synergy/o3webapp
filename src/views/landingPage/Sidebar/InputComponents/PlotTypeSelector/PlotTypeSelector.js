@@ -57,7 +57,7 @@ function PlotTypeSelector(props) {
 
     useEffect(() => {
         if (plotTypesRequestData.status === REQUEST_STATE.error) {
-            props.reportError(plotTypesRequestData.error);
+            props.reportError("API not responding: " + plotTypesRequestData.error);
         }
     });
 
