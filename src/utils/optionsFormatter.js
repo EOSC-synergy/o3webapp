@@ -108,6 +108,7 @@ export function generateSeries({plotId, data}) {
             )
 
         }
+        return {series, colors};
     } else if (plotId === "tco3_return") {
         const boxPlotValues = calculateBoxPlotValues(data);
         series.push({
@@ -152,7 +153,7 @@ export function generateSeries({plotId, data}) {
             }
         )
 
-
+        
         for (const [model, modelData] of Object.entries(data)) {
             series.push({
                 name: model,
@@ -166,14 +167,13 @@ export function generateSeries({plotId, data}) {
     }
     return {series, colors};
 }
-let c = 0;
+
 export function getOptions({plotId, colors}) {
-    console.log(c)
     if (plotId === "tco3_zm") {
         console.log("tco3_zm_opt")
         return Object.assign({}, {
             chart: {
-                id: "penis" + c++,
+                id: "tco3_zm",
                 animations: {
                     enabled: false,
                     easing: "linear"
@@ -228,7 +228,7 @@ export function getOptions({plotId, colors}) {
                 //type: "category", // remove if it doenst work
             },
             chart: {
-              id: "tco3_return" + c++,
+              id: "tco3_return",
               type: 'boxPlot',
               height: 350,
               animations: {
@@ -239,7 +239,7 @@ export function getOptions({plotId, colors}) {
                   type: 'xy',
               }
             },
-            colors: ['#008FFB', ...colors], // todo
+            colors: [undefined, ...colors], // todo
             title: {
               text: 'TCO RETURN',
               align: 'center'

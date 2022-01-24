@@ -51,6 +51,7 @@ function Graph(props) {
     } else if (activeData.status === REQUEST_STATE.success) {
         const {series, colors} = generateSeries({plotId, data: activeData.data})
         const options = getOptions({plotId, colors});
+        console.log(options)
         //console.log(settings.series)
         //console.log(series)
         console.log("plot id" + plotId);
@@ -59,7 +60,7 @@ function Graph(props) {
         //ApexCharts.exec(plotId, "updateOptions", options, true);
         return renderChartWithSettings({plotId, options, series: series}); // settings.series
         */
-        return <Chart options={options} series={series} type={APEXCHART_PLOT_TYPE[plotId]} height={"400p"} />
+        return <Chart key={plotId} options={options} series={series} type={APEXCHART_PLOT_TYPE[plotId]} height={"400p"} />
     };
 
     // this "case" should not happen
