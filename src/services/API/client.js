@@ -20,11 +20,11 @@ const getFromAPI = (endpoint) => {
  * Makes a POST request.
  *
  * @param {string} endpoint the endpoint of the URL
- * @param {Object} data the data for the params of the post request
+ * @param {Array.<Object>} data the data for the params of the post request
  * @returns the request promise from axios
  */
 const postAtAPI = (endpoint, data) => {
-    // dont pack "data" in an object, the api accepts only an array of values (e.g. model list)
+    // don't pack "data" in an object, the api accepts only an array of values (e.g. model list)
     return axios.post(baseURL + endpoint, data, { timeout: timeoutVal }); 
 }
 
