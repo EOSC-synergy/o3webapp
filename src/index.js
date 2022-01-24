@@ -8,8 +8,19 @@ import { fetchModels, fetchPlotData, fetchPlotTypes } from './services/API/apiSl
 
 const reloadInitialData = () => {
     store.dispatch(fetchPlotData({
+        plotId: "tco3_return",
+        latMin: "-90", 
+        latMax: "90", 
+        months: [1, 2, 3], 
+        startYear: 1960, 
+        endYear: 2100, 
+        modelList: store.getState().api.models.data.slice(0, 1), // not all models for faster testing!
+        refYear: 1980,
+        refModel: "SBUV_GSFC_merged-SAT-ozone",
+    }));
+
+    store.dispatch(fetchPlotData({
         plotId: "tco3_zm",
-        plotType: "tco3_zm",
         latMin: "-90", 
         latMax: "90", 
         months: [1, 2, 3], 
