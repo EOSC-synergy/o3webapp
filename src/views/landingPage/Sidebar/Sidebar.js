@@ -12,6 +12,8 @@ import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import { Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
+import ModelGroupConfigurator from './InputComponents/ModelGroupConfigurator/ModelGroupConfigurator.js';
+import PropTypes from 'prop-types';
 
 /**
  * Defining a drawerheader section at the beginning of a drawer

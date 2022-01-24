@@ -4,7 +4,7 @@ import { render } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import {createTestStore} from "../../../store/store"
 
-let store;
+
 beforeEach(() => {
   store = createTestStore();
 }); 

@@ -8,8 +8,21 @@ import "@testing-library/jest-dom/extend-expect";
 
 it('Section renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<Section isExpanded={false}/>, div);
+  ReactDOM.render(<Section />, div);
 });
+
+const testPropTypes = (component, propName, arraysOfTestValues, otherProps) => {
+    console.error = jest.fn();
+    const _test = (testValues, expectError) => {
+        for (let propValue of testValues) {
+            console.error.mockClear();
+            React.createElement(component, {...otherProps, [propName]: propValue});
+            expect(console.error).toHaveBeenCalledTimes(expectError ? 1 : 0);
+        }
+    };
+    _test(arraysOfTestValues[0], false);
+    _test(arraysOfTestValues[1], true);
+};
 
 // report error if no components are entered
 it('Section reports error if no components are passed to render', () => {

@@ -1,6 +1,7 @@
 import React from "react";
 import AddModelGroupModal from "./AddModelGroupModal/AddModelGroupModal";
 import ModelGroupCard from "./ModelGroupCard/ModelGroupCard";
+import { Button } from '@mui/material';
 import { useDispatch } from "react-redux"
 import { updatedModelGroup, addedModelGroup } from "../../../../../store/modelsSlice/modelsSlice";
 
@@ -67,9 +68,9 @@ function ModelGroupConfigurator(props) {
 
     return (
         <>
-            ModelGroupConfigurator
-            <AddModelGroupModal error={props.reportError} />
-            <ModelGroupCard error={props.reportError} />
+            <Button varian="outlined" onClick={openAddModal}>Open Add Model Group Modal (Dev)</Button>
+            <AddModelGroupModal isOpen={isAddModalVisible} onClose={closeAddModal} error={props.reportError} />
+            {/* <ModelGroupCard error={props.reportError} /> */}
             {/* <ModelGroup /> */}
         </>
     );
