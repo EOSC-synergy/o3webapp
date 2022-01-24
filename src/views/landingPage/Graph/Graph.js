@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Chart from "react-apexcharts"
 import data from "./default-data.json"
 import settings from "./default-settings.json"
-import { convertToStrokeStyle, colourNameToHex } from "../../../utils/optionsFormatter"
+import { convertToStrokeStyle, colourNameToHex, renderChartWithSettings, getOptions } from "../../../utils/optionsFormatter"
 import {useSelector} from 'react-redux'
 import { selectPlotId } from '../../../store/plotSlice/plotSlice';
 import { REQUEST_STATE, selectActivePlotData } from '../../../services/API/apiSlice';
@@ -108,15 +108,8 @@ function Graph(props) {
         return <Typography>An error occurred, please try to reload the site</Typography>;
 
     } else if (activeData.status === REQUEST_STATE.success) {
-        return renderCorrectChartComponent(plotId, activeData.data);
-        /*
-        <Chart
-            options={settings.options}
-            series={settings.series}
-            type={"line"}
-            height={"60%"}
-        />
-        */
+        // get options
+        return renderChartWithSettings({plotId, options: getOptions(), series: settings.series});
     };
 
     // this "case" should not happen

@@ -24,6 +24,58 @@ export function renderChartWithSettings({plotId, series, options}) {
 }
 
 
+export function getOptions() {
+    return {
+            "xaxis": {
+                "categories": [] // TODO: x axis
+            },
+            "chart": {
+                "id": "OCTS",
+                "animations": {
+                    "enabled": false,
+                    "easing": "linear"
+                },
+                "toolbar": {
+                    "show": true,
+                    "tools":{
+                        "download": true 
+                    }
+                },
+                "zoom": {
+                    "enabled": true,
+                    "type": "xy"
+                }
+            },
+            "legend": {
+                "show": false
+            },
+            "dataLabels": {
+                "enabled": false
+            },
+            "tooltip": {
+                "enabled": true,
+                "shared": false
+            },
+            "colors": [], // TODO
+            "stroke": {
+                "width": [], // TODO
+                "dashArray": [] // TODO
+            },
+            "title": {
+                "text": "OCTS Plot", // todo
+                "align": "center",
+                "floating": false,
+                "style": {
+                    "fontSize":  "30px",
+                    "fontWeight":  "bold",
+                    "fontFamily":  "undefined",
+                    "color":  "#263238"
+                }
+            }
+        }
+}
+
+
 export function mergeModelDataAndSettings(modelData, modelSettings) {
     
 };
