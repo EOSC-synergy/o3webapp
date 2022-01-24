@@ -109,8 +109,9 @@ function Graph(props) {
 
     } else if (activeData.status === REQUEST_STATE.success) {
         // get options
-        console.log(plotId)
-        return renderChartWithSettings({plotId, options: getOptions({plotId, colors: settings.options.color}), series: settings.series});
+        const options = getOptions({plotId, colors: settings.options.color});
+        const series = null;
+        return renderChartWithSettings({plotId, options, series: settings.series});
     };
 
     // this "case" should not happen
