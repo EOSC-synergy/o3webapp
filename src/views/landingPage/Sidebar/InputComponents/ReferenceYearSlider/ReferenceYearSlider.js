@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Typography, Slider} from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux";
 import { setYear } from "../../../../../store/referenceSlice/referenceSlice";
 import {REF_SLIDER_MAX_YEAR, REF_SLIDER_MIN_YEAR, REF_SLIDER_DEFAULT_YEAR} from  "../../../../../utils/constants";
@@ -14,8 +14,9 @@ import {REF_SLIDER_MAX_YEAR, REF_SLIDER_MIN_YEAR, REF_SLIDER_DEFAULT_YEAR} from 
  */
 function ReferenceYearSlider(props) {
 
-    /** Dispatcher to dispatch the plot name change action. */
-    const dispatch = useDispatch()
+     
+    // /** Dispatcher to dispatch the plot name change action. */
+    const dispatch = useDispatch();
 
     const selectedYear = useSelector(state => state.reference.settings[state.reference.plotId].year);
 

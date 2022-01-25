@@ -1,4 +1,5 @@
 import reducer, {
+  setActivePlotId,
   setYear,
   setModel,
   setVisibility,
@@ -13,14 +14,14 @@ const definedInitialState = {
       name: "OCTS", // should show up in the drop down menu
       year: 1980,
       model: "defaultModel",
-      isVisibile: false,
+      visible: false,
       isOffsetApplied: false,
     },
     tco3_return: {
       name: "Return/Recovery",
       year: 1980,
       model: "defaultModel",
-      isVisibile: false,
+      visible: false,
       isOffsetApplied: false,
     },
   },
@@ -37,14 +38,14 @@ test("should update the active plot id", () => {
     plotId: "tco3_zm",
   };
 
-  const expected = {
+  const expectedState = {
     // expect changed plotId
     plotId: "tco3_return",
   };
 
   expect(
     reducer(previousState, setActivePlotId({ plotId: "tco3_return" }))
-  ).toEqual(expected);
+  ).toEqual(expectedState);
 });
 
 test("should update the reference year of the current refference settings.", () => {
@@ -57,7 +58,7 @@ test("should update the reference year of the current refference settings.", () 
     },
   };
 
-  const expected = {
+  const expectedState = {
     // Expect the new state to have the new title
     plotId: "tco3_zm",
     settings: {
@@ -72,7 +73,7 @@ test("should update the reference year of the current refference settings.", () 
       previousState, // use initial state
       setYear({ year: 2022 })
     )
-  ).toEqual(expected);
+  ).toEqual(expectedState);
 });
 
 test("should update the reference model of the current refference settings.", () => {
@@ -85,7 +86,7 @@ test("should update the reference model of the current refference settings.", ()
     },
   };
 
-  const expected = {
+  const expectedState = {
     // expect changed location
     plotId: "tco3_zm",
     settings: {
@@ -100,7 +101,7 @@ test("should update the reference model of the current refference settings.", ()
       previousState, // use initial state
       setModel({ model: "CCMI-1_CCCma_CMAM-senC2CH4rcp85" })
     )
-  ).toEqual(expected);
+  ).toEqual(expectedState);
 });
 
 test("should update the visibility of the current refference line.", () => {
@@ -108,7 +109,7 @@ test("should update the visibility of the current refference line.", () => {
     plotId: "tco3_zm",
     settings: {
       tco3_zm: {
-        visibile: false,
+        visible: false,
       },
     },
   };
@@ -116,7 +117,7 @@ test("should update the visibility of the current refference line.", () => {
     plotId: "tco3_zm",
     settings: {
       tco3_zm: {
-        visibile: true,
+        visible: true,
       },
     },
   };
@@ -126,9 +127,8 @@ test("should update the visibility of the current refference line.", () => {
       previousState, // use initial state
       setVisibility({ visible: true })
     )
-  ).toEqual(expected);
+  ).toEqual(expectedState);
 });
-
 
 test("should update the offset applied status of the current refference line.", () => {
   const previousState = {
@@ -143,7 +143,7 @@ test("should update the offset applied status of the current refference line.", 
     plotId: "tco3_zm",
     settings: {
       tco3_zm: {
-        isOffsetApplied: false,
+        isOffsetApplied: true,
       },
     },
   };
@@ -153,5 +153,5 @@ test("should update the offset applied status of the current refference line.", 
       previousState, // use initial state
       setOffsetApplied({ isOffsetApplied: true })
     )
-  ).toEqual(expected);
+  ).toEqual(expectedState);
 });

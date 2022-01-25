@@ -136,6 +136,7 @@ const referenceSlice = createSlice({
  * the view (our react components).
  */
 export const {
+  setActivePlotId,
   setYear,
   setModel,
   setVisibility,
