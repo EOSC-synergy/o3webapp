@@ -18,6 +18,32 @@ function App() {
     const [errorMessage, setErrorMessage] = React.useState(null);  // if errorMessage null no error
     const [isCookieConsentModalVisible, setCookieConsentModalVisibility] = React.useState(true);
     const [errorMessages, setErrorMessages] = React.useState([]);
+    const [isSidebarOpen, setSidebarOpen] = React.useState(false);
+
+    /**
+     * Function to open sidebar
+     */
+    const openSidebar = () => {
+        setSidebarOpen(true);
+    }
+
+    /**
+     * Function to close sidebar,
+     * if the user does not currently try to navigate the sidebar
+     * @param {event} event the event that triggered the call of this function
+     */
+    const closeSidebar = (event) => {
+        // for accessibility do not close sidebar if users
+        // try to navigate sidebar using Tab or Shift
+        if (
+            event &&
+            event.type === 'keydown' &&
+            (event.key === 'Tab' || event.key === 'Shift')
+        ) {
+            return;
+        }
+        setSidebarOpen(false);
+    }
 
     /**
      * function to report an error from other components
@@ -58,8 +84,8 @@ function App() {
 
     return (
     <div style={{minHeight: "100vh", display: 'flex', flexDirection: 'column'}}>
-        <Navbar reportError={reportError} />
-        <LandingPage reportError={reportError} /> 
+        <Navbar reportError={reportError} openSidebar={openSidebar} />
+        <LandingPage reportError={reportError} openSidebar={openSidebar} closeSidebar={closeSidebar} isSidebarOpen={isSidebarOpen} />
         <Footer reportError={reportError} />
         <ErrorMessageModal isOpen={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />
         <CookieConsentModal isOpen={isCookieConsentModalVisible} onClose={onCloseCookieConsentModal} />

@@ -13,41 +13,16 @@ import ModelGroupConfigurator from './Sidebar/InputComponents/ModelGroupConfigur
  * main view of web page
  * @param {Object} props
  * @param {function} props.reportError - function to report an error
- * @returns {JSX} a jsx containing all main components
+ * @param {function} props.openSidebar - function to open the sidebar
+ * @param {function} props.closeSidebar - function to close the sidebar
+ * @param {boolean} props.isSidebarOpen - boolean to indicate whether the sidebar is open or not
+ * @returns {JSX.Element} a jsx containing all main components
  */
 function LandingPage(props) {
-
-    const [isSidebarOpen, setSidebarOpen] = React.useState(false);
-    
-    /**
-     * Function to open sidebar
-     */
-    const openSidebar = () => {
-        setSidebarOpen(true);
-    }
-
-    /**
-     * Function to close sidebar,
-     * if the user does not currently try to navigate the sidebar
-     * @param {event} event the event that triggered the call of this function
-     */
-    const closeSidebar = (event) => {
-        // for accessibility do not close sidebar if users 
-        // try to navigate sidebar using Tab or Shift
-        if (
-            event &&
-            event.type === 'keydown' &&
-            (event.key === 'Tab' || event.key === 'Shift')
-          ) {
-            return;
-          }
-        setSidebarOpen(false);
-    }
     
     return (
     <div data-testid="landingPage" style={{width: "100%"}}> 
-      <Sidebar reportError={props.reportError} isOpen={isSidebarOpen} onClose={closeSidebar} onOpen={openSidebar} />
-      <Button variant="outlined" onClick={openSidebar} style={{width: "100%"}}>Open Sidebar (Dev)</Button>
+      <Sidebar reportError={props.reportError} isOpen={props.isSidebarOpen} onClose={props.closeSidebar} onOpen={props.openSidebar} />
   
       <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
         <div style={{width: "95%"}}>
