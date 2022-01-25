@@ -1912,17 +1912,6 @@ exports[`test LandingPage component LandingPage renders correctly 1`] = `
         </button>
       </div>
     </div>
-    <button
-      class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root  css-1rwt2y5-MuiButtonBase-root-MuiButton-root"
-      style="width: 100%;"
-      tabindex="0"
-      type="button"
-    >
-      Open Sidebar (Dev)
-      <span
-        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-      />
-    </button>
     <div
       style="display: flex; justify-content: center; align-items: center;"
     >
