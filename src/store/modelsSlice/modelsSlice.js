@@ -6,6 +6,28 @@ import { createSlice } from "@reduxjs/toolkit";
  */
 const STATISTICAL_VALUES = ["mean", "median", "derivative", "percentile"];
 
+const MODEL_DATA_TEMPLATE = {   // single model
+    color: null,                // if not set it defaults to standard value from api
+    isVisible: true,            // show/hide individual models from a group
+    mean: true,
+    derivative: true,
+    median: true,
+    percentile: true,
+}
+
+const MODEL_GROUP_TEMPLATE = { 
+    name: null,
+    modelList: [],
+    models: {},         // models is lookup table
+    isVisible: true,    // show/hide complete group
+    visibileSV: {       // lookup table so the reducer impl. can be more convenient
+        mean: true,
+        derivative: true,
+        median: true,
+        percentile: true,
+    }
+}
+
 /**
  * The initial state of the modelSlice defines the data structure in the 
  * store. Each plot has its own data i.e. have separate model(groups).
@@ -142,27 +164,44 @@ const modelsSlice = createSlice({
          * and calculates the new state based on the action and the action 
          * data given in action.payload.
          * 
-         * TODO: should be adjusted to match the UI in ModelGroupConfigurator and AddModalGroup
+         * This method provides a convenient interface for the AddModelGroupModal
+         * by allowing to dispatch a groupId with the required models. If
+         * the group already exists the corresponding data is updated otherwise
+         * the reducer takes care of creating a group.
          * 
          * @param {object} state the current store state of: state/plot
          * @param {object} action accepts the action returned from updateModelGroup()
          * @param {object} action.payload the payload is an object containg the given data
+         * @param {string} action.payload.groupId the name of the group to set
+         * @param {string} action.payload.modelList the list of models the group should have
          */
-        updatedModelGroup(state, action) { }, // implementing this requires more knowledge about the UI
-        
-        /**
-         * This reducer accepts an action object returned from addModelGroup()
-         *       e.g. dispatch(addModelGroup({}))
-         * and calculates the new state based on the action and the action 
-         * data given in action.payload.
-         * 
-         * TODO: should be adjusted to match the UI in ModelGroupConfigurator and AddModalGroup
-         * 
-         * @param {object} state the current store state of: state/plot
-         * @param {object} action accepts the action returned from addModelGroup()
-         * @param {object} action.payload the payload is an object containg the given data
-         */
-        addedModelGroup(state, action) { },
+        setModelGroup(state, action) { 
+            const { groupId, modelList } = action.payload;
+            // set model group
+            if (state.modelGroupList.includes(groupId)) {
+                const selectedModelGroup = state.modelGroups[groupId];
+                // remove unwanted
+                const toDelete = selectedModelGroup.filter(model => !modelList.includes(model));
+                toDelete.forEach(
+                    model => delete selectedModelGroup[model]
+                );
+                // add new ones
+                for (let model of modelList) {
+                    if (!selectedModelGroup[model]){ // initialize with default settings
+                        selectedModelGroup.modelList.push(model);
+                        selectedModelGroup.models[model] = Object.assign({}, MODEL_DATA_TEMPLATE);
+                    }
+                };
+            } else { // create new group
+                state.modelList.push(groupId);
+                state.modelGroups[groupId] = Object.assign({}, MODEL_GROUP_TEMPLATE);
+                const currentGroup = state.modelGroups[groupId];
+                for (let model of modelList) {
+                    currentGroup.modelList.push(model);
+                    currentGroup.models[model] = Object.assign({}, MODEL_DATA_TEMPLATE);
+                }
+            }
+        }, 
 
         /**
          * This reducer accepts an action object returned from setVisibility()
