@@ -375,7 +375,7 @@ function AddModelGroupModal(props) {
 
 
 AddModelGroupModal.propTypes = {
-    reportError: PropTypes.func,
+    reportError: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     isOpen: PropTypes.bool.isRequired
 }
