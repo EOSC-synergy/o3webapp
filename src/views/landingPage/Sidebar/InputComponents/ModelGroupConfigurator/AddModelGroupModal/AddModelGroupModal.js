@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 // import { useDispatch } from "react-redux"
 // import { useGetModelsQuery } from "../../../../../../services/API/apiSlice"
 // import { addedModelGroup, updatedModelGroup } from "../../../../../../store/modelsSlice";
@@ -24,6 +24,8 @@ import { union, not, intersection } from "../../../../../../utils/arrayOperation
 import CloseIcon from '@mui/icons-material/Close';
 import Alert from "@mui/material/Alert";
 import PropTypes from 'prop-types'; 
+import { useSelector } from "react-redux";
+import { REQUEST_STATE } from "../../../../../../services/API/apiSlice";
 
 /**
  * opens a modal where the user can add a new model group
@@ -35,14 +37,32 @@ import PropTypes from 'prop-types';
  */
 function AddModelGroupModal(props) {
 
+    const modelListRequestedData = useSelector(state => state.api.models);
+
+    let isLoading = true;
+    let allModels = [];
+    if (modelListRequestedData.status === REQUEST_STATE.idle
+        || modelListRequestedData.status === REQUEST_STATE.loading) {
+            isLoading = true;
+    }
+    else if (modelListRequestedData.status === REQUEST_STATE.success) {
+        allModels = modelListRequestedData.data;
+        isLoading = false;
+    }
+
+    useEffect(() => {
+        if (modelListRequestedData.status === REQUEST_STATE.error) {
+            props.reportError("API not responding: " + modelListRequestedData.error);
+        }
+        if (modelListRequestedData.status === REQUEST_STATE.success) {
+            setVisible(modelListRequestedData.data);
+        }
+    });
+
     /**
      * Array containing all currently checked models
      */
     const [checked, setChecked] = React.useState([]);
-    /**
-     * Array containing all current models
-     */
-    const [allModels, setAllModels] = React.useState([]);   // could be taken from redux store
     /**
      * Array containing all models, that are currently plotted in the right transfer list
      * -> models that should eventually be added
@@ -59,9 +79,7 @@ function AddModelGroupModal(props) {
     const [groupName, setGroupName] = React.useState('');
     const theme = useTheme();
 
-
-    // Omly needed for development
-    const [isLoading, setIsLoading] = React.useState(true);
+    
 
     /**
      * Returns how many models in the provided array are currently checked
@@ -160,34 +178,6 @@ function AddModelGroupModal(props) {
         }
         setVisible(newFilteredModelsIdx);
     }
-
-    /**
-     * mocks a sleeping function; used for dev reasons
-     * @param {int} ms the number of milisecons the program should sleep
-     * @returns a promise waiting ms milisecons
-     * @todo after getAvailablePlotTypes is connect remove this function
-     */
-    function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-    
-
-    /**
-     * gets all currently available models
-     * @todo place redux connection here
-     */
-    const getAllAvailableModels = () => {
-        // const {data, isSuccess, isLoading, isError, error} = useGetModelsQuery()
-        // display spinner until loading finished
-        sleep(0).then(() => {
-            if (isLoading) {
-                setVisible(models);
-                setIsLoading(false);
-                setAllModels(models);
-            }
-        });
-    }
-    getAllAvailableModels();
 
     /**
      * renders a custom transfer list component with provided lists
