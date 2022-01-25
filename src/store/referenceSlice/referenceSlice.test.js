@@ -1,11 +1,11 @@
 import reducer, {
-  setReferenceYear,
-  setReferenceModel,
-  selectIsVisible,
-  selectIsOffsetApplied,
+  setYear,
+  setModel,
+  setVisibility,
+  setOffsetApplied,
 } from "./referenceSlice";
 
-const initialState = {
+const definedInitialState = {
   plotId: "tco3_zm", // currently active plot
   // maps plotTyps to their reference settings.
   settings: {
@@ -79,8 +79,8 @@ test("should update the reference model of the current refference settings.", ()
   const previousState = {
     plotId: "tco3_zm",
     settings: {
-      "tco3_zm": {
-        model: "CCMI-1_CCCma_CMAM-refC2"
+      tco3_zm: {
+        model: "CCMI-1_CCCma_CMAM-refC2",
       },
     },
   };
@@ -89,8 +89,8 @@ test("should update the reference model of the current refference settings.", ()
     // expect changed location
     plotId: "tco3_zm",
     settings: {
-      "tco3_zm": {
-        model: "CCMI-1_CCCma_CMAM-senC2CH4rcp85"
+      tco3_zm: {
+        model: "CCMI-1_CCCma_CMAM-senC2CH4rcp85",
       },
     },
   };
@@ -98,33 +98,25 @@ test("should update the reference model of the current refference settings.", ()
   expect(
     reducer(
       previousState, // use initial state
-      setModel({model: "CCMI-1_CCCma_CMAM-senC2CH4rcp85"})
+      setModel({ model: "CCMI-1_CCCma_CMAM-senC2CH4rcp85" })
     )
   ).toEqual(expected);
 });
 
-test("should update the display x range of the current active plot", () => {
+test("should update the visibility of the current refference line.", () => {
   const previousState = {
     plotId: "tco3_zm",
     settings: {
       tco3_zm: {
-        displayXRange: {
-          minX: 0,
-          maxX: 1000,
-        },
+        visibile: false,
       },
     },
   };
-
-  const expected = {
-    // expect changed displayXRange
+  const expectedState = {
     plotId: "tco3_zm",
     settings: {
       tco3_zm: {
-        displayXRange: {
-          minX: 200,
-          maxX: 400,
-        },
+        visibile: true,
       },
     },
   };
@@ -132,33 +124,26 @@ test("should update the display x range of the current active plot", () => {
   expect(
     reducer(
       previousState, // use initial state
-      setDisplayXRange({ minX: 200, maxX: 400 })
+      setVisibility({ visible: true })
     )
   ).toEqual(expected);
 });
 
-test("should update the display y range of the current active plot", () => {
+
+test("should update the offset applied status of the current refference line.", () => {
   const previousState = {
     plotId: "tco3_zm",
     settings: {
       tco3_zm: {
-        displayYRange: {
-          minY: 1000,
-          maxY: 2000,
-        },
+        isOffsetApplied: false,
       },
     },
   };
-
-  const expected = {
-    // expect changed displayYRange
+  const expectedState = {
     plotId: "tco3_zm",
     settings: {
       tco3_zm: {
-        displayYRange: {
-          minY: 1200,
-          maxY: 1400,
-        },
+        isOffsetApplied: false,
       },
     },
   };
@@ -166,35 +151,7 @@ test("should update the display y range of the current active plot", () => {
   expect(
     reducer(
       previousState, // use initial state
-      setDisplayYRange({ minY: 1200, maxY: 1400 })
-    )
-  ).toEqual(expected);
-});
-
-test("should update the selected months of the current active plot", () => {
-  const previousState = {
-    plotId: "tco3_zm",
-    settings: {
-      tco3_zm: {
-        months: [1],
-      },
-    },
-  };
-
-  const expected = {
-    // expect changed months
-    plotId: "tco3_zm",
-    settings: {
-      tco3_zm: {
-        months: [3, 4, 5],
-      },
-    },
-  };
-
-  expect(
-    reducer(
-      previousState, // use initial state
-      setMonths({ months: [3, 4, 5] })
+      setOffsetApplied({ isOffsetApplied: true })
     )
   ).toEqual(expected);
 });

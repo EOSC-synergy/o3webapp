@@ -7,7 +7,7 @@ import {useSelector} from 'react-redux'
 import { useGetRawPlotDataMutation } from '../../../services/API/apiSlice';
 import { selectCurrentModelGroups } from '../../../store/modelsSlice/modelsSlice';
 import { selectCurrentPlotId, selectCurrentPlotType, selectCurrentSettings, selectPlotTitle } from '../../../store/plotSlice/plotSlice';
-import { selectCurrentReferenceSettings } from '../../../store/referenceSlice';
+import { selectCurrentReferenceSettings } from '../../../store/referenceSlice/referenceSlice';
 // import {calculatePlotSeries} from "../../../utils/math"
 
 /**
