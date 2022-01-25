@@ -92,28 +92,21 @@ function calculateBoxPlotValues(data) {
     return boxPlotValues
 }
 
-export function generateSeries({plotId, data}) {
-    // return color, line width, dash array if lineplot
-    // else: 
-    const series = [];
-    const colors = [];
-    const dashArray = [];
-    const width = [];
-    if (plotId === "tco3_zm") {
-        for (const [model, modelData] of Object.entries(data)) {
-            series.push({
-                //type: "line",
-                name: model,
-                data: modelData.data,
-            });
-            colors.push(colourNameToHex(modelData.plotStyle.color));
-            width.push(2);
-            dashArray.push(convertToStrokeStyle(modelData.plotStyle.linestyle)); // default line thickness
+function generateTco3_ZmSeries({data, series, colors, dashArray, width}) {
+    for (const [model, modelData] of Object.entries(data)) {
+        series.push({
+            //type: "line",
+            name: model,
+            data: modelData.data,
+        });
+        colors.push(colourNameToHex(modelData.plotStyle.color));
+        width.push(2);
+        dashArray.push(convertToStrokeStyle(modelData.plotStyle.linestyle)); // default line thickness
+    }
+}
 
-        }
-        
-    } else if (plotId === "tco3_return") {
-        const boxPlotValues = calculateBoxPlotValues(data);
+function generateTco3_ReturnSeries({data, series, colors}) {
+    const boxPlotValues = calculateBoxPlotValues(data);
         series.push({
                 name: 'box',
                 type: 'boxPlot',
@@ -124,12 +117,11 @@ export function generateSeries({plotId, data}) {
                 })),
             }
         )
-        console.log(boxPlotValues)
 
         for (const [model, modelData] of Object.entries(data)) {
 
             const transformed = []
-            modelData.data.forEach(xypair => transformed[xypair.x] = xypair.y)
+            modelData.data.forEach(xypair => transformed[xypair.x] = xypair.y) // this could be done after fetching!
             
             const sortedData = ALL.map(region => ({
                 x: region,
@@ -145,6 +137,17 @@ export function generateSeries({plotId, data}) {
                 colourNameToHex(modelData.plotStyle.color)
             )
         }
+}
+
+export function generateSeries({plotId, data}) {
+    const series = [];
+    const colors = [];
+    const dashArray = [];
+    const width = [];
+    if (plotId === "tco3_zm") {
+        generateTco3_ZmSeries({data, series, colors, dashArray, width});
+    } else if (plotId === "tco3_return") {
+        generateTco3_ReturnSeries({data, series, colors, dashArray, width});
     }
     return {series, styling: {colors, dashArray, width}};
 }
