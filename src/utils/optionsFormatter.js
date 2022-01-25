@@ -18,7 +18,7 @@ const NEAR_GLOBAL = "Near global"
 const GLOBAL = "Global"
 const USER_REGION = "User region"
 const ALL = [ANTARCTIC, SH_MID, NH_MID, TROPICS, ARCTIC, NEAR_GLOBAL, GLOBAL, USER_REGION];
-
+ALL.sort();
 
 export const preTransformApiData = ({plotId, data}) => {
     if (plotId === "tco3_zm" || plotId === "tco3_return") {
@@ -73,9 +73,10 @@ function calculateBoxPlotValues(data) {
 
     }
     //console.log(staticData)
-
+    console.log(staticData)
     const boxPlotValues = {}
 	for (let region of ALL) {
+        console.log(region)
 		staticData[region].sort()
 		const arr = staticData[region]
 		boxPlotValues[region] = []
@@ -117,49 +118,27 @@ export function generateSeries({plotId, data}) {
                 name: 'box',
                 type: 'boxPlot',
         
-                data: [
-                {
-                    x: ANTARCTIC,
-                    y: boxPlotValues[ANTARCTIC] // min, q1, median, q3, max
-                },
-                
-                {
-                    x: SH_MID,
-                    y: boxPlotValues[SH_MID] // all sh mid lat values etc.
-                },
-                {
-                    x: NH_MID,
-                    y: boxPlotValues[NH_MID] // all sh mid lat values etc.
-                },
-                {
-                    x: TROPICS,
-                    y: boxPlotValues[TROPICS]
-                },
-                {
-                    x: ARCTIC,
-                    y: boxPlotValues[ARCTIC]
-                },
-                {
-                    x: NEAR_GLOBAL,
-                    y: boxPlotValues[NEAR_GLOBAL]
-                },
-                {
-                    x: GLOBAL,
-                    y: boxPlotValues[GLOBAL]
-                },
-                {
-                    x: USER_REGION,
-                    y: boxPlotValues[USER_REGION],
-                },
-                ]
+                data: ALL.map(region => ({
+                    x: region,
+                    y: boxPlotValues[region],
+                })),
             }
         )
+        console.log(boxPlotValues)
 
-        
         for (const [model, modelData] of Object.entries(data)) {
+
+            const transformed = []
+            modelData.data.forEach(xypair => transformed[xypair.x] = xypair.y)
+            
+            const sortedData = ALL.map(region => ({
+                x: region,
+                y: transformed[region] || null, // null as default if data is missing
+            }));
+            
             series.push({
                 name: model,
-                data: modelData.data,
+                data: sortedData,
                 type: "scatter",
             });
             colors.push(
