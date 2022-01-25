@@ -96,6 +96,8 @@ export function generateSeries({plotId, data}) {
     // else: 
     const series = [];
     const colors = [];
+    const dashArray = [];
+    const width = [];
     if (plotId === "tco3_zm") {
         for (const [model, modelData] of Object.entries(data)) {
             series.push({
@@ -103,12 +105,12 @@ export function generateSeries({plotId, data}) {
                 name: model,
                 data: modelData.data,
             });
-            colors.push(
-                colourNameToHex(modelData.plotStyle.color)
-            )
+            colors.push(colourNameToHex(modelData.plotStyle.color));
+            width.push(2);
+            dashArray.push(convertToStrokeStyle(modelData.plotStyle.linestyle)); // default line thickness
 
         }
-        return {series, colors};
+        
     } else if (plotId === "tco3_return") {
         const boxPlotValues = calculateBoxPlotValues(data);
         series.push({
@@ -165,10 +167,10 @@ export function generateSeries({plotId, data}) {
             )
         }
     }
-    return {series, colors};
+    return {series, styling: {colors, dashArray, width}};
 }
 
-export function getOptions({plotId, colors}) {
+export function getOptions({plotId, styling}) {
     if (plotId === "tco3_zm") {
         console.log("tco3_zm_opt")
         return Object.assign({}, {
@@ -197,13 +199,13 @@ export function getOptions({plotId, colors}) {
             },
             tooltip: {
                 enabled: true,
-                shared: false,
+                shared: true,
             },
-            colors: colors, // TODO
+            colors: styling.colors, // TODO
             stroke: {
                 curve: "smooth",
-                //width: [], // TODO
-                //dashArray: [] // TODO
+                width: styling.width, // TODO
+                dashArray: styling.dashArray, // TODO
             },
             title: {
                 text: "OCTS Plot", // todo
@@ -216,9 +218,6 @@ export function getOptions({plotId, colors}) {
                     color:  "#263238"
                 }
             },
-            /*markers: {
-
-            }*/
         });
         
     } else if (plotId === "tco3_return") {
@@ -235,11 +234,11 @@ export function getOptions({plotId, colors}) {
                   enabled: false, // disable animations
               },
               zoom: {
-                  enabled: true,
+                  enabled: false,
                   type: 'xy',
               }
             },
-            colors: [undefined, ...colors], // todo
+            colors: [undefined, ...styling.colors], // todo
             title: {
               text: 'TCO RETURN',
               align: 'center'
@@ -262,7 +261,7 @@ export function getOptions({plotId, colors}) {
             
             markers: {
               size: 5,
-              colors: [undefined, ...colors],
+              colors: [undefined, ...styling.colors],
               strokeColors: '#fff',
               strokeWidth: 0,
               strokeOpacity: 0.2, //?

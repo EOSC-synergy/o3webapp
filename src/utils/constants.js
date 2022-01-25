@@ -112,3 +112,9 @@ export const fileFormats = [ Symbol("pdf"), Symbol("png") ];
 
 /** The max. length of the plot name */
 export const PLOT_NAME_MAX_LEN = 40;
+
+
+export const APEXCHART_PLOT_TYPE = {
+    tco3_zm: "line",
+    tco3_return: "boxPlot"
+}
