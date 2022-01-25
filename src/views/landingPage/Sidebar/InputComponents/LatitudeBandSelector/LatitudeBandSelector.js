@@ -1,6 +1,6 @@
 import React from "react";
-import { useDispatch } from "react-redux"
-import { setLocation } from "../../../../../store/plotSlice/plotSlice";
+import {useDispatch, useSelector} from "react-redux"
+import {selectPlotLocation, setLocation} from "../../../../../store/plotSlice/plotSlice";
 import {Box, Divider, Grid, MenuItem, Select, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { latitudeBands } from "../../../../../utils/constants";
@@ -55,20 +55,31 @@ const customLatitudeBandInput = (label, value, onChange) => {
  * @returns {JSX.Element} a JSX containing a dropdown and if "individual latitude band" is selected a number input field
  */
 function LatitudeBandSelector(props) {
-    /**
-     * The default value that should be selected after initially loading this module
-     */
-    const defaultValue = [-90, 90];
 
-    // const dispatch = useDispatch()
-    /***
-     * the value of the currently selected latitude band or the entered custom latitude band
+    /**
+     * A dispatch function to dispatch actions to the redux store.
      */
-    const [latitudeBand, setLatitudeBand] = React.useState(defaultValue);
+    const dispatch = useDispatch();
+
+    /**
+     * An object containing the current minLat and maxLat Values.
+     */
+    const selectedLocation = useSelector(selectPlotLocation);
+
+    /**
+     * The selectedLocation Object from Redux as an array.
+     */
+    const selectedLocationArray = [selectedLocation.minLat, selectedLocation.maxLat];
+
     /**
      * whether the user selected to enter a custom latitude band
      */
     const [isCustomizable, setIsCustomizable] = React.useState(false);
+
+    /**
+     * The default value that should be selected after initially loading this module
+     */
+    const defaultValue = [-90, 90];
 
     /**
      * handles the change when the user clicked on a new latitude band option 
@@ -79,8 +90,9 @@ function LatitudeBandSelector(props) {
         if (event.target.value === 'custom') {
             setIsCustomizable(true);
         } else {
-            setLatitudeBand(event.target.value);
             setIsCustomizable(false);
+            dispatch(setLocation({minLat: event.target.value[0], maxLat: event.target.value[1]}));
+            console.log(selectedLocationArray);
         }
     };
 
@@ -90,12 +102,32 @@ function LatitudeBandSelector(props) {
      * @param {int} idx the index that should be changed of the latitude band
      */
     const handleChangeLatitudeBandSingleElement = (event, idx) => {
-        if (idx < latitudeBand.length || idx > 0) {
-            let latitudeBandCopy = [...latitudeBand];
+        if (idx < selectedLocationArray.length || idx > 0) {
+            let latitudeBandCopy = [...selectedLocationArray];
             latitudeBandCopy[idx] = event.target.value;
-            setLatitudeBand(latitudeBandCopy);
+            dispatch(setLocation({minLat: latitudeBandCopy[0], maxLat: latitudeBandCopy[1]}));
+            console.log(selectedLocationArray);
         }
     };
+
+    /**
+     * Finds the text for the latitude band values.
+     *
+     * @returns {string} the text for the values
+     */
+    const findTextForLocationArray = () => {
+        for (let i = 0; i < latitudeBands.length; i++) {
+            if (
+                latitudeBands[i].value[0] === selectedLocationArray[0] &&
+                latitudeBands[i].value[1] === selectedLocationArray[1]
+            ) {
+                console.log(i);
+                console.log(latitudeBands[i].text.description);
+                return latitudeBands[i].text.description;
+            }
+        }
+        props.reportError("Invalid value.");
+    }
 
     return (
         <>
@@ -103,9 +135,9 @@ function LatitudeBandSelector(props) {
             <Box sx={{paddingLeft: '8%', paddingRight: '8%', paddingTop: '3%'}}>
                 <Select
                     sx={{width: '100%' }}
-                       labelId="latitudeBandSelectorLabel"
+                    labelId="latitudeBandSelectorLabel"
                     id="latitudeBandSelector"
-                    value={isCustomizable ? 'custom' : latitudeBand}
+                    value={isCustomizable ? 'custom' : findTextForLocationArray()}
                     label="LatitudeBand"
                     onChange={handleChangeLatitudeBand}
                     defaultValue={defaultValue}
@@ -120,8 +152,8 @@ function LatitudeBandSelector(props) {
                 {
                     isCustomizable &&
                     <>
-                        {customLatitudeBandInput('lat min', latitudeBand[0], (event) => handleChangeLatitudeBandSingleElement(event, 0))}
-                        {customLatitudeBandInput('lat max', latitudeBand[1], (event) => handleChangeLatitudeBandSingleElement(event, 1))}
+                        {customLatitudeBandInput('lat min', selectedLocationArray[0], (event) => handleChangeLatitudeBandSingleElement(event, 0))}
+                        {customLatitudeBandInput('lat max', selectedLocationArray[1], (event) => handleChangeLatitudeBandSingleElement(event, 1))}
                     </>
                 }
             </Box>

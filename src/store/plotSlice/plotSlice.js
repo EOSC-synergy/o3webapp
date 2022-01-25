@@ -75,7 +75,7 @@ const plotSlice = createSlice({
          * 
          * @param {object} state the current store state of: state/plot
          * @param {object} action accepts the action returned from setActivePlotId()
-         * @param {object} action.payload the payload is an object containg the given data
+         * @param {object} action.payload the payload is an object containing the given data
          * @param {string} action.payload.plotId a string that contains the new plot id
          */
         setActivePlotId(state, action) {
@@ -93,7 +93,7 @@ const plotSlice = createSlice({
          * 
          * @param {object} state the current store state of: state/plot
          * @param {object} action accepts the action returned from setTitle()
-         * @param {object} action.payload the payload is an object containg the given data
+         * @param {object} action.payload the payload is an object containing the given data
          * @param {string} action.payload.id a string that contains the new plot title
          */
         setTitle(state, action) {
@@ -103,7 +103,7 @@ const plotSlice = createSlice({
 
         /**
          * This reducer accepts an action object returned from setLocation()
-         *     e.g. dispatch(setLocation({minLat: -90, maxLat: 90}))     
+         *     e.g. dispatch(setLocation({minLat: -90, maxLat: 90}))
          * and calculates the new state based on the action and the action 
          * data given in action.payload.
          * 
@@ -112,7 +112,7 @@ const plotSlice = createSlice({
          * 
          * @param {object} state the current store state of: state/plot
          * @param {object} action accepts the action returned from setTitle()
-         * @param {object} action.payload the payload is an object containg the given data
+         * @param {object} action.payload the payload is an object containing the given data
          * @param {number} action.payload.minLat a number specifying the minimum latitude
          * @param {number} action.payload.maxLat a number specifying the maximum latitude
          */
@@ -138,7 +138,7 @@ const plotSlice = createSlice({
          * 
          * @param {object} state the current store state of: state/plot
          * @param {object} action accepts the action returned from setDisplayXRange()
-         * @param {object} action.payload the payload is an object containg the given data
+         * @param {object} action.payload the payload is an object containing the given data
          * @param {number} action.payload.minX a number specifying the start of the x range
          * @param {number} action.payload.maxX a number specifying the end of the x range
          */
@@ -160,7 +160,7 @@ const plotSlice = createSlice({
          * 
          * @param {object} state the current store state of: state/plot
          * @param {object} action accepts the action returned from setDisplayYRange()
-         * @param {object} action.payload the payload is an object containg the given data
+         * @param {object} action.payload the payload is an object containing the given data
          * @param {number} action.payload.minY a number specifying the start of the y range
          * @param {number} action.payload.maxY a number specifying the end of the y range
          */
