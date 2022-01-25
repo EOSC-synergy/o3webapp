@@ -117,7 +117,6 @@ describe('test addModelGroupModal functionality', () => {
         </Provider>);
 
         expect(mockReportError).toHaveBeenCalledWith("API not responding: " + errorMessage);
-        
     });
 
 });
