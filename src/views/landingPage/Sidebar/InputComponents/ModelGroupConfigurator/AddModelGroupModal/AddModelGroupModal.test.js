@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import * as redux from 'react-redux';
 import { createTestStore } from '../../../../../../store/store';
 import { REQUEST_STATE } from "../../../../../../services/API/apiSlice";
+import { TestScheduler } from 'jest';
 
 let store;
 describe('test addModelGroupModal rendering', () => {
@@ -21,20 +22,20 @@ describe('test addModelGroupModal rendering', () => {
 
     
     it('renders correctly when open', () => {
-        let { container } = render(<Provider store={store}>
+        let { baseElement, container } = render(<Provider store={store}>
             <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} />
         </Provider>
         );
-        expect(container).toMatchSnapshot();
+        expect(baseElement).toMatchSnapshot();
         expect(container).toBeVisible();
     });
 
     it('renders correctly when closed', () => {
-        let { container } = render(<Provider store={store}>
+        let { container, baseElement } = render(<Provider store={store}>
             <AddModelGroupModal isOpen={false} onClose={() => {}} reportError={() => {}} />
         </Provider>
         );
-        expect(container).toMatchSnapshot();
+        expect(baseElement).toMatchSnapshot();
         expect(container).not.toBeVisible;
     });
 
@@ -66,11 +67,44 @@ describe('test addModelGroupModal rendering', () => {
         );
         expect(console.error).toHaveBeenCalled();
     });
+
+    it("renders correctly if model list provided", () => {
+        const spy = jest.spyOn(redux, 'useSelector');
+        
+        spy.mockReturnValue(
+            { 
+                status: REQUEST_STATE.success,
+                data: ["modelA", "modelB"],
+                error: null,
+            }
+        );
+
+        const { baseElement } = render(<Provider store={store}>
+            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}}/>
+        </Provider>);
+
+        expect(baseElement).toMatchSnapshot();
+    });
 });
 
 describe('test addModelGroupModal functionality', () => {
 
+    beforeEach(() => {
+        store = createTestStore();
+    });
+
+
     it('disables move all checked buttons if nothing is checked at beginning', () => {
+        const spy = jest.spyOn(redux, 'useSelector');
+        
+        spy.mockReturnValue(
+            { 
+                status: REQUEST_STATE.success,
+                data: ["modelA", "modelB"],
+                error: null,
+            }
+        );
+
         const { getByTestId } = render(<Provider store={store}>
             <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} />
         </Provider>
@@ -84,7 +118,7 @@ describe('test addModelGroupModal functionality', () => {
     it("displays spinner when models are being fetched", () => {
         const spy = jest.spyOn(redux, 'useSelector');
         
-        spy.mockReturnValueOnce(
+        spy.mockReturnValue(
             { 
                 status: REQUEST_STATE.loading,
                 data: [],
@@ -118,5 +152,26 @@ describe('test addModelGroupModal functionality', () => {
 
         expect(mockReportError).toHaveBeenCalledWith("API not responding: " + errorMessage);
     });
+    
+    it("check if models are rendered on the left", () => {
+        const spy = jest.spyOn(redux, 'useSelector');
+        
+        spy.mockReturnValue(
+            { 
+                status: REQUEST_STATE.success,
+                data: ["modelA", "modelB"],
+                error: null,
+            }
+        );
+
+        const { baseElement } = render(<Provider store={store}>
+            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}}/>
+        </Provider>);
+
+        expect(baseElement).toHaveTextContent("modelA");
+    });
+
+    test.todo("check if models can be moved from left to right");
+    test.todo("check if models not being selected by search are being hidden");
 
 });
