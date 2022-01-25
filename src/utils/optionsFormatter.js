@@ -152,118 +152,124 @@ export function generateSeries({plotId, data}) {
     return {series, styling: {colors, dashArray, width}};
 }
 
+const defaultTCO3_zm = {
+    chart: {
+        id: "tco3_zm",
+        animations: {
+            enabled: false,
+            easing: "linear"
+        },
+        toolbar: {
+            "show": true,
+            "tools":{
+                "download": true 
+            }
+        },
+        zoom: {
+            enabled: true,
+            type: "xy",
+        }
+    },
+    legend: {
+        show: true,
+    },
+    dataLabels: {
+        enabled: false,
+    },
+    tooltip: {
+        enabled: true,
+        shared: true,
+    },
+    colors: null, //styling.colors
+    stroke: {
+        curve: "smooth",
+        width: null, // styling.width,
+        dashArray: null, //styling.dashArray,
+    },
+    title: {
+        text: "OCTS Plot",
+        align: "center",
+        floating: false,
+        style: {
+            fontSize:  "30px",
+            fontWeight:  "bold",
+            fontFamily:  "undefined",
+            color:  "#263238"
+        }
+    },
+};
+
+const default_TCO3_return = {
+    chart: {
+      id: "tco3_return",
+      type: 'boxPlot',
+      height: 350,
+      animations: {
+          enabled: false, // disable animations
+      },
+      zoom: {
+          enabled: false,
+          type: 'xy',
+      }
+    },
+    colors: [undefined], // , ...styling.colors
+    title: {
+      text: 'TCO RETURN',
+      align: 'center'
+    },
+    tooltip: {
+      shared: false,
+      intersect: true
+    },
+    plotOptions: {
+      boxPlot: {
+        colors: {
+          upper: '#5C4742',
+          lower: '#A5978B'
+        }
+      }
+    },
+    legend: {
+        show: true,
+    },
+    
+    markers: {
+      size: 5,
+      colors: [undefined], // ...styling.colors
+      strokeColors: '#000',
+      strokeWidth: 0,
+      strokeOpacity: 0.2, //?
+      strokeDashArray: 0, //?
+      fillOpacity: 0.7,
+      discrete: [],
+      //shape: [undefined, "circle", "square"], // circle or square
+      radius: 1,
+      offsetX: 0, // interesting
+      offsetY: 0,
+      //onClick: (event) => {alert("click")},
+      onDblClick: undefined,
+      showNullDataPoints: true,
+      hover: {
+          size: 10,
+            sizeOffset: 10,
+      },
+    }
+    
+}
+
 export function getOptions({plotId, styling}) {
     if (plotId === "tco3_zm") {
-        console.log("tco3_zm_opt")
-        return Object.assign({}, {
-            chart: {
-                id: "tco3_zm",
-                animations: {
-                    enabled: false,
-                    easing: "linear"
-                },
-                toolbar: {
-                    "show": true,
-                    "tools":{
-                        "download": true 
-                    }
-                },
-                zoom: {
-                    enabled: true,
-                    type: "xy",
-                }
-            },
-            legend: {
-                show: true,
-            },
-            dataLabels: {
-                enabled: false,
-            },
-            tooltip: {
-                enabled: true,
-                shared: true,
-            },
-            colors: styling.colors, // TODO
-            stroke: {
-                curve: "smooth",
-                width: styling.width, // TODO
-                dashArray: styling.dashArray, // TODO
-            },
-            title: {
-                text: "OCTS Plot", // todo
-                align: "center",
-                floating: false,
-                style: {
-                    fontSize:  "30px",
-                    fontWeight:  "bold",
-                    fontFamily:  "undefined",
-                    color:  "#263238"
-                }
-            },
-        });
-        
+        const newOptions = Object.assign({}, defaultTCO3_zm);
+        newOptions.colors = styling.colors;
+        newOptions.stroke.width = styling.width;
+        newOptions.stroke.dashArray = styling.dashArray;
+        return newOptions;
+
     } else if (plotId === "tco3_return") {
-        console.log("tco3_return_opt")
-        return Object.assign({}, {
-            xaxis: {
-                //type: "category", // remove if it doenst work
-            },
-            chart: {
-              id: "tco3_return",
-              type: 'boxPlot',
-              height: 350,
-              animations: {
-                  enabled: false, // disable animations
-              },
-              zoom: {
-                  enabled: false,
-                  type: 'xy',
-              }
-            },
-            colors: [undefined, ...styling.colors], // todo
-            title: {
-              text: 'TCO RETURN',
-              align: 'center'
-            },
-            tooltip: {
-              shared: false,
-              intersect: true
-            },
-            plotOptions: {
-              boxPlot: {
-                colors: {
-                  upper: '#5C4742',
-                  lower: '#A5978B'
-                }
-              }
-            },
-            legend: {
-                show: true,
-            },
-            
-            markers: {
-              size: 5,
-              colors: [undefined, ...styling.colors],
-              strokeColors: '#fff',
-              strokeWidth: 0,
-              strokeOpacity: 0.2, //?
-              strokeDashArray: 0, //?
-              fillOpacity: 0.7,
-              discrete: [],
-              //shape: [undefined, "circle", "square"], // circle or square
-              radius: 1,
-              offsetX: 0, // interesting
-              offsetY: 0,
-              //onClick: (event) => {alert("click")},
-              onDblClick: undefined,
-              showNullDataPoints: true,
-              hover: {
-                  size: 10,
-                    sizeOffset: 10,
-              },
-            }
-            
-        });
+        const newOptions = Object.assign({}, default_TCO3_return);
+        newOptions.colors.push(...styling.colors); // for the legend!
+        //newOptions.markers.colors.push(...styling.colors);
+        return newOptions;
     }    
 }
 
