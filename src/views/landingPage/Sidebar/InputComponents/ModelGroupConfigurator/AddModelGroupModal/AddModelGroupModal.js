@@ -15,7 +15,6 @@ import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import { Card } from '@mui/material';
 import CardActions from '@mui/material/CardActions';
-import models from '../../../../../../utils/models.json';
 import CircularProgress from '@mui/material/CircularProgress';
 import CardHeader from '@mui/material/CardHeader';
 import Searchbar from "../SearchBar/SearchBar";
