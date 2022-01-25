@@ -203,7 +203,6 @@ const default_TCO3_return = {
     chart: {
       id: "tco3_return",
       type: 'boxPlot',
-      height: 350,
       animations: {
           enabled: false, // disable animations
       },
@@ -224,8 +223,8 @@ const default_TCO3_return = {
     plotOptions: {
       boxPlot: {
         colors: {
-          upper: '#5C4742',
-          lower: '#A5978B'
+          upper: "#8def4e", //'#5C4742',
+          lower: "#63badb", //'#A5978B'
         }
       }
     },
