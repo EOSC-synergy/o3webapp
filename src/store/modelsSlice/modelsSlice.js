@@ -13,8 +13,6 @@ const STATISTICAL_VALUES = {
 
 const STATISTICAL_VALUES_LIST = Object.values(STATISTICAL_VALUES);
 
-
-
 const MODEL_DATA_TEMPLATE = {   // single model
     color: null,                // if not set it defaults to standard value from api
     isVisible: true,            // show/hide individual models from a group
@@ -114,17 +112,17 @@ const modelsSlice = createSlice({
                 const selectedModelGroup = state.modelGroups[groupId];
                 
                 // remove unwanted
-                const toDelete = selectedModelGroup.filter(model => !modelList.includes(model));
+                const toDelete = selectedModelGroup.modelList.filter(model => !modelList.includes(model));
                 
                 toDelete.forEach( // delete from lookup table
-                    model => delete selectedModelGroup[model]
+                    model => delete selectedModelGroup.models[model]
                 );
                 // filter out from list
                 selectedModelGroup.modelList = selectedModelGroup.modelList.filter(model => !toDelete.includes(model));  
                 
                 // add new ones
                 for (let model of modelList) {
-                    if (!selectedModelGroup[model]){ // initialize with default settings
+                    if (!selectedModelGroup.modelList.includes(model)){ // initialize with default settings
                         selectedModelGroup.modelList.push(model);
                         selectedModelGroup.models[model] = Object.assign({}, MODEL_DATA_TEMPLATE);
                     }
