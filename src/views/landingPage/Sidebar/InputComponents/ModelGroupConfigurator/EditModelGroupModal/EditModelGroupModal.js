@@ -47,6 +47,7 @@ function createRows(modelList) {
         const model = modelList[i];
         const info = model.match(regex);
         rows.push({
+            'fullModelId': model,
             'model': info[0],
             'institute': info[2],
             'dataset + model': info[4],
@@ -73,8 +74,13 @@ const MemoizedCheckbox = React.memo(CustomCheckbox);
  * @returns a jsx containing a modal with a data grid with all models from the model group
  */
 function EditModelGroupModal(props) {
-    const modelList = useSelector(selectModelsOfGroup(props.modelGroupId));
-    const modelData = useSelector(selectModelDataOfGroup(props.modelGroupId));
+
+    const dispatch = useDispatch();
+
+    const modelList = useSelector(state => selectModelsOfGroup(state, props.modelGroupId));
+    const modelData = useSelector(state => selectModelDataOfGroup(state, props.modelGroupId));
+
+
     const rows = createRows(modelList);
     const typeList = ["Median", "Mean", "Derivative", "Percentile"];
 
@@ -267,7 +273,7 @@ function EditModelGroupModal(props) {
     }
 
     const applyChanges = () => {
-        console.log("Changes Applied");
+        const dataCpy = Object.assign({}, modelData);
         props.onClose();
     }
 
