@@ -167,26 +167,9 @@ function calculateBoxPlotValues(data) {
 }
 
 
-function generateTco3_ZmSeries({data, series, colors, dashArray, width, getState}) {
-    // add all models that are present
-    const includedModels = new Set();
-    const modelGroups = getState().models.modelGroups;
-    for (let id of getState().models.modelGroupList) {
-        if (!modelGroups[id].isVisible) { // skip group: should not be visible
-            continue;
-        }
-        for (let model of modelGroups[id].modelList) {
-            if (!modelGroups[id].models[model].isVisible) { // skip model, not visible
-                continue;
-            }
-            includedModels.add(model);
-        }
-    }
+function generateTco3_ZmSeries({data, series, colors, dashArray, width}) {
 
     for (const [model, modelData] of Object.entries(data)) {
-        if (!includedModels.has(model)) {
-            continue;
-        }
 
         series.push({
             //type: "line",
@@ -237,15 +220,42 @@ function generateTco3_ReturnSeries({data, series, colors}) {
         }
 }
 
+function getIncludedModels(getState) {
+    const includedModels = new Set();
+    const modelGroups = getState().models.modelGroups;
+    for (let id of getState().models.modelGroupList) {
+        if (!modelGroups[id].isVisible) { // skip group: should not be visible
+            continue;
+        }
+        for (let model of modelGroups[id].modelList) {
+            if (!modelGroups[id].models[model].isVisible) { // skip model, not visible
+                continue;
+            }
+            includedModels.add(model);
+        }
+    }
+    return includedModels;
+}
+
 export function generateSeries({plotId, data, getState}) {
     const series = [];
     const colors = [];
     const dashArray = [];
     const width = [];
+
+    const includedModels = getIncludedModels(getState); // this is a set
+    const trimmedData = {}
+
+    for (const [model, modelData] of Object.entries(data)) {
+        if (includedModels.has(model)){
+            trimmedData[model] = modelData;
+        }
+    }
+
     if (plotId === "tco3_zm") {
-        generateTco3_ZmSeries({data, series, colors, dashArray, width, getState});
+        generateTco3_ZmSeries({data: trimmedData, series, colors, dashArray, width});
     } else if (plotId === "tco3_return") {
-        generateTco3_ReturnSeries({data, series, colors, dashArray, width, getState});
+        generateTco3_ReturnSeries({data: trimmedData, series, colors, dashArray, width});
     }
     return {series, styling: {colors, dashArray, width}};
 }
@@ -290,7 +300,7 @@ const defaultTCO3_zm = {
     },
     colors: null, //styling.colors
     stroke: {
-        curve: "smooth",
+        //curve: "smooth", Ask betreuer for this
         width: null, // styling.width,
         dashArray: null, //styling.dashArray,
     },
