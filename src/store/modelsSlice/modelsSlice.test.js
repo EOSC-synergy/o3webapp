@@ -10,6 +10,8 @@ import reducer,
     selectModelsOfGroup,
     selectModelDataOfGroup,
     selectNameOfGroup,
+    selectStatisticalValueSettingsOfGroup,
+    selectVisibilityOfGroup,
 } from "./modelsSlice"
 
 const MODEL_DATA_TEMPLATE = {   
@@ -330,7 +332,7 @@ describe("reducer tests", () => {
 
 describe("selector tests", () => {
     
-    it('should select the correct model list', () => {
+    it('should select the model list', () => {
         const modelList = ["modelA", "modelB"];
         
         const globalState = {
@@ -351,7 +353,7 @@ describe("selector tests", () => {
         expect(selectModelsOfGroup(globalState, 0)).toEqual(modelList);
     });
 
-    it('should select the correct model data', () => {
+    it('should select the model data', () => {
         const modelData = {
             modelA: "dataA",
             modelB: "dataB",
@@ -372,7 +374,7 @@ describe("selector tests", () => {
         expect(selectModelDataOfGroup(globalState, 0)).toEqual(modelData);
     });
 
-    it('should select the corret name', () => {
+    it('should select the name', () => {
         const name = "refC2";
         
         const globalState = {
@@ -389,8 +391,56 @@ describe("selector tests", () => {
         expect(selectNameOfGroup(globalState, 0)).toEqual(name);
     });
 
+    it('should select the statistical values', () => {
+        const visibileSV = {
+            mean: true,
+            median: false,
+            derivative: true,
+            percentile: false,
+        }
+        
+        const globalState = {
+            models: {
+                modelGroupList: [0],
+                modelGroups: {
+                    0: {
+                        visibileSV, 
+                    },
+                },
+            },
+        };
 
+        expect(selectStatisticalValueSettingsOfGroup(globalState, 0)).toEqual(visibileSV);
+    });
 
+    it('should select the correct visibility', () => {
+        const isVisible = true;
+        
+        const globalState = {
+            models: {
+                modelGroupList: [0],
+                modelGroups: {
+                    0: {
+                        isVisible, 
+                    },
+                },
+            },
+        };
+
+        expect(selectVisibilityOfGroup(globalState, 0)).toEqual(isVisible);
+    });
+
+    it('should select all group ids', () => {
+        const allGroupIds = [0, 1, 2, 3, 4, 5];
+        
+        const globalState = {
+            models: {
+                modelGroupList: allGroupIds,
+            },
+        };
+
+        expect(selectAllGroupIds(globalState)).toEqual(allGroupIds);
+    });
 
 
 });
