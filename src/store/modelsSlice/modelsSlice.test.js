@@ -5,6 +5,7 @@ import reducer,
     setVisibilityForGroup,
     deleteModelGroup,
     updatePropertiesOfModelGroup,
+    STATISTICAL_VALUES,
 } from "./modelsSlice"
 
 const MODEL_DATA_TEMPLATE = {   
@@ -276,6 +277,49 @@ describe("reducer test for modelsSlice", () => {
                     data,
                 })
             )).toEqual(expected);
+    });
+
+    it('should set the statistical value for the given group correct', () => {
+        const previousState = {
+            modelGroupList: [0],
+            modelGroups: {
+                0: {
+                    modelList: [],
+                    models: {},
+                    visibileSV: {
+                        mean: true,
+                        derivative: true,
+                        median: true,
+                        percentile: true,
+                    }
+                },
+            },
+        };
+
+        const expected = {
+            modelGroupList: [0],
+            modelGroups: {
+                0: {
+                    modelList: [],
+                    models: {},
+                    visibileSV: {
+                        mean: false,
+                        derivative: true,
+                        median: true,
+                        percentile: true,
+                    }
+                },
+            },
+        };
+
+        expect(
+            reducer(
+                previousState,
+                setStatisticalValueForGroup({groupId: 0, svType: STATISTICAL_VALUES.mean, isIncluded: false})
+            )
+        ).toEqual(expected);
+
+        
     });
 
 });
