@@ -40,6 +40,7 @@ function normalizeArray(xValues, yValues) {
             result.push(null);
         }
     }
+    return result;
 }
 
 /**
@@ -173,6 +174,7 @@ function generateTco3_ZmSeries({data, series, colors, dashArray, width}) {
             name: model,
             data: modelData.data,
         });
+        console.log(modelData.data);
         colors.push(colourNameToHex(modelData.plotStyle.color));
         width.push(2);
         dashArray.push(convertToStrokeStyle(modelData.plotStyle.linestyle)); // default line thickness
@@ -227,6 +229,16 @@ export function generateSeries({plotId, data}) {
 }
 
 const defaultTCO3_zm = {
+    xaxis: {
+        categories: [],
+        title: {
+            text: "Years"
+        },
+        labels: {
+            rotate: 0, // no need to rotate since hiding labels gives plenty of room
+            hideOverlappingLabels: false  // all labels must be rendered
+        }
+    },
     chart: {
         id: "tco3_zm",
         animations: {
@@ -333,6 +345,7 @@ const default_TCO3_return = {
 export function getOptions({plotId, styling}) {
     if (plotId === "tco3_zm") {
         const newOptions = Object.assign({}, defaultTCO3_zm);
+        newOptions.xaxis.categories = IMPLICIT_YEAR_LIST;
         newOptions.colors = styling.colors;
         newOptions.stroke.width = styling.width;
         newOptions.stroke.dashArray = styling.dashArray;

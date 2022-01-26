@@ -4,6 +4,12 @@ DEBUG Container
     outline: 1px solid rgb(155, 44, 44);
 }
 */
+.apexcharts-xaxis-label {
+    display: none;
+}
+
+.apexcharts-xaxis-label:nth-child(5n){ display:revert; }
+
 :root {
     --redux-color: #4350af;
 }
