@@ -15,7 +15,7 @@ import models from "./models.json";
 import { Typography } from "@mui/material";
 
 const StyledDataGrid = styled(DataGrid)(({theme}) => ({
-    height: "65%",
+    height: "80%",
     marginTop: "3%",
 }));
 
@@ -149,7 +149,21 @@ function EditModelGroupModal(props) {
         return selected;
     }
 
-
+    const generateHeaderName = (name) => {
+        return areAllCheckboxesSelected(name) ? 
+        <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+        }}><CheckBoxIcon fontSize="small" style={{marginRight: "5px"}}/><span>{name}</span></div>
+            :
+        
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+            }}><CheckBoxOutlineBlankIcon  fontSize="small" style={{marginRight: "5px"}}/>{name}</div>
+    }
     
     //const makeRepeated = (arr, repeats) => Array.from({ length: repeats }, () => arr).flat();
 
@@ -162,19 +176,19 @@ function EditModelGroupModal(props) {
           field: 'institute',
           headerName: 'Institute',
           width: 150,
-          editable: true,
+          editable: false,
         },
         {
           field: 'dataset + model',
           headerName: 'Dataset and Model',
           width: 225,
-          editable: true,
+          editable: false,
         },
         {
             field: 'Median',
-            headerName: 'Median',
+            headerName: generateHeaderName('Median'),
             sortable: false,
-            width: 120,
+            width: 140,
             disableClickEventBubbling: true,
             renderCell: (params) => {
                 return (
@@ -184,9 +198,9 @@ function EditModelGroupModal(props) {
           },
           {
             field: 'Mean',
-            headerName: 'Mean',
+            headerName: generateHeaderName('Mean'),
             sortable: false,
-            width: 120,
+            width: 140,
             disableClickEventBubbling: true,
             renderCell: (params) => {
                 return (
@@ -196,9 +210,9 @@ function EditModelGroupModal(props) {
           },
           {
             field: 'Derivative',
-            headerName: 'Derivative',
+            headerName: generateHeaderName('Derivative'),
             sortable: false,
-            width: 120,
+            width: 140,
             disableClickEventBubbling: true,
             renderCell: (params) => {
                 return (
@@ -208,8 +222,8 @@ function EditModelGroupModal(props) {
           },
           {
             field: 'Percentile',
-            headerName: 'Percentile',
-            width: 120,
+            headerName: generateHeaderName("Percentile"),
+            width: 140,
             sortable: false,
             disableClickEventBubbling: true,
             renderCell: (params) => {
@@ -222,7 +236,7 @@ function EditModelGroupModal(props) {
             field: 'visible',
             headerName: 'Visible',
             sortable: false,
-            width: 120,
+            width: 140,
             disableClickEventBubbling: true,
             renderCell: (params) => {
                 return (
@@ -238,27 +252,10 @@ function EditModelGroupModal(props) {
     const foundIndices = (indexArray) => {
         setFilteredRows(indexArray.map(idx => rows[idx])); // translates indices into selected rows
     }
-
-    const createSVButton = (type) => {
-        return <><Button variant="outlined" 
-        startIcon={areAllCheckboxesSelected(type) ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />} 
-        onClick={() => {
-            const visibleCopy = [...getSVList(type)];
-            const checkboxesSelected = areAllCheckboxesSelected(type);
-            filteredRows.forEach(
-                prop => {visibleCopy[prop["id"]] = (checkboxesSelected ? false : true)}
-            )
-            const setter = getSVSetter(type);
-            setter(visibleCopy);
-        }}
-        style={{marginRight: "1%", marginTop: "1%"}}> 
-        {type} 
-        </Button></>
-    }
-
+    
     const columnHeaderClick = (params) => {
-        console.log(params)
-        const type = params.colDef.headerName;
+        if (!typeList.includes(params.colDef.field)) return
+        const type = params.colDef.field;
         const visibleCopy = [...getSVList(type)];
         const checkboxesSelected = areAllCheckboxesSelected(type);
         filteredRows.forEach(
@@ -266,6 +263,11 @@ function EditModelGroupModal(props) {
         )
         const setter = getSVSetter(type);
         setter(visibleCopy);
+    }
+
+    const applyChanges = () => {
+        console.log("Changes Applied");
+        props.onClose();
     }
 
     return (
@@ -279,37 +281,22 @@ function EditModelGroupModal(props) {
                 aria-describedby="modal-modal-description"
             >
                 <Card sx={cardStyle}>
-                    <Grid container alignItems="flex-end" justifyContent="right" style={{marginBottom: "1%"}}>
-                        
-                        <IconButton aria-label="delete" color={"success"} size="large">
-                            <DoneIcon fontSize="large"/>
-                        </IconButton>
-                        <IconButton onClick={props.onClose} aria-label="delete" color={"error"} size="large">
-                            <ClearIcon fontSize="large"/>
-                        </IconButton>
-                    </Grid>
                     <div style={{width: "95%"}}>
                         <SearchBar 
                             inputArray={rows}
                             foundIndicesCallback={foundIndices}
                         />
                     </div>
-                    <Grid container direction="row"  justifyContent="center" style={{marginTop: "1%"}}> 
-                        <Typography>Modify Selected Rows:</Typography>
-                        <Grid container direction="row"  justifyContent="center">
-                            {typeList.map(type => createSVButton(type))}
-                        </Grid>
-                    </Grid>
                     <StyledDataGrid 
                             rows={filteredRows}
                             columns={columns}
-                            pageSize={10}
+                            pageSize={20}
                             rowsPerPageOptions={[5]}
                             onColumnHeaderClick={columnHeaderClick}
                             // hideFooter
                             // autoHeight
                             //disableSelectionOnClick
-                            //disableColumnMenu
+                            disableColumnMenu
                             //disableColumnSelector
                             //checkboxSelection
                             //onSelectionModelChange={(ids) => {
@@ -323,7 +310,15 @@ function EditModelGroupModal(props) {
                             //  }}
                     />
                     
-                    
+                    <Grid container alignItems="flex-end" justifyContent="center" style={{}}>
+                        
+                        <IconButton aria-label="delete" color={"success"} size="large" onClick={applyChanges}>
+                            <DoneIcon fontSize="large"/>
+                        </IconButton>
+                        <IconButton onClick={props.onClose} aria-label="delete" color={"error"} size="large" onClick={props.onClose}>
+                            <ClearIcon fontSize="large"/>
+                        </IconButton>
+                    </Grid>
                 </Card>
 
             </Modal>
