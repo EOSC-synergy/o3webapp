@@ -18,6 +18,7 @@ const MODEL_DATA_TEMPLATE = {
 
 
 describe("reducer test for modelsSlice", () => {
+
     it('should edit the model list of the given group and leave other groups untoched', () => {
     
         const newModelList = ["modelB", "modelC"]
@@ -149,6 +150,132 @@ describe("reducer test for modelsSlice", () => {
         );
     });
     
-    
+    it('should delete the given model group', () => {
+        const previousState = {
+            modelGroupList: [0, 1],
+            modelGroups: {
+                0: {
+                    modelList: ["modelA", "modelB"],
+                    models: {
+                        modelA: "dataA",
+                        modelB: "dataB",
+                    },
+                    isVisible: false,
+                },
+                1: {
+                    modelList: ["modelC", "modelD"],
+                    models: {
+                        modelA: "dataC",
+                        modelB: "dataD",
+                    },
+                    isVisible: false,
+                },
+            },
+        };
+
+        const expected = {
+            modelGroupList: [1],
+            modelGroups: {
+                1: {
+                    modelList: ["modelC", "modelD"],
+                    models: {
+                        modelA: "dataC",
+                        modelB: "dataD",
+                    },
+                    isVisible: false,
+                },
+            },
+        };
+
+        expect(
+            reducer(
+                previousState,
+                deleteModelGroup({groupId: 0}),
+            )
+        ).toEqual(expected);
+
+    });
+
+    it('should update the properties of the model group accordingly', () => {
+        const previousState = {
+            modelGroupList: [0],
+            modelGroups: {
+                0: {
+                    modelList: ["modelA", "modelB"],
+                    models: {
+                        modelA: {   
+                            color: null,              
+                            isVisible: false,          
+                            mean: true,
+                            derivative: true,
+                            median: true,
+                            percentile: true,
+                        },
+                        modelB: {   
+                            color: null,              
+                            isVisible: true,          
+                            mean: false,
+                            derivative: false,
+                            median: false,
+                            percentile: false,
+                        },
+                    },
+                },
+            },
+        };
+
+        const expected = {
+            modelGroupList: [0],
+            modelGroups: {
+                0: {
+                    modelList: ["modelA", "modelB"],
+                    models: {
+                        modelA: {   
+                            color: null,              
+                            isVisible: true,          
+                            mean: false,
+                            derivative: false,
+                            median: false,
+                            percentile: false,
+                        },
+                        modelB: {   
+                            color: null,              
+                            isVisible: false,          
+                            mean: true,
+                            derivative: true,
+                            median: true,
+                            percentile: true,
+                        },
+                    },
+                },
+            },
+        };
+        
+        const data = {
+            modelA: {   
+                color: null,              
+                isVisible: true,          
+                mean: false,
+                derivative: false,
+                median: false,
+                percentile: false,
+            },
+            modelB: {   
+                color: null,              
+                isVisible: false,          
+                mean: true,
+                derivative: true,
+                median: true,
+                percentile: true,
+            },
+        };
+
+
+        expect(reducer(previousState, updatePropertiesOfModelGroup({
+                    groupId: 0,
+                    data,
+                })
+            )).toEqual(expected);
+    });
 
 });
