@@ -9,6 +9,7 @@ import { REQUEST_STATE, selectActivePlotData } from '../../../services/API/apiSl
 import { Spinner } from '../../../components/Spinner/Spinner';
 import { Typography } from '@mui/material';
 import { APEXCHART_PLOT_TYPE } from '../../../utils/constants';
+import store from "../../../store/store";
 
 /**
  * Currently there is no dynamic data linking. The graph will always
@@ -45,7 +46,7 @@ function Graph(props) {
         return <Typography>An error occurred, please try to reload the site.</Typography>;
 
     } else if (activeData.status === REQUEST_STATE.success) {
-        const {series, styling} = generateSeries({plotId, data: activeData.data})
+        const {series, styling} = generateSeries({plotId, data: activeData.data, getState: store.getState});
         const options = getOptions({plotId, styling});
         return <Chart key={plotId} options={options} series={series} type={APEXCHART_PLOT_TYPE[plotId]} height={"400p"} />
     };

@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material"
+import { getStepLabelUtilityClass, Typography } from "@mui/material"
 import Chart from "react-apexcharts"
 import { q25, q75, median } from "../services/math/math"
 import { IMPLICIT_YEAR_LIST, START_YEAR, END_YEAR } from "./constants"
@@ -167,8 +167,20 @@ function calculateBoxPlotValues(data) {
 }
 
 
-function generateTco3_ZmSeries({data, series, colors, dashArray, width}) {
+function generateTco3_ZmSeries({data, series, colors, dashArray, width, getState}) {
+    const includedModels = new Set();
+    const modelGroups = getState().models.modelGroups;
+    for (let id of getState().models.modelGroupList) {
+        for (let model of modelGroups[id].modelList) {
+            includedModels.add(model);
+        }
+    }
+
     for (const [model, modelData] of Object.entries(data)) {
+        if (!includedModels.has(model)) {
+            continue;
+        }
+
         series.push({
             //type: "line",
             name: model,
@@ -197,7 +209,10 @@ function generateTco3_ReturnSeries({data, series, colors}) {
         for (const [model, modelData] of Object.entries(data)) {
 
             const transformed = []
-            modelData.data.forEach(xypair => transformed[xypair.x] = xypair.y) // this could be done after fetching!
+            for (let xypair of modelData.data) {
+                transformed[xypair.x] = xypair.y;
+            }
+            //modelData.data.forEach(xypair => ) // this could be done after fetching!
             
             const sortedData = ALL.map(region => ({
                 x: region,
@@ -215,15 +230,15 @@ function generateTco3_ReturnSeries({data, series, colors}) {
         }
 }
 
-export function generateSeries({plotId, data}) {
+export function generateSeries({plotId, data, getState}) {
     const series = [];
     const colors = [];
     const dashArray = [];
     const width = [];
     if (plotId === "tco3_zm") {
-        generateTco3_ZmSeries({data, series, colors, dashArray, width});
+        generateTco3_ZmSeries({data, series, colors, dashArray, width, getState});
     } else if (plotId === "tco3_return") {
-        generateTco3_ReturnSeries({data, series, colors, dashArray, width});
+        generateTco3_ReturnSeries({data, series, colors, dashArray, width, getState});
     }
     return {series, styling: {colors, dashArray, width}};
 }
@@ -240,7 +255,7 @@ const defaultTCO3_zm = {
         }
     },
     chart: {
-        id: "tco3_zm",
+        id: "chart",
         animations: {
             enabled: false,
             easing: "linear"
@@ -264,7 +279,7 @@ const defaultTCO3_zm = {
     },
     tooltip: {
         enabled: true,
-        shared: true,
+        shared: false,
     },
     colors: null, //styling.colors
     stroke: {
