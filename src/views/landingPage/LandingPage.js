@@ -41,7 +41,7 @@ function LandingPage(props) {
           }
         setSidebarOpen(false);
     }
-    const [isEditOpen, setEditOpen] = React.useState(true);
+    const [isEditOpen, setEditOpen] = React.useState(false);
     
     return (
     <div data-testid="landingPage" style={{width: "100%"}}> 
@@ -54,7 +54,7 @@ function LandingPage(props) {
         </div>
       </div>
 
-      <Button variant="outlined" onClick={openSidebar} style={{width: "100%"}}/>
+      <Button variant="outlined" onClick={()=> setEditOpen(true)} style={{width: "50%"}}/>
       <EditModelGroupModal isOpen={isEditOpen} onClose={()=>{setEditOpen(false)}} modelGroupId={0}/>
       
     </div>

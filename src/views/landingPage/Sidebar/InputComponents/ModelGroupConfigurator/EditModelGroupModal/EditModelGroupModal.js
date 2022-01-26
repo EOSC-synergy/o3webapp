@@ -9,10 +9,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import ClearIcon from '@mui/icons-material/Clear';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import { selectActivePlotData } from "../../../../../../services/API/apiSlice";
-
-import { Typography } from "@mui/material";
-import { selectModelsOfGroup, selectModelDataOfGroup } from "../../../../../../store/modelsSlice/modelsSlice";
+import { selectModelsOfGroup, selectModelDataOfGroup, updatePropertiesOfModelGroup } from "../../../../../../store/modelsSlice/modelsSlice";
 
 const StyledDataGrid = styled(DataGrid)(({theme}) => ({
     height: "80%",
@@ -56,7 +53,7 @@ function createRows(modelList) {
             'Mean': false,
             'Percentile': false,
             'Derivative': false,
-            'visible': false
+            'Visible': false
         })
     }
     return rows;
@@ -80,17 +77,15 @@ function EditModelGroupModal(props) {
     const modelList = useSelector(state => selectModelsOfGroup(state, props.modelGroupId));
     const modelData = useSelector(state => selectModelDataOfGroup(state, props.modelGroupId));
 
-
     const rows = createRows(modelList);
     const typeList = ["Median", "Mean", "Derivative", "Percentile"];
-
     const [filteredRows, setFilteredRows] = React.useState(rows);
 
-    const [medianVisible, setMedianVisible] =           React.useState(Array(filteredRows.length).fill(false));
-    const [meanVisible, setMeanVisible] =               React.useState(Array(filteredRows.length).fill(false));
-    const [derivativeVisible, setDerivativeVisible] =   React.useState(Array(filteredRows.length).fill(false));
-    const [percentileVisible, setPercentileVisible] =   React.useState(Array(filteredRows.length).fill(false));
-    //const [currentSelectedIds, setCurrentSelectedIds] = React.useState([]);
+    const [medianVisible, setMedianVisible] =           React.useState(Array(rows.length).fill(false));
+    const [meanVisible, setMeanVisible] =               React.useState(Array(rows.length).fill(false));
+    const [derivativeVisible, setDerivativeVisible] =   React.useState(Array(rows.length).fill(false));
+    const [percentileVisible, setPercentileVisible] =   React.useState(Array(rows.length).fill(false));
+    const [isVisible, setIsVisible] =                   React.useState(Array(rows.length).fill(false));
 
 
 
@@ -119,32 +114,37 @@ function EditModelGroupModal(props) {
         setPercentileVisible(percentileVisibleCopy);
     }
 
-    const handleVisibleChecked = () => {
-
+    const handleVisibleChecked = (id) => {
+        let isVisibleCopy = [...isVisible];
+        isVisibleCopy[id] = !isVisibleCopy[id];
+        setIsVisible(isVisibleCopy);
     }
-    const getSVList = (type) => {
+
+    const getCheckedListByType = (type) => {
         switch(type) {
             case "Median": return medianVisible;
             case "Mean": return  meanVisible;
             case "Derivative": return  derivativeVisible;
             case "Percentile": return  percentileVisible;
+            case "Visible": return isVisible;
         }
 
     }
 
-    const getSVSetter = (type) => {
+    const getCheckedSetterByType = (type) => {
         switch(type) {
             case "Median": return setMedianVisible;
             case "Mean": return  setMeanVisible;
             case "Derivative": return  setDerivativeVisible;
             case "Percentile": return  setPercentileVisible;
+            case "Visible": return setIsVisible;
         }
 
     }
 
     const areAllCheckboxesSelected = (type) => {
         if (filteredRows.length == 0) return false;
-        const sv = getSVList(type);
+        const sv = getCheckedListByType(type);
         
         let selected = true;
         filteredRows.forEach( prop => {
@@ -177,7 +177,6 @@ function EditModelGroupModal(props) {
     //rows = makeRepeated(rows, 10);
 
     const columns = [
-        { field: 'id', headerName: 'ID', width: 90, hide: true },
         { field: 'model', headerName: 'Model', width: 120 },
         {
           field: 'institute',
@@ -240,7 +239,7 @@ function EditModelGroupModal(props) {
              }
           },
           {
-            field: 'visible',
+            field: 'Visible',
             headerName: 'Visible',
             sortable: false,
             width: 140,
@@ -263,17 +262,28 @@ function EditModelGroupModal(props) {
     const columnHeaderClick = (params) => {
         if (!typeList.includes(params.colDef.field)) return
         const type = params.colDef.field;
-        const visibleCopy = [...getSVList(type)];
+        const visibleCopy = [...getCheckedListByType(type)];
         const checkboxesSelected = areAllCheckboxesSelected(type);
         filteredRows.forEach(
             prop => {visibleCopy[prop["id"]] = (checkboxesSelected ? false : true)}
         )
-        const setter = getSVSetter(type);
+        const setter = getCheckedSetterByType(type);
         setter(visibleCopy);
     }
 
     const applyChanges = () => {
-        const dataCpy = Object.assign({}, modelData);
+        const dataCpy = JSON.parse(JSON.stringify(modelData));
+        
+        for(let i = 0; i < modelList.length; i++) {
+            const model = modelList[i];
+            dataCpy[model].mean = meanVisible[i];
+            dataCpy[model].median = medianVisible[i];
+            dataCpy[model].derivative = derivativeVisible[i];
+            dataCpy[model].percentile = percentileVisible[i];
+            dataCpy[model].visible = isVisible[i];
+        }
+
+        dispatch(updatePropertiesOfModelGroup({groupId: props.modelGroupId, data: dataCpy}))
         props.onClose();
     }
 
@@ -300,31 +310,18 @@ function EditModelGroupModal(props) {
                             pageSize={20}
                             rowsPerPageOptions={[5]}
                             onColumnHeaderClick={columnHeaderClick}
-                            // hideFooter
-                            // autoHeight
-                            //disableSelectionOnClick
                             disableColumnMenu
-                            //disableColumnSelector
-                            //checkboxSelection
-                            //onSelectionModelChange={(ids) => {
-                            //    const selectedIDs = new Set(ids);
-                                /*
-                                const selectedRowData = rows.filter((row) =>
-                                  selectedIDs.has(row.id.toString())
-                                );
-                                */
-                            //    setCurrentSelectedIds([...selectedIDs]);
-                            //  }}
+
                     />
                     
                     <Grid container alignItems="flex-end" justifyContent="center" style={{}}>
                         
-                        <IconButton aria-label="delete" color={"success"} size="large" onClick={applyChanges}>
-                            <DoneIcon fontSize="large"/>
-                        </IconButton>
-                        <IconButton onClick={props.onClose} aria-label="delete" color={"error"} size="large" onClick={props.onClose}>
-                            <ClearIcon fontSize="large"/>
-                        </IconButton>
+                        <Button aria-label="delete" color={"success"} size="large" onClick={applyChanges}>
+                            <DoneIcon fontSize="large"/> Apply Changes
+                        </Button>
+                        <Button onClick={props.onClose} aria-label="delete" color={"error"} size="large" onClick={props.onClose}>
+                            <ClearIcon fontSize="large"/> Discard Changes
+                        </Button>
                     </Grid>
                 </Card>
 

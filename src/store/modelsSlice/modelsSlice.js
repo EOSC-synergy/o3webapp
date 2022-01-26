@@ -4,15 +4,22 @@ import { createSlice } from "@reduxjs/toolkit";
  * The statistical values that are computable are listed here as
  * an "enum"
  */
-const STATISTICAL_VALUES = {
+export const STATISTICAL_VALUES = {
     mean: "mean",
     median: "median",
     derivative: "derivative",
     percentile: "percentile",
 }
 
+/**
+ * The same statistical values as a list to verify certain payload data
+ */
 const STATISTICAL_VALUES_LIST = Object.values(STATISTICAL_VALUES);
 
+/**
+ * This object serves as a template, whenever a new model is added to a group
+ * this object describes the default settings of the freshly added model.
+ */
 const MODEL_DATA_TEMPLATE = {   // single model
     color: null,                // if not set it defaults to standard value from api
     isVisible: true,            // show/hide individual models from a group
@@ -21,6 +28,7 @@ const MODEL_DATA_TEMPLATE = {   // single model
     median: true,
     percentile: true,
 }
+
 
 const MODEL_GROUP_TEMPLATE = { 
     name: "",
@@ -100,7 +108,7 @@ const modelsSlice = createSlice({
          * the group already exists the corresponding data is updated otherwise
          * the reducer TAKES CARE of creating a group.
          * 
-         * @param {object} state the current store state of: state/plot
+         * @param {object} state the current store state of: state/models
          * @param {object} action accepts the action returned from updateModelGroup()
          * @param {object} action.payload the payload is an object containg the given data
          * @param {string} action.payload.groupId the name of the group to set
@@ -111,7 +119,7 @@ const modelsSlice = createSlice({
             // set model group
             if (state.modelGroupList.includes(groupId)) {
                 const selectedModelGroup = state.modelGroups[groupId];
-                
+                state.modelGroups[groupId].name = groupName;
                 // remove unwanted
                 const toDelete = selectedModelGroup.modelList.filter(model => !modelList.includes(model));
                 
@@ -128,18 +136,21 @@ const modelsSlice = createSlice({
                         selectedModelGroup.models[model] = Object.assign({}, MODEL_DATA_TEMPLATE);
                     }
                 };
+                
             } else { // create new group
-                newGroupId = state.idCounter++;
+                const newGroupId = state.idCounter++;
                 state.modelGroupList.push(newGroupId);
                 state.modelGroups[newGroupId] = Object.assign({}, MODEL_GROUP_TEMPLATE);
+                state.modelGroups[newGroupId].name = groupName;
                 const currentGroup = state.modelGroups[newGroupId];
                 for (let model of modelList) {
                     currentGroup.modelList.push(model);
                     currentGroup.models[model] = Object.assign({}, MODEL_DATA_TEMPLATE);
-                }
+                };
+
             }
             // change name either way
-            state.modelGroups[groupId].name = groupName;
+            
         }, 
 
         /**
@@ -155,7 +166,7 @@ const modelsSlice = createSlice({
          * the group already exists the corresponding data is updated otherwise
          * the reducer takes care of creating a group.
          * 
-         * @param {object} state the current store state of: state/plot
+         * @param {object} state the current store state of: state/models
          * @param {object} action accepts the action returned from deleteModelGroup()
          * @param {object} action.payload the payload is an object containg the given data
          * @param {string} action.payload.groupId the name of the group that should be deleted
@@ -172,17 +183,21 @@ const modelsSlice = createSlice({
         },
         
         /**
-         * ...
+         * This reducer accepts an action object returned from updatePropertiesOfModelGroup()
          * 
          *      e.g. dispatch(setStatisticalValueForGroup(
          *          { groupID: 42, data: bigObject }
          *      ));
          * 
-         * ...
+         * This method provides an interface to update the properties of an existing model
+         * group. The properties are whether the model is included in the statistical value(s)
+         * and whether the model is visible.
          * 
-         * @param {*} state 
-         * @param {*} action 
-         * @param {*} action.payload.modelData
+         * @param {object} state the current store state of: state/models
+         * @param {object} action accepts the action returned from deleteModelGroup()
+         * @param {object} action.payload the payload is an object containg the given data
+         * @param {string} action.payload.groupId the name of the group whose model properties should be updated
+         * @param {object} action.payload.data holds the information that should be updated 
          */
         updatePropertiesOfModelGroup(state, action) {
             const { groupId, data } = action.payload;
@@ -215,7 +230,7 @@ const modelsSlice = createSlice({
          * In this case for a given group is set whether the given statistical values (SV)
          * should be displayed.
          * 
-         * @param {object} state the current store state of: state/plot
+         * @param {object} state the current store state of: state/models
          * @param {object} action accepts the action returned from updateModelGroup()
          * @param {object} action.payload the payload is an object containg the given data
          * @param {string} action.payload.groupId a string specifying the group
@@ -245,7 +260,7 @@ const modelsSlice = createSlice({
          * 
          * In this case for a given group is set whether it should be visibile or not.
          * 
-         * @param {object} state the current store state of: state/plot
+         * @param {object} state the current store state of: state/models
          * @param {object} action accepts the action returned from updateModelGroup()
          * @param {object} action.payload the payload is an object containg the given data
          * @param {string} action.payload.groupId a string specifying the group
