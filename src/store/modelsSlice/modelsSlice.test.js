@@ -1,126 +1,69 @@
 import reducer, 
 {
-    addModels,
-    removeModels,
-    updatedModelGroup,  // not impl. yet
-    addedModelGroup,    // not impl. yet
-    setVisibility, 
-    setStatisticalValueIncluded, 
-    setStatisticalValueForGroup
+    setModelsOfModelGroup,
+    setStatisticalValueForGroup,
+    setVisibilityForGroup,
+    deleteModelGroup,
+    updatePropertiesOfModelGroup,
 } from "./modelsSlice"
 
-const definedInitialState = {
-    // currently active plot
-    plotId: "tco3_zm",
-    settings: {
-        "tco3_zm": { 
-            // this objects holds key-value-pairs, the keys being the model-group 
-            // identifier and the values being the settings for each group 
-            "all": { 
-                // model group storing all information until it is possible 
-                // to implement more model groups
-                name: "All OCTS models",
-                modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"],
-                models: { // models is lookup table
-                    "CCMI-1_ACCESS_ACCESS-CCM-refC2": { // single model
-                        institute: "IMK",
-                        dataset: {
-                            x: [42],
-                            y: [42],
-                        },
-                        color: "#000000",
-                        plotStyle: "solid",
-                        isVisible: true, // show/hide individual models from a group
-                        mean: true,
-                        derivative: true,
-                        median: true,
-                        percentile: true,
-                    }
-                },
-                hidden: false, // show/hide complete group
-                visibileSV: { // lookup table so the reducer impl. can be more convenient
-                    mean: true,
-                    derivative: true,
-                    median: true,
-                    percentile: true,
-                }
-            }
-        },
-        "tco3_return": {
-            "all": { 
-                name: "All Return/Recovery models",
-                modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"],
-                models: { // models is lookup table
-                    "CCMI-1_ACCESS_ACCESS-CCM-refC2": { // single model
-                        institute: "IMK",
-                        dataset: {
-                            x: [42],
-                            y: [42],
-                        },
-                        hidden: false, // show/hide individual models from a group
-                        mean: true,
-                        derivative: true,
-                        median: true,
-                        percentile: true,
-                        color: "#000000",
-                        plotStyle: "solid",
-                    }
-                },
-                hidden: false, // show/hide complete group
-                visibileSV: { // lookup table so the reducer impl. can be more convenient
-                    mean: true,
-                    derivative: true,
-                    median: true,
-                    percentile: true,
-                }
-            }
-        }
-    }
+const MODEL_DATA_TEMPLATE = {   
+    color: null,                
+    isVisible: true,          
+    mean: true,
+    derivative: true,
+    median: true,
+    percentile: true,
 }
 
-test('should return the initial state', () => {
-    expect(reducer(undefined, {})).toEqual(
-      definedInitialState // Expect initial state to be the defined initial state
-    );
-});
-
-
-test('should remove the model list of the current plot', () => {
+test('should edit the model list of the given group', () => {
     
-    const removeModelList = ["modelA", "modelB", "modelC"]
+    const newModelList = ["modelB", "modelC"]
     
     const previousState = {
-        plotId: "tco3_zm",
-        settings: {
-            "tco3_zm": {  
-                all: {
-                    modelList: removeModelList,
-                    models: {
-                        modelA: "dataA",
-                        modelB: "dataB",
-                        modelC: "dataC",
-                    }
-                }
-            }
-        }
+        modelGroupList: ["group1", "group2"],
+        modelGroups: {
+            group1: {
+                modelList: ["modelA", "modelB"],
+                models: {
+                    modelA: "dataA",
+                    modelB: "dataB",
+                },
+            },
+            group2: {
+                modelList: ["dataD", "dataE", "dataF"],
+                models: {
+                    modelA: "dataD",
+                    modelB: "dataE",
+                    modelC: "dataF",
+                },
+            },
+        },
     };
 
     const expected = {
-        plotId: "tco3_zm",
-        settings: {
-            "tco3_zm": {  
-                "all": {
-                    modelList: [],
-                    models: {
-                        // expect lookup table to be empty
-                    }
-                }
-            }
-        }
+        modelGroupList: ["group1", "group2"],
+        modelGroups: {
+            group1: {
+                modelList: ["modelB", "modelC"], // empty
+                models: {
+                    modelB: "dataB",
+                    modelC: MODEL_DATA_TEMPLATE,
+                }, // empty
+            },
+            group2: {
+                modelList: ["dataD", "dataE", "dataF"],
+                models: {
+                    modelA: "dataD",
+                    modelB: "dataE",
+                    modelC: "dataF",
+                },
+            },
+        },
     };
 
     expect(
-        reducer(previousState, removeModels({groupId: "all", removeModelList: removeModelList}))
+        reducer(previousState, setModelsOfModelGroup({groupId: "group1", modelList: newModelList}))
     ).toEqual(expected);
 
 });
