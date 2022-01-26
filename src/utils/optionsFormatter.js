@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material"
 import Chart from "react-apexcharts"
 import { q25, q75, median } from "../services/math/math"
+import { IMPLICIT_YEAR_LIST, START_YEAR, END_YEAR } from "./constants"
 
 const APEXCHART_PLOT_TYPE = {
     tco3_zm: "line",
@@ -20,8 +21,75 @@ const USER_REGION = "User region"
 const ALL = [ANTARCTIC, SH_MID, NH_MID, TROPICS, ARCTIC, NEAR_GLOBAL, GLOBAL, USER_REGION];
 ALL.sort();
 
+/**
+ * Iterates through the x and y data returned from the api for the tco3_zm and fills the corresponding years with
+ * either data points, if they are present or with `null`. The first index corresponds to START_YEAR
+ * 
+ * @param {array} xValues an array holding the years
+ * @param {array} yValues an array of the same length holding the datapoints for the corresponding years
+ */
+function normalizeArray(xValues, yValues) {
+    const result = [];
+    let currentValueIndex = 0;
+    
+    for (let year of IMPLICIT_YEAR_LIST) {
+        if (xValues[currentValueIndex] === year) {
+            result.push(yValues[currentValueIndex]);
+            currentValueIndex++;
+        } else {
+            result.push(null);
+        }
+    }
+}
+
+/**
+ * This function is called only once when the data from the api is fetched. It transforms the data
+ * into a format that (hopefully) speeds up the computation of certain things.
+ * 
+ * The TCO3_ZM data is transformed from a x and y array into one single array whose first index 
+ * represents the START_YEAR (1959) and so on. It contains either data points or null.
+ * x = ['1960', '1963', '1965', '1966']
+ * y = [0, 1, 2, 3]
+ * normalized: [null (1959), 0, null (1961), null (1962), 1, null (1964), 2, 3, null (1967), ...]
+ * 
+ * The TCO3_RETURN data is transformed from a x and y array into a lookup table with the given region:
+ * 
+ *   "x": [
+ *     "Antarctic(Oct)",
+ *     "SH mid-lat",
+ *     "Tropics",
+ *     "Arctic(Mar)",              {
+ *     "Near global",               "Antarctic(Oct)": 2064,
+ *     "Global",                    "SH mid-lat": 2051,
+ *     "User region"                "Tropics": 2060,
+ *   ],                     =>      "Tropics": 2041,
+ *   "y": [                             ...
+ *     2064,                       }
+ *     2051,
+ *     2060,
+ *     2041,
+ *     2040,
+ *     2049,
+ *     2052,
+ *     2052
+ *   ]
+ * 
+ * @param {string} obj.plotId a string specifying the plot (to perform different transformations, according to the data format)
+ * @param {object} obj.data an object holding the data as it was returned from the api 
+ * @returns 
+ */
 export const preTransformApiData = ({plotId, data}) => {
-    if (plotId === "tco3_zm" || plotId === "tco3_return") {
+    if (plotId === "tco3_zm") {
+        const lookUpTable = {};
+        for (let datum of data) {
+            // top structure
+            lookUpTable[datum.model] = {
+                plotStyle: datum.plotstyle,
+                data: normalizeArray(datum.x, datum.y), // this should speed up the calculation of the statistical values later
+            };
+        }
+        return lookUpTable;
+    } else if (plotId === "tco3_return") { // old way of doing this
         const lookUpTable = {};
         for (let datum of data) {
             // top structure
