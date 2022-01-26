@@ -51,10 +51,10 @@ function createRows(modelList) {
             'institute': info[2],
             'dataset + model': info[4],
             'id': i,
-            'include in median': false,
-            'include in mean': false,
-            'include in percentile': false,
-            'include in derivative': false,
+            'Median': false,
+            'Mean': false,
+            'Percentile': false,
+            'Derivative': false,
             'visible': false
         })
     }
@@ -83,7 +83,7 @@ function EditModelGroupModal(props) {
     const [meanVisible, setMeanVisible] =               React.useState(Array(filteredRows.length).fill(false));
     const [derivativeVisible, setDerivativeVisible] =   React.useState(Array(filteredRows.length).fill(false));
     const [percentileVisible, setPercentileVisible] =   React.useState(Array(filteredRows.length).fill(false));
-    const [currentSelectedIds, setCurrentSelectedIds] = React.useState([]);
+    //const [currentSelectedIds, setCurrentSelectedIds] = React.useState([]);
 
 
 
@@ -136,12 +136,12 @@ function EditModelGroupModal(props) {
     }
 
     const areAllCheckboxesSelected = (type) => {
-        if (currentSelectedIds.length == 0) return false;
+        if (filteredRows.length == 0) return false;
         const sv = getSVList(type);
         
         let selected = true;
-        currentSelectedIds.forEach( id => {
-            if(!sv[id]) {
+        filteredRows.forEach( prop => {
+            if(!sv[prop["id"]]) {
                 selected = false;
             }
             
@@ -171,7 +171,7 @@ function EditModelGroupModal(props) {
           editable: true,
         },
         {
-            field: 'include in median',
+            field: 'Median',
             headerName: 'Median',
             sortable: false,
             width: 120,
@@ -183,7 +183,7 @@ function EditModelGroupModal(props) {
              }
           },
           {
-            field: 'include in mean',
+            field: 'Mean',
             headerName: 'Mean',
             sortable: false,
             width: 120,
@@ -195,7 +195,7 @@ function EditModelGroupModal(props) {
              }
           },
           {
-            field: 'include in derivative',
+            field: 'Derivative',
             headerName: 'Derivative',
             sortable: false,
             width: 120,
@@ -207,7 +207,7 @@ function EditModelGroupModal(props) {
              }
           },
           {
-            field: 'include in percentile',
+            field: 'Percentile',
             headerName: 'Percentile',
             width: 120,
             sortable: false,
@@ -244,8 +244,9 @@ function EditModelGroupModal(props) {
         startIcon={areAllCheckboxesSelected(type) ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />} 
         onClick={() => {
             const visibleCopy = [...getSVList(type)];
-            currentSelectedIds.forEach(
-                id => {visibleCopy[id] = (areAllCheckboxesSelected(type) ? false : true)}
+            const checkboxesSelected = areAllCheckboxesSelected(type);
+            filteredRows.forEach(
+                prop => {visibleCopy[prop["id"]] = (checkboxesSelected ? false : true)}
             )
             const setter = getSVSetter(type);
             setter(visibleCopy);
@@ -253,6 +254,18 @@ function EditModelGroupModal(props) {
         style={{marginRight: "1%", marginTop: "1%"}}> 
         {type} 
         </Button></>
+    }
+
+    const columnHeaderClick = (params) => {
+        console.log(params)
+        const type = params.colDef.headerName;
+        const visibleCopy = [...getSVList(type)];
+        const checkboxesSelected = areAllCheckboxesSelected(type);
+        filteredRows.forEach(
+            prop => {visibleCopy[prop["id"]] = (checkboxesSelected ? false : true)}
+        )
+        const setter = getSVSetter(type);
+        setter(visibleCopy);
     }
 
     return (
@@ -292,21 +305,22 @@ function EditModelGroupModal(props) {
                             columns={columns}
                             pageSize={10}
                             rowsPerPageOptions={[5]}
+                            onColumnHeaderClick={columnHeaderClick}
                             // hideFooter
                             // autoHeight
                             //disableSelectionOnClick
                             //disableColumnMenu
                             //disableColumnSelector
-                            checkboxSelection
-                            onSelectionModelChange={(ids) => {
-                                const selectedIDs = new Set(ids);
+                            //checkboxSelection
+                            //onSelectionModelChange={(ids) => {
+                            //    const selectedIDs = new Set(ids);
                                 /*
                                 const selectedRowData = rows.filter((row) =>
                                   selectedIDs.has(row.id.toString())
                                 );
                                 */
-                                setCurrentSelectedIds([...selectedIDs]);
-                              }}
+                            //    setCurrentSelectedIds([...selectedIDs]);
+                            //  }}
                     />
                     
                     
