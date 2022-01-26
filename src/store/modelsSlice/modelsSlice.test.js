@@ -142,7 +142,7 @@ describe("reducer test for modelsSlice", () => {
         expect(
             reducer(
                 previousState, // use initial state 
-                setVisibilityForGroup({groupID: 0, isVisible: true})
+                setVisibilityForGroup({groupId: 0, isVisible: true})
             )
         ).toEqual(
             expected
