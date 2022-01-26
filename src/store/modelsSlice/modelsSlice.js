@@ -112,6 +112,7 @@ const modelsSlice = createSlice({
          * @param {object} action accepts the action returned from updateModelGroup()
          * @param {object} action.payload the payload is an object containg the given data
          * @param {int} action.payload.groupId the name of the group to set
+         * @param {string} action.payload.groupName the name of the group
          * @param {string} action.payload.modelList the list of models the group should have
          */
         setModelsOfModelGroup(state, action) { 
