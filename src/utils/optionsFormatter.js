@@ -168,10 +168,17 @@ function calculateBoxPlotValues(data) {
 
 
 function generateTco3_ZmSeries({data, series, colors, dashArray, width, getState}) {
+    // add all models that are present
     const includedModels = new Set();
     const modelGroups = getState().models.modelGroups;
     for (let id of getState().models.modelGroupList) {
+        if (!modelGroups[id].isVisible) { // skip group: should not be visible
+            continue;
+        }
         for (let model of modelGroups[id].modelList) {
+            if (!modelGroups[id].models[model].isVisible) { // skip model, not visible
+                continue;
+            }
             includedModels.add(model);
         }
     }
@@ -186,7 +193,7 @@ function generateTco3_ZmSeries({data, series, colors, dashArray, width, getState
             name: model,
             data: modelData.data,
         });
-        console.log(modelData.data);
+
         colors.push(colourNameToHex(modelData.plotStyle.color));
         width.push(2);
         dashArray.push(convertToStrokeStyle(modelData.plotStyle.linestyle)); // default line thickness
