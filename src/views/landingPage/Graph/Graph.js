@@ -24,6 +24,8 @@ function Graph(props) {
 
     const plotId = useSelector(selectPlotId);
     const activeData = useSelector(state => selectActivePlotData(state, plotId));
+    // settings
+    // modelgroups => 
 
     useEffect(() => { 
         // note: this is important, because we should only "propagate" the error to the top
