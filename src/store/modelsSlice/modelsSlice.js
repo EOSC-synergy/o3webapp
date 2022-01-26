@@ -172,12 +172,36 @@ const modelsSlice = createSlice({
         },
         
         /**
-         * TODO: mit Nick absprechen
+         * ...
+         * 
+         *      e.g. dispatch(setStatisticalValueForGroup(
+         *          { groupID: 42, data: bigObject }
+         *      ));
+         * 
+         * ...
          * 
          * @param {*} state 
          * @param {*} action 
+         * @param {*} action.payload.modelData
          */
         updatePropertiesOfModelGroup(state, action) {
+            const { groupId, data } = action.payload;
+
+            if (!state.modelGroupList.includes(groupId)) { // no group with this name in store
+                throw `tried to access "${groupId}" which is not a valid group`;
+            };
+
+            for (let model of state.modelGroups[groupId].modelList) {
+                const { color, mean, median, derivative, percentile, isVisible } = data[model]; // expect data to meet certain scheme
+                state.modelGroups[groupId].models[model] = {
+                    color,
+                    mean,
+                    median,
+                    derivative,
+                    percentile,
+                    isVisible,
+                };
+            };
         },
 
         /**
@@ -258,3 +282,8 @@ export const {
  * the above defined actions wouldn't trigger state updates.
  */
 export default modelsSlice.reducer;
+
+
+export const selectModelsOfGroup = (state, groupId) => state.models.modelGroups[groupId].modelList;
+export const selectModelDataOfGroup = (state, groupId) => state.models.modelGroups[groupId].models;
+export const selectNameOfGroup = (state, groupId) => state.models.modelGroups[groupId].name;
