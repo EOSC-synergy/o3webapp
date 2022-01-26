@@ -298,7 +298,6 @@ export const {
  * the above defined actions wouldn't trigger state updates.
  */
 export default modelsSlice.reducer;
-
 /**
  * This selector allows components to select the models of a given group (specified by ID)
  *
@@ -323,3 +322,26 @@ export const selectModelDataOfGroup = (state, groupId) => state.models.modelGrou
  * @returns a string that holds the name of the group
  */
 export const selectNameOfGroup = (state, groupId) => state.models.modelGroups[groupId].name;
+/**
+ * This selector allows components to select the statistical values of a given group (specified by ID)
+ * 
+ * @param {object} state the global redux state
+ * @param {int} groupId the group id specifies which data should be retrieved
+ * @returns an object that maps each statistical value onto a boolean
+ */
+export const selectStatisticalValueSettingsOfGroup = (state, groupId) => state.models.modelGroups[groupId].visibileSV;
+/**
+ * This selector allows components to select the visibility of a given group (specified by ID)
+ * 
+ * @param {object} state the global redux state
+ * @param {int} groupId the group id specifies which data should be retrieved
+ * @returns boolean value whether the group is visible or not
+ */
+export const selectVisibilityOfGroup = (state, groupId) => state.models.modelGroups[groupId].isVisible;
+/**
+ * This selector allows components to select all valid group ids
+ * 
+ * @param {object} state the global redux state
+ * @returns an array holding all valid group ids
+ */
+export const selectAllGroupIds = state => state.modelGroupList;

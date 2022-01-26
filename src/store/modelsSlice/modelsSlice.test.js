@@ -18,7 +18,7 @@ const MODEL_DATA_TEMPLATE = {
 }
 
 
-describe("reducer test for modelsSlice", () => {
+describe("reducer tests", () => {
 
     it('should edit the model list of the given group and leave other groups untoched', () => {
     
@@ -321,5 +321,38 @@ describe("reducer test for modelsSlice", () => {
 
         
     });
+
+});
+
+describe("selector tests", () => {
+    
+    it('should select the correct model list', () => {
+        const globalState = {
+            models: {
+                modelGroupList: ["group1"],
+                modelGroups: {
+                    group1: {
+                        modelList: ["modelA", "modelB"],
+                        models: {
+                            modelA: "dataA",
+                            modelB: "dataB",
+                        },
+                    },
+                },
+            },
+        };
+    });
+
+    it('should select the correct model data', () => {
+
+    });
+
+    it('should select the corret name', () => {
+
+    });
+
+
+
+
 
 });
