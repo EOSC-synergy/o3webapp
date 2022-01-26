@@ -16,7 +16,7 @@ const MODEL_DATA_TEMPLATE = {
     percentile: true,
 }
 
-test('should edit the model list of the given group', () => {
+test('should edit the model list of the given group and leave other groups untoched', () => {
     
     const newModelList = ["modelB", "modelC"]
     
@@ -58,6 +58,43 @@ test('should edit the model list of the given group', () => {
                     modelB: "dataE",
                     modelC: "dataF",
                 },
+            },
+        },
+    };
+
+    expect(
+        reducer(previousState, setModelsOfModelGroup({groupId: "group1", modelList: newModelList}))
+    ).toEqual(expected);
+
+});
+
+test('should create a new group if the given id is not present', () => {
+    
+    const newModelList = ["modelA", "modelB"]
+    
+    const previousState = {
+        modelGroupList: [],
+        modelGroups: {
+            
+        },
+    };
+
+    const expected = {
+        modelGroupList: ["group1"],
+        modelGroups: {
+            group1: {
+                modelList: ["modelA", "modelB"],
+                models: {
+                    modelA: MODEL_DATA_TEMPLATE,
+                    modelB: MODEL_DATA_TEMPLATE,
+                },
+                isVisible: true,    // show/hide complete group
+                visibileSV: {       // lookup table so the reducer impl. can be more convenient
+                    mean: true,
+                    derivative: true,
+                    median: true,
+                    percentile: true,
+                }
             },
         },
     };

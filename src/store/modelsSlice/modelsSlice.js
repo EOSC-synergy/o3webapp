@@ -23,7 +23,6 @@ const MODEL_DATA_TEMPLATE = {   // single model
 }
 
 const MODEL_GROUP_TEMPLATE = { 
-    name: null,
     modelList: [],
     models: {},         // models is lookup table
     isVisible: true,    // show/hide complete group
@@ -51,7 +50,6 @@ const initialState = {
         "all": { 
             // model group storing all information until it is possible 
             // to implement more model groups
-            name: "All OCTS models",
             modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"],
             models: { // models is lookup table
                 "CCMI-1_ACCESS_ACCESS-CCM-refC2": { // single model
@@ -128,7 +126,7 @@ const modelsSlice = createSlice({
                     }
                 };
             } else { // create new group
-                state.modelList.push(groupId);
+                state.modelGroupList.push(groupId);
                 state.modelGroups[groupId] = Object.assign({}, MODEL_GROUP_TEMPLATE);
                 const currentGroup = state.modelGroups[groupId];
                 for (let model of modelList) {
