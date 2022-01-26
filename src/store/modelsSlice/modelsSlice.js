@@ -23,6 +23,7 @@ const MODEL_DATA_TEMPLATE = {   // single model
 }
 
 const MODEL_GROUP_TEMPLATE = { 
+    name: "",
     modelList: [],
     models: {},         // models is lookup table
     isVisible: true,    // show/hide complete group
@@ -42,12 +43,14 @@ const MODEL_GROUP_TEMPLATE = {
  * corresponding test file, that tests the initial state.
  */
 const initialState = {
-    modelGroupList: ["all"],
+    idCounter: 1,
+    modelGroupList: [0],
     // currently active plot
     modelGroups: {
         // this objects holds key-value-pairs, the keys being the model-group 
         // identifier and the values being the settings for each group 
-        "all": { 
+        0: { 
+            name: "Example Group",
             // model group storing all information until it is possible 
             // to implement more model groups
             modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"],
@@ -104,7 +107,7 @@ const modelsSlice = createSlice({
          * @param {string} action.payload.modelList the list of models the group should have
          */
         setModelsOfModelGroup(state, action) { 
-            const { groupId, modelList } = action.payload;
+            const { groupId, groupName, modelList } = action.payload;
             // set model group
             if (state.modelGroupList.includes(groupId)) {
                 const selectedModelGroup = state.modelGroups[groupId];
@@ -126,14 +129,17 @@ const modelsSlice = createSlice({
                     }
                 };
             } else { // create new group
-                state.modelGroupList.push(groupId);
-                state.modelGroups[groupId] = Object.assign({}, MODEL_GROUP_TEMPLATE);
-                const currentGroup = state.modelGroups[groupId];
+                newGroupId = state.idCounter++;
+                state.modelGroupList.push(newGroupId);
+                state.modelGroups[newGroupId] = Object.assign({}, MODEL_GROUP_TEMPLATE);
+                const currentGroup = state.modelGroups[newGroupId];
                 for (let model of modelList) {
                     currentGroup.modelList.push(model);
                     currentGroup.models[model] = Object.assign({}, MODEL_DATA_TEMPLATE);
                 }
             }
+            // change name either way
+            state.modelGroups[groupId].name = groupName;
         }, 
 
         /**
