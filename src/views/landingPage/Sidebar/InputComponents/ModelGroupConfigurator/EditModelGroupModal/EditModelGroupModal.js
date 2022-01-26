@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { Modal, Card, Button, Grid, Checkbox, createSvgIcon, Divider } from "@mui/material";
+import { Modal, Card, Button, Grid, Checkbox } from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
 import SearchBar from "../SearchBar/SearchBar";
 import { styled } from '@mui/material/styles';
-import IconButton from '@mui/material/IconButton';
 import DoneIcon from '@mui/icons-material/Done';
 import ClearIcon from '@mui/icons-material/Clear';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import { selectModelsOfGroup, selectModelDataOfGroup, updatePropertiesOfModelGroup } from "../../../../../../store/modelsSlice/modelsSlice";
+import IntermediateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
+import { selectModelsOfGroup, selectModelDataOfGroup, updatePropertiesOfModelGroup, STATISTICAL_VALUES } from "../../../../../../store/modelsSlice/modelsSlice";
 
 const StyledDataGrid = styled(DataGrid)(({theme}) => ({
     height: "80%",
@@ -47,13 +47,13 @@ function createRows(modelList) {
             'fullModelId': model,
             'model': info[0],
             'institute': info[2],
-            'dataset + model': info[4],
+            'datasetAndModel': info[4],
             'id': i,
-            'Median': false,
-            'Mean': false,
-            'Percentile': false,
-            'Derivative': false,
-            'Visible': false
+            'median': false,
+            'mean': false,
+            'percentile': false,
+            'derivative': false,
+            'visible': false
         })
     }
     return rows;
@@ -78,194 +78,124 @@ function EditModelGroupModal(props) {
     const modelData = useSelector(state => selectModelDataOfGroup(state, props.modelGroupId));
 
     const rows = createRows(modelList);
-    const typeList = ["Median", "Mean", "Derivative", "Percentile"];
+    const typeList = Object.values(STATISTICAL_VALUES);
+    typeList.push("visible")
+
     const [filteredRows, setFilteredRows] = React.useState(rows);
 
-    const [medianVisible, setMedianVisible] =           React.useState(Array(rows.length).fill(false));
-    const [meanVisible, setMeanVisible] =               React.useState(Array(rows.length).fill(false));
-    const [derivativeVisible, setDerivativeVisible] =   React.useState(Array(rows.length).fill(false));
-    const [percentileVisible, setPercentileVisible] =   React.useState(Array(rows.length).fill(false));
-    const [isVisible, setIsVisible] =                   React.useState(Array(rows.length).fill(false));
+    const [medianVisible, setMedianVisible] =           React.useState(modelList.map(model => modelData[model].median));
+    const [meanVisible, setMeanVisible] =               React.useState(modelList.map(model => modelData[model].mean));
+    const [derivativeVisible, setDerivativeVisible] =   React.useState(modelList.map(model => modelData[model].derivative));
+    const [percentileVisible, setPercentileVisible] =   React.useState(modelList.map(model => modelData[model].percentile));
+    const [isVisible, setIsVisible] =                   React.useState(modelList.map(model => modelData[model].isVisible));
 
-
-
-
-    const handleMedianChecked = (id) => {
-        let medianVisibleCopy = [...medianVisible]
-        medianVisibleCopy[id] = !medianVisibleCopy[id]
-        setMedianVisible(medianVisibleCopy);
-    }
-
-    const handleMeanChecked = (id) => {
-        let meanVisibleCopy = [...meanVisible]
-        meanVisibleCopy[id] = !meanVisibleCopy[id]
-        setMeanVisible(meanVisibleCopy);
-    }
-
-    const handleDerivativeChecked = (id) => {
-        let derivativeVisibleCopy = [...derivativeVisible]
-        derivativeVisibleCopy[id] = !derivativeVisibleCopy[id]
-        setDerivativeVisible(derivativeVisibleCopy);
-    }
-
-    const handlePercentileChecked = (id) => {
-        let percentileVisibleCopy = [...percentileVisible]
-        percentileVisibleCopy[id] = !percentileVisibleCopy[id]
-        setPercentileVisible(percentileVisibleCopy);
-    }
-
-    const handleVisibleChecked = (id) => {
-        let isVisibleCopy = [...isVisible];
-        isVisibleCopy[id] = !isVisibleCopy[id];
-        setIsVisible(isVisibleCopy);
+    const foundIndices = (indexArray) => {
+        setFilteredRows(indexArray.map(idx => rows[idx])); // translates indices into selected rows
     }
 
     const getCheckedListByType = (type) => {
-        switch(type) {
-            case "Median": return medianVisible;
-            case "Mean": return  meanVisible;
-            case "Derivative": return  derivativeVisible;
-            case "Percentile": return  percentileVisible;
-            case "Visible": return isVisible;
+        switch(type.toLowerCase()) {
+            case "median": return medianVisible;
+            case "mean": return  meanVisible;
+            case "derivative": return  derivativeVisible;
+            case "percentile": return  percentileVisible;
+            case "visible": return isVisible;
+            default: return medianVisible;
         }
 
     }
 
     const getCheckedSetterByType = (type) => {
-        switch(type) {
-            case "Median": return setMedianVisible;
-            case "Mean": return  setMeanVisible;
-            case "Derivative": return  setDerivativeVisible;
-            case "Percentile": return  setPercentileVisible;
-            case "Visible": return setIsVisible;
+        switch(type.toLowerCase()) {
+            case "pedian": return setMedianVisible;
+            case "mean": return  setMeanVisible;
+            case "derivative": return  setDerivativeVisible;
+            case "percentile": return  setPercentileVisible;
+            case "visible": return setIsVisible;
+            default: return setMedianVisible;
         }
 
     }
 
+    const handleChecked = (checkedList, setter) => (id) => {
+        let checkedListCopy = [...checkedList];
+        checkedListCopy[id] = !checkedListCopy[id];
+        setter(checkedListCopy);
+    }
+
     const areAllCheckboxesSelected = (type) => {
         if (filteredRows.length == 0) return false;
-        const sv = getCheckedListByType(type);
+        const checkedList = getCheckedListByType(type);
         
-        let selected = true;
-        filteredRows.forEach( prop => {
-            if(!sv[prop["id"]]) {
-                selected = false;
+        let allRowsSelected = true;
+        filteredRows.forEach( row => {
+            if(!checkedList[row["id"]]) {
+                allRowsSelected = false;
             }
             
         });
-        return selected;
+        return allRowsSelected;
     }
 
-    const generateHeaderName = (name) => {
-        return areAllCheckboxesSelected(name) ? 
-        <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-        }}><CheckBoxIcon fontSize="small" style={{marginRight: "5px"}}/><span>{name}</span></div>
-            :
+    const areNoCheckboxesSelected = (type) => {
+        if (filteredRows.length == 0) return true;
+        const checkedList = getCheckedListByType(type);
         
-            <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                flexWrap: 'wrap',
-            }}><CheckBoxOutlineBlankIcon  fontSize="small" style={{marginRight: "5px"}}/>{name}</div>
+        let noSelectedRows = true;
+        filteredRows.forEach( row => {
+            if(checkedList[row["id"]]) {
+                noSelectedRows = false;
+            }
+            
+        });
+        return noSelectedRows;
     }
-    
-    //const makeRepeated = (arr, repeats) => Array.from({ length: repeats }, () => arr).flat();
 
-    //rows = makeRepeated(rows, 10);
-
-    const columns = [
-        { field: 'model', headerName: 'Model', width: 120 },
-        {
-          field: 'institute',
-          headerName: 'Institute',
-          width: 150,
-          editable: false,
-        },
-        {
-          field: 'dataset + model',
-          headerName: 'Dataset and Model',
-          width: 225,
-          editable: false,
-        },
-        {
-            field: 'Median',
-            headerName: generateHeaderName('Median'),
-            sortable: false,
-            width: 140,
-            disableClickEventBubbling: true,
-            renderCell: (params) => {
+    const generateHeaderName = (type) => {
+        if (areAllCheckboxesSelected(type)) {
+            return (
+            <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                <CheckBoxIcon fontSize="small" style={{marginRight: "5px"}}/>
+                {type}
+            </div>)
+        } else {
+            if (areNoCheckboxesSelected(type)) {
                 return (
-                    <MemoizedCheckbox isChecked={medianVisible[params.row.id]} handleChecked={() => handleMedianChecked(params.row.id)}/>
-                );
-             }
-          },
-          {
-            field: 'Mean',
-            headerName: generateHeaderName('Mean'),
-            sortable: false,
-            width: 140,
-            disableClickEventBubbling: true,
-            renderCell: (params) => {
+                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                    <CheckBoxOutlineBlankIcon  fontSize="small" style={{marginRight: "5px"}}/>
+                    {type}
+                </div>)
+            } else {
                 return (
-                    <MemoizedCheckbox isChecked={meanVisible[params.row.id]} handleChecked={() => handleMeanChecked(params.row.id)}/>
-                );
-             }
-          },
-          {
-            field: 'Derivative',
-            headerName: generateHeaderName('Derivative'),
-            sortable: false,
-            width: 140,
-            disableClickEventBubbling: true,
-            renderCell: (params) => {
-                return (
-                    <MemoizedCheckbox isChecked={derivativeVisible[params.row.id]} handleChecked={() => handleDerivativeChecked(params.row.id)}/>
-                );
-             }
-          },
-          {
-            field: 'Percentile',
-            headerName: generateHeaderName("Percentile"),
-            width: 140,
-            sortable: false,
-            disableClickEventBubbling: true,
-            renderCell: (params) => {
-                return (
-                    <MemoizedCheckbox isChecked={percentileVisible[params.row.id]} handleChecked={() => handlePercentileChecked(params.row.id)}/>
-                );
-             }
-          },
-          {
-            field: 'Visible',
-            headerName: 'Visible',
-            sortable: false,
-            width: 140,
-            disableClickEventBubbling: true,
-            renderCell: (params) => {
-                return (
-                    <div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
-                        <Checkbox onClick={handleVisibleChecked} />
-                    </div>
-                );
-             }
-          },
-
-    ];
-
-    const foundIndices = (indexArray) => {
-        setFilteredRows(indexArray.map(idx => rows[idx])); // translates indices into selected rows
+                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                    <IntermediateCheckBoxIcon  fontSize="small" style={{marginRight: "5px"}}/>
+                    {type}
+                </div>)
+            }
+        }
     }
-    
+
+    const createCellCheckBox = (params, type) => {
+        const checkedList =  getCheckedListByType(type);
+        const setter =  getCheckedSetterByType(type);
+        return (
+            <CustomCheckbox 
+                isChecked={checkedList[params.row.id]} 
+                handleChecked={() => {
+                    const checkedHandler = handleChecked(checkedList, setter);
+                    checkedHandler(params.row.id)
+                }}
+            />
+        );
+    }
+
     const columnHeaderClick = (params) => {
         if (!typeList.includes(params.colDef.field)) return
-        const type = params.colDef.field;
+        const type = params.colDef.headerName;
         const visibleCopy = [...getCheckedListByType(type)];
-        const checkboxesSelected = areAllCheckboxesSelected(type);
+        const allCheckboxesSelected = areAllCheckboxesSelected(type);
         filteredRows.forEach(
-            prop => {visibleCopy[prop["id"]] = (checkboxesSelected ? false : true)}
+            prop => {visibleCopy[prop["id"]] = (allCheckboxesSelected ? false : true)}
         )
         const setter = getCheckedSetterByType(type);
         setter(visibleCopy);
@@ -287,31 +217,74 @@ function EditModelGroupModal(props) {
         props.onClose();
     }
 
+    const discardChanges = () => {
+        const meanData = [], medianData = [], derivativeData = [], percentileData = [], visibleData = [];
+
+        for(const model of modelList) {
+            meanData.push(modelData[model].mean);
+            medianData.push(modelData[model].median);
+            derivativeData.push(modelData[model].derivative);
+            percentileData.push(modelData[model].percentile);
+            visibleData.push(modelData[model].isVisible);
+        }
+  
+        setMeanVisible(meanData);
+        setMedianVisible(medianData);
+        setDerivativeVisible(derivativeData);
+        setPercentileVisible(percentileData);
+        setIsVisible(visibleData);
+
+        props.onClose();
+    }
+
+    const columns = [
+        { field: 'model', headerName: 'Model', width: 120 },
+        { field: 'institute', headerName: 'Institute', width: 150, editable: false },
+        { field: 'datasetAndModel', headerName: 'Dataset and Model', width: 225, editable: false },
+        { field: 'median', headerName: 'Median', sortable: false, width: 140, disableClickEventBubbling: true,
+            renderHeader: () => generateHeaderName("Median"),
+            renderCell: (params) => {return createCellCheckBox(params, "Median")}
+        },
+        { field: 'mean', headerName: 'Mean', sortable: false, width: 140, disableClickEventBubbling: true,
+            renderHeader: () => generateHeaderName("Mean"),
+            renderCell: (params) => {return createCellCheckBox(params, "Mean")}
+        },
+        { field: 'derivative', headerName: 'Derivative', sortable: false, width: 140, disableClickEventBubbling: true,
+            renderHeader: () => generateHeaderName("Derivative"),
+            renderCell: (params) => {return createCellCheckBox(params, "Derivative")}
+        },
+        { field: 'percentile', headerName: "Percentile", width: 140, sortable: false, disableClickEventBubbling: true,
+            renderHeader: () => generateHeaderName("Percentile"),
+            renderCell: (params) => {return createCellCheckBox(params, "Percentile")}
+        },
+        { field: 'visible', headerName: 'Visible', sortable: false, width: 140, disableClickEventBubbling: true,
+            renderHeader: () => generateHeaderName("Visible"),
+            renderCell: (params) => {return createCellCheckBox(params, "Visible")}
+        },
+
+    ];
+
     return (
         <>
         {props.isOpen && 
 
             <Modal 
                 open={props.isOpen}
-                onClose={props.onClose}
+                onClose={discardChanges}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
                 <Card sx={cardStyle}>
                     <div style={{width: "95%"}}>
-                        <SearchBar 
-                            inputArray={rows}
-                            foundIndicesCallback={foundIndices}
-                        />
+                        <SearchBar inputArray={rows} foundIndicesCallback={foundIndices} />
                     </div>
-                    <StyledDataGrid 
-                            rows={filteredRows}
-                            columns={columns}
-                            pageSize={20}
-                            rowsPerPageOptions={[5]}
-                            onColumnHeaderClick={columnHeaderClick}
-                            disableColumnMenu
-
+                    <StyledDataGrid
+                        rows={filteredRows}
+                        columns={columns}
+                        pageSize={20}
+                        rowsPerPageOptions={[5]}
+                        onColumnHeaderClick={columnHeaderClick}
+                        disableColumnMenu
                     />
                     
                     <Grid container alignItems="flex-end" justifyContent="center" style={{}}>
@@ -319,7 +292,7 @@ function EditModelGroupModal(props) {
                         <Button aria-label="delete" color={"success"} size="large" onClick={applyChanges}>
                             <DoneIcon fontSize="large"/> Apply Changes
                         </Button>
-                        <Button onClick={props.onClose} aria-label="delete" color={"error"} size="large" onClick={props.onClose}>
+                        <Button onClick={discardChanges} aria-label="delete" color={"error"} size="large">
                             <ClearIcon fontSize="large"/> Discard Changes
                         </Button>
                     </Grid>
