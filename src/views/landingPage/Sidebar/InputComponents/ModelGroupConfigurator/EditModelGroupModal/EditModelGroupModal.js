@@ -1,17 +1,16 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux"
-import { Modal, Card, Button, Grid, Checkbox } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux"
+import { Modal, Card, Button, Grid, Checkbox, createSvgIcon, Divider } from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
-import models from "./models"
 import SearchBar from "../SearchBar/SearchBar";
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
-import AddIcon from '@mui/icons-material/Add';
 import DoneIcon from '@mui/icons-material/Done';
 import ClearIcon from '@mui/icons-material/Clear';
-import DeleteIcon from '@mui/icons-material/Delete';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import { selectActivePlotData } from "../../../../../../services/API/apiSlice";
+import models from "./models.json";
 
 import { Typography } from "@mui/material";
 
@@ -20,24 +19,17 @@ const StyledDataGrid = styled(DataGrid)(({theme}) => ({
     marginTop: "3%",
 }));
 
-const rows = [];
-const regex= /([a-z]|[A-Z]|[0-9]|-)*/g;
-
-for(let i = 0; i < models.length; i++) {
-    const model = models[i];
-    const info = model.match(regex);
-    rows.push({
-        'model': info[0],
-        'institute': info[2],
-        'dataset + model': info[4],
-        'id': i,
-        'include in median': false,
-        'include in mean': false,
-        'include in percentile': false,
-        'include in derivative': false,
-        'visible': false
-    })
-}
+const cardStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '65%',
+    height: '75%',
+    bgcolor: "#FFFFFF",
+    boxShadow: 24,
+    p: 4,
+};
 
 function CustomCheckbox(props) {
     return (
@@ -45,6 +37,28 @@ function CustomCheckbox(props) {
             <Checkbox checked={props.isChecked} onClick={props.handleChecked}/>
         </div>
     );
+}
+
+function createRows(modelList) {
+    const rows = [];
+    const regex= /([a-z]|[A-Z]|[0-9]|-)*/g;
+
+    for(let i = 0; i < modelList.length; i++) {
+        const model = modelList[i];
+        const info = model.match(regex);
+        rows.push({
+            'model': info[0],
+            'institute': info[2],
+            'dataset + model': info[4],
+            'id': i,
+            'include in median': false,
+            'include in mean': false,
+            'include in percentile': false,
+            'include in derivative': false,
+            'visible': false
+        })
+    }
+    return rows;
 }
 
 const MemoizedCheckbox = React.memo(CustomCheckbox);
@@ -59,26 +73,19 @@ const MemoizedCheckbox = React.memo(CustomCheckbox);
  * @returns a jsx containing a modal with a data grid with all models from the model group
  */
 function EditModelGroupModal(props) {
+    //const models = ["AAA", "BBB","CCC", "DDD"]//useSelector(selectActivePlotData);
+    const rows = createRows(models);
+    const typeList = ["Median", "Mean", "Derivative", "Percentile"];
 
     const [filteredRows, setFilteredRows] = React.useState(rows);
-
-    const cardStyle = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: '65%',
-        height: '75%',
-        bgcolor: "#FFFFFF",
-        boxShadow: 24,
-        p: 4,
-    };
 
     const [medianVisible, setMedianVisible] =           React.useState(Array(filteredRows.length).fill(false));
     const [meanVisible, setMeanVisible] =               React.useState(Array(filteredRows.length).fill(false));
     const [derivativeVisible, setDerivativeVisible] =   React.useState(Array(filteredRows.length).fill(false));
     const [percentileVisible, setPercentileVisible] =   React.useState(Array(filteredRows.length).fill(false));
     const [currentSelectedIds, setCurrentSelectedIds] = React.useState([]);
+
+
 
 
     const handleMedianChecked = (id) => {
@@ -107,6 +114,39 @@ function EditModelGroupModal(props) {
 
     const handleVisibleChecked = () => {
 
+    }
+    const getSVList = (type) => {
+        switch(type) {
+            case "Median": return medianVisible;
+            case "Mean": return  meanVisible;
+            case "Derivative": return  derivativeVisible;
+            case "Percentile": return  percentileVisible;
+        }
+
+    }
+
+    const getSVSetter = (type) => {
+        switch(type) {
+            case "Median": return setMedianVisible;
+            case "Mean": return  setMeanVisible;
+            case "Derivative": return  setDerivativeVisible;
+            case "Percentile": return  setPercentileVisible;
+        }
+
+    }
+
+    const areAllCheckboxesSelected = (type) => {
+        if (currentSelectedIds.length == 0) return false;
+        const sv = getSVList(type);
+        
+        let selected = true;
+        currentSelectedIds.forEach( id => {
+            if(!sv[id]) {
+                selected = false;
+            }
+            
+        });
+        return selected;
     }
 
 
@@ -199,6 +239,22 @@ function EditModelGroupModal(props) {
         setFilteredRows(indexArray.map(idx => rows[idx])); // translates indices into selected rows
     }
 
+    const createSVButton = (type) => {
+        return <><Button variant="outlined" 
+        startIcon={areAllCheckboxesSelected(type) ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />} 
+        onClick={() => {
+            const visibleCopy = [...getSVList(type)];
+            currentSelectedIds.forEach(
+                id => {visibleCopy[id] = (areAllCheckboxesSelected(type) ? false : true)}
+            )
+            const setter = getSVSetter(type);
+            setter(visibleCopy);
+        }}
+        style={{marginRight: "1%", marginTop: "1%"}}> 
+        {type} 
+        </Button></>
+    }
+
     return (
         <>
         {props.isOpen && 
@@ -225,46 +281,10 @@ function EditModelGroupModal(props) {
                             foundIndicesCallback={foundIndices}
                         />
                     </div>
-                    <Grid container direction="row"> 
-                        <Typography>
-                            Modify Selected Rows: 
-                        </Typography>
-                        <Grid container direction="row">
-                            <Button variant="outlined" startIcon={<CheckBoxIcon />} onClick={() => {
-                                    const meanVisibleCopy = [...meanVisible];
-                                    currentSelectedIds.forEach(
-                                        id => {meanVisibleCopy[id] = true;}
-                                    )
-                                    setMeanVisible(meanVisibleCopy);
-                            }}>
-                                Mean
-                            </Button>
-                            <Button variant="outlined" startIcon={<CheckBoxOutlineBlankIcon />} onClick={() => {
-                                    const meanVisibleCopy = [...meanVisible];
-                                    //console.log(currentSelectedIds)
-                                    currentSelectedIds.forEach(
-                                        id => {meanVisibleCopy[id] = false;}
-                                    )
-                                    setMeanVisible(meanVisibleCopy);
-                                    console.log(meanVisibleCopy);
-
-                            }}>
-                                Mean
-                            </Button>
-                            
-                            <Button variant="outlined" startIcon={<CheckBoxIcon />}>
-                                Median
-                            </Button>
-                            <Button variant="outlined" startIcon={<CheckBoxOutlineBlankIcon />}>
-                                Median
-                            </Button>
-                            <Button variant="outlined" startIcon={<CheckBoxIcon />}>
-                                Derivative
-                            </Button>
-                            <Button variant="outlined" startIcon={<CheckBoxOutlineBlankIcon />}>
-                                Derivative
-                            </Button>
-                            
+                    <Grid container direction="row"  justifyContent="center" style={{marginTop: "1%"}}> 
+                        <Typography>Modify Selected Rows:</Typography>
+                        <Grid container direction="row"  justifyContent="center">
+                            {typeList.map(type => createSVButton(type))}
                         </Grid>
                     </Grid>
                     <StyledDataGrid 

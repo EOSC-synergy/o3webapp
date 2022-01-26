@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import PropTypes from "prop-types";
 import { FormControl, Grid } from '@mui/material';
 import { height, width } from '@mui/system';
+import EditModelGroupModal from './Sidebar/InputComponents/ModelGroupConfigurator/EditModelGroupModal/EditModelGroupModal';
 
 /**
  * main view of web page
@@ -51,6 +52,9 @@ function LandingPage(props) {
           <Graph reportError={props.reportError} />
         </div>
       </div>
+
+      <Button variant="outlined" onClick={openSidebar} style={{width: "100%"}}/>
+      <EditModelGroupModal isOpen={true} onClose={()=>{}}/>
       
     </div>
     );
