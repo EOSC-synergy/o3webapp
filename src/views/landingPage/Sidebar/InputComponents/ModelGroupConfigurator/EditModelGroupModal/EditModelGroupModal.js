@@ -89,10 +89,6 @@ function EditModelGroupModal(props) {
     const [percentileVisible, setPercentileVisible] =   React.useState(modelList.map(model => modelData[model].percentile));
     const [isVisible, setIsVisible] =                   React.useState(modelList.map(model => modelData[model].isVisible));
 
-    const foundIndices = (indexArray) => {
-        setFilteredRows(indexArray.map(idx => rows[idx])); // translates indices into selected rows
-    }
-
     const getCheckedListByType = (type) => {
         switch(type.toLowerCase()) {
             case "median": return medianVisible;
@@ -115,6 +111,10 @@ function EditModelGroupModal(props) {
             default: return setMedianVisible;
         }
 
+    }
+
+    const foundIndices = (indexArray) => {
+        setFilteredRows(indexArray.map(idx => rows[idx])); // translates indices into selected rows
     }
 
     const handleChecked = (checkedList, setter) => (id) => {
