@@ -55,7 +55,7 @@ function LandingPage(props) {
       </div>
 
       <Button variant="outlined" onClick={openSidebar} style={{width: "100%"}}/>
-      <EditModelGroupModal isOpen={isEditOpen} onClose={()=>{setEditOpen(false)}}/>
+      <EditModelGroupModal isOpen={isEditOpen} onClose={()=>{setEditOpen(false)}} modelGroupId={0}/>
       
     </div>
     );

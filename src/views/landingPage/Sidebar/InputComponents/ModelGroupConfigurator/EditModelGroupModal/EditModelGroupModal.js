@@ -10,9 +10,9 @@ import ClearIcon from '@mui/icons-material/Clear';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import { selectActivePlotData } from "../../../../../../services/API/apiSlice";
-import models from "./models.json";
 
 import { Typography } from "@mui/material";
+import { selectModelsOfGroup, selectModelDataOfGroup } from "../../../../../../store/modelsSlice/modelsSlice";
 
 const StyledDataGrid = styled(DataGrid)(({theme}) => ({
     height: "80%",
@@ -73,8 +73,9 @@ const MemoizedCheckbox = React.memo(CustomCheckbox);
  * @returns a jsx containing a modal with a data grid with all models from the model group
  */
 function EditModelGroupModal(props) {
-    //const models = ["AAA", "BBB","CCC", "DDD"]//useSelector(selectActivePlotData);
-    const rows = createRows(models);
+    const modelList = useSelector(selectModelsOfGroup(props.modelGroupId));
+    const modelData = useSelector(selectModelDataOfGroup(props.modelGroupId));
+    const rows = createRows(modelList);
     const typeList = ["Median", "Mean", "Derivative", "Percentile"];
 
     const [filteredRows, setFilteredRows] = React.useState(rows);
