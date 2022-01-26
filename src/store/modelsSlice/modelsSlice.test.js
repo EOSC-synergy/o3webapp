@@ -6,6 +6,10 @@ import reducer,
     deleteModelGroup,
     updatePropertiesOfModelGroup,
     STATISTICAL_VALUES,
+    selectAllGroupIds,
+    selectModelsOfGroup,
+    selectModelDataOfGroup,
+    selectNameOfGroup,
 } from "./modelsSlice"
 
 const MODEL_DATA_TEMPLATE = {   
@@ -327,12 +331,14 @@ describe("reducer tests", () => {
 describe("selector tests", () => {
     
     it('should select the correct model list', () => {
+        const modelList = ["modelA", "modelB"];
+        
         const globalState = {
             models: {
-                modelGroupList: ["group1"],
+                modelGroupList: [0],
                 modelGroups: {
-                    group1: {
-                        modelList: ["modelA", "modelB"],
+                    0: {
+                        modelList,
                         models: {
                             modelA: "dataA",
                             modelB: "dataB",
@@ -341,14 +347,46 @@ describe("selector tests", () => {
                 },
             },
         };
+
+        expect(selectModelsOfGroup(globalState, 0)).toEqual(modelList);
     });
 
     it('should select the correct model data', () => {
+        const modelData = {
+            modelA: "dataA",
+            modelB: "dataB",
+        };
 
+        const globalState = {
+            models: {
+                modelGroupList: [0],
+                modelGroups: {
+                    0: {
+                        modelList: ["modelA", "modelB"],
+                        models: modelData,
+                    },
+                },
+            },
+        };
+
+        expect(selectModelDataOfGroup(globalState, 0)).toEqual(modelData);
     });
 
     it('should select the corret name', () => {
-
+        const name = "refC2";
+        
+        const globalState = {
+            models: {
+                modelGroupList: [0],
+                modelGroups: {
+                    0: {
+                        name, 
+                    },
+                },
+            },
+        };
+        
+        expect(selectNameOfGroup(globalState, 0)).toEqual(name);
     });
 
 
