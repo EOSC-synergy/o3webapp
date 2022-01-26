@@ -83,7 +83,6 @@ function calculateBoxPlotValues(data) {
     
     const boxPlotValues = {}
 	for (let region of ALL) {
-        console.log(region)
 		staticData[region].sort()
 		const arr = staticData[region]
 		boxPlotValues[region] = []
