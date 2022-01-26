@@ -1929,7 +1929,21 @@ exports[`test LandingPage component LandingPage renders correctly 1`] = `
       <div
         style="width: 95%;"
       >
-        <div />
+        <div
+          style="display: flex; align-items: center; justify-content: center; height: 300px;"
+        >
+          <div
+            class="spinner"
+          >
+            <h4>
+              loading data
+            </h4>
+            <div
+              class="loader"
+              style="height: 8em; width: 8em;"
+            />
+          </div>
+        </div>
       </div>
     </div>
   </div>
