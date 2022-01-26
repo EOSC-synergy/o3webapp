@@ -344,4 +344,4 @@ export const selectVisibilityOfGroup = (state, groupId) => state.models.modelGro
  * @param {object} state the global redux state
  * @returns an array holding all valid group ids
  */
-export const selectAllGroupIds = state => state.modelGroupList;
+export const selectAllGroupIds = state => state.models.modelGroupList;
