@@ -114,10 +114,8 @@ function LatitudeBandSelector(props) {
             <Box sx={{paddingLeft: '8%', paddingRight: '8%', paddingTop: '3%'}}>
                 <Select
                     sx={{width: '100%' }}
-                    labelId="latitudeBandSelectorLabel"
                     id="latitudeBandSelector"
                     value={isCustomizable ? 'custom' : selectedLocationArray}
-                    label="LatitudeBand"
                     onChange={handleChangeLatitudeBand}
                     defaultValue={defaultValue}
                 >
