@@ -220,10 +220,10 @@ function generateTco3_ReturnSeries({data, series, colors}) {
         }
 }
 
-function getIncludedModels(getState) {
+function getIncludedModels(modelsSlice) {
     const includedModels = new Set();
-    const modelGroups = getState().models.modelGroups;
-    for (let id of getState().models.modelGroupList) {
+    const modelGroups = modelsSlice.modelGroups;
+    for (let id of modelsSlice.modelGroupList) {
         if (!modelGroups[id].isVisible) { // skip group: should not be visible
             continue;
         }
@@ -237,13 +237,13 @@ function getIncludedModels(getState) {
     return includedModels;
 }
 
-export function generateSeries({plotId, data, getState}) {
+export function generateSeries({plotId, data, modelsSlice}) {
     const series = [];
     const colors = [];
     const dashArray = [];
     const width = [];
 
-    const includedModels = getIncludedModels(getState); // this is a set
+    const includedModels = getIncludedModels(modelsSlice); // this is a set
     const trimmedData = {}
 
     for (const [model, modelData] of Object.entries(data)) {
@@ -263,9 +263,11 @@ export function generateSeries({plotId, data, getState}) {
 const defaultTCO3_zm = {
     xaxis: {
         categories: [],
+        
+        /*
         title: {
             text: "Years"
-        },
+        },*/
         /*
         labels: {
             rotate: 0, // no need to rotate since hiding labels gives plenty of room
@@ -291,7 +293,7 @@ const defaultTCO3_zm = {
         }
     },
     legend: {
-        show: true,
+        show: true, // only shows up if there is more than one line
     },
     dataLabels: {
         enabled: false,

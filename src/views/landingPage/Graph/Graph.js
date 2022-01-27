@@ -25,6 +25,7 @@ function Graph(props) {
 
     const plotId = useSelector(selectPlotId);
     const activeData = useSelector(state => selectActivePlotData(state, plotId));
+    const modelsSlice = useSelector(state => state.models);
     // settings
     // modelgroups => 
 
@@ -46,7 +47,7 @@ function Graph(props) {
         return <Typography>An error occurred, please try to reload the site.</Typography>;
 
     } else if (activeData.status === REQUEST_STATE.success) {
-        const {series, styling} = generateSeries({plotId, data: activeData.data, getState: store.getState});
+        const {series, styling} = generateSeries({plotId, data: activeData.data, modelsSlice});
         const options = getOptions({plotId, styling});
         return <Chart key={plotId} options={options} series={series} type={APEXCHART_PLOT_TYPE[plotId]} height={"400p"} />
     };
