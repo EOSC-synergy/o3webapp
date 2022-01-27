@@ -113,6 +113,10 @@ export const fileFormats = [ Symbol("pdf"), Symbol("png") ];
 /** The max. length of the plot name */
 export const PLOT_NAME_MAX_LEN = 40;
 
+/*
+// GRAPH
+*/
+
 export const O3AS_PLOTS = { // used for internal testing or manual if-else
     tco3_zm: "tco3_zm",
     tco3_return: "tco3_return",
@@ -123,7 +127,12 @@ export const APEXCHART_PLOT_TYPE = {
     tco3_return: "boxPlot"
 };
 
+export const HEIGHT_LOADING_SPINNER = "300px";
+export const HEIGHT_GRAPH = "400px";
+
+/*
 // Options Formatter
+*/
 export const START_YEAR = 1959
 export const END_YEAR = 2100
 // year list: 1959 - 2100

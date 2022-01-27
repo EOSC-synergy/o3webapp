@@ -351,7 +351,7 @@ export const default_TCO3_return = {
 };
 
 export function getOptions({plotId, styling, plotTitle}) {
-    if (plotId === "tco3_zm") {
+    if (plotId === O3AS_PLOTS.tco3_zm) {
         const newOptions = Object.assign({}, defaultTCO3_zm);
         newOptions.xaxis.categories = IMPLICIT_YEAR_LIST;
         newOptions.colors = styling.colors;
@@ -361,7 +361,7 @@ export function getOptions({plotId, styling, plotTitle}) {
         newOptions.title.text = plotTitle;
         return newOptions;
 
-    } else if (plotId === "tco3_return") {
+    } else if (plotId === O3AS_PLOTS.tco3_return) {
         const newOptions = Object.assign({}, default_TCO3_return);
         newOptions.colors.push(...styling.colors); // for the legend!
         newOptions.title = Object.assign({}, newOptions.title);  // this is necessary in order for apexcharts to update the title

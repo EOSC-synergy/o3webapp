@@ -6,7 +6,7 @@ import { selectPlotId, selectPlotTitle } from '../../../store/plotSlice/plotSlic
 import { REQUEST_STATE, selectActivePlotData } from '../../../services/API/apiSlice';
 import { Spinner } from '../../../components/Spinner/Spinner';
 import { Typography } from '@mui/material';
-import { APEXCHART_PLOT_TYPE } from '../../../utils/constants';
+import { APEXCHART_PLOT_TYPE, HEIGHT_LOADING_SPINNER, HEIGHT_GRAPH } from '../../../utils/constants';
 
 /**
  * Currently there is no dynamic data linking. The graph will always
@@ -37,7 +37,7 @@ function Graph(props) {
     })
 
     if (activeData.status === REQUEST_STATE.loading || activeData.status === REQUEST_STATE.idle) {
-        return <div style={{display: "flex", alignItems: "center", justifyContent: "center", height: "300px"}}>
+        return <div style={{display: "flex", alignItems: "center", justifyContent: "center", height: HEIGHT_LOADING_SPINNER}}>
             <Spinner text={"loading data"} size={"8em"}></Spinner>
         </div>
 
@@ -47,7 +47,7 @@ function Graph(props) {
     } else if (activeData.status === REQUEST_STATE.success) {
         const {series, styling} = generateSeries({plotId, data: activeData.data, modelsSlice, xAxisRange, yAxisRange});
         const options = getOptions({plotId, styling, plotTitle});
-        return <Chart key={plotId} options={options} series={series} type={APEXCHART_PLOT_TYPE[plotId]} height={"400p"} />
+        return <Chart key={plotId} options={options} series={series} type={APEXCHART_PLOT_TYPE[plotId]} height={HEIGHT_GRAPH} />
     };
 
     // this "case" should not happen
