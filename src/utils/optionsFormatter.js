@@ -113,7 +113,7 @@ export const preTransformApiData = ({plotId, data}) => {
  * @param {object} data contains the region data from the api
  * @returns object holding an array of 5 values (min, q1, median, q3, max) for each region
  */
-export function calculateBoxPlotValues(data) {
+function calculateBoxPlotValues(data) {
     const staticData = {}
 	for (let region of ALL_REGIONS_ORDERED) {
 		staticData[region] = []
@@ -144,8 +144,7 @@ export function calculateBoxPlotValues(data) {
     return boxPlotValues
 }
 
-
-export function generateTco3_ZmSeries({data, series, colors, dashArray, width}) {
+function generateTco3_ZmSeries({data, series, colors, dashArray, width}) {
 
     for (const [model, modelData] of Object.entries(data)) {
 
@@ -155,13 +154,13 @@ export function generateTco3_ZmSeries({data, series, colors, dashArray, width}) 
             data: modelData.data,
         });
 
-        colors.push(colourNameToHex(modelData.plotStyle.color));
+        colors.push(colorNameToHex(modelData.plotStyle.color));
         width.push(2);
         dashArray.push(convertToStrokeStyle(modelData.plotStyle.linestyle)); // default line thickness
     }
 }
 
-export function generateTco3_ReturnSeries({data, series, colors}) {
+function generateTco3_ReturnSeries({data, series, colors}) {
     const boxPlotValues = calculateBoxPlotValues(data);
         series.push({
                 name: 'box',
@@ -193,7 +192,7 @@ export function generateTco3_ReturnSeries({data, series, colors}) {
                 type: "scatter",
             });
             colors.push(
-                colourNameToHex(modelData.plotStyle.color)
+                colorNameToHex(modelData.plotStyle.color)
             )
         }
 }
@@ -234,6 +233,8 @@ export function generateSeries({plotId, data, modelsSlice}) {
         generateTco3_ZmSeries({data, series, colors, dashArray, width}); // data: trimmedData
     } else if (plotId === "tco3_return") {
         generateTco3_ReturnSeries({data, series, colors, dashArray, width});
+    } else {
+        throw `the given plot id "${plotId}" is not defined`;
     }
     return {series, styling: {colors, dashArray, width}};
 }
@@ -389,9 +390,9 @@ export function mergeModelDataAndSettings(modelData, modelSettings) {
     
 };
 
-export function colourNameToHex(colour)
+export function colorNameToHex(color)
 {
-    const colours = {"aliceblue":"#f0f8ff","antiquewhite":"#faebd7","aqua":"#00ffff","aquamarine":"#7fffd4","azure":"#f0ffff",
+    const colors = {"aliceblue":"#f0f8ff","antiquewhite":"#faebd7","aqua":"#00ffff","aquamarine":"#7fffd4","azure":"#f0ffff",
     "beige":"#f5f5dc","bisque":"#ffe4c4","black":"#000000","blanchedalmond":"#ffebcd","blue":"#0000ff","blueviolet":"#8a2be2","brown":"#a52a2a","burlywood":"#deb887",
     "cadetblue":"#5f9ea0","chartreuse":"#7fff00","chocolate":"#d2691e","coral":"#ff7f50","cornflowerblue":"#6495ed","cornsilk":"#fff8dc","crimson":"#dc143c","cyan":"#00ffff",
     "darkblue":"#00008b","darkcyan":"#008b8b","darkgoldenrod":"#b8860b","darkgray":"#a9a9a9","darkgreen":"#006400","darkkhaki":"#bdb76b","darkmagenta":"#8b008b","darkolivegreen":"#556b2f",
@@ -416,8 +417,8 @@ export function colourNameToHex(colour)
     "wheat":"#f5deb3","white":"#ffffff","whitesmoke":"#f5f5f5",
     "yellow":"#ffff00","yellowgreen":"#9acd32"};
 
-    if (typeof colours[colour.toLowerCase()] != 'undefined')
-        return colours[colour.toLowerCase()];
+    if (typeof colors[color.toLowerCase()] != 'undefined')
+        return colors[color.toLowerCase()];
 
     return false;
 };

@@ -1,5 +1,5 @@
 import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, START_YEAR } from "./constants";
-import { normalizeArray, preTransformApiData } from "./optionsFormatter";
+import { colorNameToHex, convertToStrokeStyle, generateSeries, normalizeArray, preTransformApiData } from "./optionsFormatter";
 
 describe("testing optionsFormatter functionality", () => {
     const spacedYearArray = [...Array(10).keys()].map(number => `${START_YEAR + 2 * number}`);
@@ -72,24 +72,14 @@ describe("testing optionsFormatter functionality", () => {
         });
     })
 
-    it('calculates the correct boxplot values', () => {
-
-    });
-
-    it('generates the the tco3_zm series', () => {
-
-    });
-
-    it('generates the tco3_return series', () => {
-
-    });
-
     it('extracts all models which should be included', () => {
 
     });
 
-    it('generates the series accordingly', () => {
-
+    it('throws an error if a provided plotId is not correct', () => {
+        expect(
+            () => generateSeries({plotId: "no valid id", data: {}, modelsSlice: { modelGroupList: []}})
+        ).toThrow("the given plot id \"no valid id\" is not defined");
     });
 
 
@@ -98,11 +88,18 @@ describe("testing optionsFormatter functionality", () => {
     });
 
     it('converts the color name to hex codes', () => {
+        const colorName = "lime";
+        const colorHex = "#00ff00";
+        expect(colorNameToHex(colorName)).toEqual(colorHex);
 
+        expect(colorNameToHex("no color")).toEqual(false);
     });
     
     it('converts the stroke style to to apexcharts syntax', () => {
-
+        const lineStyle = "solid";
+        const apexChartsLineStyle = 0;
+        expect(convertToStrokeStyle(lineStyle)).toEqual(apexChartsLineStyle);
+        expect(convertToStrokeStyle("no valid line style")).toEqual(false);
     });
 
 
