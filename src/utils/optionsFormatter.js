@@ -22,7 +22,7 @@ const ALL = [ANTARCTIC, SH_MID, NH_MID, TROPICS, ARCTIC, NEAR_GLOBAL, GLOBAL, US
  * @param {array} xValues an array holding the years
  * @param {array} yValues an array of the same length holding the datapoints for the corresponding years
  */
-function normalizeArray(xValues, yValues) {
+export function normalizeArray(xValues, yValues) {
     const result = [];
     let currentValueIndex = 0;
     
@@ -113,7 +113,7 @@ export const preTransformApiData = ({plotId, data}) => {
  * @param {object} data contains the region data from the api
  * @returns object holding an array of 5 values (min, q1, median, q3, max) for each region
  */
-function calculateBoxPlotValues(data) {
+export function calculateBoxPlotValues(data) {
     const staticData = {}
 	for (let region of ALL) {
 		staticData[region] = []
@@ -145,7 +145,7 @@ function calculateBoxPlotValues(data) {
 }
 
 
-function generateTco3_ZmSeries({data, series, colors, dashArray, width}) {
+export function generateTco3_ZmSeries({data, series, colors, dashArray, width}) {
 
     for (const [model, modelData] of Object.entries(data)) {
 
@@ -161,7 +161,7 @@ function generateTco3_ZmSeries({data, series, colors, dashArray, width}) {
     }
 }
 
-function generateTco3_ReturnSeries({data, series, colors}) {
+export function generateTco3_ReturnSeries({data, series, colors}) {
     const boxPlotValues = calculateBoxPlotValues(data);
         series.push({
                 name: 'box',
@@ -198,7 +198,7 @@ function generateTco3_ReturnSeries({data, series, colors}) {
         }
 }
 
-function getIncludedModels(modelsSlice) {
+export function getIncludedModels(modelsSlice) {
     const includedModels = new Set();
     const modelGroups = modelsSlice.modelGroups;
     for (let id of modelsSlice.modelGroupList) {
@@ -238,7 +238,7 @@ export function generateSeries({plotId, data, modelsSlice}) {
     return {series, styling: {colors, dashArray, width}};
 }
 
-const defaultTCO3_zm = {
+export const defaultTCO3_zm = {
     xaxis: {
         categories: [],
         
@@ -299,7 +299,7 @@ const defaultTCO3_zm = {
     },
 };
 
-const default_TCO3_return = {
+export const default_TCO3_return = {
     chart: {
       id: "tco3_return",
       type: 'boxPlot',
