@@ -1,4 +1,4 @@
-
+import {normali} from "./optionsFormatter";
 
 describe("testing optionsFormatter functionality", () => {
 
