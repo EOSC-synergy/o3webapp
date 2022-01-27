@@ -230,9 +230,9 @@ export function generateSeries({plotId, data, modelsSlice}) {
     }
 
     if (plotId === "tco3_zm") {
-        generateTco3_ZmSeries({data, series, colors, dashArray, width}); // data: trimmedData
+        generateTco3_ZmSeries({data: trimmedData, series, colors, dashArray, width});
     } else if (plotId === "tco3_return") {
-        generateTco3_ReturnSeries({data, series, colors, dashArray, width});
+        generateTco3_ReturnSeries({data: trimmedData, series, colors, dashArray, width});
     } else {
         throw `the given plot id "${plotId}" is not defined`;
     }
