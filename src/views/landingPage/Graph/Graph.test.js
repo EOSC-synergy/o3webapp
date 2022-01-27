@@ -51,6 +51,19 @@ describe('tests graph component rendering', () => {
                 modelGroupList: [],
                 modelGrous: {},
             }
+        ).mockReturnValueOnce(
+            "tco3_zm"            
+        ).mockReturnValueOnce(
+            { 
+                status: REQUEST_STATE.success,
+                data: [],
+                error: null,
+            }
+        ).mockReturnValueOnce(
+            {
+                modelGroupList: [],
+                modelGrous: {},
+            }
         );
 
         const { container } = render(<Provider store={store}>
@@ -67,6 +80,19 @@ describe('tests graph component rendering', () => {
         const reportedErrorMessage = "Something went wrong :(";
 
         spy.mockReturnValueOnce(
+            "tco3_zm"            
+        ).mockReturnValueOnce(
+            { 
+                status: REQUEST_STATE.error,
+                data: [],
+                error: reportedErrorMessage,
+            }
+        ).mockReturnValueOnce(
+            {
+                modelGroupList: [],
+                modelGrous: {},
+            }
+        ).mockReturnValueOnce(
             "tco3_zm"            
         ).mockReturnValueOnce(
             { 
