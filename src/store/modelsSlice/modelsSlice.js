@@ -72,7 +72,7 @@ const initialState = {
                     percentile: true,
                 }
             },
-            isVisible: false, // show/hide complete group
+            isVisible: true, // show/hide complete group
             visibileSV: { // lookup table so the reducer impl. can be more convenient
                 mean: true,
                 derivative: true,
