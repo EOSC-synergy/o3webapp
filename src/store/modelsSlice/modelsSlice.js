@@ -4,7 +4,44 @@ import { createSlice } from "@reduxjs/toolkit";
  * The statistical values that are computable are listed here as
  * an "enum"
  */
-const STATISTICAL_VALUES = ["mean", "median", "derivative", "percentile"];
+export const STATISTICAL_VALUES = {
+    mean: "mean",
+    median: "median",
+    derivative: "derivative",
+    percentile: "percentile",
+}
+
+/**
+ * The same statistical values as a list to verify certain payload data
+ */
+const STATISTICAL_VALUES_LIST = Object.values(STATISTICAL_VALUES);
+
+/**
+ * This object serves as a template, whenever a new model is added to a group
+ * this object describes the default settings of the freshly added model.
+ */
+const MODEL_DATA_TEMPLATE = {   // single model
+    color: null,                // if not set it defaults to standard value from api
+    isVisible: true,            // show/hide individual models from a group
+    mean: true,
+    derivative: true,
+    median: true,
+    percentile: true,
+}
+
+
+const MODEL_GROUP_TEMPLATE = { 
+    name: "",
+    modelList: [],
+    models: {},         // models is lookup table
+    isVisible: true,    // show/hide complete group
+    visibileSV: {       // lookup table so the reducer impl. can be more convenient
+        mean: true,
+        derivative: true,
+        median: true,
+        percentile: true,
+    }
+}
 
 /**
  * The initial state of the modelSlice defines the data structure in the 
@@ -14,72 +51,36 @@ const STATISTICAL_VALUES = ["mean", "median", "derivative", "percentile"];
  * corresponding test file, that tests the initial state.
  */
 const initialState = {
+    idCounter: 1,
+    modelGroupList: [0],
     // currently active plot
-    plotId: "tco3_zm",
-    settings: {
-        "tco3_zm": { 
-            // this objects holds key-value-pairs, the keys being the model-group 
-            // identifier and the values being the settings for each group 
-            "all": { 
-                // model group storing all information until it is possible 
-                // to implement more model groups
-                name: "All OCTS models",
-                modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"],
-                models: { // models is lookup table
-                    "CCMI-1_ACCESS_ACCESS-CCM-refC2": { // single model
-                        institute: "IMK",
-                        dataset: {
-                            x: [42],
-                            y: [42],
-                        },
-                        color: "#000000",
-                        plotStyle: "solid",
-                        isVisible: true, // show/hide individual models from a group
-                        mean: true,
-                        derivative: true,
-                        median: true,
-                        percentile: true,
-                    }
-                },
-                hidden: false, // show/hide complete group
-                visibileSV: { // lookup table so the reducer impl. can be more convenient
+    modelGroups: {
+        // this objects holds key-value-pairs, the keys being the model-group 
+        // identifier and the values being the settings for each group 
+        0: { 
+            name: "Example Group",
+            // model group storing all information until it is possible 
+            // to implement more model groups
+            modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"],
+            models: { // models is lookup table
+                "CCMI-1_ACCESS_ACCESS-CCM-refC2": { // single model
+                    color: null, // if not set it defaults to standard value from api
+                    isVisible: true, // show/hide individual models from a group
                     mean: true,
                     derivative: true,
                     median: true,
                     percentile: true,
                 }
-            }
-        },
-        "tco3_return": {
-            "all": { 
-                name: "All Return/Recovery models",
-                modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"],
-                models: { // models is lookup table
-                    "CCMI-1_ACCESS_ACCESS-CCM-refC2": { // single model
-                        institute: "IMK",
-                        dataset: {
-                            x: [42],
-                            y: [42],
-                        },
-                        hidden: false, // show/hide individual models from a group
-                        mean: true,
-                        derivative: true,
-                        median: true,
-                        percentile: true,
-                        color: "#000000",
-                        plotStyle: "solid",
-                    }
-                },
-                hidden: false, // show/hide complete group
-                visibileSV: { // lookup table so the reducer impl. can be more convenient
-                    mean: true,
-                    derivative: true,
-                    median: true,
-                    percentile: true,
-                }
+            },
+            isVisible: false, // show/hide complete group
+            visibileSV: { // lookup table so the reducer impl. can be more convenient
+                mean: true,
+                derivative: true,
+                median: true,
+                percentile: true,
             }
         }
-    }
+    },
 }
 
 /**
@@ -92,202 +93,189 @@ const modelsSlice = createSlice({
     reducers: {
 
         /**
-         * This reducer accepts an action object returned from addModels()
-         *     e.g. dispatch(addModels(
-         *          {newModelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"]}
-         *      ))
+         * This reducer accepts an action object returned from setModelsOfModelGroup()
+         * 
+         *      e.g. dispatch(setModelsOfModelGroup({
+         *              groupId: 0, 
+         *              modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2", "CCMI-1_CCCma_CMAM-refC2"]
+         *      }))
+         * 
          * and calculates the new state based on the action and the action 
          * data given in action.payload.
          * 
-         * In this case the given models are added to the current list of models
-         * (NOT implemented yet! and the model data in the corresponding lookup table is filled with
-         * default values)
+         * This method provides a convenient interface for the AddModelGroupModal
+         * by allowing to dispatch a groupId with the required models. If
+         * the group already exists the corresponding data is updated otherwise
+         * the reducer TAKES CARE of creating a group.
          * 
-         * @param {object} state the current store state of: state/plot
-         * @param {object} action accepts the action returned from addModels()
-         * @param {object} action.payload the payload is an object containg the given data
-         * @param {string} action.payload.groupId a string specifying the group to which the data should be added
-         * @param {array} action.payload.newModelList an array of strings specifying the models that should be added
-         */
-        addModels(state, action) { 
-            const { groupId, newModelList }  = action.payload;
-            const activeSettings = state.settings[state.plotId];
-            const selectedGroup = activeSettings[groupId];
-            const activeModelList = selectedGroup.modelList;
-
-
-            if (selectedGroup === undefined) {
-                throw `Tried to access model-group with groupID "${groupId}" that is not yet defined!`;
-            }
-
-            // Add model to modelList if it is not already included
-            for (var i = 0; i < newModelList.length; i++) {
-                if (activeModelList.indexOf(newModelList[i]) !== -1) {
-                    continue;
-                }
-
-                activeModelList.push(newModelList[i]);
-            }
-
-            // ---------------------------------------------------------
-            // TODO: Add Model information to the model lookup table
-            //
-            // ---> idea: add model information with default settings
-            // do not store additional information that is provided by
-            // the api such as institute of the model and datasets but
-            // instead reference the cached (?) data (-> we probably 
-            // need an extra api slice at some time)
-            // ---------------------------------------------------------
-
-        },
-
-        /**
-         * This reducer accepts an action object returned from removeModels()
-         *      e.g. dispatch(removeModels(
-         *          {removeModelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"]}
-         *      ))
-         * and calculates the new state based on the action and the action 
-         * data given in action.payload.
-         * 
-         * In this case the given models are removed from the model list 
-         * and the corresponding data in the lookup table is deleted.
-         * 
-         * @param {object} state the current store state of: state/plot
-         * @param {object} action accepts the action returned from removeModels()
-         * @param {object} action.payload the payload is an object containg the given data
-         * @param {string} action.payload.groupdId a string specifying the group from which the models should be removed
-         * @param {array} action.payload.removeModelList an array of strings specifying the models that should be removed
-         */
-        removeModels(state, action) { 
-            const { groupId, removeModelList }  = action.payload;
-            const activeSettings = state.settings[state.plotId];
-            const selectedGroup = activeSettings[groupId];
-
-            if (selectedGroup === undefined) {
-                throw `Tried to access model-group with groupID "${groupId}" that is not yet defined!`;
-            }
-
-            selectedGroup.modelList = selectedGroup.modelList.filter(item => !removeModelList.includes(item))
-            removeModelList.forEach(
-                model => delete selectedGroup.models[model]
-            )
-        },
-
-        /**
-         * This reducer accepts an action object returned from updateModelGroup()
-         *      e.g. dispatch(updateModelGroup({}))
-         * and calculates the new state based on the action and the action 
-         * data given in action.payload.
-         * 
-         * TODO: should be adjusted to match the UI in ModelGroupConfigurator and AddModalGroup
-         * 
-         * @param {object} state the current store state of: state/plot
+         * @param {object} state the current store state of: state/models
          * @param {object} action accepts the action returned from updateModelGroup()
          * @param {object} action.payload the payload is an object containg the given data
+         * @param {int} action.payload.groupId the name of the group to set
+         * @param {string} action.payload.groupName the name of the group
+         * @param {string} action.payload.modelList the list of models the group should have
          */
-        updatedModelGroup(state, action) { }, // implementing this requires more knowledge about the UI
+        setModelsOfModelGroup(state, action) { 
+            const { groupId, groupName, modelList } = action.payload;
+            // set model group
+            if (state.modelGroupList.includes(groupId)) {
+                const selectedModelGroup = state.modelGroups[groupId];
+                state.modelGroups[groupId].name = groupName;
+                // remove unwanted
+                const toDelete = selectedModelGroup.modelList.filter(model => !modelList.includes(model));
+                
+                toDelete.forEach( // delete from lookup table
+                    model => delete selectedModelGroup.models[model]
+                );
+                // filter out from list
+                selectedModelGroup.modelList = selectedModelGroup.modelList.filter(model => !toDelete.includes(model));  
+                
+                // add new ones
+                for (let model of modelList) {
+                    if (!selectedModelGroup.modelList.includes(model)){ // initialize with default settings
+                        selectedModelGroup.modelList.push(model);
+                        selectedModelGroup.models[model] = Object.assign({}, MODEL_DATA_TEMPLATE);
+                    }
+                };
+                
+            } else { // create new group
+                const newGroupId = state.idCounter++;
+                state.modelGroupList.push(newGroupId);
+                state.modelGroups[newGroupId] = Object.assign({}, MODEL_GROUP_TEMPLATE);
+                state.modelGroups[newGroupId].name = groupName;
+                const currentGroup = state.modelGroups[newGroupId];
+                for (let model of modelList) {
+                    currentGroup.modelList.push(model);
+                    currentGroup.models[model] = Object.assign({}, MODEL_DATA_TEMPLATE);
+                };
+
+            }
+            // change name either way
+            
+        }, 
+
+        /**
+         * This reducer accepts an action object returned from deleteModelGroup()
+         * 
+         *      e.g. dispatch(deleteModelGroup({0: "refC2"}))
+         * 
+         * and calculates the new state based on the action and the action 
+         * data given in action.payload.
+         * 
+         * This method provides a convenient interface for the AddModelGroupModal
+         * by allowing to dispatch a groupId with the required models. If
+         * the group already exists the corresponding data is updated otherwise
+         * the reducer takes care of creating a group.
+         * 
+         * @param {object} state the current store state of: state/models
+         * @param {object} action accepts the action returned from deleteModelGroup()
+         * @param {object} action.payload the payload is an object containg the given data
+         * @param {int} action.payload.groupId the name of the group that should be deleted
+         */
+        deleteModelGroup(state, action) {
+            const { groupId } = action.payload;
+            if (!state.modelGroupList.includes(groupId)) { // no group with this name in store
+                throw `tried to access "${groupId}" which is not a valid group`;
+            };
+
+            state.modelGroupList = state.modelGroupList.filter(name => name !== groupId); // filter out name
+            delete state.modelGroups[groupId]; // delete from lookup table
+
+        },
         
         /**
-         * This reducer accepts an action object returned from addModelGroup()
-         *       e.g. dispatch(addModelGroup({}))
-         * and calculates the new state based on the action and the action 
-         * data given in action.payload.
+         * This reducer accepts an action object returned from updatePropertiesOfModelGroup()
          * 
-         * TODO: should be adjusted to match the UI in ModelGroupConfigurator and AddModalGroup
+         *      e.g. dispatch(setStatisticalValueForGroup(
+         *          { groupID: 42, data: bigObject }
+         *      ));
          * 
-         * @param {object} state the current store state of: state/plot
-         * @param {object} action accepts the action returned from addModelGroup()
+         * This method provides an interface to update the properties of an existing model
+         * group. The properties are whether the model is included in the statistical value(s)
+         * and whether the model is visible.
+         * 
+         * @param {object} state the current store state of: state/models
+         * @param {object} action accepts the action returned from deleteModelGroup()
          * @param {object} action.payload the payload is an object containg the given data
+         * @param {int} action.payload.groupId the name of the group whose model properties should be updated
+         * @param {object} action.payload.data holds the information that should be updated 
          */
-        addedModelGroup(state, action) { },
+        updatePropertiesOfModelGroup(state, action) {
+            const { groupId, data } = action.payload;
 
-        /**
-         * This reducer accepts an action object returned from setVisibility()
-         *       e.g. dispatch(setVisibility(
-         *          {groupID: "all", modelID: "CCMI-1_ACCESS_ACCESS-CCM-refC2", isVisible: false}
-         *       ))
-         * and calculates the new state based on the action and the action 
-         * data given in action.payload.
-         * 
-         * In this case the visibility of a given model in the given group is set
-         * to the new value.
-         * 
-         * @param {object} state the current store state of: state/plot
-         * @param {object} action accepts the action returned from updateModelGroup()
-         * @param {object} action.payload the payload is an object containg the given data
-         * @param {string} action.payload.groupID a string specifying the group of the target model
-         * @param {string} action.payload.modelID a string specifying the target model
-         * @param {boolean} action.payload.isVisible is the model visible as boolean
-         */
-        setVisibility(state, action) { 
-            const { groupID, modelID, isVisible } = action.payload;
-            const activeSettings = state.settings[state.plotId];
-            const activeModel = activeSettings[groupID].models[modelID];
-            if (activeModel === undefined) {
-                throw `tried to access model with modelID "${modelID}" that is not yet defined!`;
-            } 
-            activeModel.isVisible = isVisible;
-        },
+            if (!state.modelGroupList.includes(groupId)) { // no group with this name in store
+                throw `tried to access "${groupId}" which is not a valid group`;
+            };
 
-        /**
-         * This reducer accepts an action object returned from setStatisticalValuesIncluded()
-         *      e.g. dispatch(setVisibility(
-         *          {groupID: "all", modelID: "CCMI-1_ACCESS_ACCESS-CCM-refC2", svType: "mean", isIncluded: true}
-         *       ))
-         * and calculates the new state based on the action and the action 
-         * data given in action.payload.
-         * 
-         * In this case for a given model is set whether it should be included
-         * in the calculation of the given statistical value (SV).
-         * 
-         * @param {object} state the current store state of: state/plot
-         * @param {object} action accepts the action returned from updateModelGroup()
-         * @param {object} action.payload the payload is an object containg the given data
-         * @param {string} action.payload.groupID a string specifying the group of the target model
-         * @param {string} action.payload.modelID a string specifying the target model
-         * @param {string} action.payload.svType the SV as a string
-         * @param {boolean} action.payload.isIncluded should the model be included for the given SV
-         */
-        setStatisticalValueIncluded(state, action) { // this is for an individual model
-            // svType has to be a string of the form: 
-            // mean | derivative | median | percentile
-            const { groupID, modelID, svType, isIncluded } = action.payload;
-            const activeSettings = state.settings[state.plotId];
-            const activeModel = activeSettings[groupID].models[modelID];
-            if (activeModel === undefined) {
-                throw `tried to access model with modelID "${modelID}" that is not yet defined!`;
-            }
-            if (!STATISTICAL_VALUES.includes(svType)) { // svType doesn't represent a valid statistical value
-                throw `tried to set statistial value "${svType}" that is not a valid statistical value (${STATISTICAL_VALUES.join("|")})`;
-            }
-            activeModel[svType] = isIncluded;
+            for (let model of state.modelGroups[groupId].modelList) {
+                const { color, mean, median, derivative, percentile, isVisible } = data[model]; // expect data to meet certain scheme
+                state.modelGroups[groupId].models[model] = {
+                    color,
+                    mean,
+                    median,
+                    derivative,
+                    percentile,
+                    isVisible,
+                };
+            };
         },
 
         /**
          * This reducer accepts an action object returned from setStatisticalValueForGroup()
          *      e.g. dispatch(setStatisticalValueForGroup(
-         *          {groupID: "all", svType: "median", isIncluded: true}
-         *      ))
+         *          {groupID: 0, svType: STATISTICAL_VALUES.median, isIncluded: true}
+         *      ));
          * and calculates the new state based on the action and the action 
          * data given in action.payload.
          * 
          * In this case for a given group is set whether the given statistical values (SV)
          * should be displayed.
          * 
-         * @param {object} state the current store state of: state/plot
+         * @param {object} state the current store state of: state/models
          * @param {object} action accepts the action returned from updateModelGroup()
          * @param {object} action.payload the payload is an object containg the given data
-         * @param {string} action.payload.groupID a string specifying the group
+         * @param {int} action.payload.groupId a string specifying the group
          * @param {string} action.payload.svType the SV as a string
          * @param {boolean} action.payload.isIncluded should the SV be displayed for the given group
          */
         setStatisticalValueForGroup(state, action) { // this is for an entire group
-            const { groupID, svType, isIncluded } = action.payload;
-            const activeSettings = state.settings[state.plotId];
-            if (!STATISTICAL_VALUES.includes(svType)) { // svType doesn't represent a valid statistical value
-                throw `tried to set statistial value "${svType}" that is not a valid statistical value (${STATISTICAL_VALUES.join("|")})`;
+            const { groupId, svType, isIncluded } = action.payload;
+            
+            if (!STATISTICAL_VALUES_LIST.includes(svType)) { // svType doesn't represent a valid statistical value
+                throw `tried to set statistial value "${svType}" that is not a valid statistical value (${STATISTICAL_VALUES_LIST.join("|")})`;
             }
-            activeSettings[groupID].visibileSV[svType] = isIncluded;
+            if (!state.modelGroupList.includes(groupId)) { // no group with this name in store
+                throw `tried to access "${groupId}" which is not a valid group`;
+            };
+
+            state.modelGroups[groupId].visibileSV[svType] = isIncluded;
+        },
+
+        /**
+         * This reducer accepts an action object returned from setVisibilityForGroup()
+         *      e.g. dispatch(setVisibilityForGroup(
+         *          {groupID: 0, isVisibile: true}
+         *      ));
+         * and calculates the new state based on the action and the action 
+         * data given in action.payload.
+         * 
+         * In this case for a given group is set whether it should be visibile or not.
+         * 
+         * @param {object} state the current store state of: state/models
+         * @param {object} action accepts the action returned from updateModelGroup()
+         * @param {object} action.payload the payload is an object containg the given data
+         * @param {int} action.payload.groupId a string specifying the group
+         * @param {string} action.payload.svType the SV as a string
+         * @param {boolean} action.payload.isIncluded should the SV be displayed for the given group
+         */
+        setVisibilityForGroup(state, action) { // this is for an entire group
+            const { groupId, isVisible } = action.payload;
+
+            if (!state.modelGroupList.includes(groupId)) {
+                throw `tried to access "${groupId}" which is not a valid group`;
+            };
+
+            state.modelGroups[groupId].isVisible = isVisible;
         },
     }
 })
@@ -297,13 +285,11 @@ const modelsSlice = createSlice({
  * the view (our react components).
  */
 export const { 
-    addModels,
-    removeModels,
-    updatedModelGroup,
-    addedModelGroup,
-    setVisibility, 
-    setStatisticalValueIncluded, 
-    setStatisticalValueForGroup
+    setModelsOfModelGroup,
+    deleteModelGroup,
+    updatePropertiesOfModelGroup,
+    setStatisticalValueForGroup,
+    setVisibilityForGroup,
 } = modelsSlice.actions;
 
 /**
@@ -312,22 +298,50 @@ export const {
  * the above defined actions wouldn't trigger state updates.
  */
 export default modelsSlice.reducer;
-
 /**
- * This function is a selector, i.e. it allows components to 
- * select only a specific piece of data from the store. In this
- * case an object holding all current model groups is returned.
+ * This selector allows components to select the models of a given group (specified by ID)
+ *
+ * @param {object} state the global redux state
+ * @param {int} groupId the group id specifies which group should be retrieved
+ * @returns an array containg all models currently in the given group
+ */
+export const selectModelsOfGroup = (state, groupId) => state.models.modelGroups[groupId].modelList;
+/**
+ * This selector allows components to select the model data of a given group (specified by ID)
  * 
  * @param {object} state the global redux state
- * @returns {object} an object holding all current model groups
+ * @param {int} groupId the group id specifies which group data should be retrieved
+ * @returns an object containg all the data for each model present in the group. The model names are the keys.
  */
-export const selectCurrentModelGroups = state => state.models[state.plot.plotId];
+export const selectModelDataOfGroup = (state, groupId) => state.models.modelGroups[groupId].models;
 /**
- * This selectors allows components to select the a specific model group
- * from the store for the current active plot.
+ * This selector allows components to select the name of a given group (specified by ID)
  * 
  * @param {object} state the global redux state
- * @param {string} groupId a string specifying what model group shall be returned
- * @returns {object} the model group with the given id
+ * @param {int} groupId the group id specifies which group name should be retrieved
+ * @returns a string that holds the name of the group
  */
-export const selectCurrentModelGroup = (state, groupId) => state.models[state.plot.plotId][groupId];
+export const selectNameOfGroup = (state, groupId) => state.models.modelGroups[groupId].name;
+/**
+ * This selector allows components to select the statistical values of a given group (specified by ID)
+ * 
+ * @param {object} state the global redux state
+ * @param {int} groupId the group id specifies which data should be retrieved
+ * @returns an object that maps each statistical value onto a boolean
+ */
+export const selectStatisticalValueSettingsOfGroup = (state, groupId) => state.models.modelGroups[groupId].visibileSV;
+/**
+ * This selector allows components to select the visibility of a given group (specified by ID)
+ * 
+ * @param {object} state the global redux state
+ * @param {int} groupId the group id specifies which data should be retrieved
+ * @returns boolean value whether the group is visible or not
+ */
+export const selectVisibilityOfGroup = (state, groupId) => state.models.modelGroups[groupId].isVisible;
+/**
+ * This selector allows components to select all valid group ids
+ * 
+ * @param {object} state the global redux state
+ * @returns an array holding all valid group ids
+ */
+export const selectAllGroupIds = state => state.models.modelGroupList;

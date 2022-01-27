@@ -4,7 +4,13 @@ export const convertModelName = (name) => {
     }
     const regex= /([a-z]|[A-Z]|[0-9]|-)*/g;
     const info = name.match(regex);
-    if (info.length < 4) { throw ("Invalid model name"); }
+    if (info.length < 4) { 
+        return {
+            project: "",
+            institute: "",
+            name: name
+        }
+    }
     return {
         project: info[0],
         institute: info[2],

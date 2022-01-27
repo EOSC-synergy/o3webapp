@@ -135,7 +135,7 @@ function ModelGroupCard(props) {
                                     onChange={toggleModelGroupMedianVisibility}
                                     checked={isModelGroupMedianVisible}
                                     id="ModelGroupCoard-toggle-median-checkbox"
-                                    labelId="ModelGroupCoard-toggle-median-label"
+                                    labelid="ModelGroupCoard-toggle-median-label"
                                 />
                             }
                         />
@@ -149,7 +149,7 @@ function ModelGroupCard(props) {
                                     onChange={toggleModelGroupMeanVisibility}
                                     checked={isModelGroupMeanVisible}
                                     id="ModelGroupCoard-toggle-mean-checkbox"
-                                    labelId="ModelGroupCoard-toggle-mean-label"
+                                    labelid="ModelGroupCoard-toggle-mean-label"
                                 />
                             }
                         />
@@ -165,7 +165,7 @@ function ModelGroupCard(props) {
                                     onChange={toggleModelGroupPercentileVisibility}
                                     checked={isModelGroupPercentileVisible}
                                     id="ModelGroupCoard-toggle-percentile-checkbox"
-                                    labelId="ModelGroupCoard-toggle-percentile-label"
+                                    labelid="ModelGroupCoard-toggle-percentile-label"
                                 />
                             }
                         />                    
@@ -179,7 +179,7 @@ function ModelGroupCard(props) {
                                     onChange={toggleModelGroupDerivativeVisibility}
                                     checked={isModelGroupDerivativeVisible}
                                     id="ModelGroupCoard-toggle-derivative-checkbox"
-                                    labelId="ModelGroupCoard-toggle-derivative-label"
+                                    labelid="ModelGroupCoard-toggle-derivative-label"
                                 />
                             }
                         /> 
