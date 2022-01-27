@@ -50,6 +50,9 @@ const definedInitialState = {
             months: [
                 1
             ],
+            regions: [
+                0
+            ],
         }
     }
 };
