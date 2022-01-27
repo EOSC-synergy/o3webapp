@@ -112,22 +112,6 @@ export const preTransformApiData = ({plotId, data}) => {
 }
 
 /**
- * This function renders the correct apexcharts element, depending on the passed
- * plotId.
- * 
- * @param {string} obj.plotId specifies what plot should be rendered
- * @param {array} obj.series stores the data for the chart in the format that is expected by apexcharts
- * @param {object} obj.options holds the information about the graph (has to be the format that is expected by apexcharts)
- * @returns 
- */
-export function renderChartWithSettings({plotId, series, options}) {
-    if (typeof APEXCHART_PLOT_TYPE[plotId] === "undefined") {
-        return <Typography>{`A plot for "${plotId} is currently not supported."`}</Typography>
-    }
-    return <Chart options={options} series={series} type={APEXCHART_PLOT_TYPE[plotId]} height={"400p"}/>
-}
-
-/**
  * This method calculates the boxplot values for the tco3_return plot.
  * For each region an array of 5 values is calculated: min, q1, median, q3, max
  * which is sufficient to render the desired box plot.
