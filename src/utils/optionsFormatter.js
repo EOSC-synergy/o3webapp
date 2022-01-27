@@ -1,19 +1,5 @@
-import { getStepLabelUtilityClass, Typography } from "@mui/material"
-import Chart from "react-apexcharts"
 import { q25, q75, median } from "../services/math/math"
-import { IMPLICIT_YEAR_LIST, START_YEAR, END_YEAR } from "./constants"
-
-// TODO extract to constants ?
-const ANTARCTIC = "Antarctic(Oct)"
-const SH_MID = "SH mid-lat"
-const NH_MID = "NH mid-lat"
-const TROPICS = "Tropics"
-const ARCTIC = "Arctic(Mar)"
-const NEAR_GLOBAL = "Near global"
-const GLOBAL = "Global"
-const USER_REGION = "User region"
-const ALL_REGIONS_ORDERED = [ANTARCTIC, SH_MID, NH_MID, TROPICS, ARCTIC, NEAR_GLOBAL, GLOBAL, USER_REGION];
-//ALL.sort(); // solve without sorting
+import { IMPLICIT_YEAR_LIST, O3AS_REGIONS, O3AS_PLOTS, ALL_REGIONS_ORDERED } from "./constants"
 
 /**
  * Iterates through the x and y data returned from the api for the tco3_zm and fills the corresponding years with
@@ -74,7 +60,7 @@ export function normalizeArray(xValues, yValues) {
  * @returns 
  */
 export const preTransformApiData = ({plotId, data}) => {
-    if (plotId === "tco3_zm") {
+    if (plotId === O3AS_PLOTS.tco3_zm) {
         const lookUpTable = {};
         for (let datum of data) {
             // top structure
@@ -84,7 +70,7 @@ export const preTransformApiData = ({plotId, data}) => {
             };
         }
         return lookUpTable;
-    } else if (plotId === "tco3_return") { // old way of doing this
+    } else if (plotId === O3AS_PLOTS.tco3_return) { // old way of doing this
         const lookUpTable = {};
         for (let datum of data) {
             // top structure
@@ -229,9 +215,9 @@ export function generateSeries({plotId, data, modelsSlice}) {
         }
     }
 
-    if (plotId === "tco3_zm") {
+    if (plotId === O3AS_PLOTS.tco3_zm) {
         generateTco3_ZmSeries({data: trimmedData, series, colors, dashArray, width});
-    } else if (plotId === "tco3_return") {
+    } else if (plotId === O3AS_PLOTS.tco3_return) {
         generateTco3_ReturnSeries({data: trimmedData, series, colors, dashArray, width});
     } else {
         throw `the given plot id "${plotId}" is not defined`;
@@ -255,7 +241,7 @@ export const defaultTCO3_zm = {
         */
     },
     chart: {
-        id: "chart",
+        id: O3AS_PLOTS.tco3_zm,
         animations: {
             enabled: false,
             easing: "linear"
@@ -302,7 +288,7 @@ export const defaultTCO3_zm = {
 
 export const default_TCO3_return = {
     chart: {
-      id: "tco3_return",
+      id: O3AS_PLOTS.tco3_return,
       type: 'boxPlot',
       animations: {
           enabled: false, // disable animations

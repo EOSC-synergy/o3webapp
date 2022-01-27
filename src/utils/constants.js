@@ -116,15 +116,36 @@ export const PLOT_NAME_MAX_LEN = 40;
 export const O3AS_PLOTS = { // used for internal testing or manual if-else
     tco3_zm: "tco3_zm",
     tco3_return: "tco3_return",
-}
+};
 
 export const APEXCHART_PLOT_TYPE = {
     tco3_zm: "line",
     tco3_return: "boxPlot"
-}
+};
 
 // Options Formatter
 export const START_YEAR = 1959
 export const END_YEAR = 2100
 // year list: 1959 - 2100
 export const IMPLICIT_YEAR_LIST = [...Array(END_YEAR - START_YEAR + 1).keys()].map(number => `${START_YEAR + number}`)
+
+// important for api data transformation
+const ANTARCTIC = "Antarctic(Oct)";
+const SH_MID = "SH mid-lat";
+const NH_MID = "NH mid-lat";
+const TROPICS = "Tropics";
+const ARCTIC = "Arctic(Mar)";
+const NEAR_GLOBAL = "Near global";
+const GLOBAL = "Global";
+const USER_REGION = "User region";
+export const O3AS_REGIONS = {
+    ANTARCTIC,
+    SH_MID,
+    NH_MID,
+    TROPICS,
+    ARCTIC,
+    NEAR_GLOBAL,
+    GLOBAL,
+    USER_REGION
+}
+export const ALL_REGIONS_ORDERED = [ANTARCTIC, SH_MID, NH_MID, TROPICS, ARCTIC, NEAR_GLOBAL, GLOBAL, USER_REGION];
