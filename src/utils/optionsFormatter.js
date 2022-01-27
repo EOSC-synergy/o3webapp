@@ -362,7 +362,7 @@ export const default_TCO3_return = {
       },
     }
     
-}
+};
 
 export function getOptions({plotId, styling, plotTitle}) {
     if (plotId === "tco3_zm") {
@@ -383,11 +383,6 @@ export function getOptions({plotId, styling, plotTitle}) {
         //newOptions.markers.colors.push(...styling.colors);
         return newOptions;
     }    
-}
-
-
-export function mergeModelDataAndSettings(modelData, modelSettings) {
-    
 };
 
 export function colorNameToHex(color)
