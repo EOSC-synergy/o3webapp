@@ -316,7 +316,7 @@ const defaultTCO3_zm = {
             fontSize:  "30px",
             fontWeight:  "bold",
             fontFamily:  "undefined",
-            color:  "#263238"
+            color:  "#4350af"
         }
     },
 };
@@ -335,8 +335,15 @@ const default_TCO3_return = {
     },
     colors: [undefined], // , ...styling.colors
     title: {
-      text: 'TCO RETURN',
-      align: 'center'
+        text: "Return/Recovery",
+        align: "center",
+        floating: false,
+        style: {
+            fontSize:  "30px",
+            fontWeight:  "bold",
+            fontFamily:  "undefined",
+            color:  "#4350af"
+        }
     },
     tooltip: {
       shared: false,
@@ -378,18 +385,22 @@ const default_TCO3_return = {
     
 }
 
-export function getOptions({plotId, styling}) {
+export function getOptions({plotId, styling, plotTitle}) {
     if (plotId === "tco3_zm") {
         const newOptions = Object.assign({}, defaultTCO3_zm);
         newOptions.xaxis.categories = IMPLICIT_YEAR_LIST;
         newOptions.colors = styling.colors;
         newOptions.stroke.width = styling.width;
         newOptions.stroke.dashArray = styling.dashArray;
+        newOptions.title = Object.assign({}, newOptions.title); // this is necessary in order for apexcharts to update the title
+        newOptions.title.text = plotTitle;
         return newOptions;
 
     } else if (plotId === "tco3_return") {
         const newOptions = Object.assign({}, default_TCO3_return);
         newOptions.colors.push(...styling.colors); // for the legend!
+        newOptions.title = Object.assign({}, newOptions.title);  // this is necessary in order for apexcharts to update the title
+        newOptions.title.text = plotTitle;
         //newOptions.markers.colors.push(...styling.colors);
         return newOptions;
     }    

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Chart from "react-apexcharts"
 import { getOptions, generateSeries } from "../../../utils/optionsFormatter"
 import { useSelector } from 'react-redux'
-import { selectPlotId } from '../../../store/plotSlice/plotSlice';
+import { selectPlotId, selectPlotTitle } from '../../../store/plotSlice/plotSlice';
 import { REQUEST_STATE, selectActivePlotData } from '../../../services/API/apiSlice';
 import { Spinner } from '../../../components/Spinner/Spinner';
 import { Typography } from '@mui/material';
@@ -21,6 +21,9 @@ import { APEXCHART_PLOT_TYPE } from '../../../utils/constants';
 function Graph(props) {
 
     const plotId = useSelector(selectPlotId);
+    const plotTitle = useSelector(selectPlotTitle);
+    const xAxisRange = useSelector(state => state.plot.settings[state.plot.plotId].displayXRange); // => selector
+    const yAxisRange = useSelector(state => state.plot.settings[state.plot.plotId].displayYRange); // => selector
     const activeData = useSelector(state => selectActivePlotData(state, plotId));
     const modelsSlice = useSelector(state => state.models);
     
@@ -42,8 +45,8 @@ function Graph(props) {
         return <Typography>An error occurred, please try to reload the site.</Typography>;
 
     } else if (activeData.status === REQUEST_STATE.success) {
-        const {series, styling} = generateSeries({plotId, data: activeData.data, modelsSlice});
-        const options = getOptions({plotId, styling});
+        const {series, styling} = generateSeries({plotId, data: activeData.data, modelsSlice, xAxisRange, yAxisRange});
+        const options = getOptions({plotId, styling, plotTitle});
         return <Chart key={plotId} options={options} series={series} type={APEXCHART_PLOT_TYPE[plotId]} height={"400p"} />
     };
 
