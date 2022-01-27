@@ -1,5 +1,5 @@
 import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, START_YEAR } from "./constants";
-import { colorNameToHex, convertToStrokeStyle, generateSeries, normalizeArray, preTransformApiData } from "./optionsFormatter";
+import { colorNameToHex, convertToStrokeStyle, generateSeries, getIncludedModels, normalizeArray, preTransformApiData } from "./optionsFormatter";
 
 describe("testing optionsFormatter functionality", () => {
     const spacedYearArray = [...Array(10).keys()].map(number => `${START_YEAR + 2 * number}`);
@@ -73,7 +73,29 @@ describe("testing optionsFormatter functionality", () => {
     })
 
     it('extracts all models which should be included', () => {
+        const modelSlice = {
+            idCounter: 1,
+            modelGroupList: [0],
+            modelGroups: {
+                0: { 
+                    modelList: ["modelA", "modelB", "modelC"],
+                    models: {
+                        "modelA": {
+                            isVisible: true,
+                        },
+                        "modelB": {
+                            isVisible: false,
+                        },
+                        "modelC": {
+                            isVisible: true,
+                        },
+                    },
+                    isVisible: true,
+                }
+            },
+        };
 
+        expect(getIncludedModels(modelSlice)).toEqual(new Set(["modelA", "modelC"]));
     });
 
     it('throws an error if a provided plotId is not correct', () => {
@@ -101,7 +123,5 @@ describe("testing optionsFormatter functionality", () => {
         expect(convertToStrokeStyle(lineStyle)).toEqual(apexChartsLineStyle);
         expect(convertToStrokeStyle("no valid line style")).toEqual(false);
     });
-
-
 
 });
