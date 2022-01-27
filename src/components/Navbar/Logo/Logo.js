@@ -16,7 +16,7 @@ export const O3ASLink = "#";
 /**
  * Returns a logo from O3AS and the text "O3AS Webapp"
  * @param {Object} props 
- * @param {Object} props.display when the logo should be displayed
+ * @param {Object|String} props.display when the logo should be displayed
  * @returns {JSX.Element} containing one Image and one Text wrapped in a Link component
  */
 const Logo = (props) => {
@@ -38,7 +38,10 @@ const Logo = (props) => {
 };
 
 Logo.propTypes = {
-    display: PropTypes.object
+    display: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.string
+    ])
 }
 
 export default Logo;
