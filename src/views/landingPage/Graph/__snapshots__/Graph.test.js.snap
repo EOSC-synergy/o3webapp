@@ -1,7 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`tests graph component rendering Renders OK 1`] = `
+exports[`tests graph component rendering renders with loading spinner if no data present 1`] = `
 <div>
-  <div />
+  <div
+    style="display: flex; align-items: center; justify-content: center; height: 300px;"
+  >
+    <div
+      class="spinner"
+    >
+      <h4>
+        loading data
+      </h4>
+      <div
+        class="loader"
+        style="height: 8em; width: 8em;"
+      />
+    </div>
+  </div>
 </div>
 `;
