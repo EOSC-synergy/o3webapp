@@ -11,6 +11,12 @@ import { Typography } from '@mui/material';
 import { APEXCHART_PLOT_TYPE } from '../../../utils/constants';
 import store from "../../../store/store";
 
+function ChartWrapper(props) {
+
+}
+
+const MemoizedChart = React.memo(ChartWrapper);
+
 /**
  * Currently there is no dynamic data linking. The graph will always
  * render the data from default-data.json in this folder. This is
@@ -56,4 +62,4 @@ function Graph(props) {
     return <Typography>CRITICAL: an internal error occurred that shouldn't happen!</Typography>;
 }
 
-export default Graph;
+export default React.memo(Graph); // prevent graph from rerendering if sidebar is opened and closed
