@@ -1,21 +1,12 @@
 import React, { useEffect } from 'react';
 import Chart from "react-apexcharts"
-import data from "./default-data.json"
-import settings from "./default-settings.json"
-import { convertToStrokeStyle, colourNameToHex, renderChartWithSettings, getOptions, generateSeries } from "../../../utils/optionsFormatter"
-import {useSelector} from 'react-redux'
+import { getOptions, generateSeries } from "../../../utils/optionsFormatter"
+import { useSelector } from 'react-redux'
 import { selectPlotId } from '../../../store/plotSlice/plotSlice';
 import { REQUEST_STATE, selectActivePlotData } from '../../../services/API/apiSlice';
 import { Spinner } from '../../../components/Spinner/Spinner';
 import { Typography } from '@mui/material';
 import { APEXCHART_PLOT_TYPE } from '../../../utils/constants';
-import store from "../../../store/store";
-
-function ChartWrapper(props) {
-
-}
-
-const MemoizedChart = React.memo(ChartWrapper);
 
 /**
  * Currently there is no dynamic data linking. The graph will always
@@ -32,9 +23,7 @@ function Graph(props) {
     const plotId = useSelector(selectPlotId);
     const activeData = useSelector(state => selectActivePlotData(state, plotId));
     const modelsSlice = useSelector(state => state.models);
-    // settings
-    // modelgroups => 
-
+    
     useEffect(() => { 
         // note: this is important, because we should only "propagate" the error to the top
         // if this component has finished rendering, causing no <em>side effects</em> in
