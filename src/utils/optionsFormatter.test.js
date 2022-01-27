@@ -27,7 +27,7 @@ describe("testing optionsFormatter functionality", () => {
         it('should pre-tranform the api data for tco3_zm correctly', () => {
             const apiData = [{
                 model: "modelA",
-                plotstyle: "plotstyle",
+                plotstyle: "plotstyleData",
                 x: spacedYearArray,
                 y: valueArray,
             }];
@@ -36,7 +36,7 @@ describe("testing optionsFormatter functionality", () => {
                 preTransformApiData({plotId: O3AS_PLOTS.tco3_zm, data: apiData})
             ).toEqual({
                 modelA: {
-                    plotStyle: "plotstyle",
+                    plotStyle: "plotstyleData",
                     data: expectedNormalize,
                 }
             });
@@ -44,7 +44,31 @@ describe("testing optionsFormatter functionality", () => {
         });
 
         it('should pre-transform the api data for tco3_return correctly', () => {
-            
+            const apiData = [{
+                model: "modelA",
+                plotstyle: "plotstyleData",
+                x: ["regionA", "regionB"],
+                y: [2010, 2022],
+            }];
+
+            expect(
+                preTransformApiData({plotId: O3AS_PLOTS.tco3_return, data: apiData})
+            ).toEqual({
+                modelA: {
+                    plotStyle: "plotstyleData",
+                    data: [ // a direct lookup table might be faster (to consider if boxplot calculation becomes to slow!)
+                        {
+                            x: "regionA",
+                            y: 2010,
+                        },
+                        {
+                            x: "regionB",
+                            y: 2022,
+                        }
+                    ]
+                        
+                }
+            });
         });
     })
 
