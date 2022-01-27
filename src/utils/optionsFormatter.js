@@ -266,10 +266,12 @@ const defaultTCO3_zm = {
         title: {
             text: "Years"
         },
+        /*
         labels: {
             rotate: 0, // no need to rotate since hiding labels gives plenty of room
             hideOverlappingLabels: false  // all labels must be rendered
         }
+        */
     },
     chart: {
         id: "chart",
