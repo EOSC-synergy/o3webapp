@@ -47,12 +47,12 @@ describe('plot type selector test', () => {
     it('PlotTypeSelector reports error if an error occurred in the fetching of plotTypes', () => {
         const spy = jest.spyOn(redux, 'useSelector')
         
-        const errorMessage = "Error Message";
+        const errorMessage = "API not responding: Error Message";
         spy.mockReturnValue(
             { 
                 status: REQUEST_STATE.error,
                 data: [],
-                error: errorMessage,
+                error: "Error Message",
             }
         );
         
