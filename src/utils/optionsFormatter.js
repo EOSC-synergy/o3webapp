@@ -12,7 +12,7 @@ const ARCTIC = "Arctic(Mar)"
 const NEAR_GLOBAL = "Near global"
 const GLOBAL = "Global"
 const USER_REGION = "User region"
-const ALL = [ANTARCTIC, SH_MID, NH_MID, TROPICS, ARCTIC, NEAR_GLOBAL, GLOBAL, USER_REGION];
+const ALL_REGIONS_ORDERED = [ANTARCTIC, SH_MID, NH_MID, TROPICS, ARCTIC, NEAR_GLOBAL, GLOBAL, USER_REGION];
 //ALL.sort(); // solve without sorting
 
 /**
@@ -115,7 +115,7 @@ export const preTransformApiData = ({plotId, data}) => {
  */
 export function calculateBoxPlotValues(data) {
     const staticData = {}
-	for (let region of ALL) {
+	for (let region of ALL_REGIONS_ORDERED) {
 		staticData[region] = []
 	}
 
@@ -129,7 +129,7 @@ export function calculateBoxPlotValues(data) {
     }
     
     const boxPlotValues = {}
-	for (let region of ALL) {
+	for (let region of ALL_REGIONS_ORDERED) {
 		staticData[region].sort()
 		const arr = staticData[region]
 		boxPlotValues[region] = []
@@ -167,7 +167,7 @@ export function generateTco3_ReturnSeries({data, series, colors}) {
                 name: 'box',
                 type: 'boxPlot',
         
-                data: ALL.map(region => ({
+                data: ALL_REGIONS_ORDERED.map(region => ({
                     x: region,
                     y: boxPlotValues[region],
                 })),
@@ -182,7 +182,7 @@ export function generateTco3_ReturnSeries({data, series, colors}) {
             }
             //modelData.data.forEach(xypair => ) // this could be done after fetching!
             
-            const sortedData = ALL.map(region => ({
+            const sortedData = ALL_REGIONS_ORDERED.map(region => ({
                 x: region,
                 y: transformed[region] || null, // null as default if data is missing
             }));
