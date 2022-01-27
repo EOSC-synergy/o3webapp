@@ -362,13 +362,16 @@ function EditModelGroupModal(props) {
         const checkedList =  getCheckedListByType(type);
         const setter =  getCheckedSetterByType(type);
         return (
+            <div data-testid={`CellCheckboxRow${params.row.id}Type${type}`}>
             <CustomCheckbox 
                 isChecked={checkedList[params.row.id]} 
                 handleChecked={() => {
+                    
                     const checkedHandler = handleChecked(checkedList, setter);
                     checkedHandler(params.row.id)
                 }}
             />
+            </div>
         );
     }
 
@@ -403,36 +406,34 @@ function EditModelGroupModal(props) {
     ];
 
     return (
-        <> { props.isOpen && 
-            <Modal 
-                open={props.isOpen}
-                onClose={discardChanges}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Card sx={cardStyle}>
-                    <div style={{width: "95%"}}>
-                        <SearchBar inputArray={rows} foundIndicesCallback={foundIndices} />
-                    </div>
-                    <StyledDataGrid
-                        rows={filteredRows}
-                        columns={columns}
-                        pageSize={20}
-                        rowsPerPageOptions={[5]}
-                        onColumnHeaderClick={columnHeaderClick}
-                        disableColumnMenu
-                    />
-                    <Grid container alignItems="flex-end" justifyContent="center" style={{}}> 
-                        <Button aria-label="delete" color={"success"} size="large" onClick={applyChanges}>
-                            <DoneIcon fontSize="large"/> Apply Changes
-                        </Button>
-                        <Button aria-label="delete" color={"error"} size="large" onClick={discardChanges}>
-                            <ClearIcon fontSize="large"/> Discard Changes
-                        </Button>
-                    </Grid>
-                </Card>
-            </Modal>
-        } </>
+        <Modal 
+            open={props.isOpen}
+            onClose={discardChanges}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <Card sx={cardStyle}>
+                <div style={{width: "95%"}}>
+                    <SearchBar inputArray={rows} foundIndicesCallback={foundIndices} />
+                </div>
+                <StyledDataGrid
+                    rows={filteredRows}
+                    columns={columns}
+                    pageSize={10}
+                    rowsPerPageOptions={[10]}
+                    onColumnHeaderClick={columnHeaderClick}
+                    disableColumnMenu
+                />
+                <Grid container alignItems="flex-end" justifyContent="center" style={{}}> 
+                    <Button aria-label="delete" color={"success"} size="large" onClick={applyChanges} data-testid="EditModelGroupModalApplyButton">
+                        <DoneIcon fontSize="large"/> Apply Changes
+                    </Button>
+                    <Button aria-label="delete" color={"error"} size="large" onClick={discardChanges} data-testid="EditModelGroupModalDiscardButton">
+                        <ClearIcon fontSize="large"/> Discard Changes
+                    </Button>
+                </Grid>
+            </Card>
+        </Modal>
     );
 }
 
