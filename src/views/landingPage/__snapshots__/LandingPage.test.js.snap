@@ -416,7 +416,7 @@ exports[`test LandingPage component LandingPage renders correctly 1`] = `
                             <svg
                               aria-hidden="true"
                               class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                              data-testid="VisibilityOffIcon"
+                              data-testid="ModelGroupCard-VisibilityIcon-invisible"
                               focusable="false"
                               viewBox="0 0 24 24"
                             >

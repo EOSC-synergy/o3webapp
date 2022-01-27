@@ -35,15 +35,17 @@ function ModelGroupCard(props) {
     
     /**
      * toggles the visibility of the whole group in the graph
-     * @todo insert redux call here
+     * by dispatching an action to the redux store
      */
     const toggleModelGroupVisibility = () => {
         dispatch(setVisibilityForGroup({groupId: props.modelGroupId, isVisible: !isModelGroupVisible}));
     }
 
     /**
-     * toggles the visibility of the median from this group in the graph
-     * @todo insert redux call here
+     * toggles the visibility of the given statistical value
+     * by dispatching an action to the redux store
+     * @param {event} event the event that called this function
+     * @param {string} statisticalValue the name of the statistical value that should be toggled
      */
     const toggleModelGroupStatisticalValueVisibility = (event, statisticalValue) => {
         dispatch(setStatisticalValueForGroup(
@@ -74,7 +76,7 @@ function ModelGroupCard(props) {
      * function to return the visibility icon, depending on whether the group is currently visible or not
      */
     const VisibilityIcon = () => {
-        return isModelGroupVisible ? <MuiVisibilityIcon /> : <VisibilityOffIcon />
+        return isModelGroupVisible ? <MuiVisibilityIcon data-testid="ModelGroupCard-VisibilityIcon-visible" /> : <VisibilityOffIcon data-testid="ModelGroupCard-VisibilityIcon-invisible" />
     }
 
     return (
@@ -120,7 +122,7 @@ function ModelGroupCard(props) {
 
 ModelGroupCard.propTypes = {
     modelGroupId: PropTypes.number.isRequired,
-    reportError: PropTypes.func
+    reportError: PropTypes.func.isRequired
 }
 
 export default ModelGroupCard;
