@@ -14,7 +14,6 @@ const definedInitialState = {
     // maps plotids to their settings
     settings: {
         "tco3_zm": {
-            name: "OCTS", // should show up in the drop down menu
             title: "OCTS Plot", // the title shown in the apexcharts generated chart
             location: {
                 minLat: -90,
@@ -33,7 +32,6 @@ const definedInitialState = {
             ],
         },
         "tco3_return": {
-            name: "Return/Recovery",
             title: "Return/Recovery Plot",
             location: { // custom user defined region
                 minLat: -90,
