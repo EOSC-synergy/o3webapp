@@ -81,6 +81,11 @@ function LatitudeBandSelector(props) {
      */
     const defaultValue = [-90, 90];
 
+    /***
+     * the value of the currently selected latitude band or the entered custom latitude band
+     */
+    const [latitudeBand, setLatitudeBand] = React.useState(defaultValue);
+
     /**
      * handles the change when the user clicked on a new latitude band option 
      * if the user selected custom sets isCustomizable to true
@@ -91,6 +96,7 @@ function LatitudeBandSelector(props) {
             setIsCustomizable(true);
         } else {
             setIsCustomizable(false);
+            setLatitudeBand(event.target.value);
             dispatch(setLocation({minLat: event.target.value[0], maxLat: event.target.value[1]}));
         }
     };
@@ -104,6 +110,7 @@ function LatitudeBandSelector(props) {
         if (idx < selectedLocationArray.length || idx > 0) {
             let latitudeBandCopy = [...selectedLocationArray];
             latitudeBandCopy[idx] = event.target.value;
+            setLatitudeBand(latitudeBandCopy);
             dispatch(setLocation({minLat: latitudeBandCopy[0], maxLat: latitudeBandCopy[1]}));
         }
     };
@@ -115,7 +122,7 @@ function LatitudeBandSelector(props) {
                 <Select
                     sx={{width: '100%' }}
                     id="latitudeBandSelector"
-                    value={isCustomizable ? 'custom' : selectedLocationArray}
+                    value={isCustomizable ? 'custom' : latitudeBand}
                     onChange={handleChangeLatitudeBand}
                     defaultValue={defaultValue}
                 >
