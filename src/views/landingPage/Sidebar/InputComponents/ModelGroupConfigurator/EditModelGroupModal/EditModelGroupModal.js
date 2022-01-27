@@ -10,6 +10,7 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import IntermediateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
 import { selectModelsOfGroup, selectModelDataOfGroup, updatePropertiesOfModelGroup, STATISTICAL_VALUES } from "../../../../../../store/modelsSlice/modelsSlice";
+import PropTypes from "prop-types";
 
 const StyledDataGrid = styled(DataGrid)(({theme}) => ({
     height: "80%",
@@ -28,14 +29,6 @@ const cardStyle = {
     p: 4,
 };
 
-function CustomCheckbox(props) {
-    return (
-        <div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
-            <Checkbox checked={props.isChecked} onClick={props.handleChecked}/>
-        </div>
-    );
-}
-
 function createRows(modelList) {
     const rows = [];
     const regex= /([a-z]|[A-Z]|[0-9]|-)*/g;
@@ -44,22 +37,19 @@ function createRows(modelList) {
         const model = modelList[i];
         const info = model.match(regex);
         rows.push({
-            'fullModelId': model,
-            'model': info[0],
-            'institute': info[2],
-            'datasetAndModel': info[4],
-            'id': i,
-            'median': false,
-            'mean': false,
-            'percentile': false,
-            'derivative': false,
-            'visible': false
+            "id": i,
+            "model": info[0],
+            "institute": info[2],
+            "datasetAndModel": info[4],
+            "median": false,
+            "mean": false,
+            "percentile": false,
+            "derivative": false,
+            "visible": false
         })
     }
     return rows;
 }
-
-const MemoizedCheckbox = React.memo(CustomCheckbox);
 
 /**
  * opens a modal where the user can edit an existing model group
@@ -78,9 +68,6 @@ function EditModelGroupModal(props) {
     const modelData = useSelector(state => selectModelDataOfGroup(state, props.modelGroupId));
 
     const rows = createRows(modelList);
-    const typeList = Object.values(STATISTICAL_VALUES);
-    typeList.push("visible")
-
     const [filteredRows, setFilteredRows] = React.useState(rows);
 
     const [medianVisible, setMedianVisible] =           React.useState(modelList.map(model => modelData[model].median));
@@ -88,6 +75,9 @@ function EditModelGroupModal(props) {
     const [derivativeVisible, setDerivativeVisible] =   React.useState(modelList.map(model => modelData[model].derivative));
     const [percentileVisible, setPercentileVisible] =   React.useState(modelList.map(model => modelData[model].percentile));
     const [isVisible, setIsVisible] =                   React.useState(modelList.map(model => modelData[model].isVisible));
+
+    const typeList = Object.values(STATISTICAL_VALUES);
+    typeList.push("visible");
 
     const getCheckedListByType = (type) => {
         switch(type.toLowerCase()) {
@@ -151,44 +141,6 @@ function EditModelGroupModal(props) {
         return noSelectedRows;
     }
 
-    const generateHeaderName = (type) => {
-        if (areAllCheckboxesSelected(type)) {
-            return (
-            <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                <CheckBoxIcon fontSize="small" style={{marginRight: "5px"}}/>
-                {type}
-            </div>)
-        } else {
-            if (areNoCheckboxesSelected(type)) {
-                return (
-                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                    <CheckBoxOutlineBlankIcon  fontSize="small" style={{marginRight: "5px"}}/>
-                    {type}
-                </div>)
-            } else {
-                return (
-                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                    <IntermediateCheckBoxIcon  fontSize="small" style={{marginRight: "5px"}}/>
-                    {type}
-                </div>)
-            }
-        }
-    }
-
-    const createCellCheckBox = (params, type) => {
-        const checkedList =  getCheckedListByType(type);
-        const setter =  getCheckedSetterByType(type);
-        return (
-            <CustomCheckbox 
-                isChecked={checkedList[params.row.id]} 
-                handleChecked={() => {
-                    const checkedHandler = handleChecked(checkedList, setter);
-                    checkedHandler(params.row.id)
-                }}
-            />
-        );
-    }
-
     const columnHeaderClick = (params) => {
         if (!typeList.includes(params.colDef.field)) return
         const type = params.colDef.headerName;
@@ -237,6 +189,52 @@ function EditModelGroupModal(props) {
         props.onClose();
     }
 
+    const generateHeaderName = (type) => {
+        if (areAllCheckboxesSelected(type)) {
+            return (
+            <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                <CheckBoxIcon fontSize="small" style={{marginRight: "5px"}}/>
+                {type}
+            </div>)
+        } else {
+            if (areNoCheckboxesSelected(type)) {
+                return (
+                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                    <CheckBoxOutlineBlankIcon  fontSize="small" style={{marginRight: "5px"}}/>
+                    {type}
+                </div>)
+            } else {
+                return (
+                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
+                    <IntermediateCheckBoxIcon  fontSize="small" style={{marginRight: "5px"}}/>
+                    {type}
+                </div>)
+            }
+        }
+    }
+     
+    const CustomCheckbox = (props) => {
+        return (
+            <div className="d-flex justify-content-between align-items-center" style={{ cursor: "pointer" }}>
+                <Checkbox checked={props.isChecked} onClick={props.handleChecked}/>
+            </div>
+        );
+    }
+
+    const createCellCheckBox = (params, type) => {
+        const checkedList =  getCheckedListByType(type);
+        const setter =  getCheckedSetterByType(type);
+        return (
+            <CustomCheckbox 
+                isChecked={checkedList[params.row.id]} 
+                handleChecked={() => {
+                    const checkedHandler = handleChecked(checkedList, setter);
+                    checkedHandler(params.row.id)
+                }}
+            />
+        );
+    }
+
     const columns = [
         { field: 'model', headerName: 'Model', width: 120 },
         { field: 'institute', headerName: 'Institute', width: 150, editable: false },
@@ -265,9 +263,7 @@ function EditModelGroupModal(props) {
     ];
 
     return (
-        <>
-        {props.isOpen && 
-
+        <> { props.isOpen && 
             <Modal 
                 open={props.isOpen}
                 onClose={discardChanges}
@@ -299,9 +295,15 @@ function EditModelGroupModal(props) {
                 </Card>
 
             </Modal>
-        }
-        </>
+        } </>
     );
+}
+
+EditModelGroupModal.propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    modelGroupId: PropTypes.number.isRequired,
+    reportError: PropTypes.func
 }
 
 export default EditModelGroupModal;
