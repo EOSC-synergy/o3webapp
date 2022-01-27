@@ -1,5 +1,5 @@
 import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, START_YEAR } from "./constants";
-import { colorNameToHex, convertToStrokeStyle, generateSeries, getIncludedModels, normalizeArray, preTransformApiData } from "./optionsFormatter";
+import { colorNameToHex, convertToStrokeStyle, generateSeries, getIncludedModels, getOptions, normalizeArray, preTransformApiData, default_TCO3_return } from "./optionsFormatter";
 
 describe("testing optionsFormatter functionality", () => {
     const spacedYearArray = [...Array(10).keys()].map(number => `${START_YEAR + 2 * number}`);
@@ -106,7 +106,13 @@ describe("testing optionsFormatter functionality", () => {
 
 
     it('returns the correct options formatted correctly', () => {
-
+        const expected = Object.assign({}, default_TCO3_return);
+        expected.title.text = "title";
+        expect(
+            getOptions({plotId: O3AS_PLOTS.tco3_return, styling: {colors:[]}, plotTitle: "title"})
+        ).toEqual(
+            expected
+        );
     });
 
     it('converts the color name to hex codes', () => {
