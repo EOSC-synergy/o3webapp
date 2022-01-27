@@ -20,75 +20,62 @@ Array [
     className="MuiBox-root css-1n3sbe4"
   >
     <div
-      className="MuiFormControl-root css-q8hpuo-MuiFormControl-root"
+      className="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary css-vwjx0e-MuiInputBase-root-MuiOutlinedInput-root"
+      onClick={[Function]}
     >
       <div
-        className="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
-        onClick={[Function]}
+        aria-expanded="false"
+        aria-haspopup="listbox"
+        aria-labelledby="latitudeBandSelectorLabel latitudeBandSelector"
+        className="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+        id="latitudeBandSelector"
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onMouseDown={[Function]}
+        role="button"
+        tabIndex={0}
       >
-        <div
-          aria-expanded="false"
-          aria-haspopup="listbox"
-          aria-labelledby="latitudeBandSelectorLabel latitudeBandSelector"
-          className="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
-          id="latitudeBandSelector"
-          onBlur={[Function]}
-          onFocus={[Function]}
-          onKeyDown={[Function]}
-          onMouseDown={[Function]}
-          role="button"
-          tabIndex={0}
-        >
-          <span
-            className="notranslate"
-            dangerouslySetInnerHTML={
-              Object {
-                "__html": "&#8203;",
-              }
+        <span
+          className="notranslate"
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "&#8203;",
             }
-          />
-        </div>
-        <input
-          aria-hidden={true}
-          className="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
-          disabled={false}
-          onAnimationStart={[Function]}
-          onChange={[Function]}
-          required={false}
-          tabIndex={-1}
-          value="-90,90"
+          }
         />
-        <svg
-          aria-hidden={true}
-          className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
-          data-testid="ArrowDropDownIcon"
-          focusable="false"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M7 10l5 5 5-5z"
-          />
-        </svg>
-        <fieldset
-          aria-hidden={true}
-          className="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
-        >
-          <legend
-            className="css-1z7n62"
-          >
-            <span>
-              LatitudeBand
-            </span>
-          </legend>
-        </fieldset>
       </div>
-      <label
-        className="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary MuiFormLabel-filled css-1sumxir-MuiFormLabel-root-MuiInputLabel-root"
-        data-shrink={true}
-        id="latitudeBandSelectorLabel"
+      <input
+        aria-hidden={true}
+        className="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+        onAnimationStart={[Function]}
+        onChange={[Function]}
+        tabIndex={-1}
+        value="-90,90"
+      />
+      <svg
+        aria-hidden={true}
+        className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+        data-testid="ArrowDropDownIcon"
+        focusable="false"
+        viewBox="0 0 24 24"
       >
-        Latitude Band
-      </label>
+        <path
+          d="M7 10l5 5 5-5z"
+        />
+      </svg>
+      <fieldset
+        aria-hidden={true}
+        className="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+      >
+        <legend
+          className="css-173wfxe"
+        >
+          <span>
+            LatitudeBand
+          </span>
+        </legend>
+      </fieldset>
     </div>
   </div>,
 ]
