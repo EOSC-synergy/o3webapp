@@ -92,7 +92,6 @@ function LatitudeBandSelector(props) {
         } else {
             setIsCustomizable(false);
             dispatch(setLocation({minLat: event.target.value[0], maxLat: event.target.value[1]}));
-            console.log(selectedLocationArray);
         }
     };
 
@@ -106,28 +105,8 @@ function LatitudeBandSelector(props) {
             let latitudeBandCopy = [...selectedLocationArray];
             latitudeBandCopy[idx] = event.target.value;
             dispatch(setLocation({minLat: latitudeBandCopy[0], maxLat: latitudeBandCopy[1]}));
-            console.log(selectedLocationArray);
         }
     };
-
-    /**
-     * Finds the text for the latitude band values.
-     *
-     * @returns {string} the text for the values
-     */
-    const findTextForLocationArray = () => {
-        for (let i = 0; i < latitudeBands.length; i++) {
-            if (
-                latitudeBands[i].value[0] === selectedLocationArray[0] &&
-                latitudeBands[i].value[1] === selectedLocationArray[1]
-            ) {
-                console.log(i);
-                console.log(latitudeBands[i].text.description);
-                return latitudeBands[i].text.description;
-            }
-        }
-        props.reportError("Invalid value.");
-    }
 
     return (
         <>
@@ -137,7 +116,7 @@ function LatitudeBandSelector(props) {
                     sx={{width: '100%' }}
                     labelId="latitudeBandSelectorLabel"
                     id="latitudeBandSelector"
-                    value={isCustomizable ? 'custom' : findTextForLocationArray()}
+                    value={isCustomizable ? 'custom' : selectedLocationArray}
                     label="LatitudeBand"
                     onChange={handleChangeLatitudeBand}
                     defaultValue={defaultValue}
