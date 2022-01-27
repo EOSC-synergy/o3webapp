@@ -27,7 +27,7 @@ const customLatitudeBandInput = (label, value, onChange) => {
     return (
         <Grid container>
             <Grid item xs={4}>
-                <Typography>{label}</Typography>
+                <Typography><br />{label}</Typography>
             </Grid>
             <Grid item xs={8}>
                 <TextField
