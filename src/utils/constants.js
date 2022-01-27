@@ -113,6 +113,10 @@ export const fileFormats = [ Symbol("pdf"), Symbol("png") ];
 /** The max. length of the plot name */
 export const PLOT_NAME_MAX_LEN = 40;
 
+export const O3AS_PLOTS = { // used for internal testing or manual if-else
+    tco3_zm: "tco3_zm",
+    tco3_return: "tco3_return",
+}
 
 export const APEXCHART_PLOT_TYPE = {
     tco3_zm: "line",
