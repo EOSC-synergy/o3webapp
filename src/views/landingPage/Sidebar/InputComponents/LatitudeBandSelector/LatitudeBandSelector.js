@@ -79,12 +79,7 @@ function LatitudeBandSelector(props) {
     /**
      * The default value that should be selected after initially loading this module
      */
-    const defaultValue = [-90, 90];
-
-    /***
-     * the value of the currently selected latitude band or the entered custom latitude band
-     */
-    const [latitudeBand, setLatitudeBand] = React.useState(defaultValue);
+    const defaultValue = { minLat: -90, maxLat: 90 };
 
     /**
      * handles the change when the user clicked on a new latitude band option 
@@ -96,24 +91,42 @@ function LatitudeBandSelector(props) {
             setIsCustomizable(true);
         } else {
             setIsCustomizable(false);
-            setLatitudeBand(event.target.value);
-            dispatch(setLocation({minLat: event.target.value[0], maxLat: event.target.value[1]}));
+            dispatch(setLocation({minLat: event.target.value.minLat, maxLat: event.target.value.maxLat}));
         }
     };
 
     /**
      * changes one single index of the latitude band
      * @param {event} event the event that triggered this function call
-     * @param {int} idx the index that should be changed of the latitude band
+     * @param {String} extrema minimum or maximum that should be changed
      */
-    const handleChangeLatitudeBandSingleElement = (event, idx) => {
-        if (idx < selectedLocationArray.length || idx > 0) {
-            let latitudeBandCopy = [...selectedLocationArray];
-            latitudeBandCopy[idx] = event.target.value;
-            setLatitudeBand(latitudeBandCopy);
-            dispatch(setLocation({minLat: latitudeBandCopy[0], maxLat: latitudeBandCopy[1]}));
+    const handleChangeLatitudeBandSingleElement = (event, extrema) => {
+        let selectedLocationCopy = {...selectedLocation};
+        switch(extrema) {
+            case "min":
+                selectedLocationCopy.minLat = parseInt(event.target.value);
+                break;
+            case "max":
+                selectedLocationCopy.maxLat = parseInt(event.target.value);
+                break;
+            default:
+                props.reportError("Invalid extrema string for single value change.");
         }
+        dispatch(setLocation({minLat: selectedLocationCopy.minLat, maxLat: selectedLocationCopy.maxLat}));
     };
+
+    /**
+     * Finds selectedLocation in latitudeBands.
+     * @returns {{text, value}} the location
+     */
+    const findLatitudeBandByLocation = () => {
+        latitudeBands.forEach( latBand => {
+            if (latBand.value === 'custom' ||
+                latBand.value.minLat === selectedLocation.minLat && latBand.value.maxLat === selectedLocation.maxLat) {
+                return latBand;
+            }
+        });
+    }
 
     return (
         <>
@@ -122,7 +135,7 @@ function LatitudeBandSelector(props) {
                 <Select
                     sx={{width: '100%' }}
                     id="latitudeBandSelector"
-                    value={isCustomizable ? 'custom' : latitudeBand}
+                    value={findLatitudeBandByLocation()}
                     onChange={handleChangeLatitudeBand}
                     defaultValue={defaultValue}
                 >
@@ -136,8 +149,8 @@ function LatitudeBandSelector(props) {
                 {
                     isCustomizable &&
                     <>
-                        {customLatitudeBandInput('lat min', selectedLocationArray[0], (event) => handleChangeLatitudeBandSingleElement(event, 0))}
-                        {customLatitudeBandInput('lat max', selectedLocationArray[1], (event) => handleChangeLatitudeBandSingleElement(event, 1))}
+                        {customLatitudeBandInput('lat min', selectedLocationArray[0], (event) => handleChangeLatitudeBandSingleElement(event, "min"))}
+                        {customLatitudeBandInput('lat max', selectedLocationArray[1], (event) => handleChangeLatitudeBandSingleElement(event, "max"))}
                     </>
                 }
             </Box>
