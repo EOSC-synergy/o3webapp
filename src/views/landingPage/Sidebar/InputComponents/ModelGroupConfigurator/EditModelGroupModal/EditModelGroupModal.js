@@ -172,7 +172,7 @@ function EditModelGroupModal(props) {
      */
     const getCheckedSetterByType = (type) => {
         switch(type.toLowerCase()) {
-            case "pedian": return setMedianVisible;
+            case "median": return setMedianVisible;
             case "mean": return  setMeanVisible;
             case "derivative": return  setDerivativeVisible;
             case "percentile": return  setPercentileVisible;
@@ -317,20 +317,20 @@ function EditModelGroupModal(props) {
         if (areAllCheckboxesSelected(type)) {
             return (
             <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                <CheckBoxIcon fontSize="small" style={{marginRight: "5px"}} color="primary"/>
+                <CheckBoxIcon fontSize="small" style={{marginRight: "5px"}} color="primary" data-testid={`ColumnCheckboxCheckedType${type}`} />
                 {type}
             </div>)
         } else {
             if (areNoCheckboxesSelected(type)) {
                 return (
                 <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                    <CheckBoxOutlineBlankIcon  fontSize="small" style={{marginRight: "5px"}}/>
+                    <CheckBoxOutlineBlankIcon  fontSize="small" style={{marginRight: "5px"}} data-testid={`ColumnCheckboxUncheckedType${type}`}/>
                     {type}
                 </div>)
             } else {
                 return (
                 <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                    <IntermediateCheckBoxIcon  fontSize="small" style={{marginRight: "5px"}} color="primary"/>
+                    <IntermediateCheckBoxIcon  fontSize="small" style={{marginRight: "5px"}} color="primary" data-testid={`ColumnCheckboxIntermediateType${type}`}/>
                     {type}
                 </div>)
             }
@@ -363,14 +363,13 @@ function EditModelGroupModal(props) {
         const setter =  getCheckedSetterByType(type);
         return (
             <div data-testid={`CellCheckboxRow${params.row.id}Type${type}`}>
-            <CustomCheckbox 
-                isChecked={checkedList[params.row.id]} 
-                handleChecked={() => {
-                    
-                    const checkedHandler = handleChecked(checkedList, setter);
-                    checkedHandler(params.row.id)
-                }}
-            />
+                <CustomCheckbox 
+                    isChecked={checkedList[params.row.id]} 
+                    handleChecked={() => {
+                        const checkedHandler = handleChecked(checkedList, setter);
+                        checkedHandler(params.row.id)
+                    }}
+                />
             </div>
         );
     }
@@ -409,8 +408,8 @@ function EditModelGroupModal(props) {
         <Modal 
             open={props.isOpen}
             onClose={discardChanges}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
+            aria-labelledby="EditModelGroupModal-modal"
+            data-testid="EditModelGroupModal-modal-wrapper"
         >
             <Card sx={cardStyle}>
                 <div style={{width: "95%"}}>
@@ -423,6 +422,7 @@ function EditModelGroupModal(props) {
                     rowsPerPageOptions={[10]}
                     onColumnHeaderClick={columnHeaderClick}
                     disableColumnMenu
+                    columnBuffer={8}
                 />
                 <Grid container alignItems="flex-end" justifyContent="center" style={{}}> 
                     <Button aria-label="delete" color={"success"} size="large" onClick={applyChanges} data-testid="EditModelGroupModalApplyButton">
