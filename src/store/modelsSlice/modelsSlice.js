@@ -90,6 +90,7 @@ const initialState = {
 
                 }
             },
+
             isVisible: false, // show/hide complete group
             visibileSV: { // lookup table so the reducer impl. can be more convenient
                 mean: true,
@@ -114,7 +115,7 @@ const modelsSlice = createSlice({
          * This reducer accepts an action object returned from setModelsOfModelGroup()
          * 
          *      e.g. dispatch(setModelsOfModelGroup({
-         *              groupId: "refC2", 
+         *              groupId: 0, 
          *              modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2", "CCMI-1_CCCma_CMAM-refC2"]
          *      }))
          * 
@@ -129,7 +130,8 @@ const modelsSlice = createSlice({
          * @param {object} state the current store state of: state/models
          * @param {object} action accepts the action returned from updateModelGroup()
          * @param {object} action.payload the payload is an object containg the given data
-         * @param {string} action.payload.groupId the name of the group to set
+         * @param {int} action.payload.groupId the name of the group to set
+         * @param {string} action.payload.groupName the name of the group
          * @param {string} action.payload.modelList the list of models the group should have
          */
         setModelsOfModelGroup(state, action) { 
@@ -174,7 +176,7 @@ const modelsSlice = createSlice({
         /**
          * This reducer accepts an action object returned from deleteModelGroup()
          * 
-         *      e.g. dispatch(deleteModelGroup({groupId: "refC2"}))
+         *      e.g. dispatch(deleteModelGroup({0: "refC2"}))
          * 
          * and calculates the new state based on the action and the action 
          * data given in action.payload.
@@ -187,7 +189,7 @@ const modelsSlice = createSlice({
          * @param {object} state the current store state of: state/models
          * @param {object} action accepts the action returned from deleteModelGroup()
          * @param {object} action.payload the payload is an object containg the given data
-         * @param {string} action.payload.groupId the name of the group that should be deleted
+         * @param {int} action.payload.groupId the name of the group that should be deleted
          */
         deleteModelGroup(state, action) {
             const { groupId } = action.payload;
@@ -214,7 +216,7 @@ const modelsSlice = createSlice({
          * @param {object} state the current store state of: state/models
          * @param {object} action accepts the action returned from deleteModelGroup()
          * @param {object} action.payload the payload is an object containg the given data
-         * @param {string} action.payload.groupId the name of the group whose model properties should be updated
+         * @param {int} action.payload.groupId the name of the group whose model properties should be updated
          * @param {object} action.payload.data holds the information that should be updated 
          */
         updatePropertiesOfModelGroup(state, action) {
@@ -240,7 +242,7 @@ const modelsSlice = createSlice({
         /**
          * This reducer accepts an action object returned from setStatisticalValueForGroup()
          *      e.g. dispatch(setStatisticalValueForGroup(
-         *          {groupID: "all", svType: STATISTICAL_VALUES.median, isIncluded: true}
+         *          {groupID: 0, svType: STATISTICAL_VALUES.median, isIncluded: true}
          *      ));
          * and calculates the new state based on the action and the action 
          * data given in action.payload.
@@ -251,7 +253,7 @@ const modelsSlice = createSlice({
          * @param {object} state the current store state of: state/models
          * @param {object} action accepts the action returned from updateModelGroup()
          * @param {object} action.payload the payload is an object containg the given data
-         * @param {string} action.payload.groupId a string specifying the group
+         * @param {int} action.payload.groupId a string specifying the group
          * @param {string} action.payload.svType the SV as a string
          * @param {boolean} action.payload.isIncluded should the SV be displayed for the given group
          */
@@ -271,7 +273,7 @@ const modelsSlice = createSlice({
         /**
          * This reducer accepts an action object returned from setVisibilityForGroup()
          *      e.g. dispatch(setVisibilityForGroup(
-         *          {groupID: "refC2", isVisibile: true}
+         *          {groupID: 0, isVisibile: true}
          *      ));
          * and calculates the new state based on the action and the action 
          * data given in action.payload.
@@ -281,7 +283,7 @@ const modelsSlice = createSlice({
          * @param {object} state the current store state of: state/models
          * @param {object} action accepts the action returned from updateModelGroup()
          * @param {object} action.payload the payload is an object containg the given data
-         * @param {string} action.payload.groupId a string specifying the group
+         * @param {int} action.payload.groupId a string specifying the group
          * @param {string} action.payload.svType the SV as a string
          * @param {boolean} action.payload.isIncluded should the SV be displayed for the given group
          */
@@ -315,8 +317,50 @@ export const {
  * the above defined actions wouldn't trigger state updates.
  */
 export default modelsSlice.reducer;
-
-
+/**
+ * This selector allows components to select the models of a given group (specified by ID)
+ *
+ * @param {object} state the global redux state
+ * @param {int} groupId the group id specifies which group should be retrieved
+ * @returns an array containg all models currently in the given group
+ */
 export const selectModelsOfGroup = (state, groupId) => state.models.modelGroups[groupId].modelList;
+/**
+ * This selector allows components to select the model data of a given group (specified by ID)
+ * 
+ * @param {object} state the global redux state
+ * @param {int} groupId the group id specifies which group data should be retrieved
+ * @returns an object containg all the data for each model present in the group. The model names are the keys.
+ */
 export const selectModelDataOfGroup = (state, groupId) => state.models.modelGroups[groupId].models;
+/**
+ * This selector allows components to select the name of a given group (specified by ID)
+ * 
+ * @param {object} state the global redux state
+ * @param {int} groupId the group id specifies which group name should be retrieved
+ * @returns a string that holds the name of the group
+ */
 export const selectNameOfGroup = (state, groupId) => state.models.modelGroups[groupId].name;
+/**
+ * This selector allows components to select the statistical values of a given group (specified by ID)
+ * 
+ * @param {object} state the global redux state
+ * @param {int} groupId the group id specifies which data should be retrieved
+ * @returns an object that maps each statistical value onto a boolean
+ */
+export const selectStatisticalValueSettingsOfGroup = (state, groupId) => state.models.modelGroups[groupId].visibileSV;
+/**
+ * This selector allows components to select the visibility of a given group (specified by ID)
+ * 
+ * @param {object} state the global redux state
+ * @param {int} groupId the group id specifies which data should be retrieved
+ * @returns boolean value whether the group is visible or not
+ */
+export const selectVisibilityOfGroup = (state, groupId) => state.models.modelGroups[groupId].isVisible;
+/**
+ * This selector allows components to select all valid group ids
+ * 
+ * @param {object} state the global redux state
+ * @returns an array holding all valid group ids
+ */
+export const selectAllGroupIds = state => state.models.modelGroupList;
