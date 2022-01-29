@@ -3,10 +3,6 @@ import { Provider } from 'react-redux'
 import '@testing-library/jest-dom';
 import EditModelGroupModal from './EditModelGroupModal';
 import { createTestStore } from "../../../../../../store/store";
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import IntermediateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
-import { updatePropertiesOfModelGroup } from '../../../../../../store/modelsSlice/modelsSlice';
 
 let store
 beforeEach(() => {
