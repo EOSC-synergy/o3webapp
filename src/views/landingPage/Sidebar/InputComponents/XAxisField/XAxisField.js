@@ -4,17 +4,27 @@ import { setDisplayXRange, selectPlotXRange } from "../../../../../store/plotSli
 import { Typography, Grid, TextField, FormControl } from "@mui/material";
 
 /**
- * enables the user to choose the range that should be visible on the x Axis of the plot
+ * Enables the user to choose the range that should be visible on the x-axis of the plot.
  * @param {Object} props
- * @param {function} props.reportError - function for error handling
- * @returns {JSX.Element} a jsx containing a range slider
+ * @param {function} props.reportError function for error handling
+ * @returns {JSX.Element} a jsx containing two text-fields and labels
  */
 function XAxisField(props) {
-
+    /**
+     * A dispatch function to dispatch actions to the redux store.
+     */
     const dispatch = useDispatch();
 
+    /**
+     * An object containing the minX and maxX values for the x-axis.
+     */
     const {minX, maxX} = useSelector(selectPlotXRange);
 
+    /**
+     * Handles the change of the minimum value.
+     *
+     * @param event the input value
+     */
     const handleChangeMin = (event) => {
         if (event.target.value === '') {
             dispatch(setDisplayXRange({minX: 0, maxX: maxX}));
@@ -23,6 +33,11 @@ function XAxisField(props) {
         }
     }
 
+    /**
+     * Handles the change of the maximum value.
+     *
+     * @param event the input value
+     */
     const handleChangeMax = (event) => {
         if (event.target.value === '') {
             dispatch(setDisplayXRange({minX: minX, maxX: 0}));

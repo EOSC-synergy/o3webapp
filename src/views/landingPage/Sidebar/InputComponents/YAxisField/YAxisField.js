@@ -4,17 +4,27 @@ import { setDisplayYRange, selectPlotYRange } from "../../../../../store/plotSli
 import { Typography, Grid, FormControl, TextField } from "@mui/material";
 
 /**
- * enables the user to select a range that should be displayed at the y axis of the plot
+ * Enables the user to choose the range that should be visible on the y-axis of the plot.
  * @param {Object} props 
- * @param {function} props.reportError -> function for error handling
- * @returns {JSX.Element} a jsx containing a range slider
+ * @param {function} props.reportError function for error handling
+ * @returns {JSX.Element} a jsx containing two text-fields and labels
  */
 function YAxisField(props) {
-    
+    /**
+     * A dispatch function to dispatch actions to the redux store.
+     */
     const dispatch = useDispatch();
 
+    /**
+     * An object containing the minY and maxY values for the y-axis.
+     */
     const {minY, maxY} = useSelector(selectPlotYRange);
 
+    /**
+     * Handles the change of the minimum value.
+     *
+     * @param event the input value
+     */
     const handleChangeMin = (event) => {
         if (event.target.value === '') {
             dispatch(setDisplayYRange({minY: 0, maxY: maxY}));
@@ -23,6 +33,11 @@ function YAxisField(props) {
         }
     }
 
+    /**
+     * Handles the change of the maximum value.
+     *
+     * @param event the input value
+     */
     const handleChangeMax = (event) => {
         if (event.target.value === '') {
             dispatch(setDisplayYRange({minY: minY, maxY: 0}));
