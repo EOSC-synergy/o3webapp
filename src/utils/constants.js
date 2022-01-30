@@ -19,8 +19,8 @@ export const RS_Symbol = Symbol("RegionSelector");
 export const TCG_Symbol = Symbol("TimeCheckBoxGroup");
 /** Stores the name of the XAxisField component as a Symbol. */
 export const XAF_Symbol = Symbol("XAxisField");
-/** Stores the name of the YAxisSlider component as a Symbol. */
-export const YAS_Symbol = Symbol("YAxisSlider");
+/** Stores the name of the YAxisField component as a Symbol. */
+export const YAF_Symbol = Symbol("YAxisField");
 
 // TimeCheckboxGroup.js
 /** Stores the seasons and the corresponding months */

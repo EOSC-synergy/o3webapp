@@ -2,7 +2,7 @@
   "sections": [
     {
       "name": "Appearance",
-      "components": ["PlotNameField", "XAxisField", "YAxisSlider"]
+      "components": ["PlotNameField", "XAxisField", "YAxisField"]
     },
     {
       "name": "Models",

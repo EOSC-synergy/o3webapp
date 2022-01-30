@@ -8,7 +8,7 @@ import ReferenceYearSlider from "../InputComponents/ReferenceYearSlider/Referenc
 import RegionSelector from "../InputComponents/RegionSelector/RegionSelector";
 import TimeCheckBoxGroup from "../InputComponents/TimeCheckboxGroup/TimeCheckboxGroup";
 import XAxisField from "../InputComponents/XAxisField/XAxisField";
-import YAxisSlider from "../InputComponents/YAxisSlider/YAxisSlider";
+import YAxisField from "../InputComponents/YAxisField/YAxisField";
 import PropTypes from 'prop-types'; 
 import LatitudeBandSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
 import ReferenceModelSelector from "../InputComponents/ReferenceModelSelector/ReferenceModelSelector";
@@ -30,7 +30,7 @@ import {
     TCG_Symbol,
     XAS_Symbol,
     YAS_Symbol,
-    XAF_Symbol
+    XAF_Symbol, YAF_Symbol
 } from "../../../../utils/constants";
 
 
@@ -139,8 +139,8 @@ function Section(props) {
                     return <TimeCheckBoxGroup key={key} reportError={props.reportError} />;
                 case XAF_Symbol.description:
                     return <XAxisField key={key} reportError={props.reportError} />;
-                case YAS_Symbol.description:
-                    return <YAxisSlider key={key} reportError={props.reportError} />;
+                case YAF_Symbol.description:
+                    return <YAxisField key={key} reportError={props.reportError} />;
                 default:
                     props.reportError(`Section ${props.name} found no match for an input component ${name}`);
             }

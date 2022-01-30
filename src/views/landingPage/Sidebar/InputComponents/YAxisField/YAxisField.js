@@ -1,40 +1,41 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setDisplayXRange, selectPlotXRange } from "../../../../../store/plotSlice/plotSlice";
-import { Typography, Grid, TextField, FormControl } from "@mui/material";
+import { setDisplayYRange, selectPlotYRange } from "../../../../../store/plotSlice/plotSlice";
+import { Typography, Grid, FormControl, TextField } from "@mui/material";
 
 /**
- * enables the user to choose the range that should be visible on the x Axis of the plot
- * @param {Object} props
- * @param {function} props.reportError - function for error handling
+ * enables the user to select a range that should be displayed at the y axis of the plot
+ * @param {Object} props 
+ * @param {function} props.reportError -> function for error handling
  * @returns {JSX.Element} a jsx containing a range slider
  */
-function XAxisField(props) {
-
+function YAxisField(props) {
+    
     const dispatch = useDispatch();
 
-    const {minX, maxX} = useSelector(selectPlotXRange);
+    const {minY, maxY} = useSelector(selectPlotYRange);
 
     const handleChangeMin = (event) => {
         if (event.target.value === '') {
-            dispatch(setDisplayXRange({minX: 0, maxX: maxX}));
+            dispatch(setDisplayYRange({minY: 0, maxY: maxY}));
         } else if (!isNaN(parseInt(event.target.value))) {
-            dispatch(setDisplayXRange({minX: parseInt(event.target.value), maxX: maxX}));
+            dispatch(setDisplayYRange({minY: parseInt(event.target.value), maxY: maxY}));
         }
     }
 
     const handleChangeMax = (event) => {
         if (event.target.value === '') {
-            dispatch(setDisplayXRange({minX: minX, maxX: 0}));
+            dispatch(setDisplayYRange({minY: minY, maxY: 0}));
         } else {
-            dispatch(setDisplayXRange({minX: minX, maxX: parseInt(event.target.value)}));
+            dispatch(setDisplayYRange({minY: minY, maxY: parseInt(event.target.value)}));
         }
     }
+
 
     return (
         <Grid container sx={{width: "90%", marginLeft: "auto", marginRight: "auto", marginTop: "5%"}}>
             <Grid item xs={3}>
-                <Typography>X-Axis:</Typography>
+                <Typography>Y-Axis:</Typography>
             </Grid>
             <Grid item xs={4} sx={{mt: "-8px"}}>
                 <FormControl sx={{width: '80%'}}>
@@ -42,7 +43,7 @@ function XAxisField(props) {
                         variant="outlined"
                         id="outlined-basic"
                         size="small"
-                        value={minX}
+                        value={minY}
                         onChange={handleChangeMin}
                     />
                 </FormControl>
@@ -56,13 +57,13 @@ function XAxisField(props) {
                         variant="outlined"
                         id="outlined-basic"
                         size="small"
-                        value={maxX}
+                        value={maxY}
                         onChange={handleChangeMax}
                     />
                 </FormControl>
             </Grid>
-        </Grid>    
+        </Grid> 
     );
 }
 
-export default XAxisField;
+export default YAxisField;
