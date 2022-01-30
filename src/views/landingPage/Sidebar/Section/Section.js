@@ -7,7 +7,7 @@ import PlotNameField from "../InputComponents/PlotNameField/PlotNameField";
 import ReferenceYearSlider from "../InputComponents/ReferenceYearSlider/ReferenceYearSlider";
 import RegionSelector from "../InputComponents/RegionSelector/RegionSelector";
 import TimeCheckBoxGroup from "../InputComponents/TimeCheckboxGroup/TimeCheckboxGroup";
-import XAxisSlider from "../InputComponents/XAxisSlider/XAxisSlider";
+import XAxisField from "../InputComponents/XAxisField/XAxisField";
 import YAxisSlider from "../InputComponents/YAxisSlider/YAxisSlider";
 import PropTypes from 'prop-types'; 
 import LatitudeBandSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
@@ -18,7 +18,20 @@ import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { LBS_Symbol, LS_Symbol, MGC_Symbol, OC_Symbol, PNF_Symbol, RMS_Symbol, RYS_Symbol, RS_Symbol, TCG_Symbol, XAS_Symbol, YAS_Symbol } from "../../../../utils/constants";
+import {
+    LBS_Symbol,
+    LS_Symbol,
+    MGC_Symbol,
+    OC_Symbol,
+    PNF_Symbol,
+    RMS_Symbol,
+    RYS_Symbol,
+    RS_Symbol,
+    TCG_Symbol,
+    XAS_Symbol,
+    YAS_Symbol,
+    XAF_Symbol
+} from "../../../../utils/constants";
 
 
 
@@ -124,8 +137,8 @@ function Section(props) {
                     return <RegionSelector key={key} reportError={props.reportError} />;
                 case TCG_Symbol.description:
                     return <TimeCheckBoxGroup key={key} reportError={props.reportError} />;
-                case XAS_Symbol.description:
-                    return <XAxisSlider key={key} reportError={props.reportError} />;
+                case XAF_Symbol.description:
+                    return <XAxisField key={key} reportError={props.reportError} />;
                 case YAS_Symbol.description:
                     return <YAxisSlider key={key} reportError={props.reportError} />;
                 default:

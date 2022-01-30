@@ -17,8 +17,8 @@ export const RYS_Symbol = Symbol("ReferenceYearSlider");
 export const RS_Symbol = Symbol("RegionSelector");
 /** Stores the name of the TimeCheckBoxGroup component as a Symbol. */
 export const TCG_Symbol = Symbol("TimeCheckBoxGroup");
-/** Stores the name of the XAxisSlider component as a Symbol. */
-export const XAS_Symbol = Symbol("XAxisSlider");
+/** Stores the name of the XAxisField component as a Symbol. */
+export const XAF_Symbol = Symbol("XAxisField");
 /** Stores the name of the YAxisSlider component as a Symbol. */
 export const YAS_Symbol = Symbol("YAxisSlider");
 
