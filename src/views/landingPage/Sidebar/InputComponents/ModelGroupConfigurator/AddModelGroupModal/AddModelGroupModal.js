@@ -161,6 +161,7 @@ function AddModelGroupModal(props) {
     
     const addNewGroup = () => {
         props.onClose();
+        // if dispatching is to slow consider to move it to a redux thunk
         dispatch(setModelsOfModelGroup({groupId: props.id, groupName: groupName, modelList: right}));
     }
 
