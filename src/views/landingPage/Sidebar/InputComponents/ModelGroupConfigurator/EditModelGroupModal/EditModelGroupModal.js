@@ -23,9 +23,9 @@ function EditModelGroupModal(props) {
     // dispatch(updatedModelGroup(someData))
 
     return (
-        <>
-        EditModelGroupModal
-        </>
+        <div data-testid="EditModelGroupModal-modal">
+            EditModelGroupModal
+        </div>
     );
 }
 
