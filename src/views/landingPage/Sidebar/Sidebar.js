@@ -152,7 +152,7 @@ function Sidebar(props) {
                     )}
 
                     <Button sx={{marginLeft: "10%", marginTop: "1em", width: "80%"}} variant="outlined" onClick={openDownloadModal}>Download</Button>
-                    <DownloadModal isOpen={isDownloadModalVisible} onClose={closeDownloadModal} />
+                    <DownloadModal reportError={props.reportError} isOpen={isDownloadModalVisible} onClose={closeDownloadModal} />
         </SwipeableDrawer>
     );
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormControl, InputLabel, MenuItem, Modal, Select, Typography, Card, Grid, Button } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import PropTypes from 'prop-types';
 import { fileFormats } from '../../../../utils/constants';
 
 /**
@@ -12,7 +13,7 @@ import { fileFormats } from '../../../../utils/constants';
  * @param {function} props.reportError -> enabling to report an error
  * @returns {JSX.Element} a jsx containing a modal with a dropdown to choose the file type and a download button
  */
-export default function DownloadModal(props) {
+function DownloadModal(props) {
 
     /**
      * The style of the DownloadModal.
@@ -88,7 +89,7 @@ export default function DownloadModal(props) {
                             >
                                 {
                                     fileFormats.map((elem, idx) =>
-                                        <MenuItem key={idx.toString()} value={elem.description}>{elem.description}</MenuItem>
+                                        <MenuItem key={idx} value={elem.description}>{elem.description}</MenuItem>
                                     )
                                 }
                             </Select>
@@ -109,3 +110,11 @@ export default function DownloadModal(props) {
 DownloadModal.defaultProps = {
     isOpen: false,
 }
+
+DownloadModal.propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    reportError: PropTypes.func.isRequired
+}
+
+export default DownloadModal;
