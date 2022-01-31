@@ -30,6 +30,7 @@ import { REQUEST_STATE } from "../../../../../../services/API/apiSlice";
  * @param {function} props.onClose -> function to call if modal should be closed
  * @param {boolean} props.isOpen -> boolean whether the modal should be visible
  * @param {function} props.reportError -> error handling
+ * @param {number} props.id -> a number identifying the model group
  * @returns {JSX} a jsx containing a modal with a transfer list with all available models
  */
 function AddModelGroupModal(props) {
@@ -157,11 +158,10 @@ function AddModelGroupModal(props) {
         setRight(not(right, rightChecked));
         setChecked(not(checked, rightChecked));
     };
-
+    
     const addNewGroup = () => {
-        // props.id
-        dispatch(setModelsOfModelGroup({groupId: null, groupName: groupName, modelList: right}));
         props.onClose();
+        dispatch(setModelsOfModelGroup({groupId: props.id, groupName: groupName, modelList: right}));
     }
 
     /**
