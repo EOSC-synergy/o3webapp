@@ -400,7 +400,11 @@ exports[`test LandingPage component LandingPage renders correctly 1`] = `
                       class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 MuiCard-root css-935hc6-MuiPaper-root-MuiCard-root"
                       style="margin: 5%;"
                     >
-                      EditModelGroupModal
+                      <div
+                        data-testid="EditModelGroupModal-modal"
+                      >
+                        EditModelGroupModal
+                      </div>
                       <div
                         class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
                       >
