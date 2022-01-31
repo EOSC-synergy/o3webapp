@@ -1,11 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { STATISTICAL_VALUES } from "../../utils/constants";
-
-
-/**
- * The same statistical values as a list to verify certain payload data
- */
-const STATISTICAL_VALUES_LIST = Object.values(STATISTICAL_VALUES);
+import { STATISTICAL_VALUES, STATISTICAL_VALUES_LIST } from "../../utils/constants";
 
 /**
  * This object serves as a template, whenever a new model is added to a group
