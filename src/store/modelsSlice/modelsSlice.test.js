@@ -79,7 +79,6 @@ describe("reducer tests", () => {
         
         const previousState = {
             idCounter: 0,
-            modelGroupList: [],
             modelGroups: {
                 
             },
@@ -87,11 +86,9 @@ describe("reducer tests", () => {
     
         const expected = {
             idCounter: 1,
-            modelGroupList: [0],
             modelGroups: {
                 0: {
                     name: "fancy",
-                    modelList: ["modelA", "modelB"],
                     models: {
                         modelA: MODEL_DATA_TEMPLATE,
                         modelB: MODEL_DATA_TEMPLATE,
