@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Grid, Typography, Slider, MenuItem } from "@mui/material";
 import models from "./models.json";
 import { Select, InputLabel, OutlinedInput, FormControl } from "@mui/material";
@@ -11,7 +11,6 @@ import { Select, InputLabel, OutlinedInput, FormControl } from "@mui/material";
  * @returns {JSX} a jsx containing a slider to select the reference year
  */
 function ReferenceYearSlider(props) {
-  let i = props.reportError;
 
   /** model: The currently selected reference model.
    * setModel: The function which adjusts the SelectionBar after selecting a model.

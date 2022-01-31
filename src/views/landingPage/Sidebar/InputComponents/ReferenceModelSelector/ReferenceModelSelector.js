@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import PropTypes from 'prop-types';
 
 /**
  * enables the user to select a reference model
@@ -8,13 +9,15 @@ import React, { useState } from "react";
  */
 function ReferenceModelSelector(props) {
 
-    let i = props.reportError;
-
     return (
         <>
         ReferenceModelSelector
         </>
     );
+}
+
+ReferenceModelSelector.propTypes = {
+    reportError: PropTypes.func
 }
 
 export default ReferenceModelSelector;

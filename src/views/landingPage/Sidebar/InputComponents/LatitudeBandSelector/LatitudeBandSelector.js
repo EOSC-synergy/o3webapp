@@ -1,6 +1,4 @@
 import React from "react";
-import { useDispatch } from "react-redux"
-import { setLocation } from "../../../../../store/plotSlice/plotSlice";
 import {Box, Divider, Grid, MenuItem, Select, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { latitudeBands } from "../../../../../utils/constants";

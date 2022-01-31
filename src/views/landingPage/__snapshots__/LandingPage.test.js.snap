@@ -776,7 +776,11 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                         <span
                           class="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
                         >
-                          TIME
+                          <p
+                            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                          >
+                            TIME
+                          </p>
                         </span>
                       </div>
                       <div

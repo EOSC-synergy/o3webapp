@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import Section from './Section/Section.js';
 import defaultStructure from '../../../config/defaultConfig.json';
 import tco3_zm from '../../../config/tco3_zm.json';
@@ -35,8 +35,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
  * @returns {JSX.Element} a jsx containing a sidebar with sections containing input components, a download button and a plotType dropdown
  */
 function Sidebar(props) {
-
-    const theme = useTheme();
 
     // const dispatch = useDispatch()
 

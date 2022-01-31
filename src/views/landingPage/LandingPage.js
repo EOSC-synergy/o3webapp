@@ -1,13 +1,7 @@
 import * as React from 'react';
 import Graph from './Graph/Graph';
 import Sidebar from './Sidebar/Sidebar';
-import Button from '@mui/material/Button';
 import PropTypes from "prop-types";
-import { FormControl, Grid } from '@mui/material';
-import { height, width } from '@mui/system';
-import ModelGroupConfigurator from './Sidebar/InputComponents/ModelGroupConfigurator/ModelGroupConfigurator';
-
-
 
 /**
  * main view of web page

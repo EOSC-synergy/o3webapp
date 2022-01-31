@@ -773,7 +773,11 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                       <span
                         class="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
                       >
-                        TIME
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                        >
+                          TIME
+                        </p>
                       </span>
                     </div>
                     <div
@@ -2427,7 +2431,11 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                       <span
                         class="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
                       >
-                        TIME
+                        <p
+                          class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                        >
+                          TIME
+                        </p>
                       </span>
                     </div>
                     <div
