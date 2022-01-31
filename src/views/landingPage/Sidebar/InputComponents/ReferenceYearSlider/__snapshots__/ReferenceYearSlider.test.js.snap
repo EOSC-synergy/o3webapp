@@ -1,66 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Component renders correctly from config file 1`] = `
+exports[`renders correctly 1`] = `
 <div>
-  <div
-    class="MuiFormControl-root css-78me8v-MuiFormControl-root"
-  >
-    <div
-      class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
-    >
-      <div
-        aria-expanded="false"
-        aria-haspopup="listbox"
-        aria-labelledby="locationSelectLabel locationSelect"
-        class="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
-        id="locationSelect"
-        role="button"
-        tabindex="0"
-      >
-        <span
-          class="notranslate"
-        >
-          ​
-        </span>
-      </div>
-      <input
-        aria-hidden="true"
-        class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
-        tabindex="-1"
-        value=""
-      />
-      <svg
-        aria-hidden="true"
-        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
-        data-testid="ArrowDropDownIcon"
-        focusable="false"
-        viewBox="0 0 24 24"
-      >
-        <path
-          d="M7 10l5 5 5-5z"
-        />
-      </svg>
-      <fieldset
-        aria-hidden="true"
-        class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
-      >
-        <legend
-          class="css-173wfxe"
-        >
-          <span>
-            Reference Model
-          </span>
-        </legend>
-      </fieldset>
-    </div>
-    <label
-      class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
-      data-shrink="false"
-      id="locationSelectLabel"
-    >
-      Reference Model
-    </label>
-  </div>
   <div
     class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
   >
