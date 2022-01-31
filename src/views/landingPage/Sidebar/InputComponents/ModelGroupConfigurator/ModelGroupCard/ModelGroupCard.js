@@ -137,8 +137,12 @@ function ModelGroupCard(props) {
             </Grid>
             <Divider />
             <CardActions>
-                <Button size="small" variant="outlined" onClick={showEditModal}>Edit statistical values</Button>
-                <Button size="small" variant="outlined" onClick={showAddModal}>Edit group members</Button>
+                <Button size="small" variant="outlined" onClick={showEditModal} data-testid="ModelGroupCard-EditModelGroupModal-button-open">
+                    Edit statistical values
+                </Button>
+                <Button size="small" variant="outlined" onClick={showAddModal} data-testid="ModelGroupCard-AddModelGroupModal-button-open">
+                    Edit group members
+                </Button>
             </CardActions>
         </Card>
     )
