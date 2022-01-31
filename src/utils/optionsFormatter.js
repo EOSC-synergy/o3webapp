@@ -189,6 +189,9 @@ function generateTco3_ZmSeries({data, series, colors, dashArray, width, modelsSl
         const svHolder = calculateSvForModels(Object.keys(groupData.models), data);
 
         for (const [sv, svData] of Object.entries(svHolder)) {
+            
+            if (sv === STATISTICAL_VALUES.derivative) continue;
+            
             series.push({
                 name: `${sv}(${groupData.name})`,
                 data: svData,
@@ -313,7 +316,7 @@ export const defaultTCO3_zm = {
         }
     },
     legend: {
-        show: true, // only shows up if there is more than one line
+        show: false, // only shows up if there is more than one line
     },
     dataLabels: {
         enabled: false,
