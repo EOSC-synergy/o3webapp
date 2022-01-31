@@ -59,51 +59,49 @@ export default function DownloadModal(props) {
     }
 
     return (
-        <>
-            <Modal
-                open={props.isOpen}
-                onClose={props.onClose}
-            >
-                <Card sx={style}>
-                    <Grid
-                        container
-                        spacing={5}
-                        justifyContent="center"
-                        alignItems="center"
-                    >
-                        <Grid item xs={12} sm={12} md={12} lg={12} xl={12} key="heading" sx={{textAlign: "center"}}>
-                            <Typography variant={"h3"}>Download plot</Typography>
-                        </Grid>
-                        <Grid item xs={12} sm={12} md={3} lg={3} xl={3} key="text">
-                            <Typography variant={"h6"}>Choose file format:</Typography>
-                        </Grid>
-                        <Grid item xs={12} sm={12} md={6} lg={6} xl={6} key="select">
-                            <FormControl style={{width: "100%", minWidth: 150}}>
-                                <InputLabel id="formatSelectLabel">format</InputLabel>
-                                <Select
-                                    labelId="formatSelectLabel"
-                                    id="formatSelection"
-                                    label="format"
-                                    value={selectedFileFormat}
-                                    onChange={changeFileFormat}
-                                >
-                                    {
-                                        fileFormats.map((elem, idx) =>
-                                            <MenuItem key={idx.toString()} value={elem.description}>{elem.description}</MenuItem>
-                                        )
-                                    }
-                                </Select>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={12} sm={12} md={3} lg={3} xl={3} key="button">
-                            <Button variant="outlined" onClick={downloadPlot}>
-                                <Typography>Download</Typography>
-                            </Button>
-                        </Grid>
+        <Modal
+            open={props.isOpen}
+            onClose={props.onClose}
+        >
+            <Card sx={style}>
+                <Grid
+                    container
+                    spacing={5}
+                    justifyContent="center"
+                    alignItems="center"
+                >
+                    <Grid item xs={12} sm={12} md={12} lg={12} xl={12} key="heading" sx={{textAlign: "center"}}>
+                        <Typography variant={"h3"}>Download plot</Typography>
                     </Grid>
-                </Card>
-            </Modal>
-        </>
+                    <Grid item xs={12} sm={12} md={3} lg={3} xl={3} key="text">
+                        <Typography variant={"h6"}>Choose file format:</Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6} lg={6} xl={6} key="select">
+                        <FormControl style={{width: "100%", minWidth: 150}}>
+                            <InputLabel id="formatSelectLabel">format</InputLabel>
+                            <Select
+                                labelId="formatSelectLabel"
+                                id="formatSelection"
+                                label="format"
+                                value={selectedFileFormat}
+                                onChange={changeFileFormat}
+                            >
+                                {
+                                    fileFormats.map((elem, idx) =>
+                                        <MenuItem key={idx.toString()} value={elem.description}>{elem.description}</MenuItem>
+                                    )
+                                }
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={3} lg={3} xl={3} key="button">
+                        <Button variant="outlined" onClick={downloadPlot}>
+                            <Typography>Download</Typography>
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Card>
+        </Modal>
     );
 }
 

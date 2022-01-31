@@ -28,43 +28,41 @@ export default function CookieConsentModal(props) {
     };
 
     return (
-        <>
-            <Modal
-                disableEscapeKeyDown={true}
-                open={props.isOpen}
-                onClose={props.onClose}
-            >
-                <Card sx={style}>
+        <Modal
+            disableEscapeKeyDown={true}
+            open={props.isOpen}
+            onClose={props.onClose}
+        >
+            <Card sx={style}>
+                <Grid
+                    container
+                    direction="column"
+                >
                     <Grid
-                        container
-                        direction="column"
+                        item
+                        key="cookie"
+                        sx={{display: "flex", justifyContent: "center", pt: 5, mb: -3}}
                     >
-                        <Grid
-                            item
-                            key="cookie"
-                            sx={{display: "flex", justifyContent: "center", pt: 5, mb: -3}}
-                        >
-                            <BiCookie size={100} />
-                        </Grid>
-                        <Grid
-                            item
-                            key="text"
-                            sx={{px: 5, pt: 5, pb: 3}}>
-                            <Typography variant="h3" sx={{textAlign: "center"}}><b>We Use Cookies!</b></Typography>
-                            <br />
-                            <Typography>By using this website, you automatically accept that we use cookies.</Typography>
-                        </Grid>
-                        <Grid
-                            item
-                            key="acceptButton"
-                            sx={{px: 5, pb: 5, display: "flex", justifyContent: "left"}}
-                        >
-                            <Button variant="contained" onClick={props.onClose}>Understood</Button>
-                        </Grid>
+                        <BiCookie size={100} />
                     </Grid>
-                </Card>
-            </Modal>
-        </>
+                    <Grid
+                        item
+                        key="text"
+                        sx={{px: 5, pt: 5, pb: 3}}>
+                        <Typography variant="h3" sx={{textAlign: "center"}}><b>We Use Cookies!</b></Typography>
+                        <br />
+                        <Typography>By using this website, you automatically accept that we use cookies.</Typography>
+                    </Grid>
+                    <Grid
+                        item
+                        key="acceptButton"
+                        sx={{px: 5, pb: 5, display: "flex", justifyContent: "left"}}
+                    >
+                        <Button variant="contained" onClick={props.onClose}>Understood</Button>
+                    </Grid>
+                </Grid>
+            </Card>
+        </Modal>
     );
 }
 
