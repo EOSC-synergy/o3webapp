@@ -5,6 +5,8 @@ import ModelGroupCard, { getGroupName } from './ModelGroupCard';
 import { Provider } from "react-redux";
 import * as redux from 'react-redux';
 import userEvent from '@testing-library/user-event';
+import { REQUEST_STATE } from "../../../../../../services/API/apiSlice";
+
 import {
     setStatisticalValueForGroup,
     setVisibilityForGroup
@@ -12,17 +14,6 @@ import {
 
 const groupName = "blob";
 const isVisibile = true;
-const modelList = ["AAA"];
-const modelData = {
-    "AAA": {
-        color: null,
-    	isVisible: true,
-        mean: true,
-        derivative: true,
-        median: true,
-        percentile: true,
-    }
-};
 const statisticalValues = {
     mean: true,
     median: false,
@@ -41,8 +32,13 @@ describe('test ModelGroupCard rendering', () => {
         spy.mockReturnValueOnce(groupName)
             .mockReturnValueOnce(statisticalValues)
             .mockReturnValueOnce(isVisibile)
-            .mockReturnValueOnce(modelList)
-            .mockReturnValueOnce(modelData)
+            .mockReturnValue(
+                { 
+                    status: REQUEST_STATE.success,
+                    data: ["modelA", "modelB"],
+                    error: null,
+                }
+            );
         reportError = jest.fn();
     });
     
@@ -57,7 +53,7 @@ describe('test ModelGroupCard rendering', () => {
     it('renders correctly', () => {
         const { container } = render(
             <Provider store={store}>
-                <ModelGroupCard reportError={reportError} modelGroupId={0} />
+                <ModelGroupCard reportError={reportError} modelGroupId={1} />
             </Provider>
         );
         expect(container).toMatchSnapshot();
@@ -66,7 +62,7 @@ describe('test ModelGroupCard rendering', () => {
     it('renders modelGroup name', () => {
         const { container } = render(
             <Provider store={store}>
-                <ModelGroupCard reportError={reportError} modelGroupId={0} />
+                <ModelGroupCard reportError={reportError} modelGroupId={1} />
             </Provider>
         );        
         expect(container).toHaveTextContent(groupName);
@@ -76,7 +72,7 @@ describe('test ModelGroupCard rendering', () => {
         console.error = jest.fn();
         render(            
             <Provider store={store}>
-                <ModelGroupCard modelGroupId={0} />
+                <ModelGroupCard reportError={reportError} />
             </Provider>
         );
         expect(console.error).toHaveBeenCalledTimes(1);
@@ -86,16 +82,16 @@ describe('test ModelGroupCard rendering', () => {
         console.error = jest.fn();
         render(            
             <Provider store={store}>
-                <ModelGroupCard reportError={reportError} />
+                <ModelGroupCard modelGroupId={1} />
             </Provider>
         );
-        expect(console.error).toHaveBeenCalled();
+        expect(console.error).toHaveBeenCalledTimes(1);
     });
 
     it('renders checkboxes correctly checked', () => {
         const { getByLabelText } = render(            
             <Provider store={store}>
-                <ModelGroupCard modelGroupId={0} reportError={reportError} />
+                <ModelGroupCard modelGroupId={1} reportError={reportError} />
             </Provider>
         );
         expect(getByLabelText("mean")).toBeInTheDocument();
@@ -111,35 +107,33 @@ describe('test ModelGroupCard rendering', () => {
     it('renders visibility icon correctly', () => {
         const { getByTestId } = render(            
             <Provider store={store}>
-                <ModelGroupCard modelGroupId={0} reportError={reportError} />
+                <ModelGroupCard modelGroupId={1} reportError={reportError} />
             </Provider>
         );
         expect(getByTestId(/VisibilityIcon-visible/)).toBeInTheDocument();
     });
 });
 
-describe('test addModelGroupModal functionality', () => {
+describe('test ModelGroupCard functionality', () => {
 
     beforeEach(() => {
         store = createTestStore();
-        const spy = jest.spyOn(redux, 'useSelector');
-        
-        spy.mockReturnValueOnce(groupName)
-            .mockReturnValueOnce(statisticalValues)
-            .mockReturnValueOnce(isVisibile)
-            .mockReturnValueOnce(modelList)
-            .mockReturnValueOnce(modelData)
-            .mockReturnValueOnce(groupName)
-            .mockReturnValueOnce(statisticalValues)
-            .mockReturnValueOnce(isVisibile)
-            .mockReturnValueOnce(modelList)
-            .mockReturnValueOnce(modelData)
-        reportError = jest.fn();
     });
 
     it('dispatches setStatisticalValueForGroup with correct payload when checkbox is clicked', () => {
         store.dispatch = jest.fn();
-        const modelGroupId = 0;
+        const spy = jest.spyOn(redux, 'useSelector');
+        spy.mockReturnValueOnce(groupName)
+            .mockReturnValueOnce(statisticalValues)
+            .mockReturnValueOnce(isVisibile)
+            .mockReturnValue(
+                { 
+                    status: REQUEST_STATE.success,
+                    data: ["modelA", "modelB"],
+                    error: null,
+                }
+            );
+        const modelGroupId = 1;
 
         const { getByLabelText } = render(           
             <Provider store={store}>
@@ -150,14 +144,25 @@ describe('test addModelGroupModal functionality', () => {
         expect(store.dispatch).toHaveBeenCalled();
         expect(store.dispatch).toHaveBeenCalledWith(
             setStatisticalValueForGroup(
-                {groupId: modelGroupId, svType: "mean", isIncluded: !statisticalValues.mean}
+                {groupId: 1, svType: "mean", isIncluded: !statisticalValues.mean}
             )
         );
     });
 
     it('dispatches setVisibilityForGroup with correct payload when icon is clicked', () => {
         store.dispatch = jest.fn();
-        const modelGroupId = 0;
+        const spy = jest.spyOn(redux, 'useSelector');
+        spy.mockReturnValueOnce(groupName)
+            .mockReturnValueOnce(statisticalValues)
+            .mockReturnValueOnce(isVisibile)
+            .mockReturnValue(
+                { 
+                    status: REQUEST_STATE.success,
+                    data: ["modelA", "modelB"],
+                    error: null,
+                }
+            );
+        const modelGroupId = 1;
 
         const { queryByTestId } = render(           
             <Provider store={store}>
@@ -173,6 +178,7 @@ describe('test addModelGroupModal functionality', () => {
         );
     });
 
-    test.todo('test that edit modal opens');
+    test.todo('test whether edit model group modal opens');
+    test.todo('test whether add model group modal opens');
 
 });
