@@ -4,10 +4,11 @@ import Typography from '@mui/material/Typography';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import MuiVisibilityIcon from '@mui/icons-material/Visibility';
 import { Checkbox, Divider, IconButton, FormControlLabel } from '@mui/material';
-import Edit from '@mui/icons-material/Edit';
 import Grid from '@mui/material/Grid';
 import EditModelGroupModal from "../EditModelGroupModal/EditModelGroupModal";
+import AddModelGroupModal from "../AddModelGroupModal/AddModelGroupModal";
 import PropTypes from 'prop-types';
+import { CardActions, Button } from '@mui/material';
 
 /**
  * Function to get the model group name by id provided in props
@@ -87,11 +88,16 @@ function ModelGroupCard(props) {
      * state to keep track of whether the edit group modal is currently visible or not
      */
     const [isEditModalVisible, setEditModalVisible] = React.useState(false);
+    /**
+     * state to keep track of whether the add group modal (used to edit group members) is currently visible or not
+     */
+    const [isAddModalVisible, setAddModalVisible] = React.useState(false);
 
     /**
      * shows the edit group modal
      */
     const showEditModal = () => {
+        setAddModalVisible(false);  // avoid two modals being visible under all circumstances
         setEditModalVisible(true);
     }
 
@@ -100,6 +106,21 @@ function ModelGroupCard(props) {
      */   
     const closeEditModal = () => {
         setEditModalVisible(false);
+    }
+    
+    /**
+     * shows the add model group modal (used to edit group members)
+     */
+    const showAddModal = () => {
+        setEditModalVisible(false);  // avoid two modals being visible under all circumstances
+        setAddModalVisible(true);
+    }
+
+    /**
+     * closes the add model group modal (used to edit group members)
+     */
+    const closeAddModal = () => {
+        setAddModalVisible(false);
     }
 
     /**
@@ -112,15 +133,13 @@ function ModelGroupCard(props) {
     return (
         <Card style={{margin: "5%"}} elevation={2}>
             <EditModelGroupModal id={props.modelGroupId} isOpen={isEditModalVisible} onClose={closeEditModal} />
+            <AddModelGroupModal id={props.modelGroupId} isOpen={isAddModalVisible} onClose={closeAddModal} />
             <Grid container>
                 <Grid item xs={2}>
                     <IconButton aria-label="change visibility" onClick={toggleModelGroupVisibility}><VisibilityIcon /></IconButton>
                 </Grid>
                 <Grid item xs={8} textAlign="center">
                     <Typography variant="h6">{getGroupName(props.modelGroupId)}</Typography>
-                </Grid>
-                <Grid item xs={2}>
-                    <IconButton aria-label="edit" onClick={showEditModal}><Edit /></IconButton>
                 </Grid>
             </Grid>
             <Divider />
@@ -186,6 +205,11 @@ function ModelGroupCard(props) {
                     </Grid>
                 </Grid>
             </Grid>
+            <Divider />
+            <CardActions>
+                <Button size="small" variant="outlined" onClick={showEditModal}>Edit statistical values</Button>
+                <Button size="small" variant="outlined" onClick={showAddModal}>Edit group members</Button>
+            </CardActions>
         </Card>
     )
 }
