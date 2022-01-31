@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
-// import { useDispatch } from "react-redux"
-// import { useGetModelsQuery } from "../../../../../../services/API/apiSlice"
-// import { addedModelGroup, updatedModelGroup } from "../../../../../../store/modelsSlice";
+import { setModelsOfModelGroup } from "../../../../../../store/modelsSlice/modelsSlice";
 import { useTheme } from '@mui/material/styles';
 import { CardContent, Divider, IconButton, Modal, TextField } from '@mui/material';
 import { Box } from '@mui/system';
@@ -23,7 +21,7 @@ import { union, not, intersection } from "../../../../../../utils/arrayOperation
 import CloseIcon from '@mui/icons-material/Close';
 import Alert from "@mui/material/Alert";
 import PropTypes from 'prop-types'; 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { REQUEST_STATE } from "../../../../../../services/API/apiSlice";
 
 /**
@@ -35,6 +33,8 @@ import { REQUEST_STATE } from "../../../../../../services/API/apiSlice";
  * @returns {JSX} a jsx containing a modal with a transfer list with all available models
  */
 function AddModelGroupModal(props) {
+    
+    const dispatch = useDispatch();
 
     const modelListRequestedData = useSelector(state => state.api.models);
 
@@ -159,8 +159,9 @@ function AddModelGroupModal(props) {
     };
 
     const addNewGroup = () => {
+        // props.id
+        dispatch(setModelsOfModelGroup({groupId: null, groupName: groupName, modelList: right}));
         props.onClose();
-        // // dispatch(addedModelGroup({groupName})) // add data (modelList)
     }
 
     /**
