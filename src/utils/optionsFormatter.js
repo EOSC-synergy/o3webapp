@@ -183,22 +183,19 @@ function generateTco3_ZmSeries({data, series, colors, dashArray, width, modelsSl
     }
 
     // generate SV!
-    // start with mean
     const modelGroups = modelsSlice.modelGroups;
     for (const [id, groupData] of Object.entries(modelGroups)) {
 
-        const svHolder = calculateSvForModels(Object.keys(groupData.models), data)
-        console.log(svHolder);
+        const svHolder = calculateSvForModels(Object.keys(groupData.models), data);
 
-        for (const [sv, series] of Object.entries(svHolder)) {
-
+        for (const [sv, svData] of Object.entries(svHolder)) {
             series.push({
                 name: `${sv}(${groupData.name})`,
-                data: series,
+                data: svData,
             })
-            colors.push(SV_COLORING[sv]);    // coloring?
-            width.push(3);          // thicker?
-            dashArray.push(0);      // solid?       
+            colors.push(SV_COLORING[sv]);   // coloring?
+            width.push(3);                  // thicker?
+            dashArray.push(0);              // solid?       
         }
     }
 }
@@ -279,6 +276,7 @@ export function generateSeries({plotId, data, modelsSlice}) {
     } else {
         throw `the given plot id "${plotId}" is not defined`;
     }
+    console.log(series);
     return {series, styling: {colors, dashArray, width}};
 }
 
