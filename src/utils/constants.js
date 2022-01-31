@@ -1,3 +1,10 @@
+import { 
+    mean as calculateMean,
+    median as calculateMedian, 
+    std as calculateStd,
+    q25 as calculatePercentile, // TODO import actual percentile
+} from "../services/math/math";
+
 // Section.js
 /** Stores the name of the LatitudeBandSelector component as a Symbol. */
 export const LBS_Symbol = Symbol("LatitudeBandSelector");
@@ -179,9 +186,29 @@ const percentile = "percentile";
  * The statistical values that are computable are listed here as
  * an "enum"
  */
- export const STATISTICAL_VALUES = {
+export const STATISTICAL_VALUES = {
     mean,
     median,
     derivative,
     percentile,
+}
+
+/**
+ * The same statistical values as a list to verify certain payload data
+ */
+export const STATISTICAL_VALUES_LIST = Object.values(STATISTICAL_VALUES);
+
+
+export const SV_CALCULATION = {
+    mean: calculateMean,
+    median: calculateMedian,
+    derivative: calculateStd,
+    percentile: calculatePercentile,
+}
+
+export const SV_COLORING = {
+    mean: "#c00c54",
+    median: "#f38e19",
+    derivative: "#36531b",
+    percentile: "#284bc2",
 }
