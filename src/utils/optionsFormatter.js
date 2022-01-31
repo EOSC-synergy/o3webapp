@@ -130,7 +130,36 @@ function calculateBoxPlotValues(data) {
     return boxPlotValues
 }
 
-function generateTco3_ZmSeries({data, series, colors, dashArray, width}) {
+function calculateSvForModels(modelList, data) {
+    // only mean at beginning
+    console.log(modelList)
+
+    const SV = Array(IMPLICIT_YEAR_LIST.length).fill(0);
+    const times = Array(IMPLICIT_YEAR_LIST.length).fill(0);
+
+    for (let i = 0; i < IMPLICIT_YEAR_LIST.length; ++i) {
+        
+        for (let model of modelList) {
+            if (typeof data[model] === "undefined") continue;
+
+            if (data[model].data[i] !== null) {
+                SV[i] += data[model].data[i];
+                times[i]++;
+            }
+        }
+    }
+    for (let i = 0; i < IMPLICIT_YEAR_LIST.length; ++i) {
+        SV[i] /= times[i]; 
+        if (isNaN(SV[i])) {
+            SV[i] = null;
+        }
+    }
+    
+
+    return SV;
+}
+
+function generateTco3_ZmSeries({data, series, colors, dashArray, width, modelsSlice}) {
 
     for (const [model, modelData] of Object.entries(data)) {
 
@@ -143,6 +172,30 @@ function generateTco3_ZmSeries({data, series, colors, dashArray, width}) {
         colors.push(colorNameToHex(modelData.plotStyle.color));
         width.push(2);
         dashArray.push(convertToStrokeStyle(modelData.plotStyle.linestyle)); // default line thickness
+    }
+
+    // generate SV!
+    // start with mean
+    const modelGroups = modelsSlice.modelGroups;
+    for (const [id, groupData] of Object.entries(modelGroups)) {
+        // mean for group
+        const modelList = [];
+
+        for (const [model, modelData] of Object.entries(groupData.models)) {
+            //console.log(model)
+            if (modelData.mean) {
+                modelList.push(model);
+            }
+        }
+        //console.log(calculateSvForModels(modelList, data))
+        series.push({
+            name: `MEAN FOR ${id}`,
+            data: calculateSvForModels(modelList, data),
+        })
+        colors.push("#000");
+        width.push(3);
+        dashArray.push(0)
+
     }
 }
 
@@ -216,7 +269,7 @@ export function generateSeries({plotId, data, modelsSlice}) {
     }
 
     if (plotId === O3AS_PLOTS.tco3_zm) {
-        generateTco3_ZmSeries({data: trimmedData, series, colors, dashArray, width});
+        generateTco3_ZmSeries({data: trimmedData, series, colors, dashArray, width, modelsSlice});
     } else if (plotId === O3AS_PLOTS.tco3_return) {
         generateTco3_ReturnSeries({data: trimmedData, series, colors, dashArray, width});
     } else {
