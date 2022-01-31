@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { setModelsOfModelGroup } from "../../../../../../store/modelsSlice/modelsSlice";
 import { useTheme } from '@mui/material/styles';
 import { CardContent, Divider, IconButton, Modal, TextField } from '@mui/material';
 import { Box } from '@mui/system';
@@ -20,7 +21,7 @@ import { union, not, intersection } from "../../../../../../utils/arrayOperation
 import CloseIcon from '@mui/icons-material/Close';
 import Alert from "@mui/material/Alert";
 import PropTypes from 'prop-types'; 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { REQUEST_STATE } from "../../../../../../services/API/apiSlice";
 
 /**
@@ -29,9 +30,12 @@ import { REQUEST_STATE } from "../../../../../../services/API/apiSlice";
  * @param {function} props.onClose -> function to call if modal should be closed
  * @param {boolean} props.isOpen -> boolean whether the modal should be visible
  * @param {function} props.reportError -> error handling
+ * @param {number} props.id -> a number identifying the model group
  * @returns {JSX} a jsx containing a modal with a transfer list with all available models
  */
 function AddModelGroupModal(props) {
+    
+    const dispatch = useDispatch();
 
     const modelListRequestedData = useSelector(state => state.api.models);
 
@@ -154,10 +158,11 @@ function AddModelGroupModal(props) {
         setRight(not(right, rightChecked));
         setChecked(not(checked, rightChecked));
     };
-
+    
     const addNewGroup = () => {
         props.onClose();
-        // // dispatch(addedModelGroup({groupName})) // add data (modelList)
+        // if dispatching is to slow consider to move it to a redux thunk
+        dispatch(setModelsOfModelGroup({groupId: props.id, groupName: groupName, modelList: right}));
     }
 
     /**
