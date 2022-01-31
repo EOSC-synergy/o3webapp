@@ -5,14 +5,13 @@ import defaultStructure from '../../../config/defaultConfig.json';
 import tco3_zm from '../../../config/tco3_zm.json';
 import tco3_return from '../../../config/tco3_return.json';
 import DownloadModal from './DownloadModal/DownloadModal.js';
-import {selectPlotId, selectPlotRegions} from "../../../store/plotSlice/plotSlice";
+import { selectPlotId } from "../../../store/plotSlice/plotSlice";
 import {useSelector} from "react-redux";
 import PlotTypeSelector from './InputComponents/PlotTypeSelector/PlotTypeSelector.js';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import { Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
-import ModelGroupConfigurator from './InputComponents/ModelGroupConfigurator/ModelGroupConfigurator.js';
 import PropTypes from 'prop-types';
 
 /**
@@ -155,6 +154,12 @@ function Sidebar(props) {
                     <DownloadModal reportError={props.reportError} isOpen={isDownloadModalVisible} onClose={closeDownloadModal} />
         </SwipeableDrawer>
     );
+}
+
+Sidebar.propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    reportError: PropTypes.func.isRequired,
+    onClose: PropTypes.func.isRequired
 }
 
 export default Sidebar;
