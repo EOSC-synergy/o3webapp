@@ -129,19 +129,20 @@ const modelsSlice = createSlice({
                 // add new ones
                 for (let model of modelList) {
                     if (!(model in selectedModelGroup.models)){ // initialize with default settings
-                        selectedModelGroup.models[model] = Object.assign({}, MODEL_DATA_TEMPLATE);
+                        selectedModelGroup.models[model] = JSON.parse(JSON.stringify(MODEL_DATA_TEMPLATE));
                     }
                 };
                 
             } else { // create new group
                 const newGroupId = state.idCounter++;
-                state.modelGroups[newGroupId] = Object.assign({}, MODEL_GROUP_TEMPLATE);
-                state.modelGroups[newGroupId].name = groupName;
-                const currentGroup = state.modelGroups[newGroupId];
-                for (let model of modelList) {
-                    currentGroup.models[model] = Object.assign({}, MODEL_DATA_TEMPLATE);
-                };
+                const currentGroup = JSON.parse(JSON.stringify(MODEL_GROUP_TEMPLATE))
+                currentGroup.name = groupName;
 
+                for (let model of modelList) {
+                    currentGroup.models[model] = JSON.parse(JSON.stringify(MODEL_DATA_TEMPLATE));
+                };
+                
+                state.modelGroups[newGroupId] = currentGroup;
             }
             // change name either way
             
