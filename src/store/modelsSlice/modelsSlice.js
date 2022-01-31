@@ -72,7 +72,7 @@ const initialState = {
                     percentile: true,
                 }
             },
-            isVisible: false, // show/hide complete group
+            isVisible: true, // show/hide complete group
             visibileSV: { // lookup table so the reducer impl. can be more convenient
                 mean: true,
                 derivative: true,
@@ -265,7 +265,6 @@ const modelsSlice = createSlice({
          * @param {object} action accepts the action returned from updateModelGroup()
          * @param {object} action.payload the payload is an object containg the given data
          * @param {int} action.payload.groupId a string specifying the group
-         * @param {string} action.payload.svType the SV as a string
          * @param {boolean} action.payload.isIncluded should the SV be displayed for the given group
          */
         setVisibilityForGroup(state, action) { // this is for an entire group
