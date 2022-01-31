@@ -34,9 +34,5 @@ describe('testing DownloadModal rendering', () => {
             <DownloadModal isOpen={true} reportError={() => {}} />
         );
         expect(console.error).toHaveBeenCalled();
-        render(
-            <DownloadModal onClose={()=>{}} isOpen={true} />
-        );
-        expect(console.error).toHaveBeenCalled();
     });
 });

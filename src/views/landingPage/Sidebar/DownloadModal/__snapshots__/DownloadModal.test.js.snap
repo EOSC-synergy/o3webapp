@@ -1,7 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DownloadModal component should render correctly from config file 1`] = `null`;
-
 exports[`testing DownloadModal rendering renders correctly when closed 1`] = `
 <body
   style=""

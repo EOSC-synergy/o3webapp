@@ -109,7 +109,7 @@ function DownloadModal(props) {
 DownloadModal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
-    reportError: PropTypes.func.isRequired
+    reportError: PropTypes.func
 }
 
 export default DownloadModal;
