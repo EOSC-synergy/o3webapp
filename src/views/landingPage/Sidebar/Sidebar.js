@@ -31,6 +31,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
  * @param {boolean} props.isOpen -  whether sideBar should be open
  * @param {function} props.onClose - handles closing of the sidebar
  * @param {function} props.reportError - enables component to report an error
+ * @param {function} props.onOpen - handles opening of the sidebar
  * @returns {JSX.Element} a jsx containing a sidebar with sections containing input components, a download button and a plotType dropdown
  */
 function Sidebar(props) {
@@ -159,7 +160,8 @@ function Sidebar(props) {
 Sidebar.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     reportError: PropTypes.func.isRequired,
-    onClose: PropTypes.func.isRequired
+    onClose: PropTypes.func.isRequired,
+    onOpen: PropTypes.func.isRequired
 }
 
 export default Sidebar;

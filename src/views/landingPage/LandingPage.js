@@ -22,7 +22,7 @@ function LandingPage(props) {
     
     return (
     <div data-testid="landingPage" style={{width: "100%"}}> 
-      <Sidebar reportError={props.reportError} isOpen={props.isSidebarOpen} onClose={props.closeSidebar} />
+      <Sidebar reportError={props.reportError} onOpen={props.openSidebar} isOpen={props.isSidebarOpen} onClose={props.closeSidebar} />
   
       <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
         <div style={{width: "95%"}}>
@@ -38,6 +38,7 @@ LandingPage.propTypes = {
     reportError: PropTypes.func.isRequired,
     isSidebarOpen: PropTypes.bool.isRequired,
     closeSidebar: PropTypes.func.isRequired,
+    openSidebar: PropTypes.func.isRequired,
 }
 
 export default LandingPage;
