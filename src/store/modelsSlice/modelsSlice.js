@@ -51,7 +51,6 @@ const MODEL_GROUP_TEMPLATE = {
  */
 const initialState = {
     idCounter: 1,
-    modelGroupList: [0],
     // currently active plot
     modelGroups: {
         // this objects holds key-value-pairs, the keys being the model-group 
@@ -116,7 +115,7 @@ const modelsSlice = createSlice({
         setModelsOfModelGroup(state, action) { 
             const { groupId, groupName, modelList } = action.payload;
             // set model group
-            if (state.modelGroupList.includes(groupId)) {
+            if (groupId in state.modelGroups) {
                 const selectedModelGroup = state.modelGroups[groupId];
                 state.modelGroups[groupId].name = groupName;
                 // remove unwanted
@@ -136,7 +135,6 @@ const modelsSlice = createSlice({
                 
             } else { // create new group
                 const newGroupId = state.idCounter++;
-                state.modelGroupList.push(newGroupId);
                 state.modelGroups[newGroupId] = Object.assign({}, MODEL_GROUP_TEMPLATE);
                 state.modelGroups[newGroupId].name = groupName;
                 const currentGroup = state.modelGroups[newGroupId];
@@ -169,11 +167,10 @@ const modelsSlice = createSlice({
          */
         deleteModelGroup(state, action) {
             const { groupId } = action.payload;
-            if (!state.modelGroupList.includes(groupId)) { // no group with this name in store
+            if (!(groupId in state.modelGroups)) { // no group with this name in store
                 throw `tried to access "${groupId}" which is not a valid group`;
             };
 
-            state.modelGroupList = state.modelGroupList.filter(name => name !== groupId); // filter out name
             delete state.modelGroups[groupId]; // delete from lookup table
 
         },
@@ -198,7 +195,7 @@ const modelsSlice = createSlice({
         updatePropertiesOfModelGroup(state, action) {
             const { groupId, data } = action.payload;
 
-            if (!state.modelGroupList.includes(groupId)) { // no group with this name in store
+            if (!(groupId in state.modelGroups)) { // no group with this name in store
                 throw `tried to access "${groupId}" which is not a valid group`;
             };
 
@@ -239,7 +236,7 @@ const modelsSlice = createSlice({
             if (!STATISTICAL_VALUES_LIST.includes(svType)) { // svType doesn't represent a valid statistical value
                 throw `tried to set statistial value "${svType}" that is not a valid statistical value (${STATISTICAL_VALUES_LIST.join("|")})`;
             }
-            if (!state.modelGroupList.includes(groupId)) { // no group with this name in store
+            if (!(groupId in state.modelGroups)) { // no group with this name in store
                 throw `tried to access "${groupId}" which is not a valid group`;
             };
 
@@ -265,7 +262,7 @@ const modelsSlice = createSlice({
         setVisibilityForGroup(state, action) { // this is for an entire group
             const { groupId, isVisible } = action.payload;
 
-            if (!state.modelGroupList.includes(groupId)) {
+            if (!(groupId in state.modelGroups)) {
                 throw `tried to access "${groupId}" which is not a valid group`;
             };
 
@@ -338,4 +335,4 @@ export const selectVisibilityOfGroup = (state, groupId) => state.models.modelGro
  * @param {object} state the global redux state
  * @returns an array holding all valid group ids
  */
-export const selectAllGroupIds = state => state.models.modelGroupList;
+export const selectAllGroupIds = state => Object.keys(state.models.modelGroups).map(key => parseInt(key));

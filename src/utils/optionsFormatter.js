@@ -186,7 +186,7 @@ function generateTco3_ReturnSeries({data, series, colors}) {
 export function getIncludedModels(modelsSlice) {
     const includedModels = new Set();
     const modelGroups = modelsSlice.modelGroups;
-    for (let id of modelsSlice.modelGroupList) {
+    for (let id of Object.keys(modelGroups)) {
         if (!modelGroups[id].isVisible) { // skip group: should not be visible
             continue;
         }
