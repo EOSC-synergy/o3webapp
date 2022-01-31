@@ -5,6 +5,8 @@ import ModelGroupCard, { getGroupName } from './ModelGroupCard';
 import { Provider } from "react-redux";
 import * as redux from 'react-redux';
 import userEvent from '@testing-library/user-event';
+import { REQUEST_STATE } from "../../../../../../services/API/apiSlice";
+
 import {
     setStatisticalValueForGroup,
     setVisibilityForGroup
@@ -29,7 +31,14 @@ describe('test ModelGroupCard rendering', () => {
         
         spy.mockReturnValueOnce(groupName)
             .mockReturnValueOnce(statisticalValues)
-            .mockReturnValueOnce(isVisibile);
+            .mockReturnValueOnce(isVisibile)
+            .mockReturnValue(
+                { 
+                    status: REQUEST_STATE.success,
+                    data: ["modelA", "modelB"],
+                    error: null,
+                }
+            );
         reportError = jest.fn();
     });
     
@@ -105,23 +114,25 @@ describe('test ModelGroupCard rendering', () => {
     });
 });
 
-describe('test addModelGroupModal functionality', () => {
+describe('test ModelGroupCard functionality', () => {
 
     beforeEach(() => {
         store = createTestStore();
-        const spy = jest.spyOn(redux, 'useSelector');
-        
-        spy.mockReturnValueOnce(groupName)
-            .mockReturnValueOnce(statisticalValues)
-            .mockReturnValueOnce(isVisibile)
-            .mockReturnValueOnce(groupName)
-            .mockReturnValueOnce(statisticalValues)
-            .mockReturnValueOnce(isVisibile);
-        reportError = jest.fn();
     });
 
     it('dispatches setStatisticalValueForGroup with correct payload when checkbox is clicked', () => {
         store.dispatch = jest.fn();
+        const spy = jest.spyOn(redux, 'useSelector');
+        spy.mockReturnValueOnce(groupName)
+            .mockReturnValueOnce(statisticalValues)
+            .mockReturnValueOnce(isVisibile)
+            .mockReturnValue(
+                { 
+                    status: REQUEST_STATE.success,
+                    data: ["modelA", "modelB"],
+                    error: null,
+                }
+            );
         const modelGroupId = 1;
 
         const { getByLabelText } = render(           
@@ -140,6 +151,17 @@ describe('test addModelGroupModal functionality', () => {
 
     it('dispatches setVisibilityForGroup with correct payload when icon is clicked', () => {
         store.dispatch = jest.fn();
+        const spy = jest.spyOn(redux, 'useSelector');
+        spy.mockReturnValueOnce(groupName)
+            .mockReturnValueOnce(statisticalValues)
+            .mockReturnValueOnce(isVisibile)
+            .mockReturnValue(
+                { 
+                    status: REQUEST_STATE.success,
+                    data: ["modelA", "modelB"],
+                    error: null,
+                }
+            );
         const modelGroupId = 1;
 
         const { queryByTestId } = render(           
@@ -156,6 +178,7 @@ describe('test addModelGroupModal functionality', () => {
         );
     });
 
-    test.todo('test that edit modal opens');
+    test.todo('test whether edit model group modal opens');
+    test.todo('test whether add model group modal opens');
 
 });
