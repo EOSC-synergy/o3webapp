@@ -3,6 +3,7 @@ import { FormControl, InputLabel, MenuItem, Modal, Select, Typography, Card, Gri
 import { useTheme } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import { fileFormats } from '../../../../utils/constants';
+import { showPdf } from '../../../../services/pdf/pdfCreator';
 
 /**
  * Opens a modal where the user can select the file format and download the plot.
@@ -41,6 +42,7 @@ function DownloadModal(props) {
      */
     const downloadPlot = () => {
         console.log("downloading...");
+        showPdf()
     };
 
     /**
