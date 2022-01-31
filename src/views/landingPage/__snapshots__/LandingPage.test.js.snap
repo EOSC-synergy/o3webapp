@@ -614,6 +614,7 @@ exports[`test LandingPage component LandingPage renders correctly 1`] = `
                       >
                         <button
                           class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButtonBase-root  css-1k23hlb-MuiButtonBase-root-MuiButton-root"
+                          data-testid="ModelGroupCard-EditModelGroupModal-button-open"
                           tabindex="0"
                           type="button"
                         >
@@ -624,6 +625,7 @@ exports[`test LandingPage component LandingPage renders correctly 1`] = `
                         </button>
                         <button
                           class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButtonBase-root  css-1k23hlb-MuiButtonBase-root-MuiButton-root"
+                          data-testid="ModelGroupCard-AddModelGroupModal-button-open"
                           tabindex="0"
                           type="button"
                         >
