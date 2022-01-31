@@ -1,6 +1,7 @@
 import React from "react";
 import {useTheme} from "@mui/material/styles";
 import {Button, Card, Grid, Modal, Typography} from "@mui/material";
+import PropTypes from 'prop-types';
 import { BiCookie } from "react-icons/bi";
 
 /**
@@ -11,7 +12,7 @@ import { BiCookie } from "react-icons/bi";
  * @param {function} props.onClose -> handles closing of the modal
  * @returns {JSX.Element} a jsx file containing the modal
  */
-export default function CookieConsentModal(props) {
+function CookieConsentModal(props) {
 
     /**
      * The style of the modal
@@ -66,7 +67,9 @@ export default function CookieConsentModal(props) {
     );
 }
 
-// only needed for testing
-CookieConsentModal.defaultProps = {
-    isOpen: false,
+CookieConsentModal.propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
 }
+
+export default CookieConsentModal;
