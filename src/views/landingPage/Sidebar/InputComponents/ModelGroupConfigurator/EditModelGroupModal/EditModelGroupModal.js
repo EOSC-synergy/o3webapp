@@ -76,7 +76,6 @@ function createRows(modelList) {
  */
 function EditModelGroupModal(props) {
 
-    console.log(props.modelGroupId);
     /**
      * A dispatch function to dispatch actions to the redux store.
      */
