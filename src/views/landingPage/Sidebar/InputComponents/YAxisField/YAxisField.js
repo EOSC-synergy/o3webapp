@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setDisplayYRange, selectPlotYRange } from "../../../../../store/plotSlice/plotSlice";
 import { Typography, Grid, FormControl, TextField } from "@mui/material";
+import {END_YEAR, START_YEAR} from "../../../../../utils/constants";
 
 /**
  * Enables the user to choose the range that should be visible on the y-axis of the plot.
@@ -60,6 +61,8 @@ function YAxisField(props) {
                         size="small"
                         value={minY}
                         onChange={handleChangeMin}
+                        error={minY < 0}
+                        helperText={minY < 0 ? `< 0` : ''}
                     />
                 </FormControl>
             </Grid>
@@ -74,6 +77,8 @@ function YAxisField(props) {
                         size="small"
                         value={maxY}
                         onChange={handleChangeMax}
+                        error={maxY < 0}
+                        helperText={maxY < 0 ? `< 0` : ''}
                     />
                 </FormControl>
             </Grid>

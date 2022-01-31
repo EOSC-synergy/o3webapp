@@ -141,12 +141,12 @@ export const HEIGHT_LOADING_SPINNER = "300px";
 export const HEIGHT_GRAPH = "400px";
 
 /*
-// Options Formatter
+// Options Formatter, XAxisField, YAxisField
 */
-export const START_YEAR = 1959
-export const END_YEAR = 2100
+export const START_YEAR = 1959;
+export const END_YEAR = 2100;
 // year list: 1959 - 2100
-export const IMPLICIT_YEAR_LIST = [...Array(END_YEAR - START_YEAR + 1).keys()].map(number => `${START_YEAR + number}`)
+export const IMPLICIT_YEAR_LIST = [...Array(END_YEAR - START_YEAR + 1).keys()].map(number => `${START_YEAR + number}`);
 
 // important for api data transformation
 const ANTARCTIC = "Antarctic(Oct)";
