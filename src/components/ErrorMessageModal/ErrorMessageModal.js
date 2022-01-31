@@ -2,6 +2,7 @@ import React from "react";
 import {useTheme} from "@mui/material/styles";
 import {Button, Card, Grid, Modal, Typography} from "@mui/material";
 import { IoCloseCircleOutline } from "react-icons/io5";
+import PropTypes from 'prop-types';
 
 /**
  * Displays an error message.
@@ -11,7 +12,7 @@ import { IoCloseCircleOutline } from "react-icons/io5";
  * @param {String} props.message -> error message
  * @returns {JSX.Element} a jsx file containing a modal with the given error message
  */
-export default function ErrorMessageModal(props) {
+function ErrorMessageModal(props) {
 
     /**
      * The style of the modal.
@@ -65,7 +66,9 @@ export default function ErrorMessageModal(props) {
     );
 }
 
-// only needed for testing
-ErrorMessageModal.defaultProps = {
-    isOpen: false,
+ErrorMessageModal.propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired
 }
+
+export default ErrorMessageModal;
