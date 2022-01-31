@@ -9,24 +9,14 @@ import { createSlice } from "@reduxjs/toolkit";
  * corresponding test file, that tests the initial state.
  */
 const initialState = {
-  plotId: "tco3_zm", // currently active plot
-  // maps plotTyps to their reference settings.
+
   settings: {
-    "tco3_zm": {
-      name: "OCTS", // should show up in the drop down menu
-      year: 1980,
-      model: "defaultModel",
-      visible: false,
-      isOffsetApplied: false,
-    },
-    "tco3_return": {
-      name: "Return/Recovery",
-      year: 1980,
-      model: "defaultModel",
-      visible: false,
-      isOffsetApplied: false,
-    },
+    year: 1980,
+    model: "defaultModel",
+    visible: false,
+    isOffsetApplied: false,
   },
+
 };
 
 
@@ -38,25 +28,6 @@ const referenceSlice = createSlice({
   name: "reference",
   initialState,
   reducers: {
-
-    /**
-     * This reducer accepts an action object returned from setActivePlotId()
-     *     e.g. dispatch(setActivePlotId({id: "tco3_zm"}))
-     * and calculates the new state based on the action and the action
-     * data given in action.payload.
-     *
-     * In this case the active plotId is set to the given string.
-     *
-     * @param {object} state the current store state of: state/plot
-     * @param {object} action accepts the action returned from setActivePlotId()
-     * @param {object} action.payload the payload is an object containg the given data
-     * @param {string} action.payload.plotId a string that contains the new plot id
-     */
-    setActivePlotId(state, action) {
-      const { plotId } = action.payload;
-      state.plotId = plotId;
-    },
-
     /**
      * This reducer accepts an action object returned from setYear()
      *     e.g. dispatch(setYear({year: 1980}))
@@ -72,7 +43,7 @@ const referenceSlice = createSlice({
      */
     setYear(state, action) {
       const { year } = action.payload;
-      state.settings[state.plotId].year = year;
+      state.settings.year = year;
     },
 
     /**
@@ -90,7 +61,7 @@ const referenceSlice = createSlice({
      */
     setModel(state, action) {
       const { model } = action.payload;
-      state.settings[state.plotId].model = model;
+      state.settings.model = model;
     },
 
     /**
@@ -108,7 +79,7 @@ const referenceSlice = createSlice({
      */
     setVisibility(state, action) {
       const { visible } = action.payload;
-      state.settings[state.plotId].visible = visible;
+      state.settings.visible = visible;
     },
 
     /**
@@ -126,7 +97,7 @@ const referenceSlice = createSlice({
      */
     setOffsetApplied(state, action) {
       const { isOffsetApplied } = action.payload;
-      state.settings[state.plotId].isOffsetApplied = isOffsetApplied;
+      state.settings.isOffsetApplied = isOffsetApplied;
     },
   },
 });
@@ -136,7 +107,6 @@ const referenceSlice = createSlice({
  * the view (our react components).
  */
 export const {
-  setActivePlotId,
   setYear,
   setModel,
   setVisibility,
@@ -152,17 +122,6 @@ export default referenceSlice.reducer;
 
 
 /**
- * This selectors allows components to select the current plot id
- * from the store. The plot id is a string using the same naming as the
- * o3as api e.g. tco3_zm or tco3_return
- * 
- * @param {object} state the global redux state
- * @returns {string} the current active plot id
- */
- export const selectPlotId = state => state.reference.plotId;
-
-
-/**
  * This selectors allows components to select the current reference year
  * from the store.
  *
@@ -170,7 +129,7 @@ export default referenceSlice.reducer;
  * @returns {number} the current active reference year
  */
 export const selectRefYear = (state) =>
-  state.reference.settings[state.reference.plotId].year;
+  state.reference.settings[state.reference].year;
 
 /**
  * This selectors allows components to select the current reference model
@@ -180,7 +139,7 @@ export const selectRefYear = (state) =>
  * @returns {string} the current active reference model
  */
 export const selectRefModel = (state) =>
-  state.reference.settings[state.reference.plotId].model;
+  state.reference.settings[state.reference].model;
 
 /**
  * This selectors allows components to select the current visibility of the reference line
@@ -190,7 +149,7 @@ export const selectRefModel = (state) =>
  * @returns {boolean} the current visibility of the reference line.
  */
 export const selectVisibility = (state) =>
-  state.reference.settings[state.reference.plotId].visible;
+  state.reference.settings[state.reference].visible;
 
 /**
  * This selectors allows components to select the current status of the offset
@@ -200,4 +159,4 @@ export const selectVisibility = (state) =>
  * @returns {boolean} the current status of the offset.
  */
 export const selectIsOffsetApplied = (state) =>
-  state.reference.settings[state.reference.plotId].isOffsetApplied;
+  state.reference.settings[state.reference].isOffsetApplied;

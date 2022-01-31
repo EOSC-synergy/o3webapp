@@ -16,7 +16,7 @@ function ReferenceModelSelector(props) {
 
     const dispatch = useDispatch()
 
-    const selectedModel = useSelector(state => state.reference.settings[state.reference.plotId].model);
+    const selectedModel = useSelector(state => state.reference.settings.model);
 
     /** Handles the change of the reference model selection if it's is modified.*/
     const handleChangeForRefModel = (event) => {

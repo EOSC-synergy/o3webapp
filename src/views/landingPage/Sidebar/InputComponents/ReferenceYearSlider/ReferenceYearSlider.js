@@ -18,7 +18,7 @@ function ReferenceYearSlider(props) {
     // /** Dispatcher to dispatch the plot name change action. */
     const dispatch = useDispatch();
 
-    const selectedYear = useSelector(state => state.reference.settings[state.reference.plotId].year);
+    const selectedYear = useSelector(state => state.reference.settings.year);
 
     /** Handles the change of the reference year slider if it's is modified.*/
     const handleChangeForRefYear = (event) => {
