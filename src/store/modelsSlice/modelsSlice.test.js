@@ -151,7 +151,6 @@ describe("reducer tests", () => {
     
     it('should delete the given model group', () => {
         const previousState = {
-            modelGroupList: [0, 1],
             modelGroups: {
                 0: {
                     modelList: ["modelA", "modelB"],
@@ -173,7 +172,6 @@ describe("reducer tests", () => {
         };
 
         const expected = {
-            modelGroupList: [1],
             modelGroups: {
                 1: {
                     modelList: ["modelC", "modelD"],
@@ -424,10 +422,12 @@ describe("selector tests", () => {
 
     it('should select all group ids', () => {
         const allGroupIds = [0, 1, 2, 3, 4, 5];
-        
+        const modelGroups = {}
+        allGroupIds.forEach(id => modelGroups[id] = {});
+
         const globalState = {
             models: {
-                modelGroupList: allGroupIds,
+                modelGroups,
             },
         };
 
