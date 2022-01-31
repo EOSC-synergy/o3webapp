@@ -11,13 +11,14 @@ import PropTypes from 'prop-types';
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux"
 import {
-    STATISTICAL_VALUES,
     setStatisticalValueForGroup,
     selectStatisticalValueSettingsOfGroup,
     selectNameOfGroup,
     setVisibilityForGroup,
     selectVisibilityOfGroup
 } from "../../../../../../store/modelsSlice/modelsSlice";
+
+import { STATISTICAL_VALUES } from "../../../../../../utils/constants";
 
 /**
  * a card containing information about the a modal group

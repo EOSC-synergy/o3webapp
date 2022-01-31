@@ -1,15 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { STATISTICAL_VALUES } from "../../utils/constants";
 
-/**
- * The statistical values that are computable are listed here as
- * an "enum"
- */
-export const STATISTICAL_VALUES = {
-    mean: "mean",
-    median: "median",
-    derivative: "derivative",
-    percentile: "percentile",
-}
 
 /**
  * The same statistical values as a list to verify certain payload data

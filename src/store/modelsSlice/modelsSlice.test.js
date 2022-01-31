@@ -5,7 +5,6 @@ import reducer,
     setVisibilityForGroup,
     deleteModelGroup,
     updatePropertiesOfModelGroup,
-    STATISTICAL_VALUES,
     selectAllGroupIds,
     selectModelsOfGroup,
     selectModelDataOfGroup,
@@ -13,6 +12,7 @@ import reducer,
     selectStatisticalValueSettingsOfGroup,
     selectVisibilityOfGroup,
 } from "./modelsSlice"
+import { STATISTICAL_VALUES } from "../../utils/constants";
 
 const MODEL_DATA_TEMPLATE = {   
     color: null,                

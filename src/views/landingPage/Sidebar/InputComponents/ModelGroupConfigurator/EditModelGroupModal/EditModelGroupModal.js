@@ -9,7 +9,8 @@ import ClearIcon from '@mui/icons-material/Clear';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import IntermediateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
-import { selectModelsOfGroup, selectModelDataOfGroup, updatePropertiesOfModelGroup, STATISTICAL_VALUES } from "../../../../../../store/modelsSlice/modelsSlice";
+import { selectModelsOfGroup, selectModelDataOfGroup, updatePropertiesOfModelGroup } from "../../../../../../store/modelsSlice/modelsSlice";
+import { STATISTICAL_VALUES } from "../../../../../../utils/constants";
 import PropTypes from "prop-types";
 
 /**
@@ -174,7 +175,7 @@ function EditModelGroupModal(props) {
         switch(type.toLowerCase()) {
             case "median": return setMedianVisible;
             case "mean": return  setMeanVisible;
-            case "derivative": return  setDerivativeVisible;
+            case "std": return  setDerivativeVisible;
             case "percentile": return  setPercentileVisible;
             case "visible": return setIsVisible;
             default: return setMedianVisible;

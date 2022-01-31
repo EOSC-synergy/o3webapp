@@ -133,6 +133,7 @@ function calculateBoxPlotValues(data) {
 function calculateSvForModels(modelList, data) {
     // only mean at beginning
     console.log(modelList)
+    
 
     const SV = Array(IMPLICIT_YEAR_LIST.length).fill(0);
     const times = Array(IMPLICIT_YEAR_LIST.length).fill(0);
@@ -178,19 +179,10 @@ function generateTco3_ZmSeries({data, series, colors, dashArray, width, modelsSl
     // start with mean
     const modelGroups = modelsSlice.modelGroups;
     for (const [id, groupData] of Object.entries(modelGroups)) {
-        // mean for group
-        const modelList = [];
-
-        for (const [model, modelData] of Object.entries(groupData.models)) {
-            //console.log(model)
-            if (modelData.mean) {
-                modelList.push(model);
-            }
-        }
-        //console.log(calculateSvForModels(modelList, data))
+        
         series.push({
-            name: `MEAN FOR ${id}`,
-            data: calculateSvForModels(modelList, data),
+            name: `MEAN(${groupData.name})`,
+            data: calculateSvForModels(Object.keys(groupData.models), data),
         })
         colors.push("#000");
         width.push(3);
