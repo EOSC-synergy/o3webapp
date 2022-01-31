@@ -190,7 +190,7 @@ export function getIncludedModels(modelsSlice) {
         if (!modelGroups[id].isVisible) { // skip group: should not be visible
             continue;
         }
-        for (let model of modelGroups[id].modelList) {
+        for (let model of Object.keys(modelGroups[id].models)) {
             if (!modelGroups[id].models[model].isVisible) { // skip model, not visible
                 continue;
             }

@@ -32,7 +32,6 @@ const MODEL_DATA_TEMPLATE = {   // single model
 
 const MODEL_GROUP_TEMPLATE = { 
     name: "",
-    modelList: [],
     models: {},         // models is lookup table
     isVisible: true,    // show/hide complete group
     visibileSV: {       // lookup table so the reducer impl. can be more convenient
@@ -61,7 +60,6 @@ const initialState = {
             name: "Example Group",
             // model group storing all information until it is possible 
             // to implement more model groups
-            modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"],
             models: { // models is lookup table
                 "CCMI-1_ACCESS_ACCESS-CCM-refC2": { // single model
                     color: null, // if not set it defaults to standard value from api
@@ -122,18 +120,16 @@ const modelsSlice = createSlice({
                 const selectedModelGroup = state.modelGroups[groupId];
                 state.modelGroups[groupId].name = groupName;
                 // remove unwanted
-                const toDelete = selectedModelGroup.modelList.filter(model => !modelList.includes(model));
+                const listOfCurrent = Object.keys(selectedModelGroup.models);
+                const toDelete = listOfCurrent.filter(model => !listOfCurrent.includes(model));
                 
                 toDelete.forEach( // delete from lookup table
                     model => delete selectedModelGroup.models[model]
                 );
-                // filter out from list
-                selectedModelGroup.modelList = selectedModelGroup.modelList.filter(model => !toDelete.includes(model));  
                 
                 // add new ones
                 for (let model of modelList) {
-                    if (!selectedModelGroup.modelList.includes(model)){ // initialize with default settings
-                        selectedModelGroup.modelList.push(model);
+                    if (!(model in selectedModelGroup.models)){ // initialize with default settings
                         selectedModelGroup.models[model] = Object.assign({}, MODEL_DATA_TEMPLATE);
                     }
                 };
@@ -145,7 +141,6 @@ const modelsSlice = createSlice({
                 state.modelGroups[newGroupId].name = groupName;
                 const currentGroup = state.modelGroups[newGroupId];
                 for (let model of modelList) {
-                    currentGroup.modelList.push(model);
                     currentGroup.models[model] = Object.assign({}, MODEL_DATA_TEMPLATE);
                 };
 
@@ -207,7 +202,7 @@ const modelsSlice = createSlice({
                 throw `tried to access "${groupId}" which is not a valid group`;
             };
 
-            for (let model of state.modelGroups[groupId].modelList) {
+            for (let model of Object.keys(state.modelGroups[groupId].models)) {
                 const { color, mean, median, derivative, percentile, isVisible } = data[model]; // expect data to meet certain scheme
                 state.modelGroups[groupId].models[model] = {
                     color,
@@ -304,7 +299,7 @@ export default modelsSlice.reducer;
  * @param {int} groupId the group id specifies which group should be retrieved
  * @returns an array containg all models currently in the given group
  */
-export const selectModelsOfGroup = (state, groupId) => state.models.modelGroups[groupId].modelList;
+export const selectModelsOfGroup = (state, groupId) => Object.keys(state.models.modelGroups[groupId].models);
 /**
  * This selector allows components to select the model data of a given group (specified by ID)
  * 
