@@ -36,14 +36,7 @@ Array [
         role="button"
         tabIndex={0}
       >
-        <span
-          className="notranslate"
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "&#8203;",
-            }
-          }
-        />
+        Southern Hemisphere (SH) Polar (90–60°S)
       </div>
       <input
         aria-hidden={true}
@@ -51,7 +44,7 @@ Array [
         onAnimationStart={[Function]}
         onChange={[Function]}
         tabIndex={-1}
-        value="-90,90"
+        value="-90,-60"
       />
       <svg
         aria-hidden={true}
