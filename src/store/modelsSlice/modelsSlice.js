@@ -61,7 +61,7 @@ const initialState = {
             name: "Example Group",
             // model group storing all information until it is possible 
             // to implement more model groups
-            modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"],
+            modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2", "CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG", "CCMI-1_CCCma_CMAM-refC2"],
             models: { // models is lookup table
                 "CCMI-1_ACCESS_ACCESS-CCM-refC2": { // single model
                     color: null, // if not set it defaults to standard value from api
@@ -70,6 +70,24 @@ const initialState = {
                     derivative: true,
                     median: true,
                     percentile: true,
+                },
+                "CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG": {
+                    color: null, // if not set it defaults to standard value from api
+                    isVisible: true, // show/hide individual models from a group
+                    mean: true,
+                    derivative: true,
+                    median: true,
+                    percentile: true,
+
+                }, 
+                "CCMI-1_CCCma_CMAM-refC2": {
+                    color: null, // if not set it defaults to standard value from api
+                    isVisible: true, // show/hide individual models from a group
+                    mean: true,
+                    derivative: true,
+                    median: true,
+                    percentile: true,
+
                 }
             },
             isVisible: true, // show/hide complete group
@@ -265,6 +283,7 @@ const modelsSlice = createSlice({
          * @param {object} action accepts the action returned from updateModelGroup()
          * @param {object} action.payload the payload is an object containg the given data
          * @param {int} action.payload.groupId a string specifying the group
+         * @param {string} action.payload.svType the SV as a string
          * @param {boolean} action.payload.isIncluded should the SV be displayed for the given group
          */
         setVisibilityForGroup(state, action) { // this is for an entire group
