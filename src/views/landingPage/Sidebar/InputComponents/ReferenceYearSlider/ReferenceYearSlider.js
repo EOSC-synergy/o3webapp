@@ -1,9 +1,10 @@
 import React from "react";
-import { Grid, Typography, Slider} from "@mui/material";
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux";
 import { setYear } from "../../../../../store/referenceSlice/referenceSlice";
 import {REF_SLIDER_MAX_YEAR, REF_SLIDER_MIN_YEAR, REF_SLIDER_DEFAULT_YEAR} from  "../../../../../utils/constants";
+import { Grid, Typography, Slider, MenuItem } from "@mui/material";
+import { Select, InputLabel, OutlinedInput, FormControl } from "@mui/material";
 
 /**
  * enables the user to select a reference year

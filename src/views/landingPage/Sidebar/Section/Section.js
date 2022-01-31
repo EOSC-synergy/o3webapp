@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { styled, useTheme } from '@mui/material/styles';
+import React from "react";
+import { styled } from '@mui/material/styles';
 import LocationSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
 import ModelGroupConfigurator from "../InputComponents/ModelGroupConfigurator/ModelGroupConfigurator";
 import OffsetConfigurator from "../InputComponents/OffsetConfigurator/OffsetConfigurator";
@@ -18,7 +18,19 @@ import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { LBS_Symbol, LS_Symbol, MGC_Symbol, OC_Symbol, PNF_Symbol, RMS_Symbol, RYS_Symbol, RS_Symbol, TCG_Symbol, XAS_Symbol, YAS_Symbol } from "../../../../utils/constants";
+import {
+    LBS_Symbol,
+    LS_Symbol,
+    MGC_Symbol,
+    OC_Symbol,
+    PNF_Symbol,
+    RMS_Symbol,
+    RYS_Symbol,
+    RS_Symbol,
+    TCG_Symbol,
+    XAS_Symbol,
+    YAS_Symbol
+} from "../../../../utils/constants";
 
 
 
@@ -85,19 +97,12 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
  * @returns {JSX.Element} an accordion that once expanded displays the components specified by the config files and the API doc
  */
 function Section(props) {
-    
-    let i = props.sectionId
-    i = props.name;
-    i = props.reportError;
-    i = props.isExpanded;
-    i = props.onCollapse
-    i = props.onExpand;
-    
 
     /**
      * maps a given name to a corresponding component from the ./InputComponents folder
      * if there is no component with the given name, calls the props.reportError function
      * @public
+     * @todo move to utils
      * @param {String} name the name of the component
      * @param {int} key a unique key for the given input component
      * @returns a component from the './InputComponents
@@ -138,7 +143,7 @@ function Section(props) {
         }
     }
 
-    if (!props.components) {
+    if (!props.components || props.components.length === 0) {
        if('reportError' in props && typeof props.reportError === 'function') {
            props.reportError(`Section ${props.name} was provided with no components`);
            return <></>;
