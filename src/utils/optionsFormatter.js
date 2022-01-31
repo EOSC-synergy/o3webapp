@@ -1,5 +1,5 @@
-import { q25, q75, median } from "../services/math/math"
-import { IMPLICIT_YEAR_LIST, O3AS_REGIONS, O3AS_PLOTS, ALL_REGIONS_ORDERED } from "./constants"
+import { q25, q75, median, mean } from "../services/math/math"
+import { IMPLICIT_YEAR_LIST, O3AS_REGIONS, O3AS_PLOTS, ALL_REGIONS_ORDERED, STATISTICAL_VALUES_LIST, SV_CALCULATION, SV_COLORING, STATISTICAL_VALUES } from "./constants"
 
 /**
  * Iterates through the x and y data returned from the api for the tco3_zm and fills the corresponding years with
@@ -130,34 +130,41 @@ function calculateBoxPlotValues(data) {
     return boxPlotValues
 }
 
+function create2dArray(i) {
+    return Array.from(Array(i), () => []);
+}
+
 function calculateSvForModels(modelList, data) {
     // only mean at beginning
     console.log(modelList)
-    
 
-    const SV = Array(IMPLICIT_YEAR_LIST.length).fill(0);
-    const times = Array(IMPLICIT_YEAR_LIST.length).fill(0);
+    const SERIES_LENGTH = data[modelList[0]].data.length; // grab length of first model, should all be same
 
-    for (let i = 0; i < IMPLICIT_YEAR_LIST.length; ++i) {
-        
-        for (let model of modelList) {
-            if (typeof data[model] === "undefined") continue;
+    const matrix = create2dArray(SERIES_LENGTH); // for arr of matrix: mean(arr), etc.
 
-            if (data[model].data[i] !== null) {
-                SV[i] += data[model].data[i];
-                times[i]++;
-            }
+    for (let i = 0; i < SERIES_LENGTH; ++i) {
+        for (const model of modelList) {
+            const value = data[model].data[i];
+            if (value === null) continue;
+            matrix[i].push(
+                data[model].data[i]
+            )
         }
     }
-    for (let i = 0; i < IMPLICIT_YEAR_LIST.length; ++i) {
-        SV[i] /= times[i]; 
-        if (isNaN(SV[i])) {
-            SV[i] = null;
-        }
-    }
-    
 
-    return SV;
+    const svHolder = {}
+    STATISTICAL_VALUES_LIST.forEach(
+        sv => svHolder[sv] = [] // init with empty array
+    )
+
+    for (const arr of matrix) { // fill with calculated sv
+        for (const sv of STATISTICAL_VALUES_LIST) {
+            const value = SV_CALCULATION[sv](arr) || null; // null as default if NaN or undefined
+            svHolder[sv].push(value);    
+        };
+    };
+
+    return svHolder;
 }
 
 function generateTco3_ZmSeries({data, series, colors, dashArray, width, modelsSlice}) {
@@ -179,15 +186,20 @@ function generateTco3_ZmSeries({data, series, colors, dashArray, width, modelsSl
     // start with mean
     const modelGroups = modelsSlice.modelGroups;
     for (const [id, groupData] of Object.entries(modelGroups)) {
-        
-        series.push({
-            name: `MEAN(${groupData.name})`,
-            data: calculateSvForModels(Object.keys(groupData.models), data),
-        })
-        colors.push("#000");
-        width.push(3);
-        dashArray.push(0)
 
+        const svHolder = calculateSvForModels(Object.keys(groupData.models), data)
+        console.log(svHolder);
+
+        for (const [sv, series] of Object.entries(svHolder)) {
+
+            series.push({
+                name: `${sv}(${groupData.name})`,
+                data: series,
+            })
+            colors.push(SV_COLORING[sv]);    // coloring?
+            width.push(3);          // thicker?
+            dashArray.push(0);      // solid?       
+        }
     }
 }
 
