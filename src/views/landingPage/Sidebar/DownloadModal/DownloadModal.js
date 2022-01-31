@@ -106,11 +106,6 @@ function DownloadModal(props) {
     );
 }
 
-// only needed for testing
-DownloadModal.defaultProps = {
-    isOpen: false,
-}
-
 DownloadModal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
