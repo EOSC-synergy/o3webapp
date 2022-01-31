@@ -168,3 +168,20 @@ export const O3AS_REGIONS = {
     USER_REGION
 }
 export const ALL_REGIONS_ORDERED = [ANTARCTIC, SH_MID, NH_MID, TROPICS, ARCTIC, NEAR_GLOBAL, GLOBAL, USER_REGION];
+
+
+
+const mean = "mean";
+const median = "median";
+const derivative = "derivative";
+const percentile = "percentile";
+/**
+ * The statistical values that are computable are listed here as
+ * an "enum"
+ */
+ export const STATISTICAL_VALUES = {
+    mean,
+    median,
+    derivative,
+    percentile,
+}
