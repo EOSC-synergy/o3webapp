@@ -1,26 +1,42 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { render, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import DownloadModal from './DownloadModal';
-import renderer from 'react-test-renderer';
-import "@testing-library/jest-dom/extend-expect";
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-import {shallow, configure} from 'enzyme';
 
-describe('DownloadModal component', () => {
-    configure({adapter: new Adapter()});
-    let wrapper;
-    beforeEach(() => {
-        wrapper = shallow(<DownloadModal /* isOpen={true} */ />);
+describe('testing DownloadModal rendering', () => {
+
+    it('renders without crashing', () => {
+        render(<DownloadModal reportError={() => {}} onClose={()=>{}} isOpen={true} />);
     });
 
-    it('should render without crashing', () => {
-        const div = document.createElement('div');
-        ReactDOM.render(wrapper, div);
+    it('renders correctly when open', () => {
+        let { baseElement, container } = render(
+            <DownloadModal isOpen={true} onClose={() => {}} reportError={() => {}} />
+        );
+        expect(baseElement).toMatchSnapshot();
+        expect(container).toBeVisible();
     });
 
-    // Snapshot test
-    it('should render correctly from config file', () => {
-        const tree = renderer.create(wrapper).toJSON();
-        expect(tree).toMatchSnapshot();
+    it('renders correctly when closed', () => {
+        let { container, baseElement } = render(
+            <DownloadModal isOpen={false} onClose={() => {}} reportError={() => {}} />
+        );
+        expect(baseElement).toMatchSnapshot();
+        expect(container).not.toBeVisible;
+    });
+
+    it('raises a console.error function if a required prop is not provided', () => {
+        console.error = jest.fn();
+        render(
+            <DownloadModal onClose={()=>{}} reportError={()=>{}} />
+        );
+        expect(console.error).toHaveBeenCalled();
+        render(
+            <DownloadModal isOpen={true} reportError={() => {}} />
+        );
+        expect(console.error).toHaveBeenCalled();
+        render(
+            <DownloadModal onClose={()=>{}} isOpen={true} />
+        );
+        expect(console.error).toHaveBeenCalled();
     });
 });
