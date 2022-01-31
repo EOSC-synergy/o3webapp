@@ -21,10 +21,10 @@ function ReferenceYearSlider(props) {
   /** Default year value for the Slider.*/
   const defaultYear = 1980;
 
-  /** Minimum chosable year value for the Slider.*/
+  /** Minimum choosable year value for the Slider.*/
   const minYear = 1950;
 
-  /** Minimum chosable year value for the Slider.*/
+  /** Minimum choosable year value for the Slider.*/
   const maxYear = 2100;
 
   /** Handles the change of the reference model selection if it's is modified.*/
