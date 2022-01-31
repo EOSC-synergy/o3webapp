@@ -31,17 +31,14 @@ describe("reducer tests", () => {
         const newModelList = ["modelB", "modelC"]
         
         const previousState = {
-            modelGroupList: ["group1", "group2"],
             modelGroups: {
                 group1: {
-                    modelList: ["modelA", "modelB"],
                     models: {
                         modelA: "dataA",
                         modelB: "dataB",
                     },
                 },
                 group2: {
-                    modelList: ["dataD", "dataE", "dataF"],
                     models: {
                         modelA: "dataD",
                         modelB: "dataE",
@@ -52,17 +49,15 @@ describe("reducer tests", () => {
         };
     
         const expected = {
-            modelGroupList: ["group1", "group2"],
             modelGroups: {
                 group1: {
-                    modelList: ["modelB", "modelC"], // empty
                     models: {
                         modelB: "dataB",
                         modelC: MODEL_DATA_TEMPLATE,
                     }, // empty
+                    name: "newName",
                 },
                 group2: {
-                    modelList: ["dataD", "dataE", "dataF"],
                     models: {
                         modelA: "dataD",
                         modelB: "dataE",
@@ -73,7 +68,7 @@ describe("reducer tests", () => {
         };
     
         expect(
-            reducer(previousState, setModelsOfModelGroup({groupId: "group1", modelList: newModelList}))
+            reducer(previousState, setModelsOfModelGroup({groupId: "group1", groupName: "newName", modelList: newModelList}))
         ).toEqual(expected);
     
     });

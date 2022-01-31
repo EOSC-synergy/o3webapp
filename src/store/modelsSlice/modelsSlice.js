@@ -120,7 +120,7 @@ const modelsSlice = createSlice({
                 state.modelGroups[groupId].name = groupName;
                 // remove unwanted
                 const listOfCurrent = Object.keys(selectedModelGroup.models);
-                const toDelete = listOfCurrent.filter(model => !listOfCurrent.includes(model));
+                const toDelete = listOfCurrent.filter(model => !modelList.includes(model));
                 
                 toDelete.forEach( // delete from lookup table
                     model => delete selectedModelGroup.models[model]
