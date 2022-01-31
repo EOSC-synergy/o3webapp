@@ -16,7 +16,7 @@ function ReferenceYearSlider(props) {
   /** model: The currently selected reference model.
    * setModel: The function which adjusts the SelectionBar after selecting a model.
    */
-  const [model, setModel] = React.useState([]);
+  const [model, setModel] = React.useState('');
 
   /** Default year value for the Slider.*/
   const defaultYear = 1980;
@@ -56,7 +56,7 @@ function ReferenceYearSlider(props) {
           label="Reference Model"
           onChange={handleChangeForRefModel}
           input={<OutlinedInput label="Reference Model" />}
-          defaultValue={1}
+          defaultValue={defaultYear}
           value={model}
         >
           {models.map((elem, idx) => {
