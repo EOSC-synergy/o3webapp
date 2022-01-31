@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { Modal, Card, Button, Grid, Checkbox } from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
-import SearchBar from "../SearchBar/SearchBar";
+import SearchBar from "../Searchbar/Searchbar";
 import { styled } from '@mui/material/styles';
 import DoneIcon from '@mui/icons-material/Done';
 import ClearIcon from '@mui/icons-material/Clear';
