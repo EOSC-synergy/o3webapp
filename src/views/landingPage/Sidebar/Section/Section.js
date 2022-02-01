@@ -4,7 +4,7 @@ import LocationSelector from "../InputComponents/LatitudeBandSelector/LatitudeBa
 import ModelGroupConfigurator from "../InputComponents/ModelGroupConfigurator/ModelGroupConfigurator";
 import OffsetConfigurator from "../InputComponents/OffsetConfigurator/OffsetConfigurator";
 import PlotNameField from "../InputComponents/PlotNameField/PlotNameField";
-import ReferenceYearField from "../InputComponents/ReferenceYearSlider/ReferenceYearField";
+import ReferenceYearField from "../InputComponents/ReferenceYearField/ReferenceYearField";
 import RegionSelector from "../InputComponents/RegionSelector/RegionSelector";
 import TimeCheckBoxGroup from "../InputComponents/TimeCheckboxGroup/TimeCheckboxGroup";
 import XAxisField from "../InputComponents/XAxisField/XAxisField";

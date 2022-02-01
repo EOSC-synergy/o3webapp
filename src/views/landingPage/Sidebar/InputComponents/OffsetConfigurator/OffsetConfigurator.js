@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import ReferenceYearField from "../ReferenceYearSlider/ReferenceYearField";
+import ReferenceYearField from "../ReferenceYearField/ReferenceYearField";
 
 /**
  * enables the user to select a referenceYear, referenceModel and to toggle an offset according to those two inputs
