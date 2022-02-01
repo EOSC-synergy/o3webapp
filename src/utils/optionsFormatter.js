@@ -134,7 +134,11 @@ function create2dArray(i) {
     return Array.from(Array(i), () => []);
 }
 
-function calculateSvForModels(modelList, data) {
+function isIncludedInSv(model, groupData, svType) {
+    return groupData.models[model][svType];
+}
+
+function calculateSvForModels(modelList, data, groupData) { // pass group data
     // only mean at beginning
 
     const SERIES_LENGTH = data[modelList[0]].data.length; // grab length of first model, should all be same
@@ -144,7 +148,7 @@ function calculateSvForModels(modelList, data) {
     for (let i = 0; i < SERIES_LENGTH; ++i) {
         for (const model of modelList) {
             const value = data[model].data[i];
-            if (value === null) continue;
+            // add null anyway
             matrix[i].push(
                 data[model].data[i]
             )
@@ -158,7 +162,9 @@ function calculateSvForModels(modelList, data) {
 
     for (const arr of matrix) { // fill with calculated sv
         for (const sv of STATISTICAL_VALUES_LIST) {
-            const value = SV_CALCULATION[sv](arr) || null; // null as default if NaN or undefined
+            // filter out values from not included models or null values
+            const filtered = arr.filter((value, idx) => value !== null && isIncludedInSv(modelList[idx], groupData, sv));
+            const value = SV_CALCULATION[sv](filtered) || null; // null as default if NaN or undefined
             svHolder[sv].push(value);    
         };
     };
@@ -177,18 +183,17 @@ function buildStatisticalSeries({data, series, colors, dashArray, width, modelsS
     const modelGroups = modelsSlice.modelGroups;
     for (const [id, groupData] of Object.entries(modelGroups)) {
 
-        const svHolder = calculateSvForModels(Object.keys(groupData.models), data);
+        const svHolder = calculateSvForModels(Object.keys(groupData.models), data, groupData);
 
         for (const [sv, svData] of Object.entries(svHolder)) {
             
             if (sv === STATISTICAL_VALUES.derivative
-                || sv === STATISTICAL_VALUES.percentile) continue;
+                || sv === STATISTICAL_VALUES.percentile) continue; // skip for now
             
 
             series.push({
                 name: `${sv}(${groupData.name})`,
                 data: svData,
-                type: "line",
             })
             colors.push(SV_COLORING[sv]);   // coloring?
             width.push(1);                  // thicker?
