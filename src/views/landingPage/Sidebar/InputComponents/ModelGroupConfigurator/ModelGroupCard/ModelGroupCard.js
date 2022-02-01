@@ -103,7 +103,7 @@ function ModelGroupCard(props) {
     return (
         <Card style={{margin: "5%"}} elevation={2}>
             <EditModelGroupModal modelGroupId={props.modelGroupId} isOpen={isEditModalVisible} onClose={closeEditModal} />
-            <AddModelGroupModal modelGroupId={props.modelGroupId} isOpen={isAddModalVisible} onClose={closeAddModal} />
+            <AddModelGroupModal modelGroupId={props.modelGroupId} isOpen={isAddModalVisible} onClose={closeAddModal} reportError={props.reportError} />
             <Grid container>
                 <Grid item xs={2}>
                     <IconButton aria-label="change visibility" onClick={toggleModelGroupVisibility}><VisibilityIcon /></IconButton>
