@@ -178,7 +178,7 @@ function generateTco3_ZmSeries({data, series, colors, dashArray, width, modelsSl
     for (const [model, modelData] of Object.entries(data)) {
 
         series.push({
-            //type: "line",
+            type: "line",
             name: model,
             data: modelData.data,
         });
@@ -196,15 +196,22 @@ function generateTco3_ZmSeries({data, series, colors, dashArray, width, modelsSl
 
         for (const [sv, svData] of Object.entries(svHolder)) {
             
-            if (sv === STATISTICAL_VALUES.derivative) continue;
+            if (sv === STATISTICAL_VALUES.derivative
+                || sv === STATISTICAL_VALUES.percentile) continue;
             
+
             series.push({
                 name: `${sv}(${groupData.name})`,
                 data: svData,
+                type: "line",
             })
             colors.push(SV_COLORING[sv]);   // coloring?
-            width.push(3);                  // thicker?
-            dashArray.push(0);              // solid?       
+            width.push(1);                  // thicker?
+            if (sv.includes("std")) {
+                dashArray.push(2);
+            } else {
+                dashArray.push(0);              // solid?       
+            }
         }
     }
 }
@@ -318,7 +325,8 @@ export const defaultTCO3_zm = {
         zoom: {
             enabled: true,
             type: "xy",
-        }
+        },
+        type: "line",
     },
     legend: {
         show: true, // only shows up if there is more than one line

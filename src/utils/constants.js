@@ -207,10 +207,10 @@ export const SV_CALCULATION = {
 }
 
 export const SV_COLORING = {
-    mean: "#c00c54",
-    median: "#f38e19",
-    derivative: "#36531b",
-    percentile: "#284bc2",
-    "mean+std": "#ff0000",
-    "mean-std": "#ff0000",
+    mean: "#000",
+    median: "#000",
+    derivative: "#000",
+    percentile: "#000",
+    "mean+std": "#000",
+    "mean-std": "#000",
 }
