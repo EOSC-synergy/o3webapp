@@ -112,17 +112,6 @@ export const fileFormats = [ Symbol("pdf"), Symbol("png") ];
 
 /** The max. length of the plot name */
 export const PLOT_NAME_MAX_LEN = 40;
-
-// ReferenceYearSlider.js
-
-/** Default year value for the ReferenceYearSlider.*/
-export const REF_SLIDER_DEFAULT_YEAR = 1980;
-
-/** Minimum choosable year value for the ReferenceYearSlider.*/
-export const REF_SLIDER_MIN_YEAR = 1950;
-
-/** Minimum choosable year value for the ReferenceYearSlider.*/
-export const REF_SLIDER_MAX_YEAR = 2100;
 /*
 // GRAPH
 */

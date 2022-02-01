@@ -1,16 +1,16 @@
 import React from "react";
-import { Grid, Typography, Slider} from "@mui/material";
+import { Grid, Typography, Slider, FormControl, TextField } from "@mui/material";
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux";
 import { setYear } from "../../../../../store/referenceSlice/referenceSlice";
-import {REF_SLIDER_MAX_YEAR, REF_SLIDER_MIN_YEAR, REF_SLIDER_DEFAULT_YEAR} from  "../../../../../utils/constants";
+import {END_YEAR, START_YEAR} from "../../../../../utils/constants";
 
 /**
  * enables the user to select a reference year
  * @todo add redux connection: should min and max also be in redux?
  * @param {Object} props
  * @param {function} props.reportError - function to handle errors
- * @returns {JSX} a jsx containing a slider to select the reference year
+ * @returns {JSX.Element} a jsx containing a slider to select the reference year
  */
 function ReferenceYearSlider(props) {
 
@@ -27,22 +27,22 @@ function ReferenceYearSlider(props) {
 
     return (
         <>
-        <Grid container>
-            <Grid item xs={4}>
+        <Grid container sx={{width: "90%", marginLeft: "auto", marginRight: "auto", marginTop: "5%"}}>
+            <Grid item xs={5}>
             <Typography>Reference year:</Typography>
             </Grid>
-            <Grid item xs={8}>
-                <Slider
-                    defaultValue={REF_SLIDER_DEFAULT_YEAR}
-                    step={1}
-                    min={REF_SLIDER_MIN_YEAR}
-                    max={REF_SLIDER_MAX_YEAR}
-                    value={selectedYear}
-                    onChange={handleChangeForRefYear}
-                    valueLabelDisplay="on"
-                    size="small"
-                    track={false}
-                />
+            <Grid item xs={7} sx={{mt: "-8px"}}>
+                <FormControl sx={{width: '35%'}}>
+                    <TextField
+                        variant="outlined"
+                        id="outlined-basic"
+                        size="small"
+                        value={selectedYear}
+                        onChange={handleChangeForRefYear}
+                        error={selectedYear < START_YEAR || selectedYear > END_YEAR}
+                        helperText={selectedYear < START_YEAR ? `<${START_YEAR}` : (selectedYear > END_YEAR ? `>${END_YEAR}` : '')}
+                    />
+                </FormControl>
             </Grid>
         </Grid>
         </>
