@@ -6,21 +6,25 @@ import { setYear } from "../../../../../store/referenceSlice/referenceSlice";
 import {END_YEAR, START_YEAR} from "../../../../../utils/constants";
 
 /**
- * enables the user to select a reference year
- * @todo add redux connection: should min and max also be in redux?
+ * Enables the user to select a reference year.
  * @param {Object} props
  * @param {function} props.reportError - function to handle errors
- * @returns {JSX.Element} a jsx containing a slider to select the reference year
+ * @returns {JSX.Element} a jsx containing a text field to select the reference year
  */
 function ReferenceYearSlider(props) {
-
-     
-    // /** Dispatcher to dispatch the plot name change action. */
+    /**
+     * A dispatch function to dispatch actions to the redux store.
+     */
     const dispatch = useDispatch();
 
+    /**
+     * The selected reference year from the redux store.
+     */
     const selectedYear = useSelector(state => state.reference.settings.year);
 
-    /** Handles the change of the reference year slider if it's is modified.*/
+    /**
+     * Handles the change of the reference year field if is modified.
+     */
     const handleChangeForRefYear = (event) => {
         dispatch(setYear({year: event.target.value}));
     };
