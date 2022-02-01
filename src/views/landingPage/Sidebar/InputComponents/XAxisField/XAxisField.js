@@ -52,7 +52,7 @@ function XAxisField(props) {
             <Grid item xs={3}>
                 <Typography>X-Axis:</Typography>
             </Grid>
-            <Grid item xs={4} sx={{mt: "-8px"}}>
+            <Grid item xs={3} sx={{mt: "-8px"}}>
                 <FormControl sx={{width: '80%'}}>
                     <TextField
                         variant="outlined"
@@ -61,14 +61,14 @@ function XAxisField(props) {
                         value={minX}
                         onChange={handleChangeMin}
                         error={minX < START_YEAR || minX > END_YEAR}
-                        helperText={minX < START_YEAR ? `< ${START_YEAR}` : (minX > END_YEAR ? `> ${END_YEAR}` : '')}
+                        helperText={minX < START_YEAR ? `<${START_YEAR}` : (minX > END_YEAR ? `>${END_YEAR}` : '')}
                     />
                 </FormControl>
             </Grid>
             <Grid item xs={1} sx={{mt: "-5px"}}>
-                <h2 style={{display: "inline", px: "10px", textAlign: "center"}} > - </h2>
+                <h2 style={{display: "inline"}} > - </h2>
             </Grid>
-            <Grid item xs={4} sx={{mt: "-8px"}}>
+            <Grid item xs={3} sx={{mt: "-8px"}}>
                 <FormControl sx={{width: '80%'}}>
                     <TextField
                         variant="outlined"
@@ -77,7 +77,7 @@ function XAxisField(props) {
                         value={maxX}
                         onChange={handleChangeMax}
                         error={maxX < START_YEAR || maxX > END_YEAR}
-                        helperText={maxX < START_YEAR ? `< ${START_YEAR}` : (maxX > END_YEAR ? `> ${END_YEAR}` : '')}
+                        helperText={maxX < START_YEAR ? `<${START_YEAR}` : (maxX > END_YEAR ? `>${END_YEAR}` : '')}
                     />
                 </FormControl>
             </Grid>

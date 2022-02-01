@@ -53,7 +53,7 @@ function YAxisField(props) {
             <Grid item xs={3}>
                 <Typography>Y-Axis:</Typography>
             </Grid>
-            <Grid item xs={4} sx={{mt: "-8px"}}>
+            <Grid item xs={3} sx={{mt: "-8px"}}>
                 <FormControl sx={{width: '80%'}}>
                     <TextField
                         variant="outlined"
@@ -62,14 +62,14 @@ function YAxisField(props) {
                         value={minY}
                         onChange={handleChangeMin}
                         error={minY < 0}
-                        helperText={minY < 0 ? `< 0` : ''}
+                        helperText={minY < 0 ? `<0` : ''}
                     />
                 </FormControl>
             </Grid>
             <Grid item xs={1} sx={{mt: "-5px"}}>
-                <h2 style={{display: "inline", px: "10px", textAlign: "center"}} > - </h2>
+                <h2 style={{display: "inline"}} > - </h2>
             </Grid>
-            <Grid item xs={4} sx={{mt: "-8px"}}>
+            <Grid item xs={3} sx={{mt: "-8px"}}>
                 <FormControl sx={{width: '80%'}}>
                     <TextField
                         variant="outlined"
@@ -78,7 +78,7 @@ function YAxisField(props) {
                         value={maxY}
                         onChange={handleChangeMax}
                         error={maxY < 0}
-                        helperText={maxY < 0 ? `< 0` : ''}
+                        helperText={maxY < 0 ? `<0` : ''}
                     />
                 </FormControl>
             </Grid>
