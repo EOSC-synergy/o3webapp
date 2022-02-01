@@ -147,10 +147,8 @@ function calculateSvForModels(modelList, data, groupData) { // pass group data
 
     for (let i = 0; i < SERIES_LENGTH; ++i) {
         for (const model of modelList) {
-            const value = data[model].data[i];
-            // add null anyway
             matrix[i].push(
-                data[model].data[i]
+                data[model].data[i] // add null anyway to remain index mapping (null is filtered out later)
             )
         }
     }
@@ -175,7 +173,6 @@ function calculateSvForModels(modelList, data, groupData) { // pass group data
         svHolder["mean+std"].push(svHolder.mean[i] + svHolder.derivative[i]);
         svHolder["mean-std"].push(svHolder.mean[i] - svHolder.derivative[i]);
     }
-    console.log(svHolder);
     return svHolder;
 }
 
@@ -221,41 +218,47 @@ function generateTco3_ZmSeries({data, series, colors, dashArray, width, modelsSl
     buildStatisticalSeries({data, series, colors, dashArray, width, modelsSlice});
 }
 
-function generateTco3_ReturnSeries({data, series, colors}) {
+function generateTco3_ReturnSeries({data, series, colors, modelsSlice}) {
+    
+    // 1. build boxplot
     const boxPlotValues = calculateBoxPlotValues(data);
-        series.push({
-                name: 'box',
-                type: 'boxPlot',
-        
-                data: ALL_REGIONS_ORDERED.map(region => ({
-                    x: region,
-                    y: boxPlotValues[region],
-                })),
-            }
-        )
-
-        for (const [model, modelData] of Object.entries(data)) {
-
-            const transformed = []
-            for (let xypair of modelData.data) {
-                transformed[xypair.x] = xypair.y;
-            }
-            //modelData.data.forEach(xypair => ) // this could be done after fetching!
-            
-            const sortedData = ALL_REGIONS_ORDERED.map(region => ({
+    series.push({
+            name: 'box',
+            type: 'boxPlot',
+    
+            data: ALL_REGIONS_ORDERED.map(region => ({
                 x: region,
-                y: transformed[region] || null, // null as default if data is missing
-            }));
-            
-            series.push({
-                name: model,
-                data: sortedData,
-                type: "scatter",
-            });
-            colors.push(
-                colorNameToHex(modelData.plotStyle.color)
-            )
+                y: boxPlotValues[region],
+            })),
         }
+    );
+
+    // 2. build scatter plot
+    for (const [model, modelData] of Object.entries(data)) {
+
+        const transformed = []
+        for (let xypair of modelData.data) {
+            transformed[xypair.x] = xypair.y;
+        }
+        //modelData.data.forEach(xypair => ) // this could be done after fetching!
+        
+        const sortedData = ALL_REGIONS_ORDERED.map(region => ({
+            x: region,
+            y: transformed[region] || null, // null as default if data is missing
+        }));
+        
+        series.push({
+            name: model,
+            data: sortedData,
+            type: "scatter",
+        });
+        colors.push(
+            colorNameToHex(modelData.plotStyle.color)
+        )
+    }
+
+    // 3. generate statistical values
+    buildStatisticalSeries({data, series, colors, dashArray: [], width: [], modelsSlice}); // dashArray and width are discarded
 }
 
 export function getIncludedModels(modelsSlice) {
@@ -293,9 +296,9 @@ export function generateSeries({plotId, data, modelsSlice}) {
     if (plotId === O3AS_PLOTS.tco3_zm) {
         generateTco3_ZmSeries({data: trimmedData, series, colors, dashArray, width, modelsSlice});
     } else if (plotId === O3AS_PLOTS.tco3_return) {
-        generateTco3_ReturnSeries({data: trimmedData, series, colors, dashArray, width});
+        generateTco3_ReturnSeries({data: trimmedData, series, colors, dashArray, width, modelsSlice});
     } else {
-        throw `the given plot id "${plotId}" is not defined`;
+        throw new Error(`the given plot id "${plotId}" is not defined`);
     }
     return {series, styling: {colors, dashArray, width}};
 }
