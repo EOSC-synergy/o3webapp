@@ -15,7 +15,7 @@ exports[`renders correctly 1`] = `
       </p>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-xth979-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3 css-1lrjc51-MuiGrid-root"
     >
       <div
         class="MuiFormControl-root css-1edjpmh-MuiFormControl-root"
@@ -48,6 +48,7 @@ exports[`renders correctly 1`] = `
               </legend>
             </fieldset>
           </div>
+          
         </div>
       </div>
     </div>
@@ -55,13 +56,13 @@ exports[`renders correctly 1`] = `
       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-1rbsaog-MuiGrid-root"
     >
       <h2
-        style="display: inline; text-align: center;"
+        style="display: inline;"
       >
          - 
       </h2>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-xth979-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3 css-1lrjc51-MuiGrid-root"
     >
       <div
         class="MuiFormControl-root css-1edjpmh-MuiFormControl-root"
@@ -94,6 +95,7 @@ exports[`renders correctly 1`] = `
               </legend>
             </fieldset>
           </div>
+          
         </div>
       </div>
     </div>
