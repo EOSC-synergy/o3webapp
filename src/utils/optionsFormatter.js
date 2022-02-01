@@ -154,6 +154,19 @@ function buildSvMatrixTco3Zm({modelList, data}) {
 }
 
 function buildSvMatrixTco3Return({modelList, data}) {
+    const matrix = create2dArray(ALL_REGIONS_ORDERED.length);
+
+    console.log(data);
+    for (const index in ALL_REGIONS_ORDERED) {
+        const region = ALL_REGIONS_ORDERED[index]; // iterate over regions
+        for (const model of modelList) {
+            matrix[index].push(
+                data[model].data[region]
+            )
+        }
+    }
+    console.log(matrix);
+    return matrix;
     
 }
 
