@@ -214,3 +214,5 @@ export const SV_COLORING = {
     "mean+std": "#000",
     "mean-std": "#000",
 }
+
+export const MODEL_LINE_THICKNESS = 2;

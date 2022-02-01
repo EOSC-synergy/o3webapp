@@ -1,5 +1,5 @@
 import { q25, q75, median, mean } from "../services/math/math"
-import { IMPLICIT_YEAR_LIST, O3AS_REGIONS, O3AS_PLOTS, ALL_REGIONS_ORDERED, STATISTICAL_VALUES_LIST, SV_CALCULATION, SV_COLORING, STATISTICAL_VALUES } from "./constants"
+import { IMPLICIT_YEAR_LIST, O3AS_REGIONS, O3AS_PLOTS, ALL_REGIONS_ORDERED, STATISTICAL_VALUES_LIST, SV_CALCULATION, SV_COLORING, STATISTICAL_VALUES, APEXCHART_PLOT_TYPE, MODEL_LINE_THICKNESS } from "./constants"
 
 /**
  * Iterates through the x and y data returned from the api for the tco3_zm and fills the corresponding years with
@@ -173,22 +173,7 @@ function calculateSvForModels(modelList, data) {
     return svHolder;
 }
 
-function generateTco3_ZmSeries({data, series, colors, dashArray, width, modelsSlice}) {
-
-    for (const [model, modelData] of Object.entries(data)) {
-
-        series.push({
-            type: "line",
-            name: model,
-            data: modelData.data,
-        });
-
-        colors.push(colorNameToHex(modelData.plotStyle.color));
-        width.push(2);
-        dashArray.push(convertToStrokeStyle(modelData.plotStyle.linestyle)); // default line thickness
-    }
-
-    // generate SV!
+function buildStatisticalSeries({data, series, colors, dashArray, width, modelsSlice}) {
     const modelGroups = modelsSlice.modelGroups;
     for (const [id, groupData] of Object.entries(modelGroups)) {
 
@@ -207,13 +192,28 @@ function generateTco3_ZmSeries({data, series, colors, dashArray, width, modelsSl
             })
             colors.push(SV_COLORING[sv]);   // coloring?
             width.push(1);                  // thicker?
-            if (sv.includes("std")) {
-                dashArray.push(2);
-            } else {
-                dashArray.push(0);              // solid?       
-            }
+            dashArray.push(0);              // solid?       
         }
     }
+}
+
+function generateTco3_ZmSeries({data, series, colors, dashArray, width, modelsSlice}) {
+
+    for (const [model, modelData] of Object.entries(data)) {
+
+        series.push({
+            type: APEXCHART_PLOT_TYPE.tco3_zm,
+            name: model,
+            data: modelData.data,
+        });
+
+        colors.push(colorNameToHex(modelData.plotStyle.color));
+        width.push(MODEL_LINE_THICKNESS);
+        dashArray.push(convertToStrokeStyle(modelData.plotStyle.linestyle)); // default line thickness
+    }
+
+    // generate SV!
+    buildStatisticalSeries({data, series, colors, dashArray, width, modelsSlice});
 }
 
 function generateTco3_ReturnSeries({data, series, colors}) {
