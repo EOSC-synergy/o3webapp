@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Typography, Slider, FormControl, TextField } from "@mui/material";
+import { Grid, Typography, FormControl, TextField } from "@mui/material";
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux";
 import { setYear } from "../../../../../store/referenceSlice/referenceSlice";
@@ -11,7 +11,7 @@ import {END_YEAR, START_YEAR} from "../../../../../utils/constants";
  * @param {function} props.reportError - function to handle errors
  * @returns {JSX.Element} a jsx containing a text field to select the reference year
  */
-function ReferenceYearSlider(props) {
+function ReferenceYearField(props) {
     /**
      * A dispatch function to dispatch actions to the redux store.
      */
@@ -53,4 +53,4 @@ function ReferenceYearSlider(props) {
     );
 }
 
-export default ReferenceYearSlider;
+export default ReferenceYearField;

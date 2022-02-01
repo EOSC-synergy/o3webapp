@@ -14,7 +14,7 @@
     },
     {
       "name": "Reference Year",
-      "components": ["ReferenceModelSelector", "ReferenceYearSlider"]
+      "components": ["ReferenceModelSelector", "ReferenceYearField"]
     }
   ]
 }

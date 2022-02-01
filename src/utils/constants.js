@@ -11,8 +11,8 @@ export const OC_Symbol = Symbol("OffsetConfigurator");
 export const PNF_Symbol = Symbol("PlotNameField");
 /** Stores the name of the ReferenceModelSelector component as a Symbol. */
 export const RMS_Symbol = Symbol("ReferenceModelSelector");
-/** Stores the name of the ReferenceYearSlider component as a Symbol. */
-export const RYS_Symbol = Symbol("ReferenceYearSlider");
+/** Stores the name of the ReferenceYearField component as a Symbol. */
+export const RYF_Symbol = Symbol("ReferenceYearField");
 /** Stores the name of the RegionSelector component as a Symbol. */
 export const RS_Symbol = Symbol("RegionSelector");
 /** Stores the name of the TimeCheckBoxGroup component as a Symbol. */
