@@ -138,9 +138,7 @@ function isIncludedInSv(model, groupData, svType) {
     return groupData.models[model][svType];
 }
 
-function calculateSvForModels(modelList, data, groupData) { // pass group data
-    // only mean at beginning
-
+function buildSvMatrixTco3Zm({modelList, data}) {
     const SERIES_LENGTH = data[modelList[0]].data.length; // grab length of first model, should all be same
 
     const matrix = create2dArray(SERIES_LENGTH); // for arr of matrix: mean(arr), etc.
@@ -152,6 +150,17 @@ function calculateSvForModels(modelList, data, groupData) { // pass group data
             )
         }
     }
+    return matrix;
+}
+
+function buildSvMatrixTco3Return({modelList, data}) {
+    
+}
+
+function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass group data
+    // only mean at beginning
+
+    const matrix = buildMatrix({modelList, data}); // function supplied by caller
 
     const svHolder = {};
     STATISTICAL_VALUES_LIST.forEach(
@@ -176,11 +185,11 @@ function calculateSvForModels(modelList, data, groupData) { // pass group data
     return svHolder;
 }
 
-function buildStatisticalSeries({data, series, colors, dashArray, width, modelsSlice}) {
+function buildStatisticalSeries({data, series, colors, dashArray, width, modelsSlice, buildMatrix}) {
     const modelGroups = modelsSlice.modelGroups;
     for (const [id, groupData] of Object.entries(modelGroups)) {
 
-        const svHolder = calculateSvForModels(Object.keys(groupData.models), data, groupData);
+        const svHolder = calculateSvForModels(Object.keys(groupData.models), data, groupData, buildMatrix);
 
         for (const [sv, svData] of Object.entries(svHolder)) {
             
@@ -215,7 +224,7 @@ function generateTco3_ZmSeries({data, series, colors, dashArray, width, modelsSl
     }
 
     // generate SV!
-    buildStatisticalSeries({data, series, colors, dashArray, width, modelsSlice});
+    buildStatisticalSeries({data, series, colors, dashArray, width, modelsSlice, buildMatrix: buildSvMatrixTco3Zm});
 }
 
 function generateTco3_ReturnSeries({data, series, colors, modelsSlice}) {
@@ -258,7 +267,7 @@ function generateTco3_ReturnSeries({data, series, colors, modelsSlice}) {
     }
 
     // 3. generate statistical values
-    buildStatisticalSeries({data, series, colors, dashArray: [], width: [], modelsSlice}); // dashArray and width are discarded
+    buildStatisticalSeries({data, series, colors, dashArray: [], width: [], modelsSlice, buildMatrix: buildSvMatrixTco3Return}); // dashArray and width are discarded
 }
 
 export function getIncludedModels(modelsSlice) {
