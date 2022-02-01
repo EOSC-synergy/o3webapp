@@ -11,20 +11,18 @@ beforeEach(() => {
 })
 
 it('renders without crashing', () => {
-    render(<>
+    render(
         <Provider store={store}>
             <TimeCheckBoxGroup reportError={() => {}} />
-        </Provider>
-        </>)
-}) 
+        </Provider>);
+});
 
 it('renders correctly', () => {
     
-    const { container } = render(<>
+    const { container } = render(
         <Provider store={store}>
             <TimeCheckBoxGroup reportError={() => {}} />
-        </Provider>
-        </>);
+        </Provider>);
     
     expect(container).toMatchSnapshot();
 })
@@ -48,11 +46,10 @@ it('renders all checkbox groups correctly', () => {
 it('selects a month correctly', () => {
     
     
-    const { getByTestId } = render(<>
+    const { getByTestId } = render(
         <Provider store={store}>
             <TimeCheckBoxGroup reportError={() => {}} />
-        </Provider>
-        </>);
+        </Provider>);
     
     expect(store.getState().plot.settings.tco3_zm.months).toEqual([1]); // assert: if it fails the initial state may have changed
     fireEvent.click(getByTestId("CheckboxMonth2"));
@@ -65,11 +62,10 @@ it('selects a month correctly', () => {
 
 it('selects a season correctly', () => {
     
-    const { getByTestId } = render(<>
+    const { getByTestId } = render(
         <Provider store={store}>
             <TimeCheckBoxGroup reportError={() => {}} />
-        </Provider>
-        </>);
+        </Provider>);
     
     expect(store.getState().plot.settings.tco3_zm.months).toEqual([1]); // assert: if it fails the initial state may have changed
     fireEvent.click(getByTestId("CheckboxSeasonNum0"));
@@ -81,11 +77,10 @@ it('selects a season correctly', () => {
 
 it('selects the "All Year" checkbox correctly', () => {
     
-    const { getByTestId } = render(<>
+    const { getByTestId } = render(
         <Provider store={store}>
             <TimeCheckBoxGroup reportError={() => {}}/>
-        </Provider>
-        </>);
+        </Provider>);
     
     expect(store.getState().plot.settings.tco3_zm.months).toEqual([1]); // assert: if it fails the initial state may have changed
     fireEvent.click(getByTestId("CheckboxAllYear"));

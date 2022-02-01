@@ -1,62 +1,76 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Section from './Section';
-import renderer from 'react-test-renderer';
 import {render, screen} from '@testing-library/react';
 import defaultStructure from '../../../../config/defaultConfig.json';
 import "@testing-library/jest-dom/extend-expect";
+import { Provider } from 'react-redux';
+import { createTestStore } from "../../../../store/store"
 
-it('Section renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<Section />, div);
-});
+let store;
+describe ('Section renders correclty', () => {
+    beforeEach(() => {
+        store = createTestStore();
+    });
 
-const testPropTypes = (component, propName, arraysOfTestValues, otherProps) => {
-    console.error = jest.fn();
-    const _test = (testValues, expectError) => {
-        for (let propValue of testValues) {
-            console.error.mockClear();
-            React.createElement(component, {...otherProps, [propName]: propValue});
-            expect(console.error).toHaveBeenCalledTimes(expectError ? 1 : 0);
+    it('renders without crashing', () => {
+      render(
+        <Provider store={store}>
+            <Section isExpanded={true} components={[]} reportError={()=>{}} name={"test"} />
+        </Provider>);
+    });
+    
+    // report error if no components are entered
+    it('reports error if no components are passed to render', () => {
+        const reportError = jest.fn();
+        const name = "1";
+        render(
+            <Provider store={store}>
+                <Section reportError={reportError} components={[]} name={name} isExpanded={false}/>
+            </Provider>
+        );
+        expect(reportError).toHaveBeenCalledWith(`Section ${name} was provided with no components`)
+    });
+    
+    // report error if invalid components are entered
+    it('reports error if invalid component is entered', () => {
+        const reportError = jest.fn();
+        const name = "1";
+        const compName = "blob";
+        render(
+            <Provider store={store}>
+                <Section reportError={reportError} components={[compName]} name={name} isExpanded={false}/>
+            </Provider>
+        );
+        expect(reportError).toHaveBeenCalledWith(`Section ${name} found no match for an input component ${compName}`)
+    });
+    
+    // renders props.name
+    it('renders the given name', () => {
+        const name = "Test";
+        render(
+            <Provider store={store}>     
+                <Section components={["LatitudeBandSelector"]} name={name} isExpanded={false} reportError={()=>{}} />
+            </Provider>
+        );
+        expect(screen.getByTestId('section')).toHaveTextContent(name.toUpperCase());
+    });
+    
+    
+    // Snapshot test
+    it('renders correctly from config file', () => {
+        for (let sectionIdx in defaultStructure.sections) {
+            const { container } = render(
+                <Provider store={store}>
+                    <Section
+                        name={defaultStructure.sections[sectionIdx].name}
+                        reportError={() => {}}
+                        components={defaultStructure.sections[sectionIdx].components}
+                        isExpanded={true}
+                    />
+                </Provider>
+            );
+            expect(container).toMatchSnapshot();
         }
-    };
-    _test(arraysOfTestValues[0], false);
-    _test(arraysOfTestValues[1], true);
-};
-
-// report error if no components are entered
-it('Section reports error if no components are passed to render', () => {
-    const reportError = jest.fn();
-    const name = "1";
-    const div = document.createElement('div');
-    ReactDOM.render(<Section reportError={reportError} name={name} isExpanded={false}/>, div);
-    expect(reportError).toHaveBeenCalledWith(`Section ${name} was provided with no components`)
-})
-
-// report error if invalid components are entered
-it('Section reports error if invalid component is entered', () => {
-    const reportError = jest.fn();
-    const name = "1";
-    const compName = "blob";
-    const div = document.createElement('div');
-    ReactDOM.render(<Section reportError={reportError} components={[compName]} name={name} isExpanded={false}/>, div);
-    expect(reportError).toHaveBeenCalledWith(`Section ${name} found no match for an input component ${compName}`)
-})
-
-// renders props.name
-it('Section renders the given name', () => {
-    const name = "Test";
-    render(<Section components={["LatitudeBandSelector"]} name={name} isExpanded={false}/>);
-    expect(screen.getByTestId('section')).toHaveTextContent(name.toUpperCase());
-})
-
-
-// Snapshot test
-it('Section renders correctly from config file', () => {
-    for (let section in defaultStructure.sections) {
-        const tree = renderer
-            .create(<Section name={section.name} reportError={() => {}} components={section.components} isExpanded={false}/>)
-            .toJSON();
-        expect(tree).toMatchSnapshot();
-    }
+    });
 });

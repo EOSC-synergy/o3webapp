@@ -3,7 +3,8 @@ import AddModelGroupModal from "./AddModelGroupModal/AddModelGroupModal";
 import ModelGroupCard from "./ModelGroupCard/ModelGroupCard";
 import { Button } from '@mui/material';
 import { useSelector } from "react-redux"
-import { updatedModelGroup, addedModelGroup, selectAllGroupIds } from "../../../../../store/modelsSlice/modelsSlice";
+import PropTypes from 'prop-types';
+import { selectAllGroupIds } from "../../../../../store/modelsSlice/modelsSlice";
 
 /**
  * enables the user to configure models that should be visible in the plot clustered as model groups
@@ -44,6 +45,10 @@ function ModelGroupConfigurator(props) {
             <AddModelGroupModal isOpen={isAddModalVisible} onClose={closeAddModal} reportError={props.reportError} />
         </>
     );
+}
+
+ModelGroupConfigurator.propTypes = {
+    reportError: PropTypes.func
 }
 
 export default ModelGroupConfigurator;

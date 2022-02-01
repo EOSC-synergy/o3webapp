@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
+import PropTypes from 'prop-types';
 import ReferenceYearField from "../ReferenceYearSlider/ReferenceYearField";
-// import { useDispatch, useSelector } from "react-redux"
-import { selectCurrentPlotType } from "../../../../../store/plotSlice/plotSlice";
-import { current } from "@reduxjs/toolkit";
 
 /**
  * enables the user to select a referenceYear, referenceModel and to toggle an offset according to those two inputs
@@ -11,11 +9,6 @@ import { current } from "@reduxjs/toolkit";
  * @returns {JSX} a jsx containing a referenceYearSlider, a referenceModelSelector and a button to toggle the offset
  */
 function OffsetConfigurator(props) {
-    
-    let i = props.reportError;
-
-    // const currenceDatPlotType = selectCurrentPlotType()
-    // const referenta = useSelector(state => state.reference[currentPlotType])
 
     // handle changes: dispatch actions accordingly
 
@@ -26,6 +19,10 @@ function OffsetConfigurator(props) {
             <button />
         </>
     );
+}
+
+OffsetConfigurator.propTypes = {
+    reportError: PropTypes.func
 }
 
 export default OffsetConfigurator;

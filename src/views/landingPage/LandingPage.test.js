@@ -18,23 +18,26 @@ jest.mock('react-apexcharts', () => {
 })
 
 let store;
-describe('test LandingPage component', () => {
+describe('test LandingPage component rendering', () => {
   beforeEach(() => {
     store = createTestStore();
   });
 
-  it('LandingPage renders without crashing', () => {
-    const div = document.createElement('div');
-    ReactDOM.render(<Provider store={store}>
-      <LandingPage reportError={() => {}} />
-      </Provider>, div);
+  it('renders without crashing', () => {
+    render(
+      <Provider store={store}>
+        <LandingPage reportError={() => {}} isSidebarOpen={true} openSidebar={jest.fn()} closeSidebar={jest.fn()} />
+      </Provider>
+    );
   });
   
   // Snapshot test
   it('LandingPage renders correctly', () => {
-      const { container } = render(<Provider store={store}>
-            <LandingPage reportError={() => {}} />
-          </Provider>);
+      const { container } = render(
+        <Provider store={store}>
+            <LandingPage reportError={() => {}} isSidebarOpen={true} openSidebar={jest.fn()} closeSidebar={jest.fn()} />
+        </Provider>
+      );
       expect(container).toMatchSnapshot();
   });
 });

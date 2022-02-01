@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`test LandingPage component LandingPage renders correctly 1`] = `
+exports[`test LandingPage component rendering LandingPage renders correctly 1`] = `
 <div>
   <div
     data-testid="landingPage"
@@ -12,7 +12,6 @@ exports[`test LandingPage component LandingPage renders correctly 1`] = `
     >
       <div
         class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiDrawer-paper MuiDrawer-paperAnchorRight MuiDrawer-paperAnchorDockedRight css-18sg6k4-MuiPaper-root-MuiDrawer-paper"
-        style="visibility: hidden; webkit-transform: translateX(1024px); transform: translateX(1024px);"
       >
         <div
           class="css-cfiwj7"
@@ -400,7 +399,6 @@ exports[`test LandingPage component LandingPage renders correctly 1`] = `
                       class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 MuiCard-root css-935hc6-MuiPaper-root-MuiCard-root"
                       style="margin: 5%;"
                     >
-                      EditModelGroupModal
                       <div
                         class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
                       >
@@ -734,17 +732,13 @@ exports[`test LandingPage component LandingPage renders correctly 1`] = `
                           role="button"
                           tabindex="0"
                         >
-                          <span
-                            class="notranslate"
-                          >
-                            ​
-                          </span>
+                          Southern Hemisphere (SH) Polar (90–60°S)
                         </div>
                         <input
                           aria-hidden="true"
                           class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
                           tabindex="-1"
-                          value="-90,90"
+                          value="-90,-60"
                         />
                         <svg
                           aria-hidden="true"
@@ -781,7 +775,11 @@ exports[`test LandingPage component LandingPage renders correctly 1`] = `
                         <span
                           class="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
                         >
-                          TIME
+                          <p
+                            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                          >
+                            TIME
+                          </p>
                         </span>
                       </div>
                       <div

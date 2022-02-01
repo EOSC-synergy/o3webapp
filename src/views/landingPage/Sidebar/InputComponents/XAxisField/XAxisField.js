@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setDisplayXRange, selectPlotXRange } from "../../../../../store/plotSlice/plotSlice";
 import { Typography, Grid, TextField, FormControl } from "@mui/material";
-import {START_YEAR, END_YEAR} from '../../../../../utils/constants';
+import { START_YEAR, END_YEAR } from '../../../../../utils/constants';
 
 /**
  * Enables the user to choose the range that should be visible on the x-axis of the plot.

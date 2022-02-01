@@ -1,26 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import CookieConsentModal from './CookieConsentModal';
-import renderer from 'react-test-renderer';
-import "@testing-library/jest-dom/extend-expect";
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-import {shallow, configure} from 'enzyme';
+import { render } from '@testing-library/react';
 
-describe('CookieConsentModal component', () => {
-    configure({adapter: new Adapter()});
-    let wrapper;
-    beforeEach(() => {
-        wrapper = shallow(<CookieConsentModal /* isOpen={true} */ />);
+describe('test CookieConsentModal component rendering', () => {
+
+    it('renders without crashing', () => {
+        render(<CookieConsentModal isOpen={true} onClose={jest.fn()} />);
     });
 
-    it('should render without crashing', () => {
-        const div = document.createElement('div');
-        ReactDOM.render(wrapper, div);
+    it('renders as expected', () => {
+        const { baseElement } = render(<CookieConsentModal isOpen={true} onClose={jest.fn()} />);
+        expect(baseElement).toMatchSnapshot();
     });
 
-    // Snapshot test
-    it('should render correctly from config file', () => {
-        const tree = renderer.create(wrapper).toJSON();
-        expect(tree).toMatchSnapshot();
-    });
 });

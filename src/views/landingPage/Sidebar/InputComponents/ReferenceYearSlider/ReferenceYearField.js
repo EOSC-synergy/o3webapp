@@ -3,7 +3,7 @@ import { Grid, Typography, FormControl, TextField } from "@mui/material";
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux";
 import { setYear } from "../../../../../store/referenceSlice/referenceSlice";
-import {END_YEAR, START_YEAR} from "../../../../../utils/constants";
+import { END_YEAR, START_YEAR } from "../../../../../utils/constants";
 
 /**
  * Enables the user to select a reference year.

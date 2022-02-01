@@ -1,13 +1,7 @@
 import * as React from 'react';
 import Graph from './Graph/Graph';
 import Sidebar from './Sidebar/Sidebar';
-import Button from '@mui/material/Button';
 import PropTypes from "prop-types";
-import { FormControl, Grid } from '@mui/material';
-import { height, width } from '@mui/system';
-import ModelGroupConfigurator from './Sidebar/InputComponents/ModelGroupConfigurator/ModelGroupConfigurator';
-
-
 
 /**
  * main view of web page
@@ -22,7 +16,7 @@ function LandingPage(props) {
     
     return (
     <div data-testid="landingPage" style={{width: "100%"}}> 
-      <Sidebar reportError={props.reportError} isOpen={props.isSidebarOpen} onClose={props.closeSidebar} onOpen={props.openSidebar} />
+      <Sidebar reportError={props.reportError} onOpen={props.openSidebar} isOpen={props.isSidebarOpen} onClose={props.closeSidebar} />
   
       <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
         <div style={{width: "95%"}}>
@@ -35,7 +29,10 @@ function LandingPage(props) {
 }
 
 LandingPage.propTypes = {
-    reportError: PropTypes.func,
+    reportError: PropTypes.func.isRequired,
+    isSidebarOpen: PropTypes.bool.isRequired,
+    closeSidebar: PropTypes.func.isRequired,
+    openSidebar: PropTypes.func.isRequired,
 }
 
 export default LandingPage;

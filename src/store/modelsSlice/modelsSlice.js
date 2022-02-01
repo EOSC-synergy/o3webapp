@@ -32,7 +32,6 @@ const MODEL_DATA_TEMPLATE = {   // single model
 
 const MODEL_GROUP_TEMPLATE = { 
     name: "",
-    modelList: [],
     models: {},         // models is lookup table
     isVisible: true,    // show/hide complete group
     visibileSV: {       // lookup table so the reducer impl. can be more convenient
@@ -52,7 +51,6 @@ const MODEL_GROUP_TEMPLATE = {
  */
 const initialState = {
     idCounter: 1,
-    modelGroupList: [0],
     // currently active plot
     modelGroups: {
         // this objects holds key-value-pairs, the keys being the model-group 
@@ -61,7 +59,7 @@ const initialState = {
             name: "Example Group",
             // model group storing all information until it is possible 
             // to implement more model groups
-            modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"],
+            modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2", "CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG", "CCMI-1_CCCma_CMAM-refC2"],
             models: { // models is lookup table
                 "CCMI-1_ACCESS_ACCESS-CCM-refC2": { // single model
                     color: null, // if not set it defaults to standard value from api
@@ -70,6 +68,24 @@ const initialState = {
                     derivative: true,
                     median: true,
                     percentile: true,
+                },
+                "CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG": {
+                    color: null, // if not set it defaults to standard value from api
+                    isVisible: true, // show/hide individual models from a group
+                    mean: true,
+                    derivative: true,
+                    median: true,
+                    percentile: true,
+
+                }, 
+                "CCMI-1_CCCma_CMAM-refC2": {
+                    color: null, // if not set it defaults to standard value from api
+                    isVisible: true, // show/hide individual models from a group
+                    mean: true,
+                    derivative: true,
+                    median: true,
+                    percentile: true,
+
                 }
             },
             isVisible: true, // show/hide complete group
@@ -118,37 +134,34 @@ const modelsSlice = createSlice({
         setModelsOfModelGroup(state, action) { 
             const { groupId, groupName, modelList } = action.payload;
             // set model group
-            if (state.modelGroupList.includes(groupId)) {
+            if (groupId in state.modelGroups) {
                 const selectedModelGroup = state.modelGroups[groupId];
                 state.modelGroups[groupId].name = groupName;
                 // remove unwanted
-                const toDelete = selectedModelGroup.modelList.filter(model => !modelList.includes(model));
+                const listOfCurrent = Object.keys(selectedModelGroup.models);
+                const toDelete = listOfCurrent.filter(model => !modelList.includes(model));
                 
                 toDelete.forEach( // delete from lookup table
                     model => delete selectedModelGroup.models[model]
                 );
-                // filter out from list
-                selectedModelGroup.modelList = selectedModelGroup.modelList.filter(model => !toDelete.includes(model));  
                 
                 // add new ones
                 for (let model of modelList) {
-                    if (!selectedModelGroup.modelList.includes(model)){ // initialize with default settings
-                        selectedModelGroup.modelList.push(model);
-                        selectedModelGroup.models[model] = Object.assign({}, MODEL_DATA_TEMPLATE);
+                    if (!(model in selectedModelGroup.models)){ // initialize with default settings
+                        selectedModelGroup.models[model] = JSON.parse(JSON.stringify(MODEL_DATA_TEMPLATE));
                     }
                 };
                 
             } else { // create new group
                 const newGroupId = state.idCounter++;
-                state.modelGroupList.push(newGroupId);
-                state.modelGroups[newGroupId] = Object.assign({}, MODEL_GROUP_TEMPLATE);
-                state.modelGroups[newGroupId].name = groupName;
-                const currentGroup = state.modelGroups[newGroupId];
-                for (let model of modelList) {
-                    currentGroup.modelList.push(model);
-                    currentGroup.models[model] = Object.assign({}, MODEL_DATA_TEMPLATE);
-                };
+                const currentGroup = JSON.parse(JSON.stringify(MODEL_GROUP_TEMPLATE))
+                currentGroup.name = groupName;
 
+                for (let model of modelList) {
+                    currentGroup.models[model] = JSON.parse(JSON.stringify(MODEL_DATA_TEMPLATE));
+                };
+                
+                state.modelGroups[newGroupId] = currentGroup;
             }
             // change name either way
             
@@ -174,11 +187,10 @@ const modelsSlice = createSlice({
          */
         deleteModelGroup(state, action) {
             const { groupId } = action.payload;
-            if (!state.modelGroupList.includes(groupId)) { // no group with this name in store
+            if (!(groupId in state.modelGroups)) { // no group with this name in store
                 throw `tried to access "${groupId}" which is not a valid group`;
             };
 
-            state.modelGroupList = state.modelGroupList.filter(name => name !== groupId); // filter out name
             delete state.modelGroups[groupId]; // delete from lookup table
 
         },
@@ -203,11 +215,11 @@ const modelsSlice = createSlice({
         updatePropertiesOfModelGroup(state, action) {
             const { groupId, data } = action.payload;
 
-            if (!state.modelGroupList.includes(groupId)) { // no group with this name in store
+            if (!(groupId in state.modelGroups)) { // no group with this name in store
                 throw `tried to access "${groupId}" which is not a valid group`;
             };
 
-            for (let model of state.modelGroups[groupId].modelList) {
+            for (let model of Object.keys(state.modelGroups[groupId].models)) {
                 const { color, mean, median, derivative, percentile, isVisible } = data[model]; // expect data to meet certain scheme
                 state.modelGroups[groupId].models[model] = {
                     color,
@@ -244,7 +256,7 @@ const modelsSlice = createSlice({
             if (!STATISTICAL_VALUES_LIST.includes(svType)) { // svType doesn't represent a valid statistical value
                 throw `tried to set statistial value "${svType}" that is not a valid statistical value (${STATISTICAL_VALUES_LIST.join("|")})`;
             }
-            if (!state.modelGroupList.includes(groupId)) { // no group with this name in store
+            if (!(groupId in state.modelGroups)) { // no group with this name in store
                 throw `tried to access "${groupId}" which is not a valid group`;
             };
 
@@ -265,12 +277,13 @@ const modelsSlice = createSlice({
          * @param {object} action accepts the action returned from updateModelGroup()
          * @param {object} action.payload the payload is an object containg the given data
          * @param {int} action.payload.groupId a string specifying the group
+         * @param {string} action.payload.svType the SV as a string
          * @param {boolean} action.payload.isIncluded should the SV be displayed for the given group
          */
         setVisibilityForGroup(state, action) { // this is for an entire group
             const { groupId, isVisible } = action.payload;
 
-            if (!state.modelGroupList.includes(groupId)) {
+            if (!(groupId in state.modelGroups)) {
                 throw `tried to access "${groupId}" which is not a valid group`;
             };
 
@@ -304,7 +317,7 @@ export default modelsSlice.reducer;
  * @param {int} groupId the group id specifies which group should be retrieved
  * @returns an array containg all models currently in the given group
  */
-export const selectModelsOfGroup = (state, groupId) => state.models.modelGroups[groupId].modelList;
+export const selectModelsOfGroup = (state, groupId) => Object.keys(state.models.modelGroups[groupId].models);
 /**
  * This selector allows components to select the model data of a given group (specified by ID)
  * 
@@ -343,4 +356,4 @@ export const selectVisibilityOfGroup = (state, groupId) => state.models.modelGro
  * @param {object} state the global redux state
  * @returns an array holding all valid group ids
  */
-export const selectAllGroupIds = state => state.models.modelGroupList;
+export const selectAllGroupIds = state => Object.keys(state.models.modelGroups).map(key => parseInt(key));

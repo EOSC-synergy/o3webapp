@@ -48,8 +48,7 @@ describe('tests graph component rendering', () => {
             }
         ).mockReturnValueOnce(
             {
-                modelGroupList: [],
-                modelGrous: {},
+                modelGroups: {},
             }
         ).mockReturnValueOnce(
             "tco3_zm"            
@@ -61,8 +60,7 @@ describe('tests graph component rendering', () => {
             }
         ).mockReturnValueOnce(
             {
-                modelGroupList: [],
-                modelGrous: {},
+                modelGroups: {},
             }
         );
 
