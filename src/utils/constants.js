@@ -150,7 +150,7 @@ export const HEIGHT_GRAPH = "400px";
 /*
 // Options Formatter
 */
-export const START_YEAR = 1959
+export const START_YEAR = 1960
 export const END_YEAR = 2100
 // year list: 1959 - 2100
 export const IMPLICIT_YEAR_LIST = [...Array(END_YEAR - START_YEAR + 1).keys()].map(number => `${START_YEAR + number}`)
@@ -211,4 +211,6 @@ export const SV_COLORING = {
     median: "#f38e19",
     derivative: "#36531b",
     percentile: "#284bc2",
+    "mean+std": "#ff0000",
+    "mean-std": "#ff0000",
 }

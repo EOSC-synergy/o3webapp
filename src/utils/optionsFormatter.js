@@ -136,7 +136,6 @@ function create2dArray(i) {
 
 function calculateSvForModels(modelList, data) {
     // only mean at beginning
-    console.log(modelList)
 
     const SERIES_LENGTH = data[modelList[0]].data.length; // grab length of first model, should all be same
 
@@ -152,7 +151,7 @@ function calculateSvForModels(modelList, data) {
         }
     }
 
-    const svHolder = {}
+    const svHolder = {};
     STATISTICAL_VALUES_LIST.forEach(
         sv => svHolder[sv] = [] // init with empty array
     )
@@ -164,6 +163,13 @@ function calculateSvForModels(modelList, data) {
         };
     };
 
+    svHolder["mean+std"] = [];
+    svHolder["mean-std"] = [];
+    for (let i = 0; i < svHolder[STATISTICAL_VALUES.mean].length; ++i) {
+        svHolder["mean+std"].push(svHolder.mean[i] + svHolder.derivative[i]);
+        svHolder["mean-std"].push(svHolder.mean[i] - svHolder.derivative[i]);
+    }
+    console.log(svHolder);
     return svHolder;
 }
 
@@ -279,7 +285,6 @@ export function generateSeries({plotId, data, modelsSlice}) {
     } else {
         throw `the given plot id "${plotId}" is not defined`;
     }
-    console.log(series);
     return {series, styling: {colors, dashArray, width}};
 }
 
@@ -316,7 +321,7 @@ export const defaultTCO3_zm = {
         }
     },
     legend: {
-        show: false, // only shows up if there is more than one line
+        show: true, // only shows up if there is more than one line
     },
     dataLabels: {
         enabled: false,
