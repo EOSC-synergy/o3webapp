@@ -77,9 +77,10 @@ function LatitudeBandSelector(props) {
     const [isCustomizable, setIsCustomizable] = React.useState(false);
 
     /**
-     * The default value that should be selected after initially loading this module
+     * The default value that should be selected after initially loading this module.
+     * Default is Global (90°S–90°N)
      */
-    const defaultValue = { minLat: -90, maxLat: 90 };
+    const defaultValue = latitudeBands[6].value;
 
     /**
      * handles the change when the user clicked on a new latitude band option 
@@ -117,13 +118,13 @@ function LatitudeBandSelector(props) {
 
     /**
      * Finds selectedLocation in latitudeBands.
-     * @returns {{text, value}} the location
+     * @returns {{number, number}} the location
      */
     const findLatitudeBandByLocation = () => {
         latitudeBands.forEach( latBand => {
             if (latBand.value === 'custom' ||
                 latBand.value.minLat === selectedLocation.minLat && latBand.value.maxLat === selectedLocation.maxLat) {
-                return latBand;
+                return latBand.value;
             }
         });
     }

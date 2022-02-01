@@ -31,11 +31,7 @@ exports[`renders correctly 1`] = `
         role="button"
         tabindex="0"
       >
-        <span
-          class="notranslate"
-        >
-          ​
-        </span>
+        Global (90°S–90°N)
       </div>
       <input
         aria-hidden="true"
