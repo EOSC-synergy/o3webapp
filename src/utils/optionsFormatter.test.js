@@ -56,17 +56,11 @@ describe("testing optionsFormatter functionality", () => {
             ).toEqual({
                 modelA: {
                     plotStyle: "plotstyleData",
-                    data: [ // a direct lookup table might be faster (to consider if boxplot calculation becomes to slow!)
-                        {
-                            x: "regionA",
-                            y: 2010,
-                        },
-                        {
-                            x: "regionB",
-                            y: 2022,
-                        }
-                    ]
-                        
+                    data: {
+                        "regionA": 2010,
+                        "regionB": 2022,
+
+                    } // a direct lookup table might be faster (to consider if boxplot calculation becomes to slow!)
                 }
             });
         });
