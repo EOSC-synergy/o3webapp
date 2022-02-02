@@ -294,7 +294,6 @@ function buildSvMatrixTco3Zm({modelList, data}) {
 function buildSvMatrixTco3Return({modelList, data}) {
     const matrix = create2dArray(ALL_REGIONS_ORDERED.length);
 
-    //console.log(data);
     for (const index in ALL_REGIONS_ORDERED) {
         const region = ALL_REGIONS_ORDERED[index]; // iterate over regions
         for (const model of modelList) {
@@ -303,7 +302,6 @@ function buildSvMatrixTco3Return({modelList, data}) {
             )
         }
     }
-    console.log(matrix);
     return matrix;
     
 }
@@ -477,7 +475,6 @@ function generateTco3_ReturnSeries({data, modelsSlice}) {
                 data: sortedData,
                 type: "scatter",
             });
-            console.log(model + " " + colorNameToHex(modelData.plotStyle.color));
             series.colors.push(
                 colorNameToHex(modelData.plotStyle.color)
             )
@@ -500,6 +497,7 @@ SERIES_GENERATION[O3AS_PLOTS.tco3_return] = generateTco3_ReturnSeries;
 
 export function generateSeries({plotId, data, modelsSlice}) {
     const series = SERIES_GENERATION[plotId]({data, modelsSlice}); // execute correct function based on mapping
+    console.log(series);
     return {
         data: series.data, 
         styling: {
@@ -512,19 +510,19 @@ export function generateSeries({plotId, data, modelsSlice}) {
 
 export function getOptions({plotId, styling, plotTitle}) {
     if (plotId === O3AS_PLOTS.tco3_zm) {
-        const newOptions = Object.assign({}, defaultTCO3_zm);
+        const newOptions = JSON.parse(JSON.stringify(defaultTCO3_zm)); // dirt simple and not overly horrible
         newOptions.xaxis.categories = IMPLICIT_YEAR_LIST;
         newOptions.colors = styling.colors;
         newOptions.stroke.width = styling.width;
         newOptions.stroke.dashArray = styling.dashArray;
-        newOptions.title = Object.assign({}, newOptions.title); // this is necessary in order for apexcharts to update the title
+        newOptions.title = JSON.parse(JSON.stringify(newOptions.title)); // this is necessary in order for apexcharts to update the title
         newOptions.title.text = plotTitle;
         return newOptions;
 
     } else if (plotId === O3AS_PLOTS.tco3_return) {
-        const newOptions = Object.assign({}, default_TCO3_return);
+        const newOptions = JSON.parse(JSON.stringify(default_TCO3_return));
         newOptions.colors.push(...styling.colors); // for the legend!
-        newOptions.title = Object.assign({}, newOptions.title);  // this is necessary in order for apexcharts to update the title
+        newOptions.title = JSON.parse(JSON.stringify(newOptions.title));  // this is necessary in order for apexcharts to update the title
         newOptions.title.text = plotTitle;
         //newOptions.markers.colors.push(...styling.colors);
         return newOptions;
