@@ -217,7 +217,14 @@ export function generateSeries({plotId, data, modelsSlice}) {
     }; // return generated series with styling to pass to apexcharts chart
 }
 
-
+/**
+ * This method generates the data series for tco3_zm for all models that should be displayed (specified via groups).
+ * It futhermore adds the statistical values also as series at the end.
+ * 
+ * @param {object} obj.data the raw data from the api for the current options
+ * @param {object} obj.modelsSlice the slice of the store containg information about the model groups
+ * @returns a combination of data and statistical values series
+ */
 function generateTco3_ZmSeries({data, modelsSlice}) {
     const series = {
         data: [],
@@ -254,6 +261,14 @@ function generateTco3_ZmSeries({data, modelsSlice}) {
     return combineSeries(series, svSeries);
 }
 
+/**
+ * This plugin-method is used to specify how series for tco3_zm should be build inside 
+ * the buildStatisticalValues-function.
+ * 
+ * @param {string} name of the series
+ * @param {array} svData array of plaint numbers
+ * @returns a series matching the tco3_zm style for apexcharts.
+ */
 function generateSingleTco3ZmSeries(name, svData) {
     return {
         name: name,
@@ -262,6 +277,19 @@ function generateSingleTco3ZmSeries(name, svData) {
     }
 }
 
+/**
+ * This plug-in method is used to specify how the data should be parsed and 
+ * arranged so that the generic buildStatisticalValues-Function can 
+ * take care of the calculation.
+ * 
+ * The data arrangement is basically a transposition.
+ * The first datapoint of each model ist grouped into the first array.
+ * and so on...
+ * 
+ * @param {array} obj.modelList list of models of a group that should be included
+ * @param {object} obj.data an object holding all the data from the api
+ * @returns a 2D array containing all the data (transpose matrix of given data)
+ */
 function buildSvMatrixTco3Zm({modelList, data}) {
     const SERIES_LENGTH = data[modelList[0]].data.length; // grab length of first model, should all be same
 
@@ -277,6 +305,14 @@ function buildSvMatrixTco3Zm({modelList, data}) {
     return matrix;
 }
 
+/**
+ * This method generates the data series for the tco3_return for all models that should be displayed (specified via groups).
+ * It futhermore adds the statistical values also as series at the end.
+ * 
+ * @param {object} obj.data the raw data from the api for the current options
+ * @param {object} obj.modelsSlice the slice of the store containg information about the model groups
+ * @returns a combination of data and statistical values series
+ */
 function generateTco3_ReturnSeries({data, modelsSlice}) {
     const series = {
         data: [],
@@ -332,19 +368,27 @@ function generateTco3_ReturnSeries({data, modelsSlice}) {
     return combineSeries(series, svSeries);
 }
 
+/**
+ * This plugin-method is used to specify how series for tco3_return should be build inside 
+ * the buildStatisticalValues-function.
+ * 
+ * @param {string} name of the series
+ * @param {array} svData array of plaint numbers
+ * @returns a series matching the tco3_return style for apexcharts.
+ */
 function generateSingleTco3ReturnSeries(name, svData) {
     const transformedData = ALL_REGIONS_ORDERED.map((region, index) => {
         return {
             x: region,
             y: svData[index],
         }
-    })
+    });
 
     return {
         name: name,
         data: transformedData,
         type: "scatter", // make generic
-    }
+    };
 }
 
 
@@ -437,6 +481,14 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
 }
 
 
+/**
+ * Calculates the statistical values for the given modelList and data.
+ * 
+ * @param {} modelList
+ * @param {} data
+ * @param {} groupData
+ * @param {} buildMatrix
+ */
 function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass group data
     // only mean at beginning
 
@@ -493,14 +545,14 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
 }
 
 /**
- * This function is called only once when the data from the api is fetched. It transforms the data
+ * This function is called only once when the data from the API is fetched. It transforms the data
  * into a format that (hopefully) speeds up the computation of certain things.
  * 
  * The TCO3_ZM data is transformed from a x and y array into one single array whose first index 
- * represents the START_YEAR (1959) and so on. It contains either data points or null.
+ * represents the START_YEAR) and so on. It contains either data points or null.
  * x = ['1960', '1963', '1965', '1966']
  * y = [0, 1, 2, 3]
- * normalized: [null (1959), 0, null (1961), null (1962), 1, null (1964), 2, 3, null (1967), ...]
+ * normalized: [0, null (1961), null (1962), 1, null (1964), 2, 3, null (1967), ...]
  * 
  * The TCO3_RETURN data is transformed from a x and y array into a lookup table with the given region:
  * 
@@ -524,9 +576,9 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
  *     2052
  *   ]
  * 
- * @param {string} obj.plotId a string specifying the plot (to perform different transformations, according to the data format)
- * @param {object} obj.data an object holding the data as it was returned from the api 
- * @returns 
+ * @param {string} obj.plotId       A string specifying the plot (to perform different transformations, according to the data format)
+ * @param {object} obj.data         An object holding the data as it was returned from the API
+ * @returns                         The pretransformed API data
  */
 export const preTransformApiData = ({plotId, data}) => {
     if (plotId === O3AS_PLOTS.tco3_zm) {
@@ -560,6 +612,12 @@ export const preTransformApiData = ({plotId, data}) => {
 
 // UTILITY:
 
+/**
+ * Converts the given color name to its corresponding hex code.
+ * 
+ * @param {string} color    The name of the color as a string
+ * @returns                 The hex code corresponding to the given color name
+ */
 export function colorNameToHex(color)
 {
     const colors = {"aliceblue":"#f0f8ff","antiquewhite":"#faebd7","aqua":"#00ffff","aquamarine":"#7fffd4","azure":"#f0ffff",
@@ -594,9 +652,10 @@ export function colorNameToHex(color)
 };
 
 /**
- * Converts the stroke style given by the api into the format supported by apexcharts.
+ * Converts the stroke style given by the API into the format supported by apexcharts.
  * 
- * 
+ * @param {number} apiStyle     The stroke style specified by the API
+ * returns                      The stroke style for the apexcharts library
  */
 export function convertToStrokeStyle(apiStyle) {
     const styles = {
@@ -612,12 +671,12 @@ export function convertToStrokeStyle(apiStyle) {
 
 /**
  * Combines 2 data series objects into a new one.
- * The elements of series2 get appended to a copy of series1.
- * A series object has the following form:
- *  { data: Array, colors: Array, width: Array, dashArray: Array}
+ * The copied elements of series2 get appended to a copy of series1.
+ * A series object has the following form: { data: Array, colors: Array, width: Array, dashArray: Array}
  * 
  * @param {obj} series1     The first data series object
  * @param {obj} series2     The second data series object
+ * @returns                 New series containing series1 and series2
  */
 function combineSeries(series1, series2) {
     const newSeries = {};
@@ -632,6 +691,7 @@ function combineSeries(series1, series2) {
  * Utility function to create an array of size i with empty arrays inside of it.
  * 
  * @param {number} i    The size of the array containing the empty arrays
+ * @returns             The array of size i containing empty arrays
  */
 function create2dArray(i) {
     return Array.from(Array(i), () => []);
