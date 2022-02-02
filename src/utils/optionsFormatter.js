@@ -358,10 +358,10 @@ function generateSingleTco3ZmSeries(name, svData) {
 
 function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleSvSeries}) {
     const svSeries = {
-        svData: [],
-        svColors: [],
-        svWidth: [],
-        svDashArray: [],
+        data: [],
+        colors: [],
+        width: [],
+        dashArray: [],
     };
     
     const modelGroups = modelsSlice.modelGroups;
@@ -375,10 +375,10 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
                 || sv === STATISTICAL_VALUES.percentile) continue; // skip for now
             
  
-            svSeries.svData.push(generateSingleSvSeries(`${sv}(${groupData.name})`, svData));
-            svSeries.svColors.push(SV_COLORING[sv]);   // coloring?
-            svSeries.svWidth.push(1);                  // thicker?
-            svSeries.svDashArray.push(0);              // solid?       
+            svSeries.data.push(generateSingleSvSeries(`${sv}(${groupData.name})`, svData));
+            svSeries.colors.push(SV_COLORING[sv]);   // coloring?
+            svSeries.width.push(1);                  // thicker?
+            svSeries.dashArray.push(0);              // solid?       
         }
     }
     return { svSeries };
@@ -411,17 +411,17 @@ function generateTco3_ZmSeries({data, modelsSlice}) {
         buildMatrix: buildSvMatrixTco3Zm, 
         generateSingleSvSeries: generateSingleTco3ZmSeries
     });
-    series.push(...svSeries);
-    colors.push(...svColors);
-    width.push(...svWidth);
-    dashArray.push(...svDashArray);
     
-    return {series, colors, width, dashArray};
+    return {series: combineSeries(series, svSeries)};
 }
 
 function combineSeries(series1, series2) {
     const newSeries = {};
-    newSeries.data = 
+    newSeries.data = [...series1.data, ...series2.data]
+    newSeries.color = [...series1.color, ...series2.color]
+    newSeries.width = [...series1.width, ...series2.width]
+    newSeries.dashArray = [...series1.dashArray, ...series2.dashArray]
+    return newSeries;
 }
 
 function generateTco3_ReturnSeries({data, series, colors, modelsSlice}) {
@@ -461,30 +461,20 @@ function generateTco3_ReturnSeries({data, series, colors, modelsSlice}) {
     buildStatisticalSeries({data, series, colors, dashArray: [], width: [], modelsSlice, buildMatrix: buildSvMatrixTco3Return, generateSingleSvSeries: generateSingleTco3ReturnSeries}); // dashArray and width are discarded
 }
 
-export function getIncludedModels(modelsSlice) {
-    const includedModels = new Set();
-    const modelGroups = modelsSlice.modelGroups;
-    for (let id of Object.keys(modelGroups)) {
-        if (!modelGroups[id].isVisible) { // skip group: should not be visible
-            continue;
-        }
-        for (let model of Object.keys(modelGroups[id].models)) {
-            if (!modelGroups[id].models[model].isVisible) { // skip model, not visible
-                continue;
-            }
-            includedModels.add(model);
-        }
-    }
-    return includedModels;
-}
-
 const SERIES_GENERATION = {};
 SERIES_GENERATION[O3AS_PLOTS.tco3_zm] = generateTco3_ZmSeries;
 SERIES_GENERATION[O3AS_PLOTS.tco3_return] = generateTco3_ReturnSeries;
 
 export function generateSeries({plotId, data, modelsSlice}) {
-    const {series, colors, dashArray, width} = SERIES_GENERATION[plotId]({data, modelsSlice}); // execute correct function based on mapping
-    return {series, styling: {colors, dashArray, width}}; // return generated series with styling to pass to apexcharts chart
+    const {series} = SERIES_GENERATION[plotId]({data, modelsSlice}); // execute correct function based on mapping
+    return {
+        data: series.data, 
+        styling: {
+            colors: series.color, 
+            dashArray: series.dashArray, 
+            width: series.width,
+        }
+    }; // return generated series with styling to pass to apexcharts chart
 }
 
 export function getOptions({plotId, styling, plotTitle}) {
