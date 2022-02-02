@@ -76,15 +76,12 @@ export const preTransformApiData = ({plotId, data}) => {
             // top structure
             lookUpTable[datum.model] = {
                 plotStyle: datum.plotstyle,
-                data: [] 
+                data: {}
             };
 
             // fill data
             for (let index in datum.x) {
-                lookUpTable[datum.model].data.push({
-                    x: datum.x[index],
-                    y: datum.y[index],
-                });
+                lookUpTable[datum.model].data[datum.x[index]] = datum.y[index];
             }
         }
         return lookUpTable;
@@ -209,7 +206,7 @@ function buildStatisticalSeries({data, series, colors, dashArray, width, modelsS
             if (sv === STATISTICAL_VALUES.derivative
                 || sv === STATISTICAL_VALUES.percentile) continue; // skip for now
             
-
+ 
             series.push({
                 name: `${sv}(${groupData.name})`,
                 data: svData,
