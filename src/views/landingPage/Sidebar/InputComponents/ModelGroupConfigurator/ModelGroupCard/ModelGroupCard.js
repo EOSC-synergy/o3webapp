@@ -109,7 +109,7 @@ function ModelGroupCard(props) {
                     <IconButton aria-label="change visibility" onClick={toggleModelGroupVisibility}><VisibilityIcon /></IconButton>
                 </Grid>
                 <Grid item xs={8} textAlign="center">
-                    <Typography variant="h6">{modelGroupName}</Typography>
+                    <Typography variant="h6" data-testid="ModelGroupCard-groupName">{modelGroupName}</Typography>
                 </Grid>
             </Grid>
             <Divider />
