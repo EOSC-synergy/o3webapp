@@ -473,6 +473,7 @@ function generateTco3_ReturnSeries({data, modelsSlice}) {
                 data: sortedData,
                 type: "scatter",
             });
+            console.log(model + " " + colorNameToHex(modelData.plotStyle.color));
             series.colors.push(
                 colorNameToHex(modelData.plotStyle.color)
             )
