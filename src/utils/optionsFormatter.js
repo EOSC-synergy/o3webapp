@@ -153,12 +153,12 @@ function buildSvMatrixTco3Zm({modelList, data}) {
 function buildSvMatrixTco3Return({modelList, data}) {
     const matrix = create2dArray(ALL_REGIONS_ORDERED.length);
 
-    console.log(data);
+    //console.log(data);
     for (const index in ALL_REGIONS_ORDERED) {
         const region = ALL_REGIONS_ORDERED[index]; // iterate over regions
         for (const model of modelList) {
             matrix[index].push(
-                data[model].data[region]
+                data[model].data[region] || null
             )
         }
     }
@@ -192,10 +192,34 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
         svHolder["mean+std"].push(svHolder.mean[i] + svHolder.derivative[i]);
         svHolder["mean-std"].push(svHolder.mean[i] - svHolder.derivative[i]);
     }
+    console.log(svHolder)
     return svHolder;
 }
 
-function buildStatisticalSeries({data, series, colors, dashArray, width, modelsSlice, buildMatrix}) {
+function generateSingleTco3ReturnSeries(name, svData) {
+    const transformedData = ALL_REGIONS_ORDERED.map((region, index) => {
+        return {
+            x: region,
+            y: svData[index],
+        }
+    })
+
+    return {
+        name: name,
+        data: transformedData,
+        type: "scatter", // make generic
+    }
+}
+
+function generateSingleTco3ZmSeries(name, svData) {
+    return {
+        name: name,
+        data: svData,
+        type: "line",
+    }
+}
+
+function buildStatisticalSeries({data, series, colors, dashArray, width, modelsSlice, buildMatrix, generateSingleSvSeries}) {
     const modelGroups = modelsSlice.modelGroups;
     for (const [id, groupData] of Object.entries(modelGroups)) {
 
@@ -207,10 +231,7 @@ function buildStatisticalSeries({data, series, colors, dashArray, width, modelsS
                 || sv === STATISTICAL_VALUES.percentile) continue; // skip for now
             
  
-            series.push({
-                name: `${sv}(${groupData.name})`,
-                data: svData,
-            })
+            series.push(generateSingleSvSeries(`${sv}(${groupData.name})`, svData));
             colors.push(SV_COLORING[sv]);   // coloring?
             width.push(1);                  // thicker?
             dashArray.push(0);              // solid?       
@@ -234,7 +255,7 @@ function generateTco3_ZmSeries({data, series, colors, dashArray, width, modelsSl
     }
 
     // generate SV!
-    buildStatisticalSeries({data, series, colors, dashArray, width, modelsSlice, buildMatrix: buildSvMatrixTco3Zm});
+    buildStatisticalSeries({data, series, colors, dashArray, width, modelsSlice, buildMatrix: buildSvMatrixTco3Zm, generateSingleSvSeries: generateSingleTco3ZmSeries});
 }
 
 function generateTco3_ReturnSeries({data, series, colors, modelsSlice}) {
@@ -271,7 +292,7 @@ function generateTco3_ReturnSeries({data, series, colors, modelsSlice}) {
     }
 
     // 3. generate statistical values
-    //buildStatisticalSeries({data, series, colors, dashArray: [], width: [], modelsSlice, buildMatrix: buildSvMatrixTco3Return}); // dashArray and width are discarded
+    buildStatisticalSeries({data, series, colors, dashArray: [], width: [], modelsSlice, buildMatrix: buildSvMatrixTco3Return, generateSingleSvSeries: generateSingleTco3ReturnSeries}); // dashArray and width are discarded
 }
 
 export function getIncludedModels(modelsSlice) {
@@ -313,6 +334,7 @@ export function generateSeries({plotId, data, modelsSlice}) {
     } else {
         throw new Error(`the given plot id "${plotId}" is not defined`);
     }
+    console.log(series);
     return {series, styling: {colors, dashArray, width}};
 }
 
