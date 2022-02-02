@@ -104,9 +104,9 @@ function calculateBoxPlotValues(data) {
 
     for (const [model, modelData] of Object.entries(data)) {
 
-        for (let xypair of modelData.data) {
+        for (const [region, year] of Object.entries(modelData.data)) {
             
-            staticData[xypair.x].push(xypair.y);
+            staticData[region].push(year);
         }
 
     }
@@ -255,15 +255,9 @@ function generateTco3_ReturnSeries({data, series, colors, modelsSlice}) {
     // 2. build scatter plot
     for (const [model, modelData] of Object.entries(data)) {
 
-        const transformed = []
-        for (let xypair of modelData.data) {
-            transformed[xypair.x] = xypair.y;
-        }
-        //modelData.data.forEach(xypair => ) // this could be done after fetching!
-        
         const sortedData = ALL_REGIONS_ORDERED.map(region => ({
             x: region,
-            y: transformed[region] || null, // null as default if data is missing
+            y: modelData.data[region] || null, // null as default if data is missing
         }));
         
         series.push({
@@ -277,7 +271,7 @@ function generateTco3_ReturnSeries({data, series, colors, modelsSlice}) {
     }
 
     // 3. generate statistical values
-    buildStatisticalSeries({data, series, colors, dashArray: [], width: [], modelsSlice, buildMatrix: buildSvMatrixTco3Return}); // dashArray and width are discarded
+    //buildStatisticalSeries({data, series, colors, dashArray: [], width: [], modelsSlice, buildMatrix: buildSvMatrixTco3Return}); // dashArray and width are discarded
 }
 
 export function getIncludedModels(modelsSlice) {
