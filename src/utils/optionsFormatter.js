@@ -1,5 +1,9 @@
 import { q25, q75, median, mean } from "../services/math/math"
-import { IMPLICIT_YEAR_LIST, O3AS_REGIONS, O3AS_PLOTS, ALL_REGIONS_ORDERED, STATISTICAL_VALUES_LIST, SV_CALCULATION, SV_COLORING, STATISTICAL_VALUES, APEXCHART_PLOT_TYPE, MODEL_LINE_THICKNESS, START_YEAR, END_YEAR } from "./constants"
+import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, ALL_REGIONS_ORDERED, STATISTICAL_VALUES_LIST, SV_CALCULATION, SV_COLORING, STATISTICAL_VALUES, APEXCHART_PLOT_TYPE, MODEL_LINE_THICKNESS, START_YEAR, END_YEAR } from "./constants"
+
+const SERIES_GENERATION = {}; // Map plotId to corresponding generation function
+SERIES_GENERATION[O3AS_PLOTS.tco3_zm] = generateTco3_ZmSeries;
+SERIES_GENERATION[O3AS_PLOTS.tco3_return] = generateTco3_ReturnSeries;
 
 export const defaultTCO3_zm = {
     xaxis: {
@@ -137,7 +141,75 @@ export const default_TCO3_return = {
 };
 
 
+export function generateSeries({plotId, data, modelsSlice}) {
+    const series = SERIES_GENERATION[plotId]({data, modelsSlice}); // execute correct function based on mapping
+    console.log(series);
+    return {
+        data: series.data, 
+        styling: {
+            colors: series.colors, 
+            dashArray: series.dashArray, 
+            width: series.width,
+        }
+    }; // return generated series with styling to pass to apexcharts chart
+}
 
+export function getOptions({plotId, styling, plotTitle}) {
+    if (plotId === O3AS_PLOTS.tco3_zm) {
+        const newOptions = JSON.parse(JSON.stringify(defaultTCO3_zm)); // dirt simple and not overly horrible
+        newOptions.xaxis.categories = IMPLICIT_YEAR_LIST;
+        newOptions.colors = styling.colors;
+        newOptions.stroke.width = styling.width;
+        newOptions.stroke.dashArray = styling.dashArray;
+        newOptions.title = JSON.parse(JSON.stringify(newOptions.title)); // this is necessary in order for apexcharts to update the title
+        newOptions.title.text = plotTitle;
+        return newOptions;
+
+    } else if (plotId === O3AS_PLOTS.tco3_return) {
+        const newOptions = JSON.parse(JSON.stringify(default_TCO3_return));
+        newOptions.colors.push(...styling.colors); // for the legend!
+        newOptions.title = JSON.parse(JSON.stringify(newOptions.title));  // this is necessary in order for apexcharts to update the title
+        newOptions.title.text = plotTitle;
+        //newOptions.markers.colors.push(...styling.colors);
+        return newOptions;
+    }    
+};
+
+function generateTco3_ZmSeries({data, modelsSlice}) {
+    const series = {
+        data: [],
+        colors: [],
+        width: [],
+        dashArray: [],
+    }
+
+    for (const [id, groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups
+        if (!groupData.isVisible) continue; // skip hidden groups
+        for (const [model, modelInfo] of Object.entries(groupData.models)) {
+            if (!modelInfo.isVisible) continue; // skip hidden models
+            const modelData = data[model]; // retrieve data (api)
+            series.data.push({
+                type: APEXCHART_PLOT_TYPE.tco3_zm,
+                name: model,
+                data: modelData.data.map((e, idx) => [START_YEAR + idx, e]),
+            });
+    
+            series.colors.push(colorNameToHex(modelData.plotStyle.color));
+            series.width.push(MODEL_LINE_THICKNESS);
+            series.dashArray.push(convertToStrokeStyle(modelData.plotStyle.linestyle)); // default line thickness
+        }
+    }
+
+    // generate SV!
+    const svSeries = buildStatisticalSeries({
+        data, 
+        modelsSlice, 
+        buildMatrix: buildSvMatrixTco3Zm, 
+        generateSingleSvSeries: generateSingleTco3ZmSeries
+    });
+    
+    return combineSeries(series, svSeries);
+}
 
 /**
  * Iterates through the x and y data returned from the api for the tco3_zm and fills the corresponding years with
@@ -391,41 +463,7 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
     return svSeries;
 }
 
-function generateTco3_ZmSeries({data, modelsSlice}) {
-    const series = {
-        data: [],
-        colors: [],
-        width: [],
-        dashArray: [],
-    }
 
-    for (const [id, groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups
-        if (!groupData.isVisible) continue; // skip hidden groups
-        for (const [model, modelInfo] of Object.entries(groupData.models)) {
-            if (!modelInfo.isVisible) continue; // skip hidden models
-            const modelData = data[model]; // retrieve data (api)
-            series.data.push({
-                type: APEXCHART_PLOT_TYPE.tco3_zm,
-                name: model,
-                data: modelData.data.map((e, idx) => [START_YEAR + idx, e]),
-            });
-    
-            series.colors.push(colorNameToHex(modelData.plotStyle.color));
-            series.width.push(MODEL_LINE_THICKNESS);
-            series.dashArray.push(convertToStrokeStyle(modelData.plotStyle.linestyle)); // default line thickness
-        }
-    }
-
-    // generate SV!
-    const svSeries = buildStatisticalSeries({
-        data, 
-        modelsSlice, 
-        buildMatrix: buildSvMatrixTco3Zm, 
-        generateSingleSvSeries: generateSingleTco3ZmSeries
-    });
-    
-    return combineSeries(series, svSeries);
-}
 
 function combineSeries(series1, series2) {
     const newSeries = {};
@@ -491,43 +529,7 @@ function generateTco3_ReturnSeries({data, modelsSlice}) {
     return combineSeries(series, svSeries);
 }
 
-const SERIES_GENERATION = {}; // Map plotId to corresponding generation function
-SERIES_GENERATION[O3AS_PLOTS.tco3_zm] = generateTco3_ZmSeries;
-SERIES_GENERATION[O3AS_PLOTS.tco3_return] = generateTco3_ReturnSeries;
-
-export function generateSeries({plotId, data, modelsSlice}) {
-    const series = SERIES_GENERATION[plotId]({data, modelsSlice}); // execute correct function based on mapping
-    console.log(series);
-    return {
-        data: series.data, 
-        styling: {
-            colors: series.colors, 
-            dashArray: series.dashArray, 
-            width: series.width,
-        }
-    }; // return generated series with styling to pass to apexcharts chart
-}
-
-export function getOptions({plotId, styling, plotTitle}) {
-    if (plotId === O3AS_PLOTS.tco3_zm) {
-        const newOptions = JSON.parse(JSON.stringify(defaultTCO3_zm)); // dirt simple and not overly horrible
-        newOptions.xaxis.categories = IMPLICIT_YEAR_LIST;
-        newOptions.colors = styling.colors;
-        newOptions.stroke.width = styling.width;
-        newOptions.stroke.dashArray = styling.dashArray;
-        newOptions.title = JSON.parse(JSON.stringify(newOptions.title)); // this is necessary in order for apexcharts to update the title
-        newOptions.title.text = plotTitle;
-        return newOptions;
-
-    } else if (plotId === O3AS_PLOTS.tco3_return) {
-        const newOptions = JSON.parse(JSON.stringify(default_TCO3_return));
-        newOptions.colors.push(...styling.colors); // for the legend!
-        newOptions.title = JSON.parse(JSON.stringify(newOptions.title));  // this is necessary in order for apexcharts to update the title
-        newOptions.title.text = plotTitle;
-        //newOptions.markers.colors.push(...styling.colors);
-        return newOptions;
-    }    
-};
+// UTILITY:
 
 export function colorNameToHex(color)
 {
