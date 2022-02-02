@@ -312,30 +312,13 @@ export function getIncludedModels(modelsSlice) {
     return includedModels;
 }
 
+const SERIES_GENERATION = {};
+SERIES_GENERATION[O3AS_PLOTS.tco3_zm] = generateTco3_ZmSeries;
+SERIES_GENERATION[O3AS_PLOTS.tco3_return] = generateTco3_ReturnSeries;
+
 export function generateSeries({plotId, data, modelsSlice}) {
-    const series = [];
-    const colors = [];
-    const dashArray = [];
-    const width = [];
-
-    const includedModels = getIncludedModels(modelsSlice); // this is a set
-    const trimmedData = {}
-
-    for (const [model, modelData] of Object.entries(data)) {
-        if (includedModels.has(model)){
-            trimmedData[model] = modelData;
-        }
-    }
-
-    if (plotId === O3AS_PLOTS.tco3_zm) {
-        generateTco3_ZmSeries({data: trimmedData, series, colors, dashArray, width, modelsSlice});
-    } else if (plotId === O3AS_PLOTS.tco3_return) {
-        generateTco3_ReturnSeries({data: trimmedData, series, colors, dashArray, width, modelsSlice});
-    } else {
-        throw new Error(`the given plot id "${plotId}" is not defined`);
-    }
-    console.log(series);
-    return {series, styling: {colors, dashArray, width}};
+    const {series, colors, dashArray, width} = SERIES_GENERATION[plotId]({data, modelsSlice}); // execute correct function based on mapping
+    return {series, styling: {colors, dashArray, width}}; // return generated series with styling to pass to apexcharts chart
 }
 
 export const defaultTCO3_zm = {
