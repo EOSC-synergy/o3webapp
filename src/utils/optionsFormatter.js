@@ -418,13 +418,13 @@ function generateTco3_ZmSeries({data, modelsSlice}) {
 function combineSeries(series1, series2) {
     const newSeries = {};
     newSeries.data = [...series1.data, ...series2.data]
-    newSeries.color = [...series1.color, ...series2.color]
+    newSeries.colors = [...series1.colors, ...series2.colors]
     newSeries.width = [...series1.width, ...series2.width]
     newSeries.dashArray = [...series1.dashArray, ...series2.dashArray]
     return newSeries;
 }
 
-function generateTco3_ReturnSeries({data, series, colors, modelsSlice}) {
+function generateTco3_ReturnSeries({data, modelsSlice}) {
     const series = {
         data: [],
         colors: [],
@@ -473,7 +473,7 @@ function generateTco3_ReturnSeries({data, series, colors, modelsSlice}) {
     return combineSeries(series, svSeries);
 }
 
-const SERIES_GENERATION = {};
+const SERIES_GENERATION = {}; // Map plotId to corresponding generation function
 SERIES_GENERATION[O3AS_PLOTS.tco3_zm] = generateTco3_ZmSeries;
 SERIES_GENERATION[O3AS_PLOTS.tco3_return] = generateTco3_ReturnSeries;
 
@@ -482,7 +482,7 @@ export function generateSeries({plotId, data, modelsSlice}) {
     return {
         data: series.data, 
         styling: {
-            colors: series.color, 
+            colors: series.colors, 
             dashArray: series.dashArray, 
             width: series.width,
         }
