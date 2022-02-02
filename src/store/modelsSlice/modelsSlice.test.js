@@ -31,17 +31,14 @@ describe("reducer tests", () => {
         const newModelList = ["modelB", "modelC"]
         
         const previousState = {
-            modelGroupList: ["group1", "group2"],
             modelGroups: {
                 group1: {
-                    modelList: ["modelA", "modelB"],
                     models: {
                         modelA: "dataA",
                         modelB: "dataB",
                     },
                 },
                 group2: {
-                    modelList: ["dataD", "dataE", "dataF"],
                     models: {
                         modelA: "dataD",
                         modelB: "dataE",
@@ -52,17 +49,15 @@ describe("reducer tests", () => {
         };
     
         const expected = {
-            modelGroupList: ["group1", "group2"],
             modelGroups: {
                 group1: {
-                    modelList: ["modelB", "modelC"], // empty
                     models: {
                         modelB: "dataB",
                         modelC: MODEL_DATA_TEMPLATE,
                     }, // empty
+                    name: "newName",
                 },
                 group2: {
-                    modelList: ["dataD", "dataE", "dataF"],
                     models: {
                         modelA: "dataD",
                         modelB: "dataE",
@@ -73,7 +68,7 @@ describe("reducer tests", () => {
         };
     
         expect(
-            reducer(previousState, setModelsOfModelGroup({groupId: "group1", modelList: newModelList}))
+            reducer(previousState, setModelsOfModelGroup({groupId: "group1", groupName: "newName", modelList: newModelList}))
         ).toEqual(expected);
     
     });
@@ -84,7 +79,6 @@ describe("reducer tests", () => {
         
         const previousState = {
             idCounter: 0,
-            modelGroupList: [],
             modelGroups: {
                 
             },
@@ -92,11 +86,9 @@ describe("reducer tests", () => {
     
         const expected = {
             idCounter: 1,
-            modelGroupList: [0],
             modelGroups: {
                 0: {
                     name: "fancy",
-                    modelList: ["modelA", "modelB"],
                     models: {
                         modelA: MODEL_DATA_TEMPLATE,
                         modelB: MODEL_DATA_TEMPLATE,
@@ -159,7 +151,6 @@ describe("reducer tests", () => {
     
     it('should delete the given model group', () => {
         const previousState = {
-            modelGroupList: [0, 1],
             modelGroups: {
                 0: {
                     modelList: ["modelA", "modelB"],
@@ -181,7 +172,6 @@ describe("reducer tests", () => {
         };
 
         const expected = {
-            modelGroupList: [1],
             modelGroups: {
                 1: {
                     modelList: ["modelC", "modelD"],
@@ -432,10 +422,12 @@ describe("selector tests", () => {
 
     it('should select all group ids', () => {
         const allGroupIds = [0, 1, 2, 3, 4, 5];
-        
+        const modelGroups = {}
+        allGroupIds.forEach(id => modelGroups[id] = {});
+
         const globalState = {
             models: {
-                modelGroupList: allGroupIds,
+                modelGroups,
             },
         };
 

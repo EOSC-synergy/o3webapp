@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-// import { useGetPlotsQuery } from "../../../../../services/API/apiSlice";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
@@ -7,8 +6,6 @@ import InputLabel from '@mui/material/InputLabel';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
-import { getPlotTypes } from '../../../../../services/API/apiSlice';
-import { sleep } from '../../../../../utils/mock_dev';
 import { useDispatch, useSelector } from "react-redux";
 import { selectPlotId, setActivePlotId } from "../../../../../store/plotSlice/plotSlice";
 import { REQUEST_STATE } from "../../../../../services/API/apiSlice"

@@ -5,6 +5,7 @@ import { Select, InputLabel, OutlinedInput, FormControl } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { setModel } from "../../../../../store/referenceSlice/referenceSlice";
+import PropTypes from 'prop-types';
 
 /**
  * enables the user to select a reference model
@@ -39,6 +40,10 @@ function ReferenceModelSelector(props) {
         </FormControl>
         </div>
     );
+}
+
+ReferenceModelSelector.propTypes = {
+    reportError: PropTypes.func
 }
 
 export default ReferenceModelSelector;

@@ -11,16 +11,16 @@ export const OC_Symbol = Symbol("OffsetConfigurator");
 export const PNF_Symbol = Symbol("PlotNameField");
 /** Stores the name of the ReferenceModelSelector component as a Symbol. */
 export const RMS_Symbol = Symbol("ReferenceModelSelector");
-/** Stores the name of the ReferenceYearSlider component as a Symbol. */
-export const RYS_Symbol = Symbol("ReferenceYearSlider");
+/** Stores the name of the ReferenceYearField component as a Symbol. */
+export const RYF_Symbol = Symbol("ReferenceYearField");
 /** Stores the name of the RegionSelector component as a Symbol. */
 export const RS_Symbol = Symbol("RegionSelector");
 /** Stores the name of the TimeCheckBoxGroup component as a Symbol. */
 export const TCG_Symbol = Symbol("TimeCheckBoxGroup");
-/** Stores the name of the XAxisSlider component as a Symbol. */
-export const XAS_Symbol = Symbol("XAxisSlider");
-/** Stores the name of the YAxisSlider component as a Symbol. */
-export const YAS_Symbol = Symbol("YAxisSlider");
+/** Stores the name of the XAxisField component as a Symbol. */
+export const XAF_Symbol = Symbol("XAxisField");
+/** Stores the name of the YAxisField component as a Symbol. */
+export const YAF_Symbol = Symbol("YAxisField");
 
 // TimeCheckboxGroup.js
 /** Stores the seasons and the corresponding months */
@@ -112,17 +112,6 @@ export const fileFormats = [ Symbol("pdf"), Symbol("png") ];
 
 /** The max. length of the plot name */
 export const PLOT_NAME_MAX_LEN = 40;
-
-// ReferenceYearSlider.js
-
-/** Default year value for the ReferenceYearSlider.*/
-export const REF_SLIDER_DEFAULT_YEAR = 1980;
-
-/** Minimum choosable year value for the ReferenceYearSlider.*/
-export const REF_SLIDER_MIN_YEAR = 1950;
-
-/** Minimum choosable year value for the ReferenceYearSlider.*/
-export const REF_SLIDER_MAX_YEAR = 2100;
 /*
 // GRAPH
 */
@@ -141,12 +130,12 @@ export const HEIGHT_LOADING_SPINNER = "300px";
 export const HEIGHT_GRAPH = "400px";
 
 /*
-// Options Formatter
+// Options Formatter, XAxisField, YAxisField
 */
-export const START_YEAR = 1959
-export const END_YEAR = 2100
+export const START_YEAR = 1959;
+export const END_YEAR = 2100;
 // year list: 1959 - 2100
-export const IMPLICIT_YEAR_LIST = [...Array(END_YEAR - START_YEAR + 1).keys()].map(number => `${START_YEAR + number}`)
+export const IMPLICIT_YEAR_LIST = [...Array(END_YEAR - START_YEAR + 1).keys()].map(number => `${START_YEAR + number}`);
 
 // important for api data transformation
 const ANTARCTIC = "Antarctic(Oct)";

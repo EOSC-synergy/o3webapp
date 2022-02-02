@@ -1,5 +1,5 @@
 import React from 'react';
-import ReferenceYearSlider from './ReferenceYearSlider';
+import ReferenceYearField from './ReferenceYearField';
 import { render } from '@testing-library/react';
 import "@testing-library/jest-dom/extend-expect";
 import { createTestStore } from '../../../../../store/store';
@@ -12,14 +12,14 @@ beforeEach(() => {
 });
 
 it('Component renders without crashing', () => {
-    render(<Provider store={store}><ReferenceYearSlider /></Provider>);
+    render(<Provider store={store}><ReferenceYearField /></Provider>);
 
 });
 
 
 // Snapshot test
 it('renders correctly', () => {
-    const { container } = render(<Provider store={store}><ReferenceYearSlider /></Provider>);
+    const { container } = render(<Provider store={store}><ReferenceYearField /></Provider>);
     expect(container).toMatchSnapshot();
   });
 

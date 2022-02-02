@@ -47,11 +47,12 @@ function Graph(props) {
     } else if (activeData.status === REQUEST_STATE.success) {
         const {series, styling} = generateSeries({plotId, data: activeData.data, modelsSlice, xAxisRange, yAxisRange});
         const options = getOptions({plotId, styling, plotTitle});
-        return <Chart key={plotId} options={options} series={series} type={APEXCHART_PLOT_TYPE[plotId]} height={HEIGHT_GRAPH} />
+        const uniqueNumber = Date.now(); // forces apexcharts to re-render correctly!
+        return <Chart key={uniqueNumber} options={options} series={series} type={APEXCHART_PLOT_TYPE[plotId]} height={HEIGHT_GRAPH} />
     };
 
     // this "case" should not happen
     return <Typography>CRITICAL: an internal error occurred that shouldn't happen!</Typography>;
 }
 
-export default React.memo(Graph); // prevent graph from rerendering if sidebar is opened and closed
+export default React.memo(Graph, () => true); // prevent graph from rerendering if sidebar is opened and closed
