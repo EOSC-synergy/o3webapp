@@ -391,17 +391,22 @@ function generateTco3_ZmSeries({data, modelsSlice}) {
         width: [],
         dashArray: [],
     }
-    
-    for (const [model, modelData] of Object.entries(data)) {
-        series.data.push({
-            type: APEXCHART_PLOT_TYPE.tco3_zm,
-            name: model,
-            data: modelData.data.map((e, idx) => [START_YEAR + idx, e]),
-        });
 
-        series.colors.push(colorNameToHex(modelData.plotStyle.color));
-        series.width.push(MODEL_LINE_THICKNESS);
-        series.dashArray.push(convertToStrokeStyle(modelData.plotStyle.linestyle)); // default line thickness
+    for (const [id, groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups
+        if (!groupData.isVisible) continue; // skip hidden groups
+        for (const [model, modelInfo] of Object.entries(groupData.models)) {
+            if (!modelInfo.isVisible) continue; // skip hidden models
+            const modelData = data[model]; // retrieve data (api)
+            series.data.push({
+                type: APEXCHART_PLOT_TYPE.tco3_zm,
+                name: model,
+                data: modelData.data.map((e, idx) => [START_YEAR + idx, e]),
+            });
+    
+            series.colors.push(colorNameToHex(modelData.plotStyle.color));
+            series.width.push(MODEL_LINE_THICKNESS);
+            series.dashArray.push(convertToStrokeStyle(modelData.plotStyle.linestyle)); // default line thickness
+        }
     }
 
     // generate SV!
@@ -417,10 +422,10 @@ function generateTco3_ZmSeries({data, modelsSlice}) {
 
 function combineSeries(series1, series2) {
     const newSeries = {};
-    newSeries.data = [...series1.data, ...series2.data]
-    newSeries.colors = [...series1.colors, ...series2.colors]
-    newSeries.width = [...series1.width, ...series2.width]
-    newSeries.dashArray = [...series1.dashArray, ...series2.dashArray]
+    newSeries.data = [...series1.data, ...series2.data];
+    newSeries.colors = [...series1.colors, ...series2.colors];
+    newSeries.width = [...series1.width, ...series2.width];
+    newSeries.dashArray = [...series1.dashArray, ...series2.dashArray];
     return newSeries;
 }
 
