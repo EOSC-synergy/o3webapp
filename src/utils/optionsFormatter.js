@@ -381,7 +381,7 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
             svSeries.dashArray.push(0);              // solid?       
         }
     }
-    return { svSeries };
+    return svSeries;
 }
 
 function generateTco3_ZmSeries({data, modelsSlice}) {
@@ -405,14 +405,14 @@ function generateTco3_ZmSeries({data, modelsSlice}) {
     }
 
     // generate SV!
-    const {svSeries} = buildStatisticalSeries({
+    const svSeries = buildStatisticalSeries({
         data, 
         modelsSlice, 
         buildMatrix: buildSvMatrixTco3Zm, 
         generateSingleSvSeries: generateSingleTco3ZmSeries
     });
     
-    return {series: combineSeries(series, svSeries)};
+    return combineSeries(series, svSeries);
 }
 
 function combineSeries(series1, series2) {
@@ -425,10 +425,16 @@ function combineSeries(series1, series2) {
 }
 
 function generateTco3_ReturnSeries({data, series, colors, modelsSlice}) {
+    const series = {
+        data: [],
+        colors: [],
+        width: [],
+        dashArray: [],
+    }
     
     // 1. build boxplot
     const boxPlotValues = calculateBoxPlotValues(data);
-    series.push({
+    series.data.push({
             name: 'box',
             type: 'boxPlot',
     
@@ -447,18 +453,24 @@ function generateTco3_ReturnSeries({data, series, colors, modelsSlice}) {
             y: modelData.data[region] || null, // null as default if data is missing
         }));
         
-        series.push({
+        series.data.push({
             name: model,
             data: sortedData,
             type: "scatter",
         });
-        colors.push(
+        series.colors.push(
             colorNameToHex(modelData.plotStyle.color)
         )
     }
 
     // 3. generate statistical values
-    buildStatisticalSeries({data, series, colors, dashArray: [], width: [], modelsSlice, buildMatrix: buildSvMatrixTco3Return, generateSingleSvSeries: generateSingleTco3ReturnSeries}); // dashArray and width are discarded
+    const svSeries = buildStatisticalSeries({
+        data,
+        modelsSlice,
+        buildMatrix: buildSvMatrixTco3Return,
+        generateSingleSvSeries: generateSingleTco3ReturnSeries
+    });
+    return combineSeries(series, svSeries);
 }
 
 const SERIES_GENERATION = {};
@@ -466,7 +478,7 @@ SERIES_GENERATION[O3AS_PLOTS.tco3_zm] = generateTco3_ZmSeries;
 SERIES_GENERATION[O3AS_PLOTS.tco3_return] = generateTco3_ReturnSeries;
 
 export function generateSeries({plotId, data, modelsSlice}) {
-    const {series} = SERIES_GENERATION[plotId]({data, modelsSlice}); // execute correct function based on mapping
+    const series = SERIES_GENERATION[plotId]({data, modelsSlice}); // execute correct function based on mapping
     return {
         data: series.data, 
         styling: {
