@@ -1,4 +1,4 @@
-import { q25, q75, median, mean } from "../services/math/math"
+import { q25, q75, median } from "../services/math/math"
 import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, ALL_REGIONS_ORDERED, STATISTICAL_VALUES_LIST, SV_CALCULATION, SV_COLORING, STATISTICAL_VALUES, APEXCHART_PLOT_TYPE, MODEL_LINE_THICKNESS, START_YEAR, END_YEAR } from "./constants"
 
 const SERIES_GENERATION = {}; // Map plotId to corresponding generation function
@@ -187,7 +187,23 @@ export function getOptions({plotId, styling, plotTitle}) {
     }    
 };
 
-
+/**
+ * The interface the graph component accesses to generate the series for the plot.
+ * 
+ * This function generates data structures that can directly be passed to apexcharts. 
+ * It accepts the plotId because series are generated according to the type of plot.
+ * Furthermore the data object holds all plot data for the selected options
+ * and modelsSlice is a slice from the redux store which contains information
+ * about what model groups exist, which of them are visible or should be included in the
+ * statistical value calculation.
+ * 
+ * It additionally generates a styling object which contains colors (and width/dashArray for tco3_zm).
+ * 
+ * @param {string} obj.plotId 
+ * @param {object} obj.data 
+ * @param {object} obj.modelsSlice 
+ * @returns series object which includes a subdivision into a data and a styling object.
+ */
 export function generateSeries({plotId, data, modelsSlice}) {
     const series = SERIES_GENERATION[plotId]({data, modelsSlice}); // execute correct function based on mapping
     console.log(series);
@@ -577,6 +593,11 @@ export function colorNameToHex(color)
     return false;
 };
 
+/**
+ * Converts the stroke style given by the api into the format supported by apexcharts.
+ * 
+ * 
+ */
 export function convertToStrokeStyle(apiStyle) {
     const styles = {
         "solid": 0,
@@ -589,6 +610,15 @@ export function convertToStrokeStyle(apiStyle) {
     return false;
 };
 
+/**
+ * Combines 2 data series objects into a new one.
+ * The elements of series2 get appended to a copy of series1.
+ * A series object has the following form:
+ *  { data: Array, colors: Array, width: Array, dashArray: Array}
+ * 
+ * @param {obj} series1     The first data series object
+ * @param {obj} series2     The second data series object
+ */
 function combineSeries(series1, series2) {
     const newSeries = {};
     newSeries.data = [...series1.data, ...series2.data];
