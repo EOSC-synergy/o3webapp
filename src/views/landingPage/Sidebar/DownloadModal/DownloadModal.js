@@ -3,7 +3,9 @@ import { FormControl, InputLabel, MenuItem, Modal, Select, Typography, Card, Gri
 import { useTheme } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import { fileFormats } from '../../../../utils/constants';
-import { showPdf } from '../../../../services/pdf/pdfCreator';
+import { showPdf, showPdf2 } from '../../../../services/pdf/pdfCreator';
+import { useSelector } from 'react-redux'
+
 
 /**
  * Opens a modal where the user can select the file format and download the plot.
@@ -15,6 +17,12 @@ import { showPdf } from '../../../../services/pdf/pdfCreator';
  * @returns {JSX.Element} a jsx containing a modal with a dropdown to choose the file type and a download button
  */
 function DownloadModal(props) {
+    
+    /**
+     * @todo move to redux store
+     */
+     const [selectedFileFormat, setSelectedFileFormat] = React.useState('');
+
 
     /**
      * The style of the DownloadModal.
@@ -35,20 +43,28 @@ function DownloadModal(props) {
         p: 5,
     };
 
+
     /**
      * Downloads the plot.
      *
      * @todo implement
      */
     const downloadPlot = () => {
-        console.log("downloading...");
-        showPdf()
-    };
+        //const activeData = useSelector(state => selectActivePlotData(state, plotId));
 
-    /**
-     * @todo move to redux store
-     */
-    const [selectedFileFormat, setSelectedFileFormat] = React.useState('');
+       /** showPdf(activeData.map(modelObj => {
+            return {
+                text: `${modelObj.model} (${modelObj.plotstyle.linestyle})`,
+                color: modelObj.plotstyle.color,
+            }
+        })) */ 
+        console.log(selectedFileFormat);
+
+        if (selectedFileFormat === "pdf") {
+            console.log("downloading pdf...")
+            showPdf2();
+        }
+    };
 
     /**
      * Calls the redux store and changes the selected file format.

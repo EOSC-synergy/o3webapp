@@ -73,6 +73,39 @@ export async function showPdf(models) {
       pdfmake.createPdf(docDefinition).open();
   }
 
+  export async function showPdf2() {
+    const svgAsString = await getBase64Image()
+    
+      const docDefinition = {
+        content: [
+          {
+            text: 'OCTS Plot from 1960 - 2100',
+            fontSize: 20,
+          },
+          {
+            svg: addViewbox(svgAsString),
+            width: 300,
+          },
+          {
+              text: 'List of used models:',
+              fontSize: 20,
+          },
+          {
+              text: legalNoticeHeading,
+              fontSize: 18
+          },
+          legalNotice,
+          {
+              ol: points,
+          },
+        ],
+        pageBreakBefore: function(currentNode, followingNodesOnPage, nodesOnNextPage, previousNodesOnPage) {
+          return currentNode.text == legalNoticeHeading || currentNode.text == 'List of used models:'
+        }
+      };
+      pdfmake.createPdf(docDefinition).open();
+  }
+
 export default function createPdf() {
     
 }
