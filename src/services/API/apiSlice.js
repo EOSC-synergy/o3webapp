@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import { getModels, getPlotTypes, getPlotData } from "./client";
 import { preTransformApiData } from "../../utils/optionsFormatter";
+import { START_YEAR, END_YEAR } from "../../utils/constants";
 
 /**
  * This object models an "enum" in JavaScript. Each of the values is used
@@ -84,21 +85,32 @@ const selectExistingPlotData = createAction("api/selectPlotData");
  * This async thunk creator allows to generate a data fetching action that can be dispatched 
  * against the store to start fetching new plot data from the api. 
  * 
- * @param {string} obj.plotType a string describing the plot - has to be the offical plot name (e.g. tco3_zm)
- * @param {int} obj.latMin specifies the minimum latitude
- * @param {int} obj.latMax specifies the maximum latitude
- * @param {array of int} obj.months represents the selected months
- * @param {array of string} obj.modelList lists the desired models
- * @param {int} obj.startYear from which point the data should start
- * @param {int} obj.endYear until which point the data is required
- * @param {string} obj.refModel the reference model to "normalize the data"
- * @param {int} obj.refYear the reference year to "normalize the data"
+ * @param {int} modelListBegin for faster testing limit fetching of model list
+ * @param {int} modelListEnd for faster testing limit fetching of model list
  * @returns the async thunk action
  */
-export const fetchPlotData = ({ plotId, latMin, latMax, months, startYear, endYear, modelList, refModel, refYear }) => {
-    const cacheKey = generateCacheKey({ latMin, latMax, months, refModel, refYear });
+export const fetchPlotData = (modelListBegin, modelListEnd) => {
 
     return (dispatch, getState) => {
+        const plotId = getState().plot.plotId;
+        const latMin = getState().plot.settings[plotId].location.minLat;
+        const latMax = getState().plot.settings[plotId].location.maxLat;
+        const months = getState().plot.settings[plotId].months;
+        const modelList = getState().api.models.data;
+        if (typeof modelListBegin !== 'undefined' && typeof modelListEnd !== 'undefined') {
+            modelList.slice(modelListBegin, modelListEnd);
+        }
+        const refModel = getState.reference.settings.model;
+        const refYear = getState.reference.settings.year;
+        console.log(plotId);
+        console.log(latMin);
+        console.log(latMax);
+        console.log(months);
+        console.log(modelList);
+        console.log(refModel);
+        console.log(refYear);
+
+        const cacheKey = generateCacheKey({ latMin, latMax, months, refModel, refYear });
         // it shouldn't reload the same request if the data is already present (previous successful request) or 
         // if the request is already loading
         const cachedRequest = getState().api.plotSpecific[plotId].cachedRequests[cacheKey];
@@ -120,7 +132,7 @@ export const fetchPlotData = ({ plotId, latMin, latMax, months, startYear, endYe
 
         // Return promise with success and failure actions
         
-        return getPlotData({plotId, latMin, latMax, months, modelList, startYear, endYear, refModel, refYear})
+        return getPlotData({plotId, latMin, latMax, months, modelList, START_YEAR, END_YEAR, refModel, refYear})
             .then(  
                 response => dispatch(fetchPlotDataSuccess({data: response.data, plotId, cacheKey})),
                 error => dispatch(fetchPlotDataRejected({error: error.message, plotId, cacheKey})),

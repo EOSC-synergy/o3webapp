@@ -27,7 +27,7 @@ const initialState = {
                 maxY: 400,
             },
             months: [
-                1
+                1, 2, 3
             ],
         },
         "tco3_return": {
@@ -45,7 +45,7 @@ const initialState = {
                 maxY: 400,
             },
             months: [
-                1
+                1, 2, 3
             ],
             regions: [
                 0

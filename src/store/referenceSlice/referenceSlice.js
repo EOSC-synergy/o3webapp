@@ -12,7 +12,7 @@ const initialState = {
 
   settings: {
     year: 1980,
-    model: "defaultModel",
+    model: "SBUV_GSFC_merged-SAT-ozone",
     visible: false,
     isOffsetApplied: false,
   },
