@@ -175,7 +175,7 @@ function EditModelGroupModal(props) {
         switch(type.toLowerCase()) {
             case "median": return setMedianVisible;
             case "mean": return  setMeanVisible;
-            case "std": return  setDerivativeVisible;
+            case "derivative": return  setDerivativeVisible;
             case "percentile": return  setPercentileVisible;
             case "visible": return setIsVisible;
             default: return setMedianVisible;
@@ -277,7 +277,7 @@ function EditModelGroupModal(props) {
             dataCpy[model].median = medianVisible[i];
             dataCpy[model].derivative = derivativeVisible[i];
             dataCpy[model].percentile = percentileVisible[i];
-            dataCpy[model].visible = isVisible[i];
+            dataCpy[model].isVisible = isVisible[i];
         }
 
         dispatch(updatePropertiesOfModelGroup({groupId: props.modelGroupId, data: dataCpy}))
