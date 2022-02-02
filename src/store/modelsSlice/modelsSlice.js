@@ -43,6 +43,54 @@ const MODEL_GROUP_TEMPLATE = {
 }
 
 /**
+ * this objects holds key-value-pairs, the keys being the model-group 
+ * identifier and the values being the settings for each group 
+ */
+export const modelGroups = {
+    0: { 
+        name: "Example Group",
+        // model group storing all information until it is possible 
+        // to implement more model groups
+        modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2", "CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG", "CCMI-1_CCCma_CMAM-refC2"],
+        models: { // models is lookup table
+            "CCMI-1_ACCESS_ACCESS-CCM-refC2": { // single model
+                color: null, // if not set it defaults to standard value from api
+                isVisible: true, // show/hide individual models from a group
+                mean: true,
+                derivative: true,
+                median: true,
+                percentile: true,
+            },
+            "CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG": {
+                color: null, // if not set it defaults to standard value from api
+                isVisible: true, // show/hide individual models from a group
+                mean: true,
+                derivative: true,
+                median: true,
+                percentile: true,
+
+            }, 
+            "CCMI-1_CCCma_CMAM-refC2": {
+                color: null, // if not set it defaults to standard value from api
+                isVisible: true, // show/hide individual models from a group
+                mean: true,
+                derivative: true,
+                median: true,
+                percentile: true,
+
+            }
+        },
+        isVisible: true, // show/hide complete group
+        visibileSV: { // lookup table so the reducer impl. can be more convenient
+            mean: true,
+            derivative: true,
+            median: true,
+            percentile: true,
+        }
+    }
+}
+
+/**
  * The initial state of the modelSlice defines the data structure in the 
  * store. Each plot has its own data i.e. have separate model(groups).
  * 
@@ -52,51 +100,7 @@ const MODEL_GROUP_TEMPLATE = {
 const initialState = {
     idCounter: 1,
     // currently active plot
-    modelGroups: {
-        // this objects holds key-value-pairs, the keys being the model-group 
-        // identifier and the values being the settings for each group 
-        0: { 
-            name: "Example Group",
-            // model group storing all information until it is possible 
-            // to implement more model groups
-            modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2", "CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG", "CCMI-1_CCCma_CMAM-refC2"],
-            models: { // models is lookup table
-                "CCMI-1_ACCESS_ACCESS-CCM-refC2": { // single model
-                    color: null, // if not set it defaults to standard value from api
-                    isVisible: true, // show/hide individual models from a group
-                    mean: true,
-                    derivative: true,
-                    median: true,
-                    percentile: true,
-                },
-                "CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG": {
-                    color: null, // if not set it defaults to standard value from api
-                    isVisible: true, // show/hide individual models from a group
-                    mean: true,
-                    derivative: true,
-                    median: true,
-                    percentile: true,
-
-                }, 
-                "CCMI-1_CCCma_CMAM-refC2": {
-                    color: null, // if not set it defaults to standard value from api
-                    isVisible: true, // show/hide individual models from a group
-                    mean: true,
-                    derivative: true,
-                    median: true,
-                    percentile: true,
-
-                }
-            },
-            isVisible: true, // show/hide complete group
-            visibileSV: { // lookup table so the reducer impl. can be more convenient
-                mean: true,
-                derivative: true,
-                median: true,
-                percentile: true,
-            }
-        }
-    },
+    modelGroups: modelGroups
 }
 
 /**
@@ -105,7 +109,7 @@ const initialState = {
  */
 const modelsSlice = createSlice({
     name: "models",
-    initialState,
+    initialState: initialState,
     reducers: {
 
         /**
