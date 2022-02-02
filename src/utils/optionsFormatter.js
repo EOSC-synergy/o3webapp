@@ -233,25 +233,26 @@ export const preTransformApiData = ({plotId, data}) => {
  * @param {object} data contains the region data from the api
  * @returns object holding an array of 5 values (min, q1, median, q3, max) for each region
  */
-function calculateBoxPlotValues(data) {
-    const staticData = {}
+function calculateBoxPlotValues({data, modelsSlice}) {
+    const boxPlotHolder = {}
 	for (let region of ALL_REGIONS_ORDERED) {
-		staticData[region] = []
+		boxPlotHolder[region] = []
 	}
 
-    for (const [model, modelData] of Object.entries(data)) {
-
-        for (const [region, year] of Object.entries(modelData.data)) {
-            
-            staticData[region].push(year);
+    for (const [id, groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups
+        if (!groupData.isVisible) continue; // skip hidden groups
+        for (const [model, modelInfo] of Object.entries(groupData.models)) {
+            if (!modelInfo.isVisible) continue; // skip hidden models
+            for (const [region, year] of Object.entries(data[model].data)) {
+                boxPlotHolder[region].push(year);
+            }
         }
-
     }
     
     const boxPlotValues = {}
 	for (let region of ALL_REGIONS_ORDERED) {
-		staticData[region].sort()
-		const arr = staticData[region]
+		boxPlotHolder[region].sort()
+		const arr = boxPlotHolder[region]
 		boxPlotValues[region] = []
 		boxPlotValues[region].push(
 			arr[0],
@@ -438,11 +439,11 @@ function generateTco3_ReturnSeries({data, modelsSlice}) {
     }
     
     // 1. build boxplot
-    const boxPlotValues = calculateBoxPlotValues(data);
+    const boxPlotValues = calculateBoxPlotValues({data, modelsSlice});
     series.data.push({
             name: 'box',
             type: 'boxPlot',
-    
+
             data: ALL_REGIONS_ORDERED.map(region => ({
                 x: region,
                 y: boxPlotValues[region],
@@ -450,23 +451,28 @@ function generateTco3_ReturnSeries({data, modelsSlice}) {
         }
     );
 
-    // 2. build scatter plot
-    for (const [model, modelData] of Object.entries(data)) {
 
-        const sortedData = ALL_REGIONS_ORDERED.map(region => ({
-            x: region,
-            y: modelData.data[region] || null, // null as default if data is missing
-        }));
-        
-        series.data.push({
-            name: model,
-            data: sortedData,
-            type: "scatter",
-        });
-        series.colors.push(
-            colorNameToHex(modelData.plotStyle.color)
-        )
-    }
+    // 2. build scatter plot
+
+    for (const [id, groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups
+        if (!groupData.isVisible) continue; // skip hidden groups
+        for (const [model, modelInfo] of Object.entries(groupData.models)) {
+            const modelData = data[model];
+            const sortedData = ALL_REGIONS_ORDERED.map(region => ({
+                x: region,
+                y: modelData.data[region] || null, // null as default if data is missing
+            }));
+            
+            series.data.push({
+                name: model,
+                data: sortedData,
+                type: "scatter",
+            });
+            series.colors.push(
+                colorNameToHex(modelData.plotStyle.color)
+            )
+        }
+    }   
 
     // 3. generate statistical values
     const svSeries = buildStatisticalSeries({
