@@ -19,7 +19,7 @@ const MODEL_GROUP_TEMPLATE = {
     name: "",
     models: {},         // models is lookup table
     isVisible: true,    // show/hide complete group
-    visibileSV: {       // lookup table so the reducer impl. can be more convenient
+    visibleSV: {       // lookup table so the reducer impl. can be more convenient
         mean: true,
         derivative: true,
         median: true,
@@ -74,7 +74,7 @@ const initialState = {
                 }
             },
             isVisible: true, // show/hide complete group
-            visibileSV: { // lookup table so the reducer impl. can be more convenient
+            visibleSV: { // lookup table so the reducer impl. can be more convenient
                 mean: true,
                 derivative: true,
                 median: true,
@@ -245,7 +245,7 @@ const modelsSlice = createSlice({
                 throw `tried to access "${groupId}" which is not a valid group`;
             };
 
-            state.modelGroups[groupId].visibileSV[svType] = isIncluded;
+            state.modelGroups[groupId].visibleSV[svType] = isIncluded;
         },
 
         /**
@@ -326,7 +326,7 @@ export const selectNameOfGroup = (state, groupId) => state.models.modelGroups[gr
  * @param {int} groupId the group id specifies which data should be retrieved
  * @returns an object that maps each statistical value onto a boolean
  */
-export const selectStatisticalValueSettingsOfGroup = (state, groupId) => state.models.modelGroups[groupId].visibileSV;
+export const selectStatisticalValueSettingsOfGroup = (state, groupId) => state.models.modelGroups[groupId].visibleSV;
 /**
  * This selector allows components to select the visibility of a given group (specified by ID)
  * 

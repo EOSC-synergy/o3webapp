@@ -372,10 +372,15 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
 
         for (const [sv, svData] of Object.entries(svHolder)) {
             
-            if (sv === STATISTICAL_VALUES.derivative
+            if (sv === STATISTICAL_VALUES.derivative // std
                 || sv === STATISTICAL_VALUES.percentile) continue; // skip for now
             
- 
+
+            if (groupData.visibleSV[sv] 
+                || (sv.includes("std") && groupData.visibleSV[STATISTICAL_VALUES.derivative])) {
+            } else {
+                continue; // mean und median
+            }
             svSeries.data.push(generateSingleSvSeries(`${sv}(${groupData.name})`, svData));
             svSeries.colors.push(SV_COLORING[sv]);   // coloring?
             svSeries.width.push(1);                  // thicker?
