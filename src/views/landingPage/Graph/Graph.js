@@ -1,50 +1,12 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import Chart from "react-apexcharts"
-import data from "./default-data.json"
-import settings from "./default-settings.json"
-import { convertToStrokeStyle, colourNameToHex } from "../../../utils/optionsFormatter"
-import {useSelector} from 'react-redux'
-import { useGetRawPlotDataMutation } from '../../../services/API/apiSlice';
-import { selectCurrentModelGroups } from '../../../store/modelsSlice/modelsSlice';
-import { selectCurrentPlotId, selectCurrentPlotType, selectCurrentSettings, selectPlotTitle } from '../../../store/plotSlice/plotSlice';
-import { selectCurrentReferenceSettings } from '../../../store/referenceSlice';
-// import {calculatePlotSeries} from "../../../utils/math"
-
-/**
- * Static generation of the years on the x-axis, this will be fetched from the
- * api later
- */
-const yearsOnXAxis = [...Array(20).keys()].map(value => `${value + 2000}`)
-/**
- * Transforming the data from default-data.json, this data will be fetched 
- * from the api later
- */
-const ySeries = data.map(modelObj => {        
-        return {
-            name: modelObj.model,
-            data: modelObj.y.map(number => number.toFixed(2)),
-        }
-    }
-)
-/**
- * Static color mapping to provide color in hexformat for apexcharts
- */
-const colors = data.map(modelObj => colourNameToHex(modelObj.plotstyle.color))
-/**
- * Static humand readable stroke style mapping to apexchart stroke style
- */
-const strokes = data.map(modelObj => convertToStrokeStyle(modelObj.plotstyle.linestyle))
-/**
- * Static humand readable linewidth mapping to apexchart linewidth
- */
-const lineWidth = data.map(el => 2) // default is 2
-
-// build the big object that is handed over to apexcharts
-settings.options.xaxis.categories.push(...yearsOnXAxis)
-settings.options.colors.push(...colors)
-settings.options.stroke.dashArray.push(...strokes)
-settings.options.stroke.width.push(...lineWidth)
-settings.series.push(...ySeries)
+import { getOptions, generateSeries } from "../../../utils/optionsFormatter"
+import { useSelector } from 'react-redux'
+import { selectPlotId, selectPlotTitle } from '../../../store/plotSlice/plotSlice';
+import { REQUEST_STATE, selectActivePlotData } from '../../../services/API/apiSlice';
+import { Spinner } from '../../../components/Spinner/Spinner';
+import { Typography } from '@mui/material';
+import { APEXCHART_PLOT_TYPE, HEIGHT_LOADING_SPINNER, HEIGHT_GRAPH } from '../../../utils/constants';
 
 /**
  * Currently there is no dynamic data linking. The graph will always
@@ -57,19 +19,39 @@ settings.series.push(...ySeries)
  *          the apexcharts library
  */
 function Graph(props) {
-    settings.options.title.text = useSelector(selectPlotTitle);
-    const copySettings = JSON.parse(JSON.stringify(settings)); 
 
-    return (<>
-        {/* for the OCTS Plot */}
-        <Chart
-                options={copySettings.options}
-                series={copySettings.series}
-                type={"line"}
-                height={"600px"}
-            />
-        
-    </>);
+    const plotId = useSelector(selectPlotId);
+    const plotTitle = useSelector(selectPlotTitle);
+    const xAxisRange = useSelector(state => state.plot.settings[state.plot.plotId].displayXRange); // => selector
+    const yAxisRange = useSelector(state => state.plot.settings[state.plot.plotId].displayYRange); // => selector
+    const activeData = useSelector(state => selectActivePlotData(state, plotId));
+    const modelsSlice = useSelector(state => state.models);
+    
+    useEffect(() => { 
+        // note: this is important, because we should only "propagate" the error to the top
+        // if this component has finished rendering, causing no <em>side effects</em> in
+        // its rendering process 
+        if (activeData.status === REQUEST_STATE.error) {
+            props.reportError(activeData.error);
+        }
+    })
+
+    if (activeData.status === REQUEST_STATE.loading || activeData.status === REQUEST_STATE.idle) {
+        return <div style={{display: "flex", alignItems: "center", justifyContent: "center", height: HEIGHT_LOADING_SPINNER}}>
+            <Spinner text={"loading data"} size={"8em"}></Spinner>
+        </div>
+
+    } else if (activeData.status === REQUEST_STATE.error) {
+        return <Typography>An error occurred, please try to reload the site.</Typography>;
+
+    } else if (activeData.status === REQUEST_STATE.success) {
+        const {series, styling} = generateSeries({plotId, data: activeData.data, modelsSlice, xAxisRange, yAxisRange});
+        const options = getOptions({plotId, styling, plotTitle});
+        return <Chart key={plotId} options={options} series={series} type={APEXCHART_PLOT_TYPE[plotId]} height={HEIGHT_GRAPH} />
+    };
+
+    // this "case" should not happen
+    return <Typography>CRITICAL: an internal error occurred that shouldn't happen!</Typography>;
 }
 
-export default Graph;
+export default React.memo(Graph); // prevent graph from rerendering if sidebar is opened and closed

@@ -1,278 +1,446 @@
 import reducer, 
 {
-    addModels,
-    removeModels,
-    updatedModelGroup,  // not impl. yet
-    addedModelGroup,    // not impl. yet
-    setVisibility, 
-    setStatisticalValueIncluded, 
-    setStatisticalValueForGroup
+    setModelsOfModelGroup,
+    setStatisticalValueForGroup,
+    setVisibilityForGroup,
+    deleteModelGroup,
+    updatePropertiesOfModelGroup,
+    STATISTICAL_VALUES,
+    selectAllGroupIds,
+    selectModelsOfGroup,
+    selectModelDataOfGroup,
+    selectNameOfGroup,
+    selectStatisticalValueSettingsOfGroup,
+    selectVisibilityOfGroup,
 } from "./modelsSlice"
 
-const definedInitialState = {
-    // currently active plot
-    plotId: "tco3_zm",
-    settings: {
-        "tco3_zm": { 
-            // this objects holds key-value-pairs, the keys being the model-group 
-            // identifier and the values being the settings for each group 
-            "all": { 
-                // model group storing all information until it is possible 
-                // to implement more model groups
-                name: "All OCTS models",
-                modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"],
-                models: { // models is lookup table
-                    "CCMI-1_ACCESS_ACCESS-CCM-refC2": { // single model
-                        institute: "IMK",
-                        dataset: {
-                            x: [42],
-                            y: [42],
-                        },
-                        color: "#000000",
-                        plotStyle: "solid",
-                        isVisible: true, // show/hide individual models from a group
-                        mean: true,
-                        derivative: true,
-                        median: true,
-                        percentile: true,
-                    }
-                },
-                hidden: false, // show/hide complete group
-                visibileSV: { // lookup table so the reducer impl. can be more convenient
-                    mean: true,
-                    derivative: true,
-                    median: true,
-                    percentile: true,
-                }
-            }
-        },
-        "tco3_return": {
-            "all": { 
-                name: "All Return/Recovery models",
-                modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"],
-                models: { // models is lookup table
-                    "CCMI-1_ACCESS_ACCESS-CCM-refC2": { // single model
-                        institute: "IMK",
-                        dataset: {
-                            x: [42],
-                            y: [42],
-                        },
-                        hidden: false, // show/hide individual models from a group
-                        mean: true,
-                        derivative: true,
-                        median: true,
-                        percentile: true,
-                        color: "#000000",
-                        plotStyle: "solid",
-                    }
-                },
-                hidden: false, // show/hide complete group
-                visibileSV: { // lookup table so the reducer impl. can be more convenient
-                    mean: true,
-                    derivative: true,
-                    median: true,
-                    percentile: true,
-                }
-            }
-        }
-    }
+const MODEL_DATA_TEMPLATE = {   
+    color: null,                
+    isVisible: true,          
+    mean: true,
+    derivative: true,
+    median: true,
+    percentile: true,
 }
 
-test('should return the initial state', () => {
-    expect(reducer(undefined, {})).toEqual(
-      definedInitialState // Expect initial state to be the defined initial state
-    );
-});
 
+describe("reducer tests", () => {
 
-test('should remove the model list of the current plot', () => {
+    it('should edit the model list of the given group and leave other groups untoched', () => {
     
-    const removeModelList = ["modelA", "modelB", "modelC"]
-    
-    const previousState = {
-        plotId: "tco3_zm",
-        settings: {
-            "tco3_zm": {  
-                all: {
-                    modelList: removeModelList,
+        const newModelList = ["modelB", "modelC"]
+        
+        const previousState = {
+            modelGroupList: ["group1", "group2"],
+            modelGroups: {
+                group1: {
+                    modelList: ["modelA", "modelB"],
                     models: {
                         modelA: "dataA",
                         modelB: "dataB",
-                        modelC: "dataC",
+                    },
+                },
+                group2: {
+                    modelList: ["dataD", "dataE", "dataF"],
+                    models: {
+                        modelA: "dataD",
+                        modelB: "dataE",
+                        modelC: "dataF",
+                    },
+                },
+            },
+        };
+    
+        const expected = {
+            modelGroupList: ["group1", "group2"],
+            modelGroups: {
+                group1: {
+                    modelList: ["modelB", "modelC"], // empty
+                    models: {
+                        modelB: "dataB",
+                        modelC: MODEL_DATA_TEMPLATE,
+                    }, // empty
+                },
+                group2: {
+                    modelList: ["dataD", "dataE", "dataF"],
+                    models: {
+                        modelA: "dataD",
+                        modelB: "dataE",
+                        modelC: "dataF",
+                    },
+                },
+            },
+        };
+    
+        expect(
+            reducer(previousState, setModelsOfModelGroup({groupId: "group1", modelList: newModelList}))
+        ).toEqual(expected);
+    
+    });
+    
+    it('should create a new group if the given id is not present and increment the id counter', () => {
+        
+        const newModelList = ["modelA", "modelB"]
+        
+        const previousState = {
+            idCounter: 0,
+            modelGroupList: [],
+            modelGroups: {
+                
+            },
+        };
+    
+        const expected = {
+            idCounter: 1,
+            modelGroupList: [0],
+            modelGroups: {
+                0: {
+                    name: "fancy",
+                    modelList: ["modelA", "modelB"],
+                    models: {
+                        modelA: MODEL_DATA_TEMPLATE,
+                        modelB: MODEL_DATA_TEMPLATE,
+                    },
+                    isVisible: true,    // show/hide complete group
+                    visibileSV: {       // lookup table so the reducer impl. can be more convenient
+                        mean: true,
+                        derivative: true,
+                        median: true,
+                        percentile: true,
                     }
-                }
-            }
-        }
-    };
+                },
+            },
+        };
+    
+        expect(
+            reducer(previousState, setModelsOfModelGroup({groupName: "fancy", modelList: newModelList}))
+        ).toEqual(expected);
+    
+    });
+    
+    it('should update the visibility of the given model in the given group', () => {
+        const previousState = {
+            modelGroupList: [0],
+            modelGroups: {
+                0: {
+                    modelList: ["modelA", "modelB"],
+                    models: {
+                        modelA: "dataA",
+                        modelB: "dataB",
+                    },
+                    isVisible: false,
+                },
+            },
+        };
+    
+        const expected = { // Expect the new state to have the updated visibility of modelA
+            modelGroupList: [0],
+            modelGroups: {
+                0: {
+                    modelList: ["modelA", "modelB"],
+                    models: {
+                        modelA: "dataA",
+                        modelB: "dataB",
+                    },
+                    isVisible: true,
+                },
+            },
+        };
+        
+        expect(
+            reducer(
+                previousState, // use initial state 
+                setVisibilityForGroup({groupId: 0, isVisible: true})
+            )
+        ).toEqual(
+            expected
+        );
+    });
+    
+    it('should delete the given model group', () => {
+        const previousState = {
+            modelGroupList: [0, 1],
+            modelGroups: {
+                0: {
+                    modelList: ["modelA", "modelB"],
+                    models: {
+                        modelA: "dataA",
+                        modelB: "dataB",
+                    },
+                    isVisible: false,
+                },
+                1: {
+                    modelList: ["modelC", "modelD"],
+                    models: {
+                        modelA: "dataC",
+                        modelB: "dataD",
+                    },
+                    isVisible: false,
+                },
+            },
+        };
 
-    const expected = {
-        plotId: "tco3_zm",
-        settings: {
-            "tco3_zm": {  
-                "all": {
+        const expected = {
+            modelGroupList: [1],
+            modelGroups: {
+                1: {
+                    modelList: ["modelC", "modelD"],
+                    models: {
+                        modelA: "dataC",
+                        modelB: "dataD",
+                    },
+                    isVisible: false,
+                },
+            },
+        };
+
+        expect(
+            reducer(
+                previousState,
+                deleteModelGroup({groupId: 0}),
+            )
+        ).toEqual(expected);
+
+    });
+
+    it('should update the properties of the model group accordingly', () => {
+        const previousState = {
+            modelGroupList: [0],
+            modelGroups: {
+                0: {
+                    modelList: ["modelA", "modelB"],
+                    models: {
+                        modelA: {   
+                            color: null,              
+                            isVisible: false,          
+                            mean: true,
+                            derivative: true,
+                            median: true,
+                            percentile: true,
+                        },
+                        modelB: {   
+                            color: null,              
+                            isVisible: true,          
+                            mean: false,
+                            derivative: false,
+                            median: false,
+                            percentile: false,
+                        },
+                    },
+                },
+            },
+        };
+
+        const expected = {
+            modelGroupList: [0],
+            modelGroups: {
+                0: {
+                    modelList: ["modelA", "modelB"],
+                    models: {
+                        modelA: {   
+                            color: null,              
+                            isVisible: true,          
+                            mean: false,
+                            derivative: false,
+                            median: false,
+                            percentile: false,
+                        },
+                        modelB: {   
+                            color: null,              
+                            isVisible: false,          
+                            mean: true,
+                            derivative: true,
+                            median: true,
+                            percentile: true,
+                        },
+                    },
+                },
+            },
+        };
+        
+        const data = {
+            modelA: {   
+                color: null,              
+                isVisible: true,          
+                mean: false,
+                derivative: false,
+                median: false,
+                percentile: false,
+            },
+            modelB: {   
+                color: null,              
+                isVisible: false,          
+                mean: true,
+                derivative: true,
+                median: true,
+                percentile: true,
+            },
+        };
+
+
+        expect(reducer(previousState, updatePropertiesOfModelGroup({
+                    groupId: 0,
+                    data,
+                })
+            )).toEqual(expected);
+    });
+
+    it('should set the statistical value for the given group correct', () => {
+        const previousState = {
+            modelGroupList: [0],
+            modelGroups: {
+                0: {
                     modelList: [],
-                    models: {
-                        // expect lookup table to be empty
+                    models: {},
+                    visibileSV: {
+                        mean: true,
+                        derivative: true,
+                        median: true,
+                        percentile: true,
                     }
-                }
-            }
-        }
-    };
+                },
+            },
+        };
 
-    expect(
-        reducer(previousState, removeModels({groupId: "all", removeModelList: removeModelList}))
-    ).toEqual(expected);
-
-});
-
-test('should add the model list of the current plot', () => {
-    const previousState = {
-        plotId: "tco3_zm",
-        settings: {
-            "tco3_zm": {  
-                all: {
+        const expected = {
+            modelGroupList: [0],
+            modelGroups: {
+                0: {
                     modelList: [],
-                }
-            }
-        }
-    };
-
-    const newModels = ["modelA", "modelB", "modelC"]
-
-    const expected = {
-        plotId: "tco3_zm",
-        settings: {
-            "tco3_zm": {  
-                "all": {
-                    modelList: newModels,
-                }
-            }
-        }
-    };
-
-    expect(
-        reducer(previousState, addModels({groupId: "all", newModelList: newModels}))
-    ).toEqual(expected);
-
-});
-
-
-test('should update the visibility of the given model in the given group', () => {
-    const previousState = {
-        plotId: "tco3_zm",
-        settings: {
-            tco3_zm: {
-                all: {
-                    models: {
-                        modelA: {
-                            isVisible: true
-                        }
-                    }
-                }
-            }
-        }
-    };
-
-    const expected = { // Expect the new state to have the updated visibility of modelA
-        plotId: "tco3_zm",
-        settings: {
-            tco3_zm: {
-                all: {
-                    models: {
-                        modelA: {
-                            isVisible: false
-                        }
-                    }
-                }
-            }
-        }
-    };
-    
-    expect(
-        reducer(
-            previousState, // use initial state 
-            setVisibility({groupID: "all", modelID: "modelA", isVisible: false})
-        )
-    ).toEqual(
-        expected
-    );
-});
-
-
-test('should update that the given model in the given group is now included in the given SV', () => {
-    const previousState = {
-        plotId: "tco3_zm",
-        settings: {
-            tco3_zm: {
-                all: {
-                    models: {
-                        modelA: {
-                            mean: false
-                        }
-                    }
-                }
-            }
-        }
-    };
-
-    const expected = { // Expect the new state to have the updated visibility of modelA
-        plotId: "tco3_zm",
-        settings: {
-            tco3_zm: {
-                all: {
-                    models: {
-                        modelA: {
-                            mean: true
-                        }
-                    }
-                }
-            }
-        }
-    };
-    
-    expect(
-        reducer(
-            previousState, // use initial state 
-            setStatisticalValueIncluded({groupID: "all", modelID: "modelA", svType: "mean", isIncluded: true})
-        )
-    ).toEqual(
-        expected
-    );
-});
-
-test('should update that the given model in the given group is now included in the given SV', () => {
-    const previousState = {
-        plotId: "tco3_zm",
-        settings: {
-            tco3_zm: {
-                all: {
+                    models: {},
                     visibileSV: {
-                        mean: false
+                        mean: false,
+                        derivative: true,
+                        median: true,
+                        percentile: true,
                     }
-                }
-            }
-        }
-    };
+                },
+            },
+        };
 
-    const expected = { // Expect the new state to have the updated visibility of modelA
-        plotId: "tco3_zm",
-        settings: {
-            tco3_zm: {
-                all: {
-                    visibileSV: {
-                        mean: true
-                    }
-                }
-            }
-        }
-    };
+        expect(
+            reducer(
+                previousState,
+                setStatisticalValueForGroup({groupId: 0, svType: STATISTICAL_VALUES.mean, isIncluded: false})
+            )
+        ).toEqual(expected);
+
+        
+    });
+
+});
+
+describe("selector tests", () => {
     
-    expect(
-        reducer(
-            previousState, // use initial state 
-            setStatisticalValueForGroup({groupID: "all", svType: "mean", isIncluded: true})
-        )
-    ).toEqual(
-        expected
-    );
+    it('should select the model list', () => {
+        const modelList = ["modelA", "modelB"];
+        
+        const globalState = {
+            models: {
+                modelGroupList: [0],
+                modelGroups: {
+                    0: {
+                        modelList,
+                        models: {
+                            modelA: "dataA",
+                            modelB: "dataB",
+                        },
+                    },
+                },
+            },
+        };
+
+        expect(selectModelsOfGroup(globalState, 0)).toEqual(modelList);
+    });
+
+    it('should select the model data', () => {
+        const modelData = {
+            modelA: "dataA",
+            modelB: "dataB",
+        };
+
+        const globalState = {
+            models: {
+                modelGroupList: [0],
+                modelGroups: {
+                    0: {
+                        modelList: ["modelA", "modelB"],
+                        models: modelData,
+                    },
+                },
+            },
+        };
+
+        expect(selectModelDataOfGroup(globalState, 0)).toEqual(modelData);
+    });
+
+    it('should select the name', () => {
+        const name = "refC2";
+        
+        const globalState = {
+            models: {
+                modelGroupList: [0],
+                modelGroups: {
+                    0: {
+                        name, 
+                    },
+                },
+            },
+        };
+        
+        expect(selectNameOfGroup(globalState, 0)).toEqual(name);
+    });
+
+    it('should select the statistical values', () => {
+        const visibileSV = {
+            mean: true,
+            median: false,
+            derivative: true,
+            percentile: false,
+        }
+        
+        const globalState = {
+            models: {
+                modelGroupList: [0],
+                modelGroups: {
+                    0: {
+                        visibileSV, 
+                    },
+                },
+            },
+        };
+
+        expect(selectStatisticalValueSettingsOfGroup(globalState, 0)).toEqual(visibileSV);
+    });
+
+    it('should select the correct visibility', () => {
+        const isVisible = true;
+        
+        const globalState = {
+            models: {
+                modelGroupList: [0],
+                modelGroups: {
+                    0: {
+                        isVisible, 
+                    },
+                },
+            },
+        };
+
+        expect(selectVisibilityOfGroup(globalState, 0)).toEqual(isVisible);
+    });
+
+    it('should select all group ids', () => {
+        const allGroupIds = [0, 1, 2, 3, 4, 5];
+        
+        const globalState = {
+            models: {
+                modelGroupList: allGroupIds,
+            },
+        };
+
+        expect(selectAllGroupIds(globalState)).toEqual(allGroupIds);
+    });
+
+
 });

@@ -13,7 +13,6 @@ const initialState = {
     // maps plotids to their settings
     settings: {
         "tco3_zm": {
-            name: "OCTS", // should show up in the drop down menu
             title: "OCTS Plot", // the title shown in the apexcharts generated chart
             location: {
                 minLat: -90,
@@ -32,7 +31,6 @@ const initialState = {
             ],
         },
         "tco3_return": {
-            name: "Return/Recovery",
             title: "Return/Recovery Plot",
             location: { // custom user defined region
                 minLat: -90,
@@ -239,16 +237,6 @@ export default plotSlice.reducer;
  * @returns {string} the current active plot id
  */
 export const selectPlotId = state => state.plot.plotId;
-
-/**
- * This selector allows components to select the current plot name
- * from the store. The plot name is the humand readable version specifying 
- * the plot e.g. OCTS or Return/Recovery
- * 
- * @param {object} state the global redux state
- * @returns {string} the current active plot name
- */
-export const selectPlotName = state => state.plot.settings[state.plot.plotId].name;
 
 /**
  * This selector allows components to select the current plot title

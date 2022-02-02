@@ -1,9 +1,702 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`test addModelGroupModal rendering renders correctly when closed 1`] = `<div />`;
+exports[`test addModelGroupModal rendering renders correctly if model list provided 1`] = `
+<body
+  style="padding-right: 1024px; overflow: hidden;"
+>
+  <div
+    aria-hidden="true"
+  />
+  <div
+    aria-describedby="modal-modal-description"
+    aria-labelledby="modal-modal-title"
+    class="MuiModal-root css-79ws1d-MuiModal-root"
+    role="presentation"
+  >
+    <div
+      aria-hidden="true"
+      class="MuiBackdrop-root css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop"
+      style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+    />
+    <div
+      data-test="sentinelStart"
+      tabindex="0"
+    />
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-e1glwn-MuiPaper-root-MuiCard-root"
+      tabindex="-1"
+    >
+      <div
+        class="MuiCardHeader-root css-185gdzj-MuiCardHeader-root"
+      >
+        <div
+          class="MuiCardHeader-content css-1qbkelo-MuiCardHeader-content"
+        >
+          <span
+            class="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-1qvr50w-MuiTypography-root"
+          >
+            Add a new model group
+          </span>
+        </div>
+        <div
+          class="MuiCardHeader-action css-sgoict-MuiCardHeader-action"
+        >
+          <button
+            aria-label="close"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            data-testid="addModelGroupModal-close-button"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="CloseIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              />
+            </svg>
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+        </div>
+      </div>
+      <div
+        class="MuiCardContent-root css-46bh2p-MuiCardContent-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container css-go2vvz-MuiGrid-root"
+          style="margin-bottom: 2em;"
+        >
+          <div
+            class="MuiFormControl-root MuiTextField-root css-3d5apm-MuiFormControl-root-MuiTextField-root"
+          >
+            <div
+              class="MuiInput-root MuiInput-underline MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-1480iag-MuiInputBase-root-MuiInput-root"
+            >
+              <input
+                aria-describedby="mui-4-helper-text"
+                aria-invalid="false"
+                class="MuiInput-input MuiInputBase-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
+                id="mui-4"
+                placeholder="Your group"
+                type="text"
+                value=""
+              />
+            </div>
+            <p
+              class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-1d1r5q-MuiFormHelperText-root"
+              id="mui-4-helper-text"
+            >
+              The name will only appear in the legend of the exported plot.
+            </p>
+          </div>
+        </div>
+        <div
+          class="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-1ws8119-MuiDivider-root"
+          role="separator"
+        >
+          <span
+            class="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+            >
+               Select Models
+            </p>
+          </span>
+        </div>
+        <div
+          class="MuiBox-root css-1yuhvjn"
+          id="modal-modal-description"
+        >
+          <div
+            class="css-8xjr4f"
+          >
+            <div
+              class="css-1iz4iln"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                data-testid="SearchIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                />
+              </svg>
+            </div>
+            <div
+              class="MuiInputBase-root MuiInputBase-colorPrimary css-rzandp-MuiInputBase-root"
+            >
+              <input
+                alt="Searchbar"
+                aria-label="search"
+                class="MuiInputBase-input css-yz9k0d-MuiInputBase-input"
+                data-testid="SearchbarInput"
+                placeholder="Search…"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-1dnxiqs-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-5 css-11lxi55-MuiGrid-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              >
+                All available models
+              </p>
+              <div
+                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-bhp9pd-MuiPaper-root-MuiCard-root"
+              >
+                <div
+                  class="MuiCardHeader-root css-e6s3aq-MuiCardHeader-root"
+                >
+                  <div
+                    class="MuiCardHeader-avatar css-1ssile9-MuiCardHeader-avatar"
+                  >
+                    <span
+                      class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                    >
+                      <input
+                        aria-label="all items selected"
+                        class="PrivateSwitchBase-input css-1m9pwf3"
+                        data-indeterminate="false"
+                        type="checkbox"
+                      />
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                        data-testid="CheckBoxOutlineBlankIcon"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                        />
+                      </svg>
+                      <span
+                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                      />
+                    </span>
+                  </div>
+                  <div
+                    class="MuiCardHeader-content css-1qbkelo-MuiCardHeader-content"
+                  >
+                    <span
+                      class="MuiTypography-root MuiTypography-body2 MuiCardHeader-title css-et1ao3-MuiTypography-root"
+                    >
+                      0/2 selected
+                    </span>
+                  </div>
+                </div>
+                <hr
+                  class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+                />
+                <div
+                  class="MuiList-root MuiList-padding MuiList-dense css-nxipgw-MuiList-root"
+                  role="list"
+                >
+                  <div
+                    class="MuiButtonBase-root MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding MuiListItem-button css-qyxyi3-MuiButtonBase-root-MuiListItem-root"
+                    role="listitem"
+                    tabindex="0"
+                  >
+                    <div
+                      class="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"
+                    >
+                      <span
+                        class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-355xbt-MuiButtonBase-root-MuiCheckbox-root"
+                        data-testid="AddModelGroupModal-transfer-list-item-transfer-list-all-item-modelA-label-checkbox"
+                      >
+                        <input
+                          aria-labelledby="transfer-list-all-item-modelA-label"
+                          class="PrivateSwitchBase-input css-1m9pwf3"
+                          data-indeterminate="false"
+                          tabindex="-1"
+                          type="checkbox"
+                        />
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                          data-testid="CheckBoxOutlineBlankIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                    <div
+                      class="MuiListItemText-root MuiListItemText-dense MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                      id="transfer-list-all-item-modelA-label"
+                    >
+                      <span
+                        class="MuiTypography-root MuiTypography-body2 MuiListItemText-primary css-et1ao3-MuiTypography-root"
+                      >
+                        modelA
+                      </span>
+                      <p
+                        class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+                      >
+                        institute: 
+project: 
+                      </p>
+                    </div>
+                    <span
+                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                    />
+                  </div>
+                  <div
+                    class="MuiButtonBase-root MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding MuiListItem-button css-qyxyi3-MuiButtonBase-root-MuiListItem-root"
+                    role="listitem"
+                    tabindex="0"
+                  >
+                    <div
+                      class="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"
+                    >
+                      <span
+                        class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-355xbt-MuiButtonBase-root-MuiCheckbox-root"
+                        data-testid="AddModelGroupModal-transfer-list-item-transfer-list-all-item-modelB-label-checkbox"
+                      >
+                        <input
+                          aria-labelledby="transfer-list-all-item-modelB-label"
+                          class="PrivateSwitchBase-input css-1m9pwf3"
+                          data-indeterminate="false"
+                          tabindex="-1"
+                          type="checkbox"
+                        />
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                          data-testid="CheckBoxOutlineBlankIcon"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                    <div
+                      class="MuiListItemText-root MuiListItemText-dense MuiListItemText-multiline css-konndc-MuiListItemText-root"
+                      id="transfer-list-all-item-modelB-label"
+                    >
+                      <span
+                        class="MuiTypography-root MuiTypography-body2 MuiListItemText-primary css-et1ao3-MuiTypography-root"
+                      >
+                        modelB
+                      </span>
+                      <p
+                        class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
+                      >
+                        institute: 
+project: 
+                      </p>
+                    </div>
+                    <span
+                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-2 css-63b4os-MuiGrid-root"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-t0zib5-MuiGrid-root"
+              >
+                <button
+                  aria-label="move selected right"
+                  class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButtonBase-root Mui-disabled  css-ak74bx-MuiButtonBase-root-MuiButton-root"
+                  data-testid="AddModelGroupModal-button-move-allChecked-right"
+                  disabled=""
+                  tabindex="-1"
+                  type="button"
+                >
+                  &gt;
+                </button>
+                <button
+                  aria-label="move selected left"
+                  class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButtonBase-root Mui-disabled  css-ak74bx-MuiButtonBase-root-MuiButton-root"
+                  data-testid="AddModelGroupModal-button-move-allChecked-left"
+                  disabled=""
+                  tabindex="-1"
+                  type="button"
+                >
+                  &lt;
+                </button>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-5 css-11lxi55-MuiGrid-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              >
+                Models in 
+                your group
+              </p>
+              <div
+                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-bhp9pd-MuiPaper-root-MuiCard-root"
+              >
+                <div
+                  class="MuiCardHeader-root css-e6s3aq-MuiCardHeader-root"
+                >
+                  <div
+                    class="MuiCardHeader-avatar css-1ssile9-MuiCardHeader-avatar"
+                  >
+                    <span
+                      aria-disabled="true"
+                      class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root Mui-disabled MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-disabled css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                      tabindex="-1"
+                    >
+                      <input
+                        aria-label="all items selected"
+                        class="PrivateSwitchBase-input css-1m9pwf3"
+                        data-indeterminate="false"
+                        disabled=""
+                        type="checkbox"
+                      />
+                      <svg
+                        aria-hidden="true"
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                        data-testid="CheckBoxOutlineBlankIcon"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                  <div
+                    class="MuiCardHeader-content css-1qbkelo-MuiCardHeader-content"
+                  >
+                    <span
+                      class="MuiTypography-root MuiTypography-body2 MuiCardHeader-title css-et1ao3-MuiTypography-root"
+                    >
+                      0/0 selected
+                    </span>
+                  </div>
+                </div>
+                <hr
+                  class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+                />
+                <div
+                  class="MuiList-root MuiList-padding MuiList-dense css-nxipgw-MuiList-root"
+                  role="list"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiCardActions-root MuiCardActions-spacing css-1kj8htw-MuiCardActions-root"
+      >
+        <button
+          class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-sghohy-MuiButtonBase-root-MuiButton-root"
+          tabindex="0"
+          type="button"
+        >
+          Add group
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
+        </button>
+      </div>
+    </div>
+    <div
+      data-test="sentinelEnd"
+      tabindex="0"
+    />
+  </div>
+</body>
+`;
+
+exports[`test addModelGroupModal rendering renders correctly when closed 1`] = `
+<body
+  style=""
+>
+  <div />
+</body>
+`;
 
 exports[`test addModelGroupModal rendering renders correctly when open 1`] = `
-<div
-  aria-hidden="true"
-/>
+<body
+  style="padding-right: 1024px; overflow: hidden;"
+>
+  <div
+    aria-hidden="true"
+  />
+  <div
+    aria-describedby="modal-modal-description"
+    aria-labelledby="modal-modal-title"
+    class="MuiModal-root css-79ws1d-MuiModal-root"
+    role="presentation"
+  >
+    <div
+      aria-hidden="true"
+      class="MuiBackdrop-root css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop"
+      style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+    />
+    <div
+      data-test="sentinelStart"
+      tabindex="0"
+    />
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-e1glwn-MuiPaper-root-MuiCard-root"
+      tabindex="-1"
+    >
+      <div
+        class="MuiCardHeader-root css-185gdzj-MuiCardHeader-root"
+      >
+        <div
+          class="MuiCardHeader-content css-1qbkelo-MuiCardHeader-content"
+        >
+          <span
+            class="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-1qvr50w-MuiTypography-root"
+          >
+            Add a new model group
+          </span>
+        </div>
+        <div
+          class="MuiCardHeader-action css-sgoict-MuiCardHeader-action"
+        >
+          <button
+            aria-label="close"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            data-testid="addModelGroupModal-close-button"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="CloseIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              />
+            </svg>
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+        </div>
+      </div>
+      <div
+        class="MuiCardContent-root css-46bh2p-MuiCardContent-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container css-go2vvz-MuiGrid-root"
+          style="margin-bottom: 2em;"
+        >
+          <div
+            class="MuiFormControl-root MuiTextField-root css-3d5apm-MuiFormControl-root-MuiTextField-root"
+          >
+            <div
+              class="MuiInput-root MuiInput-underline MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-1480iag-MuiInputBase-root-MuiInput-root"
+            >
+              <input
+                aria-describedby="mui-2-helper-text"
+                aria-invalid="false"
+                class="MuiInput-input MuiInputBase-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
+                id="mui-2"
+                placeholder="Your group"
+                type="text"
+                value=""
+              />
+            </div>
+            <p
+              class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-1d1r5q-MuiFormHelperText-root"
+              id="mui-2-helper-text"
+            >
+              The name will only appear in the legend of the exported plot.
+            </p>
+          </div>
+        </div>
+        <div
+          class="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-1ws8119-MuiDivider-root"
+          role="separator"
+        >
+          <span
+            class="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+            >
+               Select Models
+            </p>
+          </span>
+        </div>
+        <div
+          class="MuiBox-root css-1yuhvjn"
+          id="modal-modal-description"
+        >
+          <div
+            class="css-8xjr4f"
+          >
+            <div
+              class="css-1iz4iln"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                data-testid="SearchIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                />
+              </svg>
+            </div>
+            <div
+              class="MuiInputBase-root MuiInputBase-colorPrimary css-rzandp-MuiInputBase-root"
+            >
+              <input
+                alt="Searchbar"
+                aria-label="search"
+                class="MuiInputBase-input css-yz9k0d-MuiInputBase-input"
+                data-testid="SearchbarInput"
+                placeholder="Search…"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-1dnxiqs-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-5 css-11lxi55-MuiGrid-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              >
+                All available models
+              </p>
+              <span
+                class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-18lrjg1-MuiCircularProgress-root"
+                data-testid="AddModelGroupModal-spinner-left"
+                role="progressbar"
+                style="width: 40px; height: 40px;"
+              >
+                <svg
+                  class="MuiCircularProgress-svg css-1idz92c-MuiCircularProgress-svg"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-176wh8e-MuiCircularProgress-circle"
+                    cx="44"
+                    cy="44"
+                    fill="none"
+                    r="20.2"
+                    stroke-width="3.6"
+                  />
+                </svg>
+              </span>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-2 css-63b4os-MuiGrid-root"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-t0zib5-MuiGrid-root"
+              >
+                <button
+                  aria-label="move selected right"
+                  class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButtonBase-root Mui-disabled  css-ak74bx-MuiButtonBase-root-MuiButton-root"
+                  data-testid="AddModelGroupModal-button-move-allChecked-right"
+                  disabled=""
+                  tabindex="-1"
+                  type="button"
+                >
+                  &gt;
+                </button>
+                <button
+                  aria-label="move selected left"
+                  class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButtonBase-root Mui-disabled  css-ak74bx-MuiButtonBase-root-MuiButton-root"
+                  data-testid="AddModelGroupModal-button-move-allChecked-left"
+                  disabled=""
+                  tabindex="-1"
+                  type="button"
+                >
+                  &lt;
+                </button>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-5 css-11lxi55-MuiGrid-root"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              >
+                Models in 
+                your group
+              </p>
+              <span
+                class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-18lrjg1-MuiCircularProgress-root"
+                data-testid="AddModelGroupModal-spinner-right"
+                role="progressbar"
+                style="width: 40px; height: 40px;"
+              >
+                <svg
+                  class="MuiCircularProgress-svg css-1idz92c-MuiCircularProgress-svg"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-176wh8e-MuiCircularProgress-circle"
+                    cx="44"
+                    cy="44"
+                    fill="none"
+                    r="20.2"
+                    stroke-width="3.6"
+                  />
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiCardActions-root MuiCardActions-spacing css-1kj8htw-MuiCardActions-root"
+      >
+        <button
+          class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-sghohy-MuiButtonBase-root-MuiButton-root"
+          tabindex="0"
+          type="button"
+        >
+          Add group
+          <span
+            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+          />
+        </button>
+      </div>
+    </div>
+    <div
+      data-test="sentinelEnd"
+      tabindex="0"
+    />
+  </div>
+</body>
 `;
