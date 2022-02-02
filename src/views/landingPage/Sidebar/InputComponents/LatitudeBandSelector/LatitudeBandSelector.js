@@ -77,12 +77,6 @@ function LatitudeBandSelector(props) {
     const [isCustomizable, setIsCustomizable] = React.useState(false);
 
     /**
-     * The default value that should be selected after initially loading this module.
-     * Default is Global (90°S–90°N)
-     */
-    const defaultValue = latitudeBands[6].value;
-
-    /**
      * handles the change when the user clicked on a new latitude band option 
      * if the user selected custom sets isCustomizable to true
      * @param {event} event the event that triggered this function call
@@ -121,12 +115,22 @@ function LatitudeBandSelector(props) {
      * @returns {{number, number}} the location
      */
     const findLatitudeBandByLocation = () => {
+        for (let i = 0; i < latitudeBands.length; i++) {
+            if (latitudeBands[i].text.description === 'Custom' ||
+                latitudeBands[i].value.minLat === selectedLocation.minLat && latitudeBands[i].value.maxLat === selectedLocation.maxLat) {
+                return latitudeBands[i].value;
+            }
+        }
+        /*
         latitudeBands.forEach( latBand => {
             if (latBand.value === 'custom' ||
                 latBand.value.minLat === selectedLocation.minLat && latBand.value.maxLat === selectedLocation.maxLat) {
+                console.log(latBand.value);
                 return latBand.value;
             }
         });
+
+         */
     }
 
     return (
@@ -140,7 +144,7 @@ function LatitudeBandSelector(props) {
                     id="latitudeBandSelector"
                     value={findLatitudeBandByLocation()}
                     onChange={handleChangeLatitudeBand}
-                    defaultValue={defaultValue}
+                    defaultValue={findLatitudeBandByLocation()}
                 >
                     {
                         // maps all latitude bands from constants.js to ´MenuItem´s

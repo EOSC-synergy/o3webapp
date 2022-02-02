@@ -99,6 +99,7 @@ export const latitudeBands = [
         text: Symbol("Global (90°S–90°N)"),
         value: { minLat: -90, maxLat: 90 }
     },
+    // !!! Custom must be last in array !!!
     {
         text: Symbol("Custom"),
         value: 'custom'
