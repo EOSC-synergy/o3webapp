@@ -1,5 +1,142 @@
 import { q25, q75, median, mean } from "../services/math/math"
-import { IMPLICIT_YEAR_LIST, O3AS_REGIONS, O3AS_PLOTS, ALL_REGIONS_ORDERED, STATISTICAL_VALUES_LIST, SV_CALCULATION, SV_COLORING, STATISTICAL_VALUES, APEXCHART_PLOT_TYPE, MODEL_LINE_THICKNESS } from "./constants"
+import { IMPLICIT_YEAR_LIST, O3AS_REGIONS, O3AS_PLOTS, ALL_REGIONS_ORDERED, STATISTICAL_VALUES_LIST, SV_CALCULATION, SV_COLORING, STATISTICAL_VALUES, APEXCHART_PLOT_TYPE, MODEL_LINE_THICKNESS, START_YEAR, END_YEAR } from "./constants"
+
+export const defaultTCO3_zm = {
+    xaxis: {
+        type: "numeric",
+        //categories: [],
+        min: START_YEAR,
+        max: END_YEAR,
+        decimalsInFloat: 0,
+        labels: {
+            rotate: 0
+        } 
+    },
+    yaxis: {
+        min: 200,
+        max: 400,
+        forceNiceScale: true,
+        decimalsInFloat: 2
+    }, 
+    chart: {
+        id: O3AS_PLOTS.tco3_zm,
+        animations: {
+            enabled: false,
+            easing: "linear"
+        },
+        toolbar: {
+            "show": true,
+            offsetX: -60,
+            offsetY: 10,
+            "tools":{
+                "download": true,
+                pan: false
+            }
+        },
+        zoom: {
+            enabled: true,
+            type: "xy",
+        },
+        width: "100%"
+    },
+    legend: {
+        show: true, 
+        onItemClick: {
+            toggleDataSeries: false
+        }
+    },
+    dataLabels: {
+        enabled: false,
+    },
+    tooltip: {
+        enabled: true,
+        shared: false,
+    },
+    colors: null, //styling.colors
+    stroke: {
+        //curve: "smooth", Ask betreuer for this
+        width: null, // styling.width,
+        dashArray: null, //styling.dashArray,
+    },
+    title: {
+        text: "OCTS Plot",
+        align: "center",
+        floating: false,
+        style: {
+            fontSize:  "30px",
+            fontWeight:  "bold",
+            fontFamily:  "undefined",
+            color:  "#4350af"
+        }
+    },
+};
+
+export const default_TCO3_return = {
+    chart: {
+      id: O3AS_PLOTS.tco3_return,
+      type: 'boxPlot',
+      animations: {
+          enabled: false, // disable animations
+      },
+      zoom: {
+          enabled: false,
+          type: 'xy',
+      }
+    },
+    colors: [undefined], // , ...styling.colors
+    title: {
+        text: "Return/Recovery",
+        align: "center",
+        floating: false,
+        style: {
+            fontSize:  "30px",
+            fontWeight:  "bold",
+            fontFamily:  "undefined",
+            color:  "#4350af"
+        }
+    },
+    tooltip: {
+      shared: false,
+      intersect: true
+    },
+    plotOptions: {
+      boxPlot: {
+        colors: {
+          upper: "#8def4e", //'#5C4742',
+          lower: "#63badb", //'#A5978B'
+        }
+      }
+    },
+    legend: {
+        show: true,
+    },
+    
+    markers: {
+      size: 5,
+      colors: [undefined], // ...styling.colors
+      strokeColors: '#000',
+      strokeWidth: 0,
+      strokeOpacity: 0.2, //?
+      strokeDashArray: 0, //?
+      fillOpacity: 0.7,
+      discrete: [],
+      //shape: [undefined, "circle", "square"], // circle or square
+      radius: 1,
+      offsetX: 0, // interesting
+      offsetY: 0,
+      //onClick: (event) => {alert("click")},
+      onDblClick: undefined,
+      showNullDataPoints: true,
+      hover: {
+          size: 10,
+            sizeOffset: 10,
+      },
+    }
+    
+};
+
+
+
 
 /**
  * Iterates through the x and y data returned from the api for the tco3_zm and fills the corresponding years with
@@ -219,7 +356,12 @@ function generateSingleTco3ZmSeries(name, svData) {
     }
 }
 
-function buildStatisticalSeries({data, series, colors, dashArray, width, modelsSlice, buildMatrix, generateSingleSvSeries}) {
+function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleSvSeries}) {
+    const svSeries = [];
+    const svWidth = [];
+    const svColors = [];
+    const svDashArray = [];
+    
     const modelGroups = modelsSlice.modelGroups;
     for (const [id, groupData] of Object.entries(modelGroups)) {
 
@@ -231,22 +373,27 @@ function buildStatisticalSeries({data, series, colors, dashArray, width, modelsS
                 || sv === STATISTICAL_VALUES.percentile) continue; // skip for now
             
  
-            series.push(generateSingleSvSeries(`${sv}(${groupData.name})`, svData));
-            colors.push(SV_COLORING[sv]);   // coloring?
-            width.push(1);                  // thicker?
-            dashArray.push(0);              // solid?       
+            svSeries.push(generateSingleSvSeries(`${sv}(${groupData.name})`, svData));
+            svColors.push(SV_COLORING[sv]);   // coloring?
+            svWidth.push(1);                  // thicker?
+            svDashArray.push(0);              // solid?       
         }
     }
+    return {svSeries, svWidth, svColors, svDashArray};
 }
 
-function generateTco3_ZmSeries({data, series, colors, dashArray, width, modelsSlice}) {
+function generateTco3_ZmSeries({data, modelsSlice}) {
+
+    const series = [];
+    const width = [];
+    const colors = [];
+    const dashArray = [];
 
     for (const [model, modelData] of Object.entries(data)) {
-
         series.push({
             type: APEXCHART_PLOT_TYPE.tco3_zm,
             name: model,
-            data: modelData.data,
+            data: modelData.data.map((e, idx) => [START_YEAR + idx, e]),
         });
 
         colors.push(colorNameToHex(modelData.plotStyle.color));
@@ -255,7 +402,12 @@ function generateTco3_ZmSeries({data, series, colors, dashArray, width, modelsSl
     }
 
     // generate SV!
-    buildStatisticalSeries({data, series, colors, dashArray, width, modelsSlice, buildMatrix: buildSvMatrixTco3Zm, generateSingleSvSeries: generateSingleTco3ZmSeries});
+    buildStatisticalSeries({
+        data, 
+        modelsSlice, 
+        buildMatrix: buildSvMatrixTco3Zm, 
+        generateSingleSvSeries: generateSingleTco3ZmSeries
+    });
 }
 
 function generateTco3_ReturnSeries({data, series, colors, modelsSlice}) {
@@ -320,132 +472,6 @@ export function generateSeries({plotId, data, modelsSlice}) {
     const {series, colors, dashArray, width} = SERIES_GENERATION[plotId]({data, modelsSlice}); // execute correct function based on mapping
     return {series, styling: {colors, dashArray, width}}; // return generated series with styling to pass to apexcharts chart
 }
-
-export const defaultTCO3_zm = {
-    xaxis: {
-        categories: [],
-        
-        /*
-        title: {
-            text: "Years"
-        },*/
-        /*
-        labels: {
-            rotate: 0, // no need to rotate since hiding labels gives plenty of room
-            hideOverlappingLabels: false  // all labels must be rendered
-        }
-        */
-    },
-    chart: {
-        id: O3AS_PLOTS.tco3_zm,
-        animations: {
-            enabled: false,
-            easing: "linear"
-        },
-        toolbar: {
-            "show": true,
-            "tools":{
-                "download": true 
-            }
-        },
-        zoom: {
-            enabled: true,
-            type: "xy",
-        },
-        type: "line",
-    },
-    legend: {
-        show: true, // only shows up if there is more than one line
-    },
-    dataLabels: {
-        enabled: false,
-    },
-    tooltip: {
-        enabled: true,
-        shared: false,
-    },
-    colors: null, //styling.colors
-    stroke: {
-        //curve: "smooth", Ask betreuer for this
-        width: null, // styling.width,
-        dashArray: null, //styling.dashArray,
-    },
-    title: {
-        text: "OCTS Plot",
-        align: "center",
-        floating: false,
-        style: {
-            fontSize:  "30px",
-            fontWeight:  "bold",
-            fontFamily:  "undefined",
-            color:  "#4350af"
-        }
-    },
-};
-
-export const default_TCO3_return = {
-    chart: {
-      id: O3AS_PLOTS.tco3_return,
-      type: 'boxPlot',
-      animations: {
-          enabled: false, // disable animations
-      },
-      zoom: {
-          enabled: false,
-          type: 'xy',
-      }
-    },
-    colors: [undefined], // , ...styling.colors
-    title: {
-        text: "Return/Recovery",
-        align: "center",
-        floating: false,
-        style: {
-            fontSize:  "30px",
-            fontWeight:  "bold",
-            fontFamily:  "undefined",
-            color:  "#4350af"
-        }
-    },
-    tooltip: {
-      shared: false,
-      intersect: true
-    },
-    plotOptions: {
-      boxPlot: {
-        colors: {
-          upper: "#8def4e", //'#5C4742',
-          lower: "#63badb", //'#A5978B'
-        }
-      }
-    },
-    legend: {
-        show: true,
-    },
-    
-    markers: {
-      size: 5,
-      colors: [undefined], // ...styling.colors
-      strokeColors: '#000',
-      strokeWidth: 0,
-      strokeOpacity: 0.2, //?
-      strokeDashArray: 0, //?
-      fillOpacity: 0.7,
-      discrete: [],
-      //shape: [undefined, "circle", "square"], // circle or square
-      radius: 1,
-      offsetX: 0, // interesting
-      offsetY: 0,
-      //onClick: (event) => {alert("click")},
-      onDblClick: undefined,
-      showNullDataPoints: true,
-      hover: {
-          size: 10,
-            sizeOffset: 10,
-      },
-    }
-    
-};
 
 export function getOptions({plotId, styling, plotTitle}) {
     if (plotId === O3AS_PLOTS.tco3_zm) {
