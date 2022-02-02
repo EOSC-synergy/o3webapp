@@ -391,7 +391,19 @@ function generateSingleTco3ReturnSeries(name, svData) {
     };
 }
 
-
+/**
+ * This plug-in method is used to specify how the data should be parsed and 
+ * arranged so that the generic buildStatisticalValues-Function can 
+ * take care of the calculation.
+ * 
+ * The data arrangement is basically a transposition.
+ * The first datapoint of each model ist grouped into the first array.
+ * and so on...
+ * 
+ * @param {array} obj.modelList list of models of a group that should be included
+ * @param {object} obj.data an object holding all the data from the api
+ * @returns a 2D array containing all the data (transpose matrix of given data)
+ */
 function buildSvMatrixTco3Return({modelList, data}) {
     const matrix = create2dArray(ALL_REGIONS_ORDERED.length);
 
@@ -447,6 +459,18 @@ function calculateBoxPlotValues({data, modelsSlice}) {
     return boxPlotValues
 }
 
+/**
+ * This method builds the statistical series using the passed buildMatrix method 
+ * that brings the data into the desired format and uses the 
+ * generate passed singleSvSeries function to transform each generated series into
+ * the correct format. 
+ * 
+ * @param {object} obj.data the raw data from the api for the current options
+ * @param {object} obj.modelsSlice the slice of the store containg information about the model groups
+ * @param {function} obj.buildMatrix either buildSvMatrixTco3Zm | buildSvMatrixTco3Return, specifies how the data should be transformed
+ * @param {function} obj.generateSingleSvSeries either generateSingleTco3ZmSeries | generateSingleTco3ReturnSeries, specifies how the series should be generated
+ * @returns an array holding all statistical series for the given modelSlice
+ */
 function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleSvSeries}) {
     const svSeries = {
         data: [],
@@ -466,10 +490,10 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
                 || sv === STATISTICAL_VALUES.percentile) continue; // skip for now
             
 
-            if (groupData.visibleSV[sv] 
+            if (groupData.visibleSV[sv] // mean und median
                 || (sv.includes("std") && groupData.visibleSV[STATISTICAL_VALUES.derivative])) {
             } else {
-                continue; // mean und median
+                continue; 
             }
             svSeries.data.push(generateSingleSvSeries(`${sv}(${groupData.name})`, svData));
             svSeries.colors.push(SV_COLORING[sv]);   // coloring?
@@ -482,12 +506,13 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
 
 
 /**
- * Calculates the statistical values for the given modelList and data.
+ * Calculates the statistical values for the given modelList (from a certain modelgroup).
+ * Takes into account the groupData object which stores information about the models.
  * 
- * @param {} modelList
- * @param {} data
- * @param {} groupData
- * @param {} buildMatrix
+ * @param {array} modelList a list of all models of a specific model group.
+ * @param {object} data the raw data from the api for the current options
+ * @param {object} groupData the modelsSlice data narrowed down for a specific model group
+ * @param {function} buildMatrix either buildSvMatrixTco3Zm | buildSvMatrixTco3Return, specifies how the data should be transformed
  */
 function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass group data
     // only mean at beginning
@@ -697,7 +722,12 @@ function create2dArray(i) {
     return Array.from(Array(i), () => []);
 }
 
-
+/**
+ * Checks if a model is included in the statistical value calculation of a given SV-Type.
+ * 
+ * @param {}
+ * @param
+ */
 function isIncludedInSv(model, groupData, svType) {
     if (svType === "stdMean") return groupData.models[model][STATISTICAL_VALUES.derivative]; // the std mean should only be calculated if the "derivative" / std is necessary
     
