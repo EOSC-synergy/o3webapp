@@ -357,10 +357,12 @@ function generateSingleTco3ZmSeries(name, svData) {
 }
 
 function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleSvSeries}) {
-    const svSeries = [];
-    const svWidth = [];
-    const svColors = [];
-    const svDashArray = [];
+    const svSeries = {
+        svData: [],
+        svColors: [],
+        svWidth: [],
+        svDashArray: [],
+    };
     
     const modelGroups = modelsSlice.modelGroups;
     for (const [id, groupData] of Object.entries(modelGroups)) {
@@ -373,41 +375,53 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
                 || sv === STATISTICAL_VALUES.percentile) continue; // skip for now
             
  
-            svSeries.push(generateSingleSvSeries(`${sv}(${groupData.name})`, svData));
-            svColors.push(SV_COLORING[sv]);   // coloring?
-            svWidth.push(1);                  // thicker?
-            svDashArray.push(0);              // solid?       
+            svSeries.svData.push(generateSingleSvSeries(`${sv}(${groupData.name})`, svData));
+            svSeries.svColors.push(SV_COLORING[sv]);   // coloring?
+            svSeries.svWidth.push(1);                  // thicker?
+            svSeries.svDashArray.push(0);              // solid?       
         }
     }
-    return {svSeries, svWidth, svColors, svDashArray};
+    return { svSeries };
 }
 
 function generateTco3_ZmSeries({data, modelsSlice}) {
-
-    const series = [];
-    const width = [];
-    const colors = [];
-    const dashArray = [];
-
+    const series = {
+        data: [],
+        colors: [],
+        width: [],
+        dashArray: [],
+    }
+    
     for (const [model, modelData] of Object.entries(data)) {
-        series.push({
+        series.data.push({
             type: APEXCHART_PLOT_TYPE.tco3_zm,
             name: model,
             data: modelData.data.map((e, idx) => [START_YEAR + idx, e]),
         });
 
-        colors.push(colorNameToHex(modelData.plotStyle.color));
-        width.push(MODEL_LINE_THICKNESS);
-        dashArray.push(convertToStrokeStyle(modelData.plotStyle.linestyle)); // default line thickness
+        series.colors.push(colorNameToHex(modelData.plotStyle.color));
+        series.width.push(MODEL_LINE_THICKNESS);
+        series.dashArray.push(convertToStrokeStyle(modelData.plotStyle.linestyle)); // default line thickness
     }
 
     // generate SV!
-    buildStatisticalSeries({
+    const {svSeries} = buildStatisticalSeries({
         data, 
         modelsSlice, 
         buildMatrix: buildSvMatrixTco3Zm, 
         generateSingleSvSeries: generateSingleTco3ZmSeries
     });
+    series.push(...svSeries);
+    colors.push(...svColors);
+    width.push(...svWidth);
+    dashArray.push(...svDashArray);
+    
+    return {series, colors, width, dashArray};
+}
+
+function combineSeries(series1, series2) {
+    const newSeries = {};
+    newSeries.data = 
 }
 
 function generateTco3_ReturnSeries({data, series, colors, modelsSlice}) {
