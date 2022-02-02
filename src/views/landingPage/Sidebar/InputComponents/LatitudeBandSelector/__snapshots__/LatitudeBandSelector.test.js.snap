@@ -1,61 +1,47 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LatitudeBandSelector component should render correctly from config file 1`] = `
-Array [
+exports[`test LatitudeBandSelector component rendering renders as expected 1`] = `
+<div>
   <div
-    className="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-1ws8119-MuiDivider-root"
+    class="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-1ws8119-MuiDivider-root"
     role="separator"
   >
     <span
-      className="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
+      class="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
     >
       <p
-        className="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
       >
         LATITUDE BAND
       </p>
     </span>
-  </div>,
+  </div>
   <div
-    className="MuiBox-root css-1n3sbe4"
+    class="MuiBox-root css-1n3sbe4"
   >
     <div
-      className="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary css-vwjx0e-MuiInputBase-root-MuiOutlinedInput-root"
-      onClick={[Function]}
+      class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary css-vwjx0e-MuiInputBase-root-MuiOutlinedInput-root"
     >
       <div
         aria-expanded="false"
         aria-haspopup="listbox"
         aria-labelledby="latitudeBandSelectorLabel latitudeBandSelector"
-        className="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+        class="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
         id="latitudeBandSelector"
-        onBlur={[Function]}
-        onFocus={[Function]}
-        onKeyDown={[Function]}
-        onMouseDown={[Function]}
         role="button"
-        tabIndex={0}
+        tabindex="0"
       >
-        <span
-          className="notranslate"
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "&#8203;",
-            }
-          }
-        />
+        Southern Hemisphere (SH) Polar (90–60°S)
       </div>
       <input
-        aria-hidden={true}
-        className="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
-        onAnimationStart={[Function]}
-        onChange={[Function]}
-        tabIndex={-1}
-        value="-90,90"
+        aria-hidden="true"
+        class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+        tabindex="-1"
+        value="-90,-60"
       />
       <svg
-        aria-hidden={true}
-        className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+        aria-hidden="true"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
         data-testid="ArrowDropDownIcon"
         focusable="false"
         viewBox="0 0 24 24"
@@ -65,11 +51,11 @@ Array [
         />
       </svg>
       <fieldset
-        aria-hidden={true}
-        className="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+        aria-hidden="true"
+        class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
       >
         <legend
-          className="css-173wfxe"
+          class="css-173wfxe"
         >
           <span>
             LatitudeBand
@@ -77,6 +63,6 @@ Array [
         </legend>
       </fieldset>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;

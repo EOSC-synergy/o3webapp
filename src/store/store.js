@@ -12,7 +12,7 @@ export default configureStore({
         reference: referenceReducer,
         api: apiReducer,
     }
-})
+});
 
 export function createTestStore() {
     return configureStore({

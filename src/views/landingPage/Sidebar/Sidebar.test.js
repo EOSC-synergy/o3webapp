@@ -15,24 +15,22 @@ describe('test sidebar component', () => {
       
 
     it('Sidebar renders without crashing', () => {
-        const div = document.createElement('div');
-        ReactDOM.render(<Provider store={store}>
-            <Sidebar />
-        </Provider>
-        , div);
+        render(<Provider store={store}>
+            <Sidebar isOpen={true} onClose={jest.fn()} reportError={jest.fn()} onOpen={jest.fn()} />
+        </Provider>);
     });
 
     // Snapshot test
     it('closed Sidebar renders correctly', () => {
         const { container } = render(<Provider store={store}>
-            <Sidebar isOpen={false} />
+            <Sidebar isOpen={false} onClose={jest.fn()} reportError={jest.fn()} onOpen={jest.fn()} />
         </Provider>);
         expect(container).toMatchSnapshot();
     });
 
     it('opened Sidebar renders correctly', () => {
         const { container } = render(<Provider store={store}>
-            <Sidebar isOpen={true} />, div
+            <Sidebar isOpen={true} onClose={jest.fn()} reportError={jest.fn()} onOpen={jest.fn()} />
         </Provider>);
         expect(container).toMatchSnapshot();
     });
@@ -40,7 +38,7 @@ describe('test sidebar component', () => {
     // expect there to be a download button
     it('Sidebar has a download button', () => {
         render(<Provider store={store}>
-            <Sidebar />
+            <Sidebar isOpen={true} onClose={jest.fn()} reportError={jest.fn()} onOpen={jest.fn()} />
         </Provider>);
         const download = screen.getByText(/Download/i);
         expect(download).not.toBeDisabled();

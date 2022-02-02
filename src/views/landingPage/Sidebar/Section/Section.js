@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { styled, useTheme } from '@mui/material/styles';
+import React from "react";
+import { styled } from '@mui/material/styles';
 import LocationSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
 import ModelGroupConfigurator from "../InputComponents/ModelGroupConfigurator/ModelGroupConfigurator";
 import OffsetConfigurator from "../InputComponents/OffsetConfigurator/OffsetConfigurator";
 import PlotNameField from "../InputComponents/PlotNameField/PlotNameField";
-import ReferenceYearSlider from "../InputComponents/ReferenceYearSlider/ReferenceYearSlider";
+import ReferenceYearField from "../InputComponents/ReferenceYearField/ReferenceYearField";
 import RegionSelector from "../InputComponents/RegionSelector/RegionSelector";
 import TimeCheckBoxGroup from "../InputComponents/TimeCheckboxGroup/TimeCheckboxGroup";
-import XAxisSlider from "../InputComponents/XAxisSlider/XAxisSlider";
-import YAxisSlider from "../InputComponents/YAxisSlider/YAxisSlider";
+import XAxisField from "../InputComponents/XAxisField/XAxisField";
+import YAxisField from "../InputComponents/YAxisField/YAxisField";
 import PropTypes from 'prop-types'; 
 import LatitudeBandSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
 import ReferenceModelSelector from "../InputComponents/ReferenceModelSelector/ReferenceModelSelector";
@@ -18,7 +18,19 @@ import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { LBS_Symbol, LS_Symbol, MGC_Symbol, OC_Symbol, PNF_Symbol, RMS_Symbol, RYS_Symbol, RS_Symbol, TCG_Symbol, XAS_Symbol, YAS_Symbol } from "../../../../utils/constants";
+import {
+    LBS_Symbol,
+    LS_Symbol,
+    MGC_Symbol,
+    OC_Symbol,
+    PNF_Symbol,
+    RMS_Symbol,
+    RS_Symbol,
+    RYF_Symbol,
+    TCG_Symbol,
+    XAF_Symbol,
+    YAF_Symbol,
+} from "../../../../utils/constants";
 
 
 
@@ -85,19 +97,12 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
  * @returns {JSX.Element} an accordion that once expanded displays the components specified by the config files and the API doc
  */
 function Section(props) {
-    
-    let i = props.sectionId
-    i = props.name;
-    i = props.reportError;
-    i = props.isExpanded;
-    i = props.onCollapse
-    i = props.onExpand;
-    
 
     /**
      * maps a given name to a corresponding component from the ./InputComponents folder
      * if there is no component with the given name, calls the props.reportError function
      * @public
+     * @todo move to utils
      * @param {String} name the name of the component
      * @param {int} key a unique key for the given input component
      * @returns a component from the './InputComponents
@@ -118,16 +123,16 @@ function Section(props) {
                     return <PlotNameField key={key} reportError={props.reportError} />;
                 case RMS_Symbol.description:
                     return <ReferenceModelSelector key={key} reportError={props.reportError}/>;
-                case RYS_Symbol.description:
-                    return <ReferenceYearSlider key={key} reportError={props.reportError} />;
+                case RYF_Symbol.description:
+                    return <ReferenceYearField key={key} reportError={props.reportError} />;
                 case RS_Symbol.description:
                     return <RegionSelector key={key} reportError={props.reportError} />;
                 case TCG_Symbol.description:
                     return <TimeCheckBoxGroup key={key} reportError={props.reportError} />;
-                case XAS_Symbol.description:
-                    return <XAxisSlider key={key} reportError={props.reportError} />;
-                case YAS_Symbol.description:
-                    return <YAxisSlider key={key} reportError={props.reportError} />;
+                case XAF_Symbol.description:
+                    return <XAxisField key={key} reportError={props.reportError} />;
+                case YAF_Symbol.description:
+                    return <YAxisField key={key} reportError={props.reportError} />;
                 default:
                     props.reportError(`Section ${props.name} found no match for an input component ${name}`);
             }
@@ -138,7 +143,7 @@ function Section(props) {
         }
     }
 
-    if (!props.components) {
+    if (!props.components || props.components.length === 0) {
        if('reportError' in props && typeof props.reportError === 'function') {
            props.reportError(`Section ${props.name} was provided with no components`);
            return <></>;

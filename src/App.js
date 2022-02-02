@@ -4,9 +4,6 @@ import Footer from "./components/Footer/Footer";
 import ErrorMessageModal from './components/ErrorMessageModal/ErrorMessageModal';
 import CookieConsentModal from './components/CookieConsentModal/CookieConsentModal';
 import LandingPage from './views/landingPage/LandingPage';
-import PropTypes from "prop-types";
-import PlotTypeSelector from "./views/landingPage/Sidebar/InputComponents/PlotTypeSelector/PlotTypeSelector";
-import DiscardChangesModal from './components/DiscardChangesModal/DiscardChangesModal';
 
 /**
  * Main container of the Webapp

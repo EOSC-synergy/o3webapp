@@ -13,16 +13,16 @@ beforeEach(() => {
 
 
 it('renders without crashing', () => {
-  render(<Provider store={store}><PlotNameField /></Provider>);
+  render(<Provider store={store}><PlotNameField reportError={jest.fn()} /></Provider>);
 });
 
 it('renders correctly', () => {
-  const { container } = render(<Provider store={store}><PlotNameField /></Provider>);
+  const { container } = render(<Provider store={store}><PlotNameField reportError={jest.fn()} /></Provider>);
   expect(container).toMatchSnapshot();
 });
 
 it('renders TextField correctly', () => {
-  const { getByTestId } = render(<Provider store={store}><PlotNameField /></Provider>);
+  const { getByTestId } = render(<Provider store={store}><PlotNameField reportError={jest.fn()} /></Provider>);
   const input = getByTestId("plot-field");
   expect(input).toBeInTheDocument();
 });
@@ -30,7 +30,7 @@ it('renders TextField correctly', () => {
 it('changes the name correctly', () => {
     
     
-  const { getByTestId } = render(<Provider store={store}><PlotNameField /></Provider>);
+  const { getByTestId } = render(<Provider store={store}><PlotNameField reportError={jest.fn()} /></Provider>);
 
   const selectNode = getByTestId("plot-field").querySelector('input');
 

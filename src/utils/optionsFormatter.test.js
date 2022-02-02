@@ -75,7 +75,6 @@ describe("testing optionsFormatter functionality", () => {
     it('extracts all models which should be included', () => {
         const modelSlice = {
             idCounter: 1,
-            modelGroupList: [0],
             modelGroups: {
                 0: { 
                     modelList: ["modelA", "modelB", "modelC"],
@@ -100,7 +99,7 @@ describe("testing optionsFormatter functionality", () => {
 
     it('throws an error if a provided plotId is not correct', () => {
         expect(
-            () => generateSeries({plotId: "no valid id", data: {}, modelsSlice: { modelGroupList: []}})
+            () => generateSeries({plotId: "no valid id", data: {}, modelsSlice: { modelGroups: {}}})
         ).toThrow("the given plot id \"no valid id\" is not defined");
     });
 
