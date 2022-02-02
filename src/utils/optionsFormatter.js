@@ -5,6 +5,14 @@ const SERIES_GENERATION = {}; // Map plotId to corresponding generation function
 SERIES_GENERATION[O3AS_PLOTS.tco3_zm] = generateTco3_ZmSeries;
 SERIES_GENERATION[O3AS_PLOTS.tco3_return] = generateTco3_ReturnSeries;
 
+/**
+ * The default settings for the tco3_zm plot.
+ * 
+ * colors, width, dashArray have to be filled. 
+ * 
+ * This gigantic object allows us to communicate with the apexcharts library.
+ * More can be found here: https://apexcharts.com/docs/installation/ 
+ */
 export const defaultTCO3_zm = {
     xaxis: {
         type: "numeric",
@@ -73,7 +81,14 @@ export const defaultTCO3_zm = {
     },
 };
 
-export const default_TCO3_return = {
+/**
+ * The default settings for the tco3_return plot.
+ * 
+ * colors have to be filled.
+ * 
+ * This gigantic object allows us to communicate with the apexcharts library.
+ * More can be found here: https://apexcharts.com/docs/installation/ 
+ */export const default_TCO3_return = {
     yaxis: {
         forceNiceScale: true,
         decimalsInFloat: 0
@@ -140,20 +155,17 @@ export const default_TCO3_return = {
     
 };
 
-
-export function generateSeries({plotId, data, modelsSlice}) {
-    const series = SERIES_GENERATION[plotId]({data, modelsSlice}); // execute correct function based on mapping
-    console.log(series);
-    return {
-        data: series.data, 
-        styling: {
-            colors: series.colors, 
-            dashArray: series.dashArray, 
-            width: series.width,
-        }
-    }; // return generated series with styling to pass to apexcharts chart
-}
-
+/**
+ * The interface the graph component accesses to generate the options for the plot
+ * given the plot id, the styling (depends on plot type) and the plot title.
+ * 
+ * @param {string} obj.plotId an element of O3AS_PLOTS
+ * @param {array} obj.styling.colors an array of strings with hexcode. Has to match the length of the given series 
+ * @param {array} obj.styling.width (tco3_zm only!): array of integer defining the line width
+ * @param {array} obj.styling.dashArray (tco3_zm only!): array of integer defining if the line is solid or dashed
+ * @param {string} obj.plotTitle contains the plot title
+ * @returns an default_TCO3_plotId object formatted with the given data
+ */
 export function getOptions({plotId, styling, plotTitle}) {
     if (plotId === O3AS_PLOTS.tco3_zm) {
         const newOptions = JSON.parse(JSON.stringify(defaultTCO3_zm)); // dirt simple and not overly horrible
@@ -174,6 +186,21 @@ export function getOptions({plotId, styling, plotTitle}) {
         return newOptions;
     }    
 };
+
+
+export function generateSeries({plotId, data, modelsSlice}) {
+    const series = SERIES_GENERATION[plotId]({data, modelsSlice}); // execute correct function based on mapping
+    console.log(series);
+    return {
+        data: series.data, 
+        styling: {
+            colors: series.colors, 
+            dashArray: series.dashArray, 
+            width: series.width,
+        }
+    }; // return generated series with styling to pass to apexcharts chart
+}
+
 
 function generateTco3_ZmSeries({data, modelsSlice}) {
     const series = {
@@ -211,6 +238,222 @@ function generateTco3_ZmSeries({data, modelsSlice}) {
     return combineSeries(series, svSeries);
 }
 
+function generateSingleTco3ZmSeries(name, svData) {
+    return {
+        name: name,
+        data: svData.map((e, idx) => [START_YEAR + idx, e]),
+        type: "line",
+    }
+}
+
+function buildSvMatrixTco3Zm({modelList, data}) {
+    const SERIES_LENGTH = data[modelList[0]].data.length; // grab length of first model, should all be same
+
+    const matrix = create2dArray(SERIES_LENGTH); // for arr of matrix: mean(arr), etc.
+
+    for (let i = 0; i < SERIES_LENGTH; ++i) {
+        for (const model of modelList) {
+            matrix[i].push(
+                data[model].data[i] // add null anyway to remain index mapping (null is filtered out later)
+            )
+        }
+    }
+    return matrix;
+}
+
+function generateTco3_ReturnSeries({data, modelsSlice}) {
+    const series = {
+        data: [],
+        colors: [],
+        width: [],
+        dashArray: [],
+    }
+    
+    // 1. build boxplot
+    const boxPlotValues = calculateBoxPlotValues({data, modelsSlice});
+    series.data.push({
+            name: 'box',
+            type: 'boxPlot',
+
+            data: ALL_REGIONS_ORDERED.map(region => ({
+                x: region,
+                y: boxPlotValues[region],
+            })),
+        }
+    );
+
+
+    // 2. build scatter plot
+
+    for (const [id, groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups
+        if (!groupData.isVisible) continue; // skip hidden groups
+        for (const [model, modelInfo] of Object.entries(groupData.models)) {
+            if (!modelInfo.isVisible) continue; // skip hidden models
+            const modelData = data[model];
+            const sortedData = ALL_REGIONS_ORDERED.map(region => ({
+                x: region,
+                y: modelData.data[region] || null, // null as default if data is missing
+            }));
+            
+            series.data.push({
+                name: model,
+                data: sortedData,
+                type: "scatter",
+            });
+            series.colors.push(
+                colorNameToHex(modelData.plotStyle.color)
+            )
+        }
+    }   
+
+    // 3. generate statistical values
+    const svSeries = buildStatisticalSeries({
+        data,
+        modelsSlice,
+        buildMatrix: buildSvMatrixTco3Return,
+        generateSingleSvSeries: generateSingleTco3ReturnSeries
+    });
+    return combineSeries(series, svSeries);
+}
+
+function generateSingleTco3ReturnSeries(name, svData) {
+    const transformedData = ALL_REGIONS_ORDERED.map((region, index) => {
+        return {
+            x: region,
+            y: svData[index],
+        }
+    })
+
+    return {
+        name: name,
+        data: transformedData,
+        type: "scatter", // make generic
+    }
+}
+
+
+function buildSvMatrixTco3Return({modelList, data}) {
+    const matrix = create2dArray(ALL_REGIONS_ORDERED.length);
+
+    for (const index in ALL_REGIONS_ORDERED) {
+        const region = ALL_REGIONS_ORDERED[index]; // iterate over regions
+        for (const model of modelList) {
+            matrix[index].push(
+                data[model].data[region] || null
+            )
+        }
+    }
+    return matrix;
+    
+}
+
+/**
+ * This method calculates the boxplot values for the tco3_return plot.
+ * For each region an array of 5 values is calculated: min, q1, median, q3, max
+ * which is sufficient to render the desired box plot.
+ * 
+ * @param {object} data contains the region data from the api
+ * @returns object holding an array of 5 values (min, q1, median, q3, max) for each region
+ */
+function calculateBoxPlotValues({data, modelsSlice}) {
+    const boxPlotHolder = {}
+	for (let region of ALL_REGIONS_ORDERED) {
+		boxPlotHolder[region] = []
+	}
+
+    for (const [id, groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups
+        if (!groupData.isVisible) continue; // skip hidden groups
+        for (const [model, modelInfo] of Object.entries(groupData.models)) {
+            if (!modelInfo.isVisible) continue; // skip hidden models
+            for (const [region, year] of Object.entries(data[model].data)) {
+                boxPlotHolder[region].push(year);
+            }
+        }
+    }
+    
+    const boxPlotValues = {}
+	for (let region of ALL_REGIONS_ORDERED) {
+		boxPlotHolder[region].sort()
+		const arr = boxPlotHolder[region]
+		boxPlotValues[region] = []
+		boxPlotValues[region].push(
+			arr[0],
+			q25(arr),
+			median(arr),
+			q75(arr),
+			arr[arr.length - 1]
+		)
+	}
+    return boxPlotValues
+}
+
+function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleSvSeries}) {
+    const svSeries = {
+        data: [],
+        colors: [],
+        width: [],
+        dashArray: [],
+    };
+    
+    const modelGroups = modelsSlice.modelGroups;
+    for (const [id, groupData] of Object.entries(modelGroups)) {
+
+        const svHolder = calculateSvForModels(Object.keys(groupData.models), data, groupData, buildMatrix);
+
+        for (const [sv, svData] of Object.entries(svHolder)) {
+            
+            if (sv === STATISTICAL_VALUES.derivative // std
+                || sv === STATISTICAL_VALUES.percentile) continue; // skip for now
+            
+
+            if (groupData.visibleSV[sv] 
+                || (sv.includes("std") && groupData.visibleSV[STATISTICAL_VALUES.derivative])) {
+            } else {
+                continue; // mean und median
+            }
+            svSeries.data.push(generateSingleSvSeries(`${sv}(${groupData.name})`, svData));
+            svSeries.colors.push(SV_COLORING[sv]);   // coloring?
+            svSeries.width.push(1);                  // thicker?
+            svSeries.dashArray.push(0);              // solid?       
+        }
+    }
+    return svSeries;
+}
+
+
+function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass group data
+    // only mean at beginning
+
+    const matrix = buildMatrix({modelList, data}); // function supplied by caller
+
+    const svHolder = {stdMean: []};
+    STATISTICAL_VALUES_LIST.forEach(
+        sv => svHolder[sv] = [] // init with empty array
+    )
+
+    for (const arr of matrix) { // fill with calculated sv
+        for (const sv of [...STATISTICAL_VALUES_LIST, "stdMean"]) {
+            // filter out values from not included models or null values
+            const filtered = arr.filter((value, idx) => value !== null && isIncludedInSv(modelList[idx], groupData, sv));
+            const value = SV_CALCULATION[sv](filtered) || null; // null as default if NaN or undefined
+            svHolder[sv].push(value);    
+        };
+    };
+
+    svHolder["mean+std"] = [];
+    svHolder["mean-std"] = [];
+    for (let i = 0; i < svHolder[STATISTICAL_VALUES.derivative].length; ++i) {
+        svHolder["mean+std"].push(svHolder.stdMean[i] + svHolder.derivative[i]);
+        svHolder["mean-std"].push(svHolder.stdMean[i] - svHolder.derivative[i]);
+    }
+    delete svHolder["stdMean"];
+    return svHolder;
+}
+
+
+
+// API FORMATTING:
+
 /**
  * Iterates through the x and y data returned from the api for the tco3_zm and fills the corresponding years with
  * either data points, if they are present or with `null`. The first index corresponds to START_YEAR
@@ -218,7 +461,7 @@ function generateTco3_ZmSeries({data, modelsSlice}) {
  * @param {array} xValues an array holding the years
  * @param {array} yValues an array of the same length holding the datapoints for the corresponding years
  */
-export function normalizeArray(xValues, yValues) {
+ export function normalizeArray(xValues, yValues) {
     const result = [];
     let currentValueIndex = 0;
     
@@ -298,236 +541,6 @@ export const preTransformApiData = ({plotId, data}) => {
     };
 }
 
-/**
- * This method calculates the boxplot values for the tco3_return plot.
- * For each region an array of 5 values is calculated: min, q1, median, q3, max
- * which is sufficient to render the desired box plot.
- * 
- * @param {object} data contains the region data from the api
- * @returns object holding an array of 5 values (min, q1, median, q3, max) for each region
- */
-function calculateBoxPlotValues({data, modelsSlice}) {
-    const boxPlotHolder = {}
-	for (let region of ALL_REGIONS_ORDERED) {
-		boxPlotHolder[region] = []
-	}
-
-    for (const [id, groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups
-        if (!groupData.isVisible) continue; // skip hidden groups
-        for (const [model, modelInfo] of Object.entries(groupData.models)) {
-            if (!modelInfo.isVisible) continue; // skip hidden models
-            for (const [region, year] of Object.entries(data[model].data)) {
-                boxPlotHolder[region].push(year);
-            }
-        }
-    }
-    
-    const boxPlotValues = {}
-	for (let region of ALL_REGIONS_ORDERED) {
-		boxPlotHolder[region].sort()
-		const arr = boxPlotHolder[region]
-		boxPlotValues[region] = []
-		boxPlotValues[region].push(
-			arr[0],
-			q25(arr),
-			median(arr),
-			q75(arr),
-			arr[arr.length - 1]
-		)
-	}
-    return boxPlotValues
-}
-
-function create2dArray(i) {
-    return Array.from(Array(i), () => []);
-}
-
-function isIncludedInSv(model, groupData, svType) {
-    if (svType === "stdMean") return groupData.models[model][STATISTICAL_VALUES.derivative]; // the std mean should only be calculated if the "derivative" / std is necessary
-    
-    return groupData.models[model][svType];
-}
-
-function buildSvMatrixTco3Zm({modelList, data}) {
-    const SERIES_LENGTH = data[modelList[0]].data.length; // grab length of first model, should all be same
-
-    const matrix = create2dArray(SERIES_LENGTH); // for arr of matrix: mean(arr), etc.
-
-    for (let i = 0; i < SERIES_LENGTH; ++i) {
-        for (const model of modelList) {
-            matrix[i].push(
-                data[model].data[i] // add null anyway to remain index mapping (null is filtered out later)
-            )
-        }
-    }
-    return matrix;
-}
-
-function buildSvMatrixTco3Return({modelList, data}) {
-    const matrix = create2dArray(ALL_REGIONS_ORDERED.length);
-
-    for (const index in ALL_REGIONS_ORDERED) {
-        const region = ALL_REGIONS_ORDERED[index]; // iterate over regions
-        for (const model of modelList) {
-            matrix[index].push(
-                data[model].data[region] || null
-            )
-        }
-    }
-    return matrix;
-    
-}
-
-function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass group data
-    // only mean at beginning
-
-    const matrix = buildMatrix({modelList, data}); // function supplied by caller
-
-    const svHolder = {stdMean: []};
-    STATISTICAL_VALUES_LIST.forEach(
-        sv => svHolder[sv] = [] // init with empty array
-    )
-
-    for (const arr of matrix) { // fill with calculated sv
-        for (const sv of [...STATISTICAL_VALUES_LIST, "stdMean"]) {
-            // filter out values from not included models or null values
-            const filtered = arr.filter((value, idx) => value !== null && isIncludedInSv(modelList[idx], groupData, sv));
-            const value = SV_CALCULATION[sv](filtered) || null; // null as default if NaN or undefined
-            svHolder[sv].push(value);    
-        };
-    };
-
-    svHolder["mean+std"] = [];
-    svHolder["mean-std"] = [];
-    for (let i = 0; i < svHolder[STATISTICAL_VALUES.derivative].length; ++i) {
-        svHolder["mean+std"].push(svHolder.stdMean[i] + svHolder.derivative[i]);
-        svHolder["mean-std"].push(svHolder.stdMean[i] - svHolder.derivative[i]);
-    }
-    delete svHolder["stdMean"];
-    return svHolder;
-}
-
-function generateSingleTco3ReturnSeries(name, svData) {
-    const transformedData = ALL_REGIONS_ORDERED.map((region, index) => {
-        return {
-            x: region,
-            y: svData[index],
-        }
-    })
-
-    return {
-        name: name,
-        data: transformedData,
-        type: "scatter", // make generic
-    }
-}
-
-function generateSingleTco3ZmSeries(name, svData) {
-    return {
-        name: name,
-        data: svData.map((e, idx) => [START_YEAR + idx, e]),
-        type: "line",
-    }
-}
-
-function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleSvSeries}) {
-    const svSeries = {
-        data: [],
-        colors: [],
-        width: [],
-        dashArray: [],
-    };
-    
-    const modelGroups = modelsSlice.modelGroups;
-    for (const [id, groupData] of Object.entries(modelGroups)) {
-
-        const svHolder = calculateSvForModels(Object.keys(groupData.models), data, groupData, buildMatrix);
-
-        for (const [sv, svData] of Object.entries(svHolder)) {
-            
-            if (sv === STATISTICAL_VALUES.derivative // std
-                || sv === STATISTICAL_VALUES.percentile) continue; // skip for now
-            
-
-            if (groupData.visibleSV[sv] 
-                || (sv.includes("std") && groupData.visibleSV[STATISTICAL_VALUES.derivative])) {
-            } else {
-                continue; // mean und median
-            }
-            svSeries.data.push(generateSingleSvSeries(`${sv}(${groupData.name})`, svData));
-            svSeries.colors.push(SV_COLORING[sv]);   // coloring?
-            svSeries.width.push(1);                  // thicker?
-            svSeries.dashArray.push(0);              // solid?       
-        }
-    }
-    return svSeries;
-}
-
-
-
-function combineSeries(series1, series2) {
-    const newSeries = {};
-    newSeries.data = [...series1.data, ...series2.data];
-    newSeries.colors = [...series1.colors, ...series2.colors];
-    newSeries.width = [...series1.width, ...series2.width];
-    newSeries.dashArray = [...series1.dashArray, ...series2.dashArray];
-    return newSeries;
-}
-
-function generateTco3_ReturnSeries({data, modelsSlice}) {
-    const series = {
-        data: [],
-        colors: [],
-        width: [],
-        dashArray: [],
-    }
-    
-    // 1. build boxplot
-    const boxPlotValues = calculateBoxPlotValues({data, modelsSlice});
-    series.data.push({
-            name: 'box',
-            type: 'boxPlot',
-
-            data: ALL_REGIONS_ORDERED.map(region => ({
-                x: region,
-                y: boxPlotValues[region],
-            })),
-        }
-    );
-
-
-    // 2. build scatter plot
-
-    for (const [id, groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups
-        if (!groupData.isVisible) continue; // skip hidden groups
-        for (const [model, modelInfo] of Object.entries(groupData.models)) {
-            if (!modelInfo.isVisible) continue; // skip hidden models
-            const modelData = data[model];
-            const sortedData = ALL_REGIONS_ORDERED.map(region => ({
-                x: region,
-                y: modelData.data[region] || null, // null as default if data is missing
-            }));
-            
-            series.data.push({
-                name: model,
-                data: sortedData,
-                type: "scatter",
-            });
-            series.colors.push(
-                colorNameToHex(modelData.plotStyle.color)
-            )
-        }
-    }   
-
-    // 3. generate statistical values
-    const svSeries = buildStatisticalSeries({
-        data,
-        modelsSlice,
-        buildMatrix: buildSvMatrixTco3Return,
-        generateSingleSvSeries: generateSingleTco3ReturnSeries
-    });
-    return combineSeries(series, svSeries);
-}
 
 // UTILITY:
 
@@ -575,3 +588,28 @@ export function convertToStrokeStyle(apiStyle) {
         return styles[apiStyle.toLowerCase()];
     return false;
 };
+
+function combineSeries(series1, series2) {
+    const newSeries = {};
+    newSeries.data = [...series1.data, ...series2.data];
+    newSeries.colors = [...series1.colors, ...series2.colors];
+    newSeries.width = [...series1.width, ...series2.width];
+    newSeries.dashArray = [...series1.dashArray, ...series2.dashArray];
+    return newSeries;
+}
+
+/**
+ * Utility function to create an array of size i with empty arrays inside of it.
+ * 
+ * @param {number} i    The size of the array containing the empty arrays
+ */
+function create2dArray(i) {
+    return Array.from(Array(i), () => []);
+}
+
+
+function isIncludedInSv(model, groupData, svType) {
+    if (svType === "stdMean") return groupData.models[model][STATISTICAL_VALUES.derivative]; // the std mean should only be calculated if the "derivative" / std is necessary
+    
+    return groupData.models[model][svType];
+}
