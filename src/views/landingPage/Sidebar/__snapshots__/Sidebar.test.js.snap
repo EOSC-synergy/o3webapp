@@ -493,34 +493,10 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                       >
                         <h6
                           class="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
+                          data-testid="ModelGroupCard-groupName"
                         >
                           Example Group
                         </h6>
-                      </div>
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
-                      >
-                        <button
-                          aria-label="edit"
-                          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
-                          tabindex="0"
-                          type="button"
-                        >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                            data-testid="EditIcon"
-                            focusable="false"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
-                            />
-                          </svg>
-                          <span
-                            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                          />
-                        </button>
                       </div>
                     </div>
                     <hr
@@ -689,6 +665,35 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                           </span>
                         </label>
                       </div>
+                    </div>
+                    <hr
+                      class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+                    />
+                    <div
+                      class="MuiCardActions-root MuiCardActions-spacing css-1t6e9jv-MuiCardActions-root"
+                    >
+                      <button
+                        class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButtonBase-root  css-1k23hlb-MuiButtonBase-root-MuiButton-root"
+                        data-testid="ModelGroupCard-EditModelGroupModal-button-open"
+                        tabindex="0"
+                        type="button"
+                      >
+                        Edit statistical values
+                        <span
+                          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                        />
+                      </button>
+                      <button
+                        class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButtonBase-root  css-1k23hlb-MuiButtonBase-root-MuiButton-root"
+                        data-testid="ModelGroupCard-AddModelGroupModal-button-open"
+                        tabindex="0"
+                        type="button"
+                      >
+                        Edit group members
+                        <span
+                          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                        />
+                      </button>
                     </div>
                   </div>
                   <button
@@ -2209,34 +2214,10 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                       >
                         <h6
                           class="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
+                          data-testid="ModelGroupCard-groupName"
                         >
                           Example Group
                         </h6>
-                      </div>
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
-                      >
-                        <button
-                          aria-label="edit"
-                          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
-                          tabindex="0"
-                          type="button"
-                        >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                            data-testid="EditIcon"
-                            focusable="false"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
-                            />
-                          </svg>
-                          <span
-                            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                          />
-                        </button>
                       </div>
                     </div>
                     <hr
@@ -2405,6 +2386,35 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                           </span>
                         </label>
                       </div>
+                    </div>
+                    <hr
+                      class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+                    />
+                    <div
+                      class="MuiCardActions-root MuiCardActions-spacing css-1t6e9jv-MuiCardActions-root"
+                    >
+                      <button
+                        class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButtonBase-root  css-1k23hlb-MuiButtonBase-root-MuiButton-root"
+                        data-testid="ModelGroupCard-EditModelGroupModal-button-open"
+                        tabindex="0"
+                        type="button"
+                      >
+                        Edit statistical values
+                        <span
+                          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                        />
+                      </button>
+                      <button
+                        class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButtonBase-root  css-1k23hlb-MuiButtonBase-root-MuiButton-root"
+                        data-testid="ModelGroupCard-AddModelGroupModal-button-open"
+                        tabindex="0"
+                        type="button"
+                      >
+                        Edit group members
+                        <span
+                          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                        />
+                      </button>
                     </div>
                   </div>
                   <button
