@@ -4,7 +4,6 @@ import { IMPLICIT_YEAR_LIST, O3AS_REGIONS, O3AS_PLOTS, ALL_REGIONS_ORDERED, STAT
 export const defaultTCO3_zm = {
     xaxis: {
         type: "numeric",
-        //categories: [],
         min: START_YEAR,
         max: END_YEAR,
         decimalsInFloat: 0,
@@ -16,7 +15,7 @@ export const defaultTCO3_zm = {
         min: 200,
         max: 400,
         forceNiceScale: true,
-        decimalsInFloat: 2
+        decimalsInFloat: 0
     }, 
     chart: {
         id: O3AS_PLOTS.tco3_zm,
@@ -54,7 +53,6 @@ export const defaultTCO3_zm = {
     },
     colors: null, //styling.colors
     stroke: {
-        //curve: "smooth", Ask betreuer for this
         width: null, // styling.width,
         dashArray: null, //styling.dashArray,
     },
@@ -72,6 +70,10 @@ export const defaultTCO3_zm = {
 };
 
 export const default_TCO3_return = {
+    yaxis: {
+        forceNiceScale: true,
+        decimalsInFloat: 0
+    }, 
     chart: {
       id: O3AS_PLOTS.tco3_return,
       type: 'boxPlot',
@@ -124,7 +126,6 @@ export const default_TCO3_return = {
       radius: 1,
       offsetX: 0, // interesting
       offsetY: 0,
-      //onClick: (event) => {alert("click")},
       onDblClick: undefined,
       showNullDataPoints: true,
       hover: {
@@ -270,6 +271,8 @@ function create2dArray(i) {
 }
 
 function isIncludedInSv(model, groupData, svType) {
+    if (svType === "stdMean") return groupData.models[model][STATISTICAL_VALUES.derivative]; // the std mean should only be calculated if the "derivative" / std is necessary
+    
     return groupData.models[model][svType];
 }
 
@@ -310,13 +313,13 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
 
     const matrix = buildMatrix({modelList, data}); // function supplied by caller
 
-    const svHolder = {};
+    const svHolder = {stdMean: []};
     STATISTICAL_VALUES_LIST.forEach(
         sv => svHolder[sv] = [] // init with empty array
     )
 
     for (const arr of matrix) { // fill with calculated sv
-        for (const sv of STATISTICAL_VALUES_LIST) {
+        for (const sv of [...STATISTICAL_VALUES_LIST, "stdMean"]) {
             // filter out values from not included models or null values
             const filtered = arr.filter((value, idx) => value !== null && isIncludedInSv(modelList[idx], groupData, sv));
             const value = SV_CALCULATION[sv](filtered) || null; // null as default if NaN or undefined
@@ -326,11 +329,11 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
 
     svHolder["mean+std"] = [];
     svHolder["mean-std"] = [];
-    for (let i = 0; i < svHolder[STATISTICAL_VALUES.mean].length; ++i) {
-        svHolder["mean+std"].push(svHolder.mean[i] + svHolder.derivative[i]);
-        svHolder["mean-std"].push(svHolder.mean[i] - svHolder.derivative[i]);
+    for (let i = 0; i < svHolder[STATISTICAL_VALUES.derivative].length; ++i) {
+        svHolder["mean+std"].push(svHolder.stdMean[i] + svHolder.derivative[i]);
+        svHolder["mean-std"].push(svHolder.stdMean[i] - svHolder.derivative[i]);
     }
-    console.log(svHolder)
+    delete svHolder["stdMean"];
     return svHolder;
 }
 
@@ -462,6 +465,7 @@ function generateTco3_ReturnSeries({data, modelsSlice}) {
     for (const [id, groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups
         if (!groupData.isVisible) continue; // skip hidden groups
         for (const [model, modelInfo] of Object.entries(groupData.models)) {
+            if (!modelInfo.isVisible) continue; // skip hidden models
             const modelData = data[model];
             const sortedData = ALL_REGIONS_ORDERED.map(region => ({
                 x: region,

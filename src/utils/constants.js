@@ -204,6 +204,7 @@ export const SV_CALCULATION = {
     median: calculateMedian,
     derivative: calculateStd,
     percentile: calculatePercentile,
+    stdMean: calculateMean, // mean for std+-
 }
 
 export const SV_COLORING = {
