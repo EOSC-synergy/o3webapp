@@ -2,8 +2,9 @@ import React from "react";
 import AddModelGroupModal from "./AddModelGroupModal/AddModelGroupModal";
 import ModelGroupCard from "./ModelGroupCard/ModelGroupCard";
 import { Button } from '@mui/material';
-import { useDispatch } from "react-redux"
-import { updatedModelGroup, addedModelGroup } from "../../../../../store/modelsSlice/modelsSlice";
+import { useSelector } from "react-redux"
+import PropTypes from 'prop-types';
+import { selectAllGroupIds } from "../../../../../store/modelsSlice/modelsSlice";
 
 /**
  * enables the user to configure models that should be visible in the plot clustered as model groups
@@ -12,48 +13,11 @@ import { updatedModelGroup, addedModelGroup } from "../../../../../store/modelsS
  * @returns {JSX} a jsx containing a ModelGroupModal and a ModelGroupCard and EditModelGroupModal per model group
  */
 function ModelGroupConfigurator(props) {
-    
-    // const dispatch = useDispatch()
 
-    const addModelGroup = (name, models) => {
-        // dispatch(addedModelGroup({name, models}))   
-    }
-
-    const editModelGroup = 
-        (
-            id,
-            name,
-            models,
-            hidden,
-            derivativeVisible,
-            meanVisbile,
-            medianVisible,
-            percentileVisible
-        ) => {
-        // id = index of model group in array above
-        // dispatch(updatedModelGroup({
-        //     id,
-        //     name,
-        //     models,
-        //     hidden,
-        //     derivativeVisible,
-        //     meanVisbile,
-        //     medianVisible,
-        //     percentileVisible
-        // }))
-    }
+    const allGroupIds = useSelector(selectAllGroupIds);
 
 
     const [isAddModalVisible, setAddModalVisible] = React.useState(false);
-    const [isEditModalVisible, setEditModalVisible] = React.useState(false);
-
-    const closeEditModal = () => {
-        setEditModalVisible(false);
-    }
-
-    const openEditModal = () => {
-        setEditModalVisible(true);
-    }
 
     const closeAddModal = () => {
         setAddModalVisible(false);
@@ -63,18 +27,28 @@ function ModelGroupConfigurator(props) {
         setAddModalVisible(true);
     }
 
-    let i = props.reportError;
-
-
     return (
         <>
-            <ModelGroupCard modelGroupId={1} reportError={props.reportError} />
-            <ModelGroupCard modelGroupId={2} reportError={props.reportError} />
-            <Button varian="outlined" onClick={openAddModal}>Open Add Model Group Modal (Dev)</Button>
+            {
+                allGroupIds.map((id, idx) => {
+                    return (<ModelGroupCard key={idx} modelGroupId={id} reportError={props.reportError} />);
+                })
+            }
+            <Button
+                sx={{width: "100%"}}
+                variant="contained"
+                onClick={openAddModal}
+                data-testid="ModelGroupConfigurator-addModelGroup-button"
+            >
+                Add Model Group
+            </Button>
             <AddModelGroupModal isOpen={isAddModalVisible} onClose={closeAddModal} reportError={props.reportError} />
-            {/* <ModelGroup /> */}
         </>
     );
+}
+
+ModelGroupConfigurator.propTypes = {
+    reportError: PropTypes.func
 }
 
 export default ModelGroupConfigurator;

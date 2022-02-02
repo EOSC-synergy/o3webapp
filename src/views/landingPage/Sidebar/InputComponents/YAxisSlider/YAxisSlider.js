@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux"
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import PropTypes from 'prop-types';
 import { setDisplayYRange, selectPlotYRange } from "../../../../../store/plotSlice/plotSlice";
-import {Slider, Typography, Grid} from "@mui/material";
+import { Slider, Typography, Grid } from "@mui/material";
 
 /**
  * enables the user to select a range that should be diisplayed at the y axis of the plot
@@ -38,6 +39,10 @@ function YAxisSlider(props) {
             </Grid>
         </Grid> 
     );
+}
+
+YAxisSlider.propTypes = {
+    reportError: PropTypes.func
 }
 
 export default YAxisSlider;

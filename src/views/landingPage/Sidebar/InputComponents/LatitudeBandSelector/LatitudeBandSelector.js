@@ -131,7 +131,9 @@ function LatitudeBandSelector(props) {
 
     return (
         <>
-            <Divider><Typography>LATITUDE BAND</Typography></Divider>
+            <Divider>
+                <Typography>LATITUDE BAND</Typography>
+            </Divider>
             <Box sx={{paddingLeft: '8%', paddingRight: '8%', paddingTop: '3%'}}>
                 <Select
                     sx={{width: '100%' }}

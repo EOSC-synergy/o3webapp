@@ -12,20 +12,19 @@ beforeEach(() => {
 });
 
 it('renders without crashing', () => {
-    render(<>
+    render(
         <Provider store={store}>
             <RegionSelector reportError={() => {}} />
-        </Provider>
-    </>)
+        </Provider>);
 });
 
 it('renders correctly', () => {
 
-    const { container } = render(<>
+    const { container } = render(
         <Provider store={store}>
             <RegionSelector reportError={() => {}} />
         </Provider>
-    </>);
+    );
 
     expect(container).toMatchSnapshot();
 });

@@ -40,7 +40,7 @@ exports[`test ModelGroupCard rendering renders correctly 1`] = `
         <h6
           class="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
         >
-          blob
+          Example Group
         </h6>
       </div>
       <div
@@ -123,10 +123,11 @@ exports[`test ModelGroupCard rendering renders correctly 1`] = `
           id="ModelGroupCoard-toggle-median-label"
         >
           <span
-            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
             labelid="ModelGroupCoard-toggle-median-label"
           >
             <input
+              checked=""
               class="PrivateSwitchBase-input css-1m9pwf3"
               data-indeterminate="false"
               id="ModelGroupCoard-toggle-median-checkbox"
@@ -135,12 +136,12 @@ exports[`test ModelGroupCard rendering renders correctly 1`] = `
             <svg
               aria-hidden="true"
               class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-              data-testid="CheckBoxOutlineBlankIcon"
+              data-testid="CheckBoxIcon"
               focusable="false"
               viewBox="0 0 24 24"
             >
               <path
-                d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
               />
             </svg>
             <span
@@ -202,10 +203,11 @@ exports[`test ModelGroupCard rendering renders correctly 1`] = `
           id="ModelGroupCoard-toggle-percentile-label"
         >
           <span
-            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
             labelid="ModelGroupCoard-toggle-percentile-label"
           >
             <input
+              checked=""
               class="PrivateSwitchBase-input css-1m9pwf3"
               data-indeterminate="false"
               id="ModelGroupCoard-toggle-percentile-checkbox"
@@ -214,12 +216,12 @@ exports[`test ModelGroupCard rendering renders correctly 1`] = `
             <svg
               aria-hidden="true"
               class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-              data-testid="CheckBoxOutlineBlankIcon"
+              data-testid="CheckBoxIcon"
               focusable="false"
               viewBox="0 0 24 24"
             >
               <path
-                d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
               />
             </svg>
             <span
@@ -235,5 +237,16 @@ exports[`test ModelGroupCard rendering renders correctly 1`] = `
       </div>
     </div>
   </div>
+  <button
+    class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-1fu7jd5-MuiButtonBase-root-MuiButton-root"
+    data-testid="ModelGroupConfigurator-addModelGroup-button"
+    tabindex="0"
+    type="button"
+  >
+    Add Model Group
+    <span
+      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+    />
+  </button>
 </div>
 `;

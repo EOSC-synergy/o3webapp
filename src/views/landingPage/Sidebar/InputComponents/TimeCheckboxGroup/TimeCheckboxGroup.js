@@ -115,7 +115,7 @@ function TimeCheckBoxGroup(props) {
     /**
      * Handles the change if a month is clicked (selected/deselected).
      * 
-     * @param {*} monthId The id of the month that was clicked
+     * @param {int} monthId The id of the month that was clicked
      */
     const handleMonthChecked = (monthId) => {
         let monthCpy = [...selectedMonths]
@@ -157,7 +157,7 @@ function TimeCheckBoxGroup(props) {
 
     return (
         <div style={{marginTop: "5%"}}>
-            <Divider>TIME</Divider>
+            <Divider><Typography>TIME</Typography></Divider>
             <Box sx={{paddingLeft: '8%', paddingRight: '8%', alignItems: "center", display: "flex", flexDirection: "column"}}>
                 <FormControlLabel
                     label="All year"
