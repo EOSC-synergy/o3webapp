@@ -1,6 +1,11 @@
 import { q25, q75, median } from "../services/math/math"
 import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, ALL_REGIONS_ORDERED, STATISTICAL_VALUES_LIST, SV_CALCULATION, SV_COLORING, STATISTICAL_VALUES, APEXCHART_PLOT_TYPE, MODEL_LINE_THICKNESS, START_YEAR, END_YEAR } from "./constants"
 
+/**
+ * Maps the plotId to a function that describes how the series are going
+ * to be generated in order to make the generateSeries Function (interface) more
+ * generic.
+ */
 const SERIES_GENERATION = {}; // Map plotId to corresponding generation function
 SERIES_GENERATION[O3AS_PLOTS.tco3_zm] = generateTco3_ZmSeries;
 SERIES_GENERATION[O3AS_PLOTS.tco3_return] = generateTco3_ReturnSeries;
@@ -697,7 +702,7 @@ export function convertToStrokeStyle(apiStyle) {
 /**
  * Combines 2 data series objects into a new one.
  * The copied elements of series2 get appended to a copy of series1.
- * A series object has the following form: { data: Array, colors: Array, width: Array, dashArray: Array}
+ * A series object has the following structure: { data: Array, colors: Array, width: Array, dashArray: Array}
  * 
  * @param {obj} series1     The first data series object
  * @param {obj} series2     The second data series object
@@ -723,10 +728,12 @@ function create2dArray(i) {
 }
 
 /**
- * Checks if a model is included in the statistical value calculation of a given SV-Type.
+ * Checks if a model is included in the statistical value calculation of a given SV-Type by using the groupData as the reference data.
  * 
- * @param {}
- * @param
+ * @param {string} model        The model that should be checked
+ * @param {object} groupData    The data of the group which will be used as reference for the check
+ * @param {string} svType       The statistical value type that should be checked for
+ * @returns                     True if the given model should be included in the SV calculation of the given SV-Type
  */
 function isIncludedInSv(model, groupData, svType) {
     if (svType === "stdMean") return groupData.models[model][STATISTICAL_VALUES.derivative]; // the std mean should only be calculated if the "derivative" / std is necessary
