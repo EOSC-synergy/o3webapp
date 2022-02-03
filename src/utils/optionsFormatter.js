@@ -348,7 +348,7 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange}) {
             name: 'box',
             type: 'boxPlot',
 
-            data: ALL_REGIONS_ORDERED.filter((region, idx) => xAxisRange.regions.includes(idx)).map(region => ({
+            data: ALL_REGIONS_ORDERED.map(region => ({
                 x: region,
                 y: boxPlotValues[region],
             })),
@@ -363,7 +363,7 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange}) {
         for (const [model, modelInfo] of Object.entries(groupData.models)) {
             if (!modelInfo.isVisible) continue; // skip hidden models
             const modelData = data[model];
-            const sortedData = ALL_REGIONS_ORDERED.filter((region, idx) => xAxisRange.regions.includes(idx)).map(region => ({
+            const sortedData = ALL_REGIONS_ORDERED.map(region => ({
                 x: region,
                 y: modelData.data[region] || null, // null as default if data is missing
             }));
@@ -385,9 +385,13 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange}) {
         modelsSlice,
         buildMatrix: buildSvMatrixTco3Return,
         generateSingleSvSeries: generateSingleTco3ReturnSeries,
-        xAxisRange,
     });
     const combined = combineSeries(series, svSeries);
+
+    for (const series of combined.data) { // select chosen regions
+        series.data = series.data.filter((value, idx) => xAxisRange.regions.includes(idx));
+    }
+
     return combined;
 }
 
@@ -399,8 +403,8 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange}) {
  * @param {array} svData array of plaint numbers
  * @returns a series matching the tco3_return style for apexcharts.
  */
-function generateSingleTco3ReturnSeries(name, svData, xAxisRange) {
-    const transformedData = ALL_REGIONS_ORDERED.filter((region, idx) => xAxisRange.regions.includes(idx)).map((region, index) => {
+function generateSingleTco3ReturnSeries(name, svData) {
+    const transformedData = ALL_REGIONS_ORDERED.map((region, index) => {
         return {
             x: region,
             y: svData[index],
@@ -494,7 +498,7 @@ function calculateBoxPlotValues({data, modelsSlice}) {
  * @param {function} obj.generateSingleSvSeries either generateSingleTco3ZmSeries | generateSingleTco3ReturnSeries, specifies how the series should be generated
  * @returns an array holding all statistical series for the given modelSlice
  */
-function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleSvSeries, xAxisRange}) {
+function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleSvSeries}) {
     const svSeries = {
         data: [],
         colors: [],
@@ -518,7 +522,7 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
             } else {
                 continue; 
             }
-            svSeries.data.push(generateSingleSvSeries(`${sv}(${groupData.name})`, svData, xAxisRange));
+            svSeries.data.push(generateSingleSvSeries(`${sv}(${groupData.name})`, svData));
             svSeries.colors.push(SV_COLORING[sv]);   // coloring?
             svSeries.width.push(1);                  // thicker?
             svSeries.dashArray.push(0);              // solid?       
