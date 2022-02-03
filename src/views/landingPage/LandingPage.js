@@ -15,11 +15,11 @@ import PropTypes from "prop-types";
 function LandingPage(props) {
     
     return (
-    <div data-testid="landingPage" style={{width: "100%"}}> 
+    <div data-testid="landingPage" style={{width: "100%", height: "100%"}}> 
       <Sidebar reportError={props.reportError} onOpen={props.openSidebar} isOpen={props.isSidebarOpen} onClose={props.closeSidebar} />
   
-      <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-        <div style={{width: "95%"}}>
+      <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100%"}}>
+        <div style={{width: "95%", marginTop: "2%"}}>
           <Graph reportError={props.reportError} />
         </div>
       </div>
