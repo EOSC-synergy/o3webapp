@@ -197,8 +197,12 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange})
         newOptions.title = JSON.parse(JSON.stringify(newOptions.title));  // this is necessary in order for apexcharts to update the title
         newOptions.title.text = plotTitle;
 
-        
+        newOptions.yaxis.min = yAxisRange.minY;
+        newOptions.yaxis.max = yAxisRange.maxY;
 
+        // xAxis:
+        // xAxisRange.region(s) => array with indices refering to ALL_REGIONS_ORDERED
+        // every series [] (len 8) 
 
         return newOptions;
     }    
@@ -223,7 +227,6 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange})
  */
 export function generateSeries({plotId, data, modelsSlice}) {
     const series = SERIES_GENERATION[plotId]({data, modelsSlice}); // execute correct function based on mapping
-    console.log(series);
     return {
         data: series.data, 
         styling: {
@@ -545,8 +548,13 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
         for (const sv of [...STATISTICAL_VALUES_LIST, "stdMean"]) {
             // filter out values from not included models or null values
             const filtered = arr.filter((value, idx) => value !== null && isIncludedInSv(modelList[idx], groupData, sv));
-            const value = SV_CALCULATION[sv](filtered) || null; // null as default if NaN or undefined
-            svHolder[sv].push(value);    
+            
+            const value = SV_CALCULATION[sv](filtered); // null as default if NaN or undefined
+            if (isNaN(value) || typeof value === "undefined") {
+                svHolder[sv].push(null);    //apexcharts default "missing" value placeholder
+            } else {
+                svHolder[sv].push(value);    
+            }
         };
     };
 

@@ -1,4 +1,5 @@
-import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, START_YEAR } from "./constants";
+import { createTestStore } from "../store/store";
+import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, START_YEAR, MODEL_LINE_THICKNESS } from "./constants";
 import { colorNameToHex, convertToStrokeStyle, generateSeries, getIncludedModels, getOptions, normalizeArray, preTransformApiData, default_TCO3_return } from "./optionsFormatter";
 
 describe("testing optionsFormatter functionality", () => {
@@ -66,14 +67,105 @@ describe("testing optionsFormatter functionality", () => {
         });
     })
 
-    
+    describe('tests the generation functions for tco3_zm', () => {
+        let store;
+        let modelsSlice;
+        beforeEach(() => {
+            store = createTestStore();
+            modelsSlice = store.getState().models;
+        })
+
+        it('should generate the tco3_zm series correctly (generateTco3_ZmSeries)', () => {
+            const data = {}
+            Object.keys(modelsSlice.modelGroups[0].models).forEach(key => {
+                data[key] = Array(141).fill(0)
+            })
+            //const series = generateTco3_zm()
+        });
+        
+        it('should generate a single tco3_zm series with the expected format (generateSingleTco3ZmSeries)', () => {
+            
+        });
+        
+        it('should generate a data matrix from tco3_zm data (buildSvMatrixTco3Zm)', () => {
+            
+        });
+
+
+    });
+
+    describe("tests the generation of a series", () => {
+        let store;
+        let modelsSlice;
+        const testArray = Array(141).fill(0).map((e, i) => [START_YEAR + i, e]);;
+        beforeEach(() => {
+            store = createTestStore();
+            modelsSlice = store.getState().models;
+        })
+
+        const dataExpected = {
+            data: [
+              {
+                type: 'line',
+                name: 'CCMI-1_ACCESS_ACCESS-CCM-refC2',
+                data: testArray
+              },
+              {
+                type: 'line',
+                name: 'CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG',
+                data: testArray
+              },
+              { type: 'line', name: 'CCMI-1_CCCma_CMAM-refC2', data: testArray },
+              { name: 'mean(Example Group)', data: testArray, type: 'line' },
+              { name: 'median(Example Group)', data: testArray, type: 'line' },
+              { name: 'mean+std(Example Group)', data: testArray, type: 'line' },
+              { name: 'mean-std(Example Group)', data: testArray, type: 'line' }
+            ],
+            styling: {
+              colors: [
+                '#000000', '#000000',
+                '#000000', '#000',
+                '#000',    '#000',
+                '#000'
+              ],
+              dashArray: [
+                0, 0, 0, 0,
+                0, 0, 0
+              ],
+              width: [
+                MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, 1,
+                1, 1, 1
+              ]
+            }
+          }
+
+        it("generates the series correctly", () => {
+            const data = {}
+            Object.keys(modelsSlice.modelGroups[0].models).forEach(key => {
+                data[key] = {};
+                data[key]["plotStyle"] = {};
+                data[key].plotStyle.color = "black";
+                data[key].plotStyle.linestyle = "solid";
+                data[key].data = Array(141).fill(0);
+            })
+            const series = generateSeries({plotId: O3AS_PLOTS.tco3_zm, data: data, modelsSlice: modelsSlice})
+            expect(series).toEqual(dataExpected);
+        });
+    });
 
 
     it('returns the correct options formatted correctly for tco3_return', () => {
-        const expected = Object.assign({}, default_TCO3_return);
+        const expected = JSON.parse(JSON.stringify(default_TCO3_return));
         expected.title.text = "title";
+        //expected.xaxis.min = 0;
+        //expected.xaxis.max = 10;
+        expected.yaxis.min = 0;
+        expected.yaxis.max = 10;
+
+        const xAxisRange = {minX: 0, maxY: 10};
+        const yAxisRange = {minY: 0, maxY: 10};
         expect(
-            getOptions({plotId: O3AS_PLOTS.tco3_return, styling: {colors:[]}, plotTitle: "title"})
+            getOptions({plotId: O3AS_PLOTS.tco3_return, styling: {colors:[]}, plotTitle: "title", xAxisRange, yAxisRange})
         ).toEqual(
             expected
         );
