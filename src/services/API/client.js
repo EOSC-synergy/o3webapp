@@ -83,7 +83,7 @@ export const postModelsPlotStyle = (plotType) => {
  * @param {int} refYear the reference year to "normalize the data"
  * @returns the request promise from axios
  */
-export const getPlotData = ({plotId, latMin, latMax, months, modelList, startYear, endYear, refModel, refYear}) => {
+export const getPlotData = (plotId, latMin, latMax, months, modelList, startYear, endYear, refModel, refYear) => {
     if (months.length === 0) {
         throw new Error("requesting with an empty array will be rejected by the api");
     }

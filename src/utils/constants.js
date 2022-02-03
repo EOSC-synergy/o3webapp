@@ -130,7 +130,7 @@ export const HEIGHT_LOADING_SPINNER = "300px";
 export const HEIGHT_GRAPH = "400px";
 
 /*
-// Options Formatter, XAxisField, YAxisField
+// Options Formatter, XAxisField, YAxisField, apiSlice
 */
 export const START_YEAR = 1959;
 export const END_YEAR = 2100;

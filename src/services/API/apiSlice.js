@@ -85,8 +85,8 @@ const selectExistingPlotData = createAction("api/selectPlotData");
  * This async thunk creator allows to generate a data fetching action that can be dispatched 
  * against the store to start fetching new plot data from the api. 
  * 
- * @param {int} modelListBegin for faster testing limit fetching of model list
- * @param {int} modelListEnd for faster testing limit fetching of model list
+ * @param {number} modelListBegin for faster testing limit fetching of model list
+ * @param {number} modelListEnd for faster testing limit fetching of model list
  * @returns the async thunk action
  */
 export const fetchPlotData = (modelListBegin, modelListEnd) => {
@@ -100,15 +100,8 @@ export const fetchPlotData = (modelListBegin, modelListEnd) => {
         if (typeof modelListBegin !== 'undefined' && typeof modelListEnd !== 'undefined') {
             modelList.slice(modelListBegin, modelListEnd);
         }
-        const refModel = getState.reference.settings.model;
-        const refYear = getState.reference.settings.year;
-        console.log(plotId);
-        console.log(latMin);
-        console.log(latMax);
-        console.log(months);
-        console.log(modelList);
-        console.log(refModel);
-        console.log(refYear);
+        const refModel = getState().reference.settings.model;
+        const refYear = getState().reference.settings.year;
 
         const cacheKey = generateCacheKey({ latMin, latMax, months, refModel, refYear });
         // it shouldn't reload the same request if the data is already present (previous successful request) or 
@@ -132,7 +125,7 @@ export const fetchPlotData = (modelListBegin, modelListEnd) => {
 
         // Return promise with success and failure actions
         
-        return getPlotData({plotId, latMin, latMax, months, modelList, START_YEAR, END_YEAR, refModel, refYear})
+        return getPlotData(plotId, latMin, latMax, months, modelList, START_YEAR, END_YEAR, refModel, refYear)
             .then(  
                 response => dispatch(fetchPlotDataSuccess({data: response.data, plotId, cacheKey})),
                 error => dispatch(fetchPlotDataRejected({error: error.message, plotId, cacheKey})),
