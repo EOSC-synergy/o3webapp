@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPlotXRange, setDisplayXRange } from "../../../../../store/plotSlice/plotSlice";
-import { ALL_REGIONS_ORDERED } from "../../../../../utils/constants";
+import { ALL_REGIONS_ORDERED, LATITUDE_BAND_LIST } from "../../../../../utils/constants";
 import { Grid } from "@mui/material";
 /**
  * enables the user to select / deselect regions as well as entering a private region {@link LatitudeBandSelector}
