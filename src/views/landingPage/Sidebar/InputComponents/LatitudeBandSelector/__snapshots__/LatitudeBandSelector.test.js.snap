@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`test LatitudeBandSelector component rendering renders as expected 1`] = `
+exports[`renders correctly 1`] = `
 <div>
   <div
     class="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-1ws8119-MuiDivider-root"
@@ -25,19 +25,19 @@ exports[`test LatitudeBandSelector component rendering renders as expected 1`] =
       <div
         aria-expanded="false"
         aria-haspopup="listbox"
-        aria-labelledby="latitudeBandSelectorLabel latitudeBandSelector"
+        aria-labelledby="latitudeBandSelector"
         class="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
         id="latitudeBandSelector"
         role="button"
         tabindex="0"
       >
-        Southern Hemisphere (SH) Polar (90–60°S)
+        Global (90°S–90°N)
       </div>
       <input
         aria-hidden="true"
         class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
         tabindex="-1"
-        value="-90,-60"
+        value="[object Object]"
       />
       <svg
         aria-hidden="true"
@@ -55,10 +55,12 @@ exports[`test LatitudeBandSelector component rendering renders as expected 1`] =
         class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
       >
         <legend
-          class="css-173wfxe"
+          class="css-nnbavb"
         >
-          <span>
-            LatitudeBand
+          <span
+            class="notranslate"
+          >
+            ​
           </span>
         </legend>
       </fieldset>

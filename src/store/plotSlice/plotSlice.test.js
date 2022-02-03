@@ -5,7 +5,8 @@ import reducer,
     setLocation,
     setDisplayXRange,
     setDisplayYRange,
-    setMonths
+    setMonths,
+    initialState,
 } from "./plotSlice";
 
 const definedInitialState = {
@@ -58,7 +59,7 @@ const definedInitialState = {
 
 test('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual(
-      definedInitialState // Expect initial state to be the defined initial state
+      initialState // Expect initial state to be the defined initial state
     );
 });
 
@@ -81,7 +82,7 @@ test('should update the active plot id', () => {
 test('should update the title of the current active plot', () => {
     const previousState = {
         plotId: "tco3_zm",
-        settings: {
+        plotSpecificSettings: {
             "tco3_zm": {
                 title: "no title"
             }
@@ -90,7 +91,7 @@ test('should update the title of the current active plot', () => {
 
     const expected = { // Expect the new state to have the new title
         plotId: "tco3_zm",
-        settings: {
+        plotSpecificSettings: {
             "tco3_zm": {
                 title: "OCTS Title"
             }
@@ -108,25 +109,19 @@ test('should update the title of the current active plot', () => {
 
 test('should update the location of the current active plot', () => {
     const previousState = {
-        plotId: "tco3_zm",
-        settings: {
-            "tco3_zm": {
-                location: {
-                    minLat: 0,
-                    maxLat: 0
-                }
+        generalSettings: {
+            location: {
+                minLat: 0,
+                maxLat: 0
             }
         }
     };
 
     const expected = { // expect changed location
-        plotId: "tco3_zm",
-        settings: {
-            "tco3_zm": {
-                location: {
-                    minLat: -90,
-                    maxLat: 90
-                }
+        generalSettings: {
+            location: {
+                minLat: -90,
+                maxLat: 90,
             }
         }
     };
@@ -141,11 +136,13 @@ test('should update the location of the current active plot', () => {
 test('should update the display x range of the current active plot', () => {
     const previousState = {
         plotId: "tco3_zm",
-        settings: {
+        plotSpecificSettings: {
             "tco3_zm": {
                 displayXRange: {
-                    minX: 0,
-                    maxX: 1000
+                    years: {
+                        minX: 0,
+                        maxX: 1000
+                    }
                 }
             }
         }
@@ -153,11 +150,13 @@ test('should update the display x range of the current active plot', () => {
 
     const expected = { // expect changed displayXRange
         plotId: "tco3_zm",
-        settings: {
+        plotSpecificSettings: {
             "tco3_zm": {
                 displayXRange: {
-                    minX: 200,
-                    maxX: 400
+                    years: {
+                        minX: 200,
+                        maxX: 400
+                    }
                 }
             }
         }
@@ -166,14 +165,14 @@ test('should update the display x range of the current active plot', () => {
     expect(
         reducer(
             previousState, // use initial state 
-            setDisplayXRange({minX: 200, maxX: 400}))
+            setDisplayXRange({years: {minX: 200, maxX: 400}}))
     ).toEqual(expected);
 });
 
 test('should update the display y range of the current active plot', () => {
     const previousState = {
         plotId: "tco3_zm",
-        settings: {
+        plotSpecificSettings: {
             "tco3_zm": {
                 displayYRange: {
                     minY: 1000,
@@ -185,7 +184,7 @@ test('should update the display y range of the current active plot', () => {
 
     const expected = { // expect changed displayYRange
         plotId: "tco3_zm",
-        settings: {
+        plotSpecificSettings: {
             "tco3_zm": {
                 displayYRange: {
                     minY: 1200,
@@ -204,20 +203,14 @@ test('should update the display y range of the current active plot', () => {
 
 test('should update the selected months of the current active plot', () => {
     const previousState = {
-        plotId: "tco3_zm",
-        settings: {
-            "tco3_zm": {
-                months: [1]
-            }
+        generalSettings: {
+            months: [1]
         }
     };
 
     const expected = { // expect changed months
-        plotId: "tco3_zm",
-        settings: {
-            "tco3_zm": {
-                months: [3, 4, 5]
-            }
+        generalSettings: {
+            months: [3, 4, 5]
         }
     }
     

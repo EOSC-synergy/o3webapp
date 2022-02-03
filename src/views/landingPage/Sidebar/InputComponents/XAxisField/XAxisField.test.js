@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-redux'
-import LatitudeBandSelector from './LatitudeBandSelector';
+import XAxisField from './XAxisField';
 import { createTestStore } from "../../../../../store/store"
 
 let store;
@@ -12,7 +12,7 @@ beforeEach(() => {
 it('renders without crashing', () => {
     render(<>
         <Provider store={store}>
-            <LatitudeBandSelector reportError={() => {}} />
+            <XAxisField reportError={() => {}} />
         </Provider>
     </>)
 });
@@ -21,7 +21,7 @@ it('renders correctly', () => {
 
     const { container } = render(<>
         <Provider store={store}>
-            <LatitudeBandSelector reportError={() => {}} />
+            <XAxisField reportError={() => {}} />
         </Provider>
     </>);
 
