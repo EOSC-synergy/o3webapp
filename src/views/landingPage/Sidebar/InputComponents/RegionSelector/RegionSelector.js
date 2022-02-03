@@ -38,6 +38,7 @@ function RegionSelector(props) {
             regionCpy.push(regionIdx);
         }
         // Dispatch region checked
+        regionCpy.sort();
         dispatch(setDisplayXRange({regions: regionCpy})); // TODO
     }
 
