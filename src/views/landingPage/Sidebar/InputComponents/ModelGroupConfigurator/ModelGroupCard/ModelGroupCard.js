@@ -33,9 +33,6 @@ function ModelGroupCard(props) {
     const dispatch = useDispatch();
     const modelGroupName = useSelector(state => selectNameOfGroup(state, props.modelGroupId));
     const modelGroupStatisticalValue = useSelector(state => selectStatisticalValueSettingsOfGroup(state, props.modelGroupId));
-    console.log(modelGroupName)
-    console.log(modelGroupStatisticalValue)
-    console.log(props.modelGroupId)
     const isModelGroupVisible = useSelector(state => selectVisibilityOfGroup(state, props.modelGroupId));
     
     /**
