@@ -66,7 +66,7 @@ export const modelGroups = {
             }
         },
         isVisible: true, // show/hide complete group
-        visibileSV: { // lookup table so the reducer impl. can be more convenient
+        visibleSV: { // lookup table so the reducer impl. can be more convenient
             mean: true,
             derivative: true,
             median: true,
