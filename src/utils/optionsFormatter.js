@@ -175,7 +175,6 @@ export const default_TCO3_return = {
 export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange}) {
     if (plotId === O3AS_PLOTS.tco3_zm) {
         const newOptions = JSON.parse(JSON.stringify(defaultTCO3_zm)); // dirt simple and not overly horrible
-        newOptions.xaxis.categories = IMPLICIT_YEAR_LIST;
 
         newOptions.yaxis.min = yAxisRange.minY;
         newOptions.yaxis.max = yAxisRange.maxY;
