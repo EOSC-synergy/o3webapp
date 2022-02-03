@@ -93,7 +93,8 @@ export const defaultTCO3_zm = {
  * 
  * This gigantic object allows us to communicate with the apexcharts library.
  * More can be found here: https://apexcharts.com/docs/installation/ 
- */export const default_TCO3_return = {
+ */
+export const default_TCO3_return = {
     yaxis: {
         forceNiceScale: true,
         decimalsInFloat: 0
@@ -225,8 +226,8 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange})
  * @param {object} obj.modelsSlice 
  * @returns series object which includes a subdivision into a data and a styling object.
  */
-export function generateSeries({plotId, data, modelsSlice}) {
-    const series = SERIES_GENERATION[plotId]({data, modelsSlice}); // execute correct function based on mapping
+export function generateSeries({plotId, data, modelsSlice, xAxisRange}) {
+    const series = SERIES_GENERATION[plotId]({data, modelsSlice, xAxisRange}); // execute correct function based on mapping
     return {
         data: series.data, 
         styling: {
@@ -333,7 +334,7 @@ function buildSvMatrixTco3Zm({modelList, data}) {
  * @param {object} obj.modelsSlice the slice of the store containg information about the model groups
  * @returns a combination of data and statistical values series
  */
-function generateTco3_ReturnSeries({data, modelsSlice}) {
+function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange}) {
     const series = {
         data: [],
         colors: [],
@@ -347,7 +348,7 @@ function generateTco3_ReturnSeries({data, modelsSlice}) {
             name: 'box',
             type: 'boxPlot',
 
-            data: ALL_REGIONS_ORDERED.map(region => ({
+            data: ALL_REGIONS_ORDERED.filter((region, idx) => xAxisRange.regions.includes(idx)).map(region => ({
                 x: region,
                 y: boxPlotValues[region],
             })),
@@ -357,12 +358,12 @@ function generateTco3_ReturnSeries({data, modelsSlice}) {
 
     // 2. build scatter plot
 
-    for (const [id, groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups
+    for (const groupData of Object.values(modelsSlice.modelGroups)) { // iterate over model groups
         if (!groupData.isVisible) continue; // skip hidden groups
         for (const [model, modelInfo] of Object.entries(groupData.models)) {
             if (!modelInfo.isVisible) continue; // skip hidden models
             const modelData = data[model];
-            const sortedData = ALL_REGIONS_ORDERED.map(region => ({
+            const sortedData = ALL_REGIONS_ORDERED.filter((region, idx) => xAxisRange.regions.includes(idx)).map(region => ({
                 x: region,
                 y: modelData.data[region] || null, // null as default if data is missing
             }));
@@ -383,9 +384,11 @@ function generateTco3_ReturnSeries({data, modelsSlice}) {
         data,
         modelsSlice,
         buildMatrix: buildSvMatrixTco3Return,
-        generateSingleSvSeries: generateSingleTco3ReturnSeries
+        generateSingleSvSeries: generateSingleTco3ReturnSeries,
+        xAxisRange,
     });
-    return combineSeries(series, svSeries);
+    const combined = combineSeries(series, svSeries);
+    return combined;
 }
 
 /**
@@ -396,8 +399,8 @@ function generateTco3_ReturnSeries({data, modelsSlice}) {
  * @param {array} svData array of plaint numbers
  * @returns a series matching the tco3_return style for apexcharts.
  */
-function generateSingleTco3ReturnSeries(name, svData) {
-    const transformedData = ALL_REGIONS_ORDERED.map((region, index) => {
+function generateSingleTco3ReturnSeries(name, svData, xAxisRange) {
+    const transformedData = ALL_REGIONS_ORDERED.filter((region, idx) => xAxisRange.regions.includes(idx)).map((region, index) => {
         return {
             x: region,
             y: svData[index],
@@ -491,7 +494,7 @@ function calculateBoxPlotValues({data, modelsSlice}) {
  * @param {function} obj.generateSingleSvSeries either generateSingleTco3ZmSeries | generateSingleTco3ReturnSeries, specifies how the series should be generated
  * @returns an array holding all statistical series for the given modelSlice
  */
-function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleSvSeries}) {
+function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleSvSeries, xAxisRange}) {
     const svSeries = {
         data: [],
         colors: [],
@@ -515,7 +518,7 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
             } else {
                 continue; 
             }
-            svSeries.data.push(generateSingleSvSeries(`${sv}(${groupData.name})`, svData));
+            svSeries.data.push(generateSingleSvSeries(`${sv}(${groupData.name})`, svData, xAxisRange));
             svSeries.colors.push(SV_COLORING[sv]);   // coloring?
             svSeries.width.push(1);                  // thicker?
             svSeries.dashArray.push(0);              // solid?       

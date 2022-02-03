@@ -43,7 +43,7 @@ export const initialState = {
             },
             displayYRange: {
                 minY: 2000,
-                maxY: 2080,
+                maxY: 2100,
             },
         }
     }
