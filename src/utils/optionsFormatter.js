@@ -179,9 +179,9 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange})
         newOptions.yaxis.min = yAxisRange.minY;
         newOptions.yaxis.max = yAxisRange.maxY;
 
-        newOptions.xaxis.min = xAxisRange.minX; // xAxisRange.years.minX
-        newOptions.xaxis.max = xAxisRange.maxX; // xAxisRange.years.maxX
-        newOptions.xaxis.tickAmount = getOptimalTickAmount(xAxisRange.minX, xAxisRange.maxX);
+        newOptions.xaxis.min = xAxisRange.years.minX;
+        newOptions.xaxis.max = xAxisRange.years.maxX;
+        newOptions.xaxis.tickAmount = getOptimalTickAmount(xAxisRange.years.minX, xAxisRange.years.maxX);
 
         newOptions.colors = styling.colors;
 
