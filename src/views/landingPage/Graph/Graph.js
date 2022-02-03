@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Chart from "react-apexcharts"
 import { getOptions, generateSeries } from "../../../utils/optionsFormatter"
 import { useSelector } from 'react-redux'
-import { selectPlotId, selectPlotTitle } from '../../../store/plotSlice/plotSlice';
+import { selectPlotId, selectPlotTitle, selectPlotXRange, selectPlotYRange } from '../../../store/plotSlice/plotSlice';
 import { REQUEST_STATE, selectActivePlotData } from '../../../services/API/apiSlice';
 import { Spinner } from '../../../components/Spinner/Spinner';
 import { Typography } from '@mui/material';
@@ -22,8 +22,8 @@ function Graph(props) {
 
     const plotId = useSelector(selectPlotId);
     const plotTitle = useSelector(selectPlotTitle);
-    const xAxisRange = useSelector(state => state.plot.settings[state.plot.plotId].displayXRange); // => selector
-    const yAxisRange = useSelector(state => state.plot.settings[state.plot.plotId].displayYRange); // => selector
+    const xAxisRange = useSelector(selectPlotXRange);
+    const yAxisRange = useSelector(selectPlotYRange); 
     const activeData = useSelector(state => selectActivePlotData(state, plotId));
     const modelsSlice = useSelector(state => state.models);
     
