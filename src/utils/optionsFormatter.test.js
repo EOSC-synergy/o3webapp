@@ -115,7 +115,7 @@ describe("testing optionsFormatter functionality", () => {
                 name: 'CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG',
                 data: testArray
               },
-              { type: 'line', name: 'CCMI-1_CCCma_CMAM-refC2', data: testArray },
+              { name: 'CCMI-1_CCCma_CMAM-refC2', data: testArray, type: 'line' },
               { name: 'mean(Example Group)', data: testArray, type: 'line' },
               { name: 'median(Example Group)', data: testArray, type: 'line' },
               { name: 'mean+std(Example Group)', data: testArray, type: 'line' },
