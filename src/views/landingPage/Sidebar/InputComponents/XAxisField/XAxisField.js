@@ -19,7 +19,7 @@ function XAxisField(props) {
     /**
      * An object containing the minX and maxX values for the x-axis.
      */
-    const {minX, maxX} = useSelector(selectPlotXRange);
+    const {years: {minX, maxX}} = useSelector(selectPlotXRange);
 
     /**
      * Handles the change of the minimum value.
@@ -28,9 +28,9 @@ function XAxisField(props) {
      */
     const handleChangeMin = (event) => {
         if (event.target.value === '') {
-            dispatch(setDisplayXRange({minX: 0, maxX: maxX}));
+            dispatch(setDisplayXRange({years: {minX: 0, maxX: maxX}}));
         } else if (!isNaN(parseInt(event.target.value))) {
-            dispatch(setDisplayXRange({minX: parseInt(event.target.value), maxX: maxX}));
+            dispatch(setDisplayXRange({years: {minX: parseInt(event.target.value), maxX: maxX}}));
         }
     }
 
@@ -41,9 +41,9 @@ function XAxisField(props) {
      */
     const handleChangeMax = (event) => {
         if (event.target.value === '') {
-            dispatch(setDisplayXRange({minX: minX, maxX: 0}));
+            dispatch(setDisplayXRange({years :{minX: minX, maxX: 0}}));
         } else {
-            dispatch(setDisplayXRange({minX: minX, maxX: parseInt(event.target.value)}));
+            dispatch(setDisplayXRange({years: {minX: minX, maxX: parseInt(event.target.value)}}));
         }
     }
 
