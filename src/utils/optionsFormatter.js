@@ -171,11 +171,20 @@ export const defaultTCO3_zm = {
  * @param {string} obj.plotTitle contains the plot title
  * @returns an default_TCO3_plotId object formatted with the given data
  */
-export function getOptions({plotId, styling, plotTitle}) {
+export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange}) {
     if (plotId === O3AS_PLOTS.tco3_zm) {
         const newOptions = JSON.parse(JSON.stringify(defaultTCO3_zm)); // dirt simple and not overly horrible
         newOptions.xaxis.categories = IMPLICIT_YEAR_LIST;
+
+        newOptions.yaxis.min = yAxisRange.minY;
+        newOptions.yaxis.max = yAxisRange.maxY;
+
+        newOptions.xaxis.min = xAxisRange.minX; // xAxisRange.years.minX
+        newOptions.xaxis.max = xAxisRange.maxX; // xAxisRange.years.maxX
+        newOptions.xaxis.tickAmount = getOptimalTickAmount(xAxisRange.minX, xAxisRange.maxX);
+
         newOptions.colors = styling.colors;
+
         newOptions.stroke.width = styling.width;
         newOptions.stroke.dashArray = styling.dashArray;
         newOptions.title = JSON.parse(JSON.stringify(newOptions.title)); // this is necessary in order for apexcharts to update the title
@@ -187,7 +196,10 @@ export function getOptions({plotId, styling, plotTitle}) {
         newOptions.colors.push(...styling.colors); // for the legend!
         newOptions.title = JSON.parse(JSON.stringify(newOptions.title));  // this is necessary in order for apexcharts to update the title
         newOptions.title.text = plotTitle;
-        //newOptions.markers.colors.push(...styling.colors);
+
+        
+
+
         return newOptions;
     }    
 };
@@ -739,4 +751,21 @@ function isIncludedInSv(model, groupData, svType) {
     if (svType === "stdMean") return groupData.models[model][STATISTICAL_VALUES.derivative]; // the std mean should only be calculated if the "derivative" / std is necessary
     
     return groupData.models[model][svType];
+}
+
+
+function getOptimalTickAmount(min, max) {
+    const diff = max - min;
+    //return Math.floor(diff / (diff/20))
+    if(diff <= 40) {
+        return diff;
+    } else if(diff <= 80) {
+        return Math.floor(diff/2);
+    }else if(diff <= 150) {
+        return Math.floor(diff/5);
+    } else {
+        return Math.floor(diff/10)
+    }
+
+
 }
