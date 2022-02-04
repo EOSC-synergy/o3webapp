@@ -83,12 +83,19 @@ export const postModelsPlotStyle = (plotType) => {
  * @param {int} refYear the reference year to "normalize the data"
  * @returns the request promise from axios
  */
-export const getPlotData = (plotId, latMin, latMax, months, modelList, startYear, endYear, refModel, refYear) => {
+export const getPlotData = ({plotId, latMin, latMax, months, modelList, startYear, endYear, refModel, refYear}) => {
     if (months.length === 0) {
         throw new Error("requesting with an empty array will be rejected by the api");
     }
-    return postAtAPI(
-        `/plots/${plotId}?begin=${startYear}&end=${endYear}&month=${months.join(",")}&lat_min=${latMin}&lat_max=${latMax}&ref_meas=${refModel}&ref_year=${refYear}`,
-        modelList
-    );
+    if (plotId === 'tco3_zm') {
+        return postAtAPI(
+            `/plots/${plotId}?begin=${startYear}&end=${endYear}&month=${months.join(",")}&lat_min=${latMin}&lat_max=${latMax}&ref_meas=${refModel}&ref_year=${refYear}`,
+            modelList
+        );
+    } else if (plotId === 'tco3_return') {
+        return postAtAPI(
+            `/plots/${plotId}?month=${months.join(",")}&lat_min=${latMin}&lat_max=${latMax}&ref_meas=${refModel}&ref_year=${refYear}`,
+            modelList
+        );
+    }
 }

@@ -86,7 +86,7 @@ function TimeCheckBoxGroup(props) {
 
 
         dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
-        dispatch(fetchPlotData(modelListBegin, modelListEnd));
+        //dispatch(fetchPlotData(modelListBegin, modelListEnd));
     }
 
 
@@ -121,7 +121,7 @@ function TimeCheckBoxGroup(props) {
 
         // Dispatch season checked
         dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
-        dispatch(fetchPlotData(modelListBegin, modelListEnd));
+        //dispatch(fetchPlotData(modelListBegin, modelListEnd));
     }
 
     /**
@@ -138,7 +138,7 @@ function TimeCheckBoxGroup(props) {
         }
         // Dispatch month checked
         dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
-        dispatch(fetchPlotData(modelListBegin, modelListEnd));
+        //dispatch(fetchPlotData(modelListBegin, modelListEnd));
     }
 
     /**

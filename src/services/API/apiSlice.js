@@ -100,6 +100,8 @@ export const fetchPlotData = (modelListBegin, modelListEnd) => {
         if (typeof modelListBegin !== 'undefined' && typeof modelListEnd !== 'undefined') {
             modelList.slice(modelListBegin, modelListEnd);
         }
+        const startYear = START_YEAR;
+        const endYear = END_YEAR;
         const refModel = getState().reference.settings.model;
         const refYear = getState().reference.settings.year;
 
@@ -125,7 +127,7 @@ export const fetchPlotData = (modelListBegin, modelListEnd) => {
 
         // Return promise with success and failure actions
         
-        return getPlotData(plotId, latMin, latMax, months, modelList, START_YEAR, END_YEAR, refModel, refYear)
+        return getPlotData({plotId, latMin, latMax, months, modelList, startYear, endYear, refModel, refYear})
             .then(  
                 response => dispatch(fetchPlotDataSuccess({data: response.data, plotId, cacheKey})),
                 error => dispatch(fetchPlotDataRejected({error: error.message, plotId, cacheKey})),
