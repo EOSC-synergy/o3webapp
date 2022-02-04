@@ -3,7 +3,9 @@ import { Grid, Typography, FormControl, TextField } from "@mui/material";
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux";
 import { setYear } from "../../../../../store/referenceSlice/referenceSlice";
-import { END_YEAR, START_YEAR } from "../../../../../utils/constants";
+import { END_YEAR, START_YEAR, modelListBegin, modelListEnd } from "../../../../../utils/constants";
+import { fetchPlotData } from "../../../../../services/API/apiSlice";
+import store from "../../../../../store/store";
 
 /**
  * Enables the user to select a reference year.
@@ -27,7 +29,17 @@ function ReferenceYearField(props) {
      */
     const handleChangeForRefYear = (event) => {
         dispatch(setYear({year: event.target.value}));
+        if (yearIsValid) { // selectedYear doesnt update instantly
+            store.dispatch(fetchPlotData(modelListBegin, modelListEnd));
+            console.log("yay");
+        } else {
+            console.log("nope");
+        }
     };
+
+    const yearIsValid = () => {
+        return (selectedYear > START_YEAR && selectedYear < END_YEAR);
+    }
 
     return (
         <>
@@ -43,7 +55,7 @@ function ReferenceYearField(props) {
                         size="small"
                         value={selectedYear}
                         onChange={handleChangeForRefYear}
-                        error={selectedYear < START_YEAR || selectedYear > END_YEAR}
+                        error={!yearIsValid()}
                         helperText={selectedYear < START_YEAR ? `<${START_YEAR}` : (selectedYear > END_YEAR ? `>${END_YEAR}` : '')}
                     />
                 </FormControl>
