@@ -93,9 +93,9 @@ export const fetchPlotData = (modelListBegin, modelListEnd) => {
 
     return (dispatch, getState) => {
         const plotId = getState().plot.plotId;
-        const latMin = getState().plot.settings[plotId].location.minLat;
-        const latMax = getState().plot.settings[plotId].location.maxLat;
-        const months = getState().plot.settings[plotId].months;
+        const latMin = getState().plot.generalSettings.location.minLat;
+        const latMax = getState().plot.generalSettings.location.maxLat;
+        const months = getState().plot.generalSettings.months;
         const modelList = getState().api.models.data;
         if (typeof modelListBegin !== 'undefined' && typeof modelListEnd !== 'undefined') {
             modelList.slice(modelListBegin, modelListEnd);
