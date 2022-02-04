@@ -10,7 +10,7 @@ const definedInitialState = {
   settings: {
   
     year: 1980,
-    model: "defaultModel",
+    model: "CCMI-1_ACCESS_ACCESS-CCM-refC2",
     visible: false,
     isOffsetApplied: false,
   },

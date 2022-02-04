@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import { getModels, getPlotTypes, getPlotData } from "./client";
-import { preTransformApiData } from "../../utils/optionsFormatter";
+import { preTransformApiData } from "../../utils/optionsFormatter/optionsFormatter";
 import { START_YEAR, END_YEAR } from "../../utils/constants";
 
 /**

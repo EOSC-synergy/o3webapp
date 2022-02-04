@@ -1,12 +1,8 @@
 {
   "sections": [
     {
-      "name": "Filter Data",
-      "components": ["RegionSelector", "TimeCheckBoxGroup"]
-    },
-    {
-      "name": "Test123",
-      "components": ["RegionSelector", "TimeCheckBoxGroup"]
+      "name": "Appearance",
+      "components": ["PlotNameField", "RegionSelector", "YAxisField"]
     }
   ]
 }

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import Chart from "react-apexcharts"
-import { getOptions, generateSeries } from "../../../utils/optionsFormatter"
+import { getOptions, generateSeries } from "../../../utils/optionsFormatter/optionsFormatter"
 import { useSelector } from 'react-redux'
-import { selectPlotId, selectPlotTitle } from '../../../store/plotSlice/plotSlice';
+import { selectPlotId, selectPlotTitle, selectPlotXRange, selectPlotYRange } from '../../../store/plotSlice/plotSlice';
 import { REQUEST_STATE, selectActivePlotData } from '../../../services/API/apiSlice';
 import { Spinner } from '../../../components/Spinner/Spinner';
 import { Typography } from '@mui/material';
@@ -22,8 +22,8 @@ function Graph(props) {
 
     const plotId = useSelector(selectPlotId);
     const plotTitle = useSelector(selectPlotTitle);
-    const xAxisRange = useSelector(state => state.plot.settings[state.plot.plotId].displayXRange); // => selector
-    const yAxisRange = useSelector(state => state.plot.settings[state.plot.plotId].displayYRange); // => selector
+    const xAxisRange = useSelector(selectPlotXRange);
+    const yAxisRange = useSelector(selectPlotYRange); 
     const activeData = useSelector(state => selectActivePlotData(state, plotId));
     const modelsSlice = useSelector(state => state.models);
     
@@ -45,10 +45,10 @@ function Graph(props) {
         return <Typography>An error occurred, please try to reload the site.</Typography>;
 
     } else if (activeData.status === REQUEST_STATE.success) {
-        const {series, styling} = generateSeries({plotId, data: activeData.data, modelsSlice, xAxisRange, yAxisRange});
-        const options = getOptions({plotId, styling, plotTitle});
+        const {data, styling} = generateSeries({plotId, data: activeData.data, modelsSlice, xAxisRange, yAxisRange});
+        const options = getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange});
         const uniqueNumber = Date.now(); // forces apexcharts to re-render correctly!
-        return <Chart key={uniqueNumber} options={options} series={series} type={APEXCHART_PLOT_TYPE[plotId]} height={HEIGHT_GRAPH} />
+        return <Chart key={uniqueNumber} options={options} series={data} type={APEXCHART_PLOT_TYPE[plotId]} height={HEIGHT_GRAPH} />
     };
 
     // this "case" should not happen

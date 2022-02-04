@@ -325,7 +325,7 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                               class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
                               id="outlined-basic"
                               type="text"
-                              value="200"
+                              value="280"
                             />
                             <fieldset
                               aria-hidden="true"
@@ -372,7 +372,7 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                               class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
                               id="outlined-basic"
                               type="text"
-                              value="400"
+                              value="330"
                             />
                             <fieldset
                               aria-hidden="true"
@@ -792,19 +792,19 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                       <div
                         aria-expanded="false"
                         aria-haspopup="listbox"
-                        aria-labelledby="latitudeBandSelectorLabel latitudeBandSelector"
+                        aria-labelledby="latitudeBandSelector"
                         class="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                         id="latitudeBandSelector"
                         role="button"
                         tabindex="0"
                       >
-                        Southern Hemisphere (SH) Polar (90–60°S)
+                        Global (90°S–90°N)
                       </div>
                       <input
                         aria-hidden="true"
                         class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
                         tabindex="-1"
-                        value="-90,-60"
+                        value="[object Object]"
                       />
                       <svg
                         aria-hidden="true"
@@ -822,10 +822,12 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                         class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                       >
                         <legend
-                          class="css-173wfxe"
+                          class="css-nnbavb"
                         >
-                          <span>
-                            LatitudeBand
+                          <span
+                            class="notranslate"
+                          >
+                            ​
                           </span>
                         </legend>
                       </fieldset>
@@ -1601,17 +1603,15 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                           role="button"
                           tabindex="0"
                         >
-                          <span
-                            class="notranslate"
-                          >
-                            ​
-                          </span>
+                           
+                          CCMI-1_ACCESS_ACCESS-CCM-refC2
+                           
                         </div>
                         <input
                           aria-hidden="true"
                           class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
                           tabindex="-1"
-                          value="defaultModel"
+                          value="CCMI-1_ACCESS_ACCESS-CCM-refC2"
                         />
                         <svg
                           aria-hidden="true"
@@ -2046,7 +2046,7 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                               class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
                               id="outlined-basic"
                               type="text"
-                              value="200"
+                              value="280"
                             />
                             <fieldset
                               aria-hidden="true"
@@ -2093,7 +2093,7 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                               class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
                               id="outlined-basic"
                               type="text"
-                              value="400"
+                              value="330"
                             />
                             <fieldset
                               aria-hidden="true"
@@ -2513,19 +2513,19 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                       <div
                         aria-expanded="false"
                         aria-haspopup="listbox"
-                        aria-labelledby="latitudeBandSelectorLabel latitudeBandSelector"
+                        aria-labelledby="latitudeBandSelector"
                         class="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                         id="latitudeBandSelector"
                         role="button"
                         tabindex="0"
                       >
-                        Southern Hemisphere (SH) Polar (90–60°S)
+                        Global (90°S–90°N)
                       </div>
                       <input
                         aria-hidden="true"
                         class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
                         tabindex="-1"
-                        value="-90,-60"
+                        value="[object Object]"
                       />
                       <svg
                         aria-hidden="true"
@@ -2543,10 +2543,12 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                         class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                       >
                         <legend
-                          class="css-173wfxe"
+                          class="css-nnbavb"
                         >
-                          <span>
-                            LatitudeBand
+                          <span
+                            class="notranslate"
+                          >
+                            ​
                           </span>
                         </legend>
                       </fieldset>
@@ -3322,17 +3324,15 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                           role="button"
                           tabindex="0"
                         >
-                          <span
-                            class="notranslate"
-                          >
-                            ​
-                          </span>
+                           
+                          CCMI-1_ACCESS_ACCESS-CCM-refC2
+                           
                         </div>
                         <input
                           aria-hidden="true"
                           class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
                           tabindex="-1"
-                          value="defaultModel"
+                          value="CCMI-1_ACCESS_ACCESS-CCM-refC2"
                         />
                         <svg
                           aria-hidden="true"

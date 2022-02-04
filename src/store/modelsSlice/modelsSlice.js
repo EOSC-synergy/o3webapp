@@ -1,20 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-/**
- * The statistical values that are computable are listed here as
- * an "enum"
- */
-export const STATISTICAL_VALUES = {
-    mean: "mean",
-    median: "median",
-    derivative: "derivative",
-    percentile: "percentile",
-}
-
-/**
- * The same statistical values as a list to verify certain payload data
- */
-const STATISTICAL_VALUES_LIST = Object.values(STATISTICAL_VALUES);
+import { STATISTICAL_VALUES, STATISTICAL_VALUES_LIST } from "../../utils/constants";
 
 /**
  * This object serves as a template, whenever a new model is added to a group
@@ -34,7 +19,7 @@ const MODEL_GROUP_TEMPLATE = {
     name: "",
     models: {},         // models is lookup table
     isVisible: true,    // show/hide complete group
-    visibileSV: {       // lookup table so the reducer impl. can be more convenient
+    visibleSV: {       // lookup table so the reducer impl. can be more convenient
         mean: true,
         derivative: true,
         median: true,
@@ -81,7 +66,7 @@ export const modelGroups = {
             }
         },
         isVisible: true, // show/hide complete group
-        visibileSV: { // lookup table so the reducer impl. can be more convenient
+        visibleSV: { // lookup table so the reducer impl. can be more convenient
             mean: true,
             derivative: true,
             median: true,
@@ -264,7 +249,7 @@ const modelsSlice = createSlice({
                 throw `tried to access "${groupId}" which is not a valid group`;
             };
 
-            state.modelGroups[groupId].visibileSV[svType] = isIncluded;
+            state.modelGroups[groupId].visibleSV[svType] = isIncluded;
         },
 
         /**
@@ -345,7 +330,7 @@ export const selectNameOfGroup = (state, groupId) => state.models.modelGroups[gr
  * @param {int} groupId the group id specifies which data should be retrieved
  * @returns an object that maps each statistical value onto a boolean
  */
-export const selectStatisticalValueSettingsOfGroup = (state, groupId) => state.models.modelGroups[groupId].visibileSV;
+export const selectStatisticalValueSettingsOfGroup = (state, groupId) => state.models.modelGroups[groupId].visibleSV;
 /**
  * This selector allows components to select the visibility of a given group (specified by ID)
  * 
