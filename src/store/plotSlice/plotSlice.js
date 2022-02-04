@@ -32,8 +32,8 @@ export const initialState = {
                 }
             },
             displayYRange: {
-                minY: 200,
-                maxY: 400,
+                minY: 280,
+                maxY: 330,
             },
         },
         "tco3_return": {
@@ -42,8 +42,8 @@ export const initialState = {
                 regions: ALL_REGIONS_ORDERED.map((el, idx) => idx), // implicitly refers to ALL_REGIONS_ORDERED
             },
             displayYRange: {
-                minY: 200,
-                maxY: 400,
+                minY: 2000,
+                maxY: 2100,
             },
         }
     }

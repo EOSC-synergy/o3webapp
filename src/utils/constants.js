@@ -1,3 +1,10 @@
+import { 
+    mean as calculateMean,
+    median as calculateMedian, 
+    std as calculateStd,
+    q25 as calculatePercentile, // TODO import actual percentile
+} from "../services/math/math";
+
 // Section.js
 /** Stores the name of the LatitudeBandSelector component as a Symbol. */
 export const LBS_Symbol = Symbol("LatitudeBandSelector");
@@ -130,13 +137,13 @@ export const APEXCHART_PLOT_TYPE = {
 };
 
 export const HEIGHT_LOADING_SPINNER = "300px";
-export const HEIGHT_GRAPH = "400px";
+export const HEIGHT_GRAPH = "600px";
 
 /*
 // Options Formatter, XAxisField, YAxisField
 */
-export const START_YEAR = 1959;
-export const END_YEAR = 2100;
+export const START_YEAR = 1960
+export const END_YEAR = 2100
 // year list: 1959 - 2100
 export const IMPLICIT_YEAR_LIST = [...Array(END_YEAR - START_YEAR + 1).keys()].map(number => `${START_YEAR + number}`);
 
@@ -160,3 +167,45 @@ export const O3AS_REGIONS = {
     USER_REGION
 }
 export const ALL_REGIONS_ORDERED = [ANTARCTIC, SH_MID, NH_MID, TROPICS, ARCTIC, NEAR_GLOBAL, GLOBAL, USER_REGION];
+
+
+
+const mean = "mean";
+const median = "median";
+const derivative = "derivative";
+const percentile = "percentile";
+/**
+ * The statistical values that are computable are listed here as
+ * an "enum"
+ */
+export const STATISTICAL_VALUES = {
+    mean,
+    median,
+    derivative,
+    percentile,
+}
+
+/**
+ * The same statistical values as a list to verify certain payload data
+ */
+export const STATISTICAL_VALUES_LIST = Object.values(STATISTICAL_VALUES);
+
+
+export const SV_CALCULATION = {
+    mean: calculateMean,
+    median: calculateMedian,
+    derivative: calculateStd,
+    percentile: calculatePercentile,
+    stdMean: calculateMean, // mean for std+-
+}
+
+export const SV_COLORING = {
+    mean: "#000",
+    median: "#000",
+    derivative: "#000",
+    percentile: "#000",
+    "mean+std": "#000",
+    "mean-std": "#000",
+}
+
+export const MODEL_LINE_THICKNESS = 2;
