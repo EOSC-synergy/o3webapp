@@ -1,5 +1,6 @@
 import pdfmake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { O3AS_PLOTS} from "../../utils/constants"
 pdfmake.vfs = pdfFonts.pdfMake.vfs;
 
 const legalNoticeHeading = "ACCEPTABLE USE POLICY AND CONDITIONS OF USE"
@@ -34,32 +35,41 @@ function addViewbox(str) {
     const offset = str.substring(lastIndex).indexOf('"');
     const insertAt = offset + lastIndex + 2;
 
-    return str.substring(0, insertAt) + `viewBox="0 0 1000 622" ` + str.substring(insertAt)
+    return str.substring(0, insertAt) + `viewBox="0 0 2047 400" ` + str.substring(insertAt)
 }
 
-export async function showPdf(models) {
+  export async function showPdf(plotId, models) {
+
     const svgAsString = await getBase64Image()
-    
-      const docDefinition = {
+
+    let docDefinition = null;
+
+    console.log(plotId)
+
+    if (plotId === O3AS_PLOTS.tco3_zm || plotId === O3AS_PLOTS.tco3_return) {
+
+      console.log(models)
+      console.log(typeof(models))
+
+      docDefinition = {
+        pageOrientation: 'landscape',
+        //pageMargins: [ 40, 180, 40, 60 ],
         content: [
           {
-            text: 'OCTS Plot from 1960 - 2100',
-            fontSize: 26,
-          },
-          {
+            
             svg: addViewbox(svgAsString),
-            width: 500,
+            fit: [770, 350],
           },
           {
               text: 'List of used models:',
-              fontSize: 20,
+              fontSize: 14,
           },
           {
               ul: models
           },
           {
               text: legalNoticeHeading,
-              fontSize: 20
+              fontSize: 14
           },
           legalNotice,
           {
@@ -70,40 +80,11 @@ export async function showPdf(models) {
           return currentNode.text == legalNoticeHeading || currentNode.text == 'List of used models:'
         }
       };
-      pdfmake.createPdf(docDefinition).open();
-  }
+    } else {
+      throw `the given plot id "${plotId}" is not defined`;
+    }
 
-  export async function showPdf2() {
-    const svgAsString = await getBase64Image()
-    
-      const docDefinition = {
-        content: [
-          {
-            text: 'OCTS Plot from 1960 - 2100',
-            fontSize: 20,
-          },
-          {
-            svg: addViewbox(svgAsString),
-            width: 300,
-          },
-          {
-              text: 'List of used models:',
-              fontSize: 20,
-          },
-          {
-              text: legalNoticeHeading,
-              fontSize: 18
-          },
-          legalNotice,
-          {
-              ol: points,
-          },
-        ],
-        pageBreakBefore: function(currentNode, followingNodesOnPage, nodesOnNextPage, previousNodesOnPage) {
-          return currentNode.text == legalNoticeHeading || currentNode.text == 'List of used models:'
-        }
-      };
-      pdfmake.createPdf(docDefinition).open();
+    pdfmake.createPdf(docDefinition).open();
   }
 
 export default function createPdf() {

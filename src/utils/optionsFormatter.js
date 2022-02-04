@@ -200,6 +200,25 @@ export function getIncludedModels(modelsSlice) {
     return includedModels;
 }
 
+//
+export function getIncludedModelsAsObjects(modelsSlice) {
+    const includedModels = new Set();
+    const modelGroups = modelsSlice.modelGroups;
+    for (let id of Object.keys(modelGroups)) {
+        if (!modelGroups[id].isVisible) { // skip group: should not be visible
+            continue;
+        }
+        for (let modelName of Object.keys(modelGroups[id].models)) {
+            if (!modelGroups[id].models[modelName].isVisible) { // skip model, not visible
+                continue;
+            }
+            includedModels.add(modelGroups[id].models[modelName]);
+        }
+    }
+    return includedModels;
+}
+//
+
 export function generateSeries({plotId, data, modelsSlice}) {
     const series = [];
     const colors = [];

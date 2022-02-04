@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import { fileFormats } from '../../../../utils/constants';
 import { showPdf, showPdf2 } from '../../../../services/pdf/pdfCreator';
 import { useSelector } from 'react-redux'
+import { selectPlotId} from '../../../../store/plotSlice/plotSlice';
+import { getIncludedModelsAsObjects }from '../../../../utils/optionsFormatter';
 
 
 /**
@@ -22,7 +24,8 @@ function DownloadModal(props) {
      * @todo move to redux store
      */
      const [selectedFileFormat, setSelectedFileFormat] = React.useState('');
-
+     const plotId = useSelector(selectPlotId);
+     const modelsSlice = useSelector(state => state.models);
 
     /**
      * The style of the DownloadModal.
@@ -50,20 +53,16 @@ function DownloadModal(props) {
      * @todo implement
      */
     const downloadPlot = () => {
-        //const activeData = useSelector(state => selectActivePlotData(state, plotId));
+        
+        const includedModels = getIncludedModelsAsObjects(modelsSlice);
 
-       /** showPdf(activeData.map(modelObj => {
-            return {
-                text: `${modelObj.model} (${modelObj.plotstyle.linestyle})`,
-                color: modelObj.plotstyle.color,
-            }
-        })) */ 
-        console.log(selectedFileFormat);
+        
 
         if (selectedFileFormat === "pdf") {
-            console.log("downloading pdf...")
-            showPdf2();
+            showPdf(plotId, 
+                includedModels.map(modelObj => `${modelObj}` + `${modelObj.color}`));
         }
+
     };
 
     /**
