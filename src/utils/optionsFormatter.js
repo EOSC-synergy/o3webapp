@@ -767,10 +767,15 @@ function isIncludedInSv(model, groupData, svType) {
     return groupData.models[model][svType];
 }
 
-
+/**
+ * Determines the optimal tick amount for a given max and min year.
+ * 
+ * @param {number} min      The selected min. year of the plot
+ * @param {number} max      The selected max. year of the plot
+ * @returns                 The optimal tick amount according to those values
+ */
 function getOptimalTickAmount(min, max) {
     const diff = max - min;
-    //return Math.floor(diff / (diff/20))
     if(diff <= 40) {
         return diff;
     } else if(diff <= 80) {
@@ -780,6 +785,4 @@ function getOptimalTickAmount(min, max) {
     } else {
         return Math.floor(diff/10)
     }
-
-
 }
