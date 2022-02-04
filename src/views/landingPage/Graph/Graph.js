@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Chart from "react-apexcharts"
-import { getOptions, generateSeries } from "../../../utils/optionsFormatter"
+import { getOptions, generateSeries } from "../../../utils/optionsFormatter/optionsFormatter"
 import { useSelector } from 'react-redux'
 import { selectPlotId, selectPlotTitle, selectPlotXRange, selectPlotYRange } from '../../../store/plotSlice/plotSlice';
 import { REQUEST_STATE, selectActivePlotData } from '../../../services/API/apiSlice';

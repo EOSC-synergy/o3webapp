@@ -1,5 +1,5 @@
-import { createTestStore } from "../store/store";
-import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, START_YEAR, MODEL_LINE_THICKNESS } from "./constants";
+import { createTestStore } from "../../store/store";
+import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, START_YEAR, MODEL_LINE_THICKNESS } from "../constants";
 import { colorNameToHex, convertToStrokeStyle, generateSeries, getIncludedModels, getOptions, normalizeArray, preTransformApiData, default_TCO3_return } from "./optionsFormatter";
 
 describe("testing optionsFormatter functionality", () => {

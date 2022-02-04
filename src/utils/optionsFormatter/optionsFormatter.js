@@ -1,5 +1,5 @@
-import { q25, q75, median } from "../services/math/math"
-import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, ALL_REGIONS_ORDERED, STATISTICAL_VALUES_LIST, SV_CALCULATION, SV_COLORING, STATISTICAL_VALUES, APEXCHART_PLOT_TYPE, MODEL_LINE_THICKNESS, START_YEAR, END_YEAR } from "./constants"
+import { q25, q75, median } from "../../services/math/math"
+import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, ALL_REGIONS_ORDERED, STATISTICAL_VALUES_LIST, SV_CALCULATION, SV_COLORING, STATISTICAL_VALUES, APEXCHART_PLOT_TYPE, MODEL_LINE_THICKNESS, START_YEAR, END_YEAR } from "../constants"
 
 /**
  * Maps the plotId to a function that describes how the series are going
@@ -409,7 +409,7 @@ function generateSingleTco3ReturnSeries(name, svData) {
     return {
         name: name,
         data: transformedData,
-        type: "scatter", // make generic
+        type: "scatter"
     };
 }
 
@@ -643,7 +643,7 @@ export const preTransformApiData = ({plotId, data}) => {
             };
         }
         return lookUpTable;
-    } else if (plotId === O3AS_PLOTS.tco3_return) { // old way of doing this
+    } else if (plotId === O3AS_PLOTS.tco3_return) {
         const lookUpTable = {};
         for (let datum of data) {
             // top structure

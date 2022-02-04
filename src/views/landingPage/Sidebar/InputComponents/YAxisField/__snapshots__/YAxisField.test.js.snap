@@ -31,7 +31,7 @@ exports[`renders correctly 1`] = `
               class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
               id="outlined-basic"
               type="text"
-              value="200"
+              value="280"
             />
             <fieldset
               aria-hidden="true"
@@ -78,7 +78,7 @@ exports[`renders correctly 1`] = `
               class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
               id="outlined-basic"
               type="text"
-              value="400"
+              value="330"
             />
             <fieldset
               aria-hidden="true"

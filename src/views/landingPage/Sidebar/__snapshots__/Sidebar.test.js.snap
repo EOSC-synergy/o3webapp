@@ -325,7 +325,7 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                               class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
                               id="outlined-basic"
                               type="text"
-                              value="200"
+                              value="280"
                             />
                             <fieldset
                               aria-hidden="true"
@@ -372,7 +372,7 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                               class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
                               id="outlined-basic"
                               type="text"
-                              value="400"
+                              value="330"
                             />
                             <fieldset
                               aria-hidden="true"
@@ -1603,17 +1603,15 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                           role="button"
                           tabindex="0"
                         >
-                          <span
-                            class="notranslate"
-                          >
-                            ​
-                          </span>
+                           
+                          CCMI-1_ACCESS_ACCESS-CCM-refC2
+                           
                         </div>
                         <input
                           aria-hidden="true"
                           class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
                           tabindex="-1"
-                          value="defaultModel"
+                          value="CCMI-1_ACCESS_ACCESS-CCM-refC2"
                         />
                         <svg
                           aria-hidden="true"
@@ -2048,7 +2046,7 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                               class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
                               id="outlined-basic"
                               type="text"
-                              value="200"
+                              value="280"
                             />
                             <fieldset
                               aria-hidden="true"
@@ -2095,7 +2093,7 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                               class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
                               id="outlined-basic"
                               type="text"
-                              value="400"
+                              value="330"
                             />
                             <fieldset
                               aria-hidden="true"
@@ -3326,17 +3324,15 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                           role="button"
                           tabindex="0"
                         >
-                          <span
-                            class="notranslate"
-                          >
-                            ​
-                          </span>
+                           
+                          CCMI-1_ACCESS_ACCESS-CCM-refC2
+                           
                         </div>
                         <input
                           aria-hidden="true"
                           class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
                           tabindex="-1"
-                          value="defaultModel"
+                          value="CCMI-1_ACCESS_ACCESS-CCM-refC2"
                         />
                         <svg
                           aria-hidden="true"

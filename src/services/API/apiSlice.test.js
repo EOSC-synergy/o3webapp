@@ -2,7 +2,7 @@ import reducer, { fetchModels, fetchPlotData, fetchPlotDataPending, fetchPlotTyp
 import axios from 'axios';
 import { configureStore } from "@reduxjs/toolkit";
 import { createTestStore } from "../../store/store";
-import * as optionsFormatter from "../../utils/optionsFormatter";
+import * as optionsFormatter from "../../utils/optionsFormatter/optionsFormatter";
 
 const spy = jest.spyOn(optionsFormatter, 'preTransformApiData');
 spy.mockImplementation(x => x);

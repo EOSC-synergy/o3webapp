@@ -94,7 +94,7 @@ describe("reducer tests", () => {
                         modelB: MODEL_DATA_TEMPLATE,
                     },
                     isVisible: true,    // show/hide complete group
-                    visibileSV: {       // lookup table so the reducer impl. can be more convenient
+                    visibleSV: {       // lookup table so the reducer impl. can be more convenient
                         mean: true,
                         derivative: true,
                         median: true,
@@ -282,7 +282,7 @@ describe("reducer tests", () => {
                 0: {
                     modelList: [],
                     models: {},
-                    visibileSV: {
+                    visibleSV: {
                         mean: true,
                         derivative: true,
                         median: true,
@@ -298,7 +298,7 @@ describe("reducer tests", () => {
                 0: {
                     modelList: [],
                     models: {},
-                    visibileSV: {
+                    visibleSV: {
                         mean: false,
                         derivative: true,
                         median: true,
@@ -382,7 +382,7 @@ describe("selector tests", () => {
     });
 
     it('should select the statistical values', () => {
-        const visibileSV = {
+        const visibleSV = {
             mean: true,
             median: false,
             derivative: true,
@@ -394,13 +394,13 @@ describe("selector tests", () => {
                 modelGroupList: [0],
                 modelGroups: {
                     0: {
-                        visibileSV, 
+                        visibleSV, 
                     },
                 },
             },
         };
 
-        expect(selectStatisticalValueSettingsOfGroup(globalState, 0)).toEqual(visibileSV);
+        expect(selectStatisticalValueSettingsOfGroup(globalState, 0)).toEqual(visibleSV);
     });
 
     it('should select the correct visibility', () => {

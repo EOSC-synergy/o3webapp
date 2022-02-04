@@ -12,8 +12,7 @@ let store;
 let reportError;
 const groupId = parseInt(Object.keys(modelGroups)[0]);
 const groupName = modelGroups[groupId].name;
-const visibileSV = modelGroups[groupId].visibileSV;
-console.log(Object.keys(visibileSV));
+const visibleSV = modelGroups[groupId].visibleSV;
 const isVisble = modelGroups[groupId].isVisible;
 describe('test ModelGroupCard rendering', () => {
 
@@ -67,9 +66,9 @@ describe('test ModelGroupCard rendering', () => {
             </Provider>
         );
 
-        for (let key in visibileSV) {
+        for (let key in visibleSV) {
             expect(getByLabelText(key)).toBeInTheDocument();
-            expect(getByLabelText(key)).toHaveProperty('checked', visibileSV[key]);
+            expect(getByLabelText(key)).toHaveProperty('checked', visibleSV[key]);
         }
     });
 
