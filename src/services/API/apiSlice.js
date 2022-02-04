@@ -45,11 +45,11 @@ export const fetchPlotTypes = createAsyncThunk('api/fetchPlotTypes', async () =>
  * This function concatenates all given information into a string serving as an identifier
  * for cached requests in the store.
  * 
- * @param {int} obj.latMin specifies the minimum latitude
- * @param {int} obj.latMax specifies the maximum latitude
- * @param {array of int} obj.months represents the selected months
- * @param {string} obj.refModel the reference model to "normalize the data"
- * @param {int} obj.refYear the reference year to "normalize the data"
+ * @param {int} latMin specifies the minimum latitude
+ * @param {int} latMax specifies the maximum latitude
+ * @param {Array.<int>} months represents the selected months
+ * @param {string} refModel the reference model to "normalize the data"
+ * @param {int} refYear the reference year to "normalize the data"
  * @returns the generated string
  */
 export const generateCacheKey = ({ latMin, latMax, months, refModel, refYear }) => {
@@ -96,9 +96,9 @@ export const fetchPlotData = (modelListBegin, modelListEnd) => {
         const latMin = getState().plot.generalSettings.location.minLat;
         const latMax = getState().plot.generalSettings.location.maxLat;
         const months = getState().plot.generalSettings.months;
-        const modelList = getState().api.models.data;
+        let modelList = getState().api.models.data;
         if (typeof modelListBegin !== 'undefined' && typeof modelListEnd !== 'undefined') {
-            modelList.slice(modelListBegin, modelListEnd);
+            modelList = modelList.slice(modelListBegin, modelListEnd);
         }
         const startYear = START_YEAR;
         const endYear = END_YEAR;
@@ -192,7 +192,7 @@ const apiSlice = createSlice({
     extraReducers(builder) {
         builder
             // fetch models
-            .addCase(fetchModels.pending, (state, action) => {
+            .addCase(fetchModels.pending, (state) => {
                 state.models.status = REQUEST_STATE.loading;
             })
             .addCase(fetchModels.fulfilled, (state, action) => {
@@ -205,7 +205,7 @@ const apiSlice = createSlice({
             })
 
             // fetch plotTypes
-            .addCase(fetchPlotTypes.pending, (state, action) => {
+            .addCase(fetchPlotTypes.pending, (state) => {
                 state.plotTypes.status = REQUEST_STATE.loading;
             })
             .addCase(fetchPlotTypes.fulfilled, (state, action) => {
@@ -273,7 +273,7 @@ export const selectActivePlotData = (state, plotId) => {
         return {
             status: REQUEST_STATE.loading,
         };
-    };
+    }
 
     return plotSpecificSection.cachedRequests[activeCacheKey];
 }

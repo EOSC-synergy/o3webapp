@@ -24,7 +24,7 @@ function ReferenceModelSelector(props) {
     /** Handles the change of the reference model selection when it is modified.*/
     const handleChangeForRefModel = (event) => {
         dispatch(setModel({model: event.target.value}));
-        //dispatch(fetchPlotData(modelListBegin, modelListEnd));
+        dispatch(fetchPlotData(modelListBegin, modelListEnd));
     };
 
     return (

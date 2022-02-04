@@ -29,7 +29,7 @@ function ReferenceYearField(props) {
     const handleChangeForRefYear = (event) => {
         dispatch(setYear({year: event.target.value}));
         if (event.target.value > START_YEAR && event.target.value < END_YEAR) {
-            //dispatch(fetchPlotData(modelListBegin, modelListEnd));
+            dispatch(fetchPlotData(modelListBegin, modelListEnd));
         }
     };
 

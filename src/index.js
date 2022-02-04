@@ -25,7 +25,6 @@ store.dispatch(fetchModels())
             reloadInitialData(); // after fetching models fetch the data for the plot
         }
     });
-store.dispatch(fetchPlotTypes());
 
 ReactDOM.render(
 <React.StrictMode>
