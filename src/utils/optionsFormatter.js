@@ -344,7 +344,7 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange}) {
     // 1. build boxplot
     const boxPlotValues = calculateBoxPlotValues({data, modelsSlice});
     series.data.push({
-            name: 'box',
+            name: '',
             type: 'boxPlot',
 
             data: ALL_REGIONS_ORDERED.map(region => ({
