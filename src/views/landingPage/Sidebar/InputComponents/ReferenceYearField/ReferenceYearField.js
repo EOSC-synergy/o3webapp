@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { setYear } from "../../../../../store/referenceSlice/referenceSlice";
 import { END_YEAR, START_YEAR, modelListBegin, modelListEnd } from "../../../../../utils/constants";
 import { fetchPlotData } from "../../../../../services/API/apiSlice";
-import store from "../../../../../store/store";
 
 /**
  * Enables the user to select a reference year.
@@ -30,7 +29,7 @@ function ReferenceYearField(props) {
     const handleChangeForRefYear = (event) => {
         dispatch(setYear({year: event.target.value}));
         if (event.target.value > START_YEAR && event.target.value < END_YEAR) {
-            store.dispatch(fetchPlotData(modelListBegin, modelListEnd));
+            dispatch(fetchPlotData(modelListBegin, modelListEnd));
         }
     };
 

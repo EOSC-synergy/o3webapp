@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import { setModel } from "../../../../../store/referenceSlice/referenceSlice";
 import PropTypes from 'prop-types';
 import {modelListBegin, modelListEnd} from "../../../../../utils/constants";
-import store from "../../../../../store/store";
 import {fetchPlotData} from "../../../../../services/API/apiSlice";
 
 /**
@@ -25,7 +24,7 @@ function ReferenceModelSelector(props) {
     /** Handles the change of the reference model selection when it is modified.*/
     const handleChangeForRefModel = (event) => {
         dispatch(setModel({model: event.target.value}));
-        store.dispatch(fetchPlotData(modelListBegin, modelListEnd));
+        dispatch(fetchPlotData(modelListBegin, modelListEnd));
     };
 
     return (

@@ -12,7 +12,6 @@ import {
     modelListEnd
 } from "../../../../../utils/constants";
 import Typography from "@mui/material/Typography";
-import store from '../../../../../store/store';
 import {fetchPlotData} from "../../../../../services/API/apiSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { selectPlotMonths, setMonths } from "../../../../../store/plotSlice/plotSlice";
@@ -87,7 +86,7 @@ function TimeCheckBoxGroup(props) {
 
 
         dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
-        store.dispatch(fetchPlotData(modelListBegin, modelListEnd));
+        dispatch(fetchPlotData(modelListBegin, modelListEnd));
     }
 
 
@@ -122,7 +121,7 @@ function TimeCheckBoxGroup(props) {
 
         // Dispatch season checked
         dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
-        store.dispatch(fetchPlotData(modelListBegin, modelListEnd));
+        dispatch(fetchPlotData(modelListBegin, modelListEnd));
     }
 
     /**
@@ -139,7 +138,7 @@ function TimeCheckBoxGroup(props) {
         }
         // Dispatch month checked
         dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
-        store.dispatch(fetchPlotData(modelListBegin, modelListEnd));
+        dispatch(fetchPlotData(modelListBegin, modelListEnd));
     }
 
     /**
