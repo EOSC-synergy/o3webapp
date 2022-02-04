@@ -200,10 +200,6 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange})
         newOptions.yaxis.min = yAxisRange.minY;
         newOptions.yaxis.max = yAxisRange.maxY;
 
-        // xAxis:
-        // xAxisRange.region(s) => array with indices refering to ALL_REGIONS_ORDERED
-        // every series [] (len 8) 
-
         return newOptions;
     }    
 };
