@@ -10,7 +10,6 @@ import {setActivePlotId} from "./store/plotSlice/plotSlice";
 
 const reloadInitialData = () => {
     store.getState().api.plotTypes.data.map((name) => {
-        console.log(name);
         store.dispatch(setActivePlotId({plotId: name}));
         store.dispatch(fetchPlotData(modelListBegin, modelListEnd));
     });
