@@ -29,17 +29,10 @@ function ReferenceYearField(props) {
      */
     const handleChangeForRefYear = (event) => {
         dispatch(setYear({year: event.target.value}));
-        if (yearIsValid) { // selectedYear doesnt update instantly
+        if (event.target.value > START_YEAR && event.target.value < END_YEAR) {
             store.dispatch(fetchPlotData(modelListBegin, modelListEnd));
-            console.log("yay");
-        } else {
-            console.log("nope");
         }
     };
-
-    const yearIsValid = () => {
-        return (selectedYear > START_YEAR && selectedYear < END_YEAR);
-    }
 
     return (
         <>
@@ -55,7 +48,7 @@ function ReferenceYearField(props) {
                         size="small"
                         value={selectedYear}
                         onChange={handleChangeForRefYear}
-                        error={!yearIsValid()}
+                        error={selectedYear < START_YEAR || selectedYear > END_YEAR}
                         helperText={selectedYear < START_YEAR ? `<${START_YEAR}` : (selectedYear > END_YEAR ? `>${END_YEAR}` : '')}
                     />
                 </FormControl>
