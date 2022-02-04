@@ -1,8 +1,19 @@
 import React from "react";
 import SeasonCheckBoxGroup from "./SeasonCheckboxGroup/SeasonCheckBoxGroup";
 import {Box, Checkbox, Divider, FormControlLabel, Grid} from "@mui/material";
-import { Winter, Spring, Summer, Autumn, NUM_MONTHS_IN_SEASON, NUM_MONTHS } from "../../../../../utils/constants";
+import {
+    Winter,
+    Spring,
+    Summer,
+    Autumn,
+    NUM_MONTHS_IN_SEASON,
+    NUM_MONTHS,
+    modelListBegin,
+    modelListEnd
+} from "../../../../../utils/constants";
 import Typography from "@mui/material/Typography";
+import store from '../../../../../store/store';
+import {fetchPlotData} from "../../../../../services/API/apiSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { selectPlotMonths, setMonths } from "../../../../../store/plotSlice/plotSlice";
 import PropTypes from 'prop-types';
@@ -76,6 +87,7 @@ function TimeCheckBoxGroup(props) {
 
 
         dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
+        store.dispatch(fetchPlotData(modelListBegin, modelListEnd));
     }
 
 
@@ -110,6 +122,7 @@ function TimeCheckBoxGroup(props) {
 
         // Dispatch season checked
         dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
+        store.dispatch(fetchPlotData(modelListBegin, modelListEnd));
     }
 
     /**
@@ -126,6 +139,7 @@ function TimeCheckBoxGroup(props) {
         }
         // Dispatch month checked
         dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
+        store.dispatch(fetchPlotData(modelListBegin, modelListEnd));
     }
 
     /**
@@ -135,7 +149,7 @@ function TimeCheckBoxGroup(props) {
      * @param {String} param.name       The season name
      * @param {Array of int} param.months     An array of monthId's of the months included in this season
      * @param {int} param.seasonId   The id of this season
-     * @returns {JSX}                   A preconfigured SeasonCheckbox
+     * @returns {JSX.Element}                   A preconfigured SeasonCheckbox
      */
     const toSeasonCheckbox = ({name, months, seasonId}) => {
         const monthsInSeason = []
@@ -143,16 +157,18 @@ function TimeCheckBoxGroup(props) {
             monthsInSeason.push({monthId: months[i], checked: selectedMonths.includes(months[i])})
         }
 
-        return (<Grid item xs={6}>
-            <SeasonCheckBoxGroup
-                label = {name.description}
-                months = {monthsInSeason}
-                seasonId= {seasonId}
-                handleSeasonClicked = {handleSeasonChecked}
-                handleMonthClicked = {handleMonthChecked}
-                reportError={props.reportError}
-            />
-        </Grid>);
+        return (
+            <Grid item xs={6}>
+                <SeasonCheckBoxGroup
+                    label = {name.description}
+                    months = {monthsInSeason}
+                    seasonId= {seasonId}
+                    handleSeasonClicked = {handleSeasonChecked}
+                    handleMonthClicked = {handleMonthChecked}
+                    reportError={props.reportError}
+                />
+            </Grid>
+        );
     }
 
     return (

@@ -1,3 +1,9 @@
+// apiSlice
+/** For reducing loading time while implementing: starting value for how many models should be fetched */
+export const modelListBegin = 0;
+/** For reducing loading time while implementing: starting value for how many models should be fetched */
+export const modelListEnd = 10;
+
 // Section.js
 /** Stores the name of the LatitudeBandSelector component as a Symbol. */
 export const LBS_Symbol = Symbol("LatitudeBandSelector");
