@@ -3,8 +3,9 @@ import {useDispatch, useSelector} from "react-redux"
 import {selectPlotLocation, setLocation} from "../../../../../store/plotSlice/plotSlice";
 import {Box, Divider, Grid, MenuItem, Select, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { latitudeBands } from "../../../../../utils/constants";
-import PropTypes from 'prop-types'; 
+import {latitudeBands, modelListBegin, modelListEnd} from "../../../../../utils/constants";
+import PropTypes from 'prop-types';
+import {fetchPlotData} from "../../../../../services/API/apiSlice";
 
 
 /**
@@ -87,6 +88,7 @@ function LatitudeBandSelector(props) {
         } else {
             setIsCustomizable(false);
             dispatch(setLocation({minLat: event.target.value.minLat, maxLat: event.target.value.maxLat}));
+            dispatch(fetchPlotData(modelListBegin, modelListEnd));
         }
     };
 
@@ -108,6 +110,7 @@ function LatitudeBandSelector(props) {
                 props.reportError("Invalid extrema string for single value change.");
         }
         dispatch(setLocation({minLat: selectedLocationCopy.minLat, maxLat: selectedLocationCopy.maxLat}));
+        dispatch(fetchPlotData(modelListBegin, modelListEnd));
     };
 
     /**
