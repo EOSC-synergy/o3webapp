@@ -19,7 +19,7 @@ it('renders correctly', () => {
 
 it('displays the name of O3AS Webapp', () => {
     render(<Logo />);
-    expect(screen.getByTestId("logo-text")).toHaveTextContent("O3AS Webapp");
+    expect(screen.getByTestId("logo-text")).toHaveTextContent("O3as: Webapp");
 });
 
 it('displays the correct image', () => {
@@ -30,7 +30,7 @@ it('displays the correct image', () => {
 
 it('renders correct link onto logo', () => {
     render(<Logo />);
-    expect(screen.getByText("O3AS Webapp").closest('a')).toHaveAttribute('href', O3ASLink);
+    expect(screen.getByText("O3as: Webapp").closest('a')).toHaveAttribute('href', O3ASLink);
 });
 
 it('renders nothing if props.display={"none"}', () => {

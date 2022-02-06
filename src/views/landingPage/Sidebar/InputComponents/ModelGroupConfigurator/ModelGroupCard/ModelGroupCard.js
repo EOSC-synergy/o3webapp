@@ -36,14 +36,6 @@ function ModelGroupCard(props) {
     const modelGroupName = useSelector(state => selectNameOfGroup(state, props.modelGroupId));
     const modelGroupStatisticalValue = useSelector(state => selectStatisticalValueSettingsOfGroup(state, props.modelGroupId));
     const isModelGroupVisible = useSelector(state => selectVisibilityOfGroup(state, props.modelGroupId));
-    
-    /**
-     * toggles the visibility of the whole group in the graph
-     * by dispatching an action to the redux store
-     */
-    const toggleModelGroupVisibility = () => {
-        dispatch(setVisibilityForGroup({groupId: props.modelGroupId, isVisible: !isModelGroupVisible}));
-    }
 
     /**
      * toggles the visibility of the given statistical value
@@ -56,6 +48,19 @@ function ModelGroupCard(props) {
             {groupId: props.modelGroupId, svType: statisticalValue, isIncluded: event.target.checked}
         ));
     }
+
+        /**
+     * toggles the visibility of the whole group in the graph
+     * by dispatching an action to the redux store
+     */
+         const toggleModelGroupVisibility = () => {
+            dispatch(setVisibilityForGroup({groupId: props.modelGroupId, isVisible: !isModelGroupVisible}));
+            for (const key in STATISTICAL_VALUES) {
+                dispatch(setStatisticalValueForGroup(
+                    {groupId: props.modelGroupId, svType: key, isIncluded: !isModelGroupVisible}
+                ));
+            }
+        }
 
     /**
      * state to keep track of whether the edit group modal is currently visible or not
@@ -139,8 +144,9 @@ function ModelGroupCard(props) {
                                             event => toggleModelGroupStatisticalValueVisibility(event, key)
                                         }
                                         checked={modelGroupStatisticalValue[key]}
-                                        id={`ModelGroupCoard-toggle-${key}-checkbox`}
-                                        labelid={`ModelGroupCoard-toggle-${key}-label`}
+                                        id={`ModelGroupCard-toggle-${key}-checkbox`}
+                                        labelid={`ModelGroupCard-toggle-${key}-label`}
+                                        data-testid={`ModelGroupCard-toggle-${key}-checkbox`}
                                     />
                                 }
                             />

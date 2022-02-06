@@ -13,18 +13,36 @@ import PropTypes from "prop-types";
  * @returns {JSX.Element} a jsx containing all main components
  */
 function LandingPage(props) {
-    
+
+    const [landingPageHeight, setLandingPageHeight] = React.useState(0);
+
+    React.useEffect(() => {
+        setLandingPageHeight(window.innerHeight - document.getElementById('Navbar').offsetHeight);
+    }, []);
+
     return (
-    <div data-testid="landingPage" style={{width: "100%", height: "100%"}}> 
-      <Sidebar reportError={props.reportError} onOpen={props.openSidebar} isOpen={props.isSidebarOpen} onClose={props.closeSidebar} />
-      
-      <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100%"}} data-testid="landingPage-not-sidebar" onClick={props.closeSidebar}>
-        <div style={{width: "95%", marginTop: "2%"}}>
-          <Graph reportError={props.reportError} />
+        <div data-testid="landingPage" style={{width: "100%", height: "100%"}}>
+            <Sidebar
+                reportError={props.reportError}
+                onOpen={props.openSidebar}
+                isOpen={props.isSidebarOpen}
+                onClose={props.closeSidebar}
+            />
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: landingPageHeight
+                }}
+                data-testid="landingPage-not-sidebar"
+                onClick={props.closeSidebar}
+            >
+                <div style={{width: "95%"}}>
+                    <Graph reportError={props.reportError}/>
+                </div>
+            </div>
         </div>
-      </div>
-      
-    </div>
     );
 }
 
