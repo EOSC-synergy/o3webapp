@@ -87,7 +87,6 @@ export const updateDataAndDisplaySuggestions = ({plotId, cacheKey, data, modelsS
     return (dispatch, getState) => {
         dispatch(fetchPlotDataSuccess({data, plotId, cacheKey, modelsSlice})) 
         const { min, max } = getState().api.plotSpecific[plotId].cachedRequests[cacheKey].suggested; // suggested min/max is availabe
-
         dispatch(setDisplayYRangeForPlot({plotId, minY: Math.floor(min), maxY: Math.floor(max)}));
     }
 }
@@ -130,6 +129,8 @@ export const fetchPlotData = (modelListBegin, modelListEnd) => {
             // we want to rely on the .then() chaining later
         } else if (cachedRequest.status === REQUEST_STATE.success) {
             dispatch(selectExistingPlotData({plotId, cacheKey}));
+            const { min, max } = getState().api.plotSpecific[plotId].cachedRequests[cacheKey].suggested; // suggested min/max is availabe
+            dispatch(setDisplayYRangeForPlot({plotId, minY: Math.floor(min), maxY: Math.floor(max)}));
             return Promise.resolve(); // request is already satisfied
         }
         
