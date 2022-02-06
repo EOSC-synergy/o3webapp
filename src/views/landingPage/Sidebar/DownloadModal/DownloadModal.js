@@ -110,15 +110,15 @@ function DownloadModal(props) {
   const downloadPlot = () => {
     const includedModels = getIncludedModelsAsObjects(modelsSlice);
 
-    if (selectedFileFormat === "pdf") {
+    if (selectedFileFormat === "PDF") {
 
       downloadGraphAsPDF(plotId, plotTitle);
 
-    } else if (selectedFileFormat === "png") {
+    } else if (selectedFileFormat === "PNG") {
 
       downloadGraphAsPNG(plotTitle);
 
-    } else if (selectedFileFormat === "svg") {
+    } else if (selectedFileFormat === "SVG") {
 
       downloadGraphAsSVG(plotTitle);
 
@@ -152,14 +152,14 @@ function DownloadModal(props) {
             key="heading"
             sx={{ textAlign: "center" }}
           >
-            <Typography variant={"h3"}>Download plot</Typography>
+            <Typography variant={"h3"}>Download Plot</Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={3} lg={3} xl={3} key="text">
-            <Typography variant={"h6"}>Choose file format:</Typography>
+            <Typography variant={"h6"}>Choose File Format:</Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={6} lg={6} xl={6} key="select">
             <FormControl style={{ width: "100%", minWidth: 150 }}>
-              <InputLabel id="formatSelectLabel">format</InputLabel>
+              <InputLabel id="formatSelectLabel">Format</InputLabel>
               <Select
                 labelId="formatSelectLabel"
                 id="formatSelection"
