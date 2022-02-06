@@ -644,15 +644,19 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
  * @returns                         The pretransformed API data
  */
 export const preTransformApiData = ({plotId, data}) => {
+    const maximums = [];
     if (plotId === O3AS_PLOTS.tco3_zm) {
         const lookUpTable = {};
         for (let datum of data) {
             // top structure
+            const normalizedArray = normalizeArray(datum.x, datum.y);
+            maximums.push(Math.max(...normalizedArray));
             lookUpTable[datum.model] = {
                 plotStyle: datum.plotstyle,
-                data: normalizeArray(datum.x, datum.y), // this should speed up the calculation of the statistical values later
+                data: normalizedArray, // this should speed up the calculation of the statistical values later
             };
         }
+        console.log(Math.max(...maximums))
         return lookUpTable;
     } else if (plotId === O3AS_PLOTS.tco3_return) {
         const lookUpTable = {};
