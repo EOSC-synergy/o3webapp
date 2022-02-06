@@ -1,4 +1,5 @@
 import { render, fireEvent } from '@testing-library/react';
+import userEvent from "@testing-library/user-event";
 import { Provider } from 'react-redux'
 import '@testing-library/jest-dom';
 import EditModelGroupModal from './EditModelGroupModal';
@@ -54,7 +55,7 @@ describe("test the functionality of EditModelGroupModal", () => {
         const { queryByText, getByTestId } = render(<Provider store={store}><EditModelGroupModal isOpen={true} onClose={onClose} modelGroupId={0}/></Provider>);
         const input = getByTestId("SearchbarInput");
         expect(queryByText("ACCESS-CCM-refC2")).toBeInTheDocument(); // If this fails, the default store might have been modified.
-        fireEvent.change(input, {target: {value: "NotAnElementInTheModelList"}});
+        userEvent.type(input, "NotAnElementInTheModelList{enter}");
         expect(queryByText("ACCESS-CCM-refC2")).toBeNull();
     });
 
@@ -63,7 +64,7 @@ describe("test the functionality of EditModelGroupModal", () => {
         const { queryByText, getByTestId } = render(<Provider store={store}><EditModelGroupModal isOpen={true} onClose={onClose} modelGroupId={0}/></Provider>);
         const input = getByTestId("SearchbarInput");
         expect(queryByText("ACCESS-CCM-refC2")).toBeInTheDocument(); // If this fails, the default store might have been modified.
-        fireEvent.change(input, {target: {value: "ACCESS-CCM-refC2"}});
+        userEvent.type(input, "ACCESS-CCM-refC2{enter}");
         expect(queryByText("ACCESS-CCM-refC2")).toBeInTheDocument()
     });
 

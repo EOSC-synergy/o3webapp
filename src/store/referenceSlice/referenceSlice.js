@@ -129,7 +129,7 @@ export default referenceSlice.reducer;
  * @returns {number} the current active reference year
  */
 export const selectRefYear = (state) =>
-  state.reference.settings[state.reference].year;
+  state.reference.settings.year;
 
 /**
  * This selectors allows components to select the current reference model
@@ -139,7 +139,7 @@ export const selectRefYear = (state) =>
  * @returns {string} the current active reference model
  */
 export const selectRefModel = (state) =>
-  state.reference.settings[state.reference].model;
+  state.reference.settings.model;
 
 /**
  * This selectors allows components to select the current visibility of the reference line
@@ -149,7 +149,7 @@ export const selectRefModel = (state) =>
  * @returns {boolean} the current visibility of the reference line.
  */
 export const selectVisibility = (state) =>
-  state.reference.settings[state.reference].visible;
+  state.reference.settings.visible;
 
 /**
  * This selectors allows components to select the current status of the offset
@@ -159,4 +159,4 @@ export const selectVisibility = (state) =>
  * @returns {boolean} the current status of the offset.
  */
 export const selectIsOffsetApplied = (state) =>
-  state.reference.settings[state.reference].isOffsetApplied;
+  state.reference.settings.isOffsetApplied;

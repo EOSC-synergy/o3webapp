@@ -90,7 +90,32 @@ describe('test ModelGroupCard functionality', () => {
 
     test.todo("dispatches setStatisticalValueForGroup with correct payload when checkbox is clicked");
     test.todo("dispatches setVisibilityForGroup with correct payload when icon is clicked");
-    test.todo('test whether edit model group modal opens');
-    test.todo('test whether add model group modal opens');
+    test.todo("dispatches delete Model Group when delete icon is clicked");
+
+    it('opens edit model group modal', () => {
+        const { baseElement, getByTestId } = render(            
+            <Provider store={store}>
+                <ModelGroupCard modelGroupId={groupId} reportError={reportError} />
+            </Provider>
+        );
+        expect(getByTestId(/EditModelGroupModal-button-open/)).toBeInTheDocument();
+        const editSVButton = getByTestId(/EditModelGroupModal-button-open/);
+        userEvent.click(editSVButton);
+        expect(baseElement).toMatchSnapshot();
+        expect(getByTestId(/EditModelGroupModal-modal-wrapper/)).toBeInTheDocument();
+    });
+
+    it('opens add model group modal', () => {
+        const { baseElement, getByTestId } = render(            
+            <Provider store={store}>
+                <ModelGroupCard modelGroupId={groupId} reportError={reportError} />
+            </Provider>
+        );
+        expect(getByTestId(/EditModelGroupModal-button-open/)).toBeInTheDocument();
+        const editMemberButton = getByTestId(/AddModelGroupModal-button-open/);
+        userEvent.click(editMemberButton);
+        expect(baseElement).toMatchSnapshot();
+        expect(getByTestId(/AddModelGroupModal-modal-wrapper/)).toBeInTheDocument();
+    });
 
 });

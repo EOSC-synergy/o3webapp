@@ -28,6 +28,15 @@ function CookieConsentModal(props) {
         boxShadow: 24,
     };
 
+    /**
+     * function that is called when the user agrees to cookies
+     */
+    const agreeToCookies = () => props.onClose();
+    /**
+     * function that is called when the user disagrees to cookies
+     */
+    const disagreeToCookies = () => props.onClose();
+
     return (
         <Modal
             disableEscapeKeyDown={true}
@@ -59,7 +68,8 @@ function CookieConsentModal(props) {
                         key="acceptButton"
                         sx={{px: 5, pb: 5, display: "flex", justifyContent: "left"}}
                     >
-                        <Button variant="contained" onClick={props.onClose}>Understood</Button>
+                        <Button variant="outlined" onClick={disagreeToCookies} sx={{marginRight: '1em'}}>Disagree</Button>
+                        <Button variant="contained" onClick={agreeToCookies}>Agree</Button>
                     </Grid>
                 </Grid>
             </Card>

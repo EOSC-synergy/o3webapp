@@ -53,7 +53,7 @@ function XAxisField(props) {
                 <Typography>X-Axis:</Typography>
             </Grid>
             <Grid item xs={3} sx={{mt: "-8px"}}>
-                <FormControl sx={{width: '80%'}}>
+                <FormControl sx={{width: '85%'}}>
                     <TextField
                         variant="outlined"
                         id="outlined-basic"
@@ -69,7 +69,7 @@ function XAxisField(props) {
                 <h2 style={{display: "inline"}} > - </h2>
             </Grid>
             <Grid item xs={3} sx={{mt: "-8px"}}>
-                <FormControl sx={{width: '80%'}}>
+                <FormControl sx={{width: '85%'}}>
                     <TextField
                         variant="outlined"
                         id="outlined-basic"
