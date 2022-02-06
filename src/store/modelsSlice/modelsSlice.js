@@ -314,7 +314,14 @@ export const selectModelsOfGroup = (state, groupId) => Object.keys(state.models.
  * @param {int} groupId the group id specifies which group data should be retrieved
  * @returns an object containg all the data for each model present in the group. The model names are the keys.
  */
-export const selectModelDataOfGroup = (state, groupId) => state.models.modelGroups[groupId].models;
+export const selectModelDataOfGroup = (state, groupId) => 
+{
+    if (typeof state.models.modelGroups[groupId] !== 'undefined') {
+        console.log(state.models.modelGroups[groupId].models);
+        return state.models.modelGroups[groupId].models;
+    }
+    return {};
+};
 /**
  * This selector allows components to select the name of a given group (specified by ID)
  * 
@@ -322,7 +329,12 @@ export const selectModelDataOfGroup = (state, groupId) => state.models.modelGrou
  * @param {int} groupId the group id specifies which group name should be retrieved
  * @returns a string that holds the name of the group
  */
-export const selectNameOfGroup = (state, groupId) => state.models.modelGroups[groupId].name;
+export const selectNameOfGroup = (state, groupId) => {
+    if (typeof state.models.modelGroups[groupId] !== 'undefined') {
+        return state.models.modelGroups[groupId].name;
+    }
+    return '';
+};
 /**
  * This selector allows components to select the statistical values of a given group (specified by ID)
  * 
