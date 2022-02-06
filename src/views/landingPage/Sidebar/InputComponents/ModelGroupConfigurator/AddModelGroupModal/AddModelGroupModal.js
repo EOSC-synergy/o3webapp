@@ -77,6 +77,7 @@ function AddModelGroupModal(props) {
      * The currently enetered group name
      */
     const [groupName, setGroupName] = React.useState('');
+    const [errorMessage, setErrorMessage] = React.useState('');
     const theme = useTheme();
 
     
@@ -160,9 +161,16 @@ function AddModelGroupModal(props) {
     };
     
     const addNewGroup = () => {
-        props.onClose();
-        // if dispatching is to slow consider to move it to a redux thunk
+        if (groupName === '') {
+            setErrorMessage("Please provide a model group name");
+            return;
+        }
+        if (right.length === 0) {
+            setErrorMessage("Please provide a list of models for this group");
+            return;
+        }
         dispatch(setModelsOfModelGroup({groupId: props.id, groupName: groupName, modelList: right}));
+        props.onClose();
     }
 
     /**
@@ -360,6 +368,7 @@ function AddModelGroupModal(props) {
                             </Grid>
                         </Grid>
                     </Box>
+                    {errorMessage && <Alert severity="error" sx={{marginTop: '2em'}}>{errorMessage}</Alert>}
                 </CardContent>
                 <CardActions sx={{justifyContent: "flex-end"}}>
                     <Button onClick={addNewGroup} variant="contained">Add group</Button>
