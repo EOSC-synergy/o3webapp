@@ -3,6 +3,7 @@ import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import MuiVisibilityIcon from '@mui/icons-material/Visibility';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { Checkbox, Divider, IconButton, FormControlLabel } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import EditModelGroupModal from "../EditModelGroupModal/EditModelGroupModal";
@@ -16,7 +17,8 @@ import {
     selectStatisticalValueSettingsOfGroup,
     selectNameOfGroup,
     setVisibilityForGroup,
-    selectVisibilityOfGroup
+    selectVisibilityOfGroup,
+    deleteModelGroup
 } from "../../../../../../store/modelsSlice/modelsSlice";
 
 import { STATISTICAL_VALUES } from "../../../../../../utils/constants";
@@ -101,6 +103,13 @@ function ModelGroupCard(props) {
         return isModelGroupVisible ? <MuiVisibilityIcon data-testid="ModelGroupCard-VisibilityIcon-visible" /> : <VisibilityOffIcon data-testid="ModelGroupCard-VisibilityIcon-invisible" />
     }
 
+    /**
+     * 
+     */
+    const deleteGroup = () => {
+        dispatch(deleteModelGroup({groupId: props.modelGroupId}));
+    }
+
     return (
         <Card style={{margin: "5%"}} elevation={2}>
             <EditModelGroupModal modelGroupId={props.modelGroupId} isOpen={isEditModalVisible} onClose={closeEditModal} />
@@ -111,6 +120,9 @@ function ModelGroupCard(props) {
                 </Grid>
                 <Grid item xs={8} textAlign="center">
                     <Typography variant="h6" data-testid="ModelGroupCard-groupName">{modelGroupName}</Typography>
+                </Grid>
+                <Grid item xs={2}>
+                    <IconButton aria-label="delete model group" onClick={deleteGroup}><DeleteIcon /></IconButton>
                 </Grid>
             </Grid>
             <Divider />
