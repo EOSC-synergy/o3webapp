@@ -13,6 +13,11 @@ DEBUG Container
 .apexcharts-xaxis-label:nth-child(5n){ display:revert; }
 */
 
+.arrow-box {
+    background-color: #f8f8f8;
+    padding: 0.5rem;
+}
+
 :root {
     --redux-color: #4350af;
 }
