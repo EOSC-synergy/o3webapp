@@ -108,7 +108,7 @@ function getDefaultYAxisTco3Return(seriesName, minY, maxY, show=false, opposite=
         seriesName,
         min: minY,
         max: maxY,
-        //forceNiceScale: true,
+        forceNiceScale: false,
         decimalsInFloat: 0,
         axisBorder: {
             show: true,
@@ -117,7 +117,7 @@ function getDefaultYAxisTco3Return(seriesName, minY, maxY, show=false, opposite=
         axisTicks: {
             show: true,
         },
-        //tickAmount,
+        tickAmount,
     }
 }
 
@@ -232,10 +232,10 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
 
         // newOptions.yaxis.min = yAxisRange.minY;
         // newOptions.yaxis.max = yAxisRange.maxY;
-
-        newOptions.yaxis.push(...seriesNames.map(name => getDefaultYAxisTco3Return(name, yAxisRange.minY, yAxisRange.maxY)))
-        newOptions.yaxis.push(getDefaultYAxisTco3Zm(undefined, yAxisRange.minY, yAxisRange.maxY, true, false, 3, getTickAmountYAxisTco3Return(yAxisRange.minY, yAxisRange.maxY))); // on left side
-        newOptions.yaxis.push(getDefaultYAxisTco3Zm(undefined, yAxisRange.minY, yAxisRange.maxY, true, true, -3, getTickAmountYAxisTco3Return(yAxisRange.minY, yAxisRange.maxY))); // on right side
+        const tickAmount = getTickAmountYAxisTco3Return(yAxisRange.minY, yAxisRange.maxY);
+        newOptions.yaxis.push(...seriesNames.map(name => getDefaultYAxisTco3Return(name, yAxisRange.minY, yAxisRange.maxY, false, false, 0, tickAmount)))
+        newOptions.yaxis.push(getDefaultYAxisTco3Return(undefined, yAxisRange.minY, yAxisRange.maxY, true, false, 3, tickAmount)); // on left side
+        newOptions.yaxis.push(getDefaultYAxisTco3Return(undefined, yAxisRange.minY, yAxisRange.maxY, true, true, -3, tickAmount)); // on right side
         console.log(newOptions.yaxis);
 
         return newOptions;
@@ -847,7 +847,7 @@ function getTickAmountYAxisTco3Zm(min, max) {
 function getTickAmountYAxisTco3Return(min, max) {
     const diff = max - min;
     if (diff <= 200) {
-        return Math.floor(diff / 20) + 1;
+        return Math.floor(diff / 10);
     } else if (diff <= 400) {
         return Math.floor(diff / 40);
     }
