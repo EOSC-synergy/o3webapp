@@ -48,4 +48,22 @@ describe('test searchbar functionality', () => {
         userEvent.type(input, "hello{enter}");
         expect(callback.mock.calls[0][0]).toEqual([0, 2]); // expect the callback to be called with the correct indices
     });
+
+    it('returns the correct indices after searching for a string (string array)', () => {
+        const callback = jest.fn();
+        const inputArray = ["hello", "world", "-hello-", "hell"];
+        const { getByTestId } = render(<SearchBar inputArray={inputArray} foundIndicesCallback={callback} shouldReturnValues={true} />);
+        const input = getByTestId("SearchbarInput");
+        userEvent.type(input, "hello{enter}");
+        expect(callback.mock.calls[0][0]).toEqual(["hello", "-hello-"]); // expect the callback to be called with the correct indices
+    });
+
+    it('returns the correct values after searching for a string (obj array)', () => {
+        const callback = jest.fn();
+        const inputArray = [{model: "modelA"}, {model: "modelB"}, {}, {model: "modelA+"}];
+        const { getByTestId } = render(<SearchBar inputArray={inputArray} foundIndicesCallback={callback} shouldReturnValues={true} />);
+        const input = getByTestId("SearchbarInput");
+        userEvent.type(input, "modelA{enter}");
+        expect(callback.mock.calls[0][0]).toEqual([{model: "modelA"}, {model: "modelA+"}]);
+    });
 });
