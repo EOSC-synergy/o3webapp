@@ -37,16 +37,16 @@ export const YAF_Symbol = Symbol("YAxisField");
 
 // TimeCheckboxGroup.js
 /** Stores the season Winter and its corresponding months. */
-export const Winter = { name: Symbol("Winter"), months: [1, 2, 3], seasonId: 0 }
+export const Winter = {name: Symbol("Winter"), months: [1, 2, 3], seasonId: 0}
 
 /** Stores the season Spring and its corresponding months. */
-export const Spring = { name: Symbol("Spring"), months: [4, 5, 6], seasonId: 1 }
+export const Spring = {name: Symbol("Spring"), months: [4, 5, 6], seasonId: 1}
 
 /** Stores the season Summer and its corresponding months. */
-export const Summer = { name: Symbol("Summer"), months: [7, 8, 9], seasonId: 2 }
+export const Summer = {name: Symbol("Summer"), months: [7, 8, 9], seasonId: 2}
 
 /** Stores the season Autumn and its corresponding months. */
-export const Autumn = { name: Symbol("Autumn"), months: [10, 11, 12], seasonId: 3 }
+export const Autumn = {name: Symbol("Autumn"), months: [10, 11, 12], seasonId: 3}
 
 /** Stores all the months in short form. (first three letters) */
 export const months = [
@@ -65,31 +65,31 @@ export const NUM_MONTHS = 12;
 export const latitudeBands = [
     {
         text: Symbol("Southern Hemisphere (SH) Polar (90–60°S)"),
-        value: { minLat: -90, maxLat: -60 }
+        value: {minLat: -90, maxLat: -60}
     },
     {
         text: Symbol("SH Mid-Latitudes (60–35°S)"),
-        value: { minLat: -60, maxLat: -35 }
+        value: {minLat: -60, maxLat: -35}
     },
     {
         text: Symbol("Tropics (20°S–20°N)"),
-        value: { minLat: -20, maxLat: 20 }
+        value: {minLat: -20, maxLat: 20}
     },
     {
         text: Symbol("Northern Hemisphere (NH) Mid-Latitudes (35–60°N)"),
-        value: { minLat: 35, maxLat: 60 }
+        value: {minLat: 35, maxLat: 60}
     },
     {
         text: Symbol("NH Polar (60–90°N)"),
-        value: { minLat: 60, maxLat: 90 }
+        value: {minLat: 60, maxLat: 90}
     },
     {
         text: Symbol("Near-Global (60°S–60°N)"),
-        value: { minLat: -60, maxLat: 60 }
+        value: {minLat: -60, maxLat: 60}
     },
     {
         text: Symbol("Global (90°S–90°N)"),
-        value: { minLat: -90, maxLat: 90 }
+        value: {minLat: -90, maxLat: 90}
     },
     // !!! Custom must be last in array !!!
     {
@@ -122,7 +122,7 @@ export const APEXCHART_PLOT_TYPE = {
 };
 
 export const HEIGHT_LOADING_SPINNER = "300px";
-export const HEIGHT_GRAPH = "600px";
+export const HEIGHT_GRAPH = `${window.screen.availHeight * 0.55}px` //"600px";
 
 /*
 // Options Formatter, XAxisField, YAxisField, apiSlice
@@ -152,7 +152,6 @@ export const O3AS_REGIONS = {
     USER_REGION
 }
 export const ALL_REGIONS_ORDERED = [ANTARCTIC, SH_MID, NH_MID, TROPICS, ARCTIC, NEAR_GLOBAL, GLOBAL, USER_REGION];
-
 
 
 const mean = "mean";
@@ -191,6 +190,14 @@ export const SV_COLORING = {
     percentile: "#000",
     "mean+std": "#000",
     "mean-std": "#000",
+}
+
+export const SV_DASHING = {
+    mean: 0,
+    median: 2,
+    percentile: 0,
+    "mean+std": 8,
+    "mean-std": 8,
 }
 
 export const MODEL_LINE_THICKNESS = 2;
