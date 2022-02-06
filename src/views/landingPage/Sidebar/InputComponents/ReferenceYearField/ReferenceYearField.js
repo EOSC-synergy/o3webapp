@@ -1,8 +1,8 @@
 import React from "react";
-import { Grid, Typography, FormControl, TextField } from "@mui/material";
+import { Grid, Typography, FormControl, TextField, Checkbox } from "@mui/material";
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux";
-import { setYear } from "../../../../../store/referenceSlice/referenceSlice";
+import { setYear, setVisibility, selectVisibility } from "../../../../../store/referenceSlice/referenceSlice";
 import { END_YEAR, START_YEAR } from "../../../../../utils/constants";
 
 /**
@@ -23,11 +23,23 @@ function ReferenceYearField(props) {
     const selectedYear = useSelector(state => state.reference.settings.year);
 
     /**
-     * Handles the change of the reference year field if is modified.
+     * The selected visibility of the reference line from the redux store
+     */
+    const refYearVisibility = useSelector(selectVisibility)
+
+    /**
+     * Handles the change of the reference year field if it is modified.
      */
     const handleChangeForRefYear = (event) => {
         dispatch(setYear({year: event.target.value}));
     };
+
+    /**
+     * Handles the change of the reference line visibility field if it is modified.
+     */
+    const handleShowRefLineClicked = (event) => {
+        dispatch(setVisibility({visible: event.target.checked}))
+    }
 
     return (
         <>
@@ -47,6 +59,14 @@ function ReferenceYearField(props) {
                         helperText={selectedYear < START_YEAR ? `<${START_YEAR}` : (selectedYear > END_YEAR ? `>${END_YEAR}` : '')}
                     />
                 </FormControl>
+
+                <FormControl>
+                    <Checkbox 
+                        onClick={handleShowRefLineClicked} 
+                        checked={refYearVisibility} 
+                    />
+                </FormControl>
+                
             </Grid>
         </Grid>
         </>
