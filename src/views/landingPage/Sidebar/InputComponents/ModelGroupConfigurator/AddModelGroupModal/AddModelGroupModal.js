@@ -57,7 +57,7 @@ function AddModelGroupModal(props) {
         if (modelListRequestedData.status === REQUEST_STATE.success) {
             setVisible(modelListRequestedData.data);
         }
-    });
+    }, [allModels]);
 
     /**
      * Array containing all currently checked models
@@ -168,16 +168,10 @@ function AddModelGroupModal(props) {
     /**
      * sets the currently visible models by a provided array of indices
      * ! overwrites old visibilities
-     * @param {Array} indices array of indices that should be currently visible
+     * @param {Array} visibleModels array of models that should be currently visible
      */
-    const setCurrentlyVisibleModelsByIndex = (indices) => {
-        let newFilteredModelsIdx = [];
-        for (let idx in indices) {
-            if (idx > 0 && idx < allModels.length) {
-                newFilteredModelsIdx.push(allModels[idx]);
-            }
-        }
-        setVisible(newFilteredModelsIdx);
+    const setCurrentlyVisibleModels = (visibleModels) => {
+        setVisible(visibleModels);
     }
 
     /**
@@ -318,7 +312,7 @@ function AddModelGroupModal(props) {
                         <Typography> Select Models</Typography>
                     </Divider>
                     <Box id="modal-modal-description" sx={{ mt: 2 }}>
-                        <Searchbar inputArray={allModels} foundIndicesCallback={setCurrentlyVisibleModelsByIndex} />
+                        <Searchbar inputArray={allModels} foundIndicesCallback={setCurrentlyVisibleModels} shouldReturnValues={true} />
                         <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ marginTop: '0.5em' }}>
                             <Grid item sm={5} xs={12}>
                                 <Typography>All available models</Typography>
