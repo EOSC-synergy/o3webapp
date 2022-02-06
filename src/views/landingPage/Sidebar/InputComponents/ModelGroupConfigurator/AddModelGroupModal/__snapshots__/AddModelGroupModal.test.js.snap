@@ -24,7 +24,7 @@ exports[`test addModelGroupModal rendering renders correctly if model list provi
       tabindex="0"
     />
     <div
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-e1glwn-MuiPaper-root-MuiCard-root"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-11i9df3-MuiPaper-root-MuiCard-root"
       tabindex="-1"
     >
       <div
@@ -36,7 +36,7 @@ exports[`test addModelGroupModal rendering renders correctly if model list provi
           <span
             class="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-1qvr50w-MuiTypography-root"
           >
-            Add a new model group
+            Add Model Group
           </span>
         </div>
         <div
@@ -98,20 +98,6 @@ exports[`test addModelGroupModal rendering renders correctly if model list provi
           </div>
         </div>
         <div
-          class="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-1ws8119-MuiDivider-root"
-          role="separator"
-        >
-          <span
-            class="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
-          >
-            <p
-              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
-            >
-               Select Models
-            </p>
-          </span>
-        </div>
-        <div
           class="MuiBox-root css-1yuhvjn"
           id="modal-modal-description"
         >
@@ -156,7 +142,7 @@ exports[`test addModelGroupModal rendering renders correctly if model list provi
               <p
                 class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
               >
-                All available models
+                All Available Models
               </p>
               <span
                 class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-18lrjg1-MuiCircularProgress-root"
@@ -296,7 +282,7 @@ exports[`test addModelGroupModal rendering renders correctly when open 1`] = `
       tabindex="0"
     />
     <div
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-e1glwn-MuiPaper-root-MuiCard-root"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-11i9df3-MuiPaper-root-MuiCard-root"
       tabindex="-1"
     >
       <div
@@ -308,7 +294,7 @@ exports[`test addModelGroupModal rendering renders correctly when open 1`] = `
           <span
             class="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-1qvr50w-MuiTypography-root"
           >
-            Add a new model group
+            Add Model Group
           </span>
         </div>
         <div
@@ -370,20 +356,6 @@ exports[`test addModelGroupModal rendering renders correctly when open 1`] = `
           </div>
         </div>
         <div
-          class="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-1ws8119-MuiDivider-root"
-          role="separator"
-        >
-          <span
-            class="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
-          >
-            <p
-              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
-            >
-               Select Models
-            </p>
-          </span>
-        </div>
-        <div
           class="MuiBox-root css-1yuhvjn"
           id="modal-modal-description"
         >
@@ -428,7 +400,7 @@ exports[`test addModelGroupModal rendering renders correctly when open 1`] = `
               <p
                 class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
               >
-                All available models
+                All Available Models
               </p>
               <span
                 class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-18lrjg1-MuiCircularProgress-root"
