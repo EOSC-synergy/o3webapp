@@ -1,17 +1,26 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import { Grid, Link } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
 
+/**
+ * The links in the footer with label and href.
+ *
+ * @type {Array.<{label: string, href: string}>}
+ */
 export const links = [
     {
-        label: "Terms of Use",
-        href: "https://o3as.data.kit.edu/policies/terms-of-use.html"
+        label: "Home",
+        href: "https://o3as.data.kit.edu/#page-top"
     },
     {
         label: "Privacy Policy",
         href: "https://o3as.data.kit.edu/policies/privacy-policy.html"
     },
+    {
+        label: "Terms of Use",
+        href: "https://o3as.data.kit.edu/policies/terms-of-use.html"
+    },
+    // last element will be in a separate line (except on mobile)
     {
         label: "How to Acknowledge",
         href: "https://o3as.data.kit.edu/policies/how-to-acknowledge.html"
@@ -19,20 +28,16 @@ export const links = [
 ]
 
 /**
- * A container for important links
- * at the bottom of the Website.
- * Contains links to the impressum, 
- * privacy policy and the terms of service
+ * A container for copyright text and important links at the bottom of the Website.
+ * Contains links to home page, privacy policy, terms of use and how to acknowledge
  */
-function Footer (props) {
-    let theme = useTheme();
+function Footer () {
     return (
         <div
             style={{
-                width: '100vw'
+                width: '100%'
             }}
         >
-
             <Grid
                 spacing={3}
                 container
@@ -41,28 +46,87 @@ function Footer (props) {
                 alignItems="center"
                 data-testid="footer-grid-container"
                 sx={{
-                    position: 'absolute',
-                    bottom: 0,
-                    backgroundColor: theme.palette.grey[200],
+                    position: 'relative',
+                    backgroundColor: '#111',
                     textAlign: 'center',
-                    paddingTop: '1.5em',
-                    paddingBottom: '1.5em',
-                    marginRight: 0
+                    marginTop: '10px',
+                    paddingTop: '3px',
+                    paddingBottom: '20px',
                 }}>
-                {links.map((x, idx) => {
-                    return (
-                        <Grid
-                            item
-                            sm={12 / links.length}
-                            style={{alignText:"center"}} key={idx}
-                            data-testid={`footer-grid-item-${links.label}`}
+                <Grid
+                    item
+                    container
+                    justifyContent="center"
+                    md={6}
+                    sm={12}
+                    key="Copyright text KIT - outer grid"
+                >
+                    <Grid
+                        item
+                        md={6}
+                        sm={12}
+                        sx={{
+                            textAlign:"center",
+                        }}
+                        key="Copyright text KIT - inner grid"
+                    >
+                    <span style={{color: '#fed136'}}>
+                        <Typography
+                            sx={{
+                                fontSize: 14,
+                                lineHeight: 3
+                            }}
                         >
-                            <Link href={x.href} data-testid={`footer-link-${links.label}`}>
-                                <Typography>{x.label}</Typography>
-                            </Link>
-                        </Grid>
-                    );
-                })}
+                            Copyright © KIT – The Research University in the Helmholtz Association
+                        </Typography>
+                    </span>
+                    </Grid>
+                </Grid>
+                <Grid
+                    item
+                    container
+                    direction="row"
+                    justifyContent="center"
+                    md={6}
+                    sm={12}
+                    sx={{
+                        textAlign:"center",
+                    }}
+                    key="links"
+                >
+                    {links.map((x, idx) => {
+                        return (
+                            <Grid
+                                item
+                                md={idx === links.length - 1 ? 12 : "auto"}
+                                key={idx}
+                                sx={{
+                                    mx: 1
+                                }}
+                                data-testid={`footer-grid-item`}
+                            >
+                                <Link
+                                    href={x.href}
+                                    data-testid={`footer-link-${links.label}`}
+                                    sx={{
+                                        color: '#fed136',
+                                        textDecoration: 'none',
+                                    }}
+                                    underline='hover'
+                                >
+                                    <Typography
+                                        sx={{
+                                            fontSize: 14,
+                                            lineHeight: 3
+                                        }}
+                                    >
+                                        {x.label}
+                                    </Typography>
+                                </Link>
+                            </Grid>
+                        );
+                    })}
+                </Grid>
             </Grid>
         </div>
     );
