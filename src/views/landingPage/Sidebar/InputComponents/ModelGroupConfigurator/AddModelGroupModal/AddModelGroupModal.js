@@ -15,7 +15,7 @@ import { Card } from '@mui/material';
 import CardActions from '@mui/material/CardActions';
 import CircularProgress from '@mui/material/CircularProgress';
 import CardHeader from '@mui/material/CardHeader';
-import Searchbar from "../Searchbar/Searchbar";
+import Searchbar from "../../../../../../components/Searchbar/Searchbar";
 import { convertModelName } from "../../../../../../utils/ModelNameConverter";
 import { union, not, intersection } from "../../../../../../utils/arrayOperations";
 import CloseIcon from '@mui/icons-material/Close';
@@ -23,6 +23,7 @@ import Alert from "@mui/material/Alert";
 import PropTypes from 'prop-types'; 
 import { useDispatch, useSelector } from "react-redux";
 import { REQUEST_STATE } from "../../../../../../services/API/apiSlice";
+import { selectNameOfGroup, selectModelDataOfGroup } from "../../../../../../store/modelsSlice/modelsSlice";
 
 /**
  * opens a modal where the user can add a new model group
@@ -30,7 +31,8 @@ import { REQUEST_STATE } from "../../../../../../services/API/apiSlice";
  * @param {function} props.onClose -> function to call if modal should be closed
  * @param {boolean} props.isOpen -> boolean whether the modal should be visible
  * @param {function} props.reportError -> error handling
- * @param {number} props.id -> a number identifying the model group
+ * @param {number} props.modelGroupId -> string identifying the model group,
+ *          if this model should be used to edit an existing model group
  * @returns {JSX} a jsx containing a modal with a transfer list with all available models
  */
 function AddModelGroupModal(props) {
@@ -50,14 +52,7 @@ function AddModelGroupModal(props) {
         isLoading = false;
     }
 
-    useEffect(() => {
-        if (modelListRequestedData.status === REQUEST_STATE.error) {
-            props.reportError("API not responding: " + modelListRequestedData.error);
-        }
-        if (modelListRequestedData.status === REQUEST_STATE.success) {
-            setVisible(modelListRequestedData.data);
-        }
-    });
+    const modelGroupId = 'modelGroupId' in props ? props.modelGroupId : -1;
 
     /**
      * Array containing all currently checked models
@@ -67,7 +62,7 @@ function AddModelGroupModal(props) {
      * Array containing all models, that are currently plotted in the right transfer list
      * -> models that should eventually be added
      */
-    const [right, setRight] = React.useState([]);
+    const [right, setRight] = React.useState(Object.keys(useSelector(state => selectModelDataOfGroup(state, modelGroupId))));
     /**
      * Array containing all models that should currently be visibile
      * because of the search function those might differ from all models
@@ -76,8 +71,18 @@ function AddModelGroupModal(props) {
     /**
      * The currently enetered group name
      */
-    const [groupName, setGroupName] = React.useState('');
+    const [groupName, setGroupName] = React.useState(useSelector(state => selectNameOfGroup(state, modelGroupId)));
+    const [errorMessage, setErrorMessage] = React.useState('');
     const theme = useTheme();
+
+    useEffect(() => {
+        if (modelListRequestedData.status === REQUEST_STATE.error) {
+            props.reportError("API not responding: " + modelListRequestedData.error);
+        }
+        if (modelListRequestedData.status === REQUEST_STATE.success) {
+            setVisible(modelListRequestedData.data);
+        }
+    }, [allModels]);
 
     
 
@@ -160,24 +165,25 @@ function AddModelGroupModal(props) {
     };
     
     const addNewGroup = () => {
-        props.onClose();
-        // if dispatching is to slow consider to move it to a redux thunk
+        if (groupName === '') {
+            setErrorMessage("Please provide a model group name");
+            return;
+        }
+        if (right.length === 0) {
+            setErrorMessage("Please provide a list of models for this group");
+            return;
+        }
         dispatch(setModelsOfModelGroup({groupId: props.id, groupName: groupName, modelList: right}));
+        props.onClose();
     }
 
     /**
      * sets the currently visible models by a provided array of indices
      * ! overwrites old visibilities
-     * @param {Array} indices array of indices that should be currently visible
+     * @param {Array} visibleModels array of models that should be currently visible
      */
-    const setCurrentlyVisibleModelsByIndex = (indices) => {
-        let newFilteredModelsIdx = [];
-        for (let idx in indices) {
-            if (idx > 0 && idx < allModels.length) {
-                newFilteredModelsIdx.push(allModels[idx]);
-            }
-        }
-        setVisible(newFilteredModelsIdx);
+    const setCurrentlyVisibleModels = (visibleModels) => {
+        setVisible(visibleModels);
     }
 
     /**
@@ -318,7 +324,7 @@ function AddModelGroupModal(props) {
                         <Typography> Select Models</Typography>
                     </Divider>
                     <Box id="modal-modal-description" sx={{ mt: 2 }}>
-                        <Searchbar inputArray={allModels} foundIndicesCallback={setCurrentlyVisibleModelsByIndex} />
+                        <Searchbar inputArray={allModels} foundIndicesCallback={setCurrentlyVisibleModels} shouldReturnValues={true} />
                         <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ marginTop: '0.5em' }}>
                             <Grid item sm={5} xs={12}>
                                 <Typography>All available models</Typography>
@@ -366,9 +372,10 @@ function AddModelGroupModal(props) {
                             </Grid>
                         </Grid>
                     </Box>
+                    {errorMessage && <Alert severity="error" sx={{marginTop: '2em'}}>{errorMessage}</Alert>}
                 </CardContent>
                 <CardActions sx={{justifyContent: "flex-end"}}>
-                    <Button onClick={addNewGroup} variant="contained">Add group</Button>
+                    <Button onClick={addNewGroup} variant="contained">{'modelGroupId' in props? "Edit group members" : "Add group"}</Button>
                 </CardActions>
             </Card>
         </Modal>
@@ -379,7 +386,8 @@ function AddModelGroupModal(props) {
 AddModelGroupModal.propTypes = {
     reportError: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
-    isOpen: PropTypes.bool.isRequired
+    isOpen: PropTypes.bool.isRequired,
+    modelGroupId: PropTypes.number
 }
 
 
