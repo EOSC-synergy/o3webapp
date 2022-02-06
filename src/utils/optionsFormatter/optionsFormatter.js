@@ -781,21 +781,26 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
  * @param {object} obj.data         An object holding the data as it was returned from the API
  * @returns                         The pretransformed API data
  */
-export const preTransformApiData = ({plotId, data}) => {
+export const preTransformApiData = ({plotId, data, modelsSlice}) => {
     const maximums = [];
     const minimums = [];
     const lookUpTable = {};
+
+    const visibleModels = getIncludedModels(modelsSlice);
+
     if (plotId === O3AS_PLOTS.tco3_zm) {
 
         for (let datum of data) {
             // top structure
             const normalizedArray = normalizeArray(datum.x, datum.y);
-            maximums.push(Math.max(...normalizedArray));
-            minimums.push(Math.min(...normalizedArray));
             lookUpTable[datum.model] = {
                 plotStyle: datum.plotstyle,
                 data: normalizedArray, // this should speed up the calculation of the statistical values later
             };
+            if (visibleModels.includes(datum.model)) { // min and max values of visibile values are relevant!
+                maximums.push(Math.max(...normalizedArray));
+                minimums.push(Math.min(...normalizedArray));
+            }
         }
 
     } else if (plotId === O3AS_PLOTS.tco3_return) {
@@ -813,8 +818,11 @@ export const preTransformApiData = ({plotId, data}) => {
                 temp.push(datum.y[index]);
                 lookUpTable[datum.model].data[datum.x[index]] = datum.y[index];
             }
-            maximums.push(Math.max(...temp));
-            minimums.push(Math.min(...temp));
+            
+            if (visibleModels.includes(datum.model)) { // min and max values of visibile values are relevant!
+                maximums.push(Math.max(...temp));
+                minimums.push(Math.min(...temp));
+            }
         }
     };
     return {lookUpTable, min: Math.min(...minimums), max: Math.max(...maximums)};
@@ -1087,4 +1095,18 @@ export function customTooltipFormatter({ series, seriesIndex, dataPointIndex, w 
         </div>
         `
     )
+}
+
+function getIncludedModels(modelsSlice) {
+    const visible = [];
+    
+    for (const modelGroup of Object.values(modelsSlice.modelGroups)) {
+        if (!modelGroup.isVisible) continue;
+        for (const [model, modelData] of Object.entries(modelGroup.models)) {
+            if (!modelData.isVisible) continue;
+            visible.push(model);
+        }
+    }
+
+    return visible;
 }

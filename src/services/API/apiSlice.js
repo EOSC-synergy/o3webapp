@@ -82,10 +82,10 @@ const fetchPlotDataRejected = createAction("api/fetchPlotData/rejected");
 const selectExistingPlotData = createAction("api/selectPlotData");
 
 
-export const updateDataAndDisplaySuggestions = ({plotId, cacheKey, data}) => {
+export const updateDataAndDisplaySuggestions = ({plotId, cacheKey, data, modelsSlice}) => {
 
     return (dispatch, getState) => {
-        dispatch(fetchPlotDataSuccess({data, plotId, cacheKey})) 
+        dispatch(fetchPlotDataSuccess({data, plotId, cacheKey, modelsSlice})) 
         const { min, max } = getState().api.plotSpecific[plotId].cachedRequests[cacheKey].suggested; // suggested min/max is availabe
 
         dispatch(setDisplayYRangeForPlot({plotId, minY: Math.floor(min), maxY: Math.floor(max)}));
@@ -242,10 +242,10 @@ const apiSlice = createSlice({
                 plotSpecificSection.active = cacheKey; // select this request after dispatching it
             })
             .addCase(fetchPlotDataSuccess, (state, action) => {
-                const { data, plotId, cacheKey } = action.payload;
+                const { data, plotId, cacheKey, modelsSlice } = action.payload;
                 const storage = state.plotSpecific[plotId].cachedRequests[cacheKey];
                 storage.status = REQUEST_STATE.success;
-                const { lookUpTable, min, max } = preTransformApiData({plotId, data});
+                const { lookUpTable, min, max } = preTransformApiData({plotId, data, modelsSlice});
                 storage.data = lookUpTable;
                 storage.suggested = { min, max };
 
