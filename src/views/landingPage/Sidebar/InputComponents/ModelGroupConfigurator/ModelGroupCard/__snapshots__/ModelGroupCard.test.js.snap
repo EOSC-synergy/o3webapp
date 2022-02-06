@@ -510,22 +510,7 @@ exports[`test ModelGroupCard functionality opens add model group modal 1`] = `
           tabindex="0"
           type="button"
         >
-          <span
-            class="MuiButton-startIcon MuiButton-iconSizeMedium css-1d6wzja-MuiButton-startIcon"
-          >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-              data-testid="DoneIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"
-              />
-            </svg>
-          </span>
-          Save changes
+          Edit group members
           <span
             class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
           />
