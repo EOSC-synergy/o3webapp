@@ -361,11 +361,11 @@ exports[`test ModelGroupCard functionality opens add model group modal 1`] = `
                 id="mui-22"
                 placeholder="Your group"
                 type="text"
-                value=""
+                value="Example Group"
               />
             </div>
             <p
-              class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-1d1r5q-MuiFormHelperText-root"
+              class="MuiFormHelperText-root MuiFormHelperText-sizeMedium MuiFormHelperText-filled css-1d1r5q-MuiFormHelperText-root"
               id="mui-22-helper-text"
             >
               The name will only appear in the legend of the exported plot.
@@ -489,7 +489,7 @@ exports[`test ModelGroupCard functionality opens add model group modal 1`] = `
                 class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
               >
                 Models in 
-                your group
+                Example Group
               </p>
               <span
                 class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-18lrjg1-MuiCircularProgress-root"
@@ -514,6 +514,7 @@ exports[`test ModelGroupCard functionality opens add model group modal 1`] = `
             </div>
           </div>
         </div>
+        
       </div>
       <div
         class="MuiCardActions-root MuiCardActions-spacing css-1kj8htw-MuiCardActions-root"
@@ -523,7 +524,7 @@ exports[`test ModelGroupCard functionality opens add model group modal 1`] = `
           tabindex="0"
           type="button"
         >
-          Add group
+          Edit group members
           <span
             class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
           />
