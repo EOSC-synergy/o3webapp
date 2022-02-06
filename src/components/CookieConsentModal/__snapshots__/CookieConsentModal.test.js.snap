@@ -90,11 +90,21 @@ exports[`test CookieConsentModal component rendering renders as expected 1`] = `
           class="MuiGrid-root MuiGrid-item css-lc1qsq-MuiGrid-root"
         >
           <button
+            class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root  css-123d5lk-MuiButtonBase-root-MuiButton-root"
+            tabindex="0"
+            type="button"
+          >
+            Disagree
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+          <button
             class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-sghohy-MuiButtonBase-root-MuiButton-root"
             tabindex="0"
             type="button"
           >
-            Understood
+            Agree
             <span
               class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
             />
