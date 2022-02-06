@@ -4,8 +4,7 @@ import { getOptions, generateSeries } from "../../../utils/optionsFormatter/opti
 import { useSelector } from 'react-redux'
 import { selectPlotId, selectPlotTitle, selectPlotXRange, selectPlotYRange } from '../../../store/plotSlice/plotSlice';
 import { REQUEST_STATE, selectActivePlotData } from '../../../services/API/apiSlice';
-import { Spinner } from '../../../components/Spinner/Spinner';
-import { Typography } from '@mui/material';
+import { Typography, CircularProgress, Grid } from '@mui/material';
 import { APEXCHART_PLOT_TYPE, HEIGHT_LOADING_SPINNER, HEIGHT_GRAPH } from '../../../utils/constants';
 
 /**
@@ -38,7 +37,11 @@ function Graph(props) {
 
     if (activeData.status === REQUEST_STATE.loading || activeData.status === REQUEST_STATE.idle) {
         return <div style={{display: "flex", alignItems: "center", justifyContent: "center", height: HEIGHT_LOADING_SPINNER}}>
-            <Spinner text={"loading data"} size={"8em"}></Spinner>
+            <div>
+                <CircularProgress size={100}/> <br/>
+                <Typography component="p">Loading Data...</Typography>
+            </div>
+            
         </div>
 
     } else if (activeData.status === REQUEST_STATE.error) {
