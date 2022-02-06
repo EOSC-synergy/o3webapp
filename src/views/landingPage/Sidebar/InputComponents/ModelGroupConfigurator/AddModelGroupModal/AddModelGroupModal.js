@@ -299,6 +299,7 @@ function AddModelGroupModal(props) {
             onClose={closeWithChanges}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
+            data-testid="AddModelGroupModal-modal-wrapper"
         >   
             <Card sx={style}>
                 <CardHeader

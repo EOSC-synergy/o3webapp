@@ -498,6 +498,31 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                           Example Group
                         </h6>
                       </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
+                      >
+                        <button
+                          aria-label="delete model group"
+                          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                          tabindex="0"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                            data-testid="DeleteIcon"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+                            />
+                          </svg>
+                          <span
+                            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                          />
+                        </button>
+                      </div>
                     </div>
                     <hr
                       class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
@@ -2265,6 +2290,31 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                         >
                           Example Group
                         </h6>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
+                      >
+                        <button
+                          aria-label="delete model group"
+                          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                          tabindex="0"
+                          type="button"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                            data-testid="DeleteIcon"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+                            />
+                          </svg>
+                          <span
+                            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                          />
+                        </button>
                       </div>
                     </div>
                     <hr
