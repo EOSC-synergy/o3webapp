@@ -18,7 +18,7 @@ function LandingPage(props) {
     <div data-testid="landingPage" style={{width: "100%", height: "100%"}}> 
       <Sidebar reportError={props.reportError} onOpen={props.openSidebar} isOpen={props.isSidebarOpen} onClose={props.closeSidebar} />
       
-      <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100%"}} onClick={props.closeSidebar}>
+      <div style={{display: "flex", justifyContent: "center", alignItems: "center", height: "100%"}} data-testid="landingPage-not-sidebar" onClick={props.closeSidebar}>
         <div style={{width: "95%", marginTop: "2%"}}>
           <Graph reportError={props.reportError} />
         </div>
