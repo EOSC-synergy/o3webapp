@@ -9,7 +9,7 @@ import { selectPlotId } from "../../../store/plotSlice/plotSlice";
 import {useSelector} from "react-redux";
 import PlotTypeSelector from './InputComponents/PlotTypeSelector/PlotTypeSelector.js';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import { Button } from '@mui/material';
+import { Button, Typography, Divider } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import PropTypes from 'prop-types';
@@ -126,7 +126,7 @@ function Sidebar(props) {
                     },
                 }}
                 data-testid="sidebar"
-            >
+            > 
                 <DrawerHeader>
                     <IconButton
                         onClick={props.onClose}
@@ -135,7 +135,12 @@ function Sidebar(props) {
                         <CloseIcon />
                     </IconButton>
                 </DrawerHeader>
-                    <PlotTypeSelector reportError={ props.reportError }/>
+
+                <PlotTypeSelector reportError={ props.reportError }/>
+
+                <div style={{marginBottom: "2%"}}>
+                <Divider><Typography>CONFIGURE PLOT</Typography></Divider>
+                </div>
 
                     {createSectionStructure().map((s, idx) =>
                         <Section

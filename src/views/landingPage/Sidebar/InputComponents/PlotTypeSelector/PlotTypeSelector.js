@@ -9,6 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { useDispatch, useSelector } from "react-redux";
 import { selectPlotId, setActivePlotId } from "../../../../../store/plotSlice/plotSlice";
 import { REQUEST_STATE } from "../../../../../services/API/apiSlice"
+import { Divider, Typography, Grid } from "@mui/material";
 
 
 /**
@@ -22,6 +23,7 @@ function PlotTypeSelector(props) {
     const dispatch = useDispatch();
     const plotTypesRequestData = useSelector(state => state.api.plotTypes);
     const plotType = useSelector(selectPlotId);
+    const plotTypeLabel = "SELECT PLOT TYPE"
 
     /**
      * mocks a call to the redux store to change the plot type
@@ -58,8 +60,13 @@ function PlotTypeSelector(props) {
         }
     });
 
-    return (
-        <FormControl sx={{ width: '100%' }} data-testid="plotTypeSelectorForm">
+    return (<>
+        <div>
+        <Divider>
+            <Typography>{plotTypeLabel}</Typography>
+        </Divider>
+        </div>
+        <FormControl sx={{ width: '80%', marginRight: "auto", marginLeft: "auto", marginTop: "2%", marginBottom: "2%"}} data-testid="plotTypeSelectorForm">
             <InputLabel id="plotTypeLabel" data-testid="plotTypeSelector">Plot Type</InputLabel>
             <Select
                 labelId="plotTypeLabel"
@@ -68,12 +75,10 @@ function PlotTypeSelector(props) {
                 label="Plot Type"
                 onChange={changePlotType}
             >
-                {
-                    dropdownData
-                }
+                {dropdownData}
             </Select>
         </FormControl>
-    );
+        </>);
 }
 
 PlotTypeSelector.propTypes = {
