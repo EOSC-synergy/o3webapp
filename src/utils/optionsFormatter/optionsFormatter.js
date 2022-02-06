@@ -81,7 +81,7 @@ export const defaultTCO3_zm = {
     },
 };
 
-function getDefaultYAxis(seriesName, minY, maxY, show=false, opposite=false, offsetX=-1) {
+function getDefaultYAxis(seriesName, minY, maxY, show=false, opposite=false, offsetX=-1, tickAmount=0) {
     return {
         show,
         opposite,
@@ -94,12 +94,10 @@ function getDefaultYAxis(seriesName, minY, maxY, show=false, opposite=false, off
             show: true,
             offsetX,
         },
-        /*
         axisTicks: {
             show: true,
         },
-        */
-        //tickAmount: 10,
+        tickAmount,
     }
 }
 
@@ -191,8 +189,8 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         const newOptions = JSON.parse(JSON.stringify(defaultTCO3_zm)); // dirt simple and not overly horrible
 
         newOptions.yaxis.push(...seriesNames.map(name => getDefaultYAxis(name, yAxisRange.minY, yAxisRange.maxY)))
-        newOptions.yaxis.push(getDefaultYAxis(undefined, yAxisRange.minY, yAxisRange.maxY, true, false)); // on left side
-        newOptions.yaxis.push(getDefaultYAxis(undefined, yAxisRange.minY, yAxisRange.maxY, true, true, 0)); // on right side
+        newOptions.yaxis.push(getDefaultYAxis(undefined, yAxisRange.minY, yAxisRange.maxY, true, false, -1, getTickAmountYAxisTco3Zm(yAxisRange.minY, yAxisRange.maxY))); // on left side
+        newOptions.yaxis.push(getDefaultYAxis(undefined, yAxisRange.minY, yAxisRange.maxY, true, true, 0, getTickAmountYAxisTco3Zm(yAxisRange.minY, yAxisRange.maxY))); // on right side
 
         newOptions.xaxis.min = xAxisRange.years.minX;
         newOptions.xaxis.max = xAxisRange.years.maxX;
@@ -216,9 +214,9 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         // newOptions.yaxis.max = yAxisRange.maxY;
 
         newOptions.yaxis.push(...seriesNames.map(name => getDefaultYAxis(name, yAxisRange.minY, yAxisRange.maxY)))
-        newOptions.yaxis.push(getDefaultYAxis(undefined, yAxisRange.minY, yAxisRange.maxY, true, false, 3)); // on left side
-        newOptions.yaxis.push(getDefaultYAxis(undefined, yAxisRange.minY, yAxisRange.maxY, true, true, -3)); // on right side
-        
+        newOptions.yaxis.push(getDefaultYAxis(undefined, yAxisRange.minY, yAxisRange.maxY, true, false, 3, getTickAmountYAxisTco3Return(yAxisRange.minY, yAxisRange.maxY))); // on left side
+        newOptions.yaxis.push(getDefaultYAxis(undefined, yAxisRange.minY, yAxisRange.maxY, true, true, -3, getTickAmountYAxisTco3Return(yAxisRange.minY, yAxisRange.maxY))); // on right side
+        console.log(newOptions.yaxis);
 
         return newOptions;
     }    
@@ -360,7 +358,7 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange}) {
     // 1. build boxplot
     const boxPlotValues = calculateBoxPlotValues({data, modelsSlice});
     series.data.push({
-            name: '',
+            name: 'box',
             type: 'boxPlot',
 
             data: ALL_REGIONS_ORDERED.map(region => ({
@@ -784,7 +782,7 @@ function isIncludedInSv(model, groupData, svType) {
 }
 
 /**
- * Determines the optimal tick amount for a given max and min year.
+ * Determines the optimal tick amount for a given max and min year for the x-axis.
  * 
  * @param {number} min      The selected min. year of the plot
  * @param {number} max      The selected max. year of the plot
@@ -802,3 +800,36 @@ function getOptimalTickAmount(min, max) {
         return Math.floor(diff/10)
     }
 }
+
+/**
+ * Determines the optimal tick amount for a given max and min year for the y-axis.
+ * 
+ * @param {number} min      The selected min. year of the plot
+ * @param {number} max      The selected max. year of the plot
+ * @returns                 The optimal tick amount according to those values
+ */
+function getTickAmountYAxisTco3Zm(min, max) {
+    const diff = max - min;
+    if (diff <= 200) {
+        return Math.floor(diff / 10) + 1;
+    } else if (diff <= 400) {
+        return Math.floor(diff / 40);
+    }
+}
+
+/**
+ * Determines the optimal tick amount for a given max and min year for the y-axis.
+ * 
+ * @param {number} min      The selected min. year of the plot
+ * @param {number} max      The selected max. year of the plot
+ * @returns                 The optimal tick amount according to those values
+ */
+function getTickAmountYAxisTco3Return(min, max) {
+    const diff = max - min;
+    if (diff <= 200) {
+        return Math.floor(diff / 10) + 1;
+    } else if (diff <= 400) {
+        return Math.floor(diff / 40);
+    }
+}
+
