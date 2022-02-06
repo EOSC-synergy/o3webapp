@@ -1,5 +1,6 @@
 import { q25, q75, median } from "../../services/math/math"
-import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, ALL_REGIONS_ORDERED, STATISTICAL_VALUES_LIST, SV_CALCULATION, SV_COLORING, STATISTICAL_VALUES, APEXCHART_PLOT_TYPE, MODEL_LINE_THICKNESS, START_YEAR, END_YEAR } from "../constants"
+import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, ALL_REGIONS_ORDERED, STATISTICAL_VALUES_LIST, SV_CALCULATION, SV_COLORING, SV_DASHING, STATISTICAL_VALUES, APEXCHART_PLOT_TYPE, MODEL_LINE_THICKNESS, START_YEAR, END_YEAR } from "../constants"
+import { convertModelName } from "../ModelNameConverter";
 
 /**
  * Maps the plotId to a function that describes how the series are going
@@ -9,6 +10,19 @@ import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, ALL_REGIONS_ORDERED, STATISTICAL_VALUES
 const SERIES_GENERATION = {}; // Map plotId to corresponding generation function
 SERIES_GENERATION[O3AS_PLOTS.tco3_zm] = generateTco3_ZmSeries;
 SERIES_GENERATION[O3AS_PLOTS.tco3_return] = generateTco3_ReturnSeries;
+
+export const FONT_FAMILY = [
+    '-apple-system',
+    'BlinkMacSystemFont',
+    '"Segoe UI"',
+    'Roboto',
+    '"Helvetica Neue"',
+    'Arial',
+    'sans-serif',
+    '"Apple Color Emoji"',
+    '"Segoe UI Emoji"',
+    '"Segoe UI Symbol"',
+  ].join(',')
 
 /**
  * The default settings for the tco3_zm plot.
@@ -26,14 +40,19 @@ export const defaultTCO3_zm = {
         decimalsInFloat: 0,
         labels: {
             rotate: 0
-        } 
+        },
+        title: {
+            text: "Year",
+            style: {
+                fontSize: "1rem",
+                fontFamily: FONT_FAMILY,
+            },
+        }
     },
-    yaxis: {
-        min: 200,
-        max: 400,
-        forceNiceScale: true,
-        decimalsInFloat: 0
-    }, 
+    yaxis: [], 
+    grid: {
+        show: false,
+    },
     chart: {
         id: O3AS_PLOTS.tco3_zm,
         animations: {
@@ -41,13 +60,16 @@ export const defaultTCO3_zm = {
             easing: "linear"
         },
         toolbar: {
-            "show": true,
+            show: true,
             offsetX: -60,
             offsetY: 10,
-            "tools":{
-                "download": true,
-                pan: false
-            }
+            tools: {
+                download: true,
+                pan: false,
+                zoomin: false,
+                zoomout: false,
+                zoom: true, // enabled, otherwise the zoom is disabled
+            },
         },
         zoom: {
             enabled: true,
@@ -59,13 +81,12 @@ export const defaultTCO3_zm = {
         show: true, 
         onItemClick: {
             toggleDataSeries: false
-        }
+        },
     },
     dataLabels: {
         enabled: false,
     },
     tooltip: {
-        enabled: true,
         shared: false,
     },
     colors: null, //styling.colors
@@ -80,11 +101,97 @@ export const defaultTCO3_zm = {
         style: {
             fontSize:  "30px",
             fontWeight:  "bold",
-            fontFamily:  "undefined",
-            color:  "#4350af"
+            fontFamily:  FONT_FAMILY,
+            color:  "#000000",
         }
     },
 };
+
+/**
+ * This function is a factory method to provide objects that are fitted in the y-axis of the tco3_zm plot to 
+ * show another y-axis on the right side.
+ * 
+ * @param {string} seriesName the name of the series
+ * @param {number} minY the minimum y value (to adjust to the zoom)
+ * @param {number} maxY the maximum y value (to adjust to the zoom)
+ * @param {boolean} show whether the y-axis should be hidden (default is false)
+ * @param {boolean} opposite whether to show the y-axis on the right side (default is false)
+ * @param {number} offsetX how many px the y-axis should be adjusted
+ * @param {number} tickAmount how many ticks (on the y-axis) should be displayed (should be calculated by functions to provide a nice formatting)
+ * @returns 
+ */
+export function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show=false, opposite=false, offsetX=-1, tickAmount=0) {
+    return {
+        show,
+        opposite,
+        seriesName,
+        min: minY,
+        max: maxY,
+        forceNiceScale: true,
+        decimalsInFloat: 0,
+        axisBorder: {
+            show: true,
+            offsetX,
+        },
+        axisTicks: {
+            show: true,
+        },
+        tickAmount,
+        title: {
+            text: "TCO(DU)",
+            style: {
+                fontSize: "1rem",
+                fontFamily: FONT_FAMILY,
+            },
+        },
+        labels: {
+            formatter: formatYLabelsNicely,
+        },
+    }
+}
+
+/**
+ * This function is a factory method to provide objects that are fitted in the y-axis of the tco3_return plot to 
+ * show another y-axis on the right side.
+ * 
+ * @param {string} seriesName the name of the series
+ * @param {number} minY the minimum y value (to adjust to the zoom)
+ * @param {number} maxY the maximum y value (to adjust to the zoom)
+ * @param {boolean} show whether the y-axis should be hidden (default is false)
+ * @param {boolean} opposite whether to show the y-axis on the right side (default is false)
+ * @param {number} offsetX how many px the y-axis should be adjusted
+ * @param {number} tickAmount how many ticks (on the y-axis) should be displayed (should be calculated by functions to provide a nice formatting)
+ * @returns 
+ */
+export function getDefaultYAxisTco3Return(seriesName, minY, maxY, show=false, opposite=false, offsetX=-1, tickAmount=0) {
+    return {
+        show,
+        opposite,
+        seriesName,
+        min: minY,
+        max: maxY,
+        forceNiceScale: false,
+        decimalsInFloat: 0,
+        axisBorder: {
+            show: true,
+            offsetX,
+        },
+        axisTicks: {
+            show: true,
+        },
+        tickAmount,
+        title: {
+            text: "Year",
+            style: {
+                fontSize: "1rem",
+                fontFamily: FONT_FAMILY,
+            },
+        },
+        labels: {
+            formatter: formatYLabelsNicely,
+        }
+    }
+}
 
 /**
  * The default settings for the tco3_return plot.
@@ -95,10 +202,19 @@ export const defaultTCO3_zm = {
  * More can be found here: https://apexcharts.com/docs/installation/ 
  */
 export const default_TCO3_return = {
-    yaxis: {
-        forceNiceScale: true,
-        decimalsInFloat: 0
-    }, 
+    xaxis: {
+        title: {
+            text: "Region",
+            style: {
+                fontSize: "1rem",
+                fontFamily: FONT_FAMILY,
+            },
+        },
+    },
+    yaxis: [], 
+    grid: {
+        show: false,
+    },
     chart: {
       id: O3AS_PLOTS.tco3_return,
       type: 'boxPlot',
@@ -108,7 +224,7 @@ export const default_TCO3_return = {
       zoom: {
           enabled: false,
           type: 'xy',
-      }
+      },
     },
     colors: [undefined], // , ...styling.colors
     title: {
@@ -118,13 +234,13 @@ export const default_TCO3_return = {
         style: {
             fontSize:  "30px",
             fontWeight:  "bold",
-            fontFamily:  "undefined",
-            color:  "#4350af"
+            fontFamily: FONT_FAMILY,
+            color:  "#000000"
         }
     },
     tooltip: {
       shared: false,
-      intersect: true
+      intersect: true,
     },
     plotOptions: {
       boxPlot: {
@@ -172,12 +288,13 @@ export const default_TCO3_return = {
  * @param {string} obj.plotTitle contains the plot title
  * @returns an default_TCO3_plotId object formatted with the given data
  */
-export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange}) {
+export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, seriesNames}) {
     if (plotId === O3AS_PLOTS.tco3_zm) {
         const newOptions = JSON.parse(JSON.stringify(defaultTCO3_zm)); // dirt simple and not overly horrible
 
-        newOptions.yaxis.min = yAxisRange.minY;
-        newOptions.yaxis.max = yAxisRange.maxY;
+        newOptions.yaxis.push(...seriesNames.map(name => getDefaultYAxisTco3Zm(name, yAxisRange.minY, yAxisRange.maxY)))
+        newOptions.yaxis.push(getDefaultYAxisTco3Zm(undefined, yAxisRange.minY, yAxisRange.maxY, true, false, -1, getTickAmountYAxisTco3Zm(yAxisRange.minY, yAxisRange.maxY))); // on left side
+        newOptions.yaxis.push(getDefaultYAxisTco3Zm(undefined, yAxisRange.minY, yAxisRange.maxY, true, true, 0, getTickAmountYAxisTco3Zm(yAxisRange.minY, yAxisRange.maxY))); // on right side
 
         newOptions.xaxis.min = xAxisRange.years.minX;
         newOptions.xaxis.max = xAxisRange.years.maxX;
@@ -189,6 +306,7 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange})
         newOptions.stroke.dashArray = styling.dashArray;
         newOptions.title = JSON.parse(JSON.stringify(newOptions.title)); // this is necessary in order for apexcharts to update the title
         newOptions.title.text = plotTitle;
+        newOptions.tooltip.custom = customTooltipFormatter;
         return newOptions;
 
     } else if (plotId === O3AS_PLOTS.tco3_return) {
@@ -197,8 +315,12 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange})
         newOptions.title = JSON.parse(JSON.stringify(newOptions.title));  // this is necessary in order for apexcharts to update the title
         newOptions.title.text = plotTitle;
 
-        newOptions.yaxis.min = yAxisRange.minY;
-        newOptions.yaxis.max = yAxisRange.maxY;
+        const minY = roundDownToMultipleOfTen(yAxisRange.minY); 
+        const maxY = roundUpToMultipleOfTen(yAxisRange.maxY); 
+        const tickAmount = getTickAmountYAxisTco3Return(minY, maxY);
+        newOptions.yaxis.push(...seriesNames.map(name => getDefaultYAxisTco3Return(name, minY, maxY, false, false, 0, tickAmount)))
+        newOptions.yaxis.push(getDefaultYAxisTco3Return(undefined, minY, maxY, true, false, 3, tickAmount)); // on left side
+        newOptions.yaxis.push(getDefaultYAxisTco3Return(undefined, minY, maxY, true, true, -3, tickAmount)); // on right side
 
         return newOptions;
     }    
@@ -222,8 +344,8 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange})
  * @param {object} obj.refLineVisible visibility status of the reference line
  * @returns series object which includes a subdivision into a data and a styling object.
  */
-export function generateSeries({plotId, data, modelsSlice, xAxisRange, refLineVisible: refLineVisible}) {
-    const series = SERIES_GENERATION[plotId]({data, modelsSlice, xAxisRange, refLineVisible}); // execute correct function based on mapping
+export function generateSeries({plotId, data, modelsSlice, xAxisRange, yAxisRange, refLineVisible}) {
+    const series = SERIES_GENERATION[plotId]({data, modelsSlice, xAxisRange, yAxisRange, refLineVisible}); // execute correct function based on mapping
     return {
         data: series.data, 
         styling: {
@@ -266,7 +388,6 @@ function generateTco3_ZmSeries({data, modelsSlice, refLineVisible}) {
             if (!modelInfo.isVisible) continue; // skip hidden models
             const modelData = data[model]; // retrieve data (api)
             series.data.push({
-                type: APEXCHART_PLOT_TYPE.tco3_zm,
                 name: model,
                 data: modelData.data.map((e, idx) => [START_YEAR + idx, e]),
             });
@@ -300,7 +421,6 @@ function generateSingleTco3ZmSeries(name, svData) {
     return {
         name: name,
         data: svData.map((e, idx) => [START_YEAR + idx, e]),
-        type: "line",
     }
 }
 
@@ -340,7 +460,7 @@ function buildSvMatrixTco3Zm({modelList, data}) {
  * @param {object} obj.modelsSlice the slice of the store containg information about the model groups
  * @returns a combination of data and statistical values series
  */
-function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange}) {
+function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange}) {
     const series = {
         data: [],
         colors: [],
@@ -351,7 +471,7 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange}) {
     // 1. build boxplot
     const boxPlotValues = calculateBoxPlotValues({data, modelsSlice});
     series.data.push({
-            name: '',
+            name: 'box',
             type: 'boxPlot',
 
             data: ALL_REGIONS_ORDERED.map(region => ({
@@ -363,7 +483,8 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange}) {
 
 
     // 2. build scatter plot
-
+    const minY = yAxisRange.minY;
+    const maxY = yAxisRange.maxY;
     for (const groupData of Object.values(modelsSlice.modelGroups)) { // iterate over model groups
         if (!groupData.isVisible) continue; // skip hidden groups
         for (const [model, modelInfo] of Object.entries(groupData.models)) {
@@ -371,7 +492,7 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange}) {
             const modelData = data[model];
             const sortedData = ALL_REGIONS_ORDERED.map(region => ({
                 x: region,
-                y: modelData.data[region] || null, // null as default if data is missing
+                y: filterOutOfRange(modelData.data[region], minY, maxY) || null, // null as default if data is missing
             }));
             
             series.data.push({
@@ -389,9 +510,18 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange}) {
     const svSeries = buildStatisticalSeries({
         data,
         modelsSlice,
+        yAxisRange,
         buildMatrix: buildSvMatrixTco3Return,
         generateSingleSvSeries: generateSingleTco3ReturnSeries,
     });
+
+    // clear out data points which are outside of min-max display range (scatter points are displayed in the legend otherwise)
+    for (const series of svSeries.data) {
+        for (const regionData of series.data) {
+            regionData.y = filterOutOfRange(regionData.y, minY, maxY);
+        }
+    }
+    
     const combined = combineSeries(series, svSeries);
 
     for (const series of combined.data) { // select chosen regions
@@ -530,8 +660,8 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
             }
             svSeries.data.push(generateSingleSvSeries(`${sv}(${groupData.name})`, svData));
             svSeries.colors.push(SV_COLORING[sv]);   // coloring?
-            svSeries.width.push(1);                  // thicker?
-            svSeries.dashArray.push(0);              // solid?       
+            svSeries.width.push(MODEL_LINE_THICKNESS);                  // thicker?
+            svSeries.dashArray.push(SV_DASHING[sv]);              // solid?       
         }
     }
     return svSeries;
@@ -775,13 +905,13 @@ function isIncludedInSv(model, groupData, svType) {
 }
 
 /**
- * Determines the optimal tick amount for a given max and min year.
+ * Determines the optimal tick amount for a given max and min year for the x-axis.
  * 
  * @param {number} min      The selected min. year of the plot
  * @param {number} max      The selected max. year of the plot
  * @returns                 The optimal tick amount according to those values
  */
-function getOptimalTickAmount(min, max) {
+export function getOptimalTickAmount(min, max) {
     const diff = max - min;
     if(diff <= 40) {
         return diff;
@@ -792,4 +922,151 @@ function getOptimalTickAmount(min, max) {
     } else {
         return Math.floor(diff/10)
     }
+}
+
+/**
+ * Determines the optimal tick amount for a given max and min year for the y-axis.
+ * 
+ * @param {number} min      The selected min. year of the plot
+ * @param {number} max      The selected max. year of the plot
+ * @returns                 The optimal tick amount according to those values
+ */
+export function getTickAmountYAxisTco3Zm(min, max) {
+    const diff = max - min;
+    if (diff <= 200) {
+        return Math.floor(diff / 5) + 1;
+    } else if (diff <= 400) {
+        return Math.floor(diff / 40);
+    }
+}
+
+/**
+ * Determines the optimal tick amount for a given max and min year for the y-axis.
+ * 
+ * @param {number} min      The selected min. year of the plot
+ * @param {number} max      The selected max. year of the plot
+ * @returns                 The optimal tick amount according to those values
+ */
+export function getTickAmountYAxisTco3Return(min, max) {
+    const diff = max - min;
+    if (diff <= 200) {
+        return Math.floor(diff / 5);
+    } else if (diff <= 400) {
+        return Math.floor(diff / 40);
+    }
+}
+
+/**
+ * Rounds a number up to a multiple of ten. If the number already is a multiple of 
+ * ten the number stays the same. 
+ *  
+ * @param {int} minY 
+ * @returns number rounded down to a multiple of ten
+ */
+export function roundDownToMultipleOfTen(minY) {
+    return minY - minY % 10;
+}
+
+/**
+ * Rounds a number up to a multiple of ten. If the number already is a multiple of 
+ * ten the number stays the same. 
+ * 
+ * @param {int} maxY 
+ * @returns number rounded up to a multiple of ten
+ */
+export function roundUpToMultipleOfTen(maxY) {
+    return maxY % 10 ? maxY + (10 - maxY % 10) : maxY;
+}
+
+/**
+ * This function aims to filter out values that are outside the provided range.
+ * If the value is outside of range it is replaced with null.
+ * 
+ * @param {number} value the value that could be filtered out
+ * @param {number} min the minimum allowed value
+ * @param {number} max the maximum allowed value
+ * @returns the value or null if the value is outside the allowed range
+ */
+export function filterOutOfRange(value, min, max) {
+    return (min <= value && value <= max) ? value : null;
+}
+
+/**
+ * Function to format the labels on the y-axis nicely.
+ * It hides all labels that are not a multiple of ten (i.e. all multiples of five and NOT ten).
+ * 
+ * @param {number} value the label value
+ * @returns the value if it is a multiple of ten or an empty string to hide the label
+ */
+export const formatYLabelsNicely = value => value % 10 ? "" : value;
+
+/**
+ * This function parses the auto-generated sv names to separate 
+ * them into the sv type (e.g. mean, median) and the group.
+ * 
+ * @param {string} name the name of the dataseries (e.g. mean+std(Example Groupd))
+ * @returns an object holding the sv type and the groupname
+ */
+export function parseSvName(name) {
+    const regex = new RegExp("([^\(]+)\(([^\)]+)\)");
+    const info = name.match(regex);
+    return {
+        sv: info[1],
+        groupName: info[2].substring(1),
+    }
+
+}
+
+/**
+ * A plugin-method for apexcharts to provide a custom tooltip.
+ * In this case the tooltip is for the octs line chart. It provides
+ * a richer tooltip and shows the data points correctly.
+ * 
+ * @param {array} obj.series an array of series
+ * @param {number} obj.seriesIndex the index of the hovered dataseries
+ * @param {number} obj.dataPointIndex the index of the data point in the hovered dataseries
+ * @param {object} obj.w global apexcharts object
+ * @returns the desired html tooltip formatted with the correct information
+ */
+export function customTooltipFormatter({ series, seriesIndex, dataPointIndex, w }) {
+    const modelName = w.globals.seriesNames[seriesIndex];
+    const listOfSv = Object.keys(SV_COLORING); // included mean+/-std
+    if (modelName.startsWith("Reference")) {
+        return (
+            `
+                <div>
+                    <div style="margin:2px"><strong>${w.globals.seriesX[seriesIndex][dataPointIndex]}</strong></div>
+                    <div>Reference: <strong>${series[seriesIndex][dataPointIndex]}</strong></div>
+                </div>
+            `
+        )
+    }
+    
+    for (const sv of listOfSv) {
+        if (modelName.startsWith(sv)) {
+            // parse sv
+            const {sv, groupName} = parseSvName(modelName);
+            return (
+                `
+                <div>
+                    <div style="margin:2px"><strong>${w.globals.seriesX[seriesIndex][dataPointIndex]}</strong></div>
+                    <div>${sv}: <strong>${series[seriesIndex][dataPointIndex]}</strong></div>
+                    <div>Group: ${groupName}</div>
+                </div>
+                `
+            )
+        };
+    }
+
+    let {project, institute, name} = convertModelName(modelName);
+    return (
+        `
+        <div>
+            <div style="margin:2px"><strong>${w.globals.seriesX[seriesIndex][dataPointIndex]}</strong></div>
+            <div>${name}: <strong>${series[seriesIndex][dataPointIndex]}</strong></div>
+            <div>Project: ${project}</div>
+            <div>Institue: ${institute}</div>
+        </div>
+        `
+    )
 }

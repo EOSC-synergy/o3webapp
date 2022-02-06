@@ -122,7 +122,7 @@ export const APEXCHART_PLOT_TYPE = {
 };
 
 export const HEIGHT_LOADING_SPINNER = "300px";
-export const HEIGHT_GRAPH = "600px";
+export const HEIGHT_GRAPH = `${window.screen.availHeight * 0.55}px` //"600px";
 
 /*
 // Options Formatter, XAxisField, YAxisField, apiSlice
@@ -191,6 +191,14 @@ export const SV_COLORING = {
     percentile: "#000",
     "mean+std": "#000",
     "mean-std": "#000",
+}
+
+export const SV_DASHING = {
+    mean: 0,
+    median: 2,
+    percentile: 0,
+    "mean+std": 8,
+    "mean-std": 8,
 }
 
 export const MODEL_LINE_THICKNESS = 2;
