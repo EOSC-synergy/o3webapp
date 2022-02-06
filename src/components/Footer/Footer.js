@@ -38,7 +38,6 @@ function Footer () {
                 width: '100%'
             }}
         >
-
             <Grid
                 spacing={3}
                 container
@@ -65,6 +64,7 @@ function Footer () {
                     <Grid
                         item
                         md={6}
+                        sm={12}
                         sx={{
                             textAlign:"center",
                         }}

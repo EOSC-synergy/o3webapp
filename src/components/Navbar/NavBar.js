@@ -1,8 +1,9 @@
 import * as React from 'react';
 import {AppBar, Box, Button, Container, Grid, Toolbar} from '@mui/material';
 import { indigo } from '@mui/material/colors';
+import MenuIcon from '@mui/icons-material/Menu';
 import Logo from './Logo/Logo';
-import { AiFillEdit } from 'react-icons/ai';
+import EditIcon from '@mui/icons-material/Edit';
 import Typography from "@mui/material/Typography";
 
 
@@ -42,28 +43,41 @@ function Navbar(props) {
     }
 
     return (
-            <AppBar position="static" sx={{ margin: 0, bgcolor: indigo[500] }} data-testid="Navbar" >
+            <AppBar position="static" sx={{ margin: 0, bgcolor: '#111' }} data-testid="Navbar" >
                 <Container disableGutters maxWidth={false} sx={{ margin: 0 }} >
                     <Toolbar disableGutters data-testid="Toolbar_Navbar">
                         <Grid
                             container
+                            direction="row"
+                            justifyContent="left"
+                            alignItems="center"
+                            key="navbar grid container"
                         >
                             <Grid
                                 item
+                                xs={10}
+                                key="logo grid item"
                             >
                                 <Logo display='flex' data-testid="navbar-logo-expanded" />
                             </Grid>
                             <Grid
                                 item
+                                sx={{
+                                    ml: 5,
+                                }}
+                                key="edit graph button grid item"
                             >
-                                <Box sx={{ flexGrow: 1, display: 'flex' }}>
                                     <Button
                                         key={"editGraphButton"}
                                         onClick={props.openSidebar}
-                                        sx={{ my: 2, color: 'white', display: 'block'}}
-                                    ><AiFillEdit size={20} /><Typography>Edit Graph</Typography>
+                                        sx={{
+                                            color: 'white',
+                                            '&:hover': {
+                                                color: '#fed136',
+                                            },
+                                        }}
+                                    ><Typography>Edit Graph <EditIcon sx={{fontSize: '14px'}} /></Typography>
                                     </Button>
-                                </Box>
                             </Grid>
                         </Grid>
                 </Toolbar>

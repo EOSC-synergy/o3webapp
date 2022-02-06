@@ -29,7 +29,18 @@ const Logo = (props) => {
         >   
             <Grid container sx={{ alignItems: "center", margin: '0.5em', marginLeft: '2em'}}>
                 <img data-testid="logo-image" style={{height: '5em', margin: '0.5em'}} src={logoSrc} alt={"logo"} />
-                <Typography variant="h6" noWrap data-testid="logo-text">
+                <Typography
+                    variant="h6"
+                    noWrap
+                    data-testid="logo-text"
+                    sx={{
+                        color: '#C7D3E0',
+                        '&:hover': {
+                            color: '#fed136',
+                        },
+                        fontSize: '28px'
+                    }}
+                >
                     O3as: Webapp
                 </Typography>
             </Grid>
