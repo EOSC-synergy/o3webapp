@@ -1,8 +1,8 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setDisplayXRange, selectPlotXRange } from "../../../../../store/plotSlice/plotSlice";
-import { Typography, Grid, TextField, FormControl } from "@mui/material";
-import { START_YEAR, END_YEAR } from '../../../../../utils/constants';
+import {useDispatch, useSelector} from "react-redux";
+import {setDisplayXRange, selectPlotXRange} from "../../../../../store/plotSlice/plotSlice";
+import {Typography, Grid, TextField, FormControl} from "@mui/material";
+import {START_YEAR, END_YEAR} from '../../../../../utils/constants';
 
 /**
  * Enables the user to choose the range that should be visible on the x-axis of the plot.
@@ -29,8 +29,8 @@ function XAxisField(props) {
     const handleChangeMin = (event) => {
         if (event.target.value === '') {
             dispatch(setDisplayXRange({years: {minX: 0, maxX: maxX}}));
-        } else if (!isNaN(parseInt(event.target.value))) {
-            dispatch(setDisplayXRange({years: {minX: parseInt(event.target.value), maxX: maxX}}));
+        } else if (!isNaN(event.target.value)) {
+            dispatch(setDisplayXRange({years: {minX: event.target.value, maxX: maxX}}));
         }
     }
 
@@ -41,8 +41,8 @@ function XAxisField(props) {
      */
     const handleChangeMax = (event) => {
         if (event.target.value === '') {
-            dispatch(setDisplayXRange({years :{minX: minX, maxX: 0}}));
-        } else {
+            dispatch(setDisplayXRange({years: {minX: minX, maxX: 0}}));
+        } else if (!isNaN(event.target.value)) {
             dispatch(setDisplayXRange({years: {minX: minX, maxX: parseInt(event.target.value)}}));
         }
     }
@@ -66,7 +66,7 @@ function XAxisField(props) {
                 </FormControl>
             </Grid>
             <Grid item xs={1} sx={{mt: "-5px"}}>
-                <h2 style={{display: "inline"}} > - </h2>
+                <h2 style={{display: "inline"}}> - </h2>
             </Grid>
             <Grid item xs={3} sx={{mt: "-8px"}}>
                 <FormControl sx={{width: '85%'}}>
@@ -81,7 +81,7 @@ function XAxisField(props) {
                     />
                 </FormControl>
             </Grid>
-        </Grid>    
+        </Grid>
     );
 }
 

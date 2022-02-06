@@ -1,11 +1,11 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setDisplayYRange, selectPlotYRange } from "../../../../../store/plotSlice/plotSlice";
-import { Typography, Grid, FormControl, TextField } from "@mui/material";
+import {useDispatch, useSelector} from "react-redux";
+import {setDisplayYRange, selectPlotYRange} from "../../../../../store/plotSlice/plotSlice";
+import {Typography, Grid, FormControl, TextField} from "@mui/material";
 
 /**
  * Enables the user to choose the range that should be visible on the y-axis of the plot.
- * @param {Object} props 
+ * @param {Object} props
  * @param {function} props.reportError function for error handling
  * @returns {JSX.Element} a jsx containing two text-fields and labels
  */
@@ -28,8 +28,8 @@ function YAxisField(props) {
     const handleChangeMin = (event) => {
         if (event.target.value === '') {
             dispatch(setDisplayYRange({minY: 0, maxY: maxY}));
-        } else if (!isNaN(parseInt(event.target.value))) {
-            dispatch(setDisplayYRange({minY: parseInt(event.target.value), maxY: maxY}));
+        } else if (!isNaN(event.target.value)) {
+            dispatch(setDisplayYRange({minY: event.target.value, maxY: maxY}));
         }
     }
 
@@ -41,8 +41,8 @@ function YAxisField(props) {
     const handleChangeMax = (event) => {
         if (event.target.value === '') {
             dispatch(setDisplayYRange({minY: minY, maxY: 0}));
-        } else {
-            dispatch(setDisplayYRange({minY: minY, maxY: parseInt(event.target.value)}));
+        } else if (!isNaN(event.target.value)) {
+            dispatch(setDisplayYRange({minY: minY, maxY: event.target.value}));
         }
     }
 
@@ -66,7 +66,7 @@ function YAxisField(props) {
                 </FormControl>
             </Grid>
             <Grid item xs={1} sx={{mt: "-5px"}}>
-                <h2 style={{display: "inline"}} > - </h2>
+                <h2 style={{display: "inline"}}> - </h2>
             </Grid>
             <Grid item xs={3} sx={{mt: "-8px"}}>
                 <FormControl sx={{width: '85%'}}>
@@ -81,7 +81,7 @@ function YAxisField(props) {
                     />
                 </FormControl>
             </Grid>
-        </Grid> 
+        </Grid>
     );
 }
 
