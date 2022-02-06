@@ -501,6 +501,31 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                             Example Group
                           </h6>
                         </div>
+                        <div
+                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
+                        >
+                          <button
+                            aria-label="delete model group"
+                            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                            tabindex="0"
+                            type="button"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                              data-testid="DeleteIcon"
+                              focusable="false"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+                              />
+                            </svg>
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
+                        </div>
                       </div>
                       <hr
                         class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
@@ -1741,10 +1766,27 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
           </div>
         </div>
         <button
-          class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root  css-126gm7o-MuiButtonBase-root-MuiButton-root"
+          class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-177upon-MuiButtonBase-root-MuiButton-root"
+          elevation="3"
+          position="fixed"
           tabindex="0"
           type="button"
         >
+          <span
+            class="MuiButton-startIcon MuiButton-iconSizeMedium css-1d6wzja-MuiButton-startIcon"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="FileDownloadIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+              />
+            </svg>
+          </span>
           Download
           <span
             class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
@@ -1761,16 +1803,33 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
         <div
           style="display: flex; align-items: center; justify-content: center; height: 300px;"
         >
-          <div
-            class="spinner"
-          >
-            <h4>
-              loading data
-            </h4>
-            <div
-              class="loader"
-              style="height: 8em; width: 8em;"
-            />
+          <div>
+            <span
+              class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-18lrjg1-MuiCircularProgress-root"
+              role="progressbar"
+              style="width: 100px; height: 100px;"
+            >
+              <svg
+                class="MuiCircularProgress-svg css-1idz92c-MuiCircularProgress-svg"
+                viewBox="22 22 44 44"
+              >
+                <circle
+                  class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-176wh8e-MuiCircularProgress-circle"
+                  cx="44"
+                  cy="44"
+                  fill="none"
+                  r="20.2"
+                  stroke-width="3.6"
+                />
+              </svg>
+            </span>
+             
+            <br />
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+            >
+              Loading Data...
+            </p>
           </div>
         </div>
       </div>
