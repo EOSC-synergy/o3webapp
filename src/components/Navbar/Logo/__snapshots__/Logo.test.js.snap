@@ -14,7 +14,7 @@ exports[`renders correctly 1`] = `
         alt="logo"
         data-testid="logo-image"
         src="https://o3as.data.kit.edu/img/logos/o3as-logo.svg"
-        style="height: 5em; margin: 0.5em;"
+        style="height: 4em; margin: 0.5em;"
       />
       <h6
         class="MuiTypography-root MuiTypography-h6 MuiTypography-noWrap css-154cv3q-MuiTypography-root"

@@ -3,7 +3,7 @@
 exports[`renders correctly 1`] = `
 <DocumentFragment>
   <header
-    class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic css-18lypu8-MuiPaper-root-MuiAppBar-root"
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic css-tokqgf-MuiPaper-root-MuiAppBar-root"
     data-testid="Navbar"
   >
     <div
@@ -14,10 +14,10 @@ exports[`renders correctly 1`] = `
         data-testid="Toolbar_Navbar"
       >
         <div
-          class="MuiGrid-root MuiGrid-container css-1k9a87-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container css-1hbmzt3-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-17p3wh3-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8 css-vok43g-MuiGrid-root"
           >
             <a
               class="MuiTypography-root MuiTypography-inherit MuiTypography-noWrap MuiLink-root MuiLink-underlineAlways css-2grxvj-MuiTypography-root-MuiLink-root"
@@ -31,7 +31,7 @@ exports[`renders correctly 1`] = `
                   alt="logo"
                   data-testid="logo-image"
                   src="https://o3as.data.kit.edu/img/logos/o3as-logo.svg"
-                  style="height: 5em; margin: 0.5em;"
+                  style="height: 4em; margin: 0.5em;"
                 />
                 <h6
                   class="MuiTypography-root MuiTypography-h6 MuiTypography-noWrap css-154cv3q-MuiTypography-root"
@@ -43,7 +43,7 @@ exports[`renders correctly 1`] = `
             </a>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-item css-lel6es-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
           >
             <button
               class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-p064m1-MuiButtonBase-root-MuiButton-root"
