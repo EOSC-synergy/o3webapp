@@ -13,9 +13,12 @@ import {
 import { useTheme } from "@mui/material/styles";
 import PropTypes from "prop-types";
 import { fileFormats } from "../../../../utils/constants";
-import { downloadGraphAsPDF} from "../../../../services/pdf/pdfCreator";
+import { downloadGraphAsPDF, getBase64Image, getBase64Image2} from "../../../../services/pdf/pdfCreator";
 import { useSelector } from "react-redux";
-import { selectPlotId, selectPlotTitle } from "../../../../store/plotSlice/plotSlice";
+import {
+  selectPlotId,
+  selectPlotTitle,
+} from "../../../../store/plotSlice/plotSlice";
 import { getIncludedModelsAsObjects } from "../../../../utils/optionsFormatter";
 
 /**
@@ -55,36 +58,45 @@ function DownloadModal(props) {
     p: 5,
   };
 
+  
 
-
-
-function downloadGraphAsPNG(fileName) {
+  function downloadGraphAsPNG(fileName) {
     return new Promise((resolve, reject) => {
-         const img = new Image();
-         const svgElement = document.querySelector('.apexcharts-svg');
-         const imageBlobURL = 'data:image/svg+xml;charset=utf-8,' +
-            encodeURIComponent(svgElement.outerHTML);
-         img.onload = ()=> {
-            var canvas = document.createElement('canvas');
-            canvas.width = img.width;
-            canvas.height = img.height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0);
-            const dataURL = canvas.toDataURL('image/png');
-            downloadBase64File(dataURL, fileName);
-            resolve(dataURL);
-         };
-         img.onerror = (error) => {
-           reject(error);
-         };
-         img.src = imageBlobURL;
-        
-       }
-       );
+      const img = new Image();
+      const svgElement = document.querySelector(".apexcharts-svg");
+      const imageBlobURL =
+        "data:image/svg+xml;charset=utf-8," +
+        encodeURIComponent(svgElement.outerHTML);
+    
+      img.onload = () => {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        const dataURL = canvas.toDataURL("image/png");
+        downloadBase64File(dataURL, fileName);
+        resolve(dataURL);
+      };
+      img.onerror = (error) => {
+        reject(error);
+      };
+      img.src = imageBlobURL;
+    });
   }
 
-  
-function downloadBase64File(base64Data, fileName) {
+  function downloadGraphAsSVG(fileName) {
+    return new Promise((resolve, reject) => {
+        const svgElement = document.querySelector(".apexcharts-svg");
+        const imageBlobURL =
+          "data:image/svg+xml;charset=utf-8," +
+          encodeURIComponent(svgElement.outerHTML);
+          downloadBase64File(imageBlobURL, fileName);
+          resolve(imageBlobURL);
+      });
+  }
+
+  function downloadBase64File(base64Data, fileName) {
     const downloadLink = document.createElement("a");
     downloadLink.href = base64Data;
     downloadLink.download = fileName;
@@ -99,16 +111,14 @@ function downloadBase64File(base64Data, fileName) {
     const includedModels = getIncludedModelsAsObjects(modelsSlice);
 
     if (selectedFileFormat === "pdf") {
-        downloadGraphAsPDF(plotId, plotTitle);
+      downloadGraphAsPDF(plotId, plotTitle);
     } else if (selectedFileFormat === "png") {
-       downloadGraphAsPNG(plotTitle);
+      downloadGraphAsPNG(plotTitle);
     } else if (selectedFileFormat === "svg") {
-
+      downloadGraphAsSVG(plotTitle);
     } else {
     }
   };
-
-
 
   /**
    * Calls the redux store and changes the selected file format.
