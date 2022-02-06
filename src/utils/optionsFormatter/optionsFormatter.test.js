@@ -18,6 +18,7 @@ import {
     parseSvName,
     getDefaultYAxisTco3Zm,
     FONT_FAMILY,
+    customTooltipFormatter,
 } from "./optionsFormatter";
 
 describe("testing optionsFormatter functionality", () => {
@@ -241,5 +242,24 @@ describe("testing optionsFormatter functionality", () => {
         }
 
         expect(getDefaultYAxisTco3Zm("seriesX", 42, 420, true, true, -3, 10)).toEqual(expectedYAxisConfig);
+    });
+
+    it('should return a correct formatted tooltip for a normal series', () => {
+        
+        const expected = `
+        <div class="arrow-box">
+            <div style="margin:2px"><strong>2021</strong></div>
+            <div>MODELNAME: <strong>42</strong></div>
+            <div>Project: PROJECT-X</div>
+            <div>Institue: INSTITUTE-Y</div>
+        </div>
+        `
+        
+        expect(customTooltipFormatter({series: [[42]], seriesIndex: 0, dataPointIndex: 0, w: {
+            globals: {
+                seriesX: [[2021]],
+                seriesNames: ["PROJECT-X_INSTITUTE-Y_MODELNAME"],
+            }
+        }})).toEqual(expected);
     });
 });

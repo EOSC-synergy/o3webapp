@@ -1044,7 +1044,6 @@ export function customTooltipFormatter({ series, seriesIndex, dataPointIndex, w 
             <div>${name}: <strong>${series[seriesIndex][dataPointIndex]}</strong></div>
             <div>Project: ${project}</div>
             <div>Institue: ${institute}</div>
-
         </div>
         `
     )
