@@ -1,5 +1,6 @@
 import { q25, q75, median } from "../../services/math/math"
 import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, ALL_REGIONS_ORDERED, STATISTICAL_VALUES_LIST, SV_CALCULATION, SV_COLORING, SV_DASHING, STATISTICAL_VALUES, APEXCHART_PLOT_TYPE, MODEL_LINE_THICKNESS, START_YEAR, END_YEAR } from "../constants"
+import { convertModelName } from "../ModelNameConverter";
 
 /**
  * Maps the plotId to a function that describes how the series are going
@@ -72,7 +73,6 @@ export const defaultTCO3_zm = {
         enabled: false,
     },
     tooltip: {
-        enabled: true,
         shared: false,
     },
     colors: null, //styling.colors
@@ -118,7 +118,7 @@ function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show=false, opposite=fals
         },
         labels: {
             formatter: formatYLabelsNicely,
-        }
+        },
     }
 }
 
@@ -197,7 +197,7 @@ export const default_TCO3_return = {
     },
     tooltip: {
       shared: false,
-      intersect: true
+      intersect: true,
     },
     plotOptions: {
       boxPlot: {
@@ -263,6 +263,7 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.stroke.dashArray = styling.dashArray;
         newOptions.title = JSON.parse(JSON.stringify(newOptions.title)); // this is necessary in order for apexcharts to update the title
         newOptions.title.text = plotTitle;
+        newOptions.tooltip.custom = customTooltipFormatter;
         return newOptions;
 
     } else if (plotId === O3AS_PLOTS.tco3_return) {
@@ -930,3 +931,48 @@ function filterOutOfRange(value, min, max) {
 }
 
 const formatYLabelsNicely = value => value % 10 ? "" : value;
+
+function parseSvName(name) {
+    const regex = new RegExp("([^\(]+)\(([^\)]+)\)");
+    const info = name.match(regex);
+    console.log(info);
+    return {
+        sv: info[1],
+        groupName: info[2].substring(1),
+    }
+
+}
+
+function customTooltipFormatter({ series, seriesIndex, dataPointIndex, w }) {
+    //console.log(w)
+    const modelName = w.globals.seriesNames[seriesIndex];
+    const listOfSv = Object.keys(SV_COLORING); // included mean+/-std
+    for (const sv of listOfSv) {
+        if (modelName.startsWith(sv)) {
+            // parse sv
+            const {sv, groupName} = parseSvName(modelName);
+            return (
+                `
+                <div class="arrow-box">
+                    <div style="margin:2px"><strong>${w.globals.seriesX[seriesIndex][dataPointIndex]}</strong></div>
+                    <div>${sv}: <strong>${series[seriesIndex][dataPointIndex]}</strong></div>
+                    <div>Group: ${groupName}</div>
+                </div>
+                `
+            )
+        };
+    }
+
+    let {project, institute, name} = convertModelName(modelName);
+    return (
+        `
+        <div class="arrow-box">
+            <div style="margin:2px"><strong>${w.globals.seriesX[seriesIndex][dataPointIndex]}</strong></div>
+            <div>${name}: <strong>${series[seriesIndex][dataPointIndex]}</strong></div>
+            <div>Project: ${project}</div>
+            <div>Institue: ${institute}</div>
+
+        </div>
+        `
+    )
+}
