@@ -28,7 +28,7 @@ const Logo = (props) => {
             data-testid="logo-container"
         >   
             <Grid container sx={{ alignItems: "center", margin: '0.5em', marginLeft: '2em'}}>
-                <img data-testid="logo-image" style={{height: '5em', margin: '0.5em'}} src={logoSrc} alt={"logo"} />
+                <img data-testid="logo-image" style={{height: '4em', margin: '0.5em'}} src={logoSrc} alt={"logo"} />
                 <Typography
                     variant="h6"
                     noWrap

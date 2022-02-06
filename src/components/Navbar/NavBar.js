@@ -43,28 +43,25 @@ function Navbar(props) {
     }
 
     return (
-            <AppBar position="static" sx={{ margin: 0, bgcolor: '#111' }} data-testid="Navbar" >
+            <AppBar position="static" sx={{ margin: 0, bgcolor: '#111', height: window.innerHeight * 0.13}} data-testid="Navbar" >
                 <Container disableGutters maxWidth={false} sx={{ margin: 0 }} >
                     <Toolbar disableGutters data-testid="Toolbar_Navbar">
                         <Grid
                             container
                             direction="row"
-                            justifyContent="left"
+                            justifyContent="center"
                             alignItems="center"
                             key="navbar grid container"
                         >
                             <Grid
                                 item
-                                xs={10}
+                                xs={8}
                                 key="logo grid item"
                             >
                                 <Logo display='flex' data-testid="navbar-logo-expanded" />
                             </Grid>
                             <Grid
                                 item
-                                sx={{
-                                    ml: 5,
-                                }}
                                 key="edit graph button grid item"
                             >
                                     <Button

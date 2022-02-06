@@ -8,7 +8,7 @@ import LandingPage from './views/landingPage/LandingPage';
 /**
  * Main container of the Webapp
  * Contains all GUI elements
- * @returns {JSX} a jsx containing all main components
+ * @returns {JSX.Element} a jsx containing all main components
  */
 function App() {
 
@@ -81,7 +81,7 @@ function App() {
 
 
     return (
-    <div style={{minHeight: "100vh", display: 'flex', flexDirection: 'column'}}>
+    <div style={{backgroundColor: '#FFFFFF', minHeight: "100vh", display: 'flex', flexDirection: 'column'}}>
         <Navbar reportError={reportError} openSidebar={openSidebar} />
         <LandingPage reportError={reportError} openSidebar={openSidebar} closeSidebar={closeSidebar} isSidebarOpen={isSidebarOpen} />
         <Footer reportError={reportError} />
