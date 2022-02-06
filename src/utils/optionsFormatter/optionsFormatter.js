@@ -11,6 +11,19 @@ const SERIES_GENERATION = {}; // Map plotId to corresponding generation function
 SERIES_GENERATION[O3AS_PLOTS.tco3_zm] = generateTco3_ZmSeries;
 SERIES_GENERATION[O3AS_PLOTS.tco3_return] = generateTco3_ReturnSeries;
 
+const FONT_FAMILY = [
+    '-apple-system',
+    'BlinkMacSystemFont',
+    '"Segoe UI"',
+    'Roboto',
+    '"Helvetica Neue"',
+    'Arial',
+    'sans-serif',
+    '"Apple Color Emoji"',
+    '"Segoe UI Emoji"',
+    '"Segoe UI Symbol"',
+  ].join(',')
+
 /**
  * The default settings for the tco3_zm plot.
  * 
@@ -32,6 +45,7 @@ export const defaultTCO3_zm = {
             text: "Year",
             style: {
                 fontSize: "1rem",
+                fontFamily: FONT_FAMILY,
             },
         }
     },
@@ -87,7 +101,7 @@ export const defaultTCO3_zm = {
         style: {
             fontSize:  "30px",
             fontWeight:  "bold",
-            fontFamily:  "undefined",
+            fontFamily:  FONT_FAMILY,
             color:  "#000000",
         }
     },
@@ -127,6 +141,7 @@ export function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show=false, opposi
             text: "TCO(DU)",
             style: {
                 fontSize: "1rem",
+                fontFamily: FONT_FAMILY,
             },
         },
         labels: {
@@ -169,6 +184,7 @@ export function getDefaultYAxisTco3Return(seriesName, minY, maxY, show=false, op
             text: "Year",
             style: {
                 fontSize: "1rem",
+                fontFamily: FONT_FAMILY,
             },
         },
         labels: {
@@ -191,6 +207,7 @@ export const default_TCO3_return = {
             text: "Region",
             style: {
                 fontSize: "1rem",
+                fontFamily: FONT_FAMILY,
             },
         },
     },
@@ -217,7 +234,7 @@ export const default_TCO3_return = {
         style: {
             fontSize:  "30px",
             fontWeight:  "bold",
-            fontFamily:  "undefined",
+            fontFamily: FONT_FAMILY,
             color:  "#000000"
         }
     },
