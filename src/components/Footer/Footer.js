@@ -89,17 +89,17 @@ function Footer () {
                         textAlign:"center",
                     }}
                     key="links"
-                    data-testid={`footer-grid-item`}
                 >
                     {links.map((x, idx) => {
                         return (
                             <Grid
                                 item
-                                md={idx === links.length - 1 ? 12 : ""}
+                                md={idx === links.length - 1 ? 12 : "auto"}
                                 key={idx}
                                 sx={{
                                     mx: 1
                                 }}
+                                data-testid={`footer-grid-item`}
                             >
                                 <Link
                                     href={x.href}
