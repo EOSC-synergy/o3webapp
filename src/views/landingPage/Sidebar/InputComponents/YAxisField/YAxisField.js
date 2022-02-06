@@ -20,16 +20,19 @@ function YAxisField(props) {
      */
     const {minY, maxY} = useSelector(selectPlotYRange);
 
+    const [stateY, setStateY] = React.useState({minY, maxY});
+
     /**
      * Handles the change of the minimum value.
      *
      * @param event the input value
      */
     const handleChangeMin = (event) => {
-        if (event.target.value === '') {
-            dispatch(setDisplayYRange({minY: 0, maxY: maxY}));
-        } else if (!isNaN(event.target.value)) {
-            dispatch(setDisplayYRange({minY: event.target.value, maxY: maxY}));
+        if (!isNaN(event.target.value)) {
+            setStateY({minY: event.target.value, maxY: maxY});
+            if (event.target.value > 0 && event.target.value <= maxY) {
+                dispatch(setDisplayYRange({minY: parseInt(event.target.value), maxY: maxY}));
+            }
         }
     }
 
@@ -39,10 +42,11 @@ function YAxisField(props) {
      * @param event the input value
      */
     const handleChangeMax = (event) => {
-        if (event.target.value === '') {
-            dispatch(setDisplayYRange({minY: minY, maxY: 0}));
-        } else if (!isNaN(event.target.value)) {
-            dispatch(setDisplayYRange({minY: minY, maxY: event.target.value}));
+        if (!isNaN(event.target.value)) {
+            setStateY({minY: minY, maxY: event.target.value});
+            if (event.target.value > 0 && minY <= event.target.value) {
+                dispatch(setDisplayYRange({minY: minY, maxY: parseInt(event.target.value)}));
+            }
         }
     }
 
@@ -58,10 +62,10 @@ function YAxisField(props) {
                         variant="outlined"
                         id="outlined-basic"
                         size="small"
-                        value={minY}
+                        value={stateY.minY}
                         onChange={handleChangeMin}
-                        error={minY < 0}
-                        helperText={minY < 0 ? `<0` : ''}
+                        error={stateY.minY < 0 || stateY.minY >= maxY}
+                        helperText={stateY.minY < 0 ? `<0` : (stateY.minY > maxY ? `min>=max` : '')}
                     />
                 </FormControl>
             </Grid>
@@ -74,10 +78,10 @@ function YAxisField(props) {
                         variant="outlined"
                         id="outlined-basic"
                         size="small"
-                        value={maxY}
+                        value={stateY.maxY}
                         onChange={handleChangeMax}
-                        error={maxY < 0}
-                        helperText={maxY < 0 ? `<0` : ''}
+                        error={stateY.maxY < 0 || minY >= stateY.maxY}
+                        helperText={stateY.maxY < 0 ? `<0` : (minY > stateY.maxY ? `min>=max` : '')}
                     />
                 </FormControl>
             </Grid>

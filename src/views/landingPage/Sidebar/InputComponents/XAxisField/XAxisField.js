@@ -21,16 +21,19 @@ function XAxisField(props) {
      */
     const {years: {minX, maxX}} = useSelector(selectPlotXRange);
 
+    const [stateX, setStateX] = React.useState({minX, maxX});
+
     /**
      * Handles the change of the minimum value.
      *
      * @param event the input value
      */
     const handleChangeMin = (event) => {
-        if (event.target.value === '') {
-            dispatch(setDisplayXRange({years: {minX: 0, maxX: maxX}}));
-        } else if (!isNaN(event.target.value)) {
-            dispatch(setDisplayXRange({years: {minX: event.target.value, maxX: maxX}}));
+        if (!isNaN(event.target.value)) {
+            setStateX({minX: event.target.value, maxX: maxX});
+            if (event.target.value >= START_YEAR && event.target.value <= END_YEAR && event.target.value <= maxX) {
+                dispatch(setDisplayXRange({years: {minX: parseInt(event.target.value), maxX: maxX}}));
+            }
         }
     }
 
@@ -40,10 +43,11 @@ function XAxisField(props) {
      * @param event the input value
      */
     const handleChangeMax = (event) => {
-        if (event.target.value === '') {
-            dispatch(setDisplayXRange({years: {minX: minX, maxX: 0}}));
-        } else if (!isNaN(event.target.value)) {
-            dispatch(setDisplayXRange({years: {minX: minX, maxX: parseInt(event.target.value)}}));
+        if (!isNaN(event.target.value)) {
+            setStateX({minX: minX, maxX: event.target.value});
+            if (event.target.value >= START_YEAR && event.target.value <= END_YEAR && minX <= event.target.value) {
+                dispatch(setDisplayXRange({years: {minX: minX, maxX: parseInt(event.target.value)}}));
+            }
         }
     }
 
@@ -58,10 +62,10 @@ function XAxisField(props) {
                         variant="outlined"
                         id="outlined-basic"
                         size="small"
-                        value={minX}
+                        value={stateX.minX}
                         onChange={handleChangeMin}
-                        error={minX < START_YEAR || minX > END_YEAR}
-                        helperText={minX < START_YEAR ? `<${START_YEAR}` : (minX > END_YEAR ? `>${END_YEAR}` : '')}
+                        error={stateX.minX < START_YEAR || stateX.minX > END_YEAR || stateX.minX >= maxX}
+                        helperText={stateX.minX < START_YEAR ? `<${START_YEAR}` : (stateX.minX > END_YEAR ? `>${END_YEAR}` : (stateX.minX >= maxX ? `min>=max` : ''))}
                     />
                 </FormControl>
             </Grid>
@@ -74,10 +78,10 @@ function XAxisField(props) {
                         variant="outlined"
                         id="outlined-basic"
                         size="small"
-                        value={maxX}
+                        value={stateX.maxX}
                         onChange={handleChangeMax}
-                        error={maxX < START_YEAR || maxX > END_YEAR}
-                        helperText={maxX < START_YEAR ? `<${START_YEAR}` : (maxX > END_YEAR ? `>${END_YEAR}` : '')}
+                        error={stateX.maxX < START_YEAR || stateX.maxX > END_YEAR || minX >= stateX.maxX}
+                        helperText={stateX.maxX < START_YEAR ? `<${START_YEAR}` : (stateX.maxX > END_YEAR ? `>${END_YEAR}` : (minX >= stateX.maxX ? `min>=max` : ''))}
                     />
                 </FormControl>
             </Grid>
