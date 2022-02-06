@@ -368,7 +368,6 @@ function generateSingleTco3ZmSeries(name, svData) {
     return {
         name: name,
         data: svData.map((e, idx) => [START_YEAR + idx, e]),
-        type: "line",
     }
 }
 

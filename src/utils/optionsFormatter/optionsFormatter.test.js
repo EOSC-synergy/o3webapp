@@ -80,20 +80,18 @@ describe("testing optionsFormatter functionality", () => {
         const dataExpected = {
             data: [
               {
-                type: 'line',
                 name: 'CCMI-1_ACCESS_ACCESS-CCM-refC2',
                 data: testArray
               },
               {
-                type: 'line',
                 name: 'CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG',
                 data: testArray
               },
-              { name: 'CCMI-1_CCCma_CMAM-refC2', data: testArray, type: 'line' },
-              { name: 'mean(Example Group)', data: testArray, type: 'line' },
-              { name: 'median(Example Group)', data: testArray, type: 'line' },
-              { name: 'mean+std(Example Group)', data: testArray, type: 'line' },
-              { name: 'mean-std(Example Group)', data: testArray, type: 'line' }
+              { name: 'CCMI-1_CCCma_CMAM-refC2', data: testArray},
+              { name: 'mean(Example Group)', data: testArray},
+              { name: 'median(Example Group)', data: testArray},
+              { name: 'mean+std(Example Group)', data: testArray},
+              { name: 'mean-std(Example Group)', data: testArray}
             ],
             styling: {
               colors: [
@@ -104,11 +102,11 @@ describe("testing optionsFormatter functionality", () => {
               ],
               dashArray: [
                 0, 0, 0, 0,
-                0, 0, 0
+                2, 8, 8
               ],
               width: [
-                MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, 1,
-                1, 1, 1
+                MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS,
+                MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS
               ]
             }
           }
