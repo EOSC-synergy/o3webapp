@@ -1,5 +1,6 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import userEvent from "@testing-library/user-event";
 import SearchBar from './Searchbar';
 
 describe('test searchbar rendering', () => {
@@ -22,11 +23,10 @@ describe('test searchbar rendering', () => {
     
     it('calls the handleInputChange method which should delegate to the correct methods', () => {
         const callback = jest.fn();
-        const { getByTestId } = render(<SearchBar inputArray={[]} foundIndicesCallback={(callback)}/>);
+        const { getByTestId } = render(<SearchBar inputArray={[]} foundIndicesCallback={callback}/>);
         const input = getByTestId("SearchbarInput");
-        fireEvent.change(input, {target: {value: "some input..."}});
-        
-        expect(callback.mock.calls.length).toBe(1); // expect to call the callback function
+        userEvent.type(input, "abc{enter}");
+        expect(callback).toHaveBeenCalled();
     });
 });
 
@@ -36,7 +36,7 @@ describe('test searchbar functionality', () => {
         const inputArray = [{model: "modelA"}, {model: "modelB"}, {}, {model: "modelA+"}];
         const { getByTestId } = render(<SearchBar inputArray={inputArray} foundIndicesCallback={callback}/>);
         const input = getByTestId("SearchbarInput");
-        fireEvent.change(input, {target: {value: "modelA"}});
+        userEvent.type(input, "modelA{enter}");
         expect(callback.mock.calls[0][0]).toEqual([0, 3]); // expect the callback to be called with the correct indices
     });
 
@@ -45,7 +45,7 @@ describe('test searchbar functionality', () => {
         const inputArray = ["hello", "world", "-hello-", "hell"];
         const { getByTestId } = render(<SearchBar inputArray={inputArray} foundIndicesCallback={callback}/>);
         const input = getByTestId("SearchbarInput");
-        fireEvent.change(input, {target: {value: "hello"}});
+        userEvent.type(input, "hello{enter}");
         expect(callback.mock.calls[0][0]).toEqual([0, 2]); // expect the callback to be called with the correct indices
     });
 });
