@@ -24,6 +24,8 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from "react-redux";
 import { REQUEST_STATE } from "../../../../../../services/API/apiSlice";
 import { selectNameOfGroup, selectModelDataOfGroup } from "../../../../../../store/modelsSlice/modelsSlice";
+import DoneIcon from '@mui/icons-material/Done';
+
 
 /**
  * opens a modal where the user can add a new model group
@@ -36,6 +38,15 @@ import { selectNameOfGroup, selectModelDataOfGroup } from "../../../../../../sto
  * @returns {JSX} a jsx containing a modal with a transfer list with all available models
  */
 function AddModelGroupModal(props) {
+
+    /**
+     * the label in the card heading
+     */
+    const addModelLabel = 'modelGroupId' in props ? "Edit Model Group Members" : "Add Model Group";
+    /**
+     * the label for the submit button
+     */
+    const buttonLabel = 'modelGroupId' in props? "Save changes" : "Add group";
     
     const dispatch = useDispatch();
 
@@ -274,7 +285,8 @@ function AddModelGroupModal(props) {
         boxShadow: 24,
         p: 4,
         overflow: 'auto',
-        maxHeight: "100vh"
+        maxHeight: "100vh",
+        minHeight: "75%"
       };
 
     /**
@@ -302,7 +314,7 @@ function AddModelGroupModal(props) {
         >   
             <Card sx={style}>
                 <CardHeader
-                    title="Add New Model Group"
+                    title={addModelLabel}
                     action={
                         <IconButton onClick={closeWithChanges} aria-label="close" data-testid="addModelGroupModal-close-button">
                             <CloseIcon />
@@ -320,14 +332,11 @@ function AddModelGroupModal(props) {
                             placeholder="Your group"
                         />
                     </Grid>
-                    <Divider>
-                        <Typography> Select Models</Typography>
-                    </Divider>
                     <Box id="modal-modal-description" sx={{ mt: 2 }}>
                         <Searchbar inputArray={allModels} foundIndicesCallback={setCurrentlyVisibleModels} shouldReturnValues={true} />
                         <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ marginTop: '0.5em' }}>
                             <Grid item sm={5} xs={12}>
-                                <Typography>All available models</Typography>
+                                <Typography>All Available Models</Typography>
                                 {
                                     isLoading ? 
                                         <CircularProgress data-testid="AddModelGroupModal-spinner-left" />
@@ -375,7 +384,7 @@ function AddModelGroupModal(props) {
                     {errorMessage && <Alert severity="error" sx={{marginTop: '2em'}}>{errorMessage}</Alert>}
                 </CardContent>
                 <CardActions sx={{justifyContent: "flex-end"}}>
-                    <Button onClick={addNewGroup} variant="contained">{'modelGroupId' in props? "Edit group members" : "Add group"}</Button>
+                    <Button onClick={addNewGroup} variant="contained" startIcon={<DoneIcon/>}>{buttonLabel}</Button>
                 </CardActions>
             </Card>
         </Modal>
