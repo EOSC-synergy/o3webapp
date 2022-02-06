@@ -7,6 +7,7 @@ import * as redux from 'react-redux';
 import userEvent from '@testing-library/user-event';
 import { REQUEST_STATE } from "../../../../../../services/API/apiSlice";
 import { modelGroups } from "../../../../../../store/modelsSlice/modelsSlice";
+import { STATISTICAL_VALUES } from '../../../../../../utils/constants';
 
 let store;
 let reportError;
@@ -86,6 +87,26 @@ describe('test ModelGroupCard functionality', () => {
 
     beforeEach(() => {
         store = createTestStore();
+    });
+
+    it('checks / unchecks statistical values, when visibility icon is clicked', () => {
+        const { getByTestId, getByLabelText } = render(
+            <Provider store={store}>
+                <ModelGroupCard modelGroupId={groupId} reportError={reportError} />
+            </Provider>
+        );
+        const visibilityIcon = getByTestId(/VisibilityIcon-visible/)
+        expect(visibilityIcon).toBeInTheDocument();
+        for(const key in STATISTICAL_VALUES) {
+            expect(getByLabelText(key)).toBeInTheDocument();
+            expect(getByLabelText(key)).toHaveProperty('checked', true);
+        }
+        userEvent.click(visibilityIcon);
+        expect(getByTestId(/VisibilityIcon-invisible/)).toBeInTheDocument();
+        for(const key in STATISTICAL_VALUES) {
+            expect(getByLabelText(key)).toBeInTheDocument();
+            expect(getByLabelText(key)).toHaveProperty('checked', false);
+        }
     });
 
     test.todo("dispatches setStatisticalValueForGroup with correct payload when checkbox is clicked");
