@@ -15,7 +15,7 @@ import { Card } from '@mui/material';
 import CardActions from '@mui/material/CardActions';
 import CircularProgress from '@mui/material/CircularProgress';
 import CardHeader from '@mui/material/CardHeader';
-import Searchbar from "../Searchbar/Searchbar";
+import Searchbar from "../../../../../../components/Searchbar/Searchbar";
 import { convertModelName } from "../../../../../../utils/ModelNameConverter";
 import { union, not, intersection } from "../../../../../../utils/arrayOperations";
 import CloseIcon from '@mui/icons-material/Close';
