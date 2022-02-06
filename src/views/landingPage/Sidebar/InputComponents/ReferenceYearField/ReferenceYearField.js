@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux";
 import { setYear, setVisibility, selectVisibility } from "../../../../../store/referenceSlice/referenceSlice";
 import { END_YEAR, START_YEAR } from "../../../../../utils/constants";
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import MuiVisibilityIcon from '@mui/icons-material/Visibility';
 
 /**
  * Enables the user to select a reference year.
@@ -25,7 +27,7 @@ function ReferenceYearField(props) {
     /**
      * The selected visibility of the reference line from the redux store
      */
-    const refYearVisibility = useSelector(selectVisibility)
+    const refYearVisible = useSelector(selectVisibility)
 
     /**
      * Handles the change of the reference year field if it is modified.
@@ -61,9 +63,11 @@ function ReferenceYearField(props) {
                 </FormControl>
 
                 <FormControl>
-                    <Checkbox 
+                    <Checkbox
+                        icon={<VisibilityOffIcon data-testid="RefLineInvisibleCheckbox" />}
+                        checkedIcon={<MuiVisibilityIcon />}
                         onClick={handleShowRefLineClicked} 
-                        checked={refYearVisibility} 
+                        //checked={refYearVisible} 
                     />
                 </FormControl>
                 
