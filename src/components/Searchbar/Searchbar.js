@@ -57,7 +57,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
  * that either contains strings or objects. If the array contains objects the
  * values of these objects are searched.
  
- * @param {*} props holds all props passed to the component
+ * @param {Object} props holds all props passed to the component
  * @param {array} props.inputArray an array of either only strings or only objects.
  *                                 The input typed in the searchbar is used as a search
  *                                 string. If an array of objects is passed the values of
@@ -72,11 +72,8 @@ export default function SearchBar(props) {
 
     const { inputArray, foundIndicesCallback } = props;
 
-    const [input, setInput] = React.useState("");
-
     const handleInputChange = (event) => {
         const newInput = event.target.value
-        setInput(newInput);
         foundIndicesCallback(performSearch(inputArray, newInput));
     }
     
@@ -88,8 +85,7 @@ export default function SearchBar(props) {
         <StyledInputBase
             placeholder="Search…"
             inputProps={{ 'aria-label': 'search', 'alt': 'Searchbar', 'data-testid': 'SearchbarInput'}}
-            value={input}
-            onChange={handleInputChange}
+            onBlur={handleInputChange}
         />
     </Search>
     )
