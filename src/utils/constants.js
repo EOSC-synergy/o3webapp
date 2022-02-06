@@ -137,7 +137,7 @@ export const APEXCHART_PLOT_TYPE = {
 };
 
 export const HEIGHT_LOADING_SPINNER = "300px";
-export const HEIGHT_GRAPH = "600px";
+export const HEIGHT_GRAPH = `${window.screen.availHeight * 0.55}px` //"600px";
 
 /*
 // Options Formatter, XAxisField, YAxisField
