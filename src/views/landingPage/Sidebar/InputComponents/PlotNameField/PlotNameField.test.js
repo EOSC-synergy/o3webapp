@@ -2,9 +2,11 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import PlotNameField from './PlotNameField';
 import { render, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { createTestStore } from '../../../../../store/store';
 import { Provider } from "react-redux";
-import { PLOT_NAME_MAX_LEN } from "../../../../../utils/constants"
+import { PLOT_NAME_MAX_LEN } from "../../../../../utils/constants";
+import { initialState } from "../../../../../store/plotSlice/plotSlice";
 
 let store;
 beforeEach(() => {
@@ -35,15 +37,17 @@ it('changes the name correctly', () => {
   const selectNode = getByTestId("plot-field").querySelector('input');
 
   // Assert: if it fails the initial state may have changed
-  expect(store.getState().plot.plotSpecificSettings.tco3_zm.title).toEqual("OCTS Plot"); 
+  expect(store.getState().plot.plotSpecificSettings.tco3_zm.title).toEqual(initialState.plotSpecificSettings.tco3_zm.title); 
   
 
   // Check if the value updates correctly
-  fireEvent.change(selectNode, {target: {value: "Test"}} );
+  userEvent.clear(selectNode);
+  userEvent.type(selectNode, "Test{enter}");
   expect(store.getState().plot.plotSpecificSettings.tco3_zm.title).toEqual("Test");
 
   // Check for max. length.
-  fireEvent.change(selectNode, {target: {value: (Array(PLOT_NAME_MAX_LEN + 1).join("A") + "B")}} );
+  userEvent.clear(selectNode);
+  userEvent.type(selectNode, (Array(PLOT_NAME_MAX_LEN + 1).join("A") + "B{enter}"));
   expect(store.getState().plot.plotSpecificSettings.tco3_zm.title).toEqual(Array(PLOT_NAME_MAX_LEN + 1).join("A")); //
   
 })
