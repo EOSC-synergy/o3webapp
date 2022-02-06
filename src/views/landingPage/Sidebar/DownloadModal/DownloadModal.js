@@ -111,12 +111,19 @@ function DownloadModal(props) {
     const includedModels = getIncludedModelsAsObjects(modelsSlice);
 
     if (selectedFileFormat === "pdf") {
+
       downloadGraphAsPDF(plotId, plotTitle);
+
     } else if (selectedFileFormat === "png") {
+
       downloadGraphAsPNG(plotTitle);
+
     } else if (selectedFileFormat === "svg") {
+
       downloadGraphAsSVG(plotTitle);
+
     } else {
+      
     }
   };
 

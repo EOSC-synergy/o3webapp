@@ -15,34 +15,23 @@ export async function getBase64Image() {
     const svgElement = document.querySelector(".apexcharts-svg");
     var s = new XMLSerializer();
     var str = s.serializeToString(svgElement);
-    console.log(str);
     resolve(str);
   });
 }
 
-function addViewbox(str) {
-  console.log(str);
-  const lastIndex = str.indexOf("height") + 10;
-  const offset = str.substring(lastIndex).indexOf('"');
-  const insertAt = offset + lastIndex + 2;
+function getAdjustedSVG(svg) {
 
-  return (
-    str.substring(0, insertAt) +
-    `viewBox="0 0 2047 500" ` +
-    str.substring(insertAt)
-  );
+  let bBox = svg.getBBox();
+  let viewBoxParameters = "0 0 " + bBox.width + " " + bBox.height;
+  svg.setAttribute("viewBox", viewBoxParameters); 
+  console.log(svg);
+  return svg.outerHTML;
 }
 
 export async function downloadGraphAsPDF(plotId, fileName) {
-  //const svgAsBase64 = await getBase64Image();
     
   const svgElement = document.querySelector(".apexcharts-svg");
-  const svgAsBase64 =
-    "data:image/svg+xml;charset=utf-8," +
-    encodeURIComponent(svgElement.outerHTML);
-
   let docDefinition = null;
-
 
   if (plotId === O3AS_PLOTS.tco3_zm || plotId === O3AS_PLOTS.tco3_return) {
     docDefinition = {
@@ -54,7 +43,7 @@ export async function downloadGraphAsPDF(plotId, fileName) {
       //pageMargins: [ 40, 180, 40, 60 ],
       content: [
         {
-          svg: addViewbox(svgAsBase64),
+          svg: getAdjustedSVG(svgElement),
           fit: [770, 350],
         },
         '\n',
