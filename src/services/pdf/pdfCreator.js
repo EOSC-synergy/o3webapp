@@ -1,6 +1,7 @@
 import pdfmake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { O3AS_PLOTS} from "../../utils/constants"
+
 pdfmake.vfs = pdfFonts.pdfMake.vfs;
 
 const legalNoticeHeading = "ACCEPTABLE USE POLICY AND CONDITIONS OF USE"
@@ -21,14 +22,16 @@ const points = [
     "If you violate these rules, you may be liable for the consequences, which may include your account being suspended and a report being made to your home organisation or to law enforcement.",
 ]
 
-function getBase64Image() {
+export async function getBase64Image() {
     return new Promise((resolve, reject) => {
         const svgElement = document.querySelector('.apexcharts-svg');
         var s = new XMLSerializer();
         var str = s.serializeToString(svgElement);
+        console.log(str)
         resolve(str)
        });
 }
+
 
 function addViewbox(str) {
     const lastIndex = str.indexOf("height") + 10;
@@ -38,9 +41,9 @@ function addViewbox(str) {
     return str.substring(0, insertAt) + `viewBox="0 0 2047 400" ` + str.substring(insertAt)
 }
 
-  export async function showPdf(plotId, models) {
+  export async function downloadGraphAsPDF(plotId, fileName) {
 
-    const svgAsString = await getBase64Image()
+    const svgAsBase64 = await getBase64Image()
 
     let docDefinition = null;
 
@@ -48,16 +51,17 @@ function addViewbox(str) {
 
     if (plotId === O3AS_PLOTS.tco3_zm || plotId === O3AS_PLOTS.tco3_return) {
 
-      console.log(models)
-      console.log(typeof(models))
-
       docDefinition = {
+        info: {
+          title: fileName,
+          },
+
         pageOrientation: 'landscape',
         //pageMargins: [ 40, 180, 40, 60 ],
         content: [
           {
             
-            svg: addViewbox(svgAsString),
+            svg: addViewbox(svgAsBase64),
             fit: [770, 350],
           },
           {
@@ -65,7 +69,7 @@ function addViewbox(str) {
               fontSize: 14,
           },
           {
-              ul: models
+             // ul: models
           },
           {
               text: legalNoticeHeading,
@@ -83,7 +87,6 @@ function addViewbox(str) {
     } else {
       throw `the given plot id "${plotId}" is not defined`;
     }
-
     pdfmake.createPdf(docDefinition).open();
   }
 

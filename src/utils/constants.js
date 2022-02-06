@@ -106,7 +106,7 @@ export const latitudeBands = [
 ]
 
 // DownloadModal.js
-export const fileFormats = [ Symbol("pdf"), Symbol("png") ];
+export const fileFormats = [ Symbol("pdf"), Symbol("png"), Symbol("svg")];
 
 // PlotNameField.js
 
