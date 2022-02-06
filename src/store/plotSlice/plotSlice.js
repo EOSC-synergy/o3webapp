@@ -172,6 +172,13 @@ const plotSlice = createSlice({
             displayYRange.maxY = maxY;
         },
 
+        setDisplayYRangeForPlot(state, action) { 
+            const {minY, maxY, plotId} = action.payload;
+            const displayYRange = state.plotSpecificSettings[plotId].displayYRange;
+            displayYRange.minY = minY;
+            displayYRange.maxY = maxY;
+        },
+
         /**
          * This reducer accepts an action object returned from setMonths()
          *     e.g. dispatch(setMonths({months: [3, 4, 5]}))     
@@ -202,6 +209,7 @@ export const {
     setLocation,
     setDisplayXRange,
     setDisplayYRange,
+    setDisplayYRangeForPlot,
     setMonths,
 } = plotSlice.actions
 

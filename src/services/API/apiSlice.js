@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import { getModels, getPlotTypes, getPlotData } from "./client";
 import { preTransformApiData } from "../../utils/optionsFormatter/optionsFormatter";
 import { START_YEAR, END_YEAR } from "../../utils/constants";
+import { setDisplayYRange, setDisplayYRangeForPlot } from "../../store/plotSlice/plotSlice";
 
 /**
  * This object models an "enum" in JavaScript. Each of the values is used
@@ -81,6 +82,16 @@ const fetchPlotDataRejected = createAction("api/fetchPlotData/rejected");
 const selectExistingPlotData = createAction("api/selectPlotData");
 
 
+export const updateMinMaxValues = ({plotId, cacheKey, data}) => {
+
+    return (dispatch, getState) => {
+        dispatch(fetchPlotDataSuccess({data, plotId, cacheKey})) 
+        const { min, max } = getState().api.plotSpecific[plotId].cachedRequests[cacheKey].suggested; // suggested min/max is availabe
+
+        dispatch(setDisplayYRangeForPlot({plotId, minY: Math.floor(min), maxY: Math.floor(max)}));
+    }
+}
+
 /**
  * This async thunk creator allows to generate a data fetching action that can be dispatched 
  * against the store to start fetching new plot data from the api. 
@@ -129,7 +140,7 @@ export const fetchPlotData = (modelListBegin, modelListEnd) => {
         
         return getPlotData({plotId, latMin, latMax, months, modelList, startYear, endYear, refModel, refYear})
             .then(  
-                response => dispatch(fetchPlotDataSuccess({data: response.data, plotId, cacheKey})),
+                response => dispatch(updateMinMaxValues({plotId, cacheKey, data: response.data})),
                 error => dispatch(fetchPlotDataRejected({error: error.message, plotId, cacheKey})),
             );
         
@@ -226,6 +237,7 @@ const apiSlice = createSlice({
                     status: REQUEST_STATE.loading,
                     error: null,
                     data: [],
+                    suggested: null, // this holds the suggested min / max values
                 };
                 plotSpecificSection.active = cacheKey; // select this request after dispatching it
             })
@@ -234,8 +246,8 @@ const apiSlice = createSlice({
                 const storage = state.plotSpecific[plotId].cachedRequests[cacheKey];
                 storage.status = REQUEST_STATE.success;
                 const { lookUpTable, min, max } = preTransformApiData({plotId, data});
-                console.log(min, max);
                 storage.data = lookUpTable;
+                storage.suggested = { min, max };
 
             })
             .addCase(fetchPlotDataRejected, (state, action) => {
