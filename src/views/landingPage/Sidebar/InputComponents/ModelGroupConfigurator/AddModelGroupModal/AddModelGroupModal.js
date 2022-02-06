@@ -31,7 +31,7 @@ import { selectNameOfGroup, selectModelDataOfGroup } from "../../../../../../sto
  * @param {function} props.onClose -> function to call if modal should be closed
  * @param {boolean} props.isOpen -> boolean whether the modal should be visible
  * @param {function} props.reportError -> error handling
- * @param {string} props.modelGroupId -> string identifying the model group,
+ * @param {number} props.modelGroupId -> string identifying the model group,
  *          if this model should be used to edit an existing model group
  * @returns {JSX} a jsx containing a modal with a transfer list with all available models
  */
@@ -375,7 +375,7 @@ function AddModelGroupModal(props) {
                     {errorMessage && <Alert severity="error" sx={{marginTop: '2em'}}>{errorMessage}</Alert>}
                 </CardContent>
                 <CardActions sx={{justifyContent: "flex-end"}}>
-                    <Button onClick={addNewGroup} variant="contained">Add group</Button>
+                    <Button onClick={addNewGroup} variant="contained">{'modelGroupId' in props? "Edit group members" : "Add group"}</Button>
                 </CardActions>
             </Card>
         </Modal>
@@ -387,7 +387,7 @@ AddModelGroupModal.propTypes = {
     reportError: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     isOpen: PropTypes.bool.isRequired,
-    modelGroupId: PropTypes.string
+    modelGroupId: PropTypes.number
 }
 
 
