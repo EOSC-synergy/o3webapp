@@ -29,6 +29,9 @@ export const defaultTCO3_zm = {
         },
     },
     yaxis: [], 
+    grid: {
+        show: false,
+    },
     chart: {
         id: O3AS_PLOTS.tco3_zm,
         animations: {
@@ -131,6 +134,9 @@ function getDefaultYAxisTco3Return(seriesName, minY, maxY, show=false, opposite=
  */
 export const default_TCO3_return = {
     yaxis: [], 
+    grid: {
+        show: false,
+    },
     chart: {
       id: O3AS_PLOTS.tco3_return,
       type: 'boxPlot',
