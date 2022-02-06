@@ -81,7 +81,7 @@ export const defaultTCO3_zm = {
     },
 };
 
-function getDefaultYAxis(seriesName, minY, maxY, show=false, opposite=false, offsetX=-1, tickAmount=0) {
+function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show=false, opposite=false, offsetX=-1, tickAmount=0) {
     return {
         show,
         opposite,
@@ -98,6 +98,26 @@ function getDefaultYAxis(seriesName, minY, maxY, show=false, opposite=false, off
             show: true,
         },
         tickAmount,
+    }
+}
+
+function getDefaultYAxisTco3Return(seriesName, minY, maxY, show=false, opposite=false, offsetX=-1, tickAmount=0) {
+    return {
+        show,
+        opposite,
+        seriesName,
+        min: minY,
+        max: maxY,
+        //forceNiceScale: true,
+        decimalsInFloat: 0,
+        axisBorder: {
+            show: true,
+            offsetX,
+        },
+        axisTicks: {
+            show: true,
+        },
+        //tickAmount,
     }
 }
 
@@ -188,9 +208,9 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
     if (plotId === O3AS_PLOTS.tco3_zm) {
         const newOptions = JSON.parse(JSON.stringify(defaultTCO3_zm)); // dirt simple and not overly horrible
 
-        newOptions.yaxis.push(...seriesNames.map(name => getDefaultYAxis(name, yAxisRange.minY, yAxisRange.maxY)))
-        newOptions.yaxis.push(getDefaultYAxis(undefined, yAxisRange.minY, yAxisRange.maxY, true, false, -1, getTickAmountYAxisTco3Zm(yAxisRange.minY, yAxisRange.maxY))); // on left side
-        newOptions.yaxis.push(getDefaultYAxis(undefined, yAxisRange.minY, yAxisRange.maxY, true, true, 0, getTickAmountYAxisTco3Zm(yAxisRange.minY, yAxisRange.maxY))); // on right side
+        newOptions.yaxis.push(...seriesNames.map(name => getDefaultYAxisTco3Zm(name, yAxisRange.minY, yAxisRange.maxY)))
+        newOptions.yaxis.push(getDefaultYAxisTco3Zm(undefined, yAxisRange.minY, yAxisRange.maxY, true, false, -1, getTickAmountYAxisTco3Zm(yAxisRange.minY, yAxisRange.maxY))); // on left side
+        newOptions.yaxis.push(getDefaultYAxisTco3Zm(undefined, yAxisRange.minY, yAxisRange.maxY, true, true, 0, getTickAmountYAxisTco3Zm(yAxisRange.minY, yAxisRange.maxY))); // on right side
 
         newOptions.xaxis.min = xAxisRange.years.minX;
         newOptions.xaxis.max = xAxisRange.years.maxX;
@@ -213,9 +233,9 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         // newOptions.yaxis.min = yAxisRange.minY;
         // newOptions.yaxis.max = yAxisRange.maxY;
 
-        newOptions.yaxis.push(...seriesNames.map(name => getDefaultYAxis(name, yAxisRange.minY, yAxisRange.maxY)))
-        newOptions.yaxis.push(getDefaultYAxis(undefined, yAxisRange.minY, yAxisRange.maxY, true, false, 3, getTickAmountYAxisTco3Return(yAxisRange.minY, yAxisRange.maxY))); // on left side
-        newOptions.yaxis.push(getDefaultYAxis(undefined, yAxisRange.minY, yAxisRange.maxY, true, true, -3, getTickAmountYAxisTco3Return(yAxisRange.minY, yAxisRange.maxY))); // on right side
+        newOptions.yaxis.push(...seriesNames.map(name => getDefaultYAxisTco3Return(name, yAxisRange.minY, yAxisRange.maxY)))
+        newOptions.yaxis.push(getDefaultYAxisTco3Zm(undefined, yAxisRange.minY, yAxisRange.maxY, true, false, 3, getTickAmountYAxisTco3Return(yAxisRange.minY, yAxisRange.maxY))); // on left side
+        newOptions.yaxis.push(getDefaultYAxisTco3Zm(undefined, yAxisRange.minY, yAxisRange.maxY, true, true, -3, getTickAmountYAxisTco3Return(yAxisRange.minY, yAxisRange.maxY))); // on right side
         console.log(newOptions.yaxis);
 
         return newOptions;
@@ -827,7 +847,7 @@ function getTickAmountYAxisTco3Zm(min, max) {
 function getTickAmountYAxisTco3Return(min, max) {
     const diff = max - min;
     if (diff <= 200) {
-        return Math.floor(diff / 10) + 1;
+        return Math.floor(diff / 20) + 1;
     } else if (diff <= 400) {
         return Math.floor(diff / 40);
     }
