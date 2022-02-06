@@ -66,15 +66,21 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
  *                                              containing the indices that matched the 
  *                                              search string. The function is called after the
  *                                              search is performed.
+ * @param {boolean} props.shouldReturnValues specifies whether the searchbar should pass indices or values
+ *          to props.foundIndicesCallback
  * @returns {JSX} a pretty searchbar component
  */
 export default function SearchBar(props) {
 
     const { inputArray, foundIndicesCallback } = props;
+    let shouldReturnValues = false;
+    if ('shouldReturnValues' in props) {
+      shouldReturnValues = props.shouldReturnValues;
+    }
 
     const handleInputChange = (event) => {
         const newInput = event.target.value
-        foundIndicesCallback(performSearch(inputArray, newInput));
+        foundIndicesCallback(performSearch(inputArray, newInput, shouldReturnValues));
     }
     
     return (
