@@ -92,6 +92,11 @@ export default function SearchBar(props) {
             placeholder="Search…"
             inputProps={{ 'aria-label': 'search', 'alt': 'Searchbar', 'data-testid': 'SearchbarInput'}}
             onBlur={handleInputChange}
+            onKeyPress={(event) => {
+              if (event.key === "Enter") {
+                handleInputChange(event);
+              }
+            }}
         />
     </Search>
     )
