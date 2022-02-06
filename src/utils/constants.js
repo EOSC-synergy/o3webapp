@@ -34,6 +34,8 @@ export const TCG_Symbol = Symbol("TimeCheckBoxGroup");
 export const XAF_Symbol = Symbol("XAxisField");
 /** Stores the name of the YAxisField component as a Symbol. */
 export const YAF_Symbol = Symbol("YAxisField");
+/** Stores the name of the CustomLatitudeSelector component as a Symbol. */
+export const CLS_Symbol = Symbol("CustomLatitudeSelector");
 
 // TimeCheckboxGroup.js
 /** Stores the season Winter and its corresponding months. */
@@ -194,3 +196,16 @@ export const SV_COLORING = {
 }
 
 export const MODEL_LINE_THICKNESS = 2;
+
+// Custom Latitude Selector
+
+/**
+ * The smallest possible latitude value .
+ */
+export const LATITUDE_BAND_MAX_VALUE = 90;
+
+/**
+  * The biggest possible latitude value.
+  */
+export const LATITUDE_BAND_MIN_VALUE = -90;
+
