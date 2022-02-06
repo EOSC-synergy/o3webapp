@@ -144,8 +144,9 @@ function ModelGroupCard(props) {
                                             event => toggleModelGroupStatisticalValueVisibility(event, key)
                                         }
                                         checked={modelGroupStatisticalValue[key]}
-                                        id={`ModelGroupCoard-toggle-${key}-checkbox`}
-                                        labelid={`ModelGroupCoard-toggle-${key}-label`}
+                                        id={`ModelGroupCard-toggle-${key}-checkbox`}
+                                        labelid={`ModelGroupCard-toggle-${key}-label`}
+                                        data-testid={`ModelGroupCard-toggle-${key}-checkbox`}
                                     />
                                 }
                             />

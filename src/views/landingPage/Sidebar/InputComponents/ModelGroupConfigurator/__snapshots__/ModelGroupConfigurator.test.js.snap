@@ -85,13 +85,14 @@ exports[`test ModelGroupCard rendering renders correctly 1`] = `
         >
           <span
             class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
-            labelid="ModelGroupCoard-toggle-mean-label"
+            data-testid="ModelGroupCard-toggle-mean-checkbox"
+            labelid="ModelGroupCard-toggle-mean-label"
           >
             <input
               checked=""
               class="PrivateSwitchBase-input css-1m9pwf3"
               data-indeterminate="false"
-              id="ModelGroupCoard-toggle-mean-checkbox"
+              id="ModelGroupCard-toggle-mean-checkbox"
               type="checkbox"
             />
             <svg
@@ -125,13 +126,14 @@ exports[`test ModelGroupCard rendering renders correctly 1`] = `
         >
           <span
             class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
-            labelid="ModelGroupCoard-toggle-median-label"
+            data-testid="ModelGroupCard-toggle-median-checkbox"
+            labelid="ModelGroupCard-toggle-median-label"
           >
             <input
               checked=""
               class="PrivateSwitchBase-input css-1m9pwf3"
               data-indeterminate="false"
-              id="ModelGroupCoard-toggle-median-checkbox"
+              id="ModelGroupCard-toggle-median-checkbox"
               type="checkbox"
             />
             <svg
@@ -165,13 +167,14 @@ exports[`test ModelGroupCard rendering renders correctly 1`] = `
         >
           <span
             class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
-            labelid="ModelGroupCoard-toggle-derivative-label"
+            data-testid="ModelGroupCard-toggle-derivative-checkbox"
+            labelid="ModelGroupCard-toggle-derivative-label"
           >
             <input
               checked=""
               class="PrivateSwitchBase-input css-1m9pwf3"
               data-indeterminate="false"
-              id="ModelGroupCoard-toggle-derivative-checkbox"
+              id="ModelGroupCard-toggle-derivative-checkbox"
               type="checkbox"
             />
             <svg
@@ -205,13 +208,14 @@ exports[`test ModelGroupCard rendering renders correctly 1`] = `
         >
           <span
             class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
-            labelid="ModelGroupCoard-toggle-percentile-label"
+            data-testid="ModelGroupCard-toggle-percentile-checkbox"
+            labelid="ModelGroupCard-toggle-percentile-label"
           >
             <input
               checked=""
               class="PrivateSwitchBase-input css-1m9pwf3"
               data-indeterminate="false"
-              id="ModelGroupCoard-toggle-percentile-checkbox"
+              id="ModelGroupCard-toggle-percentile-checkbox"
               type="checkbox"
             />
             <svg
