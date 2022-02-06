@@ -1,4 +1,4 @@
-import { render, fireEvent, waitForElementToBeRemoved } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import AddModelGroupModal from './AddModelGroupModal';
 import { Provider } from "react-redux";
@@ -6,6 +6,8 @@ import * as redux from 'react-redux';
 import { createTestStore } from '../../../../../../store/store';
 import { REQUEST_STATE } from "../../../../../../services/API/apiSlice";
 import { TestScheduler } from 'jest';
+
+const TEST_MODEL_NAME = "CCMI-1_ACCESS_ACCESS-CCM-refC2";
 
 let store;
 describe('test addModelGroupModal rendering', () => {
@@ -69,15 +71,6 @@ describe('test addModelGroupModal rendering', () => {
     });
 
     it("renders correctly if model list provided", () => {
-        const spy = jest.spyOn(redux, 'useSelector');
-        
-        spy.mockReturnValue(
-            { 
-                status: REQUEST_STATE.success,
-                data: ["modelA", "modelB"],
-                error: null,
-            }
-        );
 
         const { baseElement } = render(<Provider store={store}>
             <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}}/>
@@ -95,16 +88,6 @@ describe('test addModelGroupModal functionality', () => {
 
 
     it('disables move all checked buttons if nothing is checked at beginning', () => {
-        const spy = jest.spyOn(redux, 'useSelector');
-        
-        spy.mockReturnValue(
-            { 
-                status: REQUEST_STATE.success,
-                data: ["modelA", "modelB"],
-                error: null,
-            }
-        );
-
         const { getByTestId } = render(<Provider store={store}>
             <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} />
         </Provider>
@@ -116,16 +99,6 @@ describe('test addModelGroupModal functionality', () => {
     });
 
     it("displays spinner when models are being fetched", () => {
-        const spy = jest.spyOn(redux, 'useSelector');
-        
-        spy.mockReturnValue(
-            { 
-                status: REQUEST_STATE.loading,
-                data: [],
-                error: null,
-            }
-        );
-
         const { getAllByTestId } = render(<Provider store={store}>
             <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} />
         </Provider>);
@@ -133,45 +106,10 @@ describe('test addModelGroupModal functionality', () => {
         expect(circularProgress.length).toBe(2);
     });
 
-    it("call props.reportError if fetching models failed", () => {
-        const spy = jest.spyOn(redux, 'useSelector');
-        const mockReportError = jest.fn();
-        const errorMessage = "blob";
-        
-        spy.mockReturnValueOnce(
-            { 
-                status: REQUEST_STATE.error,
-                data: [],
-                error: errorMessage,
-            }
-        );
-
-        render(<Provider store={store}>
-            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={mockReportError} />
-        </Provider>);
-
-        expect(mockReportError).toHaveBeenCalledWith("API not responding: " + errorMessage);
-    });
-    
-    it("check if models are rendered on the left", () => {
-        const spy = jest.spyOn(redux, 'useSelector');
-        
-        spy.mockReturnValue(
-            { 
-                status: REQUEST_STATE.success,
-                data: ["modelA", "modelB"],
-                error: null,
-            }
-        );
-
-        const { baseElement } = render(<Provider store={store}>
-            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}}/>
-        </Provider>);
-
-        expect(baseElement).toHaveTextContent("modelA");
-    });
-
+    test.todo("call props.reportError if fetching models failed");
+    test.todo("check if models are rendered on the left");
     test.todo("check if models can be moved from left to right");
     test.todo("check if models not being selected by search are being hidden");
-
+    test.todo("check default model group name is rendered when props.modelGroupId is provided");
+    test.todo("check default models on the right are rendered when props.modelGroupId is provided")
 });

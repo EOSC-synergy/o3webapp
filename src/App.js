@@ -14,7 +14,7 @@ function App() {
 
     const [isErrorModalVisible, setErrorModalVisible] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState(null);  // if errorMessage null no error
-    const [isCookieConsentModalVisible, setCookieConsentModalVisibility] = React.useState(true);
+    // const [isCookieConsentModalVisible, setCookieConsentModalVisibility] = React.useState(true);
     const [errorMessages, setErrorMessages] = React.useState([]);
     const [isSidebarOpen, setSidebarOpen] = React.useState(false);
 
@@ -69,15 +69,15 @@ function App() {
         setErrorModalVisible(false);
     }
 
-    /**
-     * closes the cookie consent modal
-     */
-    const onCloseCookieConsentModal = (event, reason) => {
-        if (reason !== 'backdropClick') {
-            setCookieConsentModalVisibility(false);
-            // store accepting cookies
-        }
-    }
+    // /**
+    //  * closes the cookie consent modal
+    //  */
+    // const onCloseCookieConsentModal = (event, reason) => {
+    //     if (reason !== 'backdropClick') {
+    //         setCookieConsentModalVisibility(false);
+    //         // store accepting cookies
+    //     }
+    // }
 
 
     return (
@@ -86,7 +86,7 @@ function App() {
         <LandingPage reportError={reportError} openSidebar={openSidebar} closeSidebar={closeSidebar} isSidebarOpen={isSidebarOpen} />
         <Footer reportError={reportError} />
         <ErrorMessageModal isOpen={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />
-        <CookieConsentModal isOpen={isCookieConsentModalVisible} onClose={onCloseCookieConsentModal} />
+        {/* <CookieConsentModal isOpen={isCookieConsentModalVisible} onClose={onCloseCookieConsentModal} /> */}
     </div>
     );
 }

@@ -11,6 +11,7 @@ exports[`test addModelGroupModal rendering renders correctly if model list provi
     aria-describedby="modal-modal-description"
     aria-labelledby="modal-modal-title"
     class="MuiModal-root css-79ws1d-MuiModal-root"
+    data-testid="AddModelGroupModal-modal-wrapper"
     role="presentation"
   >
     <div
@@ -157,163 +158,26 @@ exports[`test addModelGroupModal rendering renders correctly if model list provi
               >
                 All available models
               </p>
-              <div
-                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-bhp9pd-MuiPaper-root-MuiCard-root"
+              <span
+                class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-18lrjg1-MuiCircularProgress-root"
+                data-testid="AddModelGroupModal-spinner-left"
+                role="progressbar"
+                style="width: 40px; height: 40px;"
               >
-                <div
-                  class="MuiCardHeader-root css-e6s3aq-MuiCardHeader-root"
+                <svg
+                  class="MuiCircularProgress-svg css-1idz92c-MuiCircularProgress-svg"
+                  viewBox="22 22 44 44"
                 >
-                  <div
-                    class="MuiCardHeader-avatar css-1ssile9-MuiCardHeader-avatar"
-                  >
-                    <span
-                      class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
-                    >
-                      <input
-                        aria-label="all items selected"
-                        class="PrivateSwitchBase-input css-1m9pwf3"
-                        data-indeterminate="false"
-                        type="checkbox"
-                      />
-                      <svg
-                        aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                        data-testid="CheckBoxOutlineBlankIcon"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
-                        />
-                      </svg>
-                      <span
-                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                      />
-                    </span>
-                  </div>
-                  <div
-                    class="MuiCardHeader-content css-1qbkelo-MuiCardHeader-content"
-                  >
-                    <span
-                      class="MuiTypography-root MuiTypography-body2 MuiCardHeader-title css-et1ao3-MuiTypography-root"
-                    >
-                      0/2 selected
-                    </span>
-                  </div>
-                </div>
-                <hr
-                  class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
-                />
-                <div
-                  class="MuiList-root MuiList-padding MuiList-dense css-nxipgw-MuiList-root"
-                  role="list"
-                >
-                  <div
-                    class="MuiButtonBase-root MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding MuiListItem-button css-qyxyi3-MuiButtonBase-root-MuiListItem-root"
-                    role="listitem"
-                    tabindex="0"
-                  >
-                    <div
-                      class="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"
-                    >
-                      <span
-                        class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-355xbt-MuiButtonBase-root-MuiCheckbox-root"
-                        data-testid="AddModelGroupModal-transfer-list-item-transfer-list-all-item-modelA-label-checkbox"
-                      >
-                        <input
-                          aria-labelledby="transfer-list-all-item-modelA-label"
-                          class="PrivateSwitchBase-input css-1m9pwf3"
-                          data-indeterminate="false"
-                          tabindex="-1"
-                          type="checkbox"
-                        />
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                          data-testid="CheckBoxOutlineBlankIcon"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
-                          />
-                        </svg>
-                      </span>
-                    </div>
-                    <div
-                      class="MuiListItemText-root MuiListItemText-dense MuiListItemText-multiline css-konndc-MuiListItemText-root"
-                      id="transfer-list-all-item-modelA-label"
-                    >
-                      <span
-                        class="MuiTypography-root MuiTypography-body2 MuiListItemText-primary css-et1ao3-MuiTypography-root"
-                      >
-                        modelA
-                      </span>
-                      <p
-                        class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                      >
-                        institute: 
-project: 
-                      </p>
-                    </div>
-                    <span
-                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                    />
-                  </div>
-                  <div
-                    class="MuiButtonBase-root MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding MuiListItem-button css-qyxyi3-MuiButtonBase-root-MuiListItem-root"
-                    role="listitem"
-                    tabindex="0"
-                  >
-                    <div
-                      class="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"
-                    >
-                      <span
-                        class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-355xbt-MuiButtonBase-root-MuiCheckbox-root"
-                        data-testid="AddModelGroupModal-transfer-list-item-transfer-list-all-item-modelB-label-checkbox"
-                      >
-                        <input
-                          aria-labelledby="transfer-list-all-item-modelB-label"
-                          class="PrivateSwitchBase-input css-1m9pwf3"
-                          data-indeterminate="false"
-                          tabindex="-1"
-                          type="checkbox"
-                        />
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                          data-testid="CheckBoxOutlineBlankIcon"
-                          focusable="false"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
-                          />
-                        </svg>
-                      </span>
-                    </div>
-                    <div
-                      class="MuiListItemText-root MuiListItemText-dense MuiListItemText-multiline css-konndc-MuiListItemText-root"
-                      id="transfer-list-all-item-modelB-label"
-                    >
-                      <span
-                        class="MuiTypography-root MuiTypography-body2 MuiListItemText-primary css-et1ao3-MuiTypography-root"
-                      >
-                        modelB
-                      </span>
-                      <p
-                        class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
-                      >
-                        institute: 
-project: 
-                      </p>
-                    </div>
-                    <span
-                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                    />
-                  </div>
-                </div>
-              </div>
+                  <circle
+                    class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-176wh8e-MuiCircularProgress-circle"
+                    cx="44"
+                    cy="44"
+                    fill="none"
+                    r="20.2"
+                    stroke-width="3.6"
+                  />
+                </svg>
+              </span>
             </div>
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-2 css-63b4os-MuiGrid-root"
@@ -352,61 +216,30 @@ project:
                 Models in 
                 your group
               </p>
-              <div
-                class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-bhp9pd-MuiPaper-root-MuiCard-root"
+              <span
+                class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-18lrjg1-MuiCircularProgress-root"
+                data-testid="AddModelGroupModal-spinner-right"
+                role="progressbar"
+                style="width: 40px; height: 40px;"
               >
-                <div
-                  class="MuiCardHeader-root css-e6s3aq-MuiCardHeader-root"
+                <svg
+                  class="MuiCircularProgress-svg css-1idz92c-MuiCircularProgress-svg"
+                  viewBox="22 22 44 44"
                 >
-                  <div
-                    class="MuiCardHeader-avatar css-1ssile9-MuiCardHeader-avatar"
-                  >
-                    <span
-                      aria-disabled="true"
-                      class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root Mui-disabled MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-disabled css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
-                      tabindex="-1"
-                    >
-                      <input
-                        aria-label="all items selected"
-                        class="PrivateSwitchBase-input css-1m9pwf3"
-                        data-indeterminate="false"
-                        disabled=""
-                        type="checkbox"
-                      />
-                      <svg
-                        aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                        data-testid="CheckBoxOutlineBlankIcon"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
-                        />
-                      </svg>
-                    </span>
-                  </div>
-                  <div
-                    class="MuiCardHeader-content css-1qbkelo-MuiCardHeader-content"
-                  >
-                    <span
-                      class="MuiTypography-root MuiTypography-body2 MuiCardHeader-title css-et1ao3-MuiTypography-root"
-                    >
-                      0/0 selected
-                    </span>
-                  </div>
-                </div>
-                <hr
-                  class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
-                />
-                <div
-                  class="MuiList-root MuiList-padding MuiList-dense css-nxipgw-MuiList-root"
-                  role="list"
-                />
-              </div>
+                  <circle
+                    class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-176wh8e-MuiCircularProgress-circle"
+                    cx="44"
+                    cy="44"
+                    fill="none"
+                    r="20.2"
+                    stroke-width="3.6"
+                  />
+                </svg>
+              </span>
             </div>
           </div>
         </div>
+        
       </div>
       <div
         class="MuiCardActions-root MuiCardActions-spacing css-1kj8htw-MuiCardActions-root"
@@ -450,6 +283,7 @@ exports[`test addModelGroupModal rendering renders correctly when open 1`] = `
     aria-describedby="modal-modal-description"
     aria-labelledby="modal-modal-title"
     class="MuiModal-root css-79ws1d-MuiModal-root"
+    data-testid="AddModelGroupModal-modal-wrapper"
     role="presentation"
   >
     <div
@@ -677,6 +511,7 @@ exports[`test addModelGroupModal rendering renders correctly when open 1`] = `
             </div>
           </div>
         </div>
+        
       </div>
       <div
         class="MuiCardActions-root MuiCardActions-spacing css-1kj8htw-MuiCardActions-root"

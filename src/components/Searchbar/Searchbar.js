@@ -2,7 +2,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { InputBase } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import React from 'react';
-import { performSearch } from '../../../../../../utils/textSearch';
+import { performSearch } from '../../utils/textSearch';
 import PropTypes from 'prop-types';
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
@@ -57,7 +57,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
  * that either contains strings or objects. If the array contains objects the
  * values of these objects are searched.
  
- * @param {*} props holds all props passed to the component
+ * @param {Object} props holds all props passed to the component
  * @param {array} props.inputArray an array of either only strings or only objects.
  *                                 The input typed in the searchbar is used as a search
  *                                 string. If an array of objects is passed the values of
@@ -66,18 +66,21 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
  *                                              containing the indices that matched the 
  *                                              search string. The function is called after the
  *                                              search is performed.
+ * @param {boolean} props.shouldReturnValues specifies whether the searchbar should pass indices or values
+ *          to props.foundIndicesCallback
  * @returns {JSX} a pretty searchbar component
  */
 export default function SearchBar(props) {
 
     const { inputArray, foundIndicesCallback } = props;
-
-    const [input, setInput] = React.useState("");
+    let shouldReturnValues = false;
+    if ('shouldReturnValues' in props) {
+      shouldReturnValues = props.shouldReturnValues;
+    }
 
     const handleInputChange = (event) => {
         const newInput = event.target.value
-        setInput(newInput);
-        foundIndicesCallback(performSearch(inputArray, newInput));
+        foundIndicesCallback(performSearch(inputArray, newInput, shouldReturnValues));
     }
     
     return (
@@ -88,8 +91,12 @@ export default function SearchBar(props) {
         <StyledInputBase
             placeholder="Search…"
             inputProps={{ 'aria-label': 'search', 'alt': 'Searchbar', 'data-testid': 'SearchbarInput'}}
-            value={input}
-            onChange={handleInputChange}
+            onBlur={handleInputChange}
+            onKeyPress={(event) => {
+              if (event.key === "Enter") {
+                handleInputChange(event);
+              }
+            }}
         />
     </Search>
     )

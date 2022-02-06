@@ -30,10 +30,12 @@ export const fullTextSearch = (elem, searchStr) => {
  * Eeach item in the array that has the searchString as a substring is a valid search result.
  * 
  * @param {array of string|object} array holds the items that are searched
- * @param {*} searchString specifies what should be searched for
+ * @param {String} searchString specifies what should be searched for
+ * @param {boolean} shouldReturnValues specifies whether performSeach returns values or indices of
+ *          found matches
  * @returns {array} containing the indices of all elements in the array where the searchString matched
  */
- export const performSearch = (array, searchString) => {
+ export const performSearch = (array, searchString, shouldReturnValues) => {
     let arrayMappedToIndices = array.map(
         (elem, index) => ({index, value: elem})
     )
@@ -41,5 +43,5 @@ export const fullTextSearch = (elem, searchStr) => {
         ({index, value}) => fullTextSearch(value, searchString)
     )
     
-    return arrayMappedToIndices.map(({index, value}) => index)
+    return arrayMappedToIndices.map(({index, value}) => shouldReturnValues ? value : index)
 }
