@@ -1932,7 +1932,7 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
       style="display: flex; justify-content: center; align-items: center; height: 768px;"
     >
       <div
-        style="width: 95%; margin-top: 2%;"
+        style="width: 95%;"
       >
         <div
           style="display: flex; align-items: center; justify-content: center; height: 300px;"
