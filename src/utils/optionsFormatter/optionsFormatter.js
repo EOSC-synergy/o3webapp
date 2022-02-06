@@ -28,7 +28,10 @@ export const defaultTCO3_zm = {
             rotate: 0
         },
         title: {
-            text: "Year"
+            text: "Year",
+            style: {
+                fontSize: "1rem",
+            },
         }
     },
     yaxis: [], 
@@ -82,7 +85,7 @@ export const defaultTCO3_zm = {
             fontSize:  "30px",
             fontWeight:  "bold",
             fontFamily:  "undefined",
-            color:  "#4350af"
+            color:  "#000000",
         }
     },
 };
@@ -106,6 +109,9 @@ function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show=false, opposite=fals
         tickAmount,
         title: {
             text: "TCO(DU)",
+            style: {
+                fontSize: "1rem",
+            },
         }
     }
 }
@@ -128,7 +134,10 @@ function getDefaultYAxisTco3Return(seriesName, minY, maxY, show=false, opposite=
         },
         tickAmount,
         title: {
-            text: "Year"
+            text: "Year",
+            style: {
+                fontSize: "1rem",
+            },
         }
     }
 }
@@ -145,7 +154,10 @@ export const default_TCO3_return = {
     xaxis: {
         title: {
             text: "Region",
-        }
+            style: {
+                fontSize: "1rem",
+            },
+        },
     },
     yaxis: [], 
     grid: {
@@ -171,7 +183,7 @@ export const default_TCO3_return = {
             fontSize:  "30px",
             fontWeight:  "bold",
             fontFamily:  "undefined",
-            color:  "#4350af"
+            color:  "#000000"
         }
     },
     tooltip: {
