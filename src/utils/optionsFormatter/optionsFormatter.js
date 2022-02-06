@@ -26,7 +26,7 @@ export const defaultTCO3_zm = {
         decimalsInFloat: 0,
         labels: {
             rotate: 0
-        } 
+        },
     },
     yaxis: [], 
     chart: {
@@ -94,6 +94,12 @@ function getDefaultYAxis(seriesName, minY, maxY, show=false, opposite=false, off
             show: true,
             offsetX,
         },
+        /*
+        axisTicks: {
+            show: true,
+        },
+        */
+        //tickAmount: 10,
     }
 }
 
@@ -106,43 +112,7 @@ function getDefaultYAxis(seriesName, minY, maxY, show=false, opposite=false, off
  * More can be found here: https://apexcharts.com/docs/installation/ 
  */
 export const default_TCO3_return = {
-    yaxis: [
-        {   
-            seriesName: "mean (Example Group)",
-            forceNiceScale: true,
-            decimalsInFloat: 0,
-            axisBorder: {
-                show: true,
-                offsetX: 3,
-            },
-            min: 2000,
-            max: 2100,
-        },
-        {  
-            show: false, 
-            seriesName: "CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG",
-            forceNiceScale: true,
-            decimalsInFloat: 0,
-            axisBorder: {
-                show: false,
-                offsetX: 3,
-            },
-            min: 2000,
-            max: 2100,
-        },
-        {
-            seriesName: "mean (Example Group)",
-            opposite: true,
-            forceNiceScale: true,
-            decimalsInFloat: 0,
-            axisBorder: {
-                show: true,
-                offsetX: 3,
-            },
-            min: 2000,
-            max: 2100,
-        }
-    ], 
+    yaxis: [], 
     chart: {
       id: O3AS_PLOTS.tco3_return,
       type: 'boxPlot',
@@ -223,11 +193,7 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.yaxis.push(...seriesNames.map(name => getDefaultYAxis(name, yAxisRange.minY, yAxisRange.maxY)))
         newOptions.yaxis.push(getDefaultYAxis(undefined, yAxisRange.minY, yAxisRange.maxY, true, false)); // on left side
         newOptions.yaxis.push(getDefaultYAxis(undefined, yAxisRange.minY, yAxisRange.maxY, true, true, 0)); // on right side
-        console.log(newOptions.yaxis)
-        /*
-        newOptions.yaxis.min = yAxisRange.minY;
-        newOptions.yaxis.max = yAxisRange.maxY;
-        */
+
         newOptions.xaxis.min = xAxisRange.years.minX;
         newOptions.xaxis.max = xAxisRange.years.maxX;
         newOptions.xaxis.tickAmount = getOptimalTickAmount(xAxisRange.years.minX, xAxisRange.years.maxX);
@@ -246,8 +212,13 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.title = JSON.parse(JSON.stringify(newOptions.title));  // this is necessary in order for apexcharts to update the title
         newOptions.title.text = plotTitle;
 
-        newOptions.yaxis.min = yAxisRange.minY;
-        newOptions.yaxis.max = yAxisRange.maxY;
+        // newOptions.yaxis.min = yAxisRange.minY;
+        // newOptions.yaxis.max = yAxisRange.maxY;
+
+        newOptions.yaxis.push(...seriesNames.map(name => getDefaultYAxis(name, yAxisRange.minY, yAxisRange.maxY)))
+        newOptions.yaxis.push(getDefaultYAxis(undefined, yAxisRange.minY, yAxisRange.maxY, true, false, 3)); // on left side
+        newOptions.yaxis.push(getDefaultYAxis(undefined, yAxisRange.minY, yAxisRange.maxY, true, true, -3)); // on right side
+        
 
         return newOptions;
     }    
