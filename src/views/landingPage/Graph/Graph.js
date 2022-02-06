@@ -46,7 +46,8 @@ function Graph(props) {
 
     } else if (activeData.status === REQUEST_STATE.success) {
         const {data, styling} = generateSeries({plotId, data: activeData.data, modelsSlice, xAxisRange, yAxisRange});
-        const options = getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange});
+        const seriesNames = data.map(series => series.name);
+        const options = getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, seriesNames});
         const uniqueNumber = Date.now(); // forces apexcharts to re-render correctly!
         return <Chart key={uniqueNumber} options={options} series={data} type={APEXCHART_PLOT_TYPE[plotId]} height={HEIGHT_GRAPH} />
     };
