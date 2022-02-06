@@ -2,6 +2,11 @@ import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import { Grid, Link } from '@mui/material';
 
+/**
+ * The links in the footer with label and href.
+ *
+ * @type {Array.<{label: string, href: string}>}
+ */
 export const links = [
     {
         label: "Home",
@@ -15,6 +20,7 @@ export const links = [
         label: "Terms of Use",
         href: "https://o3as.data.kit.edu/policies/terms-of-use.html"
     },
+    // last element will be in a separate line (except on mobile)
     {
         label: "How to Acknowledge",
         href: "https://o3as.data.kit.edu/policies/how-to-acknowledge.html"
@@ -22,10 +28,8 @@ export const links = [
 ]
 
 /**
- * A container for important links
- * at the bottom of the Website.
- * Contains links to the impressum, 
- * privacy policy and the terms of service
+ * A container for copyright text and important links at the bottom of the Website.
+ * Contains links to home page, privacy policy, terms of use and how to acknowledge
  */
 function Footer () {
     return (
