@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import Section from './Section/Section.js';
 import defaultStructure from '../../../config/defaultConfig.json';
 import tco3_zm from '../../../config/tco3_zm.json';
@@ -13,6 +13,9 @@ import { Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import PropTypes from 'prop-types';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+
+const DRAWER_WIDTH = 400;
 
 /**
  * Defining a drawerheader section at the beginning of a drawer
@@ -36,7 +39,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
  */
 function Sidebar(props) {
 
-    // const dispatch = useDispatch()
+    const theme = useTheme();
 
     const [isDownloadModalVisible, setDownloadModalVisible] = React.useState(false);
     const [expandedSection, setExpandedSection] = React.useState(null); // -> idx of sections array
@@ -117,11 +120,11 @@ function Sidebar(props) {
                 onOpen={props.onOpen}
                 variant="persistent"
                 sx= {{
-                    width: 400,
+                    width: DRAWER_WIDTH,
                     maxWidth: "100vw",
                     flexShrink: 0,
                     '& .MuiDrawer-paper': {
-                        width: 400,
+                        width: DRAWER_WIDTH,
                         maxWidth: "100vw",
                     },
                 }}
@@ -149,7 +152,16 @@ function Sidebar(props) {
                         />
                     )}
 
-                    <Button sx={{marginLeft: "10%", marginTop: "1em", width: "80%"}} variant="outlined" onClick={openDownloadModal}>Download</Button>
+                    <Button                 
+                        startIcon={<FileDownloadIcon />}
+                        variant="contained"
+                        position="fixed"
+                        sx={{ position: 'fixed', bottom: 0, right: 0, width:DRAWER_WIDTH, backgroundColor: theme.palette.primary.light, height: "8%" }}
+                        elevation={3}
+                        onClick={openDownloadModal}
+                    >
+                    Download
+                    </Button>
                     <DownloadModal reportError={props.reportError} isOpen={isDownloadModalVisible} onClose={closeDownloadModal} />
         </SwipeableDrawer>
     );
