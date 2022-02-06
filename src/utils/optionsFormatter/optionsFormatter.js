@@ -127,7 +127,6 @@ export function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show=false, opposi
         seriesName,
         min: minY,
         max: maxY,
-        forceNiceScale: true,
         decimalsInFloat: 0,
         axisBorder: {
             show: true,
@@ -147,6 +146,11 @@ export function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show=false, opposi
         labels: {
             formatter: formatYLabelsNicely,
         },
+        /*
+        tooltip: {
+          enabled: true, // => kinda messy
+        }
+        */
     }
 }
 
@@ -289,12 +293,16 @@ export const default_TCO3_return = {
  * @returns an default_TCO3_plotId object formatted with the given data
  */
 export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, seriesNames}) {
+    const minY = roundDownToMultipleOfTen(yAxisRange.minY); 
+    const maxY = roundUpToMultipleOfTen(yAxisRange.maxY);     
+    
     if (plotId === O3AS_PLOTS.tco3_zm) {
         const newOptions = JSON.parse(JSON.stringify(defaultTCO3_zm)); // dirt simple and not overly horrible
 
-        newOptions.yaxis.push(...seriesNames.map(name => getDefaultYAxisTco3Zm(name, yAxisRange.minY, yAxisRange.maxY)))
-        newOptions.yaxis.push(getDefaultYAxisTco3Zm(undefined, yAxisRange.minY, yAxisRange.maxY, true, false, -1, getTickAmountYAxisTco3Zm(yAxisRange.minY, yAxisRange.maxY))); // on left side
-        newOptions.yaxis.push(getDefaultYAxisTco3Zm(undefined, yAxisRange.minY, yAxisRange.maxY, true, true, 0, getTickAmountYAxisTco3Zm(yAxisRange.minY, yAxisRange.maxY))); // on right side
+        const tickAmount = getTickAmountYAxisTco3Zm(minY, maxY)
+        newOptions.yaxis.push(...seriesNames.map(name => getDefaultYAxisTco3Zm(name, minY, maxY, false, false, 0, tickAmount)))
+        newOptions.yaxis.push(getDefaultYAxisTco3Zm(undefined, minY, maxY, true, false, -1, tickAmount)); // on left side
+        newOptions.yaxis.push(getDefaultYAxisTco3Zm(undefined, minY, maxY, true, true, 0, tickAmount)); // on right side
 
         newOptions.xaxis.min = xAxisRange.years.minX;
         newOptions.xaxis.max = xAxisRange.years.maxX;
@@ -786,7 +794,7 @@ export const preTransformApiData = ({plotId, data}) => {
                 data: normalizedArray, // this should speed up the calculation of the statistical values later
             };
         }
-        console.log(Math.max(...maximums))
+        console.log(maximums)
         return lookUpTable;
     } else if (plotId === O3AS_PLOTS.tco3_return) {
         const lookUpTable = {};
@@ -938,7 +946,7 @@ export function getOptimalTickAmount(min, max) {
 export function getTickAmountYAxisTco3Zm(min, max) {
     const diff = max - min;
     if (diff <= 200) {
-        return Math.floor(diff / 5) + 1;
+        return Math.floor(diff / 5);
     } else if (diff <= 400) {
         return Math.floor(diff / 40);
     }
