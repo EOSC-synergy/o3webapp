@@ -1,6 +1,22 @@
 import { createTestStore } from "../../store/store";
 import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, START_YEAR, MODEL_LINE_THICKNESS } from "../constants";
-import { colorNameToHex, convertToStrokeStyle, generateSeries, getIncludedModels, getOptions, normalizeArray, preTransformApiData, default_TCO3_return, getDefaultYAxisTco3Return } from "./optionsFormatter";
+import { 
+    colorNameToHex, 
+    convertToStrokeStyle, 
+    generateSeries, 
+    getOptions, 
+    normalizeArray, 
+    preTransformApiData, 
+    default_TCO3_return, 
+    getDefaultYAxisTco3Return, 
+    getOptimalTickAmount, 
+    getTickAmountYAxisTco3Zm, 
+    getTickAmountYAxisTco3Return, 
+    roundUpToMultipleOfTen, 
+    roundDownToMultipleOfTen, 
+    formatYLabelsNicely,
+    parseSvName
+} from "./optionsFormatter";
 
 describe("testing optionsFormatter functionality", () => {
     const spacedYearArray = [...Array(10).keys()].map(number => `${START_YEAR + 2 * number}`);
@@ -154,4 +170,40 @@ describe("testing optionsFormatter functionality", () => {
         expect(convertToStrokeStyle("no valid line style")).toEqual(false);
     });
 
+    it('should calculate the optimal tick amount for the x-axis for the tco3_zm', () => {
+        const max = 200;
+        const factor = 10;
+        expect(getOptimalTickAmount(0, max)).toEqual(max / factor);
+    });
+
+    it('should calculate the optimal tick amount for the y-axis for the tco3_zm', () => {
+        expect(getTickAmountYAxisTco3Zm(0, 100)).toEqual(21);
+    });
+
+    it('should calculate the optimal tick amount for the y-axis for the tco3_return', () => {
+        expect(getTickAmountYAxisTco3Return(0, 100)).toEqual(20);
+    });
+
+    it('should round up to a multiple of ten correctly', () => {
+        expect(roundUpToMultipleOfTen(13)).toEqual(20); // roundup
+        expect(roundUpToMultipleOfTen(10)).toEqual(10); // no roundup required
+    });
+
+    it('should round down to a multiple of ten correctly', () => {
+        expect(roundDownToMultipleOfTen(13)).toEqual(10); // round down
+        expect(roundDownToMultipleOfTen(100)).toEqual(100); // no rounddown required
+    });
+
+    it('should format the y-labels nicely', () => {
+        expect(formatYLabelsNicely(30)).toEqual(30);
+        expect(formatYLabelsNicely(5)).toEqual("");
+        expect(formatYLabelsNicely(7)).toEqual("");
+    });
+
+    it('should parse the sv name accordingly', () => {
+        expect(parseSvName("mean+std(Example Group)")).toEqual({
+            sv: "mean+std",
+            groupName: "Example Group",
+        });
+    });
 });
