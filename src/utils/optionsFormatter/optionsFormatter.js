@@ -11,7 +11,7 @@ const SERIES_GENERATION = {}; // Map plotId to corresponding generation function
 SERIES_GENERATION[O3AS_PLOTS.tco3_zm] = generateTco3_ZmSeries;
 SERIES_GENERATION[O3AS_PLOTS.tco3_return] = generateTco3_ReturnSeries;
 
-const FONT_FAMILY = [
+export const FONT_FAMILY = [
     '-apple-system',
     'BlinkMacSystemFont',
     '"Segoe UI"',

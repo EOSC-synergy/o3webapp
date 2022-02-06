@@ -15,7 +15,9 @@ import {
     roundUpToMultipleOfTen, 
     roundDownToMultipleOfTen, 
     formatYLabelsNicely,
-    parseSvName
+    parseSvName,
+    getDefaultYAxisTco3Zm,
+    FONT_FAMILY,
 } from "./optionsFormatter";
 
 describe("testing optionsFormatter functionality", () => {
@@ -205,5 +207,39 @@ describe("testing optionsFormatter functionality", () => {
             sv: "mean+std",
             groupName: "Example Group",
         });
+    });
+
+    it('should return the default y-axis config for the tco3_zm', () => {
+        
+
+        const expectedYAxisConfig = {
+            show: true,
+            opposite: true,
+            seriesName: "seriesX",
+            min: 42,
+            max: 420,
+            forceNiceScale: true,
+            decimalsInFloat: 0,
+            axisBorder: {
+                show: true,
+                offsetX: -3,
+            },
+            axisTicks: {
+                show: true,
+            },
+            tickAmount: 10,
+            title: {
+                text: "TCO(DU)",
+                style: {
+                    fontSize: "1rem",
+                    fontFamily: FONT_FAMILY,
+                },
+            },
+            labels: {
+                formatter: formatYLabelsNicely,
+            },
+        }
+
+        expect(getDefaultYAxisTco3Zm("seriesX", 42, 420, true, true, -3, 10)).toEqual(expectedYAxisConfig);
     });
 });
