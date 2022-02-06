@@ -1,16 +1,19 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import { Grid, Link } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
 
 export const links = [
     {
-        label: "Terms of Use",
-        href: "https://o3as.data.kit.edu/policies/terms-of-use.html"
+        label: "Home",
+        href: "https://o3as.data.kit.edu/#page-top"
     },
     {
         label: "Privacy Policy",
         href: "https://o3as.data.kit.edu/policies/privacy-policy.html"
+    },
+    {
+        label: "Terms of Use",
+        href: "https://o3as.data.kit.edu/policies/terms-of-use.html"
     },
     {
         label: "How to Acknowledge",
@@ -24,12 +27,11 @@ export const links = [
  * Contains links to the impressum, 
  * privacy policy and the terms of service
  */
-function Footer (props) {
-    let theme = useTheme();
+function Footer () {
     return (
         <div
             style={{
-                width: '100vw'
+                width: '100%'
             }}
         >
 
@@ -41,28 +43,86 @@ function Footer (props) {
                 alignItems="center"
                 data-testid="footer-grid-container"
                 sx={{
-                    position: 'absolute',
-                    bottom: 0,
-                    backgroundColor: theme.palette.grey[200],
+                    position: 'relative',
+                    backgroundColor: '#111',
                     textAlign: 'center',
-                    paddingTop: '1.5em',
-                    paddingBottom: '1.5em',
-                    marginRight: 0
+                    marginTop: '10px',
+                    paddingTop: '3px',
+                    paddingBottom: '20px',
                 }}>
-                {links.map((x, idx) => {
-                    return (
-                        <Grid
-                            item
-                            sm={12 / links.length}
-                            style={{alignText:"center"}} key={idx}
-                            data-testid={`footer-grid-item-${links.label}`}
+                <Grid
+                    item
+                    container
+                    justifyContent="center"
+                    md={6}
+                    sm={12}
+                    key="Copyright text KIT - outer grid"
+                >
+                    <Grid
+                        item
+                        md={6}
+                        sx={{
+                            textAlign:"center",
+                        }}
+                        key="Copyright text KIT - inner grid"
+                    >
+                    <span style={{color: '#fed136'}}>
+                        <Typography
+                            sx={{
+                                fontSize: 14,
+                                lineHeight: 3
+                            }}
                         >
-                            <Link href={x.href} data-testid={`footer-link-${links.label}`}>
-                                <Typography>{x.label}</Typography>
-                            </Link>
-                        </Grid>
-                    );
-                })}
+                            Copyright © KIT – The Research University in the Helmholtz Association
+                        </Typography>
+                    </span>
+                    </Grid>
+                </Grid>
+                <Grid
+                    item
+                    container
+                    direction="row"
+                    justifyContent="center"
+                    md={6}
+                    sm={12}
+                    sx={{
+                        textAlign:"center",
+                    }}
+                    key="links"
+                    data-testid={`footer-grid-item`}
+                >
+                    {links.map((x, idx) => {
+                        return (
+                            <Grid
+                                item
+                                md={idx === links.length - 1 ? 12 : ""}
+                                key={idx}
+                                sx={{
+                                    mx: 1
+                                }}
+                            >
+                                <Link
+                                    href={x.href}
+                                    data-testid={`footer-link-${links.label}`}
+                                    sx={{
+                                        color: '#fed136',
+                                        textDecoration: 'none',
+                                    }}
+                                    underline='hover'
+                                >
+                                    <Typography
+                                        sx={{
+                                            fontSize: 14,
+                                            lineHeight: 3
+                                        }}
+                                    >
+                                        {x.label}
+                                    </Typography>
+                                </Link>
+                            </Grid>
+                        );
+                    })}
+                </Grid>
             </Grid>
         </div>
     );
