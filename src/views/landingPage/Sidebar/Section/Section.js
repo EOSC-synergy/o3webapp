@@ -4,11 +4,11 @@ import LocationSelector from "../InputComponents/LatitudeBandSelector/LatitudeBa
 import ModelGroupConfigurator from "../InputComponents/ModelGroupConfigurator/ModelGroupConfigurator";
 import OffsetConfigurator from "../InputComponents/OffsetConfigurator/OffsetConfigurator";
 import PlotNameField from "../InputComponents/PlotNameField/PlotNameField";
-import ReferenceYearSlider from "../InputComponents/ReferenceYearSlider/ReferenceYearSlider";
+import ReferenceYearField from "../InputComponents/ReferenceYearField/ReferenceYearField";
 import RegionSelector from "../InputComponents/RegionSelector/RegionSelector";
 import TimeCheckBoxGroup from "../InputComponents/TimeCheckboxGroup/TimeCheckboxGroup";
-import XAxisSlider from "../InputComponents/XAxisSlider/XAxisSlider";
-import YAxisSlider from "../InputComponents/YAxisSlider/YAxisSlider";
+import XAxisField from "../InputComponents/XAxisField/XAxisField";
+import YAxisField from "../InputComponents/YAxisField/YAxisField";
 import PropTypes from 'prop-types'; 
 import LatitudeBandSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
 import ReferenceModelSelector from "../InputComponents/ReferenceModelSelector/ReferenceModelSelector";
@@ -25,11 +25,11 @@ import {
     OC_Symbol,
     PNF_Symbol,
     RMS_Symbol,
-    RYS_Symbol,
     RS_Symbol,
+    RYF_Symbol,
     TCG_Symbol,
-    XAS_Symbol,
-    YAS_Symbol
+    XAF_Symbol,
+    YAF_Symbol,
 } from "../../../../utils/constants";
 
 
@@ -123,16 +123,16 @@ function Section(props) {
                     return <PlotNameField key={key} reportError={props.reportError} />;
                 case RMS_Symbol.description:
                     return <ReferenceModelSelector key={key} reportError={props.reportError}/>;
-                case RYS_Symbol.description:
-                    return <ReferenceYearSlider key={key} reportError={props.reportError} />;
+                case RYF_Symbol.description:
+                    return <ReferenceYearField key={key} reportError={props.reportError} />;
                 case RS_Symbol.description:
                     return <RegionSelector key={key} reportError={props.reportError} />;
                 case TCG_Symbol.description:
                     return <TimeCheckBoxGroup key={key} reportError={props.reportError} />;
-                case XAS_Symbol.description:
-                    return <XAxisSlider key={key} reportError={props.reportError} />;
-                case YAS_Symbol.description:
-                    return <YAxisSlider key={key} reportError={props.reportError} />;
+                case XAF_Symbol.description:
+                    return <XAxisField key={key} reportError={props.reportError} />;
+                case YAF_Symbol.description:
+                    return <YAxisField key={key} reportError={props.reportError} />;
                 default:
                     props.reportError(`Section ${props.name} found no match for an input component ${name}`);
             }

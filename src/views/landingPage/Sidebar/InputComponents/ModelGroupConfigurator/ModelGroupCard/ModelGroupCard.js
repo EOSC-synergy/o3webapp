@@ -4,20 +4,22 @@ import Typography from '@mui/material/Typography';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import MuiVisibilityIcon from '@mui/icons-material/Visibility';
 import { Checkbox, Divider, IconButton, FormControlLabel } from '@mui/material';
-import Edit from '@mui/icons-material/Edit';
 import Grid from '@mui/material/Grid';
 import EditModelGroupModal from "../EditModelGroupModal/EditModelGroupModal";
+import AddModelGroupModal from "../AddModelGroupModal/AddModelGroupModal";
 import PropTypes from 'prop-types';
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux"
+import { useDispatch } from "react-redux";
+import {CardActions, Button} from '@mui/material';
 import {
-    STATISTICAL_VALUES,
     setStatisticalValueForGroup,
     selectStatisticalValueSettingsOfGroup,
     selectNameOfGroup,
     setVisibilityForGroup,
     selectVisibilityOfGroup
 } from "../../../../../../store/modelsSlice/modelsSlice";
+
+import { STATISTICAL_VALUES } from "../../../../../../utils/constants";
 
 /**
  * a card containing information about the a modal group
@@ -57,11 +59,16 @@ function ModelGroupCard(props) {
      * state to keep track of whether the edit group modal is currently visible or not
      */
     const [isEditModalVisible, setEditModalVisible] = React.useState(false);
+    /**
+     * state to keep track of whether the add group modal (used to edit group members) is currently visible or not
+     */
+    const [isAddModalVisible, setAddModalVisible] = React.useState(false);
 
     /**
      * shows the edit group modal
      */
     const showEditModal = () => {
+        setAddModalVisible(false);  // avoid two modals being visible under all circumstances
         setEditModalVisible(true);
     }
 
@@ -70,6 +77,21 @@ function ModelGroupCard(props) {
      */   
     const closeEditModal = () => {
         setEditModalVisible(false);
+    }
+    
+    /**
+     * shows the add model group modal (used to edit group members)
+     */
+    const showAddModal = () => {
+        setEditModalVisible(false);  // avoid two modals being visible under all circumstances
+        setAddModalVisible(true);
+    }
+
+    /**
+     * closes the add model group modal (used to edit group members)
+     */
+    const closeAddModal = () => {
+        setAddModalVisible(false);
     }
 
     /**
@@ -82,15 +104,13 @@ function ModelGroupCard(props) {
     return (
         <Card style={{margin: "5%"}} elevation={2}>
             <EditModelGroupModal modelGroupId={props.modelGroupId} isOpen={isEditModalVisible} onClose={closeEditModal} />
+            <AddModelGroupModal modelGroupId={props.modelGroupId} isOpen={isAddModalVisible} onClose={closeAddModal} reportError={props.reportError} />
             <Grid container>
                 <Grid item xs={2}>
                     <IconButton aria-label="change visibility" onClick={toggleModelGroupVisibility}><VisibilityIcon /></IconButton>
                 </Grid>
                 <Grid item xs={8} textAlign="center">
-                    <Typography variant="h6">{modelGroupName}</Typography>
-                </Grid>
-                <Grid item xs={2}>
-                    <IconButton aria-label="edit" onClick={showEditModal}><Edit /></IconButton>
+                    <Typography variant="h6" data-testid="ModelGroupCard-groupName">{modelGroupName}</Typography>
                 </Grid>
             </Grid>
             <Divider />
@@ -116,6 +136,15 @@ function ModelGroupCard(props) {
                     );
                 })}
             </Grid>
+            <Divider />
+            <CardActions>
+                <Button size="small" variant="outlined" onClick={showEditModal} data-testid="ModelGroupCard-EditModelGroupModal-button-open">
+                    Edit statistical values
+                </Button>
+                <Button size="small" variant="outlined" onClick={showAddModal} data-testid="ModelGroupCard-AddModelGroupModal-button-open">
+                    Edit group members
+                </Button>
+            </CardActions>
         </Card>
     )
 }

@@ -1,3 +1,16 @@
+import {
+    mean as calculateMean,
+    median as calculateMedian,
+    std as calculateStd,
+    q25 as calculatePercentile, // TODO import actual percentile
+} from "../services/math/math";
+
+// apiSlice
+/** For reducing loading time while implementing: starting value for how many models should be fetched */
+export const modelListBegin = 0;
+/** For reducing loading time while implementing: starting value for how many models should be fetched */
+export const modelListEnd = 10;
+
 // Section.js
 /** Stores the name of the LatitudeBandSelector component as a Symbol. */
 export const LBS_Symbol = Symbol("LatitudeBandSelector");
@@ -11,39 +24,18 @@ export const OC_Symbol = Symbol("OffsetConfigurator");
 export const PNF_Symbol = Symbol("PlotNameField");
 /** Stores the name of the ReferenceModelSelector component as a Symbol. */
 export const RMS_Symbol = Symbol("ReferenceModelSelector");
-/** Stores the name of the ReferenceYearSlider component as a Symbol. */
-export const RYS_Symbol = Symbol("ReferenceYearSlider");
+/** Stores the name of the ReferenceYearField component as a Symbol. */
+export const RYF_Symbol = Symbol("ReferenceYearField");
 /** Stores the name of the RegionSelector component as a Symbol. */
 export const RS_Symbol = Symbol("RegionSelector");
 /** Stores the name of the TimeCheckBoxGroup component as a Symbol. */
 export const TCG_Symbol = Symbol("TimeCheckBoxGroup");
-/** Stores the name of the XAxisSlider component as a Symbol. */
-export const XAS_Symbol = Symbol("XAxisSlider");
-/** Stores the name of the YAxisSlider component as a Symbol. */
-export const YAS_Symbol = Symbol("YAxisSlider");
+/** Stores the name of the XAxisField component as a Symbol. */
+export const XAF_Symbol = Symbol("XAxisField");
+/** Stores the name of the YAxisField component as a Symbol. */
+export const YAF_Symbol = Symbol("YAxisField");
 
 // TimeCheckboxGroup.js
-/** Stores the seasons and the corresponding months */
-/*
-export const seasons = [
-    {
-        name: 'Spring',
-        months: [3, 4, 5]
-    },
-    {
-        name: 'Summer',
-        months: [6, 7, 8]
-    },
-    {
-        name: 'Fall',
-        months: [9, 10, 11]
-    },
-    {
-        name: 'Winter',
-        months: [12, 1, 2]
-    }
-] */
-
 /** Stores the season Winter and its corresponding months. */
 export const Winter = { name: Symbol("Winter"), months: [1, 2, 3], seasonId: 0 }
 
@@ -73,37 +65,40 @@ export const NUM_MONTHS = 12;
 export const latitudeBands = [
     {
         text: Symbol("Southern Hemisphere (SH) Polar (90–60°S)"),
-        value: [-90, -60]
+        value: { minLat: -90, maxLat: -60 }
     },
     {
         text: Symbol("SH Mid-Latitudes (60–35°S)"),
-        value: [-60, -35]
+        value: { minLat: -60, maxLat: -35 }
     },
     {
         text: Symbol("Tropics (20°S–20°N)"),
-        value: [-20, 20]
+        value: { minLat: -20, maxLat: 20 }
     },
     {
         text: Symbol("Northern Hemisphere (NH) Mid-Latitudes (35–60°N)"),
-        value: [35, 60]
+        value: { minLat: 35, maxLat: 60 }
     },
     {
         text: Symbol("NH Polar (60–90°N)"),
-        value: [60, 90]
+        value: { minLat: 60, maxLat: 90 }
     },
     {
         text: Symbol("Near-Global (60°S–60°N)"),
-        value: [-60, 60]
+        value: { minLat: -60, maxLat: 60 }
     },
     {
         text: Symbol("Global (90°S–90°N)"),
-        value: [-90, 90]
+        value: { minLat: -90, maxLat: 90 }
     },
+    // !!! Custom must be last in array !!!
     {
         text: Symbol("Custom"),
         value: 'custom'
     },
 ]
+
+export const LATITUDE_BAND_LIST = latitudeBands.map(obj => obj.text.description);
 
 // DownloadModal.js
 export const fileFormats = [ Symbol("pdf"), Symbol("png"), Symbol("svg")];
@@ -112,17 +107,6 @@ export const fileFormats = [ Symbol("pdf"), Symbol("png"), Symbol("svg")];
 
 /** The max. length of the plot name */
 export const PLOT_NAME_MAX_LEN = 40;
-
-// ReferenceYearSlider.js
-
-/** Default year value for the ReferenceYearSlider.*/
-export const REF_SLIDER_DEFAULT_YEAR = 1980;
-
-/** Minimum choosable year value for the ReferenceYearSlider.*/
-export const REF_SLIDER_MIN_YEAR = 1950;
-
-/** Minimum choosable year value for the ReferenceYearSlider.*/
-export const REF_SLIDER_MAX_YEAR = 2100;
 /*
 // GRAPH
 */
@@ -138,15 +122,15 @@ export const APEXCHART_PLOT_TYPE = {
 };
 
 export const HEIGHT_LOADING_SPINNER = "300px";
-export const HEIGHT_GRAPH = "400px";
+export const HEIGHT_GRAPH = "600px";
 
 /*
-// Options Formatter
+// Options Formatter, XAxisField, YAxisField, apiSlice
 */
-export const START_YEAR = 1959
+export const START_YEAR = 1960
 export const END_YEAR = 2100
 // year list: 1959 - 2100
-export const IMPLICIT_YEAR_LIST = [...Array(END_YEAR - START_YEAR + 1).keys()].map(number => `${START_YEAR + number}`)
+export const IMPLICIT_YEAR_LIST = [...Array(END_YEAR - START_YEAR + 1).keys()].map(number => `${START_YEAR + number}`);
 
 // important for api data transformation
 const ANTARCTIC = "Antarctic(Oct)";
@@ -168,3 +152,45 @@ export const O3AS_REGIONS = {
     USER_REGION
 }
 export const ALL_REGIONS_ORDERED = [ANTARCTIC, SH_MID, NH_MID, TROPICS, ARCTIC, NEAR_GLOBAL, GLOBAL, USER_REGION];
+
+
+
+const mean = "mean";
+const median = "median";
+const derivative = "derivative";
+const percentile = "percentile";
+/**
+ * The statistical values that are computable are listed here as
+ * an "enum"
+ */
+export const STATISTICAL_VALUES = {
+    mean,
+    median,
+    derivative,
+    percentile,
+}
+
+/**
+ * The same statistical values as a list to verify certain payload data
+ */
+export const STATISTICAL_VALUES_LIST = Object.values(STATISTICAL_VALUES);
+
+
+export const SV_CALCULATION = {
+    mean: calculateMean,
+    median: calculateMedian,
+    derivative: calculateStd,
+    percentile: calculatePercentile,
+    stdMean: calculateMean, // mean for std+-
+}
+
+export const SV_COLORING = {
+    mean: "#000",
+    median: "#000",
+    derivative: "#000",
+    percentile: "#000",
+    "mean+std": "#000",
+    "mean-std": "#000",
+}
+
+export const MODEL_LINE_THICKNESS = 2;

@@ -13,16 +13,16 @@ beforeEach(() => {
 
 
 it('renders without crashing', () => {
-  render(<Provider store={store}><PlotNameField reportError={jest.fn()} /></Provider>);
+  render(<Provider store={store}><PlotNameField reportError={() => {}}/></Provider>);
 });
 
 it('renders correctly', () => {
-  const { container } = render(<Provider store={store}><PlotNameField reportError={jest.fn()} /></Provider>);
+  const { container } = render(<Provider store={store}><PlotNameField reportError={() => {}}/></Provider>);
   expect(container).toMatchSnapshot();
 });
 
 it('renders TextField correctly', () => {
-  const { getByTestId } = render(<Provider store={store}><PlotNameField reportError={jest.fn()} /></Provider>);
+  const { getByTestId } = render(<Provider store={store}><PlotNameField reportError={() => {}}/></Provider>);
   const input = getByTestId("plot-field");
   expect(input).toBeInTheDocument();
 });
@@ -30,21 +30,21 @@ it('renders TextField correctly', () => {
 it('changes the name correctly', () => {
     
     
-  const { getByTestId } = render(<Provider store={store}><PlotNameField reportError={jest.fn()} /></Provider>);
+  const { getByTestId } = render(<Provider store={store}><PlotNameField reportError={() => {}} /></Provider>);
 
   const selectNode = getByTestId("plot-field").querySelector('input');
 
   // Assert: if it fails the initial state may have changed
-  expect(store.getState().plot.settings.tco3_zm.title).toEqual("OCTS Plot"); 
+  expect(store.getState().plot.plotSpecificSettings.tco3_zm.title).toEqual("OCTS Plot"); 
   
 
   // Check if the value updates correctly
   fireEvent.change(selectNode, {target: {value: "Test"}} );
-  expect(store.getState().plot.settings.tco3_zm.title).toEqual("Test");
+  expect(store.getState().plot.plotSpecificSettings.tco3_zm.title).toEqual("Test");
 
   // Check for max. length.
   fireEvent.change(selectNode, {target: {value: (Array(PLOT_NAME_MAX_LEN + 1).join("A") + "B")}} );
-  expect(store.getState().plot.settings.tco3_zm.title).toEqual(Array(PLOT_NAME_MAX_LEN + 1).join("A")); //
+  expect(store.getState().plot.plotSpecificSettings.tco3_zm.title).toEqual(Array(PLOT_NAME_MAX_LEN + 1).join("A")); //
   
 })
 

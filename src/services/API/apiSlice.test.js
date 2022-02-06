@@ -2,7 +2,7 @@ import reducer, { fetchModels, fetchPlotData, fetchPlotDataPending, fetchPlotTyp
 import axios from 'axios';
 import { configureStore } from "@reduxjs/toolkit";
 import { createTestStore } from "../../store/store";
-import * as optionsFormatter from "../../utils/optionsFormatter";
+import * as optionsFormatter from "../../utils/optionsFormatter/optionsFormatter";
 
 const spy = jest.spyOn(optionsFormatter, 'preTransformApiData');
 spy.mockImplementation(x => x);
@@ -206,11 +206,11 @@ describe('tests fetchPlotData thunk action creator', () => {
         plotId: "tco3_zm",
         latMin: -90, 
         latMax: 90, 
-        months: [1], 
+        months: [1,2,3], 
         startYear: 1959, 
         endYear: 2100, 
         modelList: ["modelX", "modelY"], 
-        refModel: "modelRed", 
+        refModel: "SBUV_GSFC_merged-SAT-ozone", 
         refYear: 1980,
     };
     const exampleCacheKey = generateCacheKey(exampleRequestData);

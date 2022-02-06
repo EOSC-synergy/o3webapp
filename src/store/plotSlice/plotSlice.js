@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { ALL_REGIONS_ORDERED, O3AS_PLOTS } from "../../utils/constants";
 
 /**
  * The initial state of the plotSlice defines the data structure in the 
@@ -7,49 +8,43 @@ import { createSlice } from "@reduxjs/toolkit";
  * IF you change this initial state you have to adapt the first test in the
  * corresponding test file, that tests the initial state.
  */
-const initialState = {
+export const initialState = {
     
     plotId: "tco3_zm", // currently active plot
     // maps plotids to their settings
-    settings: {
+    generalSettings: {
+        location: {
+            minLat: -90,
+            maxLat: 90
+        },
+        months: [
+            1, 2, 3
+        ],
+    },
+
+    plotSpecificSettings: {
         "tco3_zm": {
             title: "OCTS Plot", // the title shown in the apexcharts generated chart
-            location: {
-                minLat: -90,
-                maxLat: 90
-            },
             displayXRange: {
-                minX: 1960,
-                maxX: 2100,
+                years: {
+                    minX: 1960,
+                    maxX: 2100,
+                }
             },
             displayYRange: {
-                minY: 200,
-                maxY: 400,
+                minY: 280,
+                maxY: 330,
             },
-            months: [
-                1
-            ],
         },
         "tco3_return": {
             title: "Return/Recovery Plot",
-            location: { // custom user defined region
-                minLat: -90,
-                maxLat: 90
-            },
             displayXRange: {
-                minX: 0,
-                maxX: 0,
+                regions: ALL_REGIONS_ORDERED.map((el, idx) => idx), // implicitly refers to ALL_REGIONS_ORDERED
             },
             displayYRange: {
-                minY: 200,
-                maxY: 400,
+                minY: 2000,
+                maxY: 2100,
             },
-            months: [
-                1
-            ],
-            regions: [
-                0
-            ],
         }
     }
 };
@@ -96,7 +91,7 @@ const plotSlice = createSlice({
          */
         setTitle(state, action) {
             const { title } = action.payload;
-            state.settings[state.plotId].title = title;
+            state.plotSpecificSettings[state.plotId].title = title;
         },
 
         /**
@@ -116,7 +111,7 @@ const plotSlice = createSlice({
          */
         setLocation(state, action) { 
             const {minLat, maxLat} = action.payload;
-            const location = state.settings[state.plotId].location;
+            const location = state.generalSettings.location;
             location.minLat = minLat;
             location.maxLat = maxLat;
         },
@@ -141,10 +136,18 @@ const plotSlice = createSlice({
          * @param {number} action.payload.maxX a number specifying the end of the x range
          */
         setDisplayXRange(state, action) { 
-            const {minX, maxX} = action.payload;
-            const displayXRange = state.settings[state.plotId].displayXRange;
-            displayXRange.minX = minX;
-            displayXRange.maxX = maxX;
+            const currentPlotId = state.plotId;
+            if (currentPlotId === O3AS_PLOTS.tco3_zm) {
+                const { years: { minX, maxX } } = action.payload;
+                const xRange = state.plotSpecificSettings[currentPlotId].displayXRange;
+                xRange.years.minX = minX;
+                xRange.years.maxX = maxX;
+            } else if (currentPlotId === O3AS_PLOTS.tco3_return) {
+                const { regions } = action.payload;
+                state.plotSpecificSettings[currentPlotId].displayXRange.regions = regions;
+            } else {
+                throw `Illegal internal state, a non valid plot is current plot: "${currentPlotId}"`;
+            }
         },
 
         /**
@@ -164,7 +167,7 @@ const plotSlice = createSlice({
          */
         setDisplayYRange(state, action) { 
             const {minY, maxY} = action.payload;
-            const displayYRange = state.settings[state.plotId].displayYRange;
+            const displayYRange = state.plotSpecificSettings[state.plotId].displayYRange;
             displayYRange.minY = minY;
             displayYRange.maxY = maxY;
         },
@@ -183,26 +186,8 @@ const plotSlice = createSlice({
          * @param {array} action.payload.months an array of integers describing the new months
          */
         setMonths(state, action) { 
-            state.settings[state.plotId].months = action.payload.months;
+            state.generalSettings.months = action.payload.months;
         },
-
-        /**
-         * This reducer accepts an action object returned from setRegions()
-         *     e.g. dispatch(setRegions({regions: [3, 4, 5]}))
-         * and calculates the new state based on the action and the action
-         * data given in action.payload.
-         *
-         * In this case the current selected regions are updated to the given array.
-         *
-         * @param {object} state the current store state of: state/plot
-         * @param {object} action accepts the action returned from setRegions()
-         * @param {object} action.payload the payload is an object containing the given data
-         * @param {array} action.payload.regions an array of integers describing the new regions
-         */
-        setRegions(state, action) {
-            state.settings[state.plotId].regions = action.payload.regions;
-        },
-
     }   
 })
 
@@ -218,7 +203,6 @@ export const {
     setDisplayXRange,
     setDisplayYRange,
     setMonths,
-    setRegions,
 } = plotSlice.actions
 
 /**
@@ -245,7 +229,7 @@ export const selectPlotId = state => state.plot.plotId;
  * @param {object} state the global redux state
  * @returns {string} the current active plot title
  */
-export const selectPlotTitle = state => state.plot.settings[state.plot.plotId].title;
+export const selectPlotTitle = state => state.plot.plotSpecificSettings[state.plot.plotId].title;
 
 /**
  * This selector allows components to select the current plot location
@@ -254,7 +238,7 @@ export const selectPlotTitle = state => state.plot.settings[state.plot.plotId].t
  * @param {object} state the global redux state
  * @returns {object} holds the current location that includes a minLat and maxLat attribute.  
  */
-export const selectPlotLocation = state => state.plot.settings[state.plot.plotId].location;
+export const selectPlotLocation = state => state.plot.generalSettings.location;
 
 /**
  * This selector allows components to select the current x range
@@ -263,7 +247,7 @@ export const selectPlotLocation = state => state.plot.settings[state.plot.plotId
  * @param {object} state the global redux state
  * @returns {object} holds the current x range that includes minX and maxX
  */
-export const selectPlotXRange = state => state.plot.settings[state.plot.plotId].displayXRange;
+export const selectPlotXRange = state => state.plot.plotSpecificSettings[state.plot.plotId].displayXRange;
 
 /**
  * This selector allows components to select the current y range
@@ -273,7 +257,7 @@ export const selectPlotXRange = state => state.plot.settings[state.plot.plotId].
  * @returns {object} holds the current x range that includes minY and maxY
  */
 
-export const selectPlotYRange = state => state.plot.settings[state.plot.plotId].displayYRange;
+export const selectPlotYRange = state => state.plot.plotSpecificSettings[state.plot.plotId].displayYRange;
 
 /**
  * This selector allows components to select the current selected months
@@ -283,13 +267,4 @@ export const selectPlotYRange = state => state.plot.settings[state.plot.plotId].
  * @returns {array} array of integers describing the current selected months
  */
 
-export const selectPlotMonths = state => state.plot.settings[state.plot.plotId].months;
-
-/**
- * This selector allows components to select the current selected regions
- * from the store.
- *
- * @param {object} state the global redux state
- * @returns {array} array of integers describing the current selected regions
- */
-export const selectPlotRegions = state => state.plot.settings[state.plot.plotId].regions;
+export const selectPlotMonths = state => state.plot.generalSettings.months;

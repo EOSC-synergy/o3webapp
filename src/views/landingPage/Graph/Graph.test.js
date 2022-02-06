@@ -41,6 +41,12 @@ describe('tests graph component rendering', () => {
         spy.mockReturnValueOnce(
             "tco3_zm"            
         ).mockReturnValueOnce(
+            "title"            
+        ).mockReturnValueOnce(
+            {years: {minX: 100, maxX: 200}}
+        ).mockReturnValueOnce(
+            {minX: 100, maxX: 200}
+        ).mockReturnValueOnce(
             { 
                 status: REQUEST_STATE.success,
                 data: [],
@@ -50,9 +56,17 @@ describe('tests graph component rendering', () => {
             {
                 modelGroups: {},
             }
+        ).mockReturnValueOnce(
+            false
         ).mockReturnValueOnce(
             "tco3_zm"            
         ).mockReturnValueOnce(
+            "title"            
+        ).mockReturnValueOnce(
+            {years: {minX: 100, maxX: 200}}
+        ).mockReturnValueOnce(
+            {minX: 100, maxX: 200}
+        ).mockReturnValueOnce(
             { 
                 status: REQUEST_STATE.success,
                 data: [],
@@ -62,7 +76,9 @@ describe('tests graph component rendering', () => {
             {
                 modelGroups: {},
             }
-        );
+        ).mockReturnValueOnce(
+            false
+        )
 
         const { container } = render(<Provider store={store}>
             <Graph />

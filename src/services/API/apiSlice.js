@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import { getModels, getPlotTypes, getPlotData } from "./client";
-import { preTransformApiData } from "../../utils/optionsFormatter";
+import { preTransformApiData } from "../../utils/optionsFormatter/optionsFormatter";
+import { START_YEAR, END_YEAR } from "../../utils/constants";
 
 /**
  * This object models an "enum" in JavaScript. Each of the values is used
@@ -44,11 +45,11 @@ export const fetchPlotTypes = createAsyncThunk('api/fetchPlotTypes', async () =>
  * This function concatenates all given information into a string serving as an identifier
  * for cached requests in the store.
  * 
- * @param {int} obj.latMin specifies the minimum latitude
- * @param {int} obj.latMax specifies the maximum latitude
- * @param {array of int} obj.months represents the selected months
- * @param {string} obj.refModel the reference model to "normalize the data"
- * @param {int} obj.refYear the reference year to "normalize the data"
+ * @param {int} latMin specifies the minimum latitude
+ * @param {int} latMax specifies the maximum latitude
+ * @param {Array.<int>} months represents the selected months
+ * @param {string} refModel the reference model to "normalize the data"
+ * @param {int} refYear the reference year to "normalize the data"
  * @returns the generated string
  */
 export const generateCacheKey = ({ latMin, latMax, months, refModel, refYear }) => {
@@ -84,21 +85,27 @@ const selectExistingPlotData = createAction("api/selectPlotData");
  * This async thunk creator allows to generate a data fetching action that can be dispatched 
  * against the store to start fetching new plot data from the api. 
  * 
- * @param {string} obj.plotType a string describing the plot - has to be the offical plot name (e.g. tco3_zm)
- * @param {int} obj.latMin specifies the minimum latitude
- * @param {int} obj.latMax specifies the maximum latitude
- * @param {array of int} obj.months represents the selected months
- * @param {array of string} obj.modelList lists the desired models
- * @param {int} obj.startYear from which point the data should start
- * @param {int} obj.endYear until which point the data is required
- * @param {string} obj.refModel the reference model to "normalize the data"
- * @param {int} obj.refYear the reference year to "normalize the data"
+ * @param {number} modelListBegin for faster testing limit fetching of model list
+ * @param {number} modelListEnd for faster testing limit fetching of model list
  * @returns the async thunk action
  */
-export const fetchPlotData = ({ plotId, latMin, latMax, months, startYear, endYear, modelList, refModel, refYear }) => {
-    const cacheKey = generateCacheKey({ latMin, latMax, months, refModel, refYear });
+export const fetchPlotData = (modelListBegin, modelListEnd) => {
 
     return (dispatch, getState) => {
+        const plotId = getState().plot.plotId;
+        const latMin = getState().plot.generalSettings.location.minLat;
+        const latMax = getState().plot.generalSettings.location.maxLat;
+        const months = getState().plot.generalSettings.months;
+        let modelList = getState().api.models.data;
+        if (typeof modelListBegin !== 'undefined' && typeof modelListEnd !== 'undefined') {
+            modelList = modelList.slice(modelListBegin, modelListEnd);
+        }
+        const startYear = START_YEAR;
+        const endYear = END_YEAR;
+        const refModel = getState().reference.settings.model;
+        const refYear = getState().reference.settings.year;
+
+        const cacheKey = generateCacheKey({ latMin, latMax, months, refModel, refYear });
         // it shouldn't reload the same request if the data is already present (previous successful request) or 
         // if the request is already loading
         const cachedRequest = getState().api.plotSpecific[plotId].cachedRequests[cacheKey];
@@ -185,7 +192,7 @@ const apiSlice = createSlice({
     extraReducers(builder) {
         builder
             // fetch models
-            .addCase(fetchModels.pending, (state, action) => {
+            .addCase(fetchModels.pending, (state) => {
                 state.models.status = REQUEST_STATE.loading;
             })
             .addCase(fetchModels.fulfilled, (state, action) => {
@@ -198,7 +205,7 @@ const apiSlice = createSlice({
             })
 
             // fetch plotTypes
-            .addCase(fetchPlotTypes.pending, (state, action) => {
+            .addCase(fetchPlotTypes.pending, (state) => {
                 state.plotTypes.status = REQUEST_STATE.loading;
             })
             .addCase(fetchPlotTypes.fulfilled, (state, action) => {
@@ -266,7 +273,7 @@ export const selectActivePlotData = (state, plotId) => {
         return {
             status: REQUEST_STATE.loading,
         };
-    };
+    }
 
     return plotSpecificSection.cachedRequests[activeCacheKey];
 }

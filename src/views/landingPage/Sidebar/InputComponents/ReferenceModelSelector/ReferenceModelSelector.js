@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { setModel } from "../../../../../store/referenceSlice/referenceSlice";
 import PropTypes from 'prop-types';
+import {modelListBegin, modelListEnd} from "../../../../../utils/constants";
+import {fetchPlotData} from "../../../../../services/API/apiSlice";
 
 /**
  * enables the user to select a reference model
@@ -19,9 +21,10 @@ function ReferenceModelSelector(props) {
 
     const selectedModel = useSelector(state => state.reference.settings.model);
 
-    /** Handles the change of the reference model selection if it's is modified.*/
+    /** Handles the change of the reference model selection when it is modified.*/
     const handleChangeForRefModel = (event) => {
         dispatch(setModel({model: event.target.value}));
+        dispatch(fetchPlotData(modelListBegin, modelListEnd));
     };
 
     return (

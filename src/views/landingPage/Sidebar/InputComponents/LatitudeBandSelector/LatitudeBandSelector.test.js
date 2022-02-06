@@ -1,16 +1,29 @@
-import React from 'react';
-import LatitudeBandSelector from './LatitudeBandSelector';
 import { render } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { Provider } from 'react-redux'
+import LatitudeBandSelector from './LatitudeBandSelector';
+import { createTestStore } from "../../../../../store/store"
 
-describe('test LatitudeBandSelector component rendering', () => {
+let store;
+beforeEach(() => {
+    store = createTestStore();
+});
 
-    it('renders without crashing', () => {
-        render(<LatitudeBandSelector />);
-    });
+it('renders without crashing', () => {
+    render(<>
+        <Provider store={store}>
+            <LatitudeBandSelector reportError={() => {}} />
+        </Provider>
+    </>)
+});
 
-    it('renders as expected', () => {
-        const { container } = render(<LatitudeBandSelector />);
-        expect(container).toMatchSnapshot();
-    });
+it('renders correctly', () => {
 
+    const { container } = render(<>
+        <Provider store={store}>
+            <LatitudeBandSelector reportError={() => {}} />
+        </Provider>
+    </>);
+
+    expect(container).toMatchSnapshot();
 });

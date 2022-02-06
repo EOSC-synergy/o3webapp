@@ -199,7 +199,7 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                     </div>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-container css-1ri4xmw-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container css-wts08w-MuiGrid-root"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3 css-1equabv-MuiGrid-root"
@@ -211,61 +211,93 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                       </p>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-9 css-1qpzhgb-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3 css-1lrjc51-MuiGrid-root"
                     >
-                      <span
-                        class="MuiSlider-colorPrimary MuiSlider-sizeSmall MuiSlider-root css-53tbrc-MuiSlider-root"
+                      <div
+                        class="MuiFormControl-root css-1edjpmh-MuiFormControl-root"
                       >
-                        <span
-                          class="MuiSlider-rail css-14pt78w-MuiSlider-rail"
-                        />
-                        <span
-                          class="MuiSlider-track css-1n40zqk-MuiSlider-track"
-                          style="left: 20%; width: 46.66666666666667%;"
-                        />
-                        <span
-                          class="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeSmall MuiSlider-thumb css-14gf62f-MuiSlider-thumb"
-                          data-index="0"
-                          style="left: 20%;"
+                        <div
+                          class="MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
                         >
-                          <input
-                            aria-orientation="horizontal"
-                            aria-valuemax="2200"
-                            aria-valuemin="1900"
-                            aria-valuenow="1960"
-                            data-index="0"
-                            max="2200"
-                            min="1900"
-                            step="1"
-                            style="border: 0px; height: 100%; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 100%; direction: ltr;"
-                            type="range"
-                            value="1960"
-                          />
-                        </span>
-                        <span
-                          class="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeSmall MuiSlider-thumb css-14gf62f-MuiSlider-thumb"
-                          data-index="1"
-                          style="left: 66.66666666666667%;"
+                          <div
+                            class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+                          >
+                            <input
+                              aria-invalid="false"
+                              class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                              id="outlined-basic"
+                              type="text"
+                              value="1960"
+                            />
+                            <fieldset
+                              aria-hidden="true"
+                              class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                            >
+                              <legend
+                                class="css-nnbavb"
+                              >
+                                <span
+                                  class="notranslate"
+                                >
+                                  ​
+                                </span>
+                              </legend>
+                            </fieldset>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-1rbsaog-MuiGrid-root"
+                    >
+                      <h2
+                        style="display: inline;"
+                      >
+                         - 
+                      </h2>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3 css-1lrjc51-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiFormControl-root css-1edjpmh-MuiFormControl-root"
+                      >
+                        <div
+                          class="MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
                         >
-                          <input
-                            aria-orientation="horizontal"
-                            aria-valuemax="2200"
-                            aria-valuemin="1900"
-                            aria-valuenow="2100"
-                            data-index="1"
-                            max="2200"
-                            min="1900"
-                            step="1"
-                            style="border: 0px; height: 100%; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 100%; direction: ltr;"
-                            type="range"
-                            value="2100"
-                          />
-                        </span>
-                      </span>
+                          <div
+                            class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+                          >
+                            <input
+                              aria-invalid="false"
+                              class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                              id="outlined-basic"
+                              type="text"
+                              value="2100"
+                            />
+                            <fieldset
+                              aria-hidden="true"
+                              class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                            >
+                              <legend
+                                class="css-nnbavb"
+                              >
+                                <span
+                                  class="notranslate"
+                                >
+                                  ​
+                                </span>
+                              </legend>
+                            </fieldset>
+                          </div>
+                          
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-container css-1ri4xmw-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container css-wts08w-MuiGrid-root"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3 css-1equabv-MuiGrid-root"
@@ -277,57 +309,89 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                       </p>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-9 css-1qpzhgb-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3 css-1lrjc51-MuiGrid-root"
                     >
-                      <span
-                        class="MuiSlider-colorPrimary MuiSlider-sizeSmall MuiSlider-root css-53tbrc-MuiSlider-root"
+                      <div
+                        class="MuiFormControl-root css-1edjpmh-MuiFormControl-root"
                       >
-                        <span
-                          class="MuiSlider-rail css-14pt78w-MuiSlider-rail"
-                        />
-                        <span
-                          class="MuiSlider-track css-1n40zqk-MuiSlider-track"
-                          style="left: 33.333333333333336%; width: 33.333333333333336%;"
-                        />
-                        <span
-                          class="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeSmall MuiSlider-thumb css-14gf62f-MuiSlider-thumb"
-                          data-index="0"
-                          style="left: 33.333333333333336%;"
+                        <div
+                          class="MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
                         >
-                          <input
-                            aria-orientation="horizontal"
-                            aria-valuemax="600"
-                            aria-valuemin="0"
-                            aria-valuenow="200"
-                            data-index="0"
-                            max="600"
-                            min="0"
-                            step="1"
-                            style="border: 0px; height: 100%; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 100%; direction: ltr;"
-                            type="range"
-                            value="200"
-                          />
-                        </span>
-                        <span
-                          class="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeSmall MuiSlider-thumb css-14gf62f-MuiSlider-thumb"
-                          data-index="1"
-                          style="left: 66.66666666666667%;"
+                          <div
+                            class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+                          >
+                            <input
+                              aria-invalid="false"
+                              class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                              id="outlined-basic"
+                              type="text"
+                              value="280"
+                            />
+                            <fieldset
+                              aria-hidden="true"
+                              class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                            >
+                              <legend
+                                class="css-nnbavb"
+                              >
+                                <span
+                                  class="notranslate"
+                                >
+                                  ​
+                                </span>
+                              </legend>
+                            </fieldset>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-1rbsaog-MuiGrid-root"
+                    >
+                      <h2
+                        style="display: inline;"
+                      >
+                         - 
+                      </h2>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3 css-1lrjc51-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiFormControl-root css-1edjpmh-MuiFormControl-root"
+                      >
+                        <div
+                          class="MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
                         >
-                          <input
-                            aria-orientation="horizontal"
-                            aria-valuemax="600"
-                            aria-valuemin="0"
-                            aria-valuenow="400"
-                            data-index="1"
-                            max="600"
-                            min="0"
-                            step="1"
-                            style="border: 0px; height: 100%; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 100%; direction: ltr;"
-                            type="range"
-                            value="400"
-                          />
-                        </span>
-                      </span>
+                          <div
+                            class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+                          >
+                            <input
+                              aria-invalid="false"
+                              class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                              id="outlined-basic"
+                              type="text"
+                              value="330"
+                            />
+                            <fieldset
+                              aria-hidden="true"
+                              class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                            >
+                              <legend
+                                class="css-nnbavb"
+                              >
+                                <span
+                                  class="notranslate"
+                                >
+                                  ​
+                                </span>
+                              </legend>
+                            </fieldset>
+                          </div>
+                          
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -429,34 +493,10 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                       >
                         <h6
                           class="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
+                          data-testid="ModelGroupCard-groupName"
                         >
                           Example Group
                         </h6>
-                      </div>
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
-                      >
-                        <button
-                          aria-label="edit"
-                          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
-                          tabindex="0"
-                          type="button"
-                        >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                            data-testid="EditIcon"
-                            focusable="false"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
-                            />
-                          </svg>
-                          <span
-                            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                          />
-                        </button>
                       </div>
                     </div>
                     <hr
@@ -626,6 +666,35 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                         </label>
                       </div>
                     </div>
+                    <hr
+                      class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+                    />
+                    <div
+                      class="MuiCardActions-root MuiCardActions-spacing css-1t6e9jv-MuiCardActions-root"
+                    >
+                      <button
+                        class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButtonBase-root  css-1k23hlb-MuiButtonBase-root-MuiButton-root"
+                        data-testid="ModelGroupCard-EditModelGroupModal-button-open"
+                        tabindex="0"
+                        type="button"
+                      >
+                        Edit statistical values
+                        <span
+                          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                        />
+                      </button>
+                      <button
+                        class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButtonBase-root  css-1k23hlb-MuiButtonBase-root-MuiButton-root"
+                        data-testid="ModelGroupCard-AddModelGroupModal-button-open"
+                        tabindex="0"
+                        type="button"
+                      >
+                        Edit group members
+                        <span
+                          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                        />
+                      </button>
+                    </div>
                   </div>
                   <button
                     class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-1fu7jd5-MuiButtonBase-root-MuiButton-root"
@@ -723,19 +792,19 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                       <div
                         aria-expanded="false"
                         aria-haspopup="listbox"
-                        aria-labelledby="latitudeBandSelectorLabel latitudeBandSelector"
+                        aria-labelledby="latitudeBandSelector"
                         class="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                         id="latitudeBandSelector"
                         role="button"
                         tabindex="0"
                       >
-                        Southern Hemisphere (SH) Polar (90–60°S)
+                        Global (90°S–90°N)
                       </div>
                       <input
                         aria-hidden="true"
                         class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
                         tabindex="-1"
-                        value="-90,-60"
+                        value="[object Object]"
                       />
                       <svg
                         aria-hidden="true"
@@ -753,10 +822,12 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                         class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                       >
                         <legend
-                          class="css-173wfxe"
+                          class="css-nnbavb"
                         >
-                          <span>
-                            LatitudeBand
+                          <span
+                            class="notranslate"
+                          >
+                            ​
                           </span>
                         </legend>
                       </fieldset>
@@ -831,23 +902,24 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                                 class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                               >
                                 <span
-                                  class="MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                                  class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
                                 >
                                   <input
+                                    checked=""
                                     class="PrivateSwitchBase-input css-1m9pwf3"
-                                    data-indeterminate="true"
+                                    data-indeterminate="false"
                                     data-testid="CheckboxSeasonNum0"
                                     type="checkbox"
                                   />
                                   <svg
                                     aria-hidden="true"
                                     class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                                    data-testid="IndeterminateCheckBoxIcon"
+                                    data-testid="CheckBoxIcon"
                                     focusable="false"
                                     viewBox="0 0 24 24"
                                   >
                                     <path
-                                      d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"
+                                      d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
                                     />
                                   </svg>
                                   <span
@@ -903,9 +975,10 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                                   class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                 >
                                   <span
-                                    class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                                    class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
                                   >
                                     <input
+                                      checked=""
                                       class="PrivateSwitchBase-input css-1m9pwf3"
                                       data-indeterminate="false"
                                       data-testid="CheckboxMonth2"
@@ -914,12 +987,12 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                                     <svg
                                       aria-hidden="true"
                                       class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                                      data-testid="CheckBoxOutlineBlankIcon"
+                                      data-testid="CheckBoxIcon"
                                       focusable="false"
                                       viewBox="0 0 24 24"
                                     >
                                       <path
-                                        d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                                        d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
                                       />
                                     </svg>
                                     <span
@@ -937,9 +1010,10 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                                   class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                 >
                                   <span
-                                    class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                                    class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
                                   >
                                     <input
+                                      checked=""
                                       class="PrivateSwitchBase-input css-1m9pwf3"
                                       data-indeterminate="false"
                                       data-testid="CheckboxMonth3"
@@ -948,12 +1022,12 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                                     <svg
                                       aria-hidden="true"
                                       class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                                      data-testid="CheckBoxOutlineBlankIcon"
+                                      data-testid="CheckBoxIcon"
                                       focusable="false"
                                       viewBox="0 0 24 24"
                                     >
                                       <path
-                                        d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                                        d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
                                       />
                                     </svg>
                                     <span
@@ -1532,17 +1606,15 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                           role="button"
                           tabindex="0"
                         >
-                          <span
-                            class="notranslate"
-                          >
-                            ​
-                          </span>
+                           
+                          SBUV_GSFC_merged-SAT-ozone
+                           
                         </div>
                         <input
                           aria-hidden="true"
                           class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
                           tabindex="-1"
-                          value="defaultModel"
+                          value="SBUV_GSFC_merged-SAT-ozone"
                         />
                         <svg
                           aria-hidden="true"
@@ -1582,10 +1654,10 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                     </div>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container css-wts08w-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-gj1fbr-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 css-k3f0g4-MuiGrid-root"
                     >
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
@@ -1594,52 +1666,69 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                       </p>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8 css-vok43g-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-7 css-a0yaxr-MuiGrid-root"
                     >
-                      <span
-                        class="MuiSlider-colorPrimary MuiSlider-sizeSmall MuiSlider-root MuiSlider-trackFalse css-53tbrc-MuiSlider-root"
+                      <div
+                        class="MuiFormControl-root css-1st3y2y-MuiFormControl-root"
+                      >
+                        <div
+                          class="MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
+                        >
+                          <div
+                            class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+                          >
+                            <input
+                              aria-invalid="false"
+                              class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                              id="outlined-basic"
+                              type="text"
+                              value="1980"
+                            />
+                            <fieldset
+                              aria-hidden="true"
+                              class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                            >
+                              <legend
+                                class="css-nnbavb"
+                              >
+                                <span
+                                  class="notranslate"
+                                >
+                                  ​
+                                </span>
+                              </legend>
+                            </fieldset>
+                          </div>
+                          
+                        </div>
+                      </div>
+                      <div
+                        class="MuiFormControl-root css-1nrlq1o-MuiFormControl-root"
                       >
                         <span
-                          class="MuiSlider-rail css-14pt78w-MuiSlider-rail"
-                        />
-                        <span
-                          class="MuiSlider-track css-1vjujtc-MuiSlider-track"
-                          style="left: 0%; width: 20%;"
-                        />
-                        <span
-                          class="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeSmall MuiSlider-thumb css-14gf62f-MuiSlider-thumb"
-                          data-index="0"
-                          style="left: 20%;"
+                          class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
                         >
                           <input
-                            aria-orientation="horizontal"
-                            aria-valuemax="2100"
-                            aria-valuemin="1950"
-                            aria-valuenow="1980"
-                            data-index="0"
-                            max="2100"
-                            min="1950"
-                            step="1"
-                            style="border: 0px; height: 100%; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 100%; direction: ltr;"
-                            type="range"
-                            value="1980"
+                            class="PrivateSwitchBase-input css-1m9pwf3"
+                            data-indeterminate="false"
+                            type="checkbox"
                           />
-                          <span
+                          <svg
                             aria-hidden="true"
-                            class="MuiSlider-valueLabelOpen MuiSlider-valueLabel css-gdpt3b-MuiSlider-valueLabel"
+                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                            data-testid="RefLineInvisibleCheckbox"
+                            focusable="false"
+                            viewBox="0 0 24 24"
                           >
-                            <span
-                              class="MuiSlider-valueLabelCircle"
-                            >
-                              <span
-                                class="MuiSlider-valueLabelLabel"
-                              >
-                                1980
-                              </span>
-                            </span>
-                          </span>
+                            <path
+                              d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78 3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"
+                            />
+                          </svg>
+                          <span
+                            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                          />
                         </span>
-                      </span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1861,7 +1950,7 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                     </div>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-container css-1ri4xmw-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container css-wts08w-MuiGrid-root"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3 css-1equabv-MuiGrid-root"
@@ -1873,61 +1962,93 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                       </p>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-9 css-1qpzhgb-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3 css-1lrjc51-MuiGrid-root"
                     >
-                      <span
-                        class="MuiSlider-colorPrimary MuiSlider-sizeSmall MuiSlider-root css-53tbrc-MuiSlider-root"
+                      <div
+                        class="MuiFormControl-root css-1edjpmh-MuiFormControl-root"
                       >
-                        <span
-                          class="MuiSlider-rail css-14pt78w-MuiSlider-rail"
-                        />
-                        <span
-                          class="MuiSlider-track css-1n40zqk-MuiSlider-track"
-                          style="left: 20%; width: 46.66666666666667%;"
-                        />
-                        <span
-                          class="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeSmall MuiSlider-thumb css-14gf62f-MuiSlider-thumb"
-                          data-index="0"
-                          style="left: 20%;"
+                        <div
+                          class="MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
                         >
-                          <input
-                            aria-orientation="horizontal"
-                            aria-valuemax="2200"
-                            aria-valuemin="1900"
-                            aria-valuenow="1960"
-                            data-index="0"
-                            max="2200"
-                            min="1900"
-                            step="1"
-                            style="border: 0px; height: 100%; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 100%; direction: ltr;"
-                            type="range"
-                            value="1960"
-                          />
-                        </span>
-                        <span
-                          class="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeSmall MuiSlider-thumb css-14gf62f-MuiSlider-thumb"
-                          data-index="1"
-                          style="left: 66.66666666666667%;"
+                          <div
+                            class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+                          >
+                            <input
+                              aria-invalid="false"
+                              class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                              id="outlined-basic"
+                              type="text"
+                              value="1960"
+                            />
+                            <fieldset
+                              aria-hidden="true"
+                              class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                            >
+                              <legend
+                                class="css-nnbavb"
+                              >
+                                <span
+                                  class="notranslate"
+                                >
+                                  ​
+                                </span>
+                              </legend>
+                            </fieldset>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-1rbsaog-MuiGrid-root"
+                    >
+                      <h2
+                        style="display: inline;"
+                      >
+                         - 
+                      </h2>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3 css-1lrjc51-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiFormControl-root css-1edjpmh-MuiFormControl-root"
+                      >
+                        <div
+                          class="MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
                         >
-                          <input
-                            aria-orientation="horizontal"
-                            aria-valuemax="2200"
-                            aria-valuemin="1900"
-                            aria-valuenow="2100"
-                            data-index="1"
-                            max="2200"
-                            min="1900"
-                            step="1"
-                            style="border: 0px; height: 100%; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 100%; direction: ltr;"
-                            type="range"
-                            value="2100"
-                          />
-                        </span>
-                      </span>
+                          <div
+                            class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+                          >
+                            <input
+                              aria-invalid="false"
+                              class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                              id="outlined-basic"
+                              type="text"
+                              value="2100"
+                            />
+                            <fieldset
+                              aria-hidden="true"
+                              class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                            >
+                              <legend
+                                class="css-nnbavb"
+                              >
+                                <span
+                                  class="notranslate"
+                                >
+                                  ​
+                                </span>
+                              </legend>
+                            </fieldset>
+                          </div>
+                          
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-container css-1ri4xmw-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container css-wts08w-MuiGrid-root"
                   >
                     <div
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3 css-1equabv-MuiGrid-root"
@@ -1939,57 +2060,89 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                       </p>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-9 css-1qpzhgb-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3 css-1lrjc51-MuiGrid-root"
                     >
-                      <span
-                        class="MuiSlider-colorPrimary MuiSlider-sizeSmall MuiSlider-root css-53tbrc-MuiSlider-root"
+                      <div
+                        class="MuiFormControl-root css-1edjpmh-MuiFormControl-root"
                       >
-                        <span
-                          class="MuiSlider-rail css-14pt78w-MuiSlider-rail"
-                        />
-                        <span
-                          class="MuiSlider-track css-1n40zqk-MuiSlider-track"
-                          style="left: 33.333333333333336%; width: 33.333333333333336%;"
-                        />
-                        <span
-                          class="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeSmall MuiSlider-thumb css-14gf62f-MuiSlider-thumb"
-                          data-index="0"
-                          style="left: 33.333333333333336%;"
+                        <div
+                          class="MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
                         >
-                          <input
-                            aria-orientation="horizontal"
-                            aria-valuemax="600"
-                            aria-valuemin="0"
-                            aria-valuenow="200"
-                            data-index="0"
-                            max="600"
-                            min="0"
-                            step="1"
-                            style="border: 0px; height: 100%; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 100%; direction: ltr;"
-                            type="range"
-                            value="200"
-                          />
-                        </span>
-                        <span
-                          class="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeSmall MuiSlider-thumb css-14gf62f-MuiSlider-thumb"
-                          data-index="1"
-                          style="left: 66.66666666666667%;"
+                          <div
+                            class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+                          >
+                            <input
+                              aria-invalid="false"
+                              class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                              id="outlined-basic"
+                              type="text"
+                              value="280"
+                            />
+                            <fieldset
+                              aria-hidden="true"
+                              class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                            >
+                              <legend
+                                class="css-nnbavb"
+                              >
+                                <span
+                                  class="notranslate"
+                                >
+                                  ​
+                                </span>
+                              </legend>
+                            </fieldset>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-1 css-1rbsaog-MuiGrid-root"
+                    >
+                      <h2
+                        style="display: inline;"
+                      >
+                         - 
+                      </h2>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3 css-1lrjc51-MuiGrid-root"
+                    >
+                      <div
+                        class="MuiFormControl-root css-1edjpmh-MuiFormControl-root"
+                      >
+                        <div
+                          class="MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
                         >
-                          <input
-                            aria-orientation="horizontal"
-                            aria-valuemax="600"
-                            aria-valuemin="0"
-                            aria-valuenow="400"
-                            data-index="1"
-                            max="600"
-                            min="0"
-                            step="1"
-                            style="border: 0px; height: 100%; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 100%; direction: ltr;"
-                            type="range"
-                            value="400"
-                          />
-                        </span>
-                      </span>
+                          <div
+                            class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+                          >
+                            <input
+                              aria-invalid="false"
+                              class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                              id="outlined-basic"
+                              type="text"
+                              value="330"
+                            />
+                            <fieldset
+                              aria-hidden="true"
+                              class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                            >
+                              <legend
+                                class="css-nnbavb"
+                              >
+                                <span
+                                  class="notranslate"
+                                >
+                                  ​
+                                </span>
+                              </legend>
+                            </fieldset>
+                          </div>
+                          
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -2091,34 +2244,10 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                       >
                         <h6
                           class="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
+                          data-testid="ModelGroupCard-groupName"
                         >
                           Example Group
                         </h6>
-                      </div>
-                      <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
-                      >
-                        <button
-                          aria-label="edit"
-                          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
-                          tabindex="0"
-                          type="button"
-                        >
-                          <svg
-                            aria-hidden="true"
-                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                            data-testid="EditIcon"
-                            focusable="false"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
-                            />
-                          </svg>
-                          <span
-                            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                          />
-                        </button>
                       </div>
                     </div>
                     <hr
@@ -2288,6 +2417,35 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                         </label>
                       </div>
                     </div>
+                    <hr
+                      class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+                    />
+                    <div
+                      class="MuiCardActions-root MuiCardActions-spacing css-1t6e9jv-MuiCardActions-root"
+                    >
+                      <button
+                        class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButtonBase-root  css-1k23hlb-MuiButtonBase-root-MuiButton-root"
+                        data-testid="ModelGroupCard-EditModelGroupModal-button-open"
+                        tabindex="0"
+                        type="button"
+                      >
+                        Edit statistical values
+                        <span
+                          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                        />
+                      </button>
+                      <button
+                        class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButtonBase-root  css-1k23hlb-MuiButtonBase-root-MuiButton-root"
+                        data-testid="ModelGroupCard-AddModelGroupModal-button-open"
+                        tabindex="0"
+                        type="button"
+                      >
+                        Edit group members
+                        <span
+                          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                        />
+                      </button>
+                    </div>
                   </div>
                   <button
                     class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-1fu7jd5-MuiButtonBase-root-MuiButton-root"
@@ -2385,19 +2543,19 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                       <div
                         aria-expanded="false"
                         aria-haspopup="listbox"
-                        aria-labelledby="latitudeBandSelectorLabel latitudeBandSelector"
+                        aria-labelledby="latitudeBandSelector"
                         class="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
                         id="latitudeBandSelector"
                         role="button"
                         tabindex="0"
                       >
-                        Southern Hemisphere (SH) Polar (90–60°S)
+                        Global (90°S–90°N)
                       </div>
                       <input
                         aria-hidden="true"
                         class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
                         tabindex="-1"
-                        value="-90,-60"
+                        value="[object Object]"
                       />
                       <svg
                         aria-hidden="true"
@@ -2415,10 +2573,12 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                         class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                       >
                         <legend
-                          class="css-173wfxe"
+                          class="css-nnbavb"
                         >
-                          <span>
-                            LatitudeBand
+                          <span
+                            class="notranslate"
+                          >
+                            ​
                           </span>
                         </legend>
                       </fieldset>
@@ -2493,23 +2653,24 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                                 class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                               >
                                 <span
-                                  class="MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                                  class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
                                 >
                                   <input
+                                    checked=""
                                     class="PrivateSwitchBase-input css-1m9pwf3"
-                                    data-indeterminate="true"
+                                    data-indeterminate="false"
                                     data-testid="CheckboxSeasonNum0"
                                     type="checkbox"
                                   />
                                   <svg
                                     aria-hidden="true"
                                     class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                                    data-testid="IndeterminateCheckBoxIcon"
+                                    data-testid="CheckBoxIcon"
                                     focusable="false"
                                     viewBox="0 0 24 24"
                                   >
                                     <path
-                                      d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"
+                                      d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
                                     />
                                   </svg>
                                   <span
@@ -2565,9 +2726,10 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                                   class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                 >
                                   <span
-                                    class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                                    class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
                                   >
                                     <input
+                                      checked=""
                                       class="PrivateSwitchBase-input css-1m9pwf3"
                                       data-indeterminate="false"
                                       data-testid="CheckboxMonth2"
@@ -2576,12 +2738,12 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                                     <svg
                                       aria-hidden="true"
                                       class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                                      data-testid="CheckBoxOutlineBlankIcon"
+                                      data-testid="CheckBoxIcon"
                                       focusable="false"
                                       viewBox="0 0 24 24"
                                     >
                                       <path
-                                        d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                                        d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
                                       />
                                     </svg>
                                     <span
@@ -2599,9 +2761,10 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                                   class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                 >
                                   <span
-                                    class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                                    class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
                                   >
                                     <input
+                                      checked=""
                                       class="PrivateSwitchBase-input css-1m9pwf3"
                                       data-indeterminate="false"
                                       data-testid="CheckboxMonth3"
@@ -2610,12 +2773,12 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                                     <svg
                                       aria-hidden="true"
                                       class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                                      data-testid="CheckBoxOutlineBlankIcon"
+                                      data-testid="CheckBoxIcon"
                                       focusable="false"
                                       viewBox="0 0 24 24"
                                     >
                                       <path
-                                        d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                                        d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
                                       />
                                     </svg>
                                     <span
@@ -3194,17 +3357,15 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                           role="button"
                           tabindex="0"
                         >
-                          <span
-                            class="notranslate"
-                          >
-                            ​
-                          </span>
+                           
+                          SBUV_GSFC_merged-SAT-ozone
+                           
                         </div>
                         <input
                           aria-hidden="true"
                           class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
                           tabindex="-1"
-                          value="defaultModel"
+                          value="SBUV_GSFC_merged-SAT-ozone"
                         />
                         <svg
                           aria-hidden="true"
@@ -3244,10 +3405,10 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                     </div>
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container css-wts08w-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 css-gj1fbr-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 css-k3f0g4-MuiGrid-root"
                     >
                       <p
                         class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
@@ -3256,52 +3417,69 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                       </p>
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8 css-vok43g-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-7 css-a0yaxr-MuiGrid-root"
                     >
-                      <span
-                        class="MuiSlider-colorPrimary MuiSlider-sizeSmall MuiSlider-root MuiSlider-trackFalse css-53tbrc-MuiSlider-root"
+                      <div
+                        class="MuiFormControl-root css-1st3y2y-MuiFormControl-root"
+                      >
+                        <div
+                          class="MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
+                        >
+                          <div
+                            class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+                          >
+                            <input
+                              aria-invalid="false"
+                              class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                              id="outlined-basic"
+                              type="text"
+                              value="1980"
+                            />
+                            <fieldset
+                              aria-hidden="true"
+                              class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                            >
+                              <legend
+                                class="css-nnbavb"
+                              >
+                                <span
+                                  class="notranslate"
+                                >
+                                  ​
+                                </span>
+                              </legend>
+                            </fieldset>
+                          </div>
+                          
+                        </div>
+                      </div>
+                      <div
+                        class="MuiFormControl-root css-1nrlq1o-MuiFormControl-root"
                       >
                         <span
-                          class="MuiSlider-rail css-14pt78w-MuiSlider-rail"
-                        />
-                        <span
-                          class="MuiSlider-track css-1vjujtc-MuiSlider-track"
-                          style="left: 0%; width: 20%;"
-                        />
-                        <span
-                          class="MuiSlider-thumbColorPrimary MuiSlider-thumbSizeSmall MuiSlider-thumb css-14gf62f-MuiSlider-thumb"
-                          data-index="0"
-                          style="left: 20%;"
+                          class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
                         >
                           <input
-                            aria-orientation="horizontal"
-                            aria-valuemax="2100"
-                            aria-valuemin="1950"
-                            aria-valuenow="1980"
-                            data-index="0"
-                            max="2100"
-                            min="1950"
-                            step="1"
-                            style="border: 0px; height: 100%; margin: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 100%; direction: ltr;"
-                            type="range"
-                            value="1980"
+                            class="PrivateSwitchBase-input css-1m9pwf3"
+                            data-indeterminate="false"
+                            type="checkbox"
                           />
-                          <span
+                          <svg
                             aria-hidden="true"
-                            class="MuiSlider-valueLabelOpen MuiSlider-valueLabel css-gdpt3b-MuiSlider-valueLabel"
+                            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                            data-testid="RefLineInvisibleCheckbox"
+                            focusable="false"
+                            viewBox="0 0 24 24"
                           >
-                            <span
-                              class="MuiSlider-valueLabelCircle"
-                            >
-                              <span
-                                class="MuiSlider-valueLabelLabel"
-                              >
-                                1980
-                              </span>
-                            </span>
-                          </span>
+                            <path
+                              d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78 3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"
+                            />
+                          </svg>
+                          <span
+                            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                          />
                         </span>
-                      </span>
+                      </div>
                     </div>
                   </div>
                 </div>

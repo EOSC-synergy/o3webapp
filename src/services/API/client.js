@@ -4,7 +4,7 @@ import axios from 'axios';
 const baseURL = "https://api.o3as.fedcloud.eu/api/v1";
 
 /** The timeout value at which an error is thrown and fetching data stops in milliseconds */
-const timeoutVal = 60 * 1000; // 1 min at least (fetching the models took 29s)
+const timeoutVal = 2 * 60 * 1000; // 1 min at least (fetching the models took 29s)
 
 /**
  * Makes a GET request.
@@ -87,8 +87,15 @@ export const getPlotData = ({plotId, latMin, latMax, months, modelList, startYea
     if (months.length === 0) {
         throw new Error("requesting with an empty array will be rejected by the api");
     }
-    return postAtAPI(
-        `/plots/${plotId}?begin=${startYear}&end=${endYear}&month=${months.join(",")}&lat_min=${latMin}&lat_max=${latMax}&ref_meas=${refModel}&ref_year=${refYear}`,
-        modelList
-    );
+    if (plotId === 'tco3_zm') {
+        return postAtAPI(
+            `/plots/${plotId}?begin=${startYear}&end=${endYear}&month=${months.join(",")}&lat_min=${latMin}&lat_max=${latMax}&ref_meas=${refModel}&ref_year=${refYear}`,
+            modelList
+        );
+    } else if (plotId === 'tco3_return') {
+        return postAtAPI(
+            `/plots/${plotId}?month=${months.join(",")}&lat_min=${latMin}&lat_max=${latMax}&ref_meas=${refModel}&ref_year=${refYear}`,
+            modelList
+        );
+    }
 }
