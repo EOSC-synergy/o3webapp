@@ -23,6 +23,7 @@ import Alert from "@mui/material/Alert";
 import PropTypes from 'prop-types'; 
 import { useDispatch, useSelector } from "react-redux";
 import { REQUEST_STATE } from "../../../../../../services/API/apiSlice";
+import { selectNameOfGroup, selectModelDataOfGroup } from "../../../../../../store/modelsSlice/modelsSlice";
 
 /**
  * opens a modal where the user can add a new model group
@@ -30,7 +31,8 @@ import { REQUEST_STATE } from "../../../../../../services/API/apiSlice";
  * @param {function} props.onClose -> function to call if modal should be closed
  * @param {boolean} props.isOpen -> boolean whether the modal should be visible
  * @param {function} props.reportError -> error handling
- * @param {number} props.id -> a number identifying the model group
+ * @param {string} props.modelGroupId -> string identifying the model group,
+ *          if this model should be used to edit an existing model group
  * @returns {JSX} a jsx containing a modal with a transfer list with all available models
  */
 function AddModelGroupModal(props) {
@@ -50,14 +52,7 @@ function AddModelGroupModal(props) {
         isLoading = false;
     }
 
-    useEffect(() => {
-        if (modelListRequestedData.status === REQUEST_STATE.error) {
-            props.reportError("API not responding: " + modelListRequestedData.error);
-        }
-        if (modelListRequestedData.status === REQUEST_STATE.success) {
-            setVisible(modelListRequestedData.data);
-        }
-    }, [allModels]);
+    const modelGroupId = 'modelGroupId' in props ? props.modelGroupId : -1;
 
     /**
      * Array containing all currently checked models
@@ -67,7 +62,7 @@ function AddModelGroupModal(props) {
      * Array containing all models, that are currently plotted in the right transfer list
      * -> models that should eventually be added
      */
-    const [right, setRight] = React.useState([]);
+    const [right, setRight] = React.useState(Object.keys(useSelector(state => selectModelDataOfGroup(state, modelGroupId))));
     /**
      * Array containing all models that should currently be visibile
      * because of the search function those might differ from all models
@@ -76,9 +71,18 @@ function AddModelGroupModal(props) {
     /**
      * The currently enetered group name
      */
-    const [groupName, setGroupName] = React.useState('');
+    const [groupName, setGroupName] = React.useState(useSelector(state => selectNameOfGroup(state, modelGroupId)));
     const [errorMessage, setErrorMessage] = React.useState('');
     const theme = useTheme();
+
+    useEffect(() => {
+        if (modelListRequestedData.status === REQUEST_STATE.error) {
+            props.reportError("API not responding: " + modelListRequestedData.error);
+        }
+        if (modelListRequestedData.status === REQUEST_STATE.success) {
+            setVisible(modelListRequestedData.data);
+        }
+    }, [allModels]);
 
     
 
@@ -382,7 +386,8 @@ function AddModelGroupModal(props) {
 AddModelGroupModal.propTypes = {
     reportError: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
-    isOpen: PropTypes.bool.isRequired
+    isOpen: PropTypes.bool.isRequired,
+    modelGroupId: PropTypes.string
 }
 
 
