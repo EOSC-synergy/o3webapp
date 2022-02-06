@@ -1,6 +1,6 @@
 import { createTestStore } from "../../store/store";
 import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, START_YEAR, MODEL_LINE_THICKNESS } from "../constants";
-import { colorNameToHex, convertToStrokeStyle, generateSeries, getIncludedModels, getOptions, normalizeArray, preTransformApiData, default_TCO3_return } from "./optionsFormatter";
+import { colorNameToHex, convertToStrokeStyle, generateSeries, getIncludedModels, getOptions, normalizeArray, preTransformApiData, default_TCO3_return, getDefaultYAxisTco3Return } from "./optionsFormatter";
 
 describe("testing optionsFormatter functionality", () => {
     const spacedYearArray = [...Array(10).keys()].map(number => `${START_YEAR + 2 * number}`);
@@ -67,32 +67,6 @@ describe("testing optionsFormatter functionality", () => {
         });
     })
 
-    describe('tests the generation functions for tco3_zm', () => {
-        let store;
-        let modelsSlice;
-        beforeEach(() => {
-            store = createTestStore();
-            modelsSlice = store.getState().models;
-        })
-
-        it('should generate the tco3_zm series correctly (generateTco3_ZmSeries)', () => {
-            const data = {}
-            Object.keys(modelsSlice.modelGroups[0].models).forEach(key => {
-                data[key] = Array(141).fill(0)
-            })
-            //const series = generateTco3_zm()
-        });
-        
-        it('should generate a single tco3_zm series with the expected format (generateSingleTco3ZmSeries)', () => {
-            
-        });
-        
-        it('should generate a data matrix from tco3_zm data (buildSvMatrixTco3Zm)', () => {
-            
-        });
-
-
-    });
 
     describe("tests the generation of a series", () => {
         let store;
@@ -156,19 +130,16 @@ describe("testing optionsFormatter functionality", () => {
 
     it('returns the correct options formatted correctly for tco3_return', () => {
         const expected = JSON.parse(JSON.stringify(default_TCO3_return));
+        const yaxis = [getDefaultYAxisTco3Return(undefined, 0, 10, true, false, 3, 2), getDefaultYAxisTco3Return(undefined, 0, 10, true, true, -3, 2),]
         expected.title.text = "title";
-        //expected.xaxis.min = 0;
-        //expected.xaxis.max = 10;
-        expected.yaxis.min = 0;
-        expected.yaxis.max = 10;
+        
+        expected.yaxis.push(...yaxis);
 
         const xAxisRange = {minX: 0, maxY: 10};
         const yAxisRange = {minY: 0, maxY: 10};
-        expect(
-            getOptions({plotId: O3AS_PLOTS.tco3_return, styling: {colors:[]}, plotTitle: "title", xAxisRange, yAxisRange})
-        ).toEqual(
-            expected
-        );
+        const result = getOptions({plotId: O3AS_PLOTS.tco3_return, styling: {colors:[]}, plotTitle: "title", xAxisRange, yAxisRange, seriesNames: []});
+        console.log(result);
+        expect(result).toEqual(expected);
     });
 
     it('converts the color name to hex codes', () => {

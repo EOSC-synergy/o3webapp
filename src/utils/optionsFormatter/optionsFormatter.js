@@ -93,7 +93,7 @@ export const defaultTCO3_zm = {
     },
 };
 
-function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show=false, opposite=false, offsetX=-1, tickAmount=0) {
+export function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show=false, opposite=false, offsetX=-1, tickAmount=0) {
     return {
         show,
         opposite,
@@ -122,7 +122,7 @@ function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show=false, opposite=fals
     }
 }
 
-function getDefaultYAxisTco3Return(seriesName, minY, maxY, show=false, opposite=false, offsetX=-1, tickAmount=0) {
+export function getDefaultYAxisTco3Return(seriesName, minY, maxY, show=false, opposite=false, offsetX=-1, tickAmount=0) {
     return {
         show,
         opposite,
@@ -944,7 +944,6 @@ function parseSvName(name) {
 }
 
 function customTooltipFormatter({ series, seriesIndex, dataPointIndex, w }) {
-    //console.log(w)
     const modelName = w.globals.seriesNames[seriesIndex];
     const listOfSv = Object.keys(SV_COLORING); // included mean+/-std
     for (const sv of listOfSv) {
