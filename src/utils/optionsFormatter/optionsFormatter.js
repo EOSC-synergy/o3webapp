@@ -783,21 +783,23 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
  */
 export const preTransformApiData = ({plotId, data}) => {
     const maximums = [];
+    const minimums = [];
+    const lookUpTable = {};
     if (plotId === O3AS_PLOTS.tco3_zm) {
-        const lookUpTable = {};
+
         for (let datum of data) {
             // top structure
             const normalizedArray = normalizeArray(datum.x, datum.y);
             maximums.push(Math.max(...normalizedArray));
+            minimums.push(Math.min(...normalizedArray));
             lookUpTable[datum.model] = {
                 plotStyle: datum.plotstyle,
                 data: normalizedArray, // this should speed up the calculation of the statistical values later
             };
         }
-        console.log(maximums)
-        return lookUpTable;
+
     } else if (plotId === O3AS_PLOTS.tco3_return) {
-        const lookUpTable = {};
+        
         for (let datum of data) {
             // top structure
             lookUpTable[datum.model] = {
@@ -806,12 +808,16 @@ export const preTransformApiData = ({plotId, data}) => {
             };
 
             // fill data
+            const temp = []
             for (let index in datum.x) {
+                temp.push(datum.y[index]);
                 lookUpTable[datum.model].data[datum.x[index]] = datum.y[index];
             }
+            maximums.push(Math.max(...temp));
+            minimums.push(Math.min(...temp));
         }
-        return lookUpTable;
     };
+    return {lookUpTable, min: Math.min(...minimums), max: Math.max(...maximums)};
 }
 
 

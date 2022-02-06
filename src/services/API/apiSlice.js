@@ -233,7 +233,10 @@ const apiSlice = createSlice({
                 const { data, plotId, cacheKey } = action.payload;
                 const storage = state.plotSpecific[plotId].cachedRequests[cacheKey];
                 storage.status = REQUEST_STATE.success;
-                storage.data = preTransformApiData({plotId, data});
+                const { lookUpTable, min, max } = preTransformApiData({plotId, data});
+                console.log(min, max);
+                storage.data = lookUpTable;
+
             })
             .addCase(fetchPlotDataRejected, (state, action) => {
                 const { error, plotId, cacheKey } = action.payload;
