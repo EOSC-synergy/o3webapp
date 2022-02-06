@@ -1738,10 +1738,27 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
         </div>
       </div>
       <button
-        class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root  css-126gm7o-MuiButtonBase-root-MuiButton-root"
+        class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-177upon-MuiButtonBase-root-MuiButton-root"
+        elevation="3"
+        position="fixed"
         tabindex="0"
         type="button"
       >
+        <span
+          class="MuiButton-startIcon MuiButton-iconSizeMedium css-1d6wzja-MuiButton-startIcon"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+            data-testid="FileDownloadIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+            />
+          </svg>
+        </span>
         Download
         <span
           class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
@@ -3489,10 +3506,27 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
         </div>
       </div>
       <button
-        class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root  css-126gm7o-MuiButtonBase-root-MuiButton-root"
+        class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-177upon-MuiButtonBase-root-MuiButton-root"
+        elevation="3"
+        position="fixed"
         tabindex="0"
         type="button"
       >
+        <span
+          class="MuiButton-startIcon MuiButton-iconSizeMedium css-1d6wzja-MuiButton-startIcon"
+        >
+          <svg
+            aria-hidden="true"
+            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+            data-testid="FileDownloadIcon"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"
+            />
+          </svg>
+        </span>
         Download
         <span
           class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
