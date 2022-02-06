@@ -1,11 +1,15 @@
-import reducer, { fetchModels, fetchPlotData, fetchPlotDataPending, fetchPlotTypes, generateCacheKey, REQUEST_STATE, selectActivePlotData } from "./apiSlice";
+import reducer, { fetchModels, fetchPlotData, fetchPlotTypes, generateCacheKey, REQUEST_STATE, selectActivePlotData } from "./apiSlice";
 import axios from 'axios';
 import { configureStore } from "@reduxjs/toolkit";
 import { createTestStore } from "../../store/store";
 import * as optionsFormatter from "../../utils/optionsFormatter/optionsFormatter";
 
+/*
 const spy = jest.spyOn(optionsFormatter, 'preTransformApiData');
-spy.mockImplementation(x => x);
+spy.mockImplementation(x => {
+    return {lookUpTable: x, min: 0, max: 0}
+});*/
+
 
 jest.mock('axios');
 
@@ -188,18 +192,6 @@ describe("tests the REQUEST_STATE enum", () => {
     expect(REQUEST_STATE.success).toEqual("success");
 });
 
-/*
-describe("tests the action creators of fetchPlotData", () => {
-    
-    console.log("a" + fetchPlotDataPending);
-    expect(fetchPlotDataPending({plotId: "tco3_zm", cacheKey: "key"})).toEqual({
-        type: "api/fetchPlotData/pending",
-        plotId: "tco3_zm", 
-        cacheKey: "key",
-    });
-});
-*/
-
 let store;
 describe('tests fetchPlotData thunk action creator', () => {
     const exampleRequestData = {
@@ -209,7 +201,7 @@ describe('tests fetchPlotData thunk action creator', () => {
         months: [1,2,3], 
         startYear: 1959, 
         endYear: 2100, 
-        modelList: ["modelX", "modelY"], 
+        modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"], 
         refModel: "SBUV_GSFC_merged-SAT-ozone", 
         refYear: 1980,
     };
@@ -226,16 +218,29 @@ describe('tests fetchPlotData thunk action creator', () => {
     })
 
     it('should dispatch a loading status', () => {
-        axios.post.mockResolvedValue({data: {}});
+        axios.post.mockResolvedValue({data: [
+            {
+              "legalinfo": "https://o3as.data.kit.edu/policies/terms-of-use.html",
+              "model": "CCMI-1_ACCESS_ACCESS-CCM-refC2",
+              "plotstyle": {
+                "color": "purple",
+                "linestyle": "solid",
+                "marker": ""
+              },
+              "x": [],
+              "y": [],
+            }]});
         store.dispatch(fetchPlotData(exampleRequestData));
-
+        
         const plotSpecificSection = store.getState().api.plotSpecific["tco3_zm"];
         expect(plotSpecificSection.active).toEqual(exampleCacheKey);
         expect(plotSpecificSection.cachedRequests[exampleCacheKey]).toEqual({
             data: [],
             error: null,
             status: REQUEST_STATE.loading,
+            suggested: null,
         });
+        
     });
 
 });
