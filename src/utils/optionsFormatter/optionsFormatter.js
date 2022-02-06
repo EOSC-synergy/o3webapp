@@ -45,13 +45,16 @@ export const defaultTCO3_zm = {
             easing: "linear"
         },
         toolbar: {
-            "show": true,
+            show: true,
             offsetX: -60,
             offsetY: 10,
-            "tools":{
-                "download": true,
-                pan: false
-            }
+            tools: {
+                download: true,
+                pan: false,
+                zoomin: false,
+                zoomout: false,
+                zoom: true, // enabled, otherwise the zoom is disabled
+            },
         },
         zoom: {
             enabled: true,
@@ -138,6 +141,9 @@ function getDefaultYAxisTco3Return(seriesName, minY, maxY, show=false, opposite=
             style: {
                 fontSize: "1rem",
             },
+        },
+        labels: {
+            formatter: value => value % 10 ? "" : value,
         }
     }
 }
@@ -172,7 +178,7 @@ export const default_TCO3_return = {
       zoom: {
           enabled: false,
           type: 'xy',
-      }
+      },
     },
     colors: [undefined], // , ...styling.colors
     title: {
@@ -889,7 +895,7 @@ function getTickAmountYAxisTco3Zm(min, max) {
 function getTickAmountYAxisTco3Return(min, max) {
     const diff = max - min;
     if (diff <= 200) {
-        return Math.floor(diff / 10);
+        return Math.floor(diff / 5);
     } else if (diff <= 400) {
         return Math.floor(diff / 40);
     }
