@@ -196,7 +196,7 @@ function AddModelGroupModal(props) {
     const customList = (models, modelsChecked, modelsVisible) => {
         const modelsCheckedInvisible = intersection(not(models, modelsVisible), modelsChecked);
         return (
-            <Card>
+            <Card sx={{backgroundColor: theme.palette.grey[200]}}>
                 <CardHeader
                     sx={{ px: 2, py: 1 }}
                     avatar={
@@ -247,7 +247,7 @@ function AddModelGroupModal(props) {
                                         data-testid={`AddModelGroupModal-transfer-list-item-${labelId}-checkbox`}
                                     />
                                 </ListItemIcon>
-                                <ListItemText id={labelId} primary={model.name} secondary={`institute: ${model.institute}\nproject: ${model.project}`} />
+                                <ListItemText id={labelId} primary={model.name} secondary={`Institute: ${model.institute}\nProject: ${model.project}`} />
                                 </ListItem>
                             );
                     })}
@@ -271,7 +271,6 @@ function AddModelGroupModal(props) {
         left: '50%',
         transform: 'translate(-50%, -50%)',
         width: '90%',
-        bgcolor: theme.palette.grey[200],
         boxShadow: 24,
         p: 4,
         overflow: 'auto',
@@ -303,7 +302,7 @@ function AddModelGroupModal(props) {
         >   
             <Card sx={style}>
                 <CardHeader
-                    title="Add a new model group"
+                    title="Add New Model Group"
                     action={
                         <IconButton onClick={closeWithChanges} aria-label="close" data-testid="addModelGroupModal-close-button">
                             <CloseIcon />
