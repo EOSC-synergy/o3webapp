@@ -122,13 +122,13 @@ export const APEXCHART_PLOT_TYPE = {
 };
 
 export const HEIGHT_LOADING_SPINNER = "300px";
-export const HEIGHT_GRAPH = `${window.screen.availHeight * 0.55}px` //"600px";
+export const HEIGHT_GRAPH = `${window.innerHeight * 0.75}px`;
 
 /*
 // Options Formatter, XAxisField, YAxisField, apiSlice
 */
-export const START_YEAR = 1960
-export const END_YEAR = 2100
+export const START_YEAR = 1960;
+export const END_YEAR = 2100;
 // year list: 1959 - 2100
 export const IMPLICIT_YEAR_LIST = [...Array(END_YEAR - START_YEAR + 1).keys()].map(number => `${START_YEAR + number}`);
 
