@@ -902,23 +902,24 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                                 class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                               >
                                 <span
-                                  class="MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                                  class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
                                 >
                                   <input
+                                    checked=""
                                     class="PrivateSwitchBase-input css-1m9pwf3"
-                                    data-indeterminate="true"
+                                    data-indeterminate="false"
                                     data-testid="CheckboxSeasonNum0"
                                     type="checkbox"
                                   />
                                   <svg
                                     aria-hidden="true"
                                     class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                                    data-testid="IndeterminateCheckBoxIcon"
+                                    data-testid="CheckBoxIcon"
                                     focusable="false"
                                     viewBox="0 0 24 24"
                                   >
                                     <path
-                                      d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"
+                                      d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
                                     />
                                   </svg>
                                   <span
@@ -974,9 +975,10 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                                   class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                 >
                                   <span
-                                    class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                                    class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
                                   >
                                     <input
+                                      checked=""
                                       class="PrivateSwitchBase-input css-1m9pwf3"
                                       data-indeterminate="false"
                                       data-testid="CheckboxMonth2"
@@ -985,12 +987,12 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                                     <svg
                                       aria-hidden="true"
                                       class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                                      data-testid="CheckBoxOutlineBlankIcon"
+                                      data-testid="CheckBoxIcon"
                                       focusable="false"
                                       viewBox="0 0 24 24"
                                     >
                                       <path
-                                        d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                                        d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
                                       />
                                     </svg>
                                     <span
@@ -1008,9 +1010,10 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                                   class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                 >
                                   <span
-                                    class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                                    class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
                                   >
                                     <input
+                                      checked=""
                                       class="PrivateSwitchBase-input css-1m9pwf3"
                                       data-indeterminate="false"
                                       data-testid="CheckboxMonth3"
@@ -1019,12 +1022,12 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                                     <svg
                                       aria-hidden="true"
                                       class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                                      data-testid="CheckBoxOutlineBlankIcon"
+                                      data-testid="CheckBoxIcon"
                                       focusable="false"
                                       viewBox="0 0 24 24"
                                     >
                                       <path
-                                        d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                                        d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
                                       />
                                     </svg>
                                     <span
@@ -1604,14 +1607,14 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                           tabindex="0"
                         >
                            
-                          CCMI-1_ACCESS_ACCESS-CCM-refC2
+                          SBUV_GSFC_merged-SAT-ozone
                            
                         </div>
                         <input
                           aria-hidden="true"
                           class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
                           tabindex="-1"
-                          value="CCMI-1_ACCESS_ACCESS-CCM-refC2"
+                          value="SBUV_GSFC_merged-SAT-ozone"
                         />
                         <svg
                           aria-hidden="true"
@@ -2623,23 +2626,24 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                                 class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                               >
                                 <span
-                                  class="MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                                  class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
                                 >
                                   <input
+                                    checked=""
                                     class="PrivateSwitchBase-input css-1m9pwf3"
-                                    data-indeterminate="true"
+                                    data-indeterminate="false"
                                     data-testid="CheckboxSeasonNum0"
                                     type="checkbox"
                                   />
                                   <svg
                                     aria-hidden="true"
                                     class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                                    data-testid="IndeterminateCheckBoxIcon"
+                                    data-testid="CheckBoxIcon"
                                     focusable="false"
                                     viewBox="0 0 24 24"
                                   >
                                     <path
-                                      d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"
+                                      d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
                                     />
                                   </svg>
                                   <span
@@ -2695,9 +2699,10 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                                   class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                 >
                                   <span
-                                    class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                                    class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
                                   >
                                     <input
+                                      checked=""
                                       class="PrivateSwitchBase-input css-1m9pwf3"
                                       data-indeterminate="false"
                                       data-testid="CheckboxMonth2"
@@ -2706,12 +2711,12 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                                     <svg
                                       aria-hidden="true"
                                       class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                                      data-testid="CheckBoxOutlineBlankIcon"
+                                      data-testid="CheckBoxIcon"
                                       focusable="false"
                                       viewBox="0 0 24 24"
                                     >
                                       <path
-                                        d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                                        d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
                                       />
                                     </svg>
                                     <span
@@ -2729,9 +2734,10 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                                   class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                 >
                                   <span
-                                    class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                                    class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
                                   >
                                     <input
+                                      checked=""
                                       class="PrivateSwitchBase-input css-1m9pwf3"
                                       data-indeterminate="false"
                                       data-testid="CheckboxMonth3"
@@ -2740,12 +2746,12 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                                     <svg
                                       aria-hidden="true"
                                       class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                                      data-testid="CheckBoxOutlineBlankIcon"
+                                      data-testid="CheckBoxIcon"
                                       focusable="false"
                                       viewBox="0 0 24 24"
                                     >
                                       <path
-                                        d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                                        d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
                                       />
                                     </svg>
                                     <span
@@ -3325,14 +3331,14 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                           tabindex="0"
                         >
                            
-                          CCMI-1_ACCESS_ACCESS-CCM-refC2
+                          SBUV_GSFC_merged-SAT-ozone
                            
                         </div>
                         <input
                           aria-hidden="true"
                           class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
                           tabindex="-1"
-                          value="CCMI-1_ACCESS_ACCESS-CCM-refC2"
+                          value="SBUV_GSFC_merged-SAT-ozone"
                         />
                         <svg
                           aria-hidden="true"

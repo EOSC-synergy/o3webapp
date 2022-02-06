@@ -10,7 +10,7 @@ const definedInitialState = {
   settings: {
   
     year: 1980,
-    model: "CCMI-1_ACCESS_ACCESS-CCM-refC2",
+    model: "SBUV_GSFC_merged-SAT-ozone",
     visible: false,
     isOffsetApplied: false,
   },
@@ -53,7 +53,7 @@ test("should update the reference model of the current refference settings.", ()
   const previousState = {
     settings: {
      
-        model: "CCMI-1_CCCma_CMAM-refC2",
+        model: "SBUV_GSFC_merged-SAT-ozone",
       
     },
   };
