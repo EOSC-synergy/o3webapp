@@ -43,7 +43,8 @@ function Navbar(props) {
     }
 
     return (
-            <AppBar position="static" sx={{ margin: 0, bgcolor: '#111', height: window.innerHeight * 0.13}} data-testid="Navbar" >
+        <div id="Navbar">
+            <AppBar position="static" sx={{ margin: 0, bgcolor: '#111'}} data-testid="Navbar" >
                 <Container disableGutters maxWidth={false} sx={{ margin: 0 }} >
                     <Toolbar disableGutters data-testid="Toolbar_Navbar">
                         <Grid
@@ -64,22 +65,24 @@ function Navbar(props) {
                                 item
                                 key="edit graph button grid item"
                             >
-                                    <Button
-                                        key={"editGraphButton"}
-                                        onClick={props.openSidebar}
-                                        sx={{
-                                            color: 'white',
-                                            '&:hover': {
-                                                color: '#fed136',
-                                            },
-                                        }}
-                                    ><Typography>Edit Graph <EditIcon sx={{fontSize: '14px'}} /></Typography>
-                                    </Button>
+                                <Button
+                                     key={"editGraphButton"}
+                                     onClick={props.openSidebar}
+                                     sx={{
+                                         color: 'white',
+                                        '&:hover': {
+                                             color: '#fed136',
+                                        },
+                                     }}
+                                >
+                                    <Typography>Edit Graph <EditIcon sx={{fontSize: '14px'}} /></Typography>
+                                </Button>
                             </Grid>
                         </Grid>
-                </Toolbar>
-            </Container>
-        </AppBar>
+                    </Toolbar>
+                </Container>
+            </AppBar>
+        </div>
     );
 }
 
