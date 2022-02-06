@@ -57,6 +57,8 @@ describe('tests graph component rendering', () => {
                 modelGroups: {},
             }
         ).mockReturnValueOnce(
+            false
+        ).mockReturnValueOnce(
             "tco3_zm"            
         ).mockReturnValueOnce(
             "title"            
@@ -74,6 +76,8 @@ describe('tests graph component rendering', () => {
             {
                 modelGroups: {},
             }
+        ).mockReturnValueOnce(
+            false
         )
 
         const { container } = render(<Provider store={store}>
