@@ -13,16 +13,10 @@ import {
 import { useTheme } from "@mui/material/styles";
 import PropTypes from "prop-types";
 import { fileFormats } from "../../../../utils/constants";
-import {
-  downloadGraphAsPDF,
-  getBase64Image,
-  getBase64Image2,
-} from "../../../../services/pdf/pdfCreator";
+import { downloadGraphAsPDF} from "../../../../services/pdf/pdfCreator";
 import { useSelector } from "react-redux";
-import {
-  selectPlotId,
-  selectPlotTitle,
-} from "../../../../store/plotSlice/plotSlice";
+import {selectPlotId, selectPlotTitle} from "../../../../store/plotSlice/plotSlice";
+import {selectActivePlotData} from "../../../../services/API/apiSlice";
 import { getIncludedModelsAsObjects } from "../../../../utils/optionsFormatter";
 
 /**
@@ -35,11 +29,12 @@ import { getIncludedModelsAsObjects } from "../../../../utils/optionsFormatter";
  * @returns {JSX.Element} a jsx containing a modal with a dropdown to choose the file type and a download button
  */
 function DownloadModal(props) {
-  /**
-   * @todo move to redux store
-   */
-  const [selectedFileFormat, setSelectedFileFormat] = React.useState("");
+
+  const modelGroups = useSelector(state => state.models.modelGroups);
   const plotId = useSelector(selectPlotId);
+  const activeData = useSelector(state => selectActivePlotData(state, plotId));
+  
+  const [selectedFileFormat, setSelectedFileFormat] = React.useState("");
   const modelsSlice = useSelector((state) => state.models);
   const plotTitle = useSelector(selectPlotTitle);
 
@@ -132,7 +127,7 @@ function DownloadModal(props) {
     const includedModels = getIncludedModelsAsObjects(modelsSlice);
 
     if (selectedFileFormat === "PDF") {
-      downloadGraphAsPDF(plotId, plotTitle);
+      downloadGraphAsPDF(plotId, plotTitle, modelGroups, activeData.data);
     } else if (selectedFileFormat === "PNG") {
       downloadGraphAsPNG(plotTitle);
     } else if (selectedFileFormat === "SVG") {
@@ -146,7 +141,6 @@ function DownloadModal(props) {
    *
    * @param {event} event the event that called this function
    *
-   * @todo connect with redux store
    */
   const changeFileFormat = (event) => {
     setSelectedFileFormat(event.target.value);

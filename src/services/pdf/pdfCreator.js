@@ -17,15 +17,14 @@ const legalNoticeLink = [
  * visit the following website for more details about the viewBox parameter:
  * https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/viewBox
  *
- * @param {the svg element.} svg
+ * @param {the svgElement element.} svg
  * @returns returns the adjusted svg element.
  */
-function getAdjustedSVG(svg) {
-  let bBox = svg.getBBox();
+function getAdjustedSVG(svgElement) {
+  let bBox = svgElement.getBBox();
   let viewBoxParameters = "0 0 " + bBox.width + " " + bBox.height;
-  svg.setAttribute("viewBox", viewBoxParameters);
-  console.log(svg);
-  return svg.outerHTML;
+  svgElement.setAttribute("viewBox", viewBoxParameters);
+  return svgElement.outerHTML;
 }
 
 
@@ -36,7 +35,22 @@ function getAdjustedSVG(svg) {
  * @param {the plot id of the graph (tco3_zm, tco3_return etc.)} plotId 
  * @param {the File name of the PDF} fileName 
  */
-export async function downloadGraphAsPDF(plotId, fileName) {
+export async function downloadGraphAsPDF(plotId, fileName, modelGroups, currentData) {
+
+  console.log(currentData);
+  for (const modelGroup of Object.values(modelGroups)) {
+    if (!modelGroup.isVisible) continue;
+    // modelGroup.name = group name
+    for (const [model, modelData] of Object.entries(modelGroup.models)) {
+        if (!modelData.isVisible) continue;
+        // model = name
+        if (typeof currentData[model] === "undefined") {
+          // default color? skip?
+        }
+        console.log(currentData[model].plotStyle) // color, linestyle?
+    }
+  }
+
   const svgElement = document.querySelector(".apexcharts-svg");
   let docDefinition = null;
 
@@ -57,6 +71,9 @@ export async function downloadGraphAsPDF(plotId, fileName) {
           style: "header",
           fontSize: 14,
         },
+        {
+          
+        },
         "\n","\n","\n",
         {
           fontSize: 11,
@@ -69,5 +86,3 @@ export async function downloadGraphAsPDF(plotId, fileName) {
   }
   pdfMake.createPdf(docDefinition).download(fileName);
 }
-
-export default function createPdf() {}
