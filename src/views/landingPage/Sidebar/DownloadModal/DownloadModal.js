@@ -13,7 +13,11 @@ import {
 import { useTheme } from "@mui/material/styles";
 import PropTypes from "prop-types";
 import { fileFormats } from "../../../../utils/constants";
-import { downloadGraphAsPDF, getBase64Image, getBase64Image2} from "../../../../services/pdf/pdfCreator";
+import {
+  downloadGraphAsPDF,
+  getBase64Image,
+  getBase64Image2,
+} from "../../../../services/pdf/pdfCreator";
 import { useSelector } from "react-redux";
 import {
   selectPlotId,
@@ -58,8 +62,12 @@ function DownloadModal(props) {
     p: 5,
   };
 
-  
-
+  /**
+   * Downloads the Graph image as a PNG file. 
+   *
+   * @param {the File name of the PNG} fileName
+   * @returns a Promise which provides the user to download the PNG file if it was successful.
+   */
   function downloadGraphAsPNG(fileName) {
     return new Promise((resolve, reject) => {
       const img = new Image();
@@ -67,7 +75,7 @@ function DownloadModal(props) {
       const imageBlobURL =
         "data:image/svg+xml;charset=utf-8," +
         encodeURIComponent(svgElement.outerHTML);
-    
+
       img.onload = () => {
         var canvas = document.createElement("canvas");
         canvas.width = img.width;
@@ -85,17 +93,29 @@ function DownloadModal(props) {
     });
   }
 
+  /**
+   * Downloads the Graph image as a SVG file. 
+   *
+   * @param {the File name of the SVG} fileName
+   * @returns a Promise which provides the user to download the SVG file if it was successful.
+   */
   function downloadGraphAsSVG(fileName) {
     return new Promise((resolve, reject) => {
-        const svgElement = document.querySelector(".apexcharts-svg");
-        const imageBlobURL =
-          "data:image/svg+xml;charset=utf-8," +
-          encodeURIComponent(svgElement.outerHTML);
-          downloadBase64File(imageBlobURL, fileName);
-          resolve(imageBlobURL);
-      });
+      const svgElement = document.querySelector(".apexcharts-svg");
+      const imageBlobURL =
+        "data:image/svg+xml;charset=utf-8," +
+        encodeURIComponent(svgElement.outerHTML);
+      downloadBase64File(imageBlobURL, fileName);
+      resolve(imageBlobURL);
+    });
   }
 
+  /**
+   * Downloads the Base64 file concerning to the given base64 data. 
+   * 
+   * @param {the given base64 data} base64Data 
+   * @param {the desired file name} fileName 
+   */
   function downloadBase64File(base64Data, fileName) {
     const downloadLink = document.createElement("a");
     downloadLink.href = base64Data;
@@ -104,26 +124,20 @@ function DownloadModal(props) {
   }
 
   /**
-   * Downloads the plot.
+   * Gets active if the download plot button is clicked.
+   * and downloads concerning to the file format the desired file or image.
    *
    */
-  const downloadPlot = () => {
+  const handleDownloadPlot = () => {
     const includedModels = getIncludedModelsAsObjects(modelsSlice);
 
     if (selectedFileFormat === "PDF") {
-
       downloadGraphAsPDF(plotId, plotTitle);
-
     } else if (selectedFileFormat === "PNG") {
-
       downloadGraphAsPNG(plotTitle);
-
     } else if (selectedFileFormat === "SVG") {
-
       downloadGraphAsSVG(plotTitle);
-
     } else {
-      
     }
   };
 
@@ -176,7 +190,7 @@ function DownloadModal(props) {
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={12} md={3} lg={3} xl={3} key="button">
-            <Button variant="outlined" onClick={downloadPlot}>
+            <Button variant="outlined" onClick={handleDownloadPlot}>
               <Typography>Download</Typography>
             </Button>
           </Grid>
