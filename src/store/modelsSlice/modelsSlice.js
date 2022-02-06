@@ -317,7 +317,6 @@ export const selectModelsOfGroup = (state, groupId) => Object.keys(state.models.
 export const selectModelDataOfGroup = (state, groupId) => 
 {
     if (typeof state.models.modelGroups[groupId] !== 'undefined') {
-        console.log(state.models.modelGroups[groupId].models);
         return state.models.modelGroups[groupId].models;
     }
     return {};
