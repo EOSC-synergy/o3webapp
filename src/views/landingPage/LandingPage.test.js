@@ -40,4 +40,15 @@ describe('test LandingPage component rendering', () => {
       );
       expect(container).toMatchSnapshot();
   });
+
+  it('closes sidebar, when clicking outside of sidebar', () => {
+    const closeSidebar = jest.fn();
+    const { getByTestId, queryByTestId } = render(
+      <Provider store={store}>
+          <LandingPage reportError={() => {}} isSidebarOpen={true} openSidebar={jest.fn()} closeSidebar={closeSidebar} />
+      </Provider>
+    );
+    userEvent.click(getByTestId(/landingPage-not-sidebar/));
+    expect(closeSidebar).toHaveBeenCalled();
+  });
 });

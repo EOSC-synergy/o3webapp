@@ -1753,6 +1753,7 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
       </div>
     </div>
     <div
+      data-testid="landingPage-not-sidebar"
       style="display: flex; justify-content: center; align-items: center; height: 100%;"
     >
       <div
