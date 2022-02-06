@@ -115,6 +115,9 @@ function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show=false, opposite=fals
             style: {
                 fontSize: "1rem",
             },
+        },
+        labels: {
+            formatter: formatYLabelsNicely,
         }
     }
 }
@@ -143,7 +146,7 @@ function getDefaultYAxisTco3Return(seriesName, minY, maxY, show=false, opposite=
             },
         },
         labels: {
-            formatter: value => value % 10 ? "" : value,
+            formatter: formatYLabelsNicely,
         }
     }
 }
@@ -879,7 +882,7 @@ function getOptimalTickAmount(min, max) {
 function getTickAmountYAxisTco3Zm(min, max) {
     const diff = max - min;
     if (diff <= 200) {
-        return Math.floor(diff / 10) + 1;
+        return Math.floor(diff / 5) + 1;
     } else if (diff <= 400) {
         return Math.floor(diff / 40);
     }
@@ -926,3 +929,5 @@ function roundUpToMultipleOfTen(maxY) {
 function filterOutOfRange(value, min, max) {
     return (min <= value && value <= max) ? value : null;
 }
+
+const formatYLabelsNicely = value => value % 10 ? "" : value;
