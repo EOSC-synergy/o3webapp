@@ -175,7 +175,7 @@ function AddModelGroupModal(props) {
         setChecked(not(checked, rightChecked));
     };
     
-    const addNewGroup = () => {
+    const addOrEditGroup = () => {
         if (groupName === '') {
             setErrorMessage("Please provide a model group name");
             return;
@@ -184,7 +184,7 @@ function AddModelGroupModal(props) {
             setErrorMessage("Please provide a list of models for this group");
             return;
         }
-        dispatch(setModelsOfModelGroup({groupId: props.id, groupName: groupName, modelList: right}));
+        dispatch(setModelsOfModelGroup({groupId: props.modelGroupId, groupName: groupName, modelList: right}));
         props.onClose();
     }
 
@@ -384,7 +384,7 @@ function AddModelGroupModal(props) {
                     {errorMessage && <Alert severity="error" sx={{marginTop: '2em'}}>{errorMessage}</Alert>}
                 </CardContent>
                 <CardActions sx={{justifyContent: "flex-end"}}>
-                    <Button onClick={addNewGroup} variant="contained" startIcon={<DoneIcon/>}>{buttonLabel}</Button>
+                    <Button onClick={addOrEditGroup} variant="contained">{'modelGroupId' in props? "Edit group members" : "Add group"}</Button>
                 </CardActions>
             </Card>
         </Modal>
