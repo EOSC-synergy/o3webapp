@@ -1,5 +1,5 @@
 import { q25, q75, median } from "../../services/math/math"
-import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, ALL_REGIONS_ORDERED, STATISTICAL_VALUES_LIST, SV_CALCULATION, SV_COLORING, STATISTICAL_VALUES, APEXCHART_PLOT_TYPE, MODEL_LINE_THICKNESS, START_YEAR, END_YEAR } from "../constants"
+import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, ALL_REGIONS_ORDERED, STATISTICAL_VALUES_LIST, SV_CALCULATION, SV_COLORING, SV_DASHING, STATISTICAL_VALUES, APEXCHART_PLOT_TYPE, MODEL_LINE_THICKNESS, START_YEAR, END_YEAR } from "../constants"
 
 /**
  * Maps the plotId to a function that describes how the series are going
@@ -608,8 +608,8 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
             }
             svSeries.data.push(generateSingleSvSeries(`${sv}(${groupData.name})`, svData));
             svSeries.colors.push(SV_COLORING[sv]);   // coloring?
-            svSeries.width.push(1);                  // thicker?
-            svSeries.dashArray.push(0);              // solid?       
+            svSeries.width.push(MODEL_LINE_THICKNESS);                  // thicker?
+            svSeries.dashArray.push(SV_DASHING[sv]);              // solid?       
         }
     }
     return svSeries;

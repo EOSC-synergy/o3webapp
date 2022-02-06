@@ -208,4 +208,12 @@ export const SV_COLORING = {
     "mean-std": "#000",
 }
 
+export const SV_DASHING = {
+    mean: 0,
+    median: 2,
+    percentile: 0,
+    "mean+std": 8,
+    "mean-std": 8,
+}
+
 export const MODEL_LINE_THICKNESS = 2;
