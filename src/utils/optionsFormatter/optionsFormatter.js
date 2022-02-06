@@ -66,7 +66,7 @@ export const defaultTCO3_zm = {
         show: true, 
         onItemClick: {
             toggleDataSeries: false
-        }
+        },
     },
     dataLabels: {
         enabled: false,
@@ -334,7 +334,6 @@ function generateTco3_ZmSeries({data, modelsSlice}) {
             if (!modelInfo.isVisible) continue; // skip hidden models
             const modelData = data[model]; // retrieve data (api)
             series.data.push({
-                type: APEXCHART_PLOT_TYPE.tco3_zm,
                 name: model,
                 data: modelData.data.map((e, idx) => [START_YEAR + idx, e]),
             });
