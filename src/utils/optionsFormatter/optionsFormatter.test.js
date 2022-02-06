@@ -138,7 +138,6 @@ describe("testing optionsFormatter functionality", () => {
         const xAxisRange = {minX: 0, maxY: 10};
         const yAxisRange = {minY: 0, maxY: 10};
         const result = getOptions({plotId: O3AS_PLOTS.tco3_return, styling: {colors:[]}, plotTitle: "title", xAxisRange, yAxisRange, seriesNames: []});
-        console.log(result);
         expect(result).toEqual(expected);
     });
 
