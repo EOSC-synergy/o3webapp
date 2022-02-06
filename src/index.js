@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import store from './store/store';
 import {Provider, useSelector} from 'react-redux';
-import "./index.css";
 import { fetchModels, fetchPlotData, fetchPlotTypes } from './services/API/apiSlice';
 import {modelListBegin, modelListEnd} from "./utils/constants";
 import {setActivePlotId} from "./store/plotSlice/plotSlice";
