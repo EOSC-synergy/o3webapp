@@ -247,7 +247,7 @@ describe("testing optionsFormatter functionality", () => {
     it('should return a correct formatted tooltip for a normal series', () => {
         
         const expected = `
-        <div class="arrow-box">
+        <div>
             <div style="margin:2px"><strong>2021</strong></div>
             <div>MODELNAME: <strong>42</strong></div>
             <div>Project: PROJECT-X</div>

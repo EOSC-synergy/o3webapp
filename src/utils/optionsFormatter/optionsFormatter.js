@@ -1031,13 +1031,24 @@ export function parseSvName(name) {
 export function customTooltipFormatter({ series, seriesIndex, dataPointIndex, w }) {
     const modelName = w.globals.seriesNames[seriesIndex];
     const listOfSv = Object.keys(SV_COLORING); // included mean+/-std
+    if (modelName.startsWith("Reference")) {
+        return (
+            `
+                <div>
+                    <div style="margin:2px"><strong>${w.globals.seriesX[seriesIndex][dataPointIndex]}</strong></div>
+                    <div>Reference: <strong>${series[seriesIndex][dataPointIndex]}</strong></div>
+                </div>
+            `
+        )
+    }
+    
     for (const sv of listOfSv) {
         if (modelName.startsWith(sv)) {
             // parse sv
             const {sv, groupName} = parseSvName(modelName);
             return (
                 `
-                <div class="arrow-box">
+                <div>
                     <div style="margin:2px"><strong>${w.globals.seriesX[seriesIndex][dataPointIndex]}</strong></div>
                     <div>${sv}: <strong>${series[seriesIndex][dataPointIndex]}</strong></div>
                     <div>Group: ${groupName}</div>
@@ -1050,7 +1061,7 @@ export function customTooltipFormatter({ series, seriesIndex, dataPointIndex, w 
     let {project, institute, name} = convertModelName(modelName);
     return (
         `
-        <div class="arrow-box">
+        <div>
             <div style="margin:2px"><strong>${w.globals.seriesX[seriesIndex][dataPointIndex]}</strong></div>
             <div>${name}: <strong>${series[seriesIndex][dataPointIndex]}</strong></div>
             <div>Project: ${project}</div>
