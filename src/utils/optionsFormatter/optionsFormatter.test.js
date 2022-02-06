@@ -1,6 +1,25 @@
 import { createTestStore } from "../../store/store";
 import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, START_YEAR, MODEL_LINE_THICKNESS } from "../constants";
-import { colorNameToHex, convertToStrokeStyle, generateSeries, getIncludedModels, getOptions, normalizeArray, preTransformApiData, default_TCO3_return } from "./optionsFormatter";
+import { 
+    colorNameToHex, 
+    convertToStrokeStyle, 
+    generateSeries, 
+    getOptions, 
+    normalizeArray, 
+    preTransformApiData, 
+    default_TCO3_return, 
+    getDefaultYAxisTco3Return, 
+    getOptimalTickAmount, 
+    getTickAmountYAxisTco3Zm, 
+    getTickAmountYAxisTco3Return, 
+    roundUpToMultipleOfTen, 
+    roundDownToMultipleOfTen, 
+    formatYLabelsNicely,
+    parseSvName,
+    getDefaultYAxisTco3Zm,
+    FONT_FAMILY,
+    customTooltipFormatter,
+} from "./optionsFormatter";
 
 describe("testing optionsFormatter functionality", () => {
     const spacedYearArray = [...Array(10).keys()].map(number => `${START_YEAR + 2 * number}`);
@@ -67,32 +86,6 @@ describe("testing optionsFormatter functionality", () => {
         });
     })
 
-    describe('tests the generation functions for tco3_zm', () => {
-        let store;
-        let modelsSlice;
-        beforeEach(() => {
-            store = createTestStore();
-            modelsSlice = store.getState().models;
-        })
-
-        it('should generate the tco3_zm series correctly (generateTco3_ZmSeries)', () => {
-            const data = {}
-            Object.keys(modelsSlice.modelGroups[0].models).forEach(key => {
-                data[key] = Array(141).fill(0)
-            })
-            //const series = generateTco3_zm()
-        });
-        
-        it('should generate a single tco3_zm series with the expected format (generateSingleTco3ZmSeries)', () => {
-            
-        });
-        
-        it('should generate a data matrix from tco3_zm data (buildSvMatrixTco3Zm)', () => {
-            
-        });
-
-
-    });
 
     describe("tests the generation of a series", () => {
         let store;
@@ -106,20 +99,18 @@ describe("testing optionsFormatter functionality", () => {
         const dataExpected = {
             data: [
               {
-                type: 'line',
                 name: 'CCMI-1_ACCESS_ACCESS-CCM-refC2',
                 data: testArray
               },
               {
-                type: 'line',
                 name: 'CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG',
                 data: testArray
               },
-              { name: 'CCMI-1_CCCma_CMAM-refC2', data: testArray, type: 'line' },
-              { name: 'mean(Example Group)', data: testArray, type: 'line' },
-              { name: 'median(Example Group)', data: testArray, type: 'line' },
-              { name: 'mean+std(Example Group)', data: testArray, type: 'line' },
-              { name: 'mean-std(Example Group)', data: testArray, type: 'line' }
+              { name: 'CCMI-1_CCCma_CMAM-refC2', data: testArray},
+              { name: 'mean(Example Group)', data: testArray},
+              { name: 'median(Example Group)', data: testArray},
+              { name: 'mean+std(Example Group)', data: testArray},
+              { name: 'mean-std(Example Group)', data: testArray}
             ],
             styling: {
               colors: [
@@ -130,11 +121,11 @@ describe("testing optionsFormatter functionality", () => {
               ],
               dashArray: [
                 0, 0, 0, 0,
-                0, 0, 0
+                2, 8, 8
               ],
               width: [
-                MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, 1,
-                1, 1, 1
+                MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS,
+                MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS
               ]
             }
           }
@@ -156,19 +147,15 @@ describe("testing optionsFormatter functionality", () => {
 
     it('returns the correct options formatted correctly for tco3_return', () => {
         const expected = JSON.parse(JSON.stringify(default_TCO3_return));
+        const yaxis = [getDefaultYAxisTco3Return(undefined, 0, 10, true, false, 3, 2), getDefaultYAxisTco3Return(undefined, 0, 10, true, true, -3, 2),]
         expected.title.text = "title";
-        //expected.xaxis.min = 0;
-        //expected.xaxis.max = 10;
-        expected.yaxis.min = 0;
-        expected.yaxis.max = 10;
+        
+        expected.yaxis.push(...yaxis);
 
         const xAxisRange = {minX: 0, maxY: 10};
         const yAxisRange = {minY: 0, maxY: 10};
-        expect(
-            getOptions({plotId: O3AS_PLOTS.tco3_return, styling: {colors:[]}, plotTitle: "title", xAxisRange, yAxisRange})
-        ).toEqual(
-            expected
-        );
+        const result = getOptions({plotId: O3AS_PLOTS.tco3_return, styling: {colors:[]}, plotTitle: "title", xAxisRange, yAxisRange, seriesNames: []});
+        expect(result).toEqual(expected);
     });
 
     it('converts the color name to hex codes', () => {
@@ -186,4 +173,93 @@ describe("testing optionsFormatter functionality", () => {
         expect(convertToStrokeStyle("no valid line style")).toEqual(false);
     });
 
+    it('should calculate the optimal tick amount for the x-axis for the tco3_zm', () => {
+        const max = 200;
+        const factor = 10;
+        expect(getOptimalTickAmount(0, max)).toEqual(max / factor);
+    });
+
+    it('should calculate the optimal tick amount for the y-axis for the tco3_zm', () => {
+        expect(getTickAmountYAxisTco3Zm(0, 100)).toEqual(21);
+    });
+
+    it('should calculate the optimal tick amount for the y-axis for the tco3_return', () => {
+        expect(getTickAmountYAxisTco3Return(0, 100)).toEqual(20);
+    });
+
+    it('should round up to a multiple of ten correctly', () => {
+        expect(roundUpToMultipleOfTen(13)).toEqual(20); // roundup
+        expect(roundUpToMultipleOfTen(10)).toEqual(10); // no roundup required
+    });
+
+    it('should round down to a multiple of ten correctly', () => {
+        expect(roundDownToMultipleOfTen(13)).toEqual(10); // round down
+        expect(roundDownToMultipleOfTen(100)).toEqual(100); // no rounddown required
+    });
+
+    it('should format the y-labels nicely', () => {
+        expect(formatYLabelsNicely(30)).toEqual(30);
+        expect(formatYLabelsNicely(5)).toEqual("");
+        expect(formatYLabelsNicely(7)).toEqual("");
+    });
+
+    it('should parse the sv name accordingly', () => {
+        expect(parseSvName("mean+std(Example Group)")).toEqual({
+            sv: "mean+std",
+            groupName: "Example Group",
+        });
+    });
+
+    it('should return the default y-axis config for the tco3_zm', () => {
+        
+
+        const expectedYAxisConfig = {
+            show: true,
+            opposite: true,
+            seriesName: "seriesX",
+            min: 42,
+            max: 420,
+            forceNiceScale: true,
+            decimalsInFloat: 0,
+            axisBorder: {
+                show: true,
+                offsetX: -3,
+            },
+            axisTicks: {
+                show: true,
+            },
+            tickAmount: 10,
+            title: {
+                text: "TCO(DU)",
+                style: {
+                    fontSize: "1rem",
+                    fontFamily: FONT_FAMILY,
+                },
+            },
+            labels: {
+                formatter: formatYLabelsNicely,
+            },
+        }
+
+        expect(getDefaultYAxisTco3Zm("seriesX", 42, 420, true, true, -3, 10)).toEqual(expectedYAxisConfig);
+    });
+
+    it('should return a correct formatted tooltip for a normal series', () => {
+        
+        const expected = `
+        <div>
+            <div style="margin:2px"><strong>2021</strong></div>
+            <div>MODELNAME: <strong>42</strong></div>
+            <div>Project: PROJECT-X</div>
+            <div>Institue: INSTITUTE-Y</div>
+        </div>
+        `
+        
+        expect(customTooltipFormatter({series: [[42]], seriesIndex: 0, dataPointIndex: 0, w: {
+            globals: {
+                seriesX: [[2021]],
+                seriesNames: ["PROJECT-X_INSTITUTE-Y_MODELNAME"],
+            }
+        }})).toEqual(expected);
+    });
 });
