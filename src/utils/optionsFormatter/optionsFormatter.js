@@ -259,8 +259,8 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
  * @param {object} obj.modelsSlice 
  * @returns series object which includes a subdivision into a data and a styling object.
  */
-export function generateSeries({plotId, data, modelsSlice, xAxisRange}) {
-    const series = SERIES_GENERATION[plotId]({data, modelsSlice, xAxisRange}); // execute correct function based on mapping
+export function generateSeries({plotId, data, modelsSlice, xAxisRange, yAxisRange}) {
+    const series = SERIES_GENERATION[plotId]({data, modelsSlice, xAxisRange, yAxisRange}); // execute correct function based on mapping
     return {
         data: series.data, 
         styling: {
@@ -367,7 +367,7 @@ function buildSvMatrixTco3Zm({modelList, data}) {
  * @param {object} obj.modelsSlice the slice of the store containg information about the model groups
  * @returns a combination of data and statistical values series
  */
-function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange}) {
+function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange}) {
     const series = {
         data: [],
         colors: [],
@@ -390,7 +390,8 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange}) {
 
 
     // 2. build scatter plot
-
+    const minY = yAxisRange.minY;
+    const maxY = yAxisRange.maxY;
     for (const groupData of Object.values(modelsSlice.modelGroups)) { // iterate over model groups
         if (!groupData.isVisible) continue; // skip hidden groups
         for (const [model, modelInfo] of Object.entries(groupData.models)) {
@@ -398,7 +399,7 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange}) {
             const modelData = data[model];
             const sortedData = ALL_REGIONS_ORDERED.map(region => ({
                 x: region,
-                y: modelData.data[region] || null, // null as default if data is missing
+                y: filterOutOfRange(modelData.data[region], minY, maxY) || null, // null as default if data is missing
             }));
             
             series.data.push({
@@ -416,9 +417,18 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange}) {
     const svSeries = buildStatisticalSeries({
         data,
         modelsSlice,
+        yAxisRange,
         buildMatrix: buildSvMatrixTco3Return,
         generateSingleSvSeries: generateSingleTco3ReturnSeries,
     });
+
+    // clear out data points which are outside of min-max display range (scatter points are displayed in the legend otherwise)
+    for (const series of svSeries.data) {
+        for (const regionData of series.data) {
+            regionData.y = filterOutOfRange(regionData.y, minY, maxY);
+        }
+    }
+    
     const combined = combineSeries(series, svSeries);
 
     for (const series of combined.data) { // select chosen regions
@@ -873,4 +883,8 @@ function roundDownToMultipleOfTen(minY) {
  */
 function roundUpToMultipleOfTen(maxY) {
     return maxY % 10 ? maxY + (10 - maxY % 10) : maxY;
+}
+
+function filterOutOfRange(value, min, max) {
+    return (min <= value && value <= max) ? value : null;
 }
