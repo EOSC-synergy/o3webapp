@@ -27,6 +27,9 @@ export const defaultTCO3_zm = {
         labels: {
             rotate: 0
         },
+        title: {
+            text: "Year"
+        }
     },
     yaxis: [], 
     grid: {
@@ -101,6 +104,9 @@ function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show=false, opposite=fals
             show: true,
         },
         tickAmount,
+        title: {
+            text: "TCO(DU)",
+        }
     }
 }
 
@@ -121,6 +127,9 @@ function getDefaultYAxisTco3Return(seriesName, minY, maxY, show=false, opposite=
             show: true,
         },
         tickAmount,
+        title: {
+            text: "Year"
+        }
     }
 }
 
@@ -133,6 +142,11 @@ function getDefaultYAxisTco3Return(seriesName, minY, maxY, show=false, opposite=
  * More can be found here: https://apexcharts.com/docs/installation/ 
  */
 export const default_TCO3_return = {
+    xaxis: {
+        title: {
+            text: "Region",
+        }
+    },
     yaxis: [], 
     grid: {
         show: false,
