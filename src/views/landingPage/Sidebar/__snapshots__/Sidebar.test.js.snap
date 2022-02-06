@@ -1680,9 +1680,11 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                             role="button"
                             tabindex="0"
                           >
-                             
-                            SBUV_GSFC_merged-SAT-ozone
-                             
+                            <span
+                              class="notranslate"
+                            >
+                              ​
+                            </span>
                           </div>
                           <input
                             aria-hidden="true"
@@ -3523,9 +3525,11 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                             role="button"
                             tabindex="0"
                           >
-                             
-                            SBUV_GSFC_merged-SAT-ozone
-                             
+                            <span
+                              class="notranslate"
+                            >
+                              ​
+                            </span>
                           </div>
                           <input
                             aria-hidden="true"

@@ -18,9 +18,11 @@ exports[`renders correctly 1`] = `
           role="button"
           tabindex="0"
         >
-           
-          SBUV_GSFC_merged-SAT-ozone
-           
+          <span
+            class="notranslate"
+          >
+            ​
+          </span>
         </div>
         <input
           aria-hidden="true"

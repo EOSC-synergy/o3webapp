@@ -1552,9 +1552,11 @@ exports[`Section renders correclty renders correctly from config file 4`] = `
                       role="button"
                       tabindex="0"
                     >
-                       
-                      SBUV_GSFC_merged-SAT-ozone
-                       
+                      <span
+                        class="notranslate"
+                      >
+                        ​
+                      </span>
                     </div>
                     <input
                       aria-hidden="true"
