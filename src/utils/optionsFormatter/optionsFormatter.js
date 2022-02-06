@@ -321,7 +321,6 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.yaxis.push(...seriesNames.map(name => getDefaultYAxisTco3Return(name, minY, maxY, false, false, 0, tickAmount)))
         newOptions.yaxis.push(getDefaultYAxisTco3Return(undefined, minY, maxY, true, false, 3, tickAmount)); // on left side
         newOptions.yaxis.push(getDefaultYAxisTco3Return(undefined, minY, maxY, true, true, -3, tickAmount)); // on right side
-        console.log(newOptions.yaxis);
 
         return newOptions;
     }    
@@ -901,7 +900,7 @@ function isIncludedInSv(model, groupData, svType) {
  * @param {number} max      The selected max. year of the plot
  * @returns                 The optimal tick amount according to those values
  */
-function getOptimalTickAmount(min, max) {
+export function getOptimalTickAmount(min, max) {
     const diff = max - min;
     if(diff <= 40) {
         return diff;
@@ -921,7 +920,7 @@ function getOptimalTickAmount(min, max) {
  * @param {number} max      The selected max. year of the plot
  * @returns                 The optimal tick amount according to those values
  */
-function getTickAmountYAxisTco3Zm(min, max) {
+export function getTickAmountYAxisTco3Zm(min, max) {
     const diff = max - min;
     if (diff <= 200) {
         return Math.floor(diff / 5) + 1;
@@ -937,7 +936,7 @@ function getTickAmountYAxisTco3Zm(min, max) {
  * @param {number} max      The selected max. year of the plot
  * @returns                 The optimal tick amount according to those values
  */
-function getTickAmountYAxisTco3Return(min, max) {
+export function getTickAmountYAxisTco3Return(min, max) {
     const diff = max - min;
     if (diff <= 200) {
         return Math.floor(diff / 5);
@@ -953,7 +952,7 @@ function getTickAmountYAxisTco3Return(min, max) {
  * @param {int} minY 
  * @returns number rounded down to a multiple of ten
  */
-function roundDownToMultipleOfTen(minY) {
+export function roundDownToMultipleOfTen(minY) {
     return minY - minY % 10;
 }
 
@@ -964,7 +963,7 @@ function roundDownToMultipleOfTen(minY) {
  * @param {int} maxY 
  * @returns number rounded up to a multiple of ten
  */
-function roundUpToMultipleOfTen(maxY) {
+export function roundUpToMultipleOfTen(maxY) {
     return maxY % 10 ? maxY + (10 - maxY % 10) : maxY;
 }
 
@@ -977,7 +976,7 @@ function roundUpToMultipleOfTen(maxY) {
  * @param {number} max the maximum allowed value
  * @returns the value or null if the value is outside the allowed range
  */
-function filterOutOfRange(value, min, max) {
+export function filterOutOfRange(value, min, max) {
     return (min <= value && value <= max) ? value : null;
 }
 
@@ -988,7 +987,7 @@ function filterOutOfRange(value, min, max) {
  * @param {number} value the label value
  * @returns the value if it is a multiple of ten or an empty string to hide the label
  */
-const formatYLabelsNicely = value => value % 10 ? "" : value;
+export const formatYLabelsNicely = value => value % 10 ? "" : value;
 
 /**
  * This function parses the auto-generated sv names to separate 
@@ -997,10 +996,9 @@ const formatYLabelsNicely = value => value % 10 ? "" : value;
  * @param {string} name the name of the dataseries (e.g. mean+std(Example Groupd))
  * @returns an object holding the sv type and the groupname
  */
-function parseSvName(name) {
+export function parseSvName(name) {
     const regex = new RegExp("([^\(]+)\(([^\)]+)\)");
     const info = name.match(regex);
-    console.log(info);
     return {
         sv: info[1],
         groupName: info[2].substring(1),
@@ -1019,7 +1017,7 @@ function parseSvName(name) {
  * @param {object} obj.w global apexcharts object
  * @returns the desired html tooltip formatted with the correct information
  */
-function customTooltipFormatter({ series, seriesIndex, dataPointIndex, w }) {
+export function customTooltipFormatter({ series, seriesIndex, dataPointIndex, w }) {
     const modelName = w.globals.seriesNames[seriesIndex];
     const listOfSv = Object.keys(SV_COLORING); // included mean+/-std
     for (const sv of listOfSv) {
