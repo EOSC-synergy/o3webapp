@@ -18,7 +18,7 @@ exports[`renders correctly 1`] = `
       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3 css-1lrjc51-MuiGrid-root"
     >
       <div
-        class="MuiFormControl-root css-1edjpmh-MuiFormControl-root"
+        class="MuiFormControl-root css-olnp1t-MuiFormControl-root"
       >
         <div
           class="MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
@@ -65,7 +65,7 @@ exports[`renders correctly 1`] = `
       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3 css-1lrjc51-MuiGrid-root"
     >
       <div
-        class="MuiFormControl-root css-1edjpmh-MuiFormControl-root"
+        class="MuiFormControl-root css-olnp1t-MuiFormControl-root"
       >
         <div
           class="MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root"

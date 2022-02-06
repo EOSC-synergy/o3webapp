@@ -11,7 +11,7 @@ exports[`renders correctly 1`] = `
       <p
         class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
       >
-        Reference year:
+        Reference Year:
       </p>
     </div>
     <div

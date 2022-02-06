@@ -23,7 +23,6 @@ function PlotTypeSelector(props) {
     const dispatch = useDispatch();
     const plotTypesRequestData = useSelector(state => state.api.plotTypes);
     const plotType = useSelector(selectPlotId);
-    const plotTypeLabel = "SELECT PLOT TYPE"
 
     /**
      * mocks a call to the redux store to change the plot type
@@ -61,11 +60,6 @@ function PlotTypeSelector(props) {
     });
 
     return (<>
-        <div>
-        <Divider>
-            <Typography>{plotTypeLabel}</Typography>
-        </Divider>
-        </div>
         <FormControl sx={{ width: '80%', marginRight: "auto", marginLeft: "auto", marginTop: "2%", marginBottom: "2%"}} data-testid="plotTypeSelectorForm">
             <InputLabel id="plotTypeLabel" data-testid="plotTypeSelector">Plot Type</InputLabel>
             <Select

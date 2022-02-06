@@ -136,13 +136,19 @@ function Sidebar(props) {
                     </IconButton>
                 </DrawerHeader>
 
+
+                <div>
+                    <Divider><Typography>SELECT PLOT TYPE</Typography></Divider>
+                </div>
+
                 <PlotTypeSelector reportError={ props.reportError }/>
 
                 <div style={{marginBottom: "2%"}}>
-                <Divider><Typography>CONFIGURE PLOT</Typography></Divider>
+                    <Divider><Typography>CONFIGURE PLOT</Typography></Divider>
                 </div>
 
                     {createSectionStructure().map((s, idx) =>
+                        <div key={idx} style={{width: "95%", marginBottom: "2%", marginLeft: "auto", marginRight: "auto"}}>
                         <Section
                             name={s.name}
                             key={idx}    
@@ -152,6 +158,7 @@ function Sidebar(props) {
                             onExpand={() => expandSection(idx)}
                             reportError={props.reportError}
                         />
+                        </div>
                     )}
 
                     <Button sx={{marginLeft: "10%", marginTop: "1em", width: "80%"}} variant="outlined" onClick={openDownloadModal}>Download</Button>
