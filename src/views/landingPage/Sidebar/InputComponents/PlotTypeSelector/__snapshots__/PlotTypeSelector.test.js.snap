@@ -3,7 +3,7 @@
 exports[`plot type selector test PlotTypeSelector renders correctly 1`] = `
 <DocumentFragment>
   <div
-    class="MuiFormControl-root css-q8hpuo-MuiFormControl-root"
+    class="MuiFormControl-root css-1y0pph0-MuiFormControl-root"
     data-testid="plotTypeSelectorForm"
   >
     <label
@@ -69,7 +69,7 @@ exports[`plot type selector test PlotTypeSelector renders correctly 1`] = `
 exports[`plot type selector test PlotTypeSelector renders correctly 2`] = `
 <DocumentFragment>
   <div
-    class="MuiFormControl-root css-q8hpuo-MuiFormControl-root"
+    class="MuiFormControl-root css-1y0pph0-MuiFormControl-root"
     data-testid="plotTypeSelectorForm"
   >
     <label

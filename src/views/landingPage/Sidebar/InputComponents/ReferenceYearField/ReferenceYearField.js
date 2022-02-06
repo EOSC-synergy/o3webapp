@@ -51,7 +51,7 @@ function ReferenceYearField(props) {
         <>
         <Grid container sx={{width: "90%", marginLeft: "auto", marginRight: "auto", marginTop: "5%"}}>
             <Grid item xs={5}>
-            <Typography>Reference year:</Typography>
+            <Typography>Reference Year:</Typography>
             </Grid>
             <Grid item xs={7} sx={{mt: "-8px"}}>
                 <FormControl sx={{width: '35%'}}>
