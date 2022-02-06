@@ -93,6 +93,19 @@ export const defaultTCO3_zm = {
     },
 };
 
+/**
+ * This function is a factory method to provide objects that are fitted in the y-axis of the tco3_zm plot to 
+ * show another y-axis on the right side.
+ * 
+ * @param {string} seriesName the name of the series
+ * @param {number} minY the minimum y value (to adjust to the zoom)
+ * @param {number} maxY the maximum y value (to adjust to the zoom)
+ * @param {boolean} show whether the y-axis should be hidden (default is false)
+ * @param {boolean} opposite whether to show the y-axis on the right side (default is false)
+ * @param {number} offsetX how many px the y-axis should be adjusted
+ * @param {number} tickAmount how many ticks (on the y-axis) should be displayed (should be calculated by functions to provide a nice formatting)
+ * @returns 
+ */
 export function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show=false, opposite=false, offsetX=-1, tickAmount=0) {
     return {
         show,
@@ -122,6 +135,19 @@ export function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show=false, opposi
     }
 }
 
+/**
+ * This function is a factory method to provide objects that are fitted in the y-axis of the tco3_return plot to 
+ * show another y-axis on the right side.
+ * 
+ * @param {string} seriesName the name of the series
+ * @param {number} minY the minimum y value (to adjust to the zoom)
+ * @param {number} maxY the maximum y value (to adjust to the zoom)
+ * @param {boolean} show whether the y-axis should be hidden (default is false)
+ * @param {boolean} opposite whether to show the y-axis on the right side (default is false)
+ * @param {number} offsetX how many px the y-axis should be adjusted
+ * @param {number} tickAmount how many ticks (on the y-axis) should be displayed (should be calculated by functions to provide a nice formatting)
+ * @returns 
+ */
 export function getDefaultYAxisTco3Return(seriesName, minY, maxY, show=false, opposite=false, offsetX=-1, tickAmount=0) {
     return {
         show,
@@ -925,12 +951,35 @@ function roundUpToMultipleOfTen(maxY) {
     return maxY % 10 ? maxY + (10 - maxY % 10) : maxY;
 }
 
+/**
+ * This function aims to filter out values that are outside the provided range.
+ * If the value is outside of range it is replaced with null.
+ * 
+ * @param {number} value the value that could be filtered out
+ * @param {number} min the minimum allowed value
+ * @param {number} max the maximum allowed value
+ * @returns the value or null if the value is outside the allowed range
+ */
 function filterOutOfRange(value, min, max) {
     return (min <= value && value <= max) ? value : null;
 }
 
+/**
+ * Function to format the labels on the y-axis nicely.
+ * It hides all labels that are not a multiple of ten (i.e. all multiples of five and NOT ten).
+ * 
+ * @param {number} value the label value
+ * @returns the value if it is a multiple of ten or an empty string to hide the label
+ */
 const formatYLabelsNicely = value => value % 10 ? "" : value;
 
+/**
+ * This function parses the auto-generated sv names to separate 
+ * them into the sv type (e.g. mean, median) and the group.
+ * 
+ * @param {string} name the name of the dataseries (e.g. mean+std(Example Groupd))
+ * @returns an object holding the sv type and the groupname
+ */
 function parseSvName(name) {
     const regex = new RegExp("([^\(]+)\(([^\)]+)\)");
     const info = name.match(regex);
@@ -942,6 +991,17 @@ function parseSvName(name) {
 
 }
 
+/**
+ * A plugin-method for apexcharts to provide a custom tooltip.
+ * In this case the tooltip is for the octs line chart. It provides
+ * a richer tooltip and shows the data points correctly.
+ * 
+ * @param {array} obj.series an array of series
+ * @param {number} obj.seriesIndex the index of the hovered dataseries
+ * @param {number} obj.dataPointIndex the index of the data point in the hovered dataseries
+ * @param {object} obj.w global apexcharts object
+ * @returns the desired html tooltip formatted with the correct information
+ */
 function customTooltipFormatter({ series, seriesIndex, dataPointIndex, w }) {
     const modelName = w.globals.seriesNames[seriesIndex];
     const listOfSv = Object.keys(SV_COLORING); // included mean+/-std
