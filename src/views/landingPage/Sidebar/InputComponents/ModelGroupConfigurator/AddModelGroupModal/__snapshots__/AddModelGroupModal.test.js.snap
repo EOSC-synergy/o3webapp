@@ -11,6 +11,7 @@ exports[`test addModelGroupModal rendering renders correctly if model list provi
     aria-describedby="modal-modal-description"
     aria-labelledby="modal-modal-title"
     class="MuiModal-root css-79ws1d-MuiModal-root"
+    data-testid="AddModelGroupModal-modal-wrapper"
     role="presentation"
   >
     <div
@@ -450,6 +451,7 @@ exports[`test addModelGroupModal rendering renders correctly when open 1`] = `
     aria-describedby="modal-modal-description"
     aria-labelledby="modal-modal-title"
     class="MuiModal-root css-79ws1d-MuiModal-root"
+    data-testid="AddModelGroupModal-modal-wrapper"
     role="presentation"
   >
     <div
