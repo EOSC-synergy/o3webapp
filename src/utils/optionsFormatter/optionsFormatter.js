@@ -230,12 +230,12 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.title = JSON.parse(JSON.stringify(newOptions.title));  // this is necessary in order for apexcharts to update the title
         newOptions.title.text = plotTitle;
 
-        // newOptions.yaxis.min = yAxisRange.minY;
-        // newOptions.yaxis.max = yAxisRange.maxY;
-        const tickAmount = getTickAmountYAxisTco3Return(yAxisRange.minY, yAxisRange.maxY);
-        newOptions.yaxis.push(...seriesNames.map(name => getDefaultYAxisTco3Return(name, yAxisRange.minY, yAxisRange.maxY, false, false, 0, tickAmount)))
-        newOptions.yaxis.push(getDefaultYAxisTco3Return(undefined, yAxisRange.minY, yAxisRange.maxY, true, false, 3, tickAmount)); // on left side
-        newOptions.yaxis.push(getDefaultYAxisTco3Return(undefined, yAxisRange.minY, yAxisRange.maxY, true, true, -3, tickAmount)); // on right side
+        const minY = roundDownToMultipleOfTen(yAxisRange.minY); 
+        const maxY = roundUpToMultipleOfTen(yAxisRange.maxY); 
+        const tickAmount = getTickAmountYAxisTco3Return(minY, maxY);
+        newOptions.yaxis.push(...seriesNames.map(name => getDefaultYAxisTco3Return(name, minY, maxY, false, false, 0, tickAmount)))
+        newOptions.yaxis.push(getDefaultYAxisTco3Return(undefined, minY, maxY, true, false, 3, tickAmount)); // on left side
+        newOptions.yaxis.push(getDefaultYAxisTco3Return(undefined, minY, maxY, true, true, -3, tickAmount)); // on right side
         console.log(newOptions.yaxis);
 
         return newOptions;
@@ -853,3 +853,24 @@ function getTickAmountYAxisTco3Return(min, max) {
     }
 }
 
+/**
+ * Rounds a number up to a multiple of ten. If the number already is a multiple of 
+ * ten the number stays the same. 
+ *  
+ * @param {int} minY 
+ * @returns number rounded down to a multiple of ten
+ */
+function roundDownToMultipleOfTen(minY) {
+    return minY - minY % 10;
+}
+
+/**
+ * Rounds a number up to a multiple of ten. If the number already is a multiple of 
+ * ten the number stays the same. 
+ * 
+ * @param {int} maxY 
+ * @returns number rounded up to a multiple of ten
+ */
+function roundUpToMultipleOfTen(maxY) {
+    return maxY % 10 ? maxY + (10 - maxY % 10) : maxY;
+}
