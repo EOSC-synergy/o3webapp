@@ -3,7 +3,7 @@
 exports[`renders correctly 1`] = `
 <DocumentFragment>
   <header
-    class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic css-t2v6u3-MuiPaper-root-MuiAppBar-root"
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic css-18lypu8-MuiPaper-root-MuiAppBar-root"
     data-testid="Navbar"
   >
     <div
@@ -13,161 +13,65 @@ exports[`renders correctly 1`] = `
         class="MuiToolbar-root MuiToolbar-regular css-1cndkqf-MuiToolbar-root"
         data-testid="Toolbar_Navbar"
       >
-        <a
-          class="MuiTypography-root MuiTypography-inherit MuiTypography-noWrap MuiLink-root MuiLink-underlineAlways css-1a3gl6d-MuiTypography-root-MuiLink-root"
-          data-testid="logo-container"
-          href="#"
+        <div
+          class="MuiGrid-root MuiGrid-container css-1k9a87-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container css-1e0cb12-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10 css-17p3wh3-MuiGrid-root"
           >
-            <img
-              alt="logo"
-              data-testid="logo-image"
-              src="https://o3as.data.kit.edu/img/logos/o3as-logo.svg"
-              style="height: 5em; margin: 0.5em;"
-            />
-            <h6
-              class="MuiTypography-root MuiTypography-h6 MuiTypography-noWrap css-8u39c-MuiTypography-root"
-              data-testid="logo-text"
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiTypography-noWrap MuiLink-root MuiLink-underlineAlways css-2grxvj-MuiTypography-root-MuiLink-root"
+              data-testid="logo-container"
+              href="#page-top"
             >
-              O3AS Webapp
-            </h6>
+              <div
+                class="MuiGrid-root MuiGrid-container css-1e0cb12-MuiGrid-root"
+              >
+                <img
+                  alt="logo"
+                  data-testid="logo-image"
+                  src="https://o3as.data.kit.edu/img/logos/o3as-logo.svg"
+                  style="height: 5em; margin: 0.5em;"
+                />
+                <h6
+                  class="MuiTypography-root MuiTypography-h6 MuiTypography-noWrap css-154cv3q-MuiTypography-root"
+                  data-testid="logo-text"
+                >
+                  O3as: Webapp
+                </h6>
+              </div>
+            </a>
           </div>
-        </a>
-        <div
-          class="MuiBox-root css-1t6c9ts"
-          data-testid="navbar-menu-expanded"
-        >
-          <button
-            class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1q39md6-MuiButtonBase-root-MuiButton-root"
-            data-testid="navbar-expanded-menu-option-About O3AS"
-            tabindex="0"
-            type="button"
-          >
-            <a
-              href="https://o3as.data.kit.edu/"
-              style="text-decoration: inherit;"
-            >
-              About O3AS
-            </a>
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
-          </button>
-          <button
-            class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1q39md6-MuiButtonBase-root-MuiButton-root"
-            data-testid="navbar-expanded-menu-option-API"
-            tabindex="0"
-            type="button"
-          >
-            <a
-              href="https://api.o3as.fedcloud.eu/api/v1/ui/"
-              style="text-decoration: inherit;"
-            >
-              API
-            </a>
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
-          </button>
-          <button
-            class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1q39md6-MuiButtonBase-root-MuiButton-root"
-            data-testid="navbar-expanded-menu-option-Legal"
-            tabindex="0"
-            type="button"
-          >
-            <a
-              href="#"
-              style="text-decoration: inherit;"
-            >
-              Legal
-            </a>
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
-          </button>
-        </div>
-        <div
-          class="MuiBox-root css-1t6c9ts"
-        >
-          <button
-            class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1q39md6-MuiButtonBase-root-MuiButton-root"
-            tabindex="0"
-            type="button"
-          >
-            <svg
-              fill="currentColor"
-              height="20"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 1024 1024"
-              width="20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M880 836H144c-17.7 0-32 14.3-32 32v36c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-36c0-17.7-14.3-32-32-32zm-622.3-84c2 0 4-.2 6-.5L431.9 722c2-.4 3.9-1.3 5.3-2.8l423.9-423.9a9.96 9.96 0 0 0 0-14.1L694.9 114.9c-1.9-1.9-4.4-2.9-7.1-2.9s-5.2 1-7.1 2.9L256.8 538.8c-1.5 1.5-2.4 3.3-2.8 5.3l-29.5 168.2a33.5 33.5 0 0 0 9.4 29.8c6.6 6.4 14.9 9.9 23.8 9.9z"
-              />
-            </svg>
-            <p
-              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
-            >
-              Edit Graph
-            </p>
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
-          </button>
-        </div>
-        <div
-          class="MuiBox-root css-1lvtzne"
-        >
-          <button
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            aria-label="menu"
-            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeLarge css-1pz7awu-MuiButtonBase-root-MuiIconButton-root"
-            tabindex="0"
-            type="button"
-          >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-              data-testid="MenuIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
-              />
-            </svg>
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
-          </button>
-        </div>
-        <a
-          class="MuiTypography-root MuiTypography-inherit MuiTypography-noWrap MuiLink-root MuiLink-underlineAlways css-1a4kmyz-MuiTypography-root-MuiLink-root"
-          data-testid="logo-container"
-          href="#"
-        >
           <div
-            class="MuiGrid-root MuiGrid-container css-1e0cb12-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-item css-lel6es-MuiGrid-root"
           >
-            <img
-              alt="logo"
-              data-testid="logo-image"
-              src="https://o3as.data.kit.edu/img/logos/o3as-logo.svg"
-              style="height: 5em; margin: 0.5em;"
-            />
-            <h6
-              class="MuiTypography-root MuiTypography-h6 MuiTypography-noWrap css-8u39c-MuiTypography-root"
-              data-testid="logo-text"
+            <button
+              class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-p064m1-MuiButtonBase-root-MuiButton-root"
+              tabindex="0"
+              type="button"
             >
-              O3AS Webapp
-            </h6>
+              <p
+                class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              >
+                Edit Graph 
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1ej1pre-MuiSvgIcon-root"
+                  data-testid="EditIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                  />
+                </svg>
+              </p>
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
           </div>
-        </a>
+        </div>
       </div>
     </div>
   </header>
