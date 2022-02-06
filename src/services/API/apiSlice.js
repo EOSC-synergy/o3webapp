@@ -82,7 +82,7 @@ const fetchPlotDataRejected = createAction("api/fetchPlotData/rejected");
 const selectExistingPlotData = createAction("api/selectPlotData");
 
 
-export const updateMinMaxValues = ({plotId, cacheKey, data}) => {
+export const updateDataAndDisplaySuggestions = ({plotId, cacheKey, data}) => {
 
     return (dispatch, getState) => {
         dispatch(fetchPlotDataSuccess({data, plotId, cacheKey})) 
@@ -140,7 +140,7 @@ export const fetchPlotData = (modelListBegin, modelListEnd) => {
         
         return getPlotData({plotId, latMin, latMax, months, modelList, startYear, endYear, refModel, refYear})
             .then(  
-                response => dispatch(updateMinMaxValues({plotId, cacheKey, data: response.data})),
+                response => dispatch(updateDataAndDisplaySuggestions({plotId, cacheKey, data: response.data, modelsSlice: getState().models})),
                 error => dispatch(fetchPlotDataRejected({error: error.message, plotId, cacheKey})),
             );
         
