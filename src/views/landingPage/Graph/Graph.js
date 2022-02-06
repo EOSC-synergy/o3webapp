@@ -3,6 +3,7 @@ import Chart from "react-apexcharts"
 import { getOptions, generateSeries } from "../../../utils/optionsFormatter/optionsFormatter"
 import { useSelector } from 'react-redux'
 import { selectPlotId, selectPlotTitle, selectPlotXRange, selectPlotYRange } from '../../../store/plotSlice/plotSlice';
+import { selectVisibility } from '../../../store/referenceSlice/referenceSlice';
 import { REQUEST_STATE, selectActivePlotData } from '../../../services/API/apiSlice';
 import { Spinner } from '../../../components/Spinner/Spinner';
 import { Typography } from '@mui/material';
@@ -26,6 +27,7 @@ function Graph(props) {
     const yAxisRange = useSelector(selectPlotYRange); 
     const activeData = useSelector(state => selectActivePlotData(state, plotId));
     const modelsSlice = useSelector(state => state.models);
+    const refLineVisible = useSelector(selectVisibility)
     
     useEffect(() => { 
         // note: this is important, because we should only "propagate" the error to the top
@@ -40,12 +42,11 @@ function Graph(props) {
         return <div style={{display: "flex", alignItems: "center", justifyContent: "center", height: HEIGHT_LOADING_SPINNER}}>
             <Spinner text={"loading data"} size={"8em"}></Spinner>
         </div>
-
     } else if (activeData.status === REQUEST_STATE.error) {
         return <Typography>An error occurred, please try to reload the site.</Typography>;
 
     } else if (activeData.status === REQUEST_STATE.success) {
-        const {data, styling} = generateSeries({plotId, data: activeData.data, modelsSlice, xAxisRange, yAxisRange});
+        const {data, styling} = generateSeries({plotId, data: activeData.data, modelsSlice, xAxisRange, yAxisRange, refLineVisible});
         const options = getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange});
         const uniqueNumber = Date.now(); // forces apexcharts to re-render correctly!
         return <Chart key={uniqueNumber} options={options} series={data} type={APEXCHART_PLOT_TYPE[plotId]} height={HEIGHT_GRAPH} />

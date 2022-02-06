@@ -216,13 +216,14 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange})
  * 
  * It additionally generates a styling object which contains colors (and width/dashArray for tco3_zm).
  * 
- * @param {string} obj.plotId 
- * @param {object} obj.data 
- * @param {object} obj.modelsSlice 
+ * @param {string} obj.plotId the id of the currently selected plot
+ * @param {object} obj.data the raw data from the api for the current options
+ * @param {object} obj.modelsSlice the slice of the store containg information about the model groups
+ * @param {object} obj.refLineVisible visibility status of the reference line
  * @returns series object which includes a subdivision into a data and a styling object.
  */
-export function generateSeries({plotId, data, modelsSlice, xAxisRange}) {
-    const series = SERIES_GENERATION[plotId]({data, modelsSlice, xAxisRange}); // execute correct function based on mapping
+export function generateSeries({plotId, data, modelsSlice, xAxisRange, refLineVisible: refLineVisible}) {
+    const series = SERIES_GENERATION[plotId]({data, modelsSlice, xAxisRange, refLineVisible}); // execute correct function based on mapping
     return {
         data: series.data, 
         styling: {
@@ -239,14 +240,24 @@ export function generateSeries({plotId, data, modelsSlice, xAxisRange}) {
  * 
  * @param {object} obj.data the raw data from the api for the current options
  * @param {object} obj.modelsSlice the slice of the store containg information about the model groups
+ * @param {boolean} obj.refLineVisible visibility status of the reference line
  * @returns a combination of data and statistical values series
  */
-function generateTco3_ZmSeries({data, modelsSlice}) {
+function generateTco3_ZmSeries({data, modelsSlice, refLineVisible}) {
     const series = {
         data: [],
         colors: [],
         width: [],
         dashArray: [],
+    }
+    if (refLineVisible) {
+        series.data.push({
+            name: data.reference_value.plotStyle.label,
+            data: data.reference_value.data.map((e, idx) => [START_YEAR + idx, e]),
+        })
+        series.colors.push(colorNameToHex(data.reference_value.plotStyle.color));
+        series.width.push(MODEL_LINE_THICKNESS);
+        series.dashArray.push(convertToStrokeStyle(data.reference_value.plotStyle.linestyle)); 
     }
 
     for (const [id, groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups
