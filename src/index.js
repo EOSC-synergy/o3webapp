@@ -14,7 +14,7 @@ const reloadInitialData = () => {
         months: [1, 2, 3], 
         startYear: 1960, 
         endYear: 2100, 
-        modelList: store.getState().api.models.data.slice(0, 10), // not all models for faster testing!
+        modelList: store.getState().api.models.data.slice(0, 4), // not all models for faster testing!
         refYear: 1980,
         refModel: "SBUV_GSFC_merged-SAT-ozone",
     }));
@@ -26,7 +26,7 @@ const reloadInitialData = () => {
         months: [1, 2, 3], 
         startYear: 1960, 
         endYear: 2100, 
-        modelList: store.getState().api.models.data.slice(0, 10), //.slice(0, 10), // not all models for faster testing!
+        modelList: store.getState().api.models.data.slice(0, 4), //.slice(0, 10), // not all models for faster testing!
         refYear: 1980,
         refModel: "SBUV_GSFC_merged-SAT-ozone",
     }));
