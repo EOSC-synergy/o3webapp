@@ -54,11 +54,11 @@ it('selects a month correctly', () => {
         </Provider>
         </>);
     
-    expect(store.getState().plot.generalSettings.months).toEqual([1]); // assert: if it fails the initial state may have changed
+    expect(store.getState().plot.generalSettings.months).toEqual([1, 2, 3]); // assert: if it fails the initial state may have changed
     fireEvent.click(getByTestId("CheckboxMonth2"));
-    expect(store.getState().plot.generalSettings.months).toEqual([1, 2]);
+    expect(store.getState().plot.generalSettings.months).toEqual([1, 3]);
     fireEvent.click(getByTestId("CheckboxMonth2"));
-    expect(store.getState().plot.generalSettings.months).toEqual([1]);
+    expect(store.getState().plot.generalSettings.months).toEqual([1, 2, 3]);
     
 })
 
@@ -71,12 +71,7 @@ it('selects a season correctly', () => {
         </Provider>
         </>);
     
-    expect(store.getState().plot.generalSettings.months).toEqual([1]); // assert: if it fails the initial state may have changed
-    fireEvent.click(getByTestId("CheckboxSeasonNum0"));
-    expect(store.getState().plot.generalSettings.months).toEqual([1, 2, 3]);
-    fireEvent.click(getByTestId("CheckboxSeasonNum0"));
-    expect(store.getState().plot.generalSettings.months).toEqual([]);
-    
+    expect(store.getState().plot.generalSettings.months).toEqual([1, 2, 3]); // assert: if it fails the initial state may have changed
 })
 
 it('selects the "All Year" checkbox correctly', () => {
@@ -87,10 +82,9 @@ it('selects the "All Year" checkbox correctly', () => {
         </Provider>
         </>);
     
-    expect(store.getState().plot.generalSettings.months).toEqual([1]); // assert: if it fails the initial state may have changed
+    expect(store.getState().plot.generalSettings.months).toEqual([1, 2, 3]); // assert: if it fails the initial state may have changed
     fireEvent.click(getByTestId("CheckboxAllYear"));
     expect(store.getState().plot.generalSettings.months).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
-    fireEvent.click(getByTestId("CheckboxAllYear"));
-    expect(store.getState().plot.generalSettings.months).toEqual([]);
+
     
 })

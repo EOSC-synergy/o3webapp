@@ -1,11 +1,13 @@
-import React from "react";
-import { Grid, Typography, Slider, MenuItem, TextField } from "@mui/material";
-import models from "./models.json";
-import { Select, InputLabel, OutlinedInput, FormControl } from "@mui/material";
+import React, { useEffect } from "react";
+import { Typography, MenuItem} from "@mui/material";
+import { Select, InputLabel, FormControl } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { setModel } from "../../../../../store/referenceSlice/referenceSlice";
+import { setModel, selectRefModel } from "../../../../../store/referenceSlice/referenceSlice";
 import PropTypes from 'prop-types';
+import {modelListBegin, modelListEnd} from "../../../../../utils/constants";
+import {fetchPlotData} from "../../../../../services/API/apiSlice";
+import { REQUEST_STATE } from "../../../../../services/API/apiSlice";
 
 /**
  * enables the user to select a reference model
@@ -14,15 +16,36 @@ import PropTypes from 'prop-types';
  * @returns {JSX} a jsx containing a dropdown to select the reference model from all currently visible models
  */
 function ReferenceModelSelector(props) {
-
     const dispatch = useDispatch()
 
-    const selectedModel = useSelector(state => state.reference.settings.model);
+    const modelListRequestedData = useSelector(state => state.api.models);
 
-    /** Handles the change of the reference model selection if it's is modified.*/
+    let isLoading = true;
+    let allModels = [];
+    if (modelListRequestedData.status === REQUEST_STATE.idle
+        || modelListRequestedData.status === REQUEST_STATE.loading) {
+            isLoading = true;
+    }
+    else if (modelListRequestedData.status === REQUEST_STATE.success) {
+        allModels = modelListRequestedData.data;
+        isLoading = false;
+    }
+
+    useEffect(() => {
+        if (modelListRequestedData.status === REQUEST_STATE.error) {
+            props.reportError("API not responding: " + modelListRequestedData.error);
+        }
+    });
+
+
+    const selectedModel = useSelector(selectRefModel);
+
+    /** Handles the change of the reference model selection when it is modified.*/
     const handleChangeForRefModel = (event) => {
         dispatch(setModel({model: event.target.value}));
+        dispatch(fetchPlotData(modelListBegin, modelListEnd));
     };
+
 
     return (
         <div>
@@ -34,7 +57,7 @@ function ReferenceModelSelector(props) {
             onChange={handleChangeForRefModel}
             value={selectedModel}
         >
-          {models.map((elem) => {return <MenuItem key={elem} value={elem}> {elem} </MenuItem>})}
+          {allModels.map((elem) => {return <MenuItem key={elem} value={elem}> {elem} </MenuItem>})}
         </Select>
         <InputLabel id="locationSelectLabel"><Typography>Reference Model</Typography></InputLabel>
         </FormControl>

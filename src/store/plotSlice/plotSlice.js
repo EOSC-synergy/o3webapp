@@ -18,7 +18,7 @@ export const initialState = {
             maxLat: 90
         },
         months: [
-            1
+            1, 2, 3
         ],
     },
 
@@ -143,7 +143,7 @@ const plotSlice = createSlice({
                 xRange.years.minX = minX;
                 xRange.years.maxX = maxX;
             } else if (currentPlotId === O3AS_PLOTS.tco3_return) {
-                const { regions } = action.payload; 
+                const { regions } = action.payload;
                 state.plotSpecificSettings[currentPlotId].displayXRange.regions = regions;
             } else {
                 throw `Illegal internal state, a non valid plot is current plot: "${currentPlotId}"`;

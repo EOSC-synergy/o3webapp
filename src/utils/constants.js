@@ -1,9 +1,15 @@
-import { 
+import {
     mean as calculateMean,
-    median as calculateMedian, 
+    median as calculateMedian,
     std as calculateStd,
     q25 as calculatePercentile, // TODO import actual percentile
 } from "../services/math/math";
+
+// apiSlice
+/** For reducing loading time while implementing: starting value for how many models should be fetched */
+export const modelListBegin = 0;
+/** For reducing loading time while implementing: starting value for how many models should be fetched */
+export const modelListEnd = 10;
 
 // Section.js
 /** Stores the name of the LatitudeBandSelector component as a Symbol. */
@@ -30,27 +36,6 @@ export const XAF_Symbol = Symbol("XAxisField");
 export const YAF_Symbol = Symbol("YAxisField");
 
 // TimeCheckboxGroup.js
-/** Stores the seasons and the corresponding months */
-/*
-export const seasons = [
-    {
-        name: 'Spring',
-        months: [3, 4, 5]
-    },
-    {
-        name: 'Summer',
-        months: [6, 7, 8]
-    },
-    {
-        name: 'Fall',
-        months: [9, 10, 11]
-    },
-    {
-        name: 'Winter',
-        months: [12, 1, 2]
-    }
-] */
-
 /** Stores the season Winter and its corresponding months. */
 export const Winter = { name: Symbol("Winter"), months: [1, 2, 3], seasonId: 0 }
 
@@ -140,7 +125,7 @@ export const HEIGHT_LOADING_SPINNER = "300px";
 export const HEIGHT_GRAPH = `${window.screen.availHeight * 0.55}px` //"600px";
 
 /*
-// Options Formatter, XAxisField, YAxisField
+// Options Formatter, XAxisField, YAxisField, apiSlice
 */
 export const START_YEAR = 1960
 export const END_YEAR = 2100

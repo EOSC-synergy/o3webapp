@@ -3,9 +3,9 @@ import Chart from "react-apexcharts"
 import { getOptions, generateSeries } from "../../../utils/optionsFormatter/optionsFormatter"
 import { useSelector } from 'react-redux'
 import { selectPlotId, selectPlotTitle, selectPlotXRange, selectPlotYRange } from '../../../store/plotSlice/plotSlice';
+import { selectVisibility } from '../../../store/referenceSlice/referenceSlice';
 import { REQUEST_STATE, selectActivePlotData } from '../../../services/API/apiSlice';
-import { Spinner } from '../../../components/Spinner/Spinner';
-import { Typography } from '@mui/material';
+import { Typography, CircularProgress, Grid } from '@mui/material';
 import { APEXCHART_PLOT_TYPE, HEIGHT_LOADING_SPINNER, HEIGHT_GRAPH } from '../../../utils/constants';
 
 /**
@@ -26,6 +26,7 @@ function Graph(props) {
     const yAxisRange = useSelector(selectPlotYRange); 
     const activeData = useSelector(state => selectActivePlotData(state, plotId));
     const modelsSlice = useSelector(state => state.models);
+    const refLineVisible = useSelector(selectVisibility)
     
     useEffect(() => { 
         // note: this is important, because we should only "propagate" the error to the top
@@ -38,14 +39,17 @@ function Graph(props) {
 
     if (activeData.status === REQUEST_STATE.loading || activeData.status === REQUEST_STATE.idle) {
         return <div style={{display: "flex", alignItems: "center", justifyContent: "center", height: HEIGHT_LOADING_SPINNER}}>
-            <Spinner text={"loading data"} size={"8em"}></Spinner>
+            <div>
+                <CircularProgress size={100}/> <br/>
+                <Typography component="p">Loading Data...</Typography>
+            </div>
+            
         </div>
-
     } else if (activeData.status === REQUEST_STATE.error) {
         return <Typography>An error occurred, please try to reload the site.</Typography>;
 
     } else if (activeData.status === REQUEST_STATE.success) {
-        const {data, styling} = generateSeries({plotId, data: activeData.data, modelsSlice, xAxisRange, yAxisRange});
+        const {data, styling} = generateSeries({plotId, data: activeData.data, modelsSlice, xAxisRange, yAxisRange, refLineVisible});
         const seriesNames = data.map(series => series.name);
         const options = getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, seriesNames});
         const uniqueNumber = Date.now(); // forces apexcharts to re-render correctly!

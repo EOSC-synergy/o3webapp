@@ -9,6 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { useDispatch, useSelector } from "react-redux";
 import { selectPlotId, setActivePlotId } from "../../../../../store/plotSlice/plotSlice";
 import { REQUEST_STATE } from "../../../../../services/API/apiSlice"
+import { Divider, Typography, Grid } from "@mui/material";
 
 
 /**
@@ -58,8 +59,8 @@ function PlotTypeSelector(props) {
         }
     });
 
-    return (
-        <FormControl sx={{ width: '100%' }} data-testid="plotTypeSelectorForm">
+    return (<>
+        <FormControl sx={{ width: '80%', marginRight: "auto", marginLeft: "auto", marginTop: "2%", marginBottom: "2%"}} data-testid="plotTypeSelectorForm">
             <InputLabel id="plotTypeLabel" data-testid="plotTypeSelector">Plot Type</InputLabel>
             <Select
                 labelId="plotTypeLabel"
@@ -68,12 +69,10 @@ function PlotTypeSelector(props) {
                 label="Plot Type"
                 onChange={changePlotType}
             >
-                {
-                    dropdownData
-                }
+                {dropdownData}
             </Select>
         </FormControl>
-    );
+        </>);
 }
 
 PlotTypeSelector.propTypes = {

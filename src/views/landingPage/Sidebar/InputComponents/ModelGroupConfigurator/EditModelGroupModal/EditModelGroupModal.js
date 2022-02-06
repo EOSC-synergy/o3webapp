@@ -1,23 +1,25 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { Modal, Card, Button, Grid, Checkbox } from "@mui/material";
+import { Modal, Card, Button, Grid, Checkbox, IconButton, CardActions } from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
-import SearchBar from "../Searchbar/Searchbar";
+import SearchBar from "../../../../../../components/Searchbar/Searchbar";
 import { styled } from '@mui/material/styles';
 import DoneIcon from '@mui/icons-material/Done';
-import ClearIcon from '@mui/icons-material/Clear';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import IntermediateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
 import { selectModelsOfGroup, selectModelDataOfGroup, updatePropertiesOfModelGroup } from "../../../../../../store/modelsSlice/modelsSlice";
 import { STATISTICAL_VALUES } from "../../../../../../utils/constants";
 import PropTypes from "prop-types";
+import CardHeader from '@mui/material/CardHeader';
+import CloseIcon from '@mui/icons-material/Close';
+import { useTheme } from '@mui/material/styles';
 
 /**
  * A DataGrid with applied CSS styling.
  */
 const StyledDataGrid = styled(DataGrid)(({theme}) => ({
-    height: "80%",
+    height: "70%",
     marginTop: "3%",
 }));
 
@@ -29,8 +31,11 @@ const cardStyle = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '65%',
+    width: '90%',
     height: '75%',
+    minHeight: "75%",
+    maxHight: "100vh",
+    overflow: "auto",
     bgcolor: "#FFFFFF",
     boxShadow: 24,
     p: 4,
@@ -77,6 +82,15 @@ function createRows(modelList) {
  */
 function EditModelGroupModal(props) {
 
+    /**
+     * Label displayed at the top of the modal
+     */
+    const editModalLabel = "Edit Statistical Values";
+
+    /**
+     * The text displayed inside the apply button 
+     */
+    const applyButtonLabel = "Save Changes";
     /**
      * A dispatch function to dispatch actions to the redux store.
      */
@@ -413,6 +427,14 @@ function EditModelGroupModal(props) {
             data-testid="EditModelGroupModal-modal-wrapper"
         >
             <Card sx={cardStyle}>
+                <CardHeader 
+                    title={editModalLabel}
+                    action={
+                        <IconButton onClick={discardChanges} aria-label="close" data-testid="DiscardButton">
+                            <CloseIcon />
+                        </IconButton>
+                    }
+                />
                 <div style={{width: "95%"}}>
                     <SearchBar inputArray={rows} foundIndicesCallback={foundIndices} />
                 </div>
@@ -425,14 +447,9 @@ function EditModelGroupModal(props) {
                     disableColumnMenu
                     columnBuffer={8}
                 />
-                <Grid container alignItems="flex-end" justifyContent="center" style={{}}> 
-                    <Button aria-label="delete" color={"success"} size="large" onClick={applyChanges} data-testid="EditModelGroupModalApplyButton">
-                        <DoneIcon fontSize="large"/> Apply Changes
-                    </Button>
-                    <Button aria-label="delete" color={"error"} size="large" onClick={discardChanges} data-testid="EditModelGroupModalDiscardButton">
-                        <ClearIcon fontSize="large"/> Discard Changes
-                    </Button>
-                </Grid>
+                <CardActions sx={{justifyContent: "flex-end", marginTop: "2%"}}>
+                    <Button onClick={applyChanges} variant="contained" startIcon={<DoneIcon/>} data-testid="ApplyButton" >{applyButtonLabel}</Button>
+                </CardActions>
             </Card>
         </Modal>
     );
