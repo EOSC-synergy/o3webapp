@@ -127,7 +127,6 @@ export function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show=false, opposi
         seriesName,
         min: minY,
         max: maxY,
-        forceNiceScale: true,
         decimalsInFloat: 0,
         axisBorder: {
             show: true,
@@ -147,6 +146,11 @@ export function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show=false, opposi
         labels: {
             formatter: formatYLabelsNicely,
         },
+        /*
+        tooltip: {
+          enabled: true, // => kinda messy
+        }
+        */
     }
 }
 
@@ -289,12 +293,16 @@ export const default_TCO3_return = {
  * @returns an default_TCO3_plotId object formatted with the given data
  */
 export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, seriesNames}) {
+    const minY = roundDownToMultipleOfTen(yAxisRange.minY); 
+    const maxY = roundUpToMultipleOfTen(yAxisRange.maxY);     
+    
     if (plotId === O3AS_PLOTS.tco3_zm) {
         const newOptions = JSON.parse(JSON.stringify(defaultTCO3_zm)); // dirt simple and not overly horrible
 
-        newOptions.yaxis.push(...seriesNames.map(name => getDefaultYAxisTco3Zm(name, yAxisRange.minY, yAxisRange.maxY)))
-        newOptions.yaxis.push(getDefaultYAxisTco3Zm(undefined, yAxisRange.minY, yAxisRange.maxY, true, false, -1, getTickAmountYAxisTco3Zm(yAxisRange.minY, yAxisRange.maxY))); // on left side
-        newOptions.yaxis.push(getDefaultYAxisTco3Zm(undefined, yAxisRange.minY, yAxisRange.maxY, true, true, 0, getTickAmountYAxisTco3Zm(yAxisRange.minY, yAxisRange.maxY))); // on right side
+        const tickAmount = getTickAmountYAxisTco3Zm(minY, maxY)
+        newOptions.yaxis.push(...seriesNames.map(name => getDefaultYAxisTco3Zm(name, minY, maxY, false, false, 0, tickAmount)))
+        newOptions.yaxis.push(getDefaultYAxisTco3Zm(undefined, minY, maxY, true, false, -1, tickAmount)); // on left side
+        newOptions.yaxis.push(getDefaultYAxisTco3Zm(undefined, minY, maxY, true, true, 0, tickAmount)); // on right side
 
         newOptions.xaxis.min = xAxisRange.years.minX;
         newOptions.xaxis.max = xAxisRange.years.maxX;
@@ -773,19 +781,30 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
  * @param {object} obj.data         An object holding the data as it was returned from the API
  * @returns                         The pretransformed API data
  */
-export const preTransformApiData = ({plotId, data}) => {
+export const preTransformApiData = ({plotId, data, modelsSlice}) => {
+    const maximums = [];
+    const minimums = [];
+    const lookUpTable = {};
+
+    const visibleModels = getIncludedModels(modelsSlice);
+
     if (plotId === O3AS_PLOTS.tco3_zm) {
-        const lookUpTable = {};
+
         for (let datum of data) {
             // top structure
+            const normalizedArray = normalizeArray(datum.x, datum.y);
             lookUpTable[datum.model] = {
                 plotStyle: datum.plotstyle,
-                data: normalizeArray(datum.x, datum.y), // this should speed up the calculation of the statistical values later
+                data: normalizedArray, // this should speed up the calculation of the statistical values later
             };
+            if (visibleModels.includes(datum.model)) { // min and max values of visibile values are relevant!
+                maximums.push(Math.max(...normalizedArray));
+                minimums.push(Math.min(...normalizedArray));
+            }
         }
-        return lookUpTable;
+
     } else if (plotId === O3AS_PLOTS.tco3_return) {
-        const lookUpTable = {};
+        
         for (let datum of data) {
             // top structure
             lookUpTable[datum.model] = {
@@ -794,12 +813,19 @@ export const preTransformApiData = ({plotId, data}) => {
             };
 
             // fill data
+            const temp = []
             for (let index in datum.x) {
+                temp.push(datum.y[index]);
                 lookUpTable[datum.model].data[datum.x[index]] = datum.y[index];
             }
+            
+            if (visibleModels.includes(datum.model)) { // min and max values of visibile values are relevant!
+                maximums.push(Math.max(...temp));
+                minimums.push(Math.min(...temp));
+            }
         }
-        return lookUpTable;
     };
+    return {lookUpTable, min: Math.min(...minimums), max: Math.max(...maximums)};
 }
 
 
@@ -934,7 +960,7 @@ export function getOptimalTickAmount(min, max) {
 export function getTickAmountYAxisTco3Zm(min, max) {
     const diff = max - min;
     if (diff <= 200) {
-        return Math.floor(diff / 5) + 1;
+        return Math.floor(diff / 5);
     } else if (diff <= 400) {
         return Math.floor(diff / 40);
     }
@@ -1069,4 +1095,18 @@ export function customTooltipFormatter({ series, seriesIndex, dataPointIndex, w 
         </div>
         `
     )
+}
+
+function getIncludedModels(modelsSlice) {
+    const visible = [];
+    
+    for (const modelGroup of Object.values(modelsSlice.modelGroups)) {
+        if (!modelGroup.isVisible) continue;
+        for (const [model, modelData] of Object.entries(modelGroup.models)) {
+            if (!modelData.isVisible) continue;
+            visible.push(model);
+        }
+    }
+
+    return visible;
 }

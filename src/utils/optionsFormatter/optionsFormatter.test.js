@@ -51,14 +51,13 @@ describe("testing optionsFormatter functionality", () => {
                 x: spacedYearArray,
                 y: valueArray,
             }];
-    
-            expect(
-                preTransformApiData({plotId: O3AS_PLOTS.tco3_zm, data: apiData})
-            ).toEqual({
-                modelA: {
-                    plotStyle: "plotstyleData",
+            
+            const {lookUpTable} = preTransformApiData({plotId: O3AS_PLOTS.tco3_zm, data: apiData, modelsSlice: {modelGroups: {}}})
+            expect(lookUpTable).toEqual({
+                "modelA": {
                     data: expectedNormalize,
-                }
+                    plotStyle: "plotstyleData",
+                },
             });
     
         });
@@ -71,8 +70,9 @@ describe("testing optionsFormatter functionality", () => {
                 y: [2010, 2022],
             }];
 
+            const { lookUpTable } = preTransformApiData({plotId: O3AS_PLOTS.tco3_return, data: apiData, modelsSlice: {modelGroups: {}}});
             expect(
-                preTransformApiData({plotId: O3AS_PLOTS.tco3_return, data: apiData})
+                lookUpTable
             ).toEqual({
                 modelA: {
                     plotStyle: "plotstyleData",
@@ -180,7 +180,7 @@ describe("testing optionsFormatter functionality", () => {
     });
 
     it('should calculate the optimal tick amount for the y-axis for the tco3_zm', () => {
-        expect(getTickAmountYAxisTco3Zm(0, 100)).toEqual(21);
+        expect(getTickAmountYAxisTco3Zm(0, 100)).toEqual(20);
     });
 
     it('should calculate the optimal tick amount for the y-axis for the tco3_return', () => {
@@ -219,7 +219,6 @@ describe("testing optionsFormatter functionality", () => {
             seriesName: "seriesX",
             min: 42,
             max: 420,
-            forceNiceScale: true,
             decimalsInFloat: 0,
             axisBorder: {
                 show: true,
