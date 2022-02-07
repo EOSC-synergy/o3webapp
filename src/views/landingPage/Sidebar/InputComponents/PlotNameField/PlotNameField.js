@@ -66,7 +66,7 @@ function PlotNameField() {
                         if (event.key === "Enter" && !isUpdating) {
                             isUpdating = true;
                             updatePlotName(event);
-                            isUpdating = false;
+                            isUpdating = false;g
                         }
                     }}
                 />
