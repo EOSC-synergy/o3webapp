@@ -1,10 +1,10 @@
 import React from "react";
-import { Grid, Typography, FormControl, TextField, Checkbox } from "@mui/material";
-import { useDispatch } from "react-redux"
-import { useSelector } from "react-redux";
-import { END_YEAR, START_YEAR, modelListBegin, modelListEnd } from "../../../../../utils/constants";
-import { fetchPlotData } from "../../../../../services/API/apiSlice";
-import { setYear, setVisibility, selectVisibility } from "../../../../../store/referenceSlice/referenceSlice";
+import {Grid, Typography, FormControl, TextField, Checkbox} from "@mui/material";
+import {useDispatch} from "react-redux"
+import {useSelector} from "react-redux";
+import {END_YEAR, START_YEAR, modelListBegin, modelListEnd} from "../../../../../utils/constants";
+import {fetchPlotData} from "../../../../../services/API/apiSlice";
+import {setYear, setVisibility, selectVisibility} from "../../../../../store/referenceSlice/referenceSlice";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import MuiVisibilityIcon from '@mui/icons-material/Visibility';
 
@@ -26,17 +26,14 @@ function ReferenceYearField(props) {
     const selectedYear = useSelector(state => state.reference.settings.year);
 
     /**
-     * The selected visibility of the reference line from the redux store
-     */
-    const refYearVisible = useSelector(selectVisibility)
-
-    /**
      * Handles the change of the reference year field if it is modified.
      */
     const handleChangeForRefYear = (event) => {
-        dispatch(setYear({year: event.target.value}));
-        if (event.target.value > START_YEAR && event.target.value < END_YEAR) {
-            dispatch(fetchPlotData(modelListBegin, modelListEnd));
+        if (!isNaN(event.target.value)) {
+            dispatch(setYear({year: event.target.value}));
+            if (event.target.value >= START_YEAR && event.target.value <= END_YEAR) {
+                dispatch(fetchPlotData(modelListBegin, modelListEnd));
+            }
         }
     };
 
@@ -49,34 +46,33 @@ function ReferenceYearField(props) {
 
     return (
         <>
-        <Grid container sx={{width: "90%", marginLeft: "auto", marginRight: "auto", marginTop: "5%"}}>
-            <Grid item xs={5}>
-            <Typography>Reference Year:</Typography>
-            </Grid>
-            <Grid item xs={7} sx={{mt: "-8px"}}>
-                <FormControl sx={{width: '35%'}}>
-                    <TextField
-                        variant="outlined"
-                        id="outlined-basic"
-                        size="small"
-                        value={selectedYear}
-                        onChange={handleChangeForRefYear}
-                        error={selectedYear < START_YEAR || selectedYear > END_YEAR}
-                        helperText={selectedYear < START_YEAR ? `<${START_YEAR}` : (selectedYear > END_YEAR ? `>${END_YEAR}` : '')}
-                    />
-                </FormControl>
+            <Grid container sx={{width: "90%", marginLeft: "auto", marginRight: "auto", marginTop: "5%"}}>
+                <Grid item xs={5}>
+                    <Typography>Reference Year:</Typography>
+                </Grid>
+                <Grid item xs={7} sx={{mt: "-8px"}}>
+                    <FormControl sx={{width: '35%'}}>
+                        <TextField
+                            variant="outlined"
+                            id="outlined-basic"
+                            size="small"
+                            value={selectedYear}
+                            onChange={handleChangeForRefYear}
+                            error={selectedYear < START_YEAR || selectedYear > END_YEAR}
+                            helperText={selectedYear < START_YEAR ? `<${START_YEAR}` : (selectedYear > END_YEAR ? `>${END_YEAR}` : '')}
+                        />
+                    </FormControl>
 
-                <FormControl>
-                    <Checkbox
-                        icon={<VisibilityOffIcon data-testid="RefLineInvisibleCheckbox" />}
-                        checkedIcon={<MuiVisibilityIcon />}
-                        onClick={handleShowRefLineClicked} 
-                        //checked={refYearVisible} 
-                    />
-                </FormControl>
-                
+                    <FormControl>
+                        <Checkbox
+                            icon={<VisibilityOffIcon data-testid="RefLineInvisibleCheckbox"/>}
+                            checkedIcon={<MuiVisibilityIcon/>}
+                            onClick={handleShowRefLineClicked}
+                        />
+                    </FormControl>
+
+                </Grid>
             </Grid>
-        </Grid>
         </>
     );
 }
