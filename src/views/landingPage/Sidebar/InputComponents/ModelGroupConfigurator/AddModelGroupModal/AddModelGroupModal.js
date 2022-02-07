@@ -207,7 +207,7 @@ function AddModelGroupModal(props) {
     const customList = (models, modelsChecked, modelsVisible) => {
         const modelsCheckedInvisible = intersection(not(models, modelsVisible), modelsChecked);
         return (
-            <Card sx={{backgroundColor: theme.palette.grey[200]}}>
+            <Card sx={{backgroundColor: theme.palette.background.paper}}>
                 <CardHeader
                     sx={{ px: 2, py: 1 }}
                     avatar={
