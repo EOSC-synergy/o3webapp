@@ -479,7 +479,7 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange}) 
     // 1. build boxplot
     const boxPlotValues = calculateBoxPlotValues({data, modelsSlice});
     series.data.push({
-            name: 'box',
+            name: '', // removed name of box, so it doesn't show up in the legend!
             type: 'boxPlot',
 
             data: ALL_REGIONS_ORDERED.map(region => ({
