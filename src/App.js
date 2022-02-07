@@ -2,8 +2,9 @@ import * as React from 'react';
 import Navbar from "./components/Navbar/NavBar";
 import Footer from "./components/Footer/Footer";
 import ErrorMessageModal from './components/ErrorMessageModal/ErrorMessageModal';
-import CookieConsentModal from './components/CookieConsentModal/CookieConsentModal';
 import LandingPage from './views/landingPage/LandingPage';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 
 /**
  * Main container of the Webapp
@@ -79,15 +80,29 @@ function App() {
     //     }
     // }
 
+    const theme = createTheme({
+        palette: {
+            mode: 'dark',
+            primary: {
+                main: "#fed136"
+            },
+            background: {
+                paper: "#191919"
+            }
+        }
+      });
+
 
     return (
-    <div style={{backgroundColor: '#FFFFFF', minHeight: "100vh", display: 'flex', flexDirection: 'column'}}>
-        <Navbar reportError={reportError} openSidebar={openSidebar} />
-        <LandingPage reportError={reportError} openSidebar={openSidebar} closeSidebar={closeSidebar} isSidebarOpen={isSidebarOpen} />
-        <Footer reportError={reportError} />
-        <ErrorMessageModal isOpen={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />
-        {/* <CookieConsentModal isOpen={isCookieConsentModalVisible} onClose={onCloseCookieConsentModal} /> */}
-    </div>
+        <ThemeProvider theme={theme}>
+            <div style={{minHeight: "100vh", display: 'flex', flexDirection: 'column'}}>
+                <Navbar reportError={reportError} openSidebar={openSidebar} />
+                <LandingPage reportError={reportError} openSidebar={openSidebar} closeSidebar={closeSidebar} isSidebarOpen={isSidebarOpen} />
+                <Footer reportError={reportError} />
+                <ErrorMessageModal isOpen={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />
+                {/* <CookieConsentModal isOpen={isCookieConsentModalVisible} onClose={onCloseCookieConsentModal} /> */}
+            </div>
+        </ThemeProvider>
     );
 }
 
