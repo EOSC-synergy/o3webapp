@@ -2,7 +2,7 @@ import { assert } from "joi";
 import { getAdjusting } from "./pdfCreator";
 import '@testing-library/jest-dom/extend-expect';
 import '@testing-library/jest-dom';
-
+/** 
 jest.mock('react-apexcharts', () => {
     return {
         __esModule: true,
@@ -14,7 +14,6 @@ jest.mock('react-apexcharts', () => {
 
 describe('testing pdf downloads correctly.', () => {
 
-
     it('adjusts the svg correctly', () => {
     
         const svgElementExpected = document.querySelector(".apexcharts-svg");
@@ -25,4 +24,4 @@ describe('testing pdf downloads correctly.', () => {
         expect(getAdjusting(document.querySelector(".apexcharts-svg"))).toEqual(svgElementExpected.outerHTML) 
 
     })
-} ) 
+} ) */

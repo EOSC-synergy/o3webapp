@@ -27,30 +27,42 @@ function getAdjustedSVG(svgElement) {
   return svgElement.outerHTML;
 }
 
-
-
 /**
- * Downloads the PDF which contains the Graph in SVG format and contains the List of models. 
- * 
- * @param {the plot id of the graph (tco3_zm, tco3_return etc.)} plotId 
- * @param {the File name of the PDF} fileName 
+ * Downloads the PDF which contains the Graph in SVG format and contains the List of models.
+ *
+ * @param {the plot id of the graph (tco3_zm, tco3_return etc.)} plotId
+ * @param {the File name of the PDF} fileName
  */
-export async function downloadGraphAsPDF(plotId, fileName, modelGroups, currentData) {
+export async function downloadGraphAsPDF(
+  plotId,
+  fileName,
+  modelGroups,
+  currentData
+) {
+  //console.log(currentData);
+  let modelGroupsList = [
+    [{ text: "", style: "header" }, { ul: [{ text: "", color: "red" }] }],
+  ];
 
-  console.log(currentData);
   for (const modelGroup of Object.values(modelGroups)) {
     if (!modelGroup.isVisible) continue;
-    // modelGroup.name = group name
-    for (const [model, modelData] of Object.entries(modelGroup.models)) {
-        if (!modelData.isVisible) continue;
-        // model = name
-        if (typeof currentData[model] === "undefined") {
-          // default color? skip?
-        }
-        console.log(currentData[model].plotStyle) // color, linestyle?
-    }
-  }
 
+    let modelsInTheGroup = [];
+    for (const [model, modelData] of Object.entries(modelGroup.models)) {
+      if (!modelData.isVisible) continue;
+      if (typeof currentData[model] === "undefined") continue;
+      modelsInTheGroup.push({
+        text: `${model}`,
+        color: `${currentData[model].plotStyle.color}`,
+      });
+    }
+    modelGroupsList.push([
+      { text: modelGroup.name, style: "header" },
+      { ul: modelsInTheGroup },
+    ]);
+  }
+  
+  modelGroupsList.shift();
   const svgElement = document.querySelector(".apexcharts-svg");
   let docDefinition = null;
 
@@ -65,19 +77,22 @@ export async function downloadGraphAsPDF(plotId, fileName, modelGroups, currentD
           svg: getAdjustedSVG(svgElement),
           fit: [770, 350],
         },
-        "\n","\n","\n",
         {
-          text: "List of used models:",
+          text: "List Of Used Models:",
           style: "header",
           fontSize: 14,
+          bold: true,
+          pageBreak: "before",
+        },
+        "\n",
+        {
+          ol: modelGroupsList,
         },
         {
-          
-        },
-        "\n","\n","\n",
-        {
-          fontSize: 11,
+          fontSize: 10,
           ul: legalNoticeLink,
+          pageBreak: "before",
+          bold: true,
         },
       ],
     };
