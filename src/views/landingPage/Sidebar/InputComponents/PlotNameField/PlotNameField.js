@@ -26,10 +26,11 @@ function PlotNameField() {
 
     const plotId = useSelector(selectPlotId);
     const plotTitle = useSelector(selectPlotTitle);
-    const [title, setTitle] = useState(plotTitle);
 
     useEffect(() => {
-        setTitle(plotTitle);
+        // this might be done better but a controlled state throws an (yet) unsolvable redux error
+        const textfield = document.getElementById("standard-basic-plot-title-input");
+        textfield.value = plotTitle;
     }, [plotId]);
 
     /** The current plot title from the store */
@@ -43,10 +44,6 @@ function PlotNameField() {
         console.log({title: event.target.value});
         dispatch(setTitle({title: event.target.value}));
     }
-
-    const updatePlotTitleState = (event) => {
-        setTitle(event.target.value);
-    }
     
     let isUpdating = false;
     return ( <>
@@ -55,18 +52,14 @@ function PlotNameField() {
             <FormControl sx={{width: '100%' }}>
                 <TextField
                     data-testid="plot-field"
-                    id="standard-basic"
+                    id="standard-basic-plot-title-input"
                     label={textFieldLabel}
                     variant="standard"
-                    value={title}
                     defaultValue={plotTitle}
                     onBlur={updatePlotName}
-                    onChange={updatePlotTitleState}
-                    onKeyPress={(event) => {
-                        if (event.key === "Enter" && !isUpdating) {
-                            isUpdating = true;
+                    onKeyUp={(event) => {
+                        if (event.key === "Enter") {
                             updatePlotName(event);
-                            isUpdating = false;g
                         }
                     }}
                 />
