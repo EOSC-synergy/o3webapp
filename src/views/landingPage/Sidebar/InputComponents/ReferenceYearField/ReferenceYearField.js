@@ -2,11 +2,12 @@ import React from "react";
 import {Grid, Typography, FormControl, TextField, Checkbox} from "@mui/material";
 import {useDispatch} from "react-redux"
 import {useSelector} from "react-redux";
-import {END_YEAR, START_YEAR, modelListBegin, modelListEnd} from "../../../../../utils/constants";
+import {END_YEAR, START_YEAR, modelListBegin, modelListEnd, O3AS_PLOTS} from "../../../../../utils/constants";
 import {fetchPlotData} from "../../../../../services/API/apiSlice";
 import {setYear, setVisibility, selectVisibility} from "../../../../../store/referenceSlice/referenceSlice";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import MuiVisibilityIcon from '@mui/icons-material/Visibility';
+import { selectPlotId } from "../../../../../store/plotSlice/plotSlice";
 
 /**
  * Enables the user to select a reference year.
@@ -24,6 +25,8 @@ function ReferenceYearField(props) {
      * The selected reference year from the redux store.
      */
     const selectedYear = useSelector(state => state.reference.settings.year);
+    
+    const plotId = useSelector(selectPlotId);
 
     /**
      * Handles the change of the reference year field if it is modified.
@@ -62,15 +65,17 @@ function ReferenceYearField(props) {
                             helperText={selectedYear < START_YEAR ? `<${START_YEAR}` : (selectedYear > END_YEAR ? `>${END_YEAR}` : '')}
                         />
                     </FormControl>
-
-                    <FormControl>
-                        <Checkbox
-                            icon={<VisibilityOffIcon data-testid="RefLineInvisibleCheckbox"/>}
-                            checkedIcon={<MuiVisibilityIcon/>}
-                            onClick={handleShowRefLineClicked}
-                        />
-                    </FormControl>
-
+                    {
+                        plotId === O3AS_PLOTS.tco3_zm
+                        && 
+                        <FormControl>
+                            <Checkbox
+                                icon={<VisibilityOffIcon data-testid="RefLineInvisibleCheckbox"/>}
+                                checkedIcon={<MuiVisibilityIcon/>}
+                                onClick={handleShowRefLineClicked}
+                            />
+                        </FormControl>
+                    }   
                 </Grid>
             </Grid>
         </>
