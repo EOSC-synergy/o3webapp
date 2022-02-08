@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {setDisplayYRange, selectPlotYRange, selectPlotId} from "../../../../../store/plotSlice/plotSlice";
 import {Typography, Grid, FormControl, TextField} from "@mui/material";
@@ -67,6 +67,24 @@ function YAxisField(props) {
             }
         }
     }
+
+    useEffect(() => {
+        // this might be done better but a controlled state, throws a (yet) unsolvable redux error
+        if (plotId === 'tco3_zm') setStateY_zm({minY, maxY});
+        else setStateY_return({minY, maxY});
+    }, [plotId]);
+
+    /*
+    useEffect(() => {
+        // this might be done better but a controlled state, throws a (yet) unsolvable redux error
+        if (plotId === 'tco3_zm') {
+            if (minY !== stateY_zm.minY || maxY !== stateY_zm.maxY) setStateY_zm({minY, maxY});
+        } else {
+            if (minY !== stateY_return.minY || maxY !== stateY_return.maxY) setStateY_return({minY, maxY});
+        }
+    }, [{minY, maxY}]);
+
+     */
 
 
     return (
