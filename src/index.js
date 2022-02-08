@@ -3,14 +3,15 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import store from './store/store';
 import {Provider, useSelector} from 'react-redux';
-import { fetchModels, fetchPlotData, fetchPlotTypes } from './services/API/apiSlice';
+import {fetchModels, fetchPlotData, fetchPlotTypes} from './services/API/apiSlice';
 import {modelListBegin, modelListEnd} from "./utils/constants";
-import {setActivePlotId} from "./store/plotSlice/plotSlice";
+import {setActivePlotId, setUpdateSwitch} from "./store/plotSlice/plotSlice";
 
 const reloadInitialData = () => {
     store.getState().api.plotTypes.data.map((name) => {
         store.dispatch(setActivePlotId({plotId: name}));
         store.dispatch(fetchPlotData(modelListBegin, modelListEnd));
+        store.dispatch(setUpdateSwitch());
     });
     store.dispatch(setActivePlotId({plotId: store.getState().api.plotTypes.data[0]}));
 }
@@ -25,10 +26,10 @@ store.dispatch(fetchModels())
     });
 
 ReactDOM.render(
-<React.StrictMode>
-    <Provider store={store}>
-        <App />
-    </Provider>
-</React.StrictMode>,
-document.getElementById('root')
+    <React.StrictMode>
+        <Provider store={store}>
+            <App/>
+        </Provider>
+    </React.StrictMode>,
+    document.getElementById('root')
 );

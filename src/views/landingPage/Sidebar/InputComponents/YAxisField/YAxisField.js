@@ -1,6 +1,11 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {setDisplayYRange, selectPlotYRange, selectPlotId} from "../../../../../store/plotSlice/plotSlice";
+import {
+    setDisplayYRange,
+    selectPlotYRange,
+    selectPlotId,
+    selectUpdateSwitch
+} from "../../../../../store/plotSlice/plotSlice";
 import {Typography, Grid, FormControl, TextField} from "@mui/material";
 import store from '../../../../../store/store';
 
@@ -25,6 +30,11 @@ function YAxisField(props) {
      * A string containing the active plot type.
      */
     const plotId = useSelector(selectPlotId);
+
+    /**
+     * A boolean containing the state of the update switch.
+     */
+    const updateSwitch = useSelector(selectUpdateSwitch);
 
     /**
      * Stores the minY and maxY values for tco3_zm
@@ -69,10 +79,12 @@ function YAxisField(props) {
     }
 
     useEffect(() => {
-        // this might be done better but a controlled state, throws a (yet) unsolvable redux error
+        console.log('useEffect');
+        console.log(minY);
+        console.log(maxY);
         if (plotId === 'tco3_zm') setStateY_zm({minY, maxY});
         else setStateY_return({minY, maxY});
-    }, [plotId]);
+    }, [updateSwitch]);
 
     /*
     useEffect(() => {

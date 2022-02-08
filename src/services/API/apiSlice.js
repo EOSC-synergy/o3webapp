@@ -149,7 +149,6 @@ export const fetchPlotData = (modelListBegin, modelListEnd) => {
                 })),
                 error => dispatch(fetchPlotDataRejected({error: error.message, plotId, cacheKey})),
             );
-
     };
 };
 

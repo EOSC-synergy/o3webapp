@@ -1,8 +1,16 @@
-import reducer, { fetchModels, fetchPlotData, fetchPlotTypes, generateCacheKey, REQUEST_STATE, selectActivePlotData } from "./apiSlice";
+import reducer, {
+    fetchModels,
+    fetchPlotData,
+    fetchPlotTypes,
+    generateCacheKey,
+    REQUEST_STATE,
+    selectActivePlotData
+} from "./apiSlice";
 import axios from 'axios';
-import { configureStore } from "@reduxjs/toolkit";
-import { createTestStore } from "../../store/store";
+import {configureStore} from "@reduxjs/toolkit";
+import {createTestStore} from "../../store/store";
 import * as optionsFormatter from "../../utils/optionsFormatter/optionsFormatter";
+import {setUpdateSwitch} from "../../store/plotSlice/plotSlice";
 
 /*
 const spy = jest.spyOn(optionsFormatter, 'preTransformApiData');
@@ -19,7 +27,7 @@ describe("tests fetchModels async thunk", () => {
         expect(fetchModels.fulfilled.type).toBe('api/fetchModels/fulfilled')
         expect(fetchModels.rejected.type).toBe('api/fetchModels/rejected')
     });
-    
+
     it('updates store accordingly after successful request', async () => {
         const store = configureStore({
             reducer: {
@@ -44,11 +52,11 @@ describe("tests fetchModels async thunk", () => {
                 plotSpecific: {
                     tco3_zm: {
                         active: null,
-                        cachedRequests: { }
+                        cachedRequests: {}
                     },
                     tco3_return: {
                         active: null,
-                        cachedRequests: { }
+                        cachedRequests: {}
                     },
                 },
             },
@@ -83,11 +91,11 @@ describe("tests fetchModels async thunk", () => {
                 plotSpecific: {
                     tco3_zm: {
                         active: null,
-                        cachedRequests: { }
+                        cachedRequests: {}
                     },
                     tco3_return: {
                         active: null,
-                        cachedRequests: { }
+                        cachedRequests: {}
                     },
                 },
             },
@@ -96,16 +104,16 @@ describe("tests fetchModels async thunk", () => {
         axios.get.mockReturnValue(Promise.reject(errorMessage));
         await store.dispatch(fetchModels());
         expect(store.getState(state => state.api)).toEqual(expected);
-    });    
+    });
 });
 
 describe("tests fetchPlotTypes async thunk", () => {
-    it('creates the action types', () => {    
+    it('creates the action types', () => {
         expect(fetchPlotTypes.pending.type).toBe('api/fetchPlotTypes/pending')
         expect(fetchPlotTypes.fulfilled.type).toBe('api/fetchPlotTypes/fulfilled')
         expect(fetchPlotTypes.rejected.type).toBe('api/fetchPlotTypes/rejected')
     });
-    
+
     it('updates store accordingly after successful request', async () => {
         const store = configureStore({
             reducer: {
@@ -130,11 +138,11 @@ describe("tests fetchPlotTypes async thunk", () => {
                 plotSpecific: {
                     tco3_zm: {
                         active: null,
-                        cachedRequests: { }
+                        cachedRequests: {}
                     },
                     tco3_return: {
                         active: null,
-                        cachedRequests: { }
+                        cachedRequests: {}
                     },
                 },
             },
@@ -169,11 +177,11 @@ describe("tests fetchPlotTypes async thunk", () => {
                 plotSpecific: {
                     tco3_zm: {
                         active: null,
-                        cachedRequests: { }
+                        cachedRequests: {}
                     },
                     tco3_return: {
                         active: null,
-                        cachedRequests: { }
+                        cachedRequests: {}
                     },
                 },
             },
@@ -182,7 +190,7 @@ describe("tests fetchPlotTypes async thunk", () => {
         axios.get.mockReturnValue(Promise.reject(errorMessage));
         await store.dispatch(fetchPlotTypes());
         expect(store.getState(state => state.api)).toEqual(expected);
-    });    
+    });
 });
 
 describe("tests the REQUEST_STATE enum", () => {
@@ -196,13 +204,13 @@ let store;
 describe('tests fetchPlotData thunk action creator', () => {
     const exampleRequestData = {
         plotId: "tco3_zm",
-        latMin: -90, 
-        latMax: 90, 
-        months: [1,2,3], 
-        startYear: 1959, 
-        endYear: 2100, 
-        modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"], 
-        refModel: "SBUV_GSFC_merged-SAT-ozone", 
+        latMin: -90,
+        latMax: 90,
+        months: [1, 2, 3],
+        startYear: 1959,
+        endYear: 2100,
+        modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"],
+        refModel: "SBUV_GSFC_merged-SAT-ozone",
         refYear: 1980,
     };
     const exampleCacheKey = generateCacheKey(exampleRequestData);
@@ -213,25 +221,28 @@ describe('tests fetchPlotData thunk action creator', () => {
 
     it('should generate the correct cacheKey', () => {
         expect(
-            generateCacheKey({latMin: -90, latMax: 90, months: [1,2], refModel: "modelRef", refYear: 420})
+            generateCacheKey({latMin: -90, latMax: 90, months: [1, 2], refModel: "modelRef", refYear: 420})
         ).toEqual("lat_min=-90&lat_min=90&months=1,2&ref_meas=modelRef&ref_year=420");
     })
 
     it('should dispatch a loading status', () => {
-        axios.post.mockResolvedValue({data: [
-            {
-              "legalinfo": "https://o3as.data.kit.edu/policies/terms-of-use.html",
-              "model": "CCMI-1_ACCESS_ACCESS-CCM-refC2",
-              "plotstyle": {
-                "color": "purple",
-                "linestyle": "solid",
-                "marker": ""
-              },
-              "x": [],
-              "y": [],
-            }]});
+        axios.post.mockResolvedValue({
+            data: [
+                {
+                    "legalinfo": "https://o3as.data.kit.edu/policies/terms-of-use.html",
+                    "model": "CCMI-1_ACCESS_ACCESS-CCM-refC2",
+                    "plotstyle": {
+                        "color": "purple",
+                        "linestyle": "solid",
+                        "marker": ""
+                    },
+                    "x": [],
+                    "y": [],
+                }]
+        });
         store.dispatch(fetchPlotData(exampleRequestData));
-        
+        store.dispatch(setUpdateSwitch());
+
         const plotSpecificSection = store.getState().api.plotSpecific["tco3_zm"];
         expect(plotSpecificSection.active).toEqual(exampleCacheKey);
         expect(plotSpecificSection.cachedRequests[exampleCacheKey]).toEqual({
@@ -240,7 +251,7 @@ describe('tests fetchPlotData thunk action creator', () => {
             status: REQUEST_STATE.loading,
             suggested: null,
         });
-        
+
     });
 
 });
