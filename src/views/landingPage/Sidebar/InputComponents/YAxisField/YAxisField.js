@@ -72,7 +72,7 @@ function YAxisField(props) {
         // this might be done better but a controlled state, throws a (yet) unsolvable redux error
         if (plotId === 'tco3_zm') setStateY_zm({minY, maxY});
         else setStateY_return({minY, maxY});
-    }, [plotId]);
+    }, [plotId, minY, maxY]);
 
     /*
     useEffect(() => {
