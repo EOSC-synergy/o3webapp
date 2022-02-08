@@ -11,6 +11,11 @@ export const modelListBegin = 0;
 /** For reducing loading time while implementing: starting value for how many models should be fetched */
 export const modelListEnd = 10;
 
+// client.js
+
+export const NO_MONTH_SELECTED = "Invalid Selection: Selecting at least one month should make this error go away.";
+
+
 // Section.js
 /** Stores the name of the LatitudeBandSelector component as a Symbol. */
 export const LBS_Symbol = Symbol("LatitudeBandSelector");

@@ -6,7 +6,7 @@ import { selectPlotId, selectPlotTitle, selectPlotXRange, selectPlotYRange } fro
 import { selectVisibility } from '../../../store/referenceSlice/referenceSlice';
 import { REQUEST_STATE, selectActivePlotData } from '../../../services/API/apiSlice';
 import { Typography, CircularProgress, Grid } from '@mui/material';
-import { APEXCHART_PLOT_TYPE, HEIGHT_LOADING_SPINNER, HEIGHT_GRAPH } from '../../../utils/constants';
+import { APEXCHART_PLOT_TYPE, HEIGHT_LOADING_SPINNER, HEIGHT_GRAPH, NO_MONTH_SELECTED } from '../../../utils/constants';
 
 /**
  * Currently there is no dynamic data linking. The graph will always
@@ -32,7 +32,8 @@ function Graph(props) {
         // note: this is important, because we should only "propagate" the error to the top
         // if this component has finished rendering, causing no <em>side effects</em> in
         // its rendering process 
-        if (activeData.status === REQUEST_STATE.error) {
+        if (activeData.status === REQUEST_STATE.error
+            && activeData.error !== NO_MONTH_SELECTED) { // if no month selected the user already gets notified with a more decent warning
             props.reportError(activeData.error);
         }
     }, [activeData]);
