@@ -438,9 +438,9 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
               <div
                 aria-colindex="6"
                 class="MuiDataGrid-columnHeader"
-                data-field="derivative"
+                data-field="standard deviation"
                 role="columnheader"
-                style="width: 140px; min-width: 140px; max-width: 140px;"
+                style="width: 200px; min-width: 200px; max-width: 200px;"
                 tabindex="-1"
               >
                 <div
@@ -456,7 +456,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       <svg
                         aria-hidden="true"
                         class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeSmall css-1bptiuh-MuiSvgIcon-root"
-                        data-testid="ColumnCheckboxCheckedTypeDerivative"
+                        data-testid="ColumnCheckboxCheckedTypeStandard deviation"
                         focusable="false"
                         style="margin-right: 5px;"
                         viewBox="0 0 24 24"
@@ -465,7 +465,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                           d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
                         />
                       </svg>
-                      Derivative
+                      Standard deviation
                     </div>
                   </div>
                 </div>
@@ -736,13 +736,13 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       aria-colindex="6"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="5"
-                      data-field="derivative"
+                      data-field="standard deviation"
                       role="cell"
-                      style="min-width: 140px; max-width: 140px; min-height: 52px; max-height: 52px;"
+                      style="min-width: 200px; max-width: 200px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
                       <div
-                        data-testid="CellCheckboxRow0TypeDerivative"
+                        data-testid="CellCheckboxRow0TypeStandard deviation"
                       >
                         <div
                           class="d-flex justify-content-between align-items-center"
@@ -994,13 +994,13 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       aria-colindex="6"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="5"
-                      data-field="derivative"
+                      data-field="standard deviation"
                       role="cell"
-                      style="min-width: 140px; max-width: 140px; min-height: 52px; max-height: 52px;"
+                      style="min-width: 200px; max-width: 200px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
                       <div
-                        data-testid="CellCheckboxRow1TypeDerivative"
+                        data-testid="CellCheckboxRow1TypeStandard deviation"
                       >
                         <div
                           class="d-flex justify-content-between align-items-center"
@@ -1252,13 +1252,13 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       aria-colindex="6"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="5"
-                      data-field="derivative"
+                      data-field="standard deviation"
                       role="cell"
-                      style="min-width: 140px; max-width: 140px; min-height: 52px; max-height: 52px;"
+                      style="min-width: 200px; max-width: 200px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
                       <div
-                        data-testid="CellCheckboxRow2TypeDerivative"
+                        data-testid="CellCheckboxRow2TypeStandard deviation"
                       >
                         <div
                           class="d-flex justify-content-between align-items-center"

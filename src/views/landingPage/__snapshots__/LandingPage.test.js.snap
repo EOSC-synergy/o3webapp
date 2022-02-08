@@ -738,18 +738,18 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                           >
                             <label
                               class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-                              id="ModelGroupCoard-toggle-derivative-label"
+                              id="ModelGroupCoard-toggle-standard deviation-label"
                             >
                               <span
                                 class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
-                                data-testid="ModelGroupCard-toggle-derivative-checkbox"
-                                labelid="ModelGroupCard-toggle-derivative-label"
+                                data-testid="ModelGroupCard-toggle-standard deviation-checkbox"
+                                labelid="ModelGroupCard-toggle-standard deviation-label"
                               >
                                 <input
                                   checked=""
                                   class="PrivateSwitchBase-input css-1m9pwf3"
                                   data-indeterminate="false"
-                                  id="ModelGroupCard-toggle-derivative-checkbox"
+                                  id="ModelGroupCard-toggle-standard deviation-checkbox"
                                   type="checkbox"
                                 />
                                 <svg
@@ -770,7 +770,7 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                               <span
                                 class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
                               >
-                                derivative
+                                standard deviation
                               </span>
                             </label>
                           </div>
