@@ -138,7 +138,7 @@ function EditModelGroupModal(props) {
      * An array filled with boolean values that indicate whether a model is included in the derivative calculation or not.
      * The index of each model in the array is its corresponding row id.  
      */
-    const [derivativeVisible, setDerivativeVisible] = React.useState(modelList.map(model => modelData[model].derivative));
+    const [derivativeVisible, setDerivativeVisible] = React.useState(modelList.map(model => modelData[model][std]));
 
     /**
      * An array filled with boolean values that indicate whether a model is included in the percentile calculation or not.

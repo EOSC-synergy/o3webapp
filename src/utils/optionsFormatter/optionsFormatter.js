@@ -700,10 +700,7 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
             // filter out values from not included models or null values
             const filtered = arr.filter((value, idx) => value !== null && isIncludedInSv(modelList[idx], groupData, sv));
 
-            
-            
             const value = SV_CALCULATION[sv](filtered); // null as default if NaN or undefined
-            if (sv === "standard deviation") console.log(value);
             if (isNaN(value) || typeof value === "undefined") {
                 svHolder[sv].push(null);    //apexcharts default "missing" value placeholder
             } else {
@@ -714,7 +711,6 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
 
     svHolder["mean+std"] = [];
     svHolder["mean-std"] = [];
-    console.log(svHolder);
     for (let i = 0; i < svHolder[STATISTICAL_VALUES[std]].length; ++i) {
         svHolder["mean+std"].push(svHolder.stdMean[i] + svHolder[STATISTICAL_VALUES[std]][i]);
         svHolder["mean-std"].push(svHolder.stdMean[i] - svHolder[STATISTICAL_VALUES[std]][i]);
