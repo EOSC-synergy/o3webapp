@@ -77,6 +77,20 @@ function TimeCheckBoxGroup(props) {
         return 0 < indetCount && indetCount < NUM_MONTHS;
     }
 
+    const updateDataProcedure = (monthCpy) => {
+
+        if (monthCpy.length === 0) {
+            setCorrectSelection(false);
+        } else {
+            setCorrectSelection(true);
+        };
+
+        dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
+
+        dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, modelListBegin, modelListEnd}));
+        dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_return, modelListBegin, modelListEnd}));
+    }
+
     /**
      * Handles the change if the "All Year"-Checkbox is clicked (selected/deselected).
      */
@@ -92,17 +106,7 @@ function TimeCheckBoxGroup(props) {
             }
         }
 
-        if (monthCpy.length === 0) {
-            setCorrectSelection(false);
-        } else {
-            setCorrectSelection(true);
-        };
-
-
-        dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
-        // fetch for tco3_zm and tco3_return
-        dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, modelListBegin, modelListEnd}));
-        dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_return, modelListBegin, modelListEnd}));
+        updateDataProcedure(monthCpy);
     }
 
 
@@ -135,17 +139,7 @@ function TimeCheckBoxGroup(props) {
             monthCpy = monthCpy.filter((m) => !monthsInSeason.includes(m));
         }
 
-        if (monthCpy.length === 0) {
-            setCorrectSelection(false);
-        } else {
-            setCorrectSelection(true);
-        };
-
-        // Dispatch season checked
-        dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
-        // fetch for tco3_zm and tco3_return
-        dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, modelListBegin, modelListEnd}));
-        dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_return, modelListBegin, modelListEnd}));
+        updateDataProcedure(monthCpy);
     }
 
     /**
@@ -167,11 +161,7 @@ function TimeCheckBoxGroup(props) {
             setCorrectSelection(true);
         };
 
-        // Dispatch month checked
-        dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
-        // fetch for tco3_zm and tco3_return
-        dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, modelListBegin, modelListEnd}));
-        dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_return, modelListBegin, modelListEnd}));
+        updateDataProcedure(monthCpy);
     }
 
     /**
@@ -206,6 +196,15 @@ function TimeCheckBoxGroup(props) {
     return (
         <div style={{marginTop: "5%"}}>
             <Divider><Typography>TIME</Typography></Divider>
+            
+            {
+                !correctSelection
+                &&
+                <Alert severity="warning">
+                    No month was selected. Data can only be fetched if atleast one month is selected.
+                </Alert>
+            }
+
             <Box sx={{paddingLeft: '8%', paddingRight: '8%', alignItems: "center", display: "flex", flexDirection: "column"}}>
                 <FormControlLabel
                     label="All year"
@@ -229,13 +228,6 @@ function TimeCheckBoxGroup(props) {
                     </Grid>
                 </Grid>
             </Box>
-            {
-                !correctSelection
-                &&
-                <Alert severity="warning">
-                    No month was selected. Data can only be fetched if atleast one month is selected.
-                </Alert>
-            }
         </div>
     );
 }

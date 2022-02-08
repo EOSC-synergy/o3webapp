@@ -35,7 +35,7 @@ function Graph(props) {
         if (activeData.status === REQUEST_STATE.error) {
             props.reportError(activeData.error);
         }
-    })
+    }, [activeData]);
 
     if (activeData.status === REQUEST_STATE.loading || activeData.status === REQUEST_STATE.idle) {
         return <div style={{display: "flex", alignItems: "center", justifyContent: "center", height: HEIGHT_LOADING_SPINNER}}>
@@ -46,7 +46,7 @@ function Graph(props) {
             
         </div>
     } else if (activeData.status === REQUEST_STATE.error) {
-        return <Typography>An error occurred, please try to reload the site.</Typography>;
+        return <Typography>Error: {activeData.error}</Typography>;
 
     } else if (activeData.status === REQUEST_STATE.success) {
         const {data, styling} = generateSeries({plotId, data: activeData.data, modelsSlice, xAxisRange, yAxisRange, refLineVisible});

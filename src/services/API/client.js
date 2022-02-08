@@ -85,7 +85,7 @@ export const postModelsPlotStyle = (plotType) => {
  */
 export const getPlotData = ({plotId, latMin, latMax, months, modelList, startYear, endYear, refModel, refYear}) => {
     if (months.length === 0) {
-        throw new Error("requesting with an empty array will be rejected by the api");
+        return Promise.reject(new Error("Cannot perform a requeset if no month is selected. Selecting at least one month should make this error go away."));
     }
     if (plotId === 'tco3_zm') {
         return postAtAPI(
