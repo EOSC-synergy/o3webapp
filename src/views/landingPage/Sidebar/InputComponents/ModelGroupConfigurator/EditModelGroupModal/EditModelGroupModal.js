@@ -24,24 +24,6 @@ const StyledDataGrid = styled(DataGrid)(({theme}) => ({
 }));
 
 /**
- * The CSS settings for the Card component
- */
-const cardStyle = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '90%',
-    height: '75%',
-    minHeight: "75%",
-    maxHight: "100vh",
-    overflow: "auto",
-    bgcolor: "#FFFFFF",
-    boxShadow: 24,
-    p: 4,
-};
-
-/**
  * Parses the rows out of the given modelList
  * 
  * @param {String[]} modelList  A list of models that will be parsed into data grid rows
@@ -81,6 +63,26 @@ function createRows(modelList) {
  * @returns                             A JSX containing a modal with a data grid with all models from the model group
  */
 function EditModelGroupModal(props) {
+
+    const theme = useTheme();
+
+    /**
+     * The CSS settings for the Card component
+     */
+    const cardStyle = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '90%',
+        height: '75%',
+        minHeight: "75%",
+        maxHight: "100vh",
+        overflow: "auto",
+        bgcolor: theme.palette.background.default,
+        boxShadow: 24,
+        p: 4,
+    };
 
     /**
      * Label displayed at the top of the modal

@@ -479,7 +479,7 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange}) 
     // 1. build boxplot
     const boxPlotValues = calculateBoxPlotValues({data, modelsSlice});
     series.data.push({
-            name: 'box',
+            name: '', // removed name of box, so it doesn't show up in the legend!
             type: 'boxPlot',
 
             data: ALL_REGIONS_ORDERED.map(region => ({
@@ -962,7 +962,13 @@ export function getTickAmountYAxisTco3Zm(min, max) {
     if (diff <= 200) {
         return Math.floor(diff / 5);
     } else if (diff <= 400) {
-        return Math.floor(diff / 40);
+        if (diff % 20 == 0) {
+            return Math.floor(diff / 20);
+        } else if (diff % 30 == 0) {
+            return Math.floor(diff / 30);
+        }
+
+        return Math.floor(diff / 10);
     }
 }
 
@@ -978,7 +984,12 @@ export function getTickAmountYAxisTco3Return(min, max) {
     if (diff <= 200) {
         return Math.floor(diff / 5);
     } else if (diff <= 400) {
-        return Math.floor(diff / 40);
+        if (diff % 20 == 0) {
+            return Math.floor(diff / 20);
+        } else if (diff % 30 == 0) {
+            return Math.floor(diff / 30);
+        }
+        return Math.floor(diff / 10);
     }
 }
 
@@ -1024,7 +1035,7 @@ export function filterOutOfRange(value, min, max) {
  * @param {number} value the label value
  * @returns the value if it is a multiple of ten or an empty string to hide the label
  */
-export const formatYLabelsNicely = value => value % 10 ? "" : value;
+export const formatYLabelsNicely = value => value % 10 ? "" : value
 
 /**
  * This function parses the auto-generated sv names to separate 

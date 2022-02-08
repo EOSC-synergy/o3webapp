@@ -216,8 +216,8 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                           <label
                             class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-root MuiFormLabel-colorPrimary MuiFormLabel-filled css-1c2i806-MuiFormLabel-root-MuiInputLabel-root"
                             data-shrink="true"
-                            for="standard-basic"
-                            id="standard-basic-label"
+                            for="standard-basic-plot-title-input"
+                            id="standard-basic-plot-title-input-label"
                           >
                             New Plot Name
                           </label>
@@ -227,7 +227,7 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                             <input
                               aria-invalid="false"
                               class="MuiInput-input MuiInputBase-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
-                              id="standard-basic"
+                              id="standard-basic-plot-title-input"
                               type="text"
                               value="OCTS Plot"
                             />
@@ -2065,8 +2065,8 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                           <label
                             class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-root MuiFormLabel-colorPrimary MuiFormLabel-filled css-1c2i806-MuiFormLabel-root-MuiInputLabel-root"
                             data-shrink="true"
-                            for="standard-basic"
-                            id="standard-basic-label"
+                            for="standard-basic-plot-title-input"
+                            id="standard-basic-plot-title-input-label"
                           >
                             New Plot Name
                           </label>
@@ -2076,7 +2076,7 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                             <input
                               aria-invalid="false"
                               class="MuiInput-input MuiInputBase-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
-                              id="standard-basic"
+                              id="standard-basic-plot-title-input"
                               type="text"
                               value="OCTS Plot"
                             />
