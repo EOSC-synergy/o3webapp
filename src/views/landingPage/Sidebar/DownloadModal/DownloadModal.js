@@ -15,9 +15,10 @@ import PropTypes from "prop-types";
 import { fileFormats } from "../../../../utils/constants";
 import { downloadGraphAsPDF} from "../../../../services/pdf/pdfCreator";
 import { useSelector } from "react-redux";
-import {selectPlotId, selectPlotTitle} from "../../../../store/plotSlice/plotSlice";
-import {selectActivePlotData} from "../../../../services/API/apiSlice";
+import { selectPlotId, selectPlotTitle} from "../../../../store/plotSlice/plotSlice";
+import { selectActivePlotData} from "../../../../services/API/apiSlice";
 import { getIncludedModelsAsObjects } from "../../../../utils/optionsFormatter";
+import { selectAllModelGroups } from "../../../../store/modelsSlice/modelsSlice";
 
 /**
  * Opens a modal where the user can select the file format and download the plot.
@@ -30,10 +31,11 @@ import { getIncludedModelsAsObjects } from "../../../../utils/optionsFormatter";
  */
 function DownloadModal(props) {
 
-  const modelGroups = useSelector(state => state.models.modelGroups);
+  //const modelGroups = useSelector(state => state.models.modelGroups);
+  const modelGroups = useSelector(state => selectAllModelGroups(state));
   const plotId = useSelector(selectPlotId);
+
   const activeData = useSelector(state => selectActivePlotData(state, plotId));
-  
   const [selectedFileFormat, setSelectedFileFormat] = React.useState("");
   const modelsSlice = useSelector((state) => state.models);
   const plotTitle = useSelector(selectPlotTitle);

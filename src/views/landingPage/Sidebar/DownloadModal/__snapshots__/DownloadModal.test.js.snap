@@ -4,7 +4,9 @@ exports[`testing DownloadModal rendering renders correctly when closed 1`] = `
 <body
   style=""
 >
-  <div />
+  <div>
+     
+  </div>
 </body>
 `;
 
@@ -14,7 +16,10 @@ exports[`testing DownloadModal rendering renders correctly when open 1`] = `
 >
   <div
     aria-hidden="true"
-  />
+  >
+     
+     
+  </div>
   <div
     class="MuiModal-root css-79ws1d-MuiModal-root"
     role="presentation"
@@ -41,7 +46,7 @@ exports[`testing DownloadModal rendering renders correctly when open 1`] = `
           <h3
             class="MuiTypography-root MuiTypography-h3 css-gepadz-MuiTypography-root"
           >
-            Download plot
+            Download Plot
           </h3>
         </div>
         <div
@@ -50,7 +55,7 @@ exports[`testing DownloadModal rendering renders correctly when open 1`] = `
           <h6
             class="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
           >
-            Choose file format:
+            Choose File Format:
           </h6>
         </div>
         <div
@@ -65,7 +70,7 @@ exports[`testing DownloadModal rendering renders correctly when open 1`] = `
               data-shrink="false"
               id="formatSelectLabel"
             >
-              format
+              Format
             </label>
             <div
               class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"

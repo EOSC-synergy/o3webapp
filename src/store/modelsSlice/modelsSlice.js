@@ -357,3 +357,5 @@ export const selectVisibilityOfGroup = (state, groupId) => state.models.modelGro
  * @returns an array holding all valid group ids
  */
 export const selectAllGroupIds = state => Object.keys(state.models.modelGroups).map(key => parseInt(key));
+
+export const selectAllModelGroups = state => state.models.modelGroups;
