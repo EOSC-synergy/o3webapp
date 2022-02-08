@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import SeasonCheckBoxGroup from "./SeasonCheckboxGroup/SeasonCheckBoxGroup";
-import {Box, Checkbox, Divider, FormControlLabel, Grid} from "@mui/material";
+import {Alert, Box, Checkbox, Divider, FormControlLabel, Grid} from "@mui/material";
 import {
     Winter,
     Spring,
@@ -9,13 +9,15 @@ import {
     NUM_MONTHS_IN_SEASON,
     NUM_MONTHS,
     modelListBegin,
-    modelListEnd
+    modelListEnd,
+    O3AS_PLOTS
 } from "../../../../../utils/constants";
 import Typography from "@mui/material/Typography";
 import {fetchPlotData} from "../../../../../services/API/apiSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { selectPlotMonths, setMonths } from "../../../../../store/plotSlice/plotSlice";
 import PropTypes from 'prop-types';
+
 
 /**
  * enables the user to select a month, season or the whole year
@@ -25,6 +27,12 @@ import PropTypes from 'prop-types';
  */
 function TimeCheckBoxGroup(props) {
     
+    /**
+     * keeps track of the selection a user did. Notifies the user if he did perform
+     * an incorrect selection i.e. selecting no month at all.
+     */
+    const [correctSelection, setCorrectSelection] = useState(true);
+
     /**
      * A dispatch function to dispatch actions to the redux store.
      */
@@ -84,9 +92,17 @@ function TimeCheckBoxGroup(props) {
             }
         }
 
+        if (monthCpy.length === 0) {
+            setCorrectSelection(false);
+        } else {
+            setCorrectSelection(true);
+        };
+
 
         dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
-        dispatch(fetchPlotData(modelListBegin, modelListEnd));
+        // fetch for tco3_zm and tco3_return
+        dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, modelListBegin, modelListEnd}));
+        dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_return, modelListBegin, modelListEnd}));
     }
 
 
@@ -119,9 +135,17 @@ function TimeCheckBoxGroup(props) {
             monthCpy = monthCpy.filter((m) => !monthsInSeason.includes(m));
         }
 
+        if (monthCpy.length === 0) {
+            setCorrectSelection(false);
+        } else {
+            setCorrectSelection(true);
+        };
+
         // Dispatch season checked
         dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
-        dispatch(fetchPlotData(modelListBegin, modelListEnd));
+        // fetch for tco3_zm and tco3_return
+        dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, modelListBegin, modelListEnd}));
+        dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_return, modelListBegin, modelListEnd}));
     }
 
     /**
@@ -136,9 +160,18 @@ function TimeCheckBoxGroup(props) {
         } else {
             monthCpy.push(monthId);
         }
+
+        if (monthCpy.length === 0) {
+            setCorrectSelection(false);
+        } else {
+            setCorrectSelection(true);
+        };
+
         // Dispatch month checked
         dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
-        dispatch(fetchPlotData(modelListBegin, modelListEnd));
+        // fetch for tco3_zm and tco3_return
+        dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, modelListBegin, modelListEnd}));
+        dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_return, modelListBegin, modelListEnd}));
     }
 
     /**
@@ -196,6 +229,13 @@ function TimeCheckBoxGroup(props) {
                     </Grid>
                 </Grid>
             </Box>
+            {
+                !correctSelection
+                &&
+                <Alert severity="warning">
+                    No month was selected. Data can only be fetched if atleast one month is selected.
+                </Alert>
+            }
         </div>
     );
 }
