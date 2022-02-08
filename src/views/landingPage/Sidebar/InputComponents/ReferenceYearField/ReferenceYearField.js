@@ -4,7 +4,7 @@ import {useDispatch} from "react-redux"
 import {useSelector} from "react-redux";
 import {END_YEAR, START_YEAR, modelListBegin, modelListEnd, O3AS_PLOTS} from "../../../../../utils/constants";
 import {fetchPlotData} from "../../../../../services/API/apiSlice";
-import {setYear, setVisibility, selectVisibility} from "../../../../../store/referenceSlice/referenceSlice";
+import {setYear, setVisibility, selectRefYear} from "../../../../../store/referenceSlice/referenceSlice";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import MuiVisibilityIcon from '@mui/icons-material/Visibility';
 import { selectPlotId } from "../../../../../store/plotSlice/plotSlice";
@@ -24,7 +24,7 @@ function ReferenceYearField(props) {
     /**
      * The selected reference year from the redux store.
      */
-    const selectedYear = useSelector(state => state.reference.settings.year);
+    const selectedYear = useSelector(selectRefYear);
     
     const plotId = useSelector(selectPlotId);
 
