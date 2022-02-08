@@ -7,8 +7,6 @@ import {fetchPlotData} from "../../../../../services/API/apiSlice";
 import {setYear, setVisibility, selectVisibility} from "../../../../../store/referenceSlice/referenceSlice";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import MuiVisibilityIcon from '@mui/icons-material/Visibility';
-import store from "../../../../../store/store";
-import {setUpdateSwitch} from "../../../../../store/plotSlice/plotSlice";
 
 /**
  * Enables the user to select a reference year.
@@ -35,7 +33,6 @@ function ReferenceYearField(props) {
             dispatch(setYear({year: event.target.value}));
             if (event.target.value >= START_YEAR && event.target.value <= END_YEAR) {
                 dispatch(fetchPlotData(modelListBegin, modelListEnd));
-                dispatch(setUpdateSwitch());
             }
         }
     };

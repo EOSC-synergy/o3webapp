@@ -1,16 +1,15 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux"
-import {selectPlotLocation, setLocation, setUpdateSwitch} from "../../../../../store/plotSlice/plotSlice";
+import {selectPlotLocation, setLocation} from "../../../../../store/plotSlice/plotSlice";
 import {Box, Divider, Grid, MenuItem, Select, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {latitudeBands, modelListBegin, modelListEnd} from "../../../../../utils/constants";
 import PropTypes from 'prop-types';
 import {fetchPlotData} from "../../../../../services/API/apiSlice";
-import store from "../../../../../store/store";
 
 
 /**
- * The minimum possible latitude value
+ * The minimum possible latitude value 
  */
 const min = -90;
 /**
@@ -29,7 +28,7 @@ const customLatitudeBandInput = (label, value, onChange) => {
     return (
         <Grid container>
             <Grid item xs={4}>
-                <Typography><br/>{label}</Typography>
+                <Typography><br />{label}</Typography>
             </Grid>
             <Grid item xs={8}>
                 <TextField
@@ -79,7 +78,7 @@ function LatitudeBandSelector(props) {
     const [isCustomizable, setIsCustomizable] = React.useState(false);
 
     /**
-     * handles the change when the user clicked on a new latitude band option
+     * handles the change when the user clicked on a new latitude band option 
      * if the user selected custom sets isCustomizable to true
      * @param {event} event the event that triggered this function call
      */
@@ -90,7 +89,6 @@ function LatitudeBandSelector(props) {
             setIsCustomizable(false);
             dispatch(setLocation({minLat: event.target.value.minLat, maxLat: event.target.value.maxLat}));
             dispatch(fetchPlotData(modelListBegin, modelListEnd));
-            dispatch(setUpdateSwitch());
         }
     };
 
@@ -101,7 +99,7 @@ function LatitudeBandSelector(props) {
      */
     const handleChangeLatitudeBandSingleElement = (event, extrema) => {
         let selectedLocationCopy = {...selectedLocation};
-        switch (extrema) {
+        switch(extrema) {
             case "min":
                 selectedLocationCopy.minLat = parseInt(event.target.value);
                 break;
@@ -113,7 +111,6 @@ function LatitudeBandSelector(props) {
         }
         dispatch(setLocation({minLat: selectedLocationCopy.minLat, maxLat: selectedLocationCopy.maxLat}));
         dispatch(fetchPlotData(modelListBegin, modelListEnd));
-        dispatch(setUpdateSwitch());
     };
 
     /**
@@ -146,7 +143,7 @@ function LatitudeBandSelector(props) {
             </Divider>
             <Box sx={{paddingLeft: '8%', paddingRight: '8%', paddingTop: '3%'}}>
                 <Select
-                    sx={{width: '100%'}}
+                    sx={{width: '100%' }}
                     id="latitudeBandSelector"
                     value={findLatitudeBandByLocation()}
                     onChange={handleChangeLatitudeBand}

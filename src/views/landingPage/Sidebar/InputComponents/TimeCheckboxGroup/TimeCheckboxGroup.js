@@ -13,10 +13,9 @@ import {
 } from "../../../../../utils/constants";
 import Typography from "@mui/material/Typography";
 import {fetchPlotData} from "../../../../../services/API/apiSlice";
-import {useSelector, useDispatch} from "react-redux";
-import {selectPlotMonths, setMonths, setUpdateSwitch} from "../../../../../store/plotSlice/plotSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { selectPlotMonths, setMonths } from "../../../../../store/plotSlice/plotSlice";
 import PropTypes from 'prop-types';
-import store from "../../../../../store/store";
 
 /**
  * enables the user to select a month, season or the whole year
@@ -25,15 +24,15 @@ import store from "../../../../../store/store";
  * @returns {JSX} a jsx containing a checkboxgroup per season and a "all year" checkbox
  */
 function TimeCheckBoxGroup(props) {
-
+    
     /**
      * A dispatch function to dispatch actions to the redux store.
      */
     const dispatch = useDispatch()
 
-    /**
+    /** 
      * An array containing the selected months.
-     *
+     * 
      * Examples:
      * If e.g. January is selected the array would have the following form: [1]
      * If e.g. February and December are selected the array would look as follows: [2, 12]
@@ -42,13 +41,13 @@ function TimeCheckBoxGroup(props) {
 
     /**
      * Checks if every month is selected.
-     *
+     * 
      * @returns True if all months are selected
      */
     const isEveryMonthChecked = () => {
         let isChecked = true;
         for (let i = 0; i < NUM_MONTHS; i++) {
-            if (!selectedMonths.includes(i + 1)) {
+            if(!selectedMonths.includes(i + 1)) {
                 isChecked = false;
             }
         }
@@ -57,13 +56,13 @@ function TimeCheckBoxGroup(props) {
 
     /**
      * Checks if the "All Year"-Checkbox should be displayed as indeterminate.
-     *
+     * 
      * @returns True if the checkbox should be displayed as indeterminate
      */
     const isIndeterminate = () => {
         let indetCount = 0;
         for (let i = 0; i < NUM_MONTHS; i++) {
-            if (!selectedMonths.includes(i + 1)) {
+            if(!selectedMonths.includes(i + 1)) {
                 indetCount++;
             }
         }
@@ -86,32 +85,31 @@ function TimeCheckBoxGroup(props) {
         }
 
 
-        dispatch(setMonths({months: monthCpy.sort((a, b) => a - b)}));
+        dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
         dispatch(fetchPlotData(modelListBegin, modelListEnd));
-        dispatch(setUpdateSwitch());
     }
 
 
     /**
      * Handles the change if a season is clicked (selected/deselected).
-     *
+     * 
      * @param {int} seasonId The id of the season that was clicked
      */
     const handleSeasonChecked = (seasonId) => {
-
+        
         let monthCpy = [...selectedMonths];
         const monthsInSeason = [];
         let shouldBeSelected = false;
 
-        for (let i = 0; i < NUM_MONTHS_IN_SEASON; i++) {
+        for(let i = 0; i < NUM_MONTHS_IN_SEASON; i++) {
             const currMonthInSeason = (seasonId * NUM_MONTHS_IN_SEASON + 1) + i
             monthsInSeason.push(currMonthInSeason);
 
-            if (shouldBeSelected) continue;
+            if(shouldBeSelected) continue;
             shouldBeSelected = !monthCpy.includes(currMonthInSeason)
         }
 
-        if (shouldBeSelected) {
+        if(shouldBeSelected) {
             for (let i = 0; i < NUM_MONTHS_IN_SEASON; i++) {
                 if (!monthCpy.includes(monthsInSeason[i])) {
                     monthCpy.push(monthsInSeason[i]);
@@ -122,14 +120,13 @@ function TimeCheckBoxGroup(props) {
         }
 
         // Dispatch season checked
-        dispatch(setMonths({months: monthCpy.sort((a, b) => a - b)}));
+        dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
         dispatch(fetchPlotData(modelListBegin, modelListEnd));
-        dispatch(setUpdateSwitch());
     }
 
     /**
      * Handles the change if a month is clicked (selected/deselected).
-     *
+     * 
      * @param {int} monthId The id of the month that was clicked
      */
     const handleMonthChecked = (monthId) => {
@@ -140,14 +137,13 @@ function TimeCheckBoxGroup(props) {
             monthCpy.push(monthId);
         }
         // Dispatch month checked
-        dispatch(setMonths({months: monthCpy.sort((a, b) => a - b)}));
+        dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
         dispatch(fetchPlotData(modelListBegin, modelListEnd));
-        dispatch(setUpdateSwitch());
     }
 
     /**
      * Constructs a SeasonCheckbox for a given season
-     *
+     * 
      * @param {Object} param            The parameter object representing a season
      * @param {String} param.name       The season name
      * @param {Array of int} param.months     An array of monthId's of the months included in this season
@@ -163,11 +159,11 @@ function TimeCheckBoxGroup(props) {
         return (
             <Grid item xs={6}>
                 <SeasonCheckBoxGroup
-                    label={name.description}
-                    months={monthsInSeason}
-                    seasonId={seasonId}
-                    handleSeasonClicked={handleSeasonChecked}
-                    handleMonthClicked={handleMonthChecked}
+                    label = {name.description}
+                    months = {monthsInSeason}
+                    seasonId= {seasonId}
+                    handleSeasonClicked = {handleSeasonChecked}
+                    handleMonthClicked = {handleMonthChecked}
                     reportError={props.reportError}
                 />
             </Grid>
@@ -177,20 +173,14 @@ function TimeCheckBoxGroup(props) {
     return (
         <div style={{marginTop: "5%"}}>
             <Divider><Typography>TIME</Typography></Divider>
-            <Box sx={{
-                paddingLeft: '8%',
-                paddingRight: '8%',
-                alignItems: "center",
-                display: "flex",
-                flexDirection: "column"
-            }}>
+            <Box sx={{paddingLeft: '8%', paddingRight: '8%', alignItems: "center", display: "flex", flexDirection: "column"}}>
                 <FormControlLabel
                     label="All year"
                     control={
-                        <Checkbox
-                            inputProps={{'data-testid': "CheckboxAllYear"}}
-                            onClick={handleYearChecked}
-                            checked={isEveryMonthChecked()}
+                        <Checkbox 
+                            inputProps={{'data-testid':"CheckboxAllYear"}} 
+                            onClick={handleYearChecked} 
+                            checked={isEveryMonthChecked()} 
                             indeterminate={isIndeterminate()}
                         />
                     }
