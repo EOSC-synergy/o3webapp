@@ -1,14 +1,10 @@
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-import { O3AS_PLOTS } from "../../utils/constants";
+import { O3AS_PLOTS, legalNoticeLinks } from "../../utils/constants";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-const legalNoticeLink = [
-  "Terms of Use Link: https://o3as.data.kit.edu/policies/terms-of-use.html",
-  "Privacy Policy Link: https://o3as.data.kit.edu/policies/privacy-policy.html",
-  "How to Acknowledge Link: https://o3as.data.kit.edu/policies/how-to-acknowledge.html",
-];
+
 
 /**
  * This Method adjusts the svg element in order to scale it right in the pdf file.
@@ -90,7 +86,7 @@ export async function downloadGraphAsPDF(
         },
         {
           fontSize: 10,
-          ul: legalNoticeLink,
+          ul: legalNoticeLinks,
           pageBreak: "before",
           bold: true,
         },

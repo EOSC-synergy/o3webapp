@@ -74,7 +74,7 @@ function DownloadModal(props) {
         encodeURIComponent(svgElement.outerHTML);
 
       img.onload = () => {
-        var canvas = document.createElement("canvas");
+        let canvas = document.createElement("canvas");
         canvas.width = img.width;
         canvas.height = img.height;
         const ctx = canvas.getContext("2d");
