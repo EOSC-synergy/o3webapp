@@ -69,23 +69,9 @@ function YAxisField(props) {
     }
 
     useEffect(() => {
-        // this might be done better but a controlled state, throws a (yet) unsolvable redux error
         if (plotId === 'tco3_zm') setStateY_zm({minY, maxY});
         else setStateY_return({minY, maxY});
     }, [plotId, minY, maxY]);
-
-    /*
-    useEffect(() => {
-        // this might be done better but a controlled state, throws a (yet) unsolvable redux error
-        if (plotId === 'tco3_zm') {
-            if (minY !== stateY_zm.minY || maxY !== stateY_zm.maxY) setStateY_zm({minY, maxY});
-        } else {
-            if (minY !== stateY_return.minY || maxY !== stateY_return.maxY) setStateY_return({minY, maxY});
-        }
-    }, [{minY, maxY}]);
-
-     */
-
 
     return (
         <Grid container sx={{width: "90%", marginLeft: "auto", marginRight: "auto", marginTop: "5%"}}>
