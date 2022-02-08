@@ -99,10 +99,10 @@ export const updateDataAndDisplaySuggestions = ({plotId, cacheKey, data, modelsS
  * @param {number} modelListEnd for faster testing limit fetching of model list
  * @returns the async thunk action
  */
-export const fetchPlotData = (modelListBegin, modelListEnd) => {
+export const fetchPlotData = ({plotId, modelListBegin, modelListEnd}) => {
 
     return (dispatch, getState) => {
-        const plotId = getState().plot.plotId;
+        if (typeof plotId === "undefined") plotId = getState().plot.plotId; // backwards compatible
         const latMin = getState().plot.generalSettings.location.minLat;
         const latMax = getState().plot.generalSettings.location.maxLat;
         const months = getState().plot.generalSettings.months;
