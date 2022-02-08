@@ -13,7 +13,7 @@ import {
 import { useTheme } from "@mui/material/styles";
 import PropTypes from "prop-types";
 import { fileFormats } from "../../../../utils/constants";
-import { downloadGraphAsPDF} from "../../../../services/pdf/pdfCreator";
+import { downloadGraphAsPDF, downloadPDF} from "../../../../services/pdf/pdfCreator";
 import { useSelector } from "react-redux";
 import { selectPlotId, selectPlotTitle} from "../../../../store/plotSlice/plotSlice";
 import { selectActivePlotData} from "../../../../services/API/apiSlice";
@@ -36,7 +36,8 @@ function DownloadModal(props) {
   const plotId = useSelector(selectPlotId);
 
   const activeData = useSelector(state => selectActivePlotData(state, plotId));
-  const [selectedFileFormat, setSelectedFileFormat] = React.useState("");
+  const [selectedFileFormat, setSelectedFileFormat] = React.useState("PDF");
+  const [btnDisabled, setBtnDisabled] = React.useState(true);
   const modelsSlice = useSelector((state) => state.models);
   const plotTitle = useSelector(selectPlotTitle);
 
@@ -127,15 +128,21 @@ function DownloadModal(props) {
    */
   const handleDownloadPlot = () => {
     const includedModels = getIncludedModelsAsObjects(modelsSlice);
+    if(includedModels == null) {
+        return;
+    }
 
     if (selectedFileFormat === "PDF") {
       downloadGraphAsPDF(plotId, plotTitle, modelGroups, activeData.data);
+      //downloadPDF(plotId, plotTitle, modelGroups, activeData.data);
     } else if (selectedFileFormat === "PNG") {
       downloadGraphAsPNG(plotTitle);
     } else if (selectedFileFormat === "SVG") {
       downloadGraphAsSVG(plotTitle);
     } else {
+      
     }
+
   };
 
   /**

@@ -1,10 +1,9 @@
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import { O3AS_PLOTS, legalNoticeLinks } from "../../utils/constants";
+import { jsPDF } from "jspdf";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
-
 
 /**
  * This Method adjusts the svg element in order to scale it right in the pdf file.
@@ -57,7 +56,7 @@ export async function downloadGraphAsPDF(
       { ul: modelsInTheGroup },
     ]);
   }
-  
+
   modelGroupsList.shift();
   const svgElement = document.querySelector(".apexcharts-svg");
   let docDefinition = null;
@@ -96,4 +95,30 @@ export async function downloadGraphAsPDF(
     throw `the given plot id "${plotId}" is not defined`;
   }
   pdfMake.createPdf(docDefinition).download(fileName);
+}
+
+export async function downloadPDF(plotId, fileName, modelGroups, currentData) {
+  if (plotId === O3AS_PLOTS.tco3_zm || plotId === O3AS_PLOTS.tco3_return) {
+    const doc = new jsPDF();
+    const svgElement = document.querySelector(".apexcharts-svg");
+    console.log(svgElement.outerHTML);
+
+    //doc.addSvgAsImage(svgElement.outerHTML, 10, 10, 100, 100, fileName, 'FAST', 0)
+    doc.addSvgAsImage(
+      `<svg height="100" width="100">
+    <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
+    Sorry, your browser does not support inline SVG.  
+  </svg> `,
+      10,
+      10,
+      100,
+      100,
+      fileName,
+      "FAST",
+      0
+    );
+    doc.save(fileName + ".pdf");
+  } else {
+    throw `the given plot id "${plotId}" is not defined`;
+  }
 }
