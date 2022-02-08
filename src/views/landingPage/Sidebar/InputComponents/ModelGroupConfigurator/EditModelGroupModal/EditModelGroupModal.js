@@ -9,7 +9,7 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import IntermediateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
 import { selectModelsOfGroup, selectModelDataOfGroup, updatePropertiesOfModelGroup } from "../../../../../../store/modelsSlice/modelsSlice";
-import { STATISTICAL_VALUES } from "../../../../../../utils/constants";
+import { STATISTICAL_VALUES, std } from "../../../../../../utils/constants";
 import PropTypes from "prop-types";
 import CardHeader from '@mui/material/CardHeader';
 import CloseIcon from '@mui/icons-material/Close';
@@ -44,7 +44,7 @@ function createRows(modelList) {
             "median": false,
             "mean": false,
             "percentile": false,
-            "derivative": false,
+            "standard deviation": false,
             "visible": false
         })
     }
@@ -171,7 +171,7 @@ function EditModelGroupModal(props) {
         switch(type.toLowerCase()) {
             case "median": return medianVisible;
             case "mean": return  meanVisible;
-            case "derivative": return  derivativeVisible;
+            case std: return  derivativeVisible;
             case "percentile": return  percentileVisible;
             case "visible": return isVisible;
             default: return medianVisible;
@@ -191,7 +191,7 @@ function EditModelGroupModal(props) {
         switch(type.toLowerCase()) {
             case "median": return setMedianVisible;
             case "mean": return  setMeanVisible;
-            case "derivative": return  setDerivativeVisible;
+            case std: return  setDerivativeVisible;
             case "percentile": return  setPercentileVisible;
             case "visible": return setIsVisible;
             default: return setMedianVisible;
@@ -291,7 +291,7 @@ function EditModelGroupModal(props) {
             const model = modelList[i];
             dataCpy[model].mean = meanVisible[i];
             dataCpy[model].median = medianVisible[i];
-            dataCpy[model].derivative = derivativeVisible[i];
+            dataCpy[model].std = derivativeVisible[i];
             dataCpy[model].percentile = percentileVisible[i];
             dataCpy[model].isVisible = isVisible[i];
         }
@@ -310,7 +310,7 @@ function EditModelGroupModal(props) {
         for(const model of modelList) {
             meanData.push(modelData[model].mean);
             medianData.push(modelData[model].median);
-            derivativeData.push(modelData[model].derivative);
+            derivativeData.push(modelData[model][std]);
             percentileData.push(modelData[model].percentile);
             visibleData.push(modelData[model].isVisible);
         }
@@ -406,9 +406,9 @@ function EditModelGroupModal(props) {
             renderHeader: () => generateHeaderName("Mean"),
             renderCell: (params) => {return createCellCheckBox(params, "Mean")}
         },
-        { field: 'derivative', headerName: 'Derivative', sortable: false, width: 140, disableClickEventBubbling: true,
-            renderHeader: () => generateHeaderName("Derivative"),
-            renderCell: (params) => {return createCellCheckBox(params, "Derivative")}
+        { field: std, headerName: 'Standard deviation', sortable: false, width: 200, disableClickEventBubbling: true,
+            renderHeader: () => generateHeaderName("Standard deviation"),
+            renderCell: (params) => {return createCellCheckBox(params, "Standard deviation")}
         },
         { field: 'percentile', headerName: "Percentile", width: 140, sortable: false, disableClickEventBubbling: true,
             renderHeader: () => generateHeaderName("Percentile"),
