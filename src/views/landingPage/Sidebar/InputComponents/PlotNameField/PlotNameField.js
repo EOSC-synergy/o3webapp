@@ -34,14 +34,12 @@ function PlotNameField() {
     }, [plotId]);
 
     /** The current plot title from the store */
-    console.log(plotTitle)
 
     /** Handles the change if the text in TextField is modified. */
     const updatePlotName = (event) => {
         if (event.target.value.length > PLOT_NAME_MAX_LEN) {
             event.target.value = event.target.value.slice(0, PLOT_NAME_MAX_LEN);
         } 
-        console.log({title: event.target.value});
         dispatch(setTitle({title: event.target.value}));
     }
     
