@@ -6,6 +6,11 @@ import {latitudeBands, modelListBegin, modelListEnd, LATITUDE_BAND_MAX_VALUE, LA
 import React from "react";
 
 
+/**
+ * A component to select the specific min and max latitude values for the custom region.
+ * 
+ * @returns     JSX with the component
+ */
 function CustomLatitudeSelector(props) {
 
     /**
@@ -132,6 +137,7 @@ function CustomLatitudeSelector(props) {
             <Grid item xs={5.5} sx={{mt: "-8px"}}>
                 <FormControl sx={{width: '90%'}}>
                     <TextField
+                        data-testid="minLatSelector"
                         variant="outlined"
                         label="Min. Lat"
                         id="outlined-basic"
@@ -150,6 +156,7 @@ function CustomLatitudeSelector(props) {
             <Grid item xs={5.5} sx={{mt: "-8px"}}>
                 <FormControl sx={{width: '90%'}}>
                     <TextField
+                        data-testid="maxLatSelector"
                         variant="outlined"
                         label="Max. Lat"
                         id="outlined-basic"
