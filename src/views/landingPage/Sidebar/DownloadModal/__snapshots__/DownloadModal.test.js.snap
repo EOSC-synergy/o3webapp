@@ -66,8 +66,8 @@ exports[`testing DownloadModal rendering renders correctly when open 1`] = `
             style="width: 100%; min-width: 150px;"
           >
             <label
-              class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
-              data-shrink="false"
+              class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary MuiFormLabel-filled css-1sumxir-MuiFormLabel-root-MuiInputLabel-root"
+              data-shrink="true"
               id="formatSelectLabel"
             >
               Format
@@ -84,17 +84,13 @@ exports[`testing DownloadModal rendering renders correctly when open 1`] = `
                 role="button"
                 tabindex="0"
               >
-                <span
-                  class="notranslate"
-                >
-                  ​
-                </span>
+                PDF
               </div>
               <input
                 aria-hidden="true"
                 class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
                 tabindex="-1"
-                value=""
+                value="PDF"
               />
               <svg
                 aria-hidden="true"
@@ -112,7 +108,7 @@ exports[`testing DownloadModal rendering renders correctly when open 1`] = `
                 class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
               >
                 <legend
-                  class="css-173wfxe"
+                  class="css-1z7n62"
                 >
                   <span>
                     format
@@ -126,8 +122,9 @@ exports[`testing DownloadModal rendering renders correctly when open 1`] = `
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-md-3 MuiGrid-grid-lg-3 MuiGrid-grid-xl-3 css-iv7vbz-MuiGrid-root"
         >
           <button
-            class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root  css-1rwt2y5-MuiButtonBase-root-MuiButton-root"
-            tabindex="0"
+            class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root Mui-disabled  css-1rwt2y5-MuiButtonBase-root-MuiButton-root"
+            disabled=""
+            tabindex="-1"
             type="button"
           >
             <p
@@ -135,9 +132,6 @@ exports[`testing DownloadModal rendering renders correctly when open 1`] = `
             >
               Download
             </p>
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
           </button>
         </div>
       </div>
