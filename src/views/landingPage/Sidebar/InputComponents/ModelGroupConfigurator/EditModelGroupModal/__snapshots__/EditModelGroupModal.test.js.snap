@@ -440,7 +440,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                 class="MuiDataGrid-columnHeader"
                 data-field="standard deviation"
                 role="columnheader"
-                style="width: 200px; min-width: 200px; max-width: 200px;"
+                style="width: 180px; min-width: 180px; max-width: 180px;"
                 tabindex="-1"
               >
                 <div
@@ -738,7 +738,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       data-colindex="5"
                       data-field="standard deviation"
                       role="cell"
-                      style="min-width: 200px; max-width: 200px; min-height: 52px; max-height: 52px;"
+                      style="min-width: 180px; max-width: 180px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
                       <div
@@ -996,7 +996,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       data-colindex="5"
                       data-field="standard deviation"
                       role="cell"
-                      style="min-width: 200px; max-width: 200px; min-height: 52px; max-height: 52px;"
+                      style="min-width: 180px; max-width: 180px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
                       <div
@@ -1254,7 +1254,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       data-colindex="5"
                       data-field="standard deviation"
                       role="cell"
-                      style="min-width: 200px; max-width: 200px; min-height: 52px; max-height: 52px;"
+                      style="min-width: 180px; max-width: 180px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
                       <div

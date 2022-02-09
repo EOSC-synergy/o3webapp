@@ -385,7 +385,7 @@ describe("selector tests", () => {
         const visibleSV = {
             mean: true,
             median: false,
-            derivative: true,
+            "standard deviation": true,
             percentile: false,
         }
         
