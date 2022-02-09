@@ -11,6 +11,10 @@ export const modelListBegin = 0;
 /** For reducing loading time while implementing: starting value for how many models should be fetched */
 export const modelListEnd = 10;
 
+// ReferenceSlice
+export const DEFAULT_REF_MODEL = "SBUV_GSFC_merged-SAT-ozone";
+export const DEFAULT_REF_YEAR = 1980;
+
 // Section.js
 /** Stores the name of the LatitudeBandSelector component as a Symbol. */
 export const LBS_Symbol = Symbol("LatitudeBandSelector");
@@ -34,6 +38,8 @@ export const TCG_Symbol = Symbol("TimeCheckBoxGroup");
 export const XAF_Symbol = Symbol("XAxisField");
 /** Stores the name of the YAxisField component as a Symbol. */
 export const YAF_Symbol = Symbol("YAxisField");
+/** Stores the name of the CustomLatitudeSelector component as a Symbol. */
+export const CLS_Symbol = Symbol("CustomLatitudeSelector");
 
 // TimeCheckboxGroup.js
 /** Stores the season Winter and its corresponding months. */
@@ -210,3 +216,15 @@ export const legalNoticeLinks = [
     "Privacy Policy Link: https://o3as.data.kit.edu/policies/privacy-policy.html",
     "How to Acknowledge Link: https://o3as.data.kit.edu/policies/how-to-acknowledge.html",
   ];
+// Custom Latitude Selector
+
+/**
+ * The smallest possible latitude value .
+ */
+export const LATITUDE_BAND_MAX_VALUE = 90;
+
+/**
+  * The biggest possible latitude value.
+  */
+export const LATITUDE_BAND_MIN_VALUE = -90;
+

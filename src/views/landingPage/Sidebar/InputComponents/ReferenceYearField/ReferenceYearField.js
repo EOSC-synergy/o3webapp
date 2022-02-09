@@ -2,11 +2,12 @@ import React from "react";
 import {Grid, Typography, FormControl, TextField, Checkbox} from "@mui/material";
 import {useDispatch} from "react-redux"
 import {useSelector} from "react-redux";
-import {END_YEAR, START_YEAR, modelListBegin, modelListEnd} from "../../../../../utils/constants";
+import {END_YEAR, START_YEAR, modelListBegin, modelListEnd, O3AS_PLOTS} from "../../../../../utils/constants";
 import {fetchPlotData} from "../../../../../services/API/apiSlice";
-import {setYear, setVisibility, selectVisibility} from "../../../../../store/referenceSlice/referenceSlice";
+import {setYear, setVisibility, selectRefYear, selectVisibility} from "../../../../../store/referenceSlice/referenceSlice";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import MuiVisibilityIcon from '@mui/icons-material/Visibility';
+import { selectPlotId } from "../../../../../store/plotSlice/plotSlice";
 
 /**
  * Enables the user to select a reference year.
@@ -23,7 +24,9 @@ function ReferenceYearField(props) {
     /**
      * The selected reference year from the redux store.
      */
-    const selectedYear = useSelector(state => state.reference.settings.year);
+    const selectedYear = useSelector(selectRefYear);
+    const refLineVisibility = useSelector(selectVisibility);
+    const plotId = useSelector(selectPlotId);
 
     /**
      * Handles the change of the reference year field if it is modified.
@@ -32,7 +35,9 @@ function ReferenceYearField(props) {
         if (!isNaN(event.target.value)) {
             dispatch(setYear({year: event.target.value}));
             if (event.target.value >= START_YEAR && event.target.value <= END_YEAR) {
-                dispatch(fetchPlotData(modelListBegin, modelListEnd));
+                // fetch for tco3_zm and tco3_return
+            dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, modelListBegin, modelListEnd}));
+            dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_return, modelListBegin, modelListEnd}));
             }
         }
     };
@@ -62,15 +67,18 @@ function ReferenceYearField(props) {
                             helperText={selectedYear < START_YEAR ? `<${START_YEAR}` : (selectedYear > END_YEAR ? `>${END_YEAR}` : '')}
                         />
                     </FormControl>
-
-                    <FormControl>
-                        <Checkbox
-                            icon={<VisibilityOffIcon data-testid="RefLineInvisibleCheckbox"/>}
-                            checkedIcon={<MuiVisibilityIcon/>}
-                            onClick={handleShowRefLineClicked}
-                        />
-                    </FormControl>
-
+                    {
+                        plotId === O3AS_PLOTS.tco3_zm
+                        && 
+                        <FormControl>
+                            <Checkbox
+                                checked={refLineVisibility}
+                                icon={<VisibilityOffIcon data-testid="RefLineInvisibleCheckbox"/>}
+                                checkedIcon={<MuiVisibilityIcon/>}
+                                onClick={handleShowRefLineClicked}
+                            />
+                        </FormControl>
+                    }   
                 </Grid>
             </Grid>
         </>

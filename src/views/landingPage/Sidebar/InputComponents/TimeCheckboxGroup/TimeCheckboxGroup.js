@@ -9,7 +9,8 @@ import {
     NUM_MONTHS_IN_SEASON,
     NUM_MONTHS,
     modelListBegin,
-    modelListEnd
+    modelListEnd,
+    O3AS_PLOTS
 } from "../../../../../utils/constants";
 import Typography from "@mui/material/Typography";
 import {fetchPlotData} from "../../../../../services/API/apiSlice";
@@ -86,7 +87,9 @@ function TimeCheckBoxGroup(props) {
 
 
         dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
-        dispatch(fetchPlotData(modelListBegin, modelListEnd));
+        // fetch for tco3_zm and tco3_return
+        dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, modelListBegin, modelListEnd}));
+        dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_return, modelListBegin, modelListEnd}));
     }
 
 
@@ -121,7 +124,9 @@ function TimeCheckBoxGroup(props) {
 
         // Dispatch season checked
         dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
-        dispatch(fetchPlotData(modelListBegin, modelListEnd));
+        // fetch for tco3_zm and tco3_return
+        dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, modelListBegin, modelListEnd}));
+        dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_return, modelListBegin, modelListEnd}));
     }
 
     /**
@@ -138,7 +143,9 @@ function TimeCheckBoxGroup(props) {
         }
         // Dispatch month checked
         dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
-        dispatch(fetchPlotData(modelListBegin, modelListEnd));
+        // fetch for tco3_zm and tco3_return
+        dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, modelListBegin, modelListEnd}));
+        dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_return, modelListBegin, modelListEnd}));
     }
 
     /**

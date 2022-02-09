@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { DEFAULT_REF_MODEL, DEFAULT_REF_YEAR } from "../../utils/constants";
 
 
 /**
@@ -11,9 +12,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
 
   settings: {
-    year: 1980,
-    model: "SBUV_GSFC_merged-SAT-ozone",
-    visible: false,
+    year: DEFAULT_REF_YEAR,
+    model: DEFAULT_REF_MODEL,
+    visible: true,
     isOffsetApplied: false,
   },
 
