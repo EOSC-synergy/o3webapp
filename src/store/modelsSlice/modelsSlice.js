@@ -358,4 +358,10 @@ export const selectVisibilityOfGroup = (state, groupId) => state.models.modelGro
  */
 export const selectAllGroupIds = state => Object.keys(state.models.modelGroups).map(key => parseInt(key));
 
+/**
+ * This selector allows components to select all Model Groups.
+ * 
+ * @param  {object} state the global redux state
+ * @returns an array containing all Model Groups
+ */
 export const selectAllModelGroups = state => state.models.modelGroups;

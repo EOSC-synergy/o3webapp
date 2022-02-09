@@ -31,14 +31,35 @@ import { REQUEST_STATE } from "../../../../services/API/apiSlice";
  */
 function DownloadModal(props) {
 
-  //const modelGroups = useSelector(state => state.models.modelGroups);
+  /**
+   * An array containing all Model Groups
+   */
   const modelGroups = useSelector(state => selectAllModelGroups(state));
+
+  /**
+   * the plot id of the graph (tco3_zm, tco3_return etc.)
+   */
   const plotId = useSelector(selectPlotId);
 
+  /**
+   * the active data of the current plot which contains usefull information about the models.
+   */
   const activeData = useSelector(state => selectActivePlotData(state, plotId));
-  const [selectedFileFormat, setSelectedFileFormat] = React.useState("PDF");
-  const modelsSlice = useSelector((state) => state.models);
+
+  /**
+   * The plot title which is shown above the graph.
+   */
   const plotTitle = useSelector(selectPlotTitle);
+
+
+  /**
+   * The Selectedfile format which will be selected by the selection.
+   */
+  const [selectedFileFormat, setSelectedFileFormat] = React.useState("PDF");
+
+ 
+
+
 
   /**
    * The style of the DownloadModal.

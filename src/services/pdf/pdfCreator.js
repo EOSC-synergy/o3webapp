@@ -1,7 +1,6 @@
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import { O3AS_PLOTS, legalNoticeLinks } from "../../utils/constants";
-import { jsPDF } from "jspdf";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
