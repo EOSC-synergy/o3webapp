@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {Grid, TextField, Typography, FormControl, Divider} from "@mui/material";
 import {selectPlotLocation, setLocation} from "../../../../../../store/plotSlice/plotSlice";
 import {fetchPlotData} from "../../../../../../services/API/apiSlice";
-import {latitudeBands, modelListBegin, modelListEnd, LATITUDE_BAND_MAX_VALUE, LATITUDE_BAND_MIN_VALUE} from "../../../../../../utils/constants";
+import {modelListBegin, modelListEnd, LATITUDE_BAND_MAX_VALUE, LATITUDE_BAND_MIN_VALUE} from "../../../../../../utils/constants";
 import React from "react";
 
 
@@ -117,7 +117,7 @@ function CustomLatitudeSelector(props) {
         if ((typeof minLatState === "string") && (typeof maxLatState === "string")) return `> ${LATITUDE_BAND_MAX_VALUE}`
         if (maxLatState < LATITUDE_BAND_MIN_VALUE) return `> ${LATITUDE_BAND_MIN_VALUE}`;
         if (maxLatState > LATITUDE_BAND_MAX_VALUE) return `< ${LATITUDE_BAND_MAX_VALUE}`;
-        if (minLatState > maxLatState) return minLatState >= LATITUDE_BAND_MAX_VALUE ? "" : ` > ${minLatState}`
+        if (minLatState > maxLatState) return minLatState >= LATITUDE_BAND_MAX_VALUE ? "" : `> ${minLatState}`
         
 
     }

@@ -71,7 +71,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
         </div>
       </div>
       <div
-        aria-colcount="3"
+        aria-colcount="8"
         aria-multiselectable="false"
         aria-rowcount="3"
         class="MuiDataGrid-root css-13in1bg-MuiDataGrid-root"
