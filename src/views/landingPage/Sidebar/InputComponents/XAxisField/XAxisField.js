@@ -21,6 +21,10 @@ function XAxisField(props) {
      */
     const {years: {minX, maxX}} = useSelector(selectPlotXRange);
 
+    /**
+     * Stores the minX and maxX values
+     * and checks their validation before sending it to the Redux store.
+     */
     const [stateX, setStateX] = React.useState({minX, maxX});
 
     /**

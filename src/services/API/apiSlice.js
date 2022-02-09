@@ -1,8 +1,8 @@
-import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
-import { getModels, getPlotTypes, getPlotData } from "./client";
-import { preTransformApiData } from "../../utils/optionsFormatter/optionsFormatter";
-import { START_YEAR, END_YEAR } from "../../utils/constants";
-import { setDisplayYRange, setDisplayYRangeForPlot } from "../../store/plotSlice/plotSlice";
+import {createSlice, createAsyncThunk, createAction} from "@reduxjs/toolkit";
+import {getModels, getPlotTypes, getPlotData} from "./client";
+import {preTransformApiData} from "../../utils/optionsFormatter/optionsFormatter";
+import {START_YEAR, END_YEAR} from "../../utils/constants";
+import {setDisplayYRange, setDisplayYRangeForPlot} from "../../store/plotSlice/plotSlice";
 
 /**
  * This object models an "enum" in JavaScript. Each of the values is used
@@ -22,9 +22,9 @@ export const REQUEST_STATE = {
  * asynchronous requests to the store. Internally a start action is dispatched
  * to the store that contains some information e.g. the request is currently loading
  * after the async request has been resolved it either returns the data or the error message
- * 
+ *
  * This action creater is dispatched against the store at the beginning of the app
- * to fetch the models from the api. 
+ * to fetch the models from the api.
  */
 export const fetchModels = createAsyncThunk('api/fetchModels', async () => {
     const response = await getModels();
@@ -33,9 +33,9 @@ export const fetchModels = createAsyncThunk('api/fetchModels', async () => {
 
 /**
  * The description of fetchModels applies to this thunk action creater as well.
- *  
+ *
  * This action creater is dispatched against the store at the beginning of the app
- * to fetch the plot types from the api. 
+ * to fetch the plot types from the api.
  */
 export const fetchPlotTypes = createAsyncThunk('api/fetchPlotTypes', async () => {
     const response = await getPlotTypes();
@@ -45,7 +45,7 @@ export const fetchPlotTypes = createAsyncThunk('api/fetchPlotTypes', async () =>
 /**
  * This function concatenates all given information into a string serving as an identifier
  * for cached requests in the store.
- * 
+ *
  * @param {int} latMin specifies the minimum latitude
  * @param {int} latMax specifies the maximum latitude
  * @param {Array.<int>} months represents the selected months
@@ -53,29 +53,29 @@ export const fetchPlotTypes = createAsyncThunk('api/fetchPlotTypes', async () =>
  * @param {int} refYear the reference year to "normalize the data"
  * @returns the generated string
  */
-export const generateCacheKey = ({ latMin, latMax, months, refModel, refYear }) => {
+export const generateCacheKey = ({latMin, latMax, months, refModel, refYear}) => {
     return `lat_min=${latMin}&lat_min=${latMax}&months=${months.join(',')}&ref_meas=${refModel}&ref_year=${refYear}`;
 }
 
 /**
- * This action creator generates an action that is dispatched against the store 
+ * This action creator generates an action that is dispatched against the store
  * when the request of the data is started. The payload contains the plotId and the cacheKey.
  */
-const fetchPlotDataPending =  createAction("api/fetchPlotData/pending");
+const fetchPlotDataPending = createAction("api/fetchPlotData/pending");
 /**
- * This action creator generates an action that is dispatched against the store 
- * when the request of the data succeded. The payload object contains the data, the cacheKey and 
+ * This action creator generates an action that is dispatched against the store
+ * when the request of the data succeded. The payload object contains the data, the cacheKey and
  * the plotId.
  */
-const fetchPlotDataSuccess =  createAction("api/fetchPlotData/success");
+const fetchPlotDataSuccess = createAction("api/fetchPlotData/success");
 /**
- * This action creator generates an action that is dispatched against the store 
- * when the request of the data failed. The playload object contains the 
+ * This action creator generates an action that is dispatched against the store
+ * when the request of the data failed. The playload object contains the
  * error message, the cacheKey and the plotId.
  */
 const fetchPlotDataRejected = createAction("api/fetchPlotData/rejected");
 /**
- * This action creator generates an action that is dispatched against the store 
+ * This action creator generates an action that is dispatched against the store
  * when the requested data is already in the cache and only needs to be selected.
  * The payload contains the plotId and the cacheKey.
  */
@@ -85,16 +85,16 @@ const selectExistingPlotData = createAction("api/selectPlotData");
 export const updateDataAndDisplaySuggestions = ({plotId, cacheKey, data, modelsSlice}) => {
 
     return (dispatch, getState) => {
-        dispatch(fetchPlotDataSuccess({data, plotId, cacheKey, modelsSlice})) 
-        const { min, max } = getState().api.plotSpecific[plotId].cachedRequests[cacheKey].suggested; // suggested min/max is availabe
-        dispatch(setDisplayYRangeForPlot({plotId, minY: Math.floor(min), maxY: Math.floor(max)}));
+        dispatch(fetchPlotDataSuccess({data, plotId, cacheKey, modelsSlice}))
+        const {min, max} = getState().api.plotSpecific[plotId].cachedRequests[cacheKey].suggested; // suggested min/max is availabe
+        dispatch(setDisplayYRangeForPlot({plotId, minY: Math.floor(min / 10) * 10, maxY: Math.ceil(max / 10) * 10}));
     }
 }
 
 /**
- * This async thunk creator allows to generate a data fetching action that can be dispatched 
- * against the store to start fetching new plot data from the api. 
- * 
+ * This async thunk creator allows to generate a data fetching action that can be dispatched
+ * against the store to start fetching new plot data from the api.
+ *
  * @param {number} modelListBegin for faster testing limit fetching of model list
  * @param {number} modelListEnd for faster testing limit fetching of model list
  * @returns the async thunk action
@@ -115,43 +115,48 @@ export const fetchPlotData = ({plotId, modelListBegin, modelListEnd}) => {
         const refModel = getState().reference.settings.model;
         const refYear = getState().reference.settings.year;
 
-        const cacheKey = generateCacheKey({ latMin, latMax, months, refModel, refYear });
+        const cacheKey = generateCacheKey({latMin, latMax, months, refModel, refYear});
         // it shouldn't reload the same request if the data is already present (previous successful request) or 
         // if the request is already loading
         const cachedRequest = getState().api.plotSpecific[plotId].cachedRequests[cacheKey];
-        
+
         if (typeof cachedRequest === "undefined") {
             // do nothing
         } else if (cachedRequest.status === REQUEST_STATE.loading) {
             // do nothing, request is already loading
-            return; 
+            return;
             // to consider later: maybe replace this with a Promise.reject if 
             // we want to rely on the .then() chaining later
         } else if (cachedRequest.status === REQUEST_STATE.success) {
             dispatch(selectExistingPlotData({plotId, cacheKey}));
-            const { min, max } = getState().api.plotSpecific[plotId].cachedRequests[cacheKey].suggested; // suggested min/max is availabe
+            const {min, max} = getState().api.plotSpecific[plotId].cachedRequests[cacheKey].suggested; // suggested min/max is availabe
             dispatch(setDisplayYRangeForPlot({plotId, minY: Math.floor(min), maxY: Math.floor(max)}));
             return Promise.resolve(); // request is already satisfied
         }
-        
+
         // Initial action dispatched
         dispatch(fetchPlotDataPending({plotId, cacheKey}));
 
         // Return promise with success and failure actions
-        
+
         return getPlotData({plotId, latMin, latMax, months, modelList, startYear, endYear, refModel, refYear})
-            .then(  
-                response => dispatch(updateDataAndDisplaySuggestions({plotId, cacheKey, data: response.data, modelsSlice: getState().models})),
+            .then(
+                response => dispatch(updateDataAndDisplaySuggestions({
+                    plotId,
+                    cacheKey,
+                    data: response.data,
+                    modelsSlice: getState().models
+                })),
                 error => dispatch(fetchPlotDataRejected({error: error.message, plotId, cacheKey})),
             );
-        
+
     };
 };
 
 /**
  * This initial state describes how the data fetched from the api is stored in this
  * slice of the redux store.
- * 
+ *
  * It should be noted that each additional data piece (models/plotTypes) follows the
  * same structure which is very useful to indicate the current status and store
  * potential errors or the returned data.
@@ -176,28 +181,24 @@ const initialState = {
         },
         tco3_return: {
             active: null,
-            cachedRequests: {
-
-            }
+            cachedRequests: {}
         },
     },
 };
 
 /**
- * The apiSlice is generated by the redux toolkit. This piece of the 
+ * The apiSlice is generated by the redux toolkit. This piece of the
  * store is responsible for storing all data fetched from the api.
  */
 const apiSlice = createSlice({
     name: "api",
     initialState,
-    reducers: {
-
-    },
+    reducers: {},
     /**
      * This interface is used to connect the redux thunk action which are returned
      * from the defined thunk action creators (fetchModels, fetchPlotTypes) to
      * this slice of the store.
-     * 
+     *
      * @param {object} builder an object handed by the redux toolkit to add these
      *                         "external" reducers to this slice
      */
@@ -231,9 +232,9 @@ const apiSlice = createSlice({
 
             // fetch plot data
             .addCase(fetchPlotDataPending, (state, action) => {
-                const { plotId, cacheKey } = action.payload;
+                const {plotId, cacheKey} = action.payload;
                 const plotSpecificSection = state.plotSpecific[plotId];
-                
+
                 plotSpecificSection.cachedRequests[cacheKey] = {
                     status: REQUEST_STATE.loading,
                     error: null,
@@ -243,16 +244,16 @@ const apiSlice = createSlice({
                 plotSpecificSection.active = cacheKey; // select this request after dispatching it
             })
             .addCase(fetchPlotDataSuccess, (state, action) => {
-                const { data, plotId, cacheKey, modelsSlice } = action.payload;
+                const {data, plotId, cacheKey, modelsSlice} = action.payload;
                 const storage = state.plotSpecific[plotId].cachedRequests[cacheKey];
                 storage.status = REQUEST_STATE.success;
-                const { lookUpTable, min, max } = preTransformApiData({plotId, data, modelsSlice});
+                const {lookUpTable, min, max} = preTransformApiData({plotId, data, modelsSlice});
                 storage.data = lookUpTable;
-                storage.suggested = { min, max };
+                storage.suggested = {min, max};
 
             })
             .addCase(fetchPlotDataRejected, (state, action) => {
-                const { error, plotId, cacheKey } = action.payload;
+                const {error, plotId, cacheKey} = action.payload;
                 const storage = state.plotSpecific[plotId].cachedRequests[cacheKey];
                 storage.status = REQUEST_STATE.error;
                 storage.error = error;
@@ -260,15 +261,15 @@ const apiSlice = createSlice({
 
             // select existing data from cache
             .addCase(selectExistingPlotData, (state, action) => {
-                const { plotId, cacheKey } = action.payload;
+                const {plotId, cacheKey} = action.payload;
                 state.plotSpecific[plotId].active = cacheKey; // update by chaning the active value to the existing cachekey
             })
     },
 });
 
 /**
- * The reducer combining all reducers defined in the plot slice. 
- * This has to be included in the redux store, otherwise dispatching 
+ * The reducer combining all reducers defined in the plot slice.
+ * This has to be included in the redux store, otherwise dispatching
  * the above defined actions wouldn't trigger state updates.
  */
 export default apiSlice.reducer;
@@ -277,7 +278,7 @@ export default apiSlice.reducer;
  * This selectors allows components (=> the graph) to "listen" for the active plot data
  * of the current selected plot. That means whenever this data is about to change, e.g. because
  * a new fetch request is dispatched, the component rerenders.
- * 
+ *
  * @param {object} state the state, handed by redux
  * @param {string} plotId identifies the plot
  * @returns the current active data for the active plot
