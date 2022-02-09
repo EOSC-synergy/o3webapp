@@ -68,6 +68,8 @@ export const NUM_MONTHS_IN_SEASON = 3;
 /** Stores the ammount of months in a year */
 export const NUM_MONTHS = 12;
 
+export const DEFAULT_MONTHS = [12, 1, 2];
+
 // LatitudeBandSelector.js
 /** Stores the latitude bands and its min/max values */
 export const latitudeBands = [

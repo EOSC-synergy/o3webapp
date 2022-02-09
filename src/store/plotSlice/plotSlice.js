@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ALL_REGIONS_ORDERED, O3AS_PLOTS } from "../../utils/constants";
+import { ALL_REGIONS_ORDERED, O3AS_PLOTS, DEFAULT_MONTHS } from "../../utils/constants";
 
 /**
  * The initial state of the plotSlice defines the data structure in the 
@@ -17,9 +17,7 @@ export const initialState = {
             minLat: -90,
             maxLat: 90
         },
-        months: [
-            1, 2, 3
-        ],
+        months: DEFAULT_MONTHS,
     },
 
     plotSpecificSettings: {
