@@ -47,7 +47,11 @@ function Graph(props) {
             
         </div>
     } else if (activeData.status === REQUEST_STATE.error) {
-        return <Typography>Error: {activeData.error}</Typography>;
+        return (
+            <React.Fragment style={{display: "flex", justifyContent: "center", alignItems: "center", width: "100%"}}>
+                <Typography style={{display: "flex", justifyContent: "center", width: "100%"}}>Error: {activeData.error}</Typography>
+            </React.Fragment>
+        )
 
     } else if (activeData.status === REQUEST_STATE.success) {
         const {data, styling} = generateSeries({plotId, data: activeData.data, modelsSlice, xAxisRange, yAxisRange, refLineVisible});
