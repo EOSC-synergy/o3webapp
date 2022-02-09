@@ -202,6 +202,9 @@ export const SV_DASHING = {
 
 export const MODEL_LINE_THICKNESS = 2;
 
+/**
+ * the Legal Notice links which will be parsed into the PDF.
+ */
 export const legalNoticeLinks = [
     "Terms of Use Link: https://o3as.data.kit.edu/policies/terms-of-use.html",
     "Privacy Policy Link: https://o3as.data.kit.edu/policies/privacy-policy.html",

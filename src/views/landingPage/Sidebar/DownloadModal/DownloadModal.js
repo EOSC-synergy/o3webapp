@@ -17,7 +17,6 @@ import { downloadGraphAsPDF} from "../../../../services/pdf/pdfCreator";
 import { useSelector } from "react-redux";
 import { selectPlotId, selectPlotTitle} from "../../../../store/plotSlice/plotSlice";
 import { selectActivePlotData} from "../../../../services/API/apiSlice";
-import { getIncludedModelsAsObjects } from "../../../../utils/optionsFormatter";
 import { selectAllModelGroups } from "../../../../store/modelsSlice/modelsSlice";
 import { REQUEST_STATE } from "../../../../services/API/apiSlice";
 
@@ -127,11 +126,6 @@ function DownloadModal(props) {
    *
    */
   const handleDownloadPlot = () => {
-    const includedModels = getIncludedModelsAsObjects(modelsSlice);
-    if(includedModels == null) {
-        return;
-    }
-
     if (selectedFileFormat === "PDF") {
       downloadGraphAsPDF(plotId, plotTitle, modelGroups, activeData.data);
     } else if (selectedFileFormat === "PNG") {

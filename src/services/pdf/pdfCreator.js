@@ -27,6 +27,8 @@ function getAdjustedSVG(svgElement) {
  *
  * @param {the plot id of the graph (tco3_zm, tco3_return etc.)} plotId
  * @param {the File name of the PDF} fileName
+ * @param {the Model Groups which contains the names of the models.} modelGroups 
+ * @param {the current Model data contains the properties of the models(color, linestyle etc.)} currentData 
  */
 export async function downloadGraphAsPDF(
   plotId,
@@ -34,29 +36,7 @@ export async function downloadGraphAsPDF(
   modelGroups,
   currentData
 ) {
-  let modelGroupsList = [
-    [{ text: "", style: "header" }, { ul: [{ text: "", color: "red" }] }],
-  ];
-
-  for (const modelGroup of Object.values(modelGroups)) {
-    if (!modelGroup.isVisible) continue;
-
-    let modelsInTheGroup = [];
-    for (const [model, modelData] of Object.entries(modelGroup.models)) {
-      if (!modelData.isVisible) continue;
-      if (typeof currentData[model] === "undefined") continue;
-      modelsInTheGroup.push({
-        text: `${model}`,
-        color: `${currentData[model].plotStyle.color}`,
-      });
-    }
-    modelGroupsList.push([
-      { text: modelGroup.name, style: "header" },
-      { ul: modelsInTheGroup },
-    ]);
-  }
-
-  modelGroupsList.shift();
+  let modelGroupsList = getListOfModelsForPdf(plotId, modelGroups, currentData);
   const svgElement = document.querySelector(".apexcharts-svg");
   let docDefinition = null;
 
@@ -69,7 +49,7 @@ export async function downloadGraphAsPDF(
       content: [
         {
           svg: getAdjustedSVG(svgElement),
-          fit: [770, 350],
+          fit: [760, 350],
         },
         {
           text: "List Of Used Models:",
@@ -96,3 +76,48 @@ export async function downloadGraphAsPDF(
   pdfMake.createPdf(docDefinition).download(fileName);
 }
 
+
+/**
+ * returns the List of models in the format which the pdfMake libary accepts.
+ *
+ * @param {the plot id of the graph (tco3_zm, tco3_return etc.)} plotId
+ * @param {the Model Groups which contains the names of the models.} modelGroups 
+ * @param {the current Model data contains the properties of the models(color, linestyle etc.)} currentData 
+ */
+function getListOfModelsForPdf(plotId, modelGroups, currentData) {
+  let modelGroupsList = [
+    [{ text: "", style: "header" }, { ul: [{ text: "", color: "red" }] }],
+  ];
+
+  for (const modelGroup of Object.values(modelGroups)) {
+    if (!modelGroup.isVisible) continue;
+
+    let modelsInTheGroup = [];
+
+    for (const [model, modelData] of Object.entries(modelGroup.models)) {
+      if (!modelData.isVisible) continue;
+      if (typeof currentData[model] === "undefined") continue;
+
+      let textOfCurrentLineOfList;
+
+      if (plotId == O3AS_PLOTS.tco3_zm) {
+        textOfCurrentLineOfList = `${model} (linetype = ${currentData[model].plotStyle.linestyle})`;
+      } else if (plotId == O3AS_PLOTS.tco3_return) {
+        textOfCurrentLineOfList = `${model}`;
+      }
+
+      modelsInTheGroup.push({
+        text: textOfCurrentLineOfList,
+        color: `${currentData[model].plotStyle.color}`,
+      });
+    }
+    modelGroupsList.push([
+      { text: modelGroup.name, style: "header" },
+      { ul: modelsInTheGroup },
+    ]);
+  }
+
+  modelGroupsList.shift();
+
+  return modelGroupsList;
+}
