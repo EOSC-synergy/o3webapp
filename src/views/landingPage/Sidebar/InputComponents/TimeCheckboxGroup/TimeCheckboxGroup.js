@@ -78,6 +78,15 @@ function TimeCheckBoxGroup(props) {
         return 0 < indetCount && indetCount < NUM_MONTHS;
     }
 
+    /**
+     * This method is called in the end whenever a data change is handled.
+     * It takes care of dispatching the months, fetching the plot data
+     * and checking whether the selection of the months was correct or not
+     * to adjust the stateful variable that decides whether a warning message
+     * gets displayed or not.
+     * 
+     * @param {array} monthCpy an array of months that should be dispatched against the store
+     */
     const updateDataProcedure = (monthCpy) => {
 
         if (monthCpy.length === 0) {

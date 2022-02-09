@@ -13,6 +13,7 @@ export const modelListEnd = 10;
 
 // client.js
 
+/** Stores the error message that is shown if no month is selected. */
 export const NO_MONTH_SELECTED = "Invalid Selection: Selecting at least one month should make this error go away.";
 
 
@@ -68,6 +69,7 @@ export const NUM_MONTHS_IN_SEASON = 3;
 /** Stores the ammount of months in a year */
 export const NUM_MONTHS = 12;
 
+/** These months are selected when the webapp starts */
 export const DEFAULT_MONTHS = [12, 1, 2];
 
 // LatitudeBandSelector.js
