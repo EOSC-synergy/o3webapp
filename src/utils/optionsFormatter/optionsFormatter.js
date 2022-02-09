@@ -395,6 +395,7 @@ function generateTco3_ZmSeries({data, modelsSlice, refLineVisible}) {
         for (const [model, modelInfo] of Object.entries(groupData.models)) {
             if (!modelInfo.isVisible) continue; // skip hidden models
             const modelData = data[model]; // retrieve data (api)
+            if (typeof modelData === "undefined") continue; // skip model if it is not available
             series.data.push({
                 name: model,
                 data: modelData.data.map((e, idx) => [START_YEAR + idx, e]),
@@ -452,8 +453,10 @@ function buildSvMatrixTco3Zm({modelList, data}) {
 
     for (let i = 0; i < SERIES_LENGTH; ++i) {
         for (const model of modelList) {
+            const modelData = data[model];
+            if (typeof modelData === "undefined") continue;
             matrix[i].push(
-                data[model].data[i] // add null anyway to remain index mapping (null is filtered out later)
+                modelData.data[i] // add null anyway to remain index mapping (null is filtered out later)
             )
         }
     }
@@ -498,6 +501,7 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange}) 
         for (const [model, modelInfo] of Object.entries(groupData.models)) {
             if (!modelInfo.isVisible) continue; // skip hidden models
             const modelData = data[model];
+            if (typeof modelData === "undefined") continue; // skip model if it is not available
             const sortedData = ALL_REGIONS_ORDERED.map(region => ({
                 x: region,
                 y: filterOutOfRange(modelData.data[region], minY, maxY) || null, // null as default if data is missing
@@ -581,8 +585,10 @@ function buildSvMatrixTco3Return({modelList, data}) {
     for (const index in ALL_REGIONS_ORDERED) {
         const region = ALL_REGIONS_ORDERED[index]; // iterate over regions
         for (const model of modelList) {
+            const modelData = data[model];
+            if (typeof modelData === "undefined") continue;
             matrix[index].push(
-                data[model].data[region] || null
+                modelData.data[region] || null
             )
         }
     }
@@ -608,7 +614,9 @@ function calculateBoxPlotValues({data, modelsSlice}) {
         if (!groupData.isVisible) continue; // skip hidden groups
         for (const [model, modelInfo] of Object.entries(groupData.models)) {
             if (!modelInfo.isVisible) continue; // skip hidden models
-            for (const [region, year] of Object.entries(data[model].data)) {
+            const modelData = data[model];
+            if (typeof modelData === "undefined") continue; // skip model if it is not available
+            for (const [region, year] of Object.entries(modelData.data)) {
                 boxPlotHolder[region].push(year);
             }
         }
