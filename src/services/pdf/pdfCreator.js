@@ -34,7 +34,6 @@ export async function downloadGraphAsPDF(
   modelGroups,
   currentData
 ) {
-  //console.log(currentData);
   let modelGroupsList = [
     [{ text: "", style: "header" }, { ul: [{ text: "", color: "red" }] }],
   ];
@@ -97,28 +96,3 @@ export async function downloadGraphAsPDF(
   pdfMake.createPdf(docDefinition).download(fileName);
 }
 
-export async function downloadPDF(plotId, fileName, modelGroups, currentData) {
-  if (plotId === O3AS_PLOTS.tco3_zm || plotId === O3AS_PLOTS.tco3_return) {
-    const doc = new jsPDF();
-    const svgElement = document.querySelector(".apexcharts-svg");
-    console.log(svgElement.outerHTML);
-
-    //doc.addSvgAsImage(svgElement.outerHTML, 10, 10, 100, 100, fileName, 'FAST', 0)
-    doc.addSvgAsImage(
-      `<svg height="100" width="100">
-    <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
-    Sorry, your browser does not support inline SVG.  
-  </svg> `,
-      10,
-      10,
-      100,
-      100,
-      fileName,
-      "FAST",
-      0
-    );
-    doc.save(fileName + ".pdf");
-  } else {
-    throw `the given plot id "${plotId}" is not defined`;
-  }
-}

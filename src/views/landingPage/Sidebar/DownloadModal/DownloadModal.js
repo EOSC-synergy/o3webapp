@@ -13,12 +13,13 @@ import {
 import { useTheme } from "@mui/material/styles";
 import PropTypes from "prop-types";
 import { fileFormats } from "../../../../utils/constants";
-import { downloadGraphAsPDF, downloadPDF} from "../../../../services/pdf/pdfCreator";
+import { downloadGraphAsPDF} from "../../../../services/pdf/pdfCreator";
 import { useSelector } from "react-redux";
 import { selectPlotId, selectPlotTitle} from "../../../../store/plotSlice/plotSlice";
 import { selectActivePlotData} from "../../../../services/API/apiSlice";
 import { getIncludedModelsAsObjects } from "../../../../utils/optionsFormatter";
 import { selectAllModelGroups } from "../../../../store/modelsSlice/modelsSlice";
+import { REQUEST_STATE } from "../../../../services/API/apiSlice";
 
 /**
  * Opens a modal where the user can select the file format and download the plot.
@@ -37,7 +38,6 @@ function DownloadModal(props) {
 
   const activeData = useSelector(state => selectActivePlotData(state, plotId));
   const [selectedFileFormat, setSelectedFileFormat] = React.useState("PDF");
-  const [btnDisabled, setBtnDisabled] = React.useState(true);
   const modelsSlice = useSelector((state) => state.models);
   const plotTitle = useSelector(selectPlotTitle);
 
@@ -134,7 +134,6 @@ function DownloadModal(props) {
 
     if (selectedFileFormat === "PDF") {
       downloadGraphAsPDF(plotId, plotTitle, modelGroups, activeData.data);
-      //downloadPDF(plotId, plotTitle, modelGroups, activeData.data);
     } else if (selectedFileFormat === "PNG") {
       downloadGraphAsPNG(plotTitle);
     } else if (selectedFileFormat === "SVG") {
@@ -193,7 +192,7 @@ function DownloadModal(props) {
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={12} md={3} lg={3} xl={3} key="button">
-            <Button variant="outlined" onClick={handleDownloadPlot}>
+            <Button disabled={activeData.status !== REQUEST_STATE.success} variant="outlined" onClick={handleDownloadPlot}>
               <Typography>Download</Typography>
             </Button>
           </Grid>
