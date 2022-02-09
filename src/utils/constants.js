@@ -11,6 +11,10 @@ export const modelListBegin = 0;
 /** For reducing loading time while implementing: starting value for how many models should be fetched */
 export const modelListEnd = 10;
 
+// ReferenceSlice
+export const DEFAULT_REF_MODEL = "SBUV_GSFC_merged-SAT-ozone";
+export const DEFAULT_REF_YEAR = 1980;
+
 // Section.js
 /** Stores the name of the LatitudeBandSelector component as a Symbol. */
 export const LBS_Symbol = Symbol("LatitudeBandSelector");
