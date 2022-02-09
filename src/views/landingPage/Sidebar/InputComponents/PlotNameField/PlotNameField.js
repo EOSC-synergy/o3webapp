@@ -25,6 +25,8 @@ function PlotNameField() {
     const dispatch = useDispatch();
 
     const plotId = useSelector(selectPlotId);
+
+    /** The current plot title from the store */
     const plotTitle = useSelector(selectPlotTitle);
 
     useEffect(() => {
@@ -32,8 +34,6 @@ function PlotNameField() {
         const textfield = document.getElementById("standard-basic-plot-title-input");
         textfield.value = plotTitle;
     }, [plotId]);
-
-    /** The current plot title from the store */
 
     /** Handles the change if the text in TextField is modified. */
     const updatePlotName = (event) => {

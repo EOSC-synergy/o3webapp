@@ -118,7 +118,7 @@ export const latitudeBands = [
 export const LATITUDE_BAND_LIST = latitudeBands.map(obj => obj.text.description);
 
 // DownloadModal.js
-export const fileFormats = [Symbol("pdf"), Symbol("png")];
+export const fileFormats = [ Symbol("PDF"), Symbol("PNG"), Symbol("SVG")];
 
 // PlotNameField.js
 
@@ -219,6 +219,14 @@ export const SV_DASHING = {
 
 export const MODEL_LINE_THICKNESS = 2;
 
+/**
+ * the Legal Notice links which will be parsed into the PDF.
+ */
+export const legalNoticeLinks = [
+    "Terms of Use Link: https://o3as.data.kit.edu/policies/terms-of-use.html",
+    "Privacy Policy Link: https://o3as.data.kit.edu/policies/privacy-policy.html",
+    "How to Acknowledge Link: https://o3as.data.kit.edu/policies/how-to-acknowledge.html",
+  ];
 // Custom Latitude Selector
 
 /**
