@@ -1,3 +1,4 @@
+import { DEFAULT_REF_MODEL, DEFAULT_REF_YEAR } from "../../utils/constants";
 import reducer, {
   setYear,
   setModel,
@@ -9,9 +10,9 @@ const definedInitialState = {
 
   settings: {
   
-    year: 1980,
-    model: "SBUV_GSFC_merged-SAT-ozone",
-    visible: false,
+    year: DEFAULT_REF_YEAR,
+    model: DEFAULT_REF_MODEL,
+    visible: true,
     isOffsetApplied: false,
   },
   

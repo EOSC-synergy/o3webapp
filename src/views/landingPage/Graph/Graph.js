@@ -48,7 +48,7 @@ function Graph(props) {
         </div>
     } else if (activeData.status === REQUEST_STATE.error) {
         return (
-            <React.Fragment style={{display: "flex", justifyContent: "center", alignItems: "center", width: "100%"}}>
+            <React.Fragment>
                 <Typography style={{display: "flex", justifyContent: "center", width: "100%"}}>Error: {activeData.error}</Typography>
             </React.Fragment>
         )

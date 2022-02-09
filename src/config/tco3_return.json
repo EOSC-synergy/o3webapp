@@ -3,6 +3,10 @@
     {
       "name": "Appearance",
       "components": ["PlotNameField", "RegionSelector", "YAxisField"]
+    },
+    {
+      "name": "Filter Data",
+      "components": ["CustomLatitudeSelector", "TimeCheckBoxGroup"]
     }
   ]
 }

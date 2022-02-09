@@ -30,7 +30,9 @@ import {
     TCG_Symbol,
     XAF_Symbol,
     YAF_Symbol,
+    CLS_Symbol
 } from "../../../../utils/constants";
+import CustomLatitudeSelector from "../InputComponents/LatitudeBandSelector/CustomLatitudeSelector/CustomLatitudeSelector";
 
 
 
@@ -133,6 +135,8 @@ function Section(props) {
                     return <XAxisField key={key} reportError={props.reportError} />;
                 case YAF_Symbol.description:
                     return <YAxisField key={key} reportError={props.reportError} />;
+                case CLS_Symbol.description:
+                    return <CustomLatitudeSelector key={key} reportError={props.reportError} />
                 default:
                     props.reportError(`Section ${props.name} found no match for an input component ${name}`);
             }

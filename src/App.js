@@ -87,7 +87,7 @@ function App() {
                 main: "#fed136"
             },
             background: {
-                paper: "#191919"
+                paper: "#262626"
             }
         }
       });

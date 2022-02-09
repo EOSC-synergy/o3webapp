@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {setDisplayYRange, selectPlotYRange} from "../../../../../store/plotSlice/plotSlice";
+import {setDisplayYRange, selectPlotYRange, selectPlotId} from "../../../../../store/plotSlice/plotSlice";
 import {Typography, Grid, FormControl, TextField} from "@mui/material";
+import store from '../../../../../store/store';
 
 /**
  * Enables the user to choose the range that should be visible on the y-axis of the plot.
@@ -20,7 +21,22 @@ function YAxisField(props) {
      */
     const {minY, maxY} = useSelector(selectPlotYRange);
 
-    const [stateY, setStateY] = React.useState({minY, maxY});
+    /**
+     * A string containing the active plot type.
+     */
+    const plotId = useSelector(selectPlotId);
+
+    /**
+     * Stores the minY and maxY values for tco3_zm
+     * and checks their validation before sending it to the Redux store.
+     */
+    const [stateY_zm, setStateY_zm] = React.useState(store.getState().plot.plotSpecificSettings.tco3_zm.displayYRange);
+
+    /**
+     * Stores the minY and maxY values for tco3_return
+     * and checks their validation before sending it to the Redux store.
+     */
+    const [stateY_return, setStateY_return] = React.useState(store.getState().plot.plotSpecificSettings.tco3_return.displayYRange);
 
     /**
      * Handles the change of the minimum value.
@@ -29,7 +45,8 @@ function YAxisField(props) {
      */
     const handleChangeMin = (event) => {
         if (!isNaN(event.target.value)) {
-            setStateY({minY: event.target.value, maxY: maxY});
+            if (plotId === 'tc03_zm') setStateY_zm({minY: event.target.value, maxY: maxY});
+            else setStateY_return({minY: event.target.value, maxY: maxY});
             if (event.target.value > 0 && event.target.value <= maxY) {
                 dispatch(setDisplayYRange({minY: parseInt(event.target.value), maxY: maxY}));
             }
@@ -43,13 +60,18 @@ function YAxisField(props) {
      */
     const handleChangeMax = (event) => {
         if (!isNaN(event.target.value)) {
-            setStateY({minY: minY, maxY: event.target.value});
+            if (plotId === 'tco3_zm') setStateY_zm({minY: minY, maxY: event.target.value});
+            else setStateY_return({minY: minY, maxY: event.target.value});
             if (event.target.value > 0 && minY <= event.target.value) {
                 dispatch(setDisplayYRange({minY: minY, maxY: parseInt(event.target.value)}));
             }
         }
     }
 
+    useEffect(() => {
+        if (plotId === 'tco3_zm') setStateY_zm({minY, maxY});
+        else setStateY_return({minY, maxY});
+    }, [plotId, minY, maxY]);
 
     return (
         <Grid container sx={{width: "90%", marginLeft: "auto", marginRight: "auto", marginTop: "5%"}}>
@@ -62,10 +84,18 @@ function YAxisField(props) {
                         variant="outlined"
                         id="outlined-basic"
                         size="small"
-                        value={stateY.minY}
+                        value={plotId === 'tco3_zm' ? stateY_zm.minY : stateY_return.minY}
                         onChange={handleChangeMin}
-                        error={stateY.minY < 0 || stateY.minY >= maxY}
-                        helperText={stateY.minY < 0 ? `<0` : (stateY.minY > maxY ? `min>=max` : '')}
+                        error={
+                            plotId === 'tco3_zm' ?
+                                stateY_zm.minY < 0 || stateY_zm.minY >= maxY :
+                                stateY_return.minY < 0 || stateY_return.minY >= maxY
+                        }
+                        helperText={
+                            plotId === 'tco3_zm' ?
+                                (stateY_zm.minY < 0 ? `<0` : (stateY_zm.minY > maxY ? `min>=max` : '')) :
+                                (stateY_return.minY < 0 ? `<0` : (stateY_return.minY > maxY ? `min>=max` : ''))
+                        }
                     />
                 </FormControl>
             </Grid>
@@ -78,10 +108,18 @@ function YAxisField(props) {
                         variant="outlined"
                         id="outlined-basic"
                         size="small"
-                        value={stateY.maxY}
+                        value={plotId === 'tco3_zm' ? stateY_zm.maxY : stateY_return.maxY}
                         onChange={handleChangeMax}
-                        error={stateY.maxY < 0 || minY >= stateY.maxY}
-                        helperText={stateY.maxY < 0 ? `<0` : (minY > stateY.maxY ? `min>=max` : '')}
+                        error={
+                            plotId === 'tco3_zm' ?
+                                stateY_zm.maxY < 0 || minY >= stateY_zm.maxY :
+                                stateY_return.maxY < 0 || minY >= stateY_return.maxY
+                        }
+                        helperText={
+                            plotId === 'tco3_zm' ?
+                                (stateY_zm.maxY < 0 ? `<0` : (minY > stateY_zm.maxY ? `min>=max` : '')) :
+                                (stateY_return.maxY < 0 ? `<0` : (minY > stateY_return.maxY ? `min>=max` : ''))
+                        }
                     />
                 </FormControl>
             </Grid>

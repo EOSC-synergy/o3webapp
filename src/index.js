@@ -2,17 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import store from './store/store';
-import {Provider, useSelector} from 'react-redux';
+import {Provider} from 'react-redux';
 import { fetchModels, fetchPlotData, fetchPlotTypes } from './services/API/apiSlice';
 import {modelListBegin, modelListEnd} from "./utils/constants";
-import {setActivePlotId} from "./store/plotSlice/plotSlice";
 
 const reloadInitialData = () => {
     store.getState().api.plotTypes.data.map((name) => {
-        store.dispatch(setActivePlotId({plotId: name}));
-        store.dispatch(fetchPlotData(modelListBegin, modelListEnd));
+        store.dispatch(fetchPlotData({plotId: name, modelListBegin, modelListEnd}));
     });
-    store.dispatch(setActivePlotId({plotId: store.getState().api.plotTypes.data[0]}));
 }
 
 // on "startup" of the app: request default values for all models
