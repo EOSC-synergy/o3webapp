@@ -135,10 +135,10 @@ function EditModelGroupModal(props) {
     const [meanVisible, setMeanVisible] = React.useState(modelList.map(model => modelData[model].mean));
 
     /**
-     * An array filled with boolean values that indicate whether a model is included in the derivative calculation or not.
+     * An array filled with boolean values that indicate whether a model is included in the standard deviation (std) calculation or not.
      * The index of each model in the array is its corresponding row id.  
      */
-    const [derivativeVisible, setDerivativeVisible] = React.useState(modelList.map(model => modelData[model][std]));
+    const [stdVisible, setStd] = React.useState(modelList.map(model => modelData[model][std]));
 
     /**
      * An array filled with boolean values that indicate whether a model is included in the percentile calculation or not.
@@ -171,7 +171,7 @@ function EditModelGroupModal(props) {
         switch(type.toLowerCase()) {
             case "median": return medianVisible;
             case "mean": return  meanVisible;
-            case std: return  derivativeVisible;
+            case std: return  stdVisible;
             case "percentile": return  percentileVisible;
             case "visible": return isVisible;
             default: return medianVisible;
@@ -191,7 +191,7 @@ function EditModelGroupModal(props) {
         switch(type.toLowerCase()) {
             case "median": return setMedianVisible;
             case "mean": return  setMeanVisible;
-            case std: return  setDerivativeVisible;
+            case std: return  setStd;
             case "percentile": return  setPercentileVisible;
             case "visible": return setIsVisible;
             default: return setMedianVisible;
@@ -291,7 +291,7 @@ function EditModelGroupModal(props) {
             const model = modelList[i];
             dataCpy[model].mean = meanVisible[i];
             dataCpy[model].median = medianVisible[i];
-            dataCpy[model].std = derivativeVisible[i];
+            dataCpy[model].std = stdVisible[i];
             dataCpy[model].percentile = percentileVisible[i];
             dataCpy[model].isVisible = isVisible[i];
         }
@@ -305,19 +305,19 @@ function EditModelGroupModal(props) {
      * All changes are lost in the process.
      */
     const discardChanges = () => {
-        const meanData = [], medianData = [], derivativeData = [], percentileData = [], visibleData = [];
+        const meanData = [], medianData = [], stdData = [], percentileData = [], visibleData = [];
 
         for(const model of modelList) {
             meanData.push(modelData[model].mean);
             medianData.push(modelData[model].median);
-            derivativeData.push(modelData[model][std]);
+            stdData.push(modelData[model][std]);
             percentileData.push(modelData[model].percentile);
             visibleData.push(modelData[model].isVisible);
         }
   
         setMeanVisible(meanData);
         setMedianVisible(medianData);
-        setDerivativeVisible(derivativeData);
+        setStd(stdData);
         setPercentileVisible(percentileData);
         setIsVisible(visibleData);
 
@@ -406,7 +406,7 @@ function EditModelGroupModal(props) {
             renderHeader: () => generateHeaderName("Mean"),
             renderCell: (params) => {return createCellCheckBox(params, "Mean")}
         },
-        { field: std, headerName: 'Standard deviation', sortable: false, width: 200, disableClickEventBubbling: true,
+        { field: std, headerName: 'Standard deviation', sortable: false, width: 180, disableClickEventBubbling: true,
             renderHeader: () => generateHeaderName("Standard deviation"),
             renderCell: (params) => {return createCellCheckBox(params, "Standard deviation")}
         },
