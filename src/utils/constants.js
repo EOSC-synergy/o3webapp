@@ -118,7 +118,7 @@ export const latitudeBands = [
 export const LATITUDE_BAND_LIST = latitudeBands.map(obj => obj.text.description);
 
 // DownloadModal.js
-export const fileFormats = [ Symbol("PDF"), Symbol("PNG"), Symbol("SVG")];
+export const fileFormats = [ Symbol("PDF"), Symbol("PNG"), Symbol("SVG"), Symbol("CSV")];
 
 // PlotNameField.js
 
