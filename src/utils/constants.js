@@ -42,16 +42,19 @@ export const YAF_Symbol = Symbol("YAxisField");
 
 // TimeCheckboxGroup.js
 /** Stores the season Winter and its corresponding months. */
-export const Winter = {name: Symbol("Winter"), months: [1, 2, 3], seasonId: 0}
+export const Winter = {name: Symbol("Winter"), months: [12, 1, 2], seasonId: 0}
 
 /** Stores the season Spring and its corresponding months. */
-export const Spring = {name: Symbol("Spring"), months: [4, 5, 6], seasonId: 1}
+export const Spring = {name: Symbol("Spring"), months: [3, 4, 5], seasonId: 1}
 
 /** Stores the season Summer and its corresponding months. */
-export const Summer = {name: Symbol("Summer"), months: [7, 8, 9], seasonId: 2}
+export const Summer = {name: Symbol("Summer"), months: [6, 7, 8], seasonId: 2}
 
 /** Stores the season Autumn and its corresponding months. */
-export const Autumn = {name: Symbol("Autumn"), months: [10, 11, 12], seasonId: 3}
+export const Autumn = {name: Symbol("Autumn"), months: [9, 10, 11], seasonId: 3}
+
+/** Array containing all season indext with the corresponding seasonId */
+export const SEASONS_ARRAY = [Winter, Spring, Summer, Autumn];
 
 /** Stores all the months in short form. (first three letters) */
 export const months = [

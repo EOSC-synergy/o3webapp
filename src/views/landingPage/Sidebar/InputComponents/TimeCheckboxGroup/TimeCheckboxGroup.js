@@ -10,7 +10,8 @@ import {
     NUM_MONTHS,
     modelListBegin,
     modelListEnd,
-    O3AS_PLOTS
+    O3AS_PLOTS,
+    SEASONS_ARRAY
 } from "../../../../../utils/constants";
 import Typography from "@mui/material/Typography";
 import {fetchPlotData} from "../../../../../services/API/apiSlice";
@@ -122,7 +123,7 @@ function TimeCheckBoxGroup(props) {
         let shouldBeSelected = false;
 
         for(let i = 0; i < NUM_MONTHS_IN_SEASON; i++) {
-            const currMonthInSeason = (seasonId * NUM_MONTHS_IN_SEASON + 1) + i
+            const currMonthInSeason = SEASONS_ARRAY[seasonId].months[i]; //(seasonId * NUM_MONTHS_IN_SEASON + 1) + i
             monthsInSeason.push(currMonthInSeason);
 
             if(shouldBeSelected) continue;
