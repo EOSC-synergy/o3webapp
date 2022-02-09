@@ -52,12 +52,8 @@ function CustomLatitudeSelector(props) {
         let selectedLocationCopy = {...selectedLocation};
         let val = parseInt(event.target.value);
         if (!isNaN(val)) {
-            if (val > LATITUDE_BAND_MAX_VALUE) {
-                val = LATITUDE_BAND_MAX_VALUE
-            } else if (val < LATITUDE_BAND_MIN_VALUE) {
-                val = LATITUDE_BAND_MIN_VALUE;
-            } else if (val >= maxLat) {
-                setMinLatState(event.target.value);
+            if (val > maxLat || val > LATITUDE_BAND_MAX_VALUE || val < LATITUDE_BAND_MIN_VALUE) {
+                setMinLatState(val);
                 return;
             }
             selectedLocationCopy.minLat = val;
@@ -79,15 +75,10 @@ function CustomLatitudeSelector(props) {
         let selectedLocationCopy = {...selectedLocation};
         let val = parseInt(event.target.value);
         if (!isNaN(val)) {
-            if (val > LATITUDE_BAND_MAX_VALUE) {
-                val = LATITUDE_BAND_MAX_VALUE
-            } else if (val < LATITUDE_BAND_MIN_VALUE) {
-                val = LATITUDE_BAND_MIN_VALUE;
-            } else if (val <= minLat) {
-                setMaxLatState(event.target.value);
+            if (val < minLat || val > LATITUDE_BAND_MAX_VALUE || val < LATITUDE_BAND_MIN_VALUE) {
+                setMaxLatState(val);
                 return;
             }
-
             selectedLocationCopy.maxLat = val;
             dispatch(setLocation({minLat: selectedLocationCopy.minLat, maxLat: selectedLocationCopy.maxLat}));
             dispatch(fetchPlotData(modelListBegin, modelListEnd));
@@ -107,9 +98,11 @@ function CustomLatitudeSelector(props) {
      */
     const generateHelperTextMin = () => {
         if (typeof minLatState === "string") return "";
-        if (minLat < LATITUDE_BAND_MIN_VALUE) return `> ${LATITUDE_BAND_MIN_VALUE}`;
-        if (minLat > LATITUDE_BAND_MAX_VALUE) return `< ${LATITUDE_BAND_MAX_VALUE}`;
-        if (minLat > maxLat) return `< ${maxLat}`
+        if ((typeof minLatState === "string") && (typeof maxLatState === "string")) return `< ${LATITUDE_BAND_MIN_VALUE}`
+        if (minLatState < LATITUDE_BAND_MIN_VALUE) return `> ${LATITUDE_BAND_MIN_VALUE}`;
+        if (minLatState > LATITUDE_BAND_MAX_VALUE) return `< ${LATITUDE_BAND_MAX_VALUE}`;
+        if (minLatState > maxLatState) return maxLatState >= LATITUDE_BAND_MAX_VALUE ? "" : `< ${maxLatState}`
+        
     
     }
 
@@ -119,10 +112,13 @@ function CustomLatitudeSelector(props) {
      * @returns     Text that should be displayed in the helper text
      */
     const generateHelperTextMax = () => {
+        console.log(typeof maxLatState)
         if (typeof maxLatState === "string") return "";
-        if (maxLat < LATITUDE_BAND_MIN_VALUE) return `> ${LATITUDE_BAND_MIN_VALUE}`;
-        if (maxLat > LATITUDE_BAND_MAX_VALUE) return `< ${LATITUDE_BAND_MAX_VALUE}`;
-        if (minLat > maxLat) return `> ${minLat}`
+        if ((typeof minLatState === "string") && (typeof maxLatState === "string")) return `> ${LATITUDE_BAND_MAX_VALUE}`
+        if (maxLatState < LATITUDE_BAND_MIN_VALUE) return `> ${LATITUDE_BAND_MIN_VALUE}`;
+        if (maxLatState > LATITUDE_BAND_MAX_VALUE) return `< ${LATITUDE_BAND_MAX_VALUE}`;
+        if (minLatState > maxLatState) return minLatState >= LATITUDE_BAND_MAX_VALUE ? "" : ` > ${minLatState}`
+        
 
     }
 
@@ -145,7 +141,13 @@ function CustomLatitudeSelector(props) {
                         type="number"
                         value={minLatState}
                         onChange={handleChangeMin}
-                        error={(typeof minLatState === "string")|| minLat < LATITUDE_BAND_MIN_VALUE|| maxLat > LATITUDE_BAND_MAX_VALUE || minLat >= maxLat}
+                        error={
+                            (typeof minLatState === "string") || 
+                            ((typeof minLatState === "string") && (typeof maxLatState === "string")) ||
+                            minLatState < LATITUDE_BAND_MIN_VALUE|| 
+                            maxLatState > LATITUDE_BAND_MAX_VALUE || 
+                            minLatState > maxLatState
+                        }
                         helperText={generateHelperTextMin()}
                     />
                 </FormControl>
@@ -164,7 +166,13 @@ function CustomLatitudeSelector(props) {
                         type="number"
                         value={maxLatState}
                         onChange={handleChangeMax}
-                        error={(typeof maxLatState === "string") || maxLat < LATITUDE_BAND_MIN_VALUE|| maxLat > LATITUDE_BAND_MAX_VALUE || minLat >= maxLat}
+                        error={
+                            (typeof maxLatState === "string") || 
+                            ((typeof minLatState === "string") && (typeof maxLatState === "string")) || 
+                            maxLatState < LATITUDE_BAND_MIN_VALUE|| 
+                            maxLatState > LATITUDE_BAND_MAX_VALUE || 
+                            minLatState > maxLatState
+                        }
                         helperText={generateHelperTextMax()}
                     />
                 </FormControl>
