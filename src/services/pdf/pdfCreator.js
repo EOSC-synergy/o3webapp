@@ -45,21 +45,22 @@ export async function downloadGraphAsPDF(
       info: {
         title: fileName,
       },
-      pageOrientation: "landscape",
       content: [
         {
           svg: getAdjustedSVG(svgElement),
-          fit: [760, 350],
+          fit: [500, 250],
+          margin: 10
         },
         {
           text: "List Of Used Models:",
           style: "header",
-          fontSize: 14,
+          fontSize: 12,
           bold: true,
-          pageBreak: "before",
+         
         },
         "\n",
         {
+          fontSize: 11,
           ol: modelGroupsList,
         },
         {
