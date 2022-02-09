@@ -83,7 +83,7 @@ describe('test functionality redux', () => {
             .mockReturnValueOnce({
                 median: true,
                 mean: true,
-                derivative: false,
+                "standard deviation": false,
                 percentile: true
             })
             .mockReturnValueOnce(true);

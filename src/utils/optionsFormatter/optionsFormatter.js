@@ -1,5 +1,5 @@
 import { q25, q75, median } from "../../services/math/math"
-import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, ALL_REGIONS_ORDERED, STATISTICAL_VALUES_LIST, SV_CALCULATION, SV_COLORING, SV_DASHING, STATISTICAL_VALUES, APEXCHART_PLOT_TYPE, MODEL_LINE_THICKNESS, START_YEAR, END_YEAR } from "../constants"
+import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, ALL_REGIONS_ORDERED, STATISTICAL_VALUES_LIST, SV_CALCULATION, SV_COLORING, SV_DASHING, STATISTICAL_VALUES, APEXCHART_PLOT_TYPE, MODEL_LINE_THICKNESS, START_YEAR, END_YEAR, std } from "../constants"
 import { convertModelName } from "../ModelNameConverter";
 
 /**
@@ -657,12 +657,12 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
 
         for (const [sv, svData] of Object.entries(svHolder)) {
             
-            if (sv === STATISTICAL_VALUES.derivative // std
+            if (sv === STATISTICAL_VALUES[std] // std
                 || sv === STATISTICAL_VALUES.percentile) continue; // skip for now
             
 
             if (groupData.visibleSV[sv] // mean und median
-                || (sv.includes("std") && groupData.visibleSV[STATISTICAL_VALUES.derivative])) {
+                || (sv.includes("std") && groupData.visibleSV[STATISTICAL_VALUES[std]])) {
             } else {
                 continue; 
             }
@@ -699,7 +699,7 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
         for (const sv of [...STATISTICAL_VALUES_LIST, "stdMean"]) {
             // filter out values from not included models or null values
             const filtered = arr.filter((value, idx) => value !== null && isIncludedInSv(modelList[idx], groupData, sv));
-            
+
             const value = SV_CALCULATION[sv](filtered); // null as default if NaN or undefined
             if (isNaN(value) || typeof value === "undefined") {
                 svHolder[sv].push(null);    //apexcharts default "missing" value placeholder
@@ -711,9 +711,9 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
 
     svHolder["mean+std"] = [];
     svHolder["mean-std"] = [];
-    for (let i = 0; i < svHolder[STATISTICAL_VALUES.derivative].length; ++i) {
-        svHolder["mean+std"].push(svHolder.stdMean[i] + svHolder.derivative[i]);
-        svHolder["mean-std"].push(svHolder.stdMean[i] - svHolder.derivative[i]);
+    for (let i = 0; i < svHolder[STATISTICAL_VALUES[std]].length; ++i) {
+        svHolder["mean+std"].push(svHolder.stdMean[i] + svHolder[STATISTICAL_VALUES[std]][i]);
+        svHolder["mean-std"].push(svHolder.stdMean[i] - svHolder[STATISTICAL_VALUES[std]][i]);
     }
     delete svHolder["stdMean"];
     return svHolder;
@@ -925,7 +925,7 @@ function create2dArray(i) {
  * @returns                     True if the given model should be included in the SV calculation of the given SV-Type
  */
 function isIncludedInSv(model, groupData, svType) {
-    if (svType === "stdMean") return groupData.models[model][STATISTICAL_VALUES.derivative]; // the std mean should only be calculated if the "derivative" / std is necessary
+    if (svType === "stdMean") return groupData.models[model][STATISTICAL_VALUES[std]]; // the std mean should only be calculated if the std is necessary
     
     return groupData.models[model][svType];
 }
