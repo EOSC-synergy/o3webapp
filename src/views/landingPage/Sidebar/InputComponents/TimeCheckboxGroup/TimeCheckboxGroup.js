@@ -123,7 +123,7 @@ function TimeCheckBoxGroup(props) {
         let shouldBeSelected = false;
 
         for(let i = 0; i < NUM_MONTHS_IN_SEASON; i++) {
-            const currMonthInSeason = SEASONS_ARRAY[seasonId].months[i]; //(seasonId * NUM_MONTHS_IN_SEASON + 1) + i
+            const currMonthInSeason = SEASONS_ARRAY[seasonId].months[i];
             monthsInSeason.push(currMonthInSeason);
 
             if(shouldBeSelected) continue;
