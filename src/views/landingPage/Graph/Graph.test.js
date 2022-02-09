@@ -90,7 +90,6 @@ describe('tests graph component rendering', () => {
     it('renders an error message and calls the reportError function', () => {
         const spy = jest.spyOn(redux, 'useSelector')
         
-        const renderedErrorMessage = "An error occurred, please try to reload the site.";
         const reportedErrorMessage = "Something went wrong :(";
 
         spy.mockReturnValueOnce(
@@ -127,7 +126,7 @@ describe('tests graph component rendering', () => {
             <Graph reportError={reportError}/>
         </Provider>);
 
-        expect(container).toHaveTextContent(renderedErrorMessage);
+        expect(container).toHaveTextContent(reportedErrorMessage);
         expect(reportError).toHaveBeenCalledWith(reportedErrorMessage);
     });
 });

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { STATISTICAL_VALUES, STATISTICAL_VALUES_LIST } from "../../utils/constants";
+import { STATISTICAL_VALUES_LIST } from "../../utils/constants";
 
 /**
  * This object serves as a template, whenever a new model is added to a group
@@ -9,7 +9,7 @@ const MODEL_DATA_TEMPLATE = {   // single model
     color: null,                // if not set it defaults to standard value from api
     isVisible: true,            // show/hide individual models from a group
     mean: true,
-    derivative: true,
+    "standard deviation": true,
     median: true,
     percentile: true,
 }
@@ -21,7 +21,7 @@ const MODEL_GROUP_TEMPLATE = {
     isVisible: true,    // show/hide complete group
     visibleSV: {       // lookup table so the reducer impl. can be more convenient
         mean: true,
-        derivative: true,
+        "standard deviation": true,
         median: true,
         percentile: true,
     }
@@ -42,7 +42,7 @@ export const modelGroups = {
                 color: null, // if not set it defaults to standard value from api
                 isVisible: true, // show/hide individual models from a group
                 mean: true,
-                derivative: true,
+                "standard deviation": true,
                 median: true,
                 percentile: true,
             },
@@ -50,7 +50,7 @@ export const modelGroups = {
                 color: null, // if not set it defaults to standard value from api
                 isVisible: true, // show/hide individual models from a group
                 mean: true,
-                derivative: true,
+                "standard deviation": true,
                 median: true,
                 percentile: true,
 
@@ -59,7 +59,7 @@ export const modelGroups = {
                 color: null, // if not set it defaults to standard value from api
                 isVisible: true, // show/hide individual models from a group
                 mean: true,
-                derivative: true,
+                "standard deviation": true,
                 median: true,
                 percentile: true,
 
@@ -68,7 +68,7 @@ export const modelGroups = {
         isVisible: true, // show/hide complete group
         visibleSV: { // lookup table so the reducer impl. can be more convenient
             mean: true,
-            derivative: true,
+            "standard deviation": true,
             median: true,
             percentile: true,
         }
@@ -209,12 +209,12 @@ const modelsSlice = createSlice({
             };
 
             for (let model of Object.keys(state.modelGroups[groupId].models)) {
-                const { color, mean, median, derivative, percentile, isVisible } = data[model]; // expect data to meet certain scheme
+                const { color, mean, median, std, percentile, isVisible } = data[model]; // expect data to meet certain scheme
                 state.modelGroups[groupId].models[model] = {
                     color,
                     mean,
                     median,
-                    derivative,
+                    "standard deviation": std,
                     percentile,
                     isVisible,
                 };

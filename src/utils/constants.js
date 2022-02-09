@@ -11,6 +11,11 @@ export const modelListBegin = 0;
 /** For reducing loading time while implementing: starting value for how many models should be fetched */
 export const modelListEnd = 10;
 
+// client.js
+
+/** Stores the error message that is shown if no month is selected. */
+export const NO_MONTH_SELECTED = "Invalid Selection: Selecting at least one month should make this error go away.";
+
 // ReferenceSlice
 export const DEFAULT_REF_MODEL = "SBUV_GSFC_merged-SAT-ozone";
 export const DEFAULT_REF_YEAR = 1980;
@@ -43,16 +48,19 @@ export const CLS_Symbol = Symbol("CustomLatitudeSelector");
 
 // TimeCheckboxGroup.js
 /** Stores the season Winter and its corresponding months. */
-export const Winter = {name: Symbol("Winter"), months: [1, 2, 3], seasonId: 0}
+export const Winter = {name: Symbol("Winter"), months: [12, 1, 2], seasonId: 0}
 
 /** Stores the season Spring and its corresponding months. */
-export const Spring = {name: Symbol("Spring"), months: [4, 5, 6], seasonId: 1}
+export const Spring = {name: Symbol("Spring"), months: [3, 4, 5], seasonId: 1}
 
 /** Stores the season Summer and its corresponding months. */
-export const Summer = {name: Symbol("Summer"), months: [7, 8, 9], seasonId: 2}
+export const Summer = {name: Symbol("Summer"), months: [6, 7, 8], seasonId: 2}
 
 /** Stores the season Autumn and its corresponding months. */
-export const Autumn = {name: Symbol("Autumn"), months: [10, 11, 12], seasonId: 3}
+export const Autumn = {name: Symbol("Autumn"), months: [9, 10, 11], seasonId: 3}
+
+/** Array containing all season indext with the corresponding seasonId */
+export const SEASONS_ARRAY = [Winter, Spring, Summer, Autumn];
 
 /** Stores all the months in short form. (first three letters) */
 export const months = [
@@ -65,6 +73,9 @@ export const NUM_MONTHS_IN_SEASON = 3;
 
 /** Stores the ammount of months in a year */
 export const NUM_MONTHS = 12;
+
+/** These months are selected when the webapp starts */
+export const DEFAULT_MONTHS = [12, 1, 2];
 
 // LatitudeBandSelector.js
 /** Stores the latitude bands and its min/max values */
@@ -162,7 +173,7 @@ export const ALL_REGIONS_ORDERED = [ANTARCTIC, SH_MID, NH_MID, TROPICS, ARCTIC, 
 
 const mean = "mean";
 const median = "median";
-const derivative = "derivative";
+export const std = "standard deviation";
 const percentile = "percentile";
 /**
  * The statistical values that are computable are listed here as
@@ -171,7 +182,7 @@ const percentile = "percentile";
 export const STATISTICAL_VALUES = {
     mean,
     median,
-    derivative,
+    "standard deviation": std,
     percentile,
 }
 
@@ -184,7 +195,7 @@ export const STATISTICAL_VALUES_LIST = Object.values(STATISTICAL_VALUES);
 export const SV_CALCULATION = {
     mean: calculateMean,
     median: calculateMedian,
-    derivative: calculateStd,
+    "standard deviation": calculateStd,
     percentile: calculatePercentile,
     stdMean: calculateMean, // mean for std+-
 }
@@ -192,7 +203,7 @@ export const SV_CALCULATION = {
 export const SV_COLORING = {
     mean: "#000",
     median: "#000",
-    derivative: "#000",
+    "standard deviation": "#000",
     percentile: "#000",
     "mean+std": "#000",
     "mean-std": "#000",

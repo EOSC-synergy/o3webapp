@@ -23,3 +23,13 @@ To generate docs run:
 ```
     npm run docs
 ```
+
+To connect to the VM where the WebApp is deployed:
+```
+    ssh -i private_key cloudadm@o3web.test.fedcloud.eu
+```
+
+Shows the logging of the application, including whatever messages from the container.
+```
+    sudo docker-compose -f app
+```

@@ -35,8 +35,6 @@ function PlotNameField() {
         textfield.value = plotTitle;
     }, [plotId]);
 
- 
-
     /** Handles the change if the text in TextField is modified. */
     const updatePlotName = (event) => {
         if (event.target.value.length > PLOT_NAME_MAX_LEN) {

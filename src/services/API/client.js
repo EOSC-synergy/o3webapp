@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { NO_MONTH_SELECTED } from '../../utils/constants';
 
 /** The base URL */
 const baseURL = "https://api.o3as.fedcloud.eu/api/v1";
@@ -85,7 +86,7 @@ export const postModelsPlotStyle = (plotType) => {
  */
 export const getPlotData = ({plotId, latMin, latMax, months, modelList, startYear, endYear, refModel, refYear}) => {
     if (months.length === 0) {
-        throw new Error("requesting with an empty array will be rejected by the api");
+        return Promise.reject(new Error(NO_MONTH_SELECTED));
     }
     if (plotId === 'tco3_zm') {
         return postAtAPI(

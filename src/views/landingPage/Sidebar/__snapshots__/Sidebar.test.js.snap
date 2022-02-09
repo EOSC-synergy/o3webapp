@@ -658,18 +658,18 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                         >
                           <label
                             class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-                            id="ModelGroupCoard-toggle-derivative-label"
+                            id="ModelGroupCoard-toggle-standard deviation-label"
                           >
                             <span
                               class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
-                              data-testid="ModelGroupCard-toggle-derivative-checkbox"
-                              labelid="ModelGroupCard-toggle-derivative-label"
+                              data-testid="ModelGroupCard-toggle-standard deviation-checkbox"
+                              labelid="ModelGroupCard-toggle-standard deviation-label"
                             >
                               <input
                                 checked=""
                                 class="PrivateSwitchBase-input css-1m9pwf3"
                                 data-indeterminate="false"
-                                id="ModelGroupCard-toggle-derivative-checkbox"
+                                id="ModelGroupCard-toggle-standard deviation-checkbox"
                                 type="checkbox"
                               />
                               <svg
@@ -690,7 +690,7 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                             <span
                               class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
                             >
-                              derivative
+                              standard deviation
                             </span>
                           </label>
                         </div>
@@ -1020,6 +1020,41 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                                         checked=""
                                         class="PrivateSwitchBase-input css-1m9pwf3"
                                         data-indeterminate="false"
+                                        data-testid="CheckboxMonth12"
+                                        type="checkbox"
+                                      />
+                                      <svg
+                                        aria-hidden="true"
+                                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                        data-testid="CheckBoxIcon"
+                                        focusable="false"
+                                        viewBox="0 0 24 24"
+                                      >
+                                        <path
+                                          d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                                        />
+                                      </svg>
+                                      <span
+                                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                      />
+                                    </span>
+                                    <span
+                                      class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
+                                    >
+                                      Dec
+                                    </span>
+                                  </label>
+                                   
+                                  <label
+                                    class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+                                  >
+                                    <span
+                                      class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                                    >
+                                      <input
+                                        checked=""
+                                        class="PrivateSwitchBase-input css-1m9pwf3"
+                                        data-indeterminate="false"
                                         data-testid="CheckboxMonth1"
                                         type="checkbox"
                                       />
@@ -1079,50 +1114,6 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                                       Feb
                                     </span>
                                   </label>
-                                   
-                                  <label
-                                    class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-                                  >
-                                    <span
-                                      class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
-                                    >
-                                      <input
-                                        checked=""
-                                        class="PrivateSwitchBase-input css-1m9pwf3"
-                                        data-indeterminate="false"
-                                        data-testid="CheckboxMonth3"
-                                        type="checkbox"
-                                      />
-                                      <svg
-                                        aria-hidden="true"
-                                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                                        data-testid="CheckBoxIcon"
-                                        focusable="false"
-                                        viewBox="0 0 24 24"
-                                      >
-                                        <path
-                                          d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-                                        />
-                                      </svg>
-                                      <span
-                                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                      />
-                                    </span>
-                                    <span
-                                      class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
-                                    >
-                                      Mar
-                                    </span>
-                                  </label>
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
                                 </div>
                               </div>
                             </div>
@@ -1169,8 +1160,39 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                                   class="MuiBox-root css-agnjr6"
                                 >
                                    
-                                   
-                                   
+                                  <label
+                                    class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+                                  >
+                                    <span
+                                      class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                                    >
+                                      <input
+                                        class="PrivateSwitchBase-input css-1m9pwf3"
+                                        data-indeterminate="false"
+                                        data-testid="CheckboxMonth3"
+                                        type="checkbox"
+                                      />
+                                      <svg
+                                        aria-hidden="true"
+                                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                        data-testid="CheckBoxOutlineBlankIcon"
+                                        focusable="false"
+                                        viewBox="0 0 24 24"
+                                      >
+                                        <path
+                                          d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                                        />
+                                      </svg>
+                                      <span
+                                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                      />
+                                    </span>
+                                    <span
+                                      class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
+                                    >
+                                      Mar
+                                    </span>
+                                  </label>
                                    
                                   <label
                                     class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
@@ -1239,46 +1261,6 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                                       May
                                     </span>
                                   </label>
-                                   
-                                  <label
-                                    class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-                                  >
-                                    <span
-                                      class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
-                                    >
-                                      <input
-                                        class="PrivateSwitchBase-input css-1m9pwf3"
-                                        data-indeterminate="false"
-                                        data-testid="CheckboxMonth6"
-                                        type="checkbox"
-                                      />
-                                      <svg
-                                        aria-hidden="true"
-                                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                                        data-testid="CheckBoxOutlineBlankIcon"
-                                        focusable="false"
-                                        viewBox="0 0 24 24"
-                                      >
-                                        <path
-                                          d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
-                                        />
-                                      </svg>
-                                      <span
-                                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                      />
-                                    </span>
-                                    <span
-                                      class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
-                                    >
-                                      Jun
-                                    </span>
-                                  </label>
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
                                 </div>
                               </div>
                             </div>
@@ -1329,11 +1311,39 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                                   class="MuiBox-root css-agnjr6"
                                 >
                                    
-                                   
-                                   
-                                   
-                                   
-                                   
+                                  <label
+                                    class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+                                  >
+                                    <span
+                                      class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                                    >
+                                      <input
+                                        class="PrivateSwitchBase-input css-1m9pwf3"
+                                        data-indeterminate="false"
+                                        data-testid="CheckboxMonth6"
+                                        type="checkbox"
+                                      />
+                                      <svg
+                                        aria-hidden="true"
+                                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                        data-testid="CheckBoxOutlineBlankIcon"
+                                        focusable="false"
+                                        viewBox="0 0 24 24"
+                                      >
+                                        <path
+                                          d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                                        />
+                                      </svg>
+                                      <span
+                                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                      />
+                                    </span>
+                                    <span
+                                      class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
+                                    >
+                                      Jun
+                                    </span>
+                                  </label>
                                    
                                   <label
                                     class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
@@ -1402,43 +1412,6 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                                       Aug
                                     </span>
                                   </label>
-                                   
-                                  <label
-                                    class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-                                  >
-                                    <span
-                                      class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
-                                    >
-                                      <input
-                                        class="PrivateSwitchBase-input css-1m9pwf3"
-                                        data-indeterminate="false"
-                                        data-testid="CheckboxMonth9"
-                                        type="checkbox"
-                                      />
-                                      <svg
-                                        aria-hidden="true"
-                                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                                        data-testid="CheckBoxOutlineBlankIcon"
-                                        focusable="false"
-                                        viewBox="0 0 24 24"
-                                      >
-                                        <path
-                                          d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
-                                        />
-                                      </svg>
-                                      <span
-                                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                      />
-                                    </span>
-                                    <span
-                                      class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
-                                    >
-                                      Sep
-                                    </span>
-                                  </label>
-                                   
-                                   
-                                   
                                 </div>
                               </div>
                             </div>
@@ -1485,14 +1458,39 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                                   class="MuiBox-root css-agnjr6"
                                 >
                                    
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
+                                  <label
+                                    class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+                                  >
+                                    <span
+                                      class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                                    >
+                                      <input
+                                        class="PrivateSwitchBase-input css-1m9pwf3"
+                                        data-indeterminate="false"
+                                        data-testid="CheckboxMonth9"
+                                        type="checkbox"
+                                      />
+                                      <svg
+                                        aria-hidden="true"
+                                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                        data-testid="CheckBoxOutlineBlankIcon"
+                                        focusable="false"
+                                        viewBox="0 0 24 24"
+                                      >
+                                        <path
+                                          d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                                        />
+                                      </svg>
+                                      <span
+                                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                      />
+                                    </span>
+                                    <span
+                                      class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
+                                    >
+                                      Sep
+                                    </span>
+                                  </label>
                                    
                                   <label
                                     class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
@@ -1559,40 +1557,6 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                                       class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
                                     >
                                       Nov
-                                    </span>
-                                  </label>
-                                   
-                                  <label
-                                    class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-                                  >
-                                    <span
-                                      class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
-                                    >
-                                      <input
-                                        class="PrivateSwitchBase-input css-1m9pwf3"
-                                        data-indeterminate="false"
-                                        data-testid="CheckboxMonth12"
-                                        type="checkbox"
-                                      />
-                                      <svg
-                                        aria-hidden="true"
-                                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                                        data-testid="CheckBoxOutlineBlankIcon"
-                                        focusable="false"
-                                        viewBox="0 0 24 24"
-                                      >
-                                        <path
-                                          d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
-                                        />
-                                      </svg>
-                                      <span
-                                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                      />
-                                    </span>
-                                    <span
-                                      class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
-                                    >
-                                      Dec
                                     </span>
                                   </label>
                                 </div>
@@ -2508,18 +2472,18 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                         >
                           <label
                             class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-                            id="ModelGroupCoard-toggle-derivative-label"
+                            id="ModelGroupCoard-toggle-standard deviation-label"
                           >
                             <span
                               class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
-                              data-testid="ModelGroupCard-toggle-derivative-checkbox"
-                              labelid="ModelGroupCard-toggle-derivative-label"
+                              data-testid="ModelGroupCard-toggle-standard deviation-checkbox"
+                              labelid="ModelGroupCard-toggle-standard deviation-label"
                             >
                               <input
                                 checked=""
                                 class="PrivateSwitchBase-input css-1m9pwf3"
                                 data-indeterminate="false"
-                                id="ModelGroupCard-toggle-derivative-checkbox"
+                                id="ModelGroupCard-toggle-standard deviation-checkbox"
                                 type="checkbox"
                               />
                               <svg
@@ -2540,7 +2504,7 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                             <span
                               class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
                             >
-                              derivative
+                              standard deviation
                             </span>
                           </label>
                         </div>
@@ -2870,6 +2834,41 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                                         checked=""
                                         class="PrivateSwitchBase-input css-1m9pwf3"
                                         data-indeterminate="false"
+                                        data-testid="CheckboxMonth12"
+                                        type="checkbox"
+                                      />
+                                      <svg
+                                        aria-hidden="true"
+                                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                        data-testid="CheckBoxIcon"
+                                        focusable="false"
+                                        viewBox="0 0 24 24"
+                                      >
+                                        <path
+                                          d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                                        />
+                                      </svg>
+                                      <span
+                                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                      />
+                                    </span>
+                                    <span
+                                      class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
+                                    >
+                                      Dec
+                                    </span>
+                                  </label>
+                                   
+                                  <label
+                                    class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+                                  >
+                                    <span
+                                      class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                                    >
+                                      <input
+                                        checked=""
+                                        class="PrivateSwitchBase-input css-1m9pwf3"
+                                        data-indeterminate="false"
                                         data-testid="CheckboxMonth1"
                                         type="checkbox"
                                       />
@@ -2929,50 +2928,6 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                                       Feb
                                     </span>
                                   </label>
-                                   
-                                  <label
-                                    class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-                                  >
-                                    <span
-                                      class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
-                                    >
-                                      <input
-                                        checked=""
-                                        class="PrivateSwitchBase-input css-1m9pwf3"
-                                        data-indeterminate="false"
-                                        data-testid="CheckboxMonth3"
-                                        type="checkbox"
-                                      />
-                                      <svg
-                                        aria-hidden="true"
-                                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                                        data-testid="CheckBoxIcon"
-                                        focusable="false"
-                                        viewBox="0 0 24 24"
-                                      >
-                                        <path
-                                          d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-                                        />
-                                      </svg>
-                                      <span
-                                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                      />
-                                    </span>
-                                    <span
-                                      class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
-                                    >
-                                      Mar
-                                    </span>
-                                  </label>
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
                                 </div>
                               </div>
                             </div>
@@ -3019,8 +2974,39 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                                   class="MuiBox-root css-agnjr6"
                                 >
                                    
-                                   
-                                   
+                                  <label
+                                    class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+                                  >
+                                    <span
+                                      class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                                    >
+                                      <input
+                                        class="PrivateSwitchBase-input css-1m9pwf3"
+                                        data-indeterminate="false"
+                                        data-testid="CheckboxMonth3"
+                                        type="checkbox"
+                                      />
+                                      <svg
+                                        aria-hidden="true"
+                                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                        data-testid="CheckBoxOutlineBlankIcon"
+                                        focusable="false"
+                                        viewBox="0 0 24 24"
+                                      >
+                                        <path
+                                          d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                                        />
+                                      </svg>
+                                      <span
+                                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                      />
+                                    </span>
+                                    <span
+                                      class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
+                                    >
+                                      Mar
+                                    </span>
+                                  </label>
                                    
                                   <label
                                     class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
@@ -3089,46 +3075,6 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                                       May
                                     </span>
                                   </label>
-                                   
-                                  <label
-                                    class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-                                  >
-                                    <span
-                                      class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
-                                    >
-                                      <input
-                                        class="PrivateSwitchBase-input css-1m9pwf3"
-                                        data-indeterminate="false"
-                                        data-testid="CheckboxMonth6"
-                                        type="checkbox"
-                                      />
-                                      <svg
-                                        aria-hidden="true"
-                                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                                        data-testid="CheckBoxOutlineBlankIcon"
-                                        focusable="false"
-                                        viewBox="0 0 24 24"
-                                      >
-                                        <path
-                                          d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
-                                        />
-                                      </svg>
-                                      <span
-                                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                      />
-                                    </span>
-                                    <span
-                                      class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
-                                    >
-                                      Jun
-                                    </span>
-                                  </label>
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
                                 </div>
                               </div>
                             </div>
@@ -3179,11 +3125,39 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                                   class="MuiBox-root css-agnjr6"
                                 >
                                    
-                                   
-                                   
-                                   
-                                   
-                                   
+                                  <label
+                                    class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+                                  >
+                                    <span
+                                      class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                                    >
+                                      <input
+                                        class="PrivateSwitchBase-input css-1m9pwf3"
+                                        data-indeterminate="false"
+                                        data-testid="CheckboxMonth6"
+                                        type="checkbox"
+                                      />
+                                      <svg
+                                        aria-hidden="true"
+                                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                        data-testid="CheckBoxOutlineBlankIcon"
+                                        focusable="false"
+                                        viewBox="0 0 24 24"
+                                      >
+                                        <path
+                                          d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                                        />
+                                      </svg>
+                                      <span
+                                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                      />
+                                    </span>
+                                    <span
+                                      class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
+                                    >
+                                      Jun
+                                    </span>
+                                  </label>
                                    
                                   <label
                                     class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
@@ -3252,43 +3226,6 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                                       Aug
                                     </span>
                                   </label>
-                                   
-                                  <label
-                                    class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-                                  >
-                                    <span
-                                      class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
-                                    >
-                                      <input
-                                        class="PrivateSwitchBase-input css-1m9pwf3"
-                                        data-indeterminate="false"
-                                        data-testid="CheckboxMonth9"
-                                        type="checkbox"
-                                      />
-                                      <svg
-                                        aria-hidden="true"
-                                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                                        data-testid="CheckBoxOutlineBlankIcon"
-                                        focusable="false"
-                                        viewBox="0 0 24 24"
-                                      >
-                                        <path
-                                          d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
-                                        />
-                                      </svg>
-                                      <span
-                                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                      />
-                                    </span>
-                                    <span
-                                      class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
-                                    >
-                                      Sep
-                                    </span>
-                                  </label>
-                                   
-                                   
-                                   
                                 </div>
                               </div>
                             </div>
@@ -3335,14 +3272,39 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                                   class="MuiBox-root css-agnjr6"
                                 >
                                    
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
+                                  <label
+                                    class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+                                  >
+                                    <span
+                                      class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                                    >
+                                      <input
+                                        class="PrivateSwitchBase-input css-1m9pwf3"
+                                        data-indeterminate="false"
+                                        data-testid="CheckboxMonth9"
+                                        type="checkbox"
+                                      />
+                                      <svg
+                                        aria-hidden="true"
+                                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                        data-testid="CheckBoxOutlineBlankIcon"
+                                        focusable="false"
+                                        viewBox="0 0 24 24"
+                                      >
+                                        <path
+                                          d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                                        />
+                                      </svg>
+                                      <span
+                                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                      />
+                                    </span>
+                                    <span
+                                      class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
+                                    >
+                                      Sep
+                                    </span>
+                                  </label>
                                    
                                   <label
                                     class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
@@ -3409,40 +3371,6 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                                       class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
                                     >
                                       Nov
-                                    </span>
-                                  </label>
-                                   
-                                  <label
-                                    class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-                                  >
-                                    <span
-                                      class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
-                                    >
-                                      <input
-                                        class="PrivateSwitchBase-input css-1m9pwf3"
-                                        data-indeterminate="false"
-                                        data-testid="CheckboxMonth12"
-                                        type="checkbox"
-                                      />
-                                      <svg
-                                        aria-hidden="true"
-                                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                                        data-testid="CheckBoxOutlineBlankIcon"
-                                        focusable="false"
-                                        viewBox="0 0 24 24"
-                                      >
-                                        <path
-                                          d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
-                                        />
-                                      </svg>
-                                      <span
-                                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                                      />
-                                    </span>
-                                    <span
-                                      class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
-                                    >
-                                      Dec
                                     </span>
                                   </label>
                                 </div>
