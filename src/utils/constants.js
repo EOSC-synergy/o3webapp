@@ -9,7 +9,7 @@ import {
 /** For reducing loading time while implementing: starting value for how many models should be fetched */
 export const modelListBegin = 0;
 /** For reducing loading time while implementing: starting value for how many models should be fetched */
-export const modelListEnd = 10;
+export const modelListEnd = 105;
 
 // client.js
 
@@ -118,7 +118,7 @@ export const latitudeBands = [
 export const LATITUDE_BAND_LIST = latitudeBands.map(obj => obj.text.description);
 
 // DownloadModal.js
-export const fileFormats = [ Symbol("PDF"), Symbol("PNG"), Symbol("SVG"), Symbol("CSV")];
+export const fileFormats = [Symbol("PDF"), Symbol("PNG"), Symbol("SVG"), Symbol("CSV")];
 
 // PlotNameField.js
 
@@ -226,7 +226,7 @@ export const legalNoticeLinks = [
     "Terms of Use Link: https://o3as.data.kit.edu/policies/terms-of-use.html",
     "Privacy Policy Link: https://o3as.data.kit.edu/policies/privacy-policy.html",
     "How to Acknowledge Link: https://o3as.data.kit.edu/policies/how-to-acknowledge.html",
-  ];
+];
 // Custom Latitude Selector
 
 /**
@@ -235,7 +235,7 @@ export const legalNoticeLinks = [
 export const LATITUDE_BAND_MAX_VALUE = 90;
 
 /**
-  * The biggest possible latitude value.
-  */
+ * The biggest possible latitude value.
+ */
 export const LATITUDE_BAND_MIN_VALUE = -90;
 
