@@ -165,6 +165,10 @@ const plotSlice = createSlice({
          */
         setDisplayYRange(state, action) { 
             const {minY, maxY} = action.payload;
+            if (minY === null || maxY === null) return;
+            if (!Number.isFinite(minY) || !Number.isFinite(maxY)) return;
+            if (isNaN(minY) || isNaN(maxY)) return;
+
             const displayYRange = state.plotSpecificSettings[state.plotId].displayYRange;
             displayYRange.minY = minY;
             displayYRange.maxY = maxY;
@@ -172,6 +176,10 @@ const plotSlice = createSlice({
 
         setDisplayYRangeForPlot(state, action) { 
             const {minY, maxY, plotId} = action.payload;
+            if (minY === null || maxY === null) return;
+            if (!Number.isFinite(minY) || !Number.isFinite(maxY)) return;
+            if (isNaN(minY) || isNaN(maxY)) return;
+            
             const displayYRange = state.plotSpecificSettings[plotId].displayYRange;
             displayYRange.minY = minY;
             displayYRange.maxY = maxY;
