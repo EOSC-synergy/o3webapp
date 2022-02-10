@@ -12,13 +12,14 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import PropTypes from "prop-types";
-import { fileFormats } from "../../../../utils/constants";
+import { fileFormats, O3AS_PLOTS } from "../../../../utils/constants";
 import { downloadGraphAsPDF} from "../../../../services/pdf/pdfCreator";
 import { useSelector } from "react-redux";
 import { selectPlotId, selectPlotTitle} from "../../../../store/plotSlice/plotSlice";
 import { selectActivePlotData} from "../../../../services/API/apiSlice";
 import { selectAllModelGroups } from "../../../../store/modelsSlice/modelsSlice";
 import { REQUEST_STATE } from "../../../../services/API/apiSlice";
+import { generateCsv } from "../../../../services/csv/csvParser";
 
 /**
  * Opens a modal where the user can select the file format and download the plot.
@@ -129,6 +130,82 @@ function DownloadModal(props) {
   }
 
   /**
+   * Downloads the data present in the graph as a csv file.
+   * 
+   * @param {string} plotTitle the title of the plot
+   * @param {string} plotId the current id of the plot
+   */
+  function downloadGraphAsCsv(plotTitle, plotId) {
+      let series, seriesX, categoryLabels, seriesNames;
+      try {
+          const global = window.ApexCharts.getChartByID(plotId).w.globals;
+          series = global.series;
+          seriesX = global.seriesX;
+          categoryLabels = global.categoryLabels;
+          seriesNames = global.seriesNames;
+      } catch (TypeError) {
+        props.reportError("Can't download the chart if it hasn't been fully loaded.");
+        return;
+      }
+      
+      const csvData = [];
+      if (plotId === O3AS_PLOTS.tco3_zm) {
+        // ### tco3_zm ###
+        const LENGTH = Math.max(...seriesX.map(series => series.length));
+        for (let lineIndex = 0; lineIndex < LENGTH; ++lineIndex) {
+            const line = {
+                category: seriesX[0][lineIndex],
+            };
+            for (let index in seriesNames) {
+                const value = series[index][lineIndex];
+                line[seriesNames[index]] = value ? value.toFixed(2) : value;
+            }
+            csvData.push(line);
+        }
+      } else if (plotId === O3AS_PLOTS.tco3_return) {
+
+        for (let regionIndex in categoryLabels) {
+            
+            const line = {
+                category: categoryLabels[regionIndex],
+            };
+            for (let seriesIndex in seriesNames) {
+                if (!seriesNames[seriesIndex]) continue; // skip "box" which is empty
+                const value = series[seriesIndex][regionIndex];
+                line[seriesNames[seriesIndex]] = value ? value.toFixed(2) : value;
+            }
+            csvData.push(line);
+        }
+
+      } else {
+          throw new Error(`The given plotId: "${plotId} has not csv support (yet)!"`);
+      }
+      
+      downloadCsvFile({fileName: plotTitle + ".csv", csvString: generateCsv(csvData)}); // download data with title
+
+  }
+
+  /**
+   * Downloads a given string interpreted as csv
+   * 
+   * @param {string} fileName name of the downloadable file
+   * @param {string} csvString the content of this file
+   */
+  function downloadCsvFile({fileName, csvString}) {
+    const blob = new Blob([csvString]);
+    const a = window.document.createElement("a");
+
+    a.href = window.URL.createObjectURL(blob, {
+    type: "text/csv"
+    });
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+
+  /**
    * Downloads the Base64 file concerning to the given base64 data. 
    * 
    * @param {the given base64 data} base64Data 
@@ -153,8 +230,8 @@ function DownloadModal(props) {
       downloadGraphAsPNG(plotTitle);
     } else if (selectedFileFormat === "SVG") {
       downloadGraphAsSVG(plotTitle);
-    } else {
-      
+    } else if (selectedFileFormat === "CSV") {
+      downloadGraphAsCsv(plotTitle, plotId);
     }
 
   };
