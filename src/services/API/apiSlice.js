@@ -123,10 +123,9 @@ export const fetchPlotData = ({plotId, modelListBegin, modelListEnd}) => {
         if (typeof cachedRequest === "undefined") {
             // do nothing
         } else if (cachedRequest.status === REQUEST_STATE.loading) {
-            // do nothing, request is already loading
+            // just select the current data obj (=> display loading spinner accordingly)
+            dispatch(selectExistingPlotData({plotId, cacheKey}));
             return;
-            // to consider later: maybe replace this with a Promise.reject if 
-            // we want to rely on the .then() chaining later
         } else if (cachedRequest.status === REQUEST_STATE.success) {
             dispatch(selectExistingPlotData({plotId, cacheKey}));
             const {min, max} = getState().api.plotSpecific[plotId].cachedRequests[cacheKey].suggested; // suggested min/max is availabe
