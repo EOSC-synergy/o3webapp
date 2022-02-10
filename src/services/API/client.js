@@ -5,7 +5,7 @@ import { NO_MONTH_SELECTED } from '../../utils/constants';
 const baseURL = "https://api.o3as.fedcloud.eu/api/v1";
 
 /** The timeout value at which an error is thrown and fetching data stops in milliseconds */
-const timeoutVal = 2 * 60 * 1000; // 1 min at least (fetching the models took 29s)
+const timeoutVal = 5 * 60 * 1000; // 5 min at least (fetching the models took 29s)
 
 /**
  * Makes a GET request.
