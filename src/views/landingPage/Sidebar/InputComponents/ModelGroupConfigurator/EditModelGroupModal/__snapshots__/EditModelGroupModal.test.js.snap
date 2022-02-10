@@ -135,7 +135,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
               <div
                 aria-colindex="1"
                 class="MuiDataGrid-columnHeader MuiDataGrid-columnHeader--sortable"
-                data-field="model"
+                data-field="project"
                 role="columnheader"
                 style="width: 120px; min-width: 120px; max-width: 120px;"
                 tabindex="0"
@@ -152,7 +152,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       class="MuiDataGrid-columnHeaderTitle css-1jbbcbn-MuiDataGrid-columnHeaderTitle"
                       data-mui-internal-clone-element="true"
                     >
-                      Model
+                      Project
                     </div>
                     <div
                       class="MuiDataGrid-iconButtonContainer css-ltf0zy-MuiDataGrid-iconButtonContainer"
@@ -269,7 +269,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
               <div
                 aria-colindex="3"
                 class="MuiDataGrid-columnHeader MuiDataGrid-columnHeader--sortable"
-                data-field="datasetAndModel"
+                data-field="model"
                 role="columnheader"
                 style="width: 225px; min-width: 225px; max-width: 225px;"
                 tabindex="-1"
@@ -286,7 +286,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       class="MuiDataGrid-columnHeaderTitle css-1jbbcbn-MuiDataGrid-columnHeaderTitle"
                       data-mui-internal-clone-element="true"
                     >
-                      Dataset and Model
+                      Model
                     </div>
                     <div
                       class="MuiDataGrid-iconButtonContainer css-ltf0zy-MuiDataGrid-iconButtonContainer"
@@ -617,7 +617,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       aria-colindex="1"
                       class="MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="0"
-                      data-field="model"
+                      data-field="project"
                       role="cell"
                       style="min-width: 120px; max-width: 120px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
@@ -639,7 +639,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       aria-colindex="3"
                       class="MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="2"
-                      data-field="datasetAndModel"
+                      data-field="model"
                       role="cell"
                       style="min-width: 225px; max-width: 225px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
@@ -875,7 +875,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       aria-colindex="1"
                       class="MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="0"
-                      data-field="model"
+                      data-field="project"
                       role="cell"
                       style="min-width: 120px; max-width: 120px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
@@ -897,7 +897,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       aria-colindex="3"
                       class="MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="2"
-                      data-field="datasetAndModel"
+                      data-field="model"
                       role="cell"
                       style="min-width: 225px; max-width: 225px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
@@ -1133,7 +1133,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       aria-colindex="1"
                       class="MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="0"
-                      data-field="model"
+                      data-field="project"
                       role="cell"
                       style="min-width: 120px; max-width: 120px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
@@ -1155,7 +1155,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       aria-colindex="3"
                       class="MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="2"
-                      data-field="datasetAndModel"
+                      data-field="model"
                       role="cell"
                       style="min-width: 225px; max-width: 225px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
