@@ -106,10 +106,12 @@ export const fetchPlotData = ({plotId, modelListBegin, modelListEnd}) => {
         const latMin = getState().plot.generalSettings.location.minLat;
         const latMax = getState().plot.generalSettings.location.maxLat;
         const months = getState().plot.generalSettings.months;
-        let modelList = getState().api.models.data;
+        let modelList = getState().api.models.data.filter(modelName => modelName.includes("refC2") || modelName.includes("ACCESS"));
+        /*
         if (typeof modelListBegin !== 'undefined' && typeof modelListEnd !== 'undefined') {
             modelList = modelList.slice(modelListBegin, modelListEnd);
         }
+        */
         const startYear = START_YEAR;
         const endYear = END_YEAR;
         const refModel = getState().reference.settings.model;
