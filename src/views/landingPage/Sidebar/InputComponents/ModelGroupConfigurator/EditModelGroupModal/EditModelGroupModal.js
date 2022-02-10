@@ -14,6 +14,7 @@ import PropTypes from "prop-types";
 import CardHeader from '@mui/material/CardHeader';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material/styles';
+import { convertModelName } from "../../../../../../utils/ModelNameConverter";
 
 /**
  * A DataGrid with applied CSS styling.
@@ -31,16 +32,15 @@ const StyledDataGrid = styled(DataGrid)(({theme}) => ({
  */
 function createRows(modelList) {
     const rows = [];
-    const regex= /([a-z]|[A-Z]|[0-9]|-)*/g;
 
     for(let i = 0; i < modelList.length; i++) {
         const model = modelList[i];
-        const info = model.match(regex);
+        const matchResult = convertModelName(model);
         rows.push({
             "id": i,
-            "model": info[0],
-            "institute": info[2],
-            "datasetAndModel": info[4],
+            "project": matchResult.project,
+            "institute": matchResult.institute,
+            "model": matchResult.name,
             "median": false,
             "mean": false,
             "percentile": false,
@@ -395,9 +395,9 @@ function EditModelGroupModal(props) {
      * An Object containing the specification for the columns of the data grid.
      */
     const columns = [
-        { field: 'model', headerName: 'Model', width: 120, editable: false},
+        { field: 'project', headerName: 'Project', width: 120, editable: false},
         { field: 'institute', headerName: 'Institute', width: 150, editable: false },
-        { field: 'datasetAndModel', headerName: 'Dataset and Model', width: 225, editable: false },
+        { field: 'model', headerName: 'Model', width: 225, editable: false },
         { field: 'median', headerName: 'Median', sortable: false, width: 140, disableClickEventBubbling: true,
             renderHeader: () => generateHeaderName("Median"),
             renderCell: (params) => {return createCellCheckBox(params, "Median")}
