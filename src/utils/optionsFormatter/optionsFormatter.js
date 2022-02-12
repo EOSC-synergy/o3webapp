@@ -1,5 +1,5 @@
 import { q25, q75, median } from "../../services/math/math"
-import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, ALL_REGIONS_ORDERED, STATISTICAL_VALUES_LIST, SV_CALCULATION, SV_COLORING, SV_DASHING, STATISTICAL_VALUES, APEXCHART_PLOT_TYPE, MODEL_LINE_THICKNESS, START_YEAR, END_YEAR } from "../constants"
+import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, ALL_REGIONS_ORDERED, STATISTICAL_VALUES_LIST, SV_CALCULATION, SV_COLORING, SV_DASHING, STATISTICAL_VALUES, MODEL_LINE_THICKNESS, START_YEAR, END_YEAR } from "../constants"
 import { convertModelName } from "../ModelNameConverter";
 
 /**
@@ -285,21 +285,27 @@ export const default_TCO3_return = {
  * The interface the graph component accesses to generate the options for the plot
  * given the plot id, the styling (depends on plot type) and the plot title.
  * 
- * @param {string} obj.plotId an element of O3AS_PLOTS
- * @param {array} obj.styling.colors an array of strings with hexcode. Has to match the length of the given series 
- * @param {array} obj.styling.width (tco3_zm only!): array of integer defining the line width
- * @param {array} obj.styling.dashArray (tco3_zm only!): array of integer defining if the line is solid or dashed
- * @param {string} obj.plotTitle contains the plot title
+ * @param {string} plotId an element of O3AS_PLOTS
+ * @param {object} styling the styling
+ * @param {array} styling.colors an array of strings with hex code. Has to match the length of the given series
+ * @param {array} styling.width (tco3_zm only!): array of integer defining the line width
+ * @param {array} styling.dashArray (tco3_zm only!): array of integer defining if the line is solid or dashed
+ * @param {string} plotTitle contains the plot title
+ * @param {object} xAxisRange the range of the x-axis
+ * @param {object} yAxisRange the range of the y-axis
+ * @param {object} seriesNames the names of the series
+ *
  * @returns an default_TCO3_plotId object formatted with the given data
  */
 export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, seriesNames}) {
     const minY = roundDownToMultipleOfTen(yAxisRange.minY); 
-    const maxY = roundUpToMultipleOfTen(yAxisRange.maxY);     
+    const maxY = roundUpToMultipleOfTen(yAxisRange.maxY);
+
+    const tickAmount = getTickAmountYAxis(minY, maxY);
     
     if (plotId === O3AS_PLOTS.tco3_zm) {
         const newOptions = JSON.parse(JSON.stringify(defaultTCO3_zm)); // dirt simple and not overly horrible
 
-        const tickAmount = getTickAmountYAxisTco3Zm(minY, maxY)
         newOptions.yaxis.push(...seriesNames.map(name => getDefaultYAxisTco3Zm(name, minY, maxY, false, false, 0, tickAmount)))
         newOptions.yaxis.push(getDefaultYAxisTco3Zm(undefined, minY, maxY, true, false, -1, tickAmount)); // on left side
         newOptions.yaxis.push(getDefaultYAxisTco3Zm(undefined, minY, maxY, true, true, 0, tickAmount)); // on right side
@@ -324,32 +330,33 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.title.text = plotTitle;
 
         const minY = roundDownToMultipleOfTen(yAxisRange.minY); 
-        const maxY = roundUpToMultipleOfTen(yAxisRange.maxY); 
-        const tickAmount = getTickAmountYAxisTco3Return(minY, maxY);
+        const maxY = roundUpToMultipleOfTen(yAxisRange.maxY);
         newOptions.yaxis.push(...seriesNames.map(name => getDefaultYAxisTco3Return(name, minY, maxY, false, false, 0, tickAmount)))
         newOptions.yaxis.push(getDefaultYAxisTco3Return(undefined, minY, maxY, true, false, 3, tickAmount)); // on left side
         newOptions.yaxis.push(getDefaultYAxisTco3Return(undefined, minY, maxY, true, true, -3, tickAmount)); // on right side
 
         return newOptions;
     }    
-};
+}
 
 /**
  * The interface the graph component accesses to generate the series for the plot.
- * 
- * This function generates data structures that can directly be passed to apexcharts. 
+ *
+ * This function generates data structures that can directly be passed to apexcharts.
  * It accepts the plotId because series are generated according to the type of plot.
  * Furthermore the data object holds all plot data for the selected options
  * and modelsSlice is a slice from the redux store which contains information
  * about what model groups exist, which of them are visible or should be included in the
  * statistical value calculation.
- * 
+ *
  * It additionally generates a styling object which contains colors (and width/dashArray for tco3_zm).
- * 
- * @param {string} obj.plotId the id of the currently selected plot
- * @param {object} obj.data the raw data from the api for the current options
- * @param {object} obj.modelsSlice the slice of the store containg information about the model groups
- * @param {object} obj.refLineVisible visibility status of the reference line
+ *
+ * @param {string} plotId the id of the currently selected plot
+ * @param {object} data the raw data from the api for the current options
+ * @param {object} modelsSlice the slice of the store containing information about the model groups
+ * @param {object} xAxisRange the range of the x-axis
+ * @param {object} yAxisRange the range of the y-axis
+ * @param {object} refLineVisible visibility status of the reference line
  * @returns series object which includes a subdivision into a data and a styling object.
  */
 export function generateSeries({plotId, data, modelsSlice, xAxisRange, yAxisRange, refLineVisible}) {
@@ -366,11 +373,11 @@ export function generateSeries({plotId, data, modelsSlice, xAxisRange, yAxisRang
 
 /**
  * This method generates the data series for tco3_zm for all models that should be displayed (specified via groups).
- * It futhermore adds the statistical values also as series at the end.
+ * It furthermore adds the statistical values also as series at the end.
  * 
- * @param {object} obj.data the raw data from the api for the current options
- * @param {object} obj.modelsSlice the slice of the store containg information about the model groups
- * @param {boolean} obj.refLineVisible visibility status of the reference line
+ * @param {object} data the raw data from the api for the current options
+ * @param {object} modelsSlice the slice of the store containing information about the model groups
+ * @param {boolean} refLineVisible visibility status of the reference line
  * @returns a combination of data and statistical values series
  */
 function generateTco3_ZmSeries({data, modelsSlice, refLineVisible}) {
@@ -390,7 +397,7 @@ function generateTco3_ZmSeries({data, modelsSlice, refLineVisible}) {
         series.dashArray.push(convertToStrokeStyle(data.reference_value.plotStyle.linestyle)); 
     }
 
-    for (const [id, groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups
+    for (const [groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups
         if (!groupData.isVisible) continue; // skip hidden groups
         for (const [model, modelInfo] of Object.entries(groupData.models)) {
             if (!modelInfo.isVisible) continue; // skip hidden models
@@ -441,8 +448,8 @@ function generateSingleTco3ZmSeries(name, svData) {
  * The first datapoint of each model ist grouped into the first array.
  * and so on...
  * 
- * @param {array} obj.modelList list of models of a group that should be included
- * @param {object} obj.data an object holding all the data from the api
+ * @param {array} modelList list of models of a group that should be included
+ * @param {object} data an object holding all the data from the api
  * @returns a 2D array containing all the data (transpose matrix of given data)
  */
 function buildSvMatrixTco3Zm({modelList, data}) {
@@ -462,10 +469,12 @@ function buildSvMatrixTco3Zm({modelList, data}) {
 
 /**
  * This method generates the data series for the tco3_return for all models that should be displayed (specified via groups).
- * It futhermore adds the statistical values also as series at the end.
- * 
- * @param {object} obj.data the raw data from the api for the current options
- * @param {object} obj.modelsSlice the slice of the store containg information about the model groups
+ * It furthermore adds the statistical values also as series at the end.
+ *
+ * @param {object} data the raw data from the api for the current options
+ * @param {object} modelsSlice the slice of the store containing information about the model groups
+ * @param {object} xAxisRange the range of the x-axis
+ * @param {object} yAxisRange the range of the y-axis
  * @returns a combination of data and statistical values series
  */
 function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange}) {
@@ -523,7 +532,7 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange}) 
         generateSingleSvSeries: generateSingleTco3ReturnSeries,
     });
 
-    // clear out data points which are outside of min-max display range (scatter points are displayed in the legend otherwise)
+    // clear out data points which are outside min-max display range (scatter points are displayed in the legend otherwise)
     for (const series of svSeries.data) {
         for (const regionData of series.data) {
             regionData.y = filterOutOfRange(regionData.y, minY, maxY);
@@ -571,8 +580,8 @@ function generateSingleTco3ReturnSeries(name, svData) {
  * The first datapoint of each model ist grouped into the first array.
  * and so on...
  * 
- * @param {array} obj.modelList list of models of a group that should be included
- * @param {object} obj.data an object holding all the data from the api
+ * @param {array} modelList list of models of a group that should be included
+ * @param {object} data an object holding all the data from the api
  * @returns a 2D array containing all the data (transpose matrix of given data)
  */
 function buildSvMatrixTco3Return({modelList, data}) {
@@ -594,8 +603,9 @@ function buildSvMatrixTco3Return({modelList, data}) {
  * This method calculates the boxplot values for the tco3_return plot.
  * For each region an array of 5 values is calculated: min, q1, median, q3, max
  * which is sufficient to render the desired box plot.
- * 
+ *
  * @param {object} data contains the region data from the api
+ * @param {object} modelsSlice the slice of the store containing information about the model groups
  * @returns object holding an array of 5 values (min, q1, median, q3, max) for each region
  */
 function calculateBoxPlotValues({data, modelsSlice}) {
@@ -604,7 +614,7 @@ function calculateBoxPlotValues({data, modelsSlice}) {
 		boxPlotHolder[region] = []
 	}
 
-    for (const [id, groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups
+    for (const [groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups
         if (!groupData.isVisible) continue; // skip hidden groups
         for (const [model, modelInfo] of Object.entries(groupData.models)) {
             if (!modelInfo.isVisible) continue; // skip hidden models
@@ -636,10 +646,10 @@ function calculateBoxPlotValues({data, modelsSlice}) {
  * generate passed singleSvSeries function to transform each generated series into
  * the correct format. 
  * 
- * @param {object} obj.data the raw data from the api for the current options
- * @param {object} obj.modelsSlice the slice of the store containg information about the model groups
- * @param {function} obj.buildMatrix either buildSvMatrixTco3Zm | buildSvMatrixTco3Return, specifies how the data should be transformed
- * @param {function} obj.generateSingleSvSeries either generateSingleTco3ZmSeries | generateSingleTco3ReturnSeries, specifies how the series should be generated
+ * @param {object} data the raw data from the api for the current options
+ * @param {object} modelsSlice the slice of the store containing information about the model groups
+ * @param {function} buildMatrix either buildSvMatrixTco3Zm | buildSvMatrixTco3Return, specifies how the data should be transformed
+ * @param {function} generateSingleSvSeries either generateSingleTco3ZmSeries | generateSingleTco3ReturnSeries, specifies how the series should be generated
  * @returns an array holding all statistical series for the given modelSlice
  */
 function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleSvSeries}) {
@@ -651,7 +661,7 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
     };
     
     const modelGroups = modelsSlice.modelGroups;
-    for (const [id, groupData] of Object.entries(modelGroups)) {
+    for (const [groupData] of Object.entries(modelGroups)) {
 
         const svHolder = calculateSvForModels(Object.keys(groupData.models), data, groupData, buildMatrix);
 
@@ -677,7 +687,7 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
 
 
 /**
- * Calculates the statistical values for the given modelList (from a certain modelgroup).
+ * Calculates the statistical values for the given modelList (from a certain model group).
  * Takes into account the groupData object which stores information about the models.
  * 
  * @param {array} modelList a list of all models of a specific model group.
@@ -706,8 +716,8 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
             } else {
                 svHolder[sv].push(value);    
             }
-        };
-    };
+        }
+    }
 
     svHolder["mean+std"] = [];
     svHolder["mean-std"] = [];
@@ -728,7 +738,7 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
  * either data points, if they are present or with `null`. The first index corresponds to START_YEAR
  * 
  * @param {array} xValues an array holding the years
- * @param {array} yValues an array of the same length holding the datapoints for the corresponding years
+ * @param {array} yValues an array of the same length holding the data points for the corresponding years
  */
  export function normalizeArray(xValues, yValues) {
     const result = [];
@@ -748,15 +758,15 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
 /**
  * This function is called only once when the data from the API is fetched. It transforms the data
  * into a format that (hopefully) speeds up the computation of certain things.
- * 
- * The TCO3_ZM data is transformed from a x and y array into one single array whose first index 
+ *
+ * The TCO3_ZM data is transformed from a x and y array into one single array whose first index
  * represents the START_YEAR) and so on. It contains either data points or null.
  * x = ['1960', '1963', '1965', '1966']
  * y = [0, 1, 2, 3]
  * normalized: [0, null (1961), null (1962), 1, null (1964), 2, 3, null (1967), ...]
- * 
+ *
  * The TCO3_RETURN data is transformed from a x and y array into a lookup table with the given region:
- * 
+ *
  *   "x": [
  *     "Antarctic(Oct)",
  *     "SH mid-lat",
@@ -776,10 +786,11 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
  *     2052,
  *     2052
  *   ]
- * 
- * @param {string} obj.plotId       A string specifying the plot (to perform different transformations, according to the data format)
- * @param {object} obj.data         An object holding the data as it was returned from the API
- * @returns                         The pretransformed API data
+ *
+ * @param {string} plotId A string specifying the plot (to perform different transformations, according to the data format)
+ * @param {object} data An object holding the data as it was returned from the API
+ * @param {object} modelsSlice the slice of the store containing information about the model groups
+ * @returns The pre transformed API data
  */
 export const preTransformApiData = ({plotId, data, modelsSlice}) => {
     const maximums = [];
@@ -797,7 +808,7 @@ export const preTransformApiData = ({plotId, data, modelsSlice}) => {
                 plotStyle: datum.plotstyle,
                 data: normalizedArray, // this should speed up the calculation of the statistical values later
             };
-            if (visibleModels.includes(datum.model)) { // min and max values of visibile values are relevant!
+            if (visibleModels.includes(datum.model)) { // min and max values of visible values are relevant!
                 maximums.push(Math.max(...normalizedArray));
                 minimums.push(Math.min(...normalizedArray));
             }
@@ -819,12 +830,12 @@ export const preTransformApiData = ({plotId, data, modelsSlice}) => {
                 lookUpTable[datum.model].data[datum.x[index]] = datum.y[index];
             }
             
-            if (visibleModels.includes(datum.model)) { // min and max values of visibile values are relevant!
+            if (visibleModels.includes(datum.model)) { // min and max values of visible values are relevant!
                 maximums.push(Math.max(...temp));
                 minimums.push(Math.min(...temp));
             }
         }
-    };
+    }
     return {lookUpTable, min: Math.min(...minimums), max: Math.max(...maximums)};
 }
 
@@ -868,7 +879,7 @@ export function colorNameToHex(color)
         return colors[color.toLowerCase()];
 
     return false;
-};
+}
 
 /**
  * Converts the stroke style given by the API into the format supported by apexcharts.
@@ -886,15 +897,15 @@ export function convertToStrokeStyle(apiStyle) {
     if (typeof styles[apiStyle.toLowerCase()] != 'undefined')
         return styles[apiStyle.toLowerCase()];
     return false;
-};
+}
 
 /**
  * Combines 2 data series objects into a new one.
  * The copied elements of series2 get appended to a copy of series1.
  * A series object has the following structure: { data: Array, colors: Array, width: Array, dashArray: Array}
  * 
- * @param {obj} series1     The first data series object
- * @param {obj} series2     The second data series object
+ * @param {object} series1     The first data series object
+ * @param {object} series2     The second data series object
  * @returns                 New series containing series1 and series2
  */
 function combineSeries(series1, series2) {
@@ -907,7 +918,7 @@ function combineSeries(series1, series2) {
 }
 
 /**
- * Utility function to create an array of size i with empty arrays inside of it.
+ * Utility function to create an array of size i with empty arrays inside it.
  * 
  * @param {number} i    The size of the array containing the empty arrays
  * @returns             The array of size i containing empty arrays
@@ -957,38 +968,17 @@ export function getOptimalTickAmount(min, max) {
  * @param {number} max      The selected max. year of the plot
  * @returns                 The optimal tick amount according to those values
  */
-export function getTickAmountYAxisTco3Zm(min, max) {
+export function getTickAmountYAxis(min, max) {
     const diff = max - min;
     if (diff <= 200) {
         return Math.floor(diff / 5);
     } else if (diff <= 400) {
-        if (diff % 20 == 0) {
+        if (diff % 20 === 0) {
             return Math.floor(diff / 20);
-        } else if (diff % 30 == 0) {
+        } else if (diff % 30 === 0) {
             return Math.floor(diff / 30);
         }
 
-        return Math.floor(diff / 10);
-    }
-}
-
-/**
- * Determines the optimal tick amount for a given max and min year for the y-axis.
- * 
- * @param {number} min      The selected min. year of the plot
- * @param {number} max      The selected max. year of the plot
- * @returns                 The optimal tick amount according to those values
- */
-export function getTickAmountYAxisTco3Return(min, max) {
-    const diff = max - min;
-    if (diff <= 200) {
-        return Math.floor(diff / 5);
-    } else if (diff <= 400) {
-        if (diff % 20 == 0) {
-            return Math.floor(diff / 20);
-        } else if (diff % 30 == 0) {
-            return Math.floor(diff / 30);
-        }
         return Math.floor(diff / 10);
     }
 }
@@ -1041,8 +1031,8 @@ export const formatYLabelsNicely = value => value % 10 ? "" : value
  * This function parses the auto-generated sv names to separate 
  * them into the sv type (e.g. mean, median) and the group.
  * 
- * @param {string} name the name of the dataseries (e.g. mean+std(Example Groupd))
- * @returns an object holding the sv type and the groupname
+ * @param {string} name the name of the data series (e.g. mean+std(Example Group))
+ * @returns an object holding the sv type and the group name
  */
 export function parseSvName(name) {
     const regex = new RegExp("([^\(]+)\(([^\)]+)\)");
@@ -1059,10 +1049,10 @@ export function parseSvName(name) {
  * In this case the tooltip is for the octs line chart. It provides
  * a richer tooltip and shows the data points correctly.
  * 
- * @param {array} obj.series an array of series
- * @param {number} obj.seriesIndex the index of the hovered dataseries
- * @param {number} obj.dataPointIndex the index of the data point in the hovered dataseries
- * @param {object} obj.w global apexcharts object
+ * @param {array} series an array of series
+ * @param {number} seriesIndex the index of the hovered data series
+ * @param {number} dataPointIndex the index of the data point in the hovered data series
+ * @param {object} w global apexcharts object
  * @returns the desired html tooltip formatted with the correct information
  */
 export function customTooltipFormatter({ series, seriesIndex, dataPointIndex, w }) {
@@ -1092,7 +1082,7 @@ export function customTooltipFormatter({ series, seriesIndex, dataPointIndex, w 
                 </div>
                 `
             )
-        };
+        }
     }
 
     let {project, institute, name} = convertModelName(modelName);

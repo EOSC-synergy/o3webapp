@@ -264,7 +264,7 @@ function EditModelGroupModal(props) {
      * @returns                 True if no checkboxes of the given type are selected
      */
     const areNoCheckboxesSelected = (type) => {
-        if (filteredRows.length == 0) return true;
+        if (filteredRows.length === 0) return true;
         const checkedList = getCheckedListByType(type);
 
         let noSelectedRows = true;
