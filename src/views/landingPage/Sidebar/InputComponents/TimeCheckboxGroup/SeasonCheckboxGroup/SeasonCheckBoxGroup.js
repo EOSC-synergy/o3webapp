@@ -65,22 +65,21 @@ function SeasonCheckBoxGroup(props) {
                 }
             />
             <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
-                {months.map((m, idx) =>
-                    (<React.Fragment key={idx}> {
-                        ((idx + 1) >= props.months[0].monthId && (idx + 1) <= props.months[props.months.length - 1].monthId) &&
+                {props.months.map(({monthId, checked}) => {
+                    return (<React.Fragment key={monthId}> {
                         <FormControlLabel
-                            label={m.description}
+                            label={months[monthId - 1].description}
                             control={
                                 <Checkbox 
-                                    inputProps={{'data-testid':"CheckboxMonth" + (idx + 1)}}
-                                    checked={props.months[(idx + 1) - props.months[0].monthId].checked} 
-                                    onChange={() => props.handleMonthClicked(idx + 1) }
+                                    inputProps={{'data-testid':"CheckboxMonth" + monthId}}
+                                    checked={checked} 
+                                    onChange={() => props.handleMonthClicked(monthId) }
                                 />
                             }
                         />
                     }
-                    </React.Fragment>))
-                }
+                    </React.Fragment>)}
+                )}
             </Box>
         </div>
     );

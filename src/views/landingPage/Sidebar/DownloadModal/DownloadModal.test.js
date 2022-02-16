@@ -1,16 +1,23 @@
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import DownloadModal from './DownloadModal';
+import { Provider } from "react-redux";
+import { createTestStore } from '../../../../store/store';
+
+let store;
+beforeEach(() => {
+  store = createTestStore();
+});
 
 describe('testing DownloadModal rendering', () => {
 
     it('renders without crashing', () => {
-        render(<DownloadModal reportError={() => {}} onClose={()=>{}} isOpen={true} />);
+        render(<Provider store ={store}> <DownloadModal reportError={() => {}} onClose={()=>{}} isOpen={true} /></Provider>);
     });
 
     it('renders correctly when open', () => {
         let { baseElement, container } = render(
-            <DownloadModal isOpen={true} onClose={() => {}} reportError={() => {}} />
+            <Provider store ={store} > <DownloadModal isOpen={true} onClose={() => {}} reportError={() => {}} /> </Provider>
         );
         expect(baseElement).toMatchSnapshot();
         expect(container).toBeVisible();
@@ -18,7 +25,7 @@ describe('testing DownloadModal rendering', () => {
 
     it('renders correctly when closed', () => {
         let { container, baseElement } = render(
-            <DownloadModal isOpen={false} onClose={() => {}} reportError={() => {}} />
+            <Provider store ={store}> <DownloadModal isOpen={false} onClose={() => {}} reportError={() => {}} /></Provider>
         );
         expect(baseElement).toMatchSnapshot();
         expect(container).not.toBeVisible;
@@ -27,11 +34,11 @@ describe('testing DownloadModal rendering', () => {
     it('raises a console.error function if a required prop is not provided', () => {
         console.error = jest.fn();
         render(
-            <DownloadModal onClose={()=>{}} reportError={()=>{}} />
+            <Provider store ={store}> <DownloadModal onClose={()=>{}} reportError={()=>{}} /></Provider>
         );
         expect(console.error).toHaveBeenCalled();
         render(
-            <DownloadModal isOpen={true} reportError={() => {}} />
+            <Provider store ={store}> <DownloadModal isOpen={true} reportError={() => {}} /></Provider>
         );
         expect(console.error).toHaveBeenCalled();
     });

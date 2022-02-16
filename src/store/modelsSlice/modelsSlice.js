@@ -9,7 +9,7 @@ const MODEL_DATA_TEMPLATE = {   // single model
     color: null,                // if not set it defaults to standard value from api
     isVisible: true,            // show/hide individual models from a group
     mean: true,
-    derivative: true,
+    "standard deviation": true,
     median: true,
     percentile: true,
 }
@@ -21,7 +21,7 @@ const MODEL_GROUP_TEMPLATE = {
     isVisible: true,    // show/hide complete group
     visibleSV: {       // lookup table so the reducer impl. can be more convenient
         mean: true,
-        derivative: true,
+        "standard deviation": true,
         median: true,
         percentile: true,
     }
@@ -42,7 +42,7 @@ export const modelGroups = {
                 color: null, // if not set it defaults to standard value from api
                 isVisible: true, // show/hide individual models from a group
                 mean: true,
-                derivative: true,
+                "standard deviation": true,
                 median: true,
                 percentile: true,
             },
@@ -50,7 +50,7 @@ export const modelGroups = {
                 color: null, // if not set it defaults to standard value from api
                 isVisible: true, // show/hide individual models from a group
                 mean: true,
-                derivative: true,
+                "standard deviation": true,
                 median: true,
                 percentile: true,
 
@@ -59,7 +59,7 @@ export const modelGroups = {
                 color: null, // if not set it defaults to standard value from api
                 isVisible: true, // show/hide individual models from a group
                 mean: true,
-                derivative: true,
+                "standard deviation": true,
                 median: true,
                 percentile: true,
 
@@ -68,7 +68,7 @@ export const modelGroups = {
         isVisible: true, // show/hide complete group
         visibleSV: { // lookup table so the reducer impl. can be more convenient
             mean: true,
-            derivative: true,
+            "standard deviation": true,
             median: true,
             percentile: true,
         }
@@ -208,12 +208,12 @@ const modelsSlice = createSlice({
             }
 
             for (let model of Object.keys(state.modelGroups[groupId].models)) {
-                const { color, mean, median, derivative, percentile, isVisible } = data[model]; // expect data to meet certain scheme
+                const { color, mean, median, std, percentile, isVisible } = data[model]; // expect data to meet certain scheme
                 state.modelGroups[groupId].models[model] = {
                     color,
                     mean,
                     median,
-                    derivative,
+                    "standard deviation": std,
                     percentile,
                     isVisible,
                 };
@@ -356,3 +356,11 @@ export const selectVisibilityOfGroup = (state, groupId) => state.models.modelGro
  * @returns an array holding all valid group ids
  */
 export const selectAllGroupIds = state => Object.keys(state.models.modelGroups).map(key => parseInt(key));
+
+/**
+ * This selector allows components to select all Model Groups.
+ * 
+ * @param  {object} state the global redux state
+ * @returns an array containing all Model Groups
+ */
+export const selectAllModelGroups = state => state.models.modelGroups;

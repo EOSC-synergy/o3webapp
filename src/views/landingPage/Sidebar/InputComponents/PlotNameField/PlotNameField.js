@@ -25,6 +25,8 @@ function PlotNameField() {
     const dispatch = useDispatch();
 
     const plotId = useSelector(selectPlotId);
+
+    /** The current plot title from the store */
     const plotTitle = useSelector(selectPlotTitle);
 
     useEffect(() => {

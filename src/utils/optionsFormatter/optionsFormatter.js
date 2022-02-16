@@ -1,6 +1,20 @@
-import { q25, q75, median } from "../../services/math/math"
-import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, ALL_REGIONS_ORDERED, STATISTICAL_VALUES_LIST, SV_CALCULATION, SV_COLORING, SV_DASHING, STATISTICAL_VALUES, MODEL_LINE_THICKNESS, START_YEAR, END_YEAR } from "../constants"
-import { convertModelName } from "../ModelNameConverter";
+import {q25, q75, median} from "../../services/math/math"
+import {
+    IMPLICIT_YEAR_LIST,
+    O3AS_PLOTS,
+    ALL_REGIONS_ORDERED,
+    STATISTICAL_VALUES_LIST,
+    SV_CALCULATION,
+    SV_COLORING,
+    SV_DASHING,
+    STATISTICAL_VALUES,
+    APEXCHART_PLOT_TYPE,
+    MODEL_LINE_THICKNESS,
+    START_YEAR,
+    END_YEAR,
+    std
+} from "../constants"
+import {convertModelName} from "../ModelNameConverter";
 
 /**
  * Maps the plotId to a function that describes how the series are going
@@ -22,15 +36,15 @@ export const FONT_FAMILY = [
     '"Apple Color Emoji"',
     '"Segoe UI Emoji"',
     '"Segoe UI Symbol"',
-  ].join(',')
+].join(',')
 
 /**
  * The default settings for the tco3_zm plot.
- * 
- * colors, width, dashArray have to be filled. 
- * 
+ *
+ * colors, width, dashArray have to be filled.
+ *
  * This gigantic object allows us to communicate with the apexcharts library.
- * More can be found here: https://apexcharts.com/docs/installation/ 
+ * More can be found here: https://apexcharts.com/docs/installation/
  */
 export const defaultTCO3_zm = {
     xaxis: {
@@ -49,7 +63,7 @@ export const defaultTCO3_zm = {
             },
         }
     },
-    yaxis: [], 
+    yaxis: [],
     grid: {
         show: false,
     },
@@ -78,10 +92,11 @@ export const defaultTCO3_zm = {
         width: "100%"
     },
     legend: {
-        show: true, 
+        show: true,
         onItemClick: {
             toggleDataSeries: false
         },
+        height: 80,
     },
     dataLabels: {
         enabled: false,
@@ -99,18 +114,18 @@ export const defaultTCO3_zm = {
         align: "center",
         floating: false,
         style: {
-            fontSize:  "30px",
-            fontWeight:  "bold",
-            fontFamily:  FONT_FAMILY,
-            color:  "#000000",
+            fontSize: "30px",
+            fontWeight: "bold",
+            fontFamily: FONT_FAMILY,
+            color: "#000000",
         }
     },
 };
 
 /**
- * This function is a factory method to provide objects that are fitted in the y-axis of the tco3_zm plot to 
+ * This function is a factory method to provide objects that are fitted in the y-axis of the tco3_zm plot to
  * show another y-axis on the right side.
- * 
+ *
  * @param {string} seriesName the name of the series
  * @param {number} minY the minimum y value (to adjust to the zoom)
  * @param {number} maxY the maximum y value (to adjust to the zoom)
@@ -118,9 +133,9 @@ export const defaultTCO3_zm = {
  * @param {boolean} opposite whether to show the y-axis on the right side (default is false)
  * @param {number} offsetX how many px the y-axis should be adjusted
  * @param {number} tickAmount how many ticks (on the y-axis) should be displayed (should be calculated by functions to provide a nice formatting)
- * @returns 
+ * @returns
  */
-export function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show=false, opposite=false, offsetX=-1, tickAmount=0) {
+export function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show = false, opposite = false, offsetX = -1, tickAmount = 0) {
     return {
         show,
         opposite,
@@ -155,9 +170,9 @@ export function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show=false, opposi
 }
 
 /**
- * This function is a factory method to provide objects that are fitted in the y-axis of the tco3_return plot to 
+ * This function is a factory method to provide objects that are fitted in the y-axis of the tco3_return plot to
  * show another y-axis on the right side.
- * 
+ *
  * @param {string} seriesName the name of the series
  * @param {number} minY the minimum y value (to adjust to the zoom)
  * @param {number} maxY the maximum y value (to adjust to the zoom)
@@ -165,9 +180,9 @@ export function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show=false, opposi
  * @param {boolean} opposite whether to show the y-axis on the right side (default is false)
  * @param {number} offsetX how many px the y-axis should be adjusted
  * @param {number} tickAmount how many ticks (on the y-axis) should be displayed (should be calculated by functions to provide a nice formatting)
- * @returns 
+ * @returns
  */
-export function getDefaultYAxisTco3Return(seriesName, minY, maxY, show=false, opposite=false, offsetX=-1, tickAmount=0) {
+export function getDefaultYAxisTco3Return(seriesName, minY, maxY, show = false, opposite = false, offsetX = -1, tickAmount = 0) {
     return {
         show,
         opposite,
@@ -199,11 +214,11 @@ export function getDefaultYAxisTco3Return(seriesName, minY, maxY, show=false, op
 
 /**
  * The default settings for the tco3_return plot.
- * 
+ *
  * colors have to be filled.
- * 
+ *
  * This gigantic object allows us to communicate with the apexcharts library.
- * More can be found here: https://apexcharts.com/docs/installation/ 
+ * More can be found here: https://apexcharts.com/docs/installation/
  */
 export const default_TCO3_return = {
     xaxis: {
@@ -215,20 +230,20 @@ export const default_TCO3_return = {
             },
         },
     },
-    yaxis: [], 
+    yaxis: [],
     grid: {
         show: false,
     },
     chart: {
-      id: O3AS_PLOTS.tco3_return,
-      type: 'boxPlot',
-      animations: {
-          enabled: false, // disable animations
-      },
-      zoom: {
-          enabled: false,
-          type: 'xy',
-      },
+        id: O3AS_PLOTS.tco3_return,
+        type: 'boxPlot',
+        animations: {
+            enabled: false, // disable animations
+        },
+        zoom: {
+            enabled: false,
+            type: 'xy',
+        },
     },
     colors: [undefined], // , ...styling.colors
     title: {
@@ -236,49 +251,50 @@ export const default_TCO3_return = {
         align: "center",
         floating: false,
         style: {
-            fontSize:  "30px",
-            fontWeight:  "bold",
+            fontSize: "30px",
+            fontWeight: "bold",
             fontFamily: FONT_FAMILY,
-            color:  "#000000"
+            color: "#000000"
         }
     },
     tooltip: {
-      shared: false,
-      intersect: true,
+        shared: false,
+        intersect: true,
     },
     plotOptions: {
-      boxPlot: {
-        colors: {
-          upper: "#8def4e", //'#5C4742',
-          lower: "#63badb", //'#A5978B'
+        boxPlot: {
+            colors: {
+                upper: "#8def4e", //'#5C4742',
+                lower: "#63badb", //'#A5978B'
+            }
         }
-      }
     },
     legend: {
         show: true,
+        height: 80,
     },
-    
+
     markers: {
-      size: 5,
-      colors: [undefined], // ...styling.colors
-      strokeColors: '#000',
-      strokeWidth: 0,
-      strokeOpacity: 0.2, //?
-      strokeDashArray: 0, //?
-      fillOpacity: 0.7,
-      discrete: [],
-      //shape: [undefined, "circle", "square"], // circle or square
-      radius: 1,
-      offsetX: 0, // interesting
-      offsetY: 0,
-      onDblClick: undefined,
-      showNullDataPoints: true,
-      hover: {
-          size: 10,
+        size: 5,
+        colors: [undefined], // ...styling.colors
+        strokeColors: '#000',
+        strokeWidth: 0,
+        strokeOpacity: 0.2, //?
+        strokeDashArray: 0, //?
+        fillOpacity: 0.7,
+        discrete: [],
+        //shape: [undefined, "circle", "square"], // circle or square
+        radius: 1,
+        offsetX: 0, // interesting
+        offsetY: 0,
+        onDblClick: undefined,
+        showNullDataPoints: true,
+        hover: {
+            size: 10,
             sizeOffset: 10,
-      },
+        },
     }
-    
+
 };
 
 /**
@@ -336,7 +352,7 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.yaxis.push(getDefaultYAxisTco3Return(undefined, minY, maxY, true, true, -3, tickAmount)); // on right side
 
         return newOptions;
-    }    
+    }
 }
 
 /**
@@ -362,10 +378,10 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
 export function generateSeries({plotId, data, modelsSlice, xAxisRange, yAxisRange, refLineVisible}) {
     const series = SERIES_GENERATION[plotId]({data, modelsSlice, xAxisRange, yAxisRange, refLineVisible}); // execute correct function based on mapping
     return {
-        data: series.data, 
+        data: series.data,
         styling: {
-            colors: series.colors, 
-            dashArray: series.dashArray, 
+            colors: series.colors,
+            dashArray: series.dashArray,
             width: series.width,
         }
     }; // return generated series with styling to pass to apexcharts chart
@@ -374,7 +390,7 @@ export function generateSeries({plotId, data, modelsSlice, xAxisRange, yAxisRang
 /**
  * This method generates the data series for tco3_zm for all models that should be displayed (specified via groups).
  * It furthermore adds the statistical values also as series at the end.
- * 
+ *
  * @param {object} data the raw data from the api for the current options
  * @param {object} modelsSlice the slice of the store containing information about the model groups
  * @param {boolean} refLineVisible visibility status of the reference line
@@ -394,19 +410,20 @@ function generateTco3_ZmSeries({data, modelsSlice, refLineVisible}) {
         })
         series.colors.push(colorNameToHex(data.reference_value.plotStyle.color));
         series.width.push(MODEL_LINE_THICKNESS);
-        series.dashArray.push(convertToStrokeStyle(data.reference_value.plotStyle.linestyle)); 
+        series.dashArray.push(convertToStrokeStyle(data.reference_value.plotStyle.linestyle));
     }
 
-    for (const [groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups
+    for (const [id, groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups  // don't remove 'id'
         if (!groupData.isVisible) continue; // skip hidden groups
         for (const [model, modelInfo] of Object.entries(groupData.models)) {
             if (!modelInfo.isVisible) continue; // skip hidden models
             const modelData = data[model]; // retrieve data (api)
+            if (typeof modelData === "undefined") continue; // skip model if it is not available
             series.data.push({
                 name: model,
                 data: modelData.data.map((e, idx) => [START_YEAR + idx, e]),
             });
-    
+
             series.colors.push(colorNameToHex(modelData.plotStyle.color));
             series.width.push(MODEL_LINE_THICKNESS);
             series.dashArray.push(convertToStrokeStyle(modelData.plotStyle.linestyle)); // default line thickness
@@ -415,19 +432,19 @@ function generateTco3_ZmSeries({data, modelsSlice, refLineVisible}) {
 
     // generate SV!
     const svSeries = buildStatisticalSeries({
-        data, 
-        modelsSlice, 
-        buildMatrix: buildSvMatrixTco3Zm, 
+        data,
+        modelsSlice,
+        buildMatrix: buildSvMatrixTco3Zm,
         generateSingleSvSeries: generateSingleTco3ZmSeries
     });
-    
+
     return combineSeries(series, svSeries);
 }
 
 /**
- * This plugin-method is used to specify how series for tco3_zm should be build inside 
+ * This plugin-method is used to specify how series for tco3_zm should be build inside
  * the buildStatisticalValues-function.
- * 
+ *
  * @param {string} name of the series
  * @param {array} svData array of plaint numbers
  * @returns a series matching the tco3_zm style for apexcharts.
@@ -440,10 +457,10 @@ function generateSingleTco3ZmSeries(name, svData) {
 }
 
 /**
- * This plug-in method is used to specify how the data should be parsed and 
- * arranged so that the generic buildStatisticalValues-Function can 
+ * This plug-in method is used to specify how the data should be parsed and
+ * arranged so that the generic buildStatisticalValues-Function can
  * take care of the calculation.
- * 
+ *
  * The data arrangement is basically a transposition.
  * The first datapoint of each model ist grouped into the first array.
  * and so on...
@@ -459,8 +476,10 @@ function buildSvMatrixTco3Zm({modelList, data}) {
 
     for (let i = 0; i < SERIES_LENGTH; ++i) {
         for (const model of modelList) {
+            const modelData = data[model];
+            if (typeof modelData === "undefined") continue;
             matrix[i].push(
-                data[model].data[i] // add null anyway to remain index mapping (null is filtered out later)
+                modelData.data[i] // add null anyway to remain index mapping (null is filtered out later)
             )
         }
     }
@@ -484,7 +503,7 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange}) 
         width: [],
         dashArray: [],
     }
-    
+
     // 1. build boxplot
     const boxPlotValues = calculateBoxPlotValues({data, modelsSlice});
     series.data.push({
@@ -507,11 +526,12 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange}) 
         for (const [model, modelInfo] of Object.entries(groupData.models)) {
             if (!modelInfo.isVisible) continue; // skip hidden models
             const modelData = data[model];
+            if (typeof modelData === "undefined") continue; // skip model if it is not available
             const sortedData = ALL_REGIONS_ORDERED.map(region => ({
                 x: region,
                 y: filterOutOfRange(modelData.data[region], minY, maxY) || null, // null as default if data is missing
             }));
-            
+
             series.data.push({
                 name: model,
                 data: sortedData,
@@ -521,7 +541,7 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange}) 
                 colorNameToHex(modelData.plotStyle.color)
             )
         }
-    }   
+    }
 
     // 3. generate statistical values
     const svSeries = buildStatisticalSeries({
@@ -538,7 +558,7 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange}) 
             regionData.y = filterOutOfRange(regionData.y, minY, maxY);
         }
     }
-    
+
     const combined = combineSeries(series, svSeries);
 
     for (const series of combined.data) { // select chosen regions
@@ -549,9 +569,9 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange}) 
 }
 
 /**
- * This plugin-method is used to specify how series for tco3_return should be build inside 
+ * This plugin-method is used to specify how series for tco3_return should be build inside
  * the buildStatisticalValues-function.
- * 
+ *
  * @param {string} name of the series
  * @param {array} svData array of plaint numbers
  * @returns a series matching the tco3_return style for apexcharts.
@@ -572,10 +592,10 @@ function generateSingleTco3ReturnSeries(name, svData) {
 }
 
 /**
- * This plug-in method is used to specify how the data should be parsed and 
- * arranged so that the generic buildStatisticalValues-Function can 
+ * This plug-in method is used to specify how the data should be parsed and
+ * arranged so that the generic buildStatisticalValues-Function can
  * take care of the calculation.
- * 
+ *
  * The data arrangement is basically a transposition.
  * The first datapoint of each model ist grouped into the first array.
  * and so on...
@@ -590,13 +610,15 @@ function buildSvMatrixTco3Return({modelList, data}) {
     for (const index in ALL_REGIONS_ORDERED) {
         const region = ALL_REGIONS_ORDERED[index]; // iterate over regions
         for (const model of modelList) {
+            const modelData = data[model];
+            if (typeof modelData === "undefined") continue;
             matrix[index].push(
-                data[model].data[region] || null
+                modelData.data[region] || null
             )
         }
     }
     return matrix;
-    
+
 }
 
 /**
@@ -610,33 +632,35 @@ function buildSvMatrixTco3Return({modelList, data}) {
  */
 function calculateBoxPlotValues({data, modelsSlice}) {
     const boxPlotHolder = {}
-	for (let region of ALL_REGIONS_ORDERED) {
-		boxPlotHolder[region] = []
-	}
+    for (let region of ALL_REGIONS_ORDERED) {
+        boxPlotHolder[region] = []
+    }
 
-    for (const [groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups
+    for (const [id, groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups  // don't remove 'id'
         if (!groupData.isVisible) continue; // skip hidden groups
         for (const [model, modelInfo] of Object.entries(groupData.models)) {
             if (!modelInfo.isVisible) continue; // skip hidden models
-            for (const [region, year] of Object.entries(data[model].data)) {
+            const modelData = data[model];
+            if (typeof modelData === "undefined") continue; // skip model if it is not available
+            for (const [region, year] of Object.entries(modelData.data)) {
                 boxPlotHolder[region].push(year);
             }
         }
     }
-    
+
     const boxPlotValues = {}
-	for (let region of ALL_REGIONS_ORDERED) {
-		boxPlotHolder[region].sort()
-		const arr = boxPlotHolder[region]
-		boxPlotValues[region] = []
-		boxPlotValues[region].push(
-			arr[0],
-			q25(arr),
-			median(arr),
-			q75(arr),
-			arr[arr.length - 1]
-		)
-	}
+    for (let region of ALL_REGIONS_ORDERED) {
+        boxPlotHolder[region].sort()
+        const arr = boxPlotHolder[region]
+        boxPlotValues[region] = []
+        boxPlotValues[region].push(
+            arr[0],
+            q25(arr),
+            median(arr),
+            q75(arr),
+            arr[arr.length - 1]
+        )
+    }
     return boxPlotValues
 }
 
@@ -644,8 +668,8 @@ function calculateBoxPlotValues({data, modelsSlice}) {
  * This method builds the statistical series using the passed buildMatrix method 
  * that brings the data into the desired format and uses the 
  * passed generateSingleSvSeries function to transform each generated series into
- * the correct format. 
- * 
+ * the correct format.
+ *
  * @param {object} data the raw data from the api for the current options
  * @param {object} modelsSlice the slice of the store containing information about the model groups
  * @param {function} buildMatrix either buildSvMatrixTco3Zm | buildSvMatrixTco3Return, specifies how the data should be transformed
@@ -659,22 +683,22 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
         width: [],
         dashArray: [],
     };
-    
+
     const modelGroups = modelsSlice.modelGroups;
     for (const [id, groupData] of Object.entries(modelGroups)) { // don't remove 'id'
 
         const svHolder = calculateSvForModels(Object.keys(groupData.models), data, groupData, buildMatrix);
 
         for (const [sv, svData] of Object.entries(svHolder)) {
-            
-            if (sv === STATISTICAL_VALUES.derivative // std
+
+            if (sv === STATISTICAL_VALUES[std] // std
                 || sv === STATISTICAL_VALUES.percentile) continue; // skip for now
-            
+
 
             if (groupData.visibleSV[sv] // mean und median
-                || (sv.includes("std") && groupData.visibleSV[STATISTICAL_VALUES.derivative])) {
+                || (sv.includes("std") && groupData.visibleSV[STATISTICAL_VALUES[std]])) {
             } else {
-                continue; 
+                continue;
             }
             svSeries.data.push(generateSingleSvSeries(`${sv}(${groupData.name})`, svData));
             svSeries.colors.push(SV_COLORING[sv]);   // coloring?
@@ -689,7 +713,7 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
 /**
  * Calculates the statistical values for the given modelList (from a certain model group).
  * Takes into account the groupData object which stores information about the models.
- * 
+ *
  * @param {array} modelList a list of all models of a specific model group.
  * @param {object} data the raw data from the api for the current options
  * @param {object} groupData the modelsSlice data narrowed down for a specific model group
@@ -709,26 +733,25 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
         for (const sv of [...STATISTICAL_VALUES_LIST, "stdMean"]) {
             // filter out values from not included models or null values
             const filtered = arr.filter((value, idx) => value !== null && isIncludedInSv(modelList[idx], groupData, sv));
-            
+
             const value = SV_CALCULATION[sv](filtered); // null as default if NaN or undefined
             if (isNaN(value) || typeof value === "undefined") {
                 svHolder[sv].push(null);    //apexcharts default "missing" value placeholder
             } else {
-                svHolder[sv].push(value);    
+                svHolder[sv].push(value);
             }
         }
     }
 
     svHolder["mean+std"] = [];
     svHolder["mean-std"] = [];
-    for (let i = 0; i < svHolder[STATISTICAL_VALUES.derivative].length; ++i) {
-        svHolder["mean+std"].push(svHolder.stdMean[i] + svHolder.derivative[i]);
-        svHolder["mean-std"].push(svHolder.stdMean[i] - svHolder.derivative[i]);
+    for (let i = 0; i < svHolder[STATISTICAL_VALUES[std]].length; ++i) {
+        svHolder["mean+std"].push(svHolder.stdMean[i] + svHolder[STATISTICAL_VALUES[std]][i]);
+        svHolder["mean-std"].push(svHolder.stdMean[i] - svHolder[STATISTICAL_VALUES[std]][i]);
     }
     delete svHolder["stdMean"];
     return svHolder;
 }
-
 
 
 // API FORMATTING:
@@ -736,14 +759,14 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
 /**
  * Iterates through the x and y data returned from the api for the tco3_zm and fills the corresponding years with
  * either data points, if they are present or with `null`. The first index corresponds to START_YEAR
- * 
+ *
  * @param {array} xValues an array holding the years
  * @param {array} yValues an array of the same length holding the data points for the corresponding years
  */
- export function normalizeArray(xValues, yValues) {
+export function normalizeArray(xValues, yValues) {
     const result = [];
     let currentValueIndex = 0;
-    
+
     for (let year of IMPLICIT_YEAR_LIST) {
         if (xValues[currentValueIndex] === year) {
             result.push(yValues[currentValueIndex]);
@@ -815,7 +838,7 @@ export const preTransformApiData = ({plotId, data, modelsSlice}) => {
         }
 
     } else if (plotId === O3AS_PLOTS.tco3_return) {
-        
+
         for (let datum of data) {
             // top structure
             lookUpTable[datum.model] = {
@@ -844,36 +867,154 @@ export const preTransformApiData = ({plotId, data, modelsSlice}) => {
 
 /**
  * Converts the given color name to its corresponding hex code.
- * 
+ *
  * @param {string} color    The name of the color as a string
  * @returns                 The hex code corresponding to the given color name
  */
-export function colorNameToHex(color)
-{
-    const colors = {"aliceblue":"#f0f8ff","antiquewhite":"#faebd7","aqua":"#00ffff","aquamarine":"#7fffd4","azure":"#f0ffff",
-    "beige":"#f5f5dc","bisque":"#ffe4c4","black":"#000000","blanchedalmond":"#ffebcd","blue":"#0000ff","blueviolet":"#8a2be2","brown":"#a52a2a","burlywood":"#deb887",
-    "cadetblue":"#5f9ea0","chartreuse":"#7fff00","chocolate":"#d2691e","coral":"#ff7f50","cornflowerblue":"#6495ed","cornsilk":"#fff8dc","crimson":"#dc143c","cyan":"#00ffff",
-    "darkblue":"#00008b","darkcyan":"#008b8b","darkgoldenrod":"#b8860b","darkgray":"#a9a9a9","darkgreen":"#006400","darkkhaki":"#bdb76b","darkmagenta":"#8b008b","darkolivegreen":"#556b2f",
-    "darkorange":"#ff8c00","darkorchid":"#9932cc","darkred":"#8b0000","darksalmon":"#e9967a","darkseagreen":"#8fbc8f","darkslateblue":"#483d8b","darkslategray":"#2f4f4f","darkturquoise":"#00ced1",
-    "darkviolet":"#9400d3","deeppink":"#ff1493","deepskyblue":"#00bfff","dimgray":"#696969","dodgerblue":"#1e90ff",
-    "firebrick":"#b22222","floralwhite":"#fffaf0","forestgreen":"#228b22","fuchsia":"#ff00ff",
-    "gainsboro":"#dcdcdc","ghostwhite":"#f8f8ff","gold":"#ffd700","goldenrod":"#daa520","gray":"#808080","green":"#008000","greenyellow":"#adff2f",
-    "honeydew":"#f0fff0","hotpink":"#ff69b4",
-    "indianred ":"#cd5c5c","indigo":"#4b0082","ivory":"#fffff0","khaki":"#f0e68c",
-    "lavender":"#e6e6fa","lavenderblush":"#fff0f5","lawngreen":"#7cfc00","lemonchiffon":"#fffacd","lightblue":"#add8e6","lightcoral":"#f08080","lightcyan":"#e0ffff","lightgoldenrodyellow":"#fafad2",
-    "lightgrey":"#d3d3d3","lightgreen":"#90ee90","lightpink":"#ffb6c1","lightsalmon":"#ffa07a","lightseagreen":"#20b2aa","lightskyblue":"#87cefa","lightslategray":"#778899","lightsteelblue":"#b0c4de",
-    "lightyellow":"#ffffe0","lime":"#00ff00","limegreen":"#32cd32","linen":"#faf0e6",
-    "magenta":"#ff00ff","maroon":"#800000","mediumaquamarine":"#66cdaa","mediumblue":"#0000cd","mediumorchid":"#ba55d3","mediumpurple":"#9370d8","mediumseagreen":"#3cb371","mediumslateblue":"#7b68ee",
-    "mediumspringgreen":"#00fa9a","mediumturquoise":"#48d1cc","mediumvioletred":"#c71585","midnightblue":"#191970","mintcream":"#f5fffa","mistyrose":"#ffe4e1","moccasin":"#ffe4b5",
-    "navajowhite":"#ffdead","navy":"#000080",
-    "oldlace":"#fdf5e6","olive":"#808000","olivedrab":"#6b8e23","orange":"#ffa500","orangered":"#ff4500","orchid":"#da70d6",
-    "palegoldenrod":"#eee8aa","palegreen":"#98fb98","paleturquoise":"#afeeee","palevioletred":"#d87093","papayawhip":"#ffefd5","peachpuff":"#ffdab9","peru":"#cd853f","pink":"#ffc0cb","plum":"#dda0dd","powderblue":"#b0e0e6","purple":"#800080",
-    "rebeccapurple":"#663399","red":"#ff0000","rosybrown":"#bc8f8f","royalblue":"#4169e1",
-    "saddlebrown":"#8b4513","salmon":"#fa8072","sandybrown":"#f4a460","seagreen":"#2e8b57","seashell":"#fff5ee","sienna":"#a0522d","silver":"#c0c0c0","skyblue":"#87ceeb","slateblue":"#6a5acd","slategray":"#708090","snow":"#fffafa","springgreen":"#00ff7f","steelblue":"#4682b4",
-    "tan":"#d2b48c","teal":"#008080","thistle":"#d8bfd8","tomato":"#ff6347","turquoise":"#40e0d0",
-    "violet":"#ee82ee",
-    "wheat":"#f5deb3","white":"#ffffff","whitesmoke":"#f5f5f5",
-    "yellow":"#ffff00","yellowgreen":"#9acd32"};
+export function colorNameToHex(color) {
+    const colors = {
+        "aliceblue": "#f0f8ff",
+        "antiquewhite": "#faebd7",
+        "aqua": "#00ffff",
+        "aquamarine": "#7fffd4",
+        "azure": "#f0ffff",
+        "beige": "#f5f5dc",
+        "bisque": "#ffe4c4",
+        "black": "#000000",
+        "blanchedalmond": "#ffebcd",
+        "blue": "#0000ff",
+        "blueviolet": "#8a2be2",
+        "brown": "#a52a2a",
+        "burlywood": "#deb887",
+        "cadetblue": "#5f9ea0",
+        "chartreuse": "#7fff00",
+        "chocolate": "#d2691e",
+        "coral": "#ff7f50",
+        "cornflowerblue": "#6495ed",
+        "cornsilk": "#fff8dc",
+        "crimson": "#dc143c",
+        "cyan": "#00ffff",
+        "darkblue": "#00008b",
+        "darkcyan": "#008b8b",
+        "darkgoldenrod": "#b8860b",
+        "darkgray": "#a9a9a9",
+        "darkgreen": "#006400",
+        "darkkhaki": "#bdb76b",
+        "darkmagenta": "#8b008b",
+        "darkolivegreen": "#556b2f",
+        "darkorange": "#ff8c00",
+        "darkorchid": "#9932cc",
+        "darkred": "#8b0000",
+        "darksalmon": "#e9967a",
+        "darkseagreen": "#8fbc8f",
+        "darkslateblue": "#483d8b",
+        "darkslategray": "#2f4f4f",
+        "darkturquoise": "#00ced1",
+        "darkviolet": "#9400d3",
+        "deeppink": "#ff1493",
+        "deepskyblue": "#00bfff",
+        "dimgray": "#696969",
+        "dodgerblue": "#1e90ff",
+        "firebrick": "#b22222",
+        "floralwhite": "#fffaf0",
+        "forestgreen": "#228b22",
+        "fuchsia": "#ff00ff",
+        "gainsboro": "#dcdcdc",
+        "ghostwhite": "#f8f8ff",
+        "gold": "#ffd700",
+        "goldenrod": "#daa520",
+        "gray": "#808080",
+        "green": "#008000",
+        "greenyellow": "#adff2f",
+        "honeydew": "#f0fff0",
+        "hotpink": "#ff69b4",
+        "indianred ": "#cd5c5c",
+        "indigo": "#4b0082",
+        "ivory": "#fffff0",
+        "khaki": "#f0e68c",
+        "lavender": "#e6e6fa",
+        "lavenderblush": "#fff0f5",
+        "lawngreen": "#7cfc00",
+        "lemonchiffon": "#fffacd",
+        "lightblue": "#add8e6",
+        "lightcoral": "#f08080",
+        "lightcyan": "#e0ffff",
+        "lightgoldenrodyellow": "#fafad2",
+        "lightgrey": "#d3d3d3",
+        "lightgreen": "#90ee90",
+        "lightpink": "#ffb6c1",
+        "lightsalmon": "#ffa07a",
+        "lightseagreen": "#20b2aa",
+        "lightskyblue": "#87cefa",
+        "lightslategray": "#778899",
+        "lightsteelblue": "#b0c4de",
+        "lightyellow": "#ffffe0",
+        "lime": "#00ff00",
+        "limegreen": "#32cd32",
+        "linen": "#faf0e6",
+        "magenta": "#ff00ff",
+        "maroon": "#800000",
+        "mediumaquamarine": "#66cdaa",
+        "mediumblue": "#0000cd",
+        "mediumorchid": "#ba55d3",
+        "mediumpurple": "#9370d8",
+        "mediumseagreen": "#3cb371",
+        "mediumslateblue": "#7b68ee",
+        "mediumspringgreen": "#00fa9a",
+        "mediumturquoise": "#48d1cc",
+        "mediumvioletred": "#c71585",
+        "midnightblue": "#191970",
+        "mintcream": "#f5fffa",
+        "mistyrose": "#ffe4e1",
+        "moccasin": "#ffe4b5",
+        "navajowhite": "#ffdead",
+        "navy": "#000080",
+        "oldlace": "#fdf5e6",
+        "olive": "#808000",
+        "olivedrab": "#6b8e23",
+        "orange": "#ffa500",
+        "orangered": "#ff4500",
+        "orchid": "#da70d6",
+        "palegoldenrod": "#eee8aa",
+        "palegreen": "#98fb98",
+        "paleturquoise": "#afeeee",
+        "palevioletred": "#d87093",
+        "papayawhip": "#ffefd5",
+        "peachpuff": "#ffdab9",
+        "peru": "#cd853f",
+        "pink": "#ffc0cb",
+        "plum": "#dda0dd",
+        "powderblue": "#b0e0e6",
+        "purple": "#800080",
+        "rebeccapurple": "#663399",
+        "red": "#ff0000",
+        "rosybrown": "#bc8f8f",
+        "royalblue": "#4169e1",
+        "saddlebrown": "#8b4513",
+        "salmon": "#fa8072",
+        "sandybrown": "#f4a460",
+        "seagreen": "#2e8b57",
+        "seashell": "#fff5ee",
+        "sienna": "#a0522d",
+        "silver": "#c0c0c0",
+        "skyblue": "#87ceeb",
+        "slateblue": "#6a5acd",
+        "slategray": "#708090",
+        "snow": "#fffafa",
+        "springgreen": "#00ff7f",
+        "steelblue": "#4682b4",
+        "tan": "#d2b48c",
+        "teal": "#008080",
+        "thistle": "#d8bfd8",
+        "tomato": "#ff6347",
+        "turquoise": "#40e0d0",
+        "violet": "#ee82ee",
+        "wheat": "#f5deb3",
+        "white": "#ffffff",
+        "whitesmoke": "#f5f5f5",
+        "yellow": "#ffff00",
+        "yellowgreen": "#9acd32"
+    };
 
     if (typeof colors[color.toLowerCase()] != 'undefined')
         return colors[color.toLowerCase()];
@@ -883,7 +1024,7 @@ export function colorNameToHex(color)
 
 /**
  * Converts the stroke style given by the API into the format supported by apexcharts.
- * 
+ *
  * @param {number} apiStyle     The stroke style specified by the API
  * returns                      The stroke style for the apexcharts library
  */
@@ -929,41 +1070,41 @@ function create2dArray(i) {
 
 /**
  * Checks if a model is included in the statistical value calculation of a given SV-Type by using the groupData as the reference data.
- * 
+ *
  * @param {string} model        The model that should be checked
  * @param {object} groupData    The data of the group which will be used as reference for the check
  * @param {string} svType       The statistical value type that should be checked for
  * @returns                     True if the given model should be included in the SV calculation of the given SV-Type
  */
 function isIncludedInSv(model, groupData, svType) {
-    if (svType === "stdMean") return groupData.models[model][STATISTICAL_VALUES.derivative]; // the std mean should only be calculated if the "derivative" / std is necessary
-    
+    if (svType === "stdMean") return groupData.models[model][STATISTICAL_VALUES[std]]; // the std mean should only be calculated if the std is necessary
+
     return groupData.models[model][svType];
 }
 
 /**
  * Determines the optimal tick amount for a given max and min year for the x-axis.
- * 
+ *
  * @param {number} min      The selected min. year of the plot
  * @param {number} max      The selected max. year of the plot
  * @returns                 The optimal tick amount according to those values
  */
 export function getOptimalTickAmount(min, max) {
     const diff = max - min;
-    if(diff <= 40) {
+    if (diff <= 40) {
         return diff;
-    } else if(diff <= 80) {
-        return Math.floor(diff/2);
-    }else if(diff <= 150) {
-        return Math.floor(diff/5);
+    } else if (diff <= 80) {
+        return Math.floor(diff / 2);
+    } else if (diff <= 150) {
+        return Math.floor(diff / 5);
     } else {
-        return Math.floor(diff/10)
+        return Math.floor(diff / 10)
     }
 }
 
 /**
  * Determines the optimal tick amount for a given max and min year for the y-axis.
- * 
+ *
  * @param {number} min      The selected min. year of the plot
  * @param {number} max      The selected max. year of the plot
  * @returns                 The optimal tick amount according to those values
@@ -984,10 +1125,10 @@ export function getTickAmountYAxis(min, max) {
 }
 
 /**
- * Rounds a number up to a multiple of ten. If the number already is a multiple of 
- * ten the number stays the same. 
- *  
- * @param {int} minY 
+ * Rounds a number up to a multiple of ten. If the number already is a multiple of
+ * ten the number stays the same.
+ *
+ * @param {int} minY
  * @returns number rounded down to a multiple of ten
  */
 export function roundDownToMultipleOfTen(minY) {
@@ -995,10 +1136,10 @@ export function roundDownToMultipleOfTen(minY) {
 }
 
 /**
- * Rounds a number up to a multiple of ten. If the number already is a multiple of 
- * ten the number stays the same. 
- * 
- * @param {int} maxY 
+ * Rounds a number up to a multiple of ten. If the number already is a multiple of
+ * ten the number stays the same.
+ *
+ * @param {int} maxY
  * @returns number rounded up to a multiple of ten
  */
 export function roundUpToMultipleOfTen(maxY) {
@@ -1008,7 +1149,7 @@ export function roundUpToMultipleOfTen(maxY) {
 /**
  * This function aims to filter out values that are outside the provided range.
  * If the value is outside of range it is replaced with null.
- * 
+ *
  * @param {number} value the value that could be filtered out
  * @param {number} min the minimum allowed value
  * @param {number} max the maximum allowed value
@@ -1021,14 +1162,14 @@ export function filterOutOfRange(value, min, max) {
 /**
  * Function to format the labels on the y-axis nicely.
  * It hides all labels that are not a multiple of ten (i.e. all multiples of five and NOT ten).
- * 
+ *
  * @param {number} value the label value
  * @returns the value if it is a multiple of ten or an empty string to hide the label
  */
 export const formatYLabelsNicely = value => value % 10 ? "" : value
 
 /**
- * This function parses the auto-generated sv names to separate 
+ * This function parses the auto-generated sv names to separate
  * them into the sv type (e.g. mean, median) and the group.
  * 
  * @param {string} name the name of the data series (e.g. mean+std(Example Group))
@@ -1055,7 +1196,7 @@ export function parseSvName(name) {
  * @param {object} w global apexcharts object
  * @returns the desired html tooltip formatted with the correct information
  */
-export function customTooltipFormatter({ series, seriesIndex, dataPointIndex, w }) {
+export function customTooltipFormatter({series, seriesIndex, dataPointIndex, w}) {
     const modelName = w.globals.seriesNames[seriesIndex];
     const listOfSv = Object.keys(SV_COLORING); // included mean+/-std
     if (modelName.startsWith("Reference")) {
@@ -1068,7 +1209,7 @@ export function customTooltipFormatter({ series, seriesIndex, dataPointIndex, w 
             `
         )
     }
-    
+
     for (const sv of listOfSv) {
         if (modelName.startsWith(sv)) {
             // parse sv
@@ -1100,7 +1241,7 @@ export function customTooltipFormatter({ series, seriesIndex, dataPointIndex, w 
 
 function getIncludedModels(modelsSlice) {
     const visible = [];
-    
+
     for (const modelGroup of Object.values(modelsSlice.modelGroups)) {
         if (!modelGroup.isVisible) continue;
         for (const [model, modelData] of Object.entries(modelGroup.models)) {

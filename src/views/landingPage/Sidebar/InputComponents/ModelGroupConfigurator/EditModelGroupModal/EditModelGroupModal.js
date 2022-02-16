@@ -8,16 +8,13 @@ import DoneIcon from '@mui/icons-material/Done';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import IntermediateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
-import {
-    selectModelsOfGroup,
-    selectModelDataOfGroup,
-    updatePropertiesOfModelGroup
-} from "../../../../../../store/modelsSlice/modelsSlice";
-import {STATISTICAL_VALUES} from "../../../../../../utils/constants";
+import { selectModelsOfGroup, selectModelDataOfGroup, updatePropertiesOfModelGroup } from "../../../../../../store/modelsSlice/modelsSlice";
+import { STATISTICAL_VALUES, std } from "../../../../../../utils/constants";
 import PropTypes from "prop-types";
 import CardHeader from '@mui/material/CardHeader';
 import CloseIcon from '@mui/icons-material/Close';
-import {useTheme} from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
+import { convertModelName } from "../../../../../../utils/ModelNameConverter";
 
 /**
  * A DataGrid with applied CSS styling.
@@ -39,16 +36,16 @@ function createRows(modelList) {
 
     for (let i = 0; i < modelList.length; i++) {
         const model = modelList[i];
-        const info = model.match(regex);
+        const matchResult = convertModelName(model);
         rows.push({
             "id": i,
-            "model": info[0],
-            "institute": info[2],
-            "datasetAndModel": info[4],
+            "project": matchResult.project,
+            "institute": matchResult.institute,
+            "model": matchResult.name,
             "median": false,
             "mean": false,
             "percentile": false,
-            "derivative": false,
+            "standard deviation": false,
             "visible": false
         })
     }
@@ -139,10 +136,10 @@ function EditModelGroupModal(props) {
     const [meanVisible, setMeanVisible] = React.useState(modelList.map(model => modelData[model].mean));
 
     /**
-     * An array filled with boolean values that indicate whether a model is included in the derivative calculation or not.
-     * The index of each model in the array is its corresponding row id.
+     * An array filled with boolean values that indicate whether a model is included in the standard deviation (std) calculation or not.
+     * The index of each model in the array is its corresponding row id.  
      */
-    const [derivativeVisible, setDerivativeVisible] = React.useState(modelList.map(model => modelData[model].derivative));
+    const [stdVisible, setStd] = React.useState(modelList.map(model => modelData[model][std]));
 
     /**
      * An array filled with boolean values that indicate whether a model is included in the percentile calculation or not.
@@ -177,8 +174,8 @@ function EditModelGroupModal(props) {
                 return medianVisible;
             case "mean":
                 return meanVisible;
-            case "derivative":
-                return derivativeVisible;
+            case std:
+                return stdVisible;
             case "percentile":
                 return percentileVisible;
             case "visible":
@@ -203,8 +200,8 @@ function EditModelGroupModal(props) {
                 return setMedianVisible;
             case "mean":
                 return setMeanVisible;
-            case "derivative":
-                return setDerivativeVisible;
+            case std:
+                return setStd;
             case "percentile":
                 return setPercentileVisible;
             case "visible":
@@ -309,7 +306,7 @@ function EditModelGroupModal(props) {
             const model = modelList[i];
             dataCpy[model].mean = meanVisible[i];
             dataCpy[model].median = medianVisible[i];
-            dataCpy[model].derivative = derivativeVisible[i];
+            dataCpy[model].std = stdVisible[i];
             dataCpy[model].percentile = percentileVisible[i];
             dataCpy[model].isVisible = isVisible[i];
         }
@@ -323,19 +320,19 @@ function EditModelGroupModal(props) {
      * All changes are lost in the process.
      */
     const discardChanges = () => {
-        const meanData = [], medianData = [], derivativeData = [], percentileData = [], visibleData = [];
+        const meanData = [], medianData = [], stdData = [], percentileData = [], visibleData = [];
 
         for (const model of modelList) {
             meanData.push(modelData[model].mean);
             medianData.push(modelData[model].median);
-            derivativeData.push(modelData[model].derivative);
+            stdData.push(modelData[model][std]);
             percentileData.push(modelData[model].percentile);
             visibleData.push(modelData[model].isVisible);
         }
 
         setMeanVisible(meanData);
         setMedianVisible(medianData);
-        setDerivativeVisible(derivativeData);
+        setStd(stdData);
         setPercentileVisible(percentileData);
         setIsVisible(visibleData);
 
@@ -416,11 +413,10 @@ function EditModelGroupModal(props) {
      * An Object containing the specification for the columns of the data grid.
      */
     const columns = [
-        {field: 'model', headerName: 'Model', width: 120, editable: false},
-        {field: 'institute', headerName: 'Institute', width: 150, editable: false},
-        {field: 'datasetAndModel', headerName: 'Dataset and Model', width: 225, editable: false},
-        {
-            field: 'median', headerName: 'Median', sortable: false, width: 140, disableClickEventBubbling: true,
+        { field: 'project', headerName: 'Project', width: 120, editable: false},
+        { field: 'institute', headerName: 'Institute', width: 150, editable: false },
+        { field: 'model', headerName: 'Model', width: 225, editable: false },
+        { field: 'median', headerName: 'Median', sortable: false, width: 140, disableClickEventBubbling: true,
             renderHeader: () => generateHeaderName("Median"),
             renderCell: (params) => {
                 return createCellCheckBox(params, "Median")
@@ -433,12 +429,9 @@ function EditModelGroupModal(props) {
                 return createCellCheckBox(params, "Mean")
             }
         },
-        {
-            field: 'derivative', headerName: 'Derivative', sortable: false, width: 140, disableClickEventBubbling: true,
-            renderHeader: () => generateHeaderName("Derivative"),
-            renderCell: (params) => {
-                return createCellCheckBox(params, "Derivative")
-            }
+        { field: std, headerName: 'Standard deviation', sortable: false, width: 180, disableClickEventBubbling: true,
+            renderHeader: () => generateHeaderName("Standard deviation"),
+            renderCell: (params) => {return createCellCheckBox(params, "Standard deviation")}
         },
         {
             field: 'percentile', headerName: "Percentile", width: 140, sortable: false, disableClickEventBubbling: true,

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ALL_REGIONS_ORDERED, O3AS_PLOTS } from "../../utils/constants";
+import { ALL_REGIONS_ORDERED, O3AS_PLOTS, DEFAULT_MONTHS } from "../../utils/constants";
 
 /**
  * The initial state of the plotSlice defines the data structure in the 
@@ -17,9 +17,7 @@ export const initialState = {
             minLat: -90,
             maxLat: 90
         },
-        months: [
-            1, 2, 3
-        ],
+        months: DEFAULT_MONTHS,
     },
 
     plotSpecificSettings: {
@@ -167,6 +165,10 @@ const plotSlice = createSlice({
          */
         setDisplayYRange(state, action) { 
             const {minY, maxY} = action.payload;
+            if (minY === null || maxY === null) return;
+            if (!Number.isFinite(minY) || !Number.isFinite(maxY)) return;
+            if (isNaN(minY) || isNaN(maxY)) return;
+
             const displayYRange = state.plotSpecificSettings[state.plotId].displayYRange;
             displayYRange.minY = minY;
             displayYRange.maxY = maxY;
@@ -174,6 +176,10 @@ const plotSlice = createSlice({
 
         setDisplayYRangeForPlot(state, action) { 
             const {minY, maxY, plotId} = action.payload;
+            if (minY === null || maxY === null) return;
+            if (!Number.isFinite(minY) || !Number.isFinite(maxY)) return;
+            if (isNaN(minY) || isNaN(maxY)) return;
+            
             const displayYRange = state.plotSpecificSettings[plotId].displayYRange;
             displayYRange.minY = minY;
             displayYRange.maxY = maxY;

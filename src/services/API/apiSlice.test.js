@@ -198,7 +198,7 @@ describe('tests fetchPlotData thunk action creator', () => {
         plotId: "tco3_zm",
         latMin: -90, 
         latMax: 90, 
-        months: [1,2,3], 
+        months: [12, 1, 2], 
         startYear: 1959, 
         endYear: 2100, 
         modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"], 

@@ -135,7 +135,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
               <div
                 aria-colindex="1"
                 class="MuiDataGrid-columnHeader MuiDataGrid-columnHeader--sortable"
-                data-field="model"
+                data-field="project"
                 role="columnheader"
                 style="width: 120px; min-width: 120px; max-width: 120px;"
                 tabindex="0"
@@ -152,7 +152,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       class="MuiDataGrid-columnHeaderTitle css-1jbbcbn-MuiDataGrid-columnHeaderTitle"
                       data-mui-internal-clone-element="true"
                     >
-                      Model
+                      Project
                     </div>
                     <div
                       class="MuiDataGrid-iconButtonContainer css-ltf0zy-MuiDataGrid-iconButtonContainer"
@@ -269,7 +269,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
               <div
                 aria-colindex="3"
                 class="MuiDataGrid-columnHeader MuiDataGrid-columnHeader--sortable"
-                data-field="datasetAndModel"
+                data-field="model"
                 role="columnheader"
                 style="width: 225px; min-width: 225px; max-width: 225px;"
                 tabindex="-1"
@@ -286,7 +286,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       class="MuiDataGrid-columnHeaderTitle css-1jbbcbn-MuiDataGrid-columnHeaderTitle"
                       data-mui-internal-clone-element="true"
                     >
-                      Dataset and Model
+                      Model
                     </div>
                     <div
                       class="MuiDataGrid-iconButtonContainer css-ltf0zy-MuiDataGrid-iconButtonContainer"
@@ -438,9 +438,9 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
               <div
                 aria-colindex="6"
                 class="MuiDataGrid-columnHeader"
-                data-field="derivative"
+                data-field="standard deviation"
                 role="columnheader"
-                style="width: 140px; min-width: 140px; max-width: 140px;"
+                style="width: 180px; min-width: 180px; max-width: 180px;"
                 tabindex="-1"
               >
                 <div
@@ -456,7 +456,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       <svg
                         aria-hidden="true"
                         class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeSmall css-1bptiuh-MuiSvgIcon-root"
-                        data-testid="ColumnCheckboxCheckedTypeDerivative"
+                        data-testid="ColumnCheckboxCheckedTypeStandard deviation"
                         focusable="false"
                         style="margin-right: 5px;"
                         viewBox="0 0 24 24"
@@ -465,7 +465,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                           d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
                         />
                       </svg>
-                      Derivative
+                      Standard deviation
                     </div>
                   </div>
                 </div>
@@ -617,7 +617,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       aria-colindex="1"
                       class="MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="0"
-                      data-field="model"
+                      data-field="project"
                       role="cell"
                       style="min-width: 120px; max-width: 120px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
@@ -639,7 +639,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       aria-colindex="3"
                       class="MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="2"
-                      data-field="datasetAndModel"
+                      data-field="model"
                       role="cell"
                       style="min-width: 225px; max-width: 225px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
@@ -736,13 +736,13 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       aria-colindex="6"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="5"
-                      data-field="derivative"
+                      data-field="standard deviation"
                       role="cell"
-                      style="min-width: 140px; max-width: 140px; min-height: 52px; max-height: 52px;"
+                      style="min-width: 180px; max-width: 180px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
                       <div
-                        data-testid="CellCheckboxRow0TypeDerivative"
+                        data-testid="CellCheckboxRow0TypeStandard deviation"
                       >
                         <div
                           class="d-flex justify-content-between align-items-center"
@@ -875,7 +875,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       aria-colindex="1"
                       class="MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="0"
-                      data-field="model"
+                      data-field="project"
                       role="cell"
                       style="min-width: 120px; max-width: 120px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
@@ -897,7 +897,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       aria-colindex="3"
                       class="MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="2"
-                      data-field="datasetAndModel"
+                      data-field="model"
                       role="cell"
                       style="min-width: 225px; max-width: 225px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
@@ -994,13 +994,13 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       aria-colindex="6"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="5"
-                      data-field="derivative"
+                      data-field="standard deviation"
                       role="cell"
-                      style="min-width: 140px; max-width: 140px; min-height: 52px; max-height: 52px;"
+                      style="min-width: 180px; max-width: 180px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
                       <div
-                        data-testid="CellCheckboxRow1TypeDerivative"
+                        data-testid="CellCheckboxRow1TypeStandard deviation"
                       >
                         <div
                           class="d-flex justify-content-between align-items-center"
@@ -1133,7 +1133,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       aria-colindex="1"
                       class="MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="0"
-                      data-field="model"
+                      data-field="project"
                       role="cell"
                       style="min-width: 120px; max-width: 120px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
@@ -1155,7 +1155,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       aria-colindex="3"
                       class="MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="2"
-                      data-field="datasetAndModel"
+                      data-field="model"
                       role="cell"
                       style="min-width: 225px; max-width: 225px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
@@ -1252,13 +1252,13 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       aria-colindex="6"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="5"
-                      data-field="derivative"
+                      data-field="standard deviation"
                       role="cell"
-                      style="min-width: 140px; max-width: 140px; min-height: 52px; max-height: 52px;"
+                      style="min-width: 180px; max-width: 180px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
                       <div
-                        data-testid="CellCheckboxRow2TypeDerivative"
+                        data-testid="CellCheckboxRow2TypeStandard deviation"
                       >
                         <div
                           class="d-flex justify-content-between align-items-center"
