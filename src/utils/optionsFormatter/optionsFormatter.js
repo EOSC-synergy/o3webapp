@@ -661,7 +661,7 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
     };
     
     const modelGroups = modelsSlice.modelGroups;
-    for (const [groupData] of Object.entries(modelGroups)) {
+    for (const [id, groupData] of Object.entries(modelGroups)) { // don't remove 'id'
 
         const svHolder = calculateSvForModels(Object.keys(groupData.models), data, groupData, buildMatrix);
 
