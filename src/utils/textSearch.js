@@ -8,9 +8,9 @@
  */
 export const fullTextSearch = (elem, searchStr) => {
     if (typeof elem === "object") {
-        const elemVals = Object.values(elem);
+        const elemValues = Object.values(elem);
         
-        for (let value of elemVals) {
+        for (let value of elemValues) {
             if (String(value).toLowerCase().includes(searchStr.toLowerCase())) {
                 return true;
             }
@@ -21,17 +21,17 @@ export const fullTextSearch = (elem, searchStr) => {
         return elem.toLowerCase().includes(searchStr.toLowerCase());
     } else {
         throw new Error("fullTextSearch only supports objects and string to search in");
-    };
+    }
 };
 
 /**
- * Searches for occurences of a string in an array. Searches either 
+ * Searches for occurrences of a string in an array. Searches either
  * the strings in the array or the values of given objects.
- * Eeach item in the array that has the searchString as a substring is a valid search result.
+ * Each item in the array that has the searchString as a substring is a valid search result.
  * 
- * @param {array of string|object} array holds the items that are searched
+ * @param {Array.<String, Object>} array holds the items that are searched
  * @param {String} searchString specifies what should be searched for
- * @param {boolean} shouldReturnValues specifies whether performSeach returns values or indices of
+ * @param {boolean} shouldReturnValues specifies whether performSearch returns values or indices of
  *          found matches
  * @returns {array} containing the indices of all elements in the array where the searchString matched
  */

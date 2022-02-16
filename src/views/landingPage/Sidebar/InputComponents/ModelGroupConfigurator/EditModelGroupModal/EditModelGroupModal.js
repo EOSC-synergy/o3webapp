@@ -22,7 +22,7 @@ import {useTheme} from '@mui/material/styles';
 /**
  * A DataGrid with applied CSS styling.
  */
-const StyledDataGrid = styled(DataGrid)(({theme}) => ({
+const StyledDataGrid = styled(DataGrid)(() => ({
     height: "70%",
     marginTop: "3%",
 }));
@@ -56,7 +56,7 @@ function createRows(modelList) {
 }
 
 /**
- * A modal where the user can edit the visability and the inclusion in statistical value calculation
+ * A modal where the user can edit the visibility and the inclusion in statistical value calculation
  * of each model in an existing model group.
  *
  * @param {Object} props
@@ -81,7 +81,7 @@ function EditModelGroupModal(props) {
         width: '90%',
         height: '75%',
         minHeight: "75%",
-        maxHight: "100vh",
+        maxHeight: "100vh",
         overflow: "auto",
         bgcolor: theme.palette.background.default,
         boxShadow: 24,
@@ -109,7 +109,7 @@ function EditModelGroupModal(props) {
     const modelList = useSelector(state => selectModelsOfGroup(state, props.modelGroupId));
 
     /**
-     * A object containing all data about the visability and incusion in the statistical values
+     * An object containing all data about the visibility and inclusion in the statistical values'
      * calculation for each model.
      * The data is fetched from the redux store via a selector.
      */
@@ -164,7 +164,7 @@ function EditModelGroupModal(props) {
     typeList.push("visible");
 
     /**
-     * Get's the boolean list of checked and unchecked models of the selected type.
+     * Gets the boolean list of checked and unchecked models of the selected type.
      * The type is either a statistical value or the visible property.
      * E.g. "visible" would return the isVisible boolean list.
      *
@@ -190,7 +190,7 @@ function EditModelGroupModal(props) {
     }
 
     /**
-     * Get's the setter for the boolean list of checked and unchecked models of the selected type.
+     * Gets the setter for the boolean list of checked and unchecked models of the selected type.
      * The type is either a statistical value or the visible property.
      * E.g. "visible" would return the setIsVisible setter.
      *
@@ -227,8 +227,8 @@ function EditModelGroupModal(props) {
     /**
      * Generates a function that handles if a specific cell in the data grid is checked.
      *
-     * @param {boolean[]} checkedList   The boolean list with the iformation on which row is checked or not (e.g. isVisible)
-     * @param {function} setter         The setter funciton for the checkedList (e.g. setIsVisible)
+     * @param {boolean[]} checkedList   The boolean list with the information on which row is checked or not (e.g. isVisible)
+     * @param {function} setter         The setter function for the checkedList (e.g. setIsVisible)
      * @returns                         A function to handle the event if a Cell-Checkbox is clicked
      */
     const handleChecked = (checkedList, setter) => (id) => {
@@ -278,7 +278,7 @@ function EditModelGroupModal(props) {
     }
 
     /**
-     * Handles the change if an column header is clicked.
+     * Handles the change if a column header is clicked.
      *
      * @param {Object} params                       The default parameters with metadata about the clicked column
      * @param {String} params.colDef.field          The fieldId of the clicked column
@@ -291,7 +291,7 @@ function EditModelGroupModal(props) {
         const allCheckboxesSelected = areAllCheckboxesSelected(type);
         filteredRows.forEach(
             prop => {
-                visibleCopy[prop["id"]] = (allCheckboxesSelected ? false : true)
+                visibleCopy[prop["id"]] = !allCheckboxesSelected
             }
         )
         const setter = getCheckedSetterByType(type);
@@ -300,7 +300,7 @@ function EditModelGroupModal(props) {
 
     /**
      * Applies the changes made in the current session of the EditModelGroup and closes the Modal.
-     * The changes are disparched into the redux store.
+     * The changes are dispatched into the redux store.
      */
     const applyChanges = () => {
         const dataCpy = JSON.parse(JSON.stringify(modelData));

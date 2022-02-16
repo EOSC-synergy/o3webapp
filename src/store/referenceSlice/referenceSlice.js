@@ -39,7 +39,7 @@ const referenceSlice = createSlice({
      *
      * @param {object} state the current store state of: state/reference
      * @param {object} action accepts the action returned from setYear()
-     * @param {object} action.payload the payload is an object containg the given data
+     * @param {object} action.payload the payload is an object containing the given data
      * @param {number} action.payload.year a number that contains the new year.
      */
     setYear(state, action) {
@@ -57,7 +57,7 @@ const referenceSlice = createSlice({
      *
      * @param {object} state the current store state of: state/reference
      * @param {object} action accepts the action returned from setModel()
-     * @param {object} action.payload the payload is an object containg the given data
+     * @param {object} action.payload the payload is an object containing the given data
      * @param {string} action.payload.id a string that contains the new reference model name.
      */
     setModel(state, action) {
@@ -75,8 +75,8 @@ const referenceSlice = createSlice({
      *
      * @param {object} state the current store state of: state/reference
      * @param {object} action accepts the action returned from setVisibility()
-     * @param {object} action.payload the payload is an object containg the given data
-     * @param {boolean} action.payload.visible the boolean for the refearence line visibility.
+     * @param {object} action.payload the payload is an object containing the given data
+     * @param {boolean} action.payload.visible the boolean for the reference line visibility.
      */
     setVisibility(state, action) {
       const { visible } = action.payload;
@@ -93,7 +93,7 @@ const referenceSlice = createSlice({
      *
      * @param {object} state the current store state of: state/reference
      * @param {object} action accepts the action returned from setOffsetApplied()
-     * @param {object} action.payload the payload is an object containg the given data
+     * @param {object} action.payload the payload is an object containing the given data
      * @param {boolean} action.payload.isOffsetApplied the boolean for the offset status.
      */
     setOffsetApplied(state, action) {
@@ -105,7 +105,7 @@ const referenceSlice = createSlice({
 
 /**
  * The here listed actions are exported and serve as an interface for
- * the view (our react components).
+ * the view (our React components).
  */
 export const {
   setYear,
@@ -123,7 +123,7 @@ export default referenceSlice.reducer;
 
 
 /**
- * This selectors allows components to select the current reference year
+ * This selector allows components to select the current reference year
  * from the store.
  *
  * @param {object} state the global redux state
@@ -133,7 +133,7 @@ export const selectRefYear = (state) =>
   state.reference.settings.year;
 
 /**
- * This selectors allows components to select the current reference model
+ * This selector allows components to select the current reference model
  * from the store.
  *
  * @param {object} state the global redux state
@@ -143,7 +143,7 @@ export const selectRefModel = (state) =>
   state.reference.settings.model;
 
 /**
- * This selectors allows components to select the current visibility of the reference line
+ * This selector allows components to select the current visibility of the reference line
  * from the store.
  *
  * @param {object} state the global redux state
@@ -153,7 +153,7 @@ export const selectVisibility = (state) =>
   state.reference.settings.visible;
 
 /**
- * This selectors allows components to select the current status of the offset
+ * This selector allows components to select the current status of the offset
  * from the store.
  *
  * @param {object} state the global redux state

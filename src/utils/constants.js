@@ -60,10 +60,10 @@ export const months = [
     Symbol("May"), Symbol("Jun"), Symbol("Jul"), Symbol("Aug"),
     Symbol("Sep"), Symbol("Oct"), Symbol("Nov"), Symbol("Dec")
 ]
-/** Stores the ammount of months in a season */
+/** Stores the amount of months in a season */
 export const NUM_MONTHS_IN_SEASON = 3;
 
-/** Stores the ammount of months in a year */
+/** Stores the amount of months in a year */
 export const NUM_MONTHS = 12;
 
 // LatitudeBandSelector.js

@@ -344,7 +344,7 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
  *
  * This function generates data structures that can directly be passed to apexcharts.
  * It accepts the plotId because series are generated according to the type of plot.
- * Furthermore the data object holds all plot data for the selected options
+ * Furthermore, the data object holds all plot data for the selected options
  * and modelsSlice is a slice from the redux store which contains information
  * about what model groups exist, which of them are visible or should be included in the
  * statistical value calculation.
@@ -643,7 +643,7 @@ function calculateBoxPlotValues({data, modelsSlice}) {
 /**
  * This method builds the statistical series using the passed buildMatrix method 
  * that brings the data into the desired format and uses the 
- * generate passed singleSvSeries function to transform each generated series into
+ * passed generateSingleSvSeries function to transform each generated series into
  * the correct format. 
  * 
  * @param {object} data the raw data from the api for the current options
@@ -759,13 +759,13 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
  * This function is called only once when the data from the API is fetched. It transforms the data
  * into a format that (hopefully) speeds up the computation of certain things.
  *
- * The TCO3_ZM data is transformed from a x and y array into one single array whose first index
- * represents the START_YEAR) and so on. It contains either data points or null.
+ * The TCO3_ZM data is transformed from an x and y array into one single array whose first index
+ * represents the START_YEAR. It contains either data points or null.
  * x = ['1960', '1963', '1965', '1966']
  * y = [0, 1, 2, 3]
  * normalized: [0, null (1961), null (1962), 1, null (1964), 2, 3, null (1967), ...]
  *
- * The TCO3_RETURN data is transformed from a x and y array into a lookup table with the given region:
+ * The TCO3_RETURN data is transformed from an x and y array into a lookup table with the given region:
  *
  *   "x": [
  *     "Antarctic(Oct)",
@@ -921,7 +921,7 @@ function combineSeries(series1, series2) {
  * Utility function to create an array of size i with empty arrays inside it.
  * 
  * @param {number} i    The size of the array containing the empty arrays
- * @returns             The array of size i containing empty arrays
+ * @returns             The array of size 'i' containing empty arrays
  */
 function create2dArray(i) {
     return Array.from(Array(i), () => []);

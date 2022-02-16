@@ -2,7 +2,7 @@
  * This functions accepts an array, sorts it in-place and returns a reference to the same array.
  * 
  * @param {array} arr of numbers
- * @returns the array sorted ascendingly
+ * @returns the array sorted ascending
  */
 export const asc = arr => arr.sort((a, b) => a - b);
 
@@ -26,7 +26,7 @@ export const mean = arr => sum(arr) / arr.length;
 /**
  * This function calculates the standard deviation of a given array.
  * 
- * @param {array} arr of numberes
+ * @param {array} arr of numbers
  * @returns the standard deviation of the given array
  */
 export const std = (arr) => {
@@ -81,7 +81,7 @@ const q50 = arr => quantile(arr, .50);
 export const q75 = arr => quantile(arr, .75);
 
 /**
- * Returns the lmedian of the given array
+ * Returns the median of the given array
  * 
  * @param {array} arr the given array
  * @returns the median

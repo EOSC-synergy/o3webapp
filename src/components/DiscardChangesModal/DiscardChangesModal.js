@@ -8,7 +8,7 @@ import { AlertTitle } from '@mui/material';
 import PropTypes from "prop-types";
 
 /**
- * Opens a non-closable discard changes modal to ask whether the users wants to discard their changes
+ * Opens a non-closable discard changes modal to ask whether the users want to discard their changes
  * @param {Object} props 
  * @param {Boolean} props.isOpen whether the dialog modal should be opened or not
  * @param {Function} props.saveChanges function to save changes

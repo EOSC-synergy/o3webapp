@@ -9,9 +9,9 @@ import { PLOT_NAME_MAX_LEN } from "../../../../../utils/constants"
 
 /**
  * Enables the user to rename and change the plot title.
- * @param {Object} props 
+ * @param {Object} props
  * @param {function} props.reportError - function for error handling
- * @returns {JSX.Element} a textfield to change the plotname
+ * @returns {JSX.Element} a jsx containing a text-field to change the plot name
  */
 function PlotNameField() {
     
@@ -28,9 +28,9 @@ function PlotNameField() {
     const plotTitle = useSelector(selectPlotTitle);
 
     useEffect(() => {
-        // this might be done better but a controlled state throws an (yet) unsolvable redux error
-        const textfield = document.getElementById("standard-basic-plot-title-input");
-        textfield.value = plotTitle;
+        // this might be done better but a controlled state throws a (yet) unsolvable redux error
+        const textField = document.getElementById("standard-basic-plot-title-input");
+        textField.value = plotTitle;
     }, [plotId]);
 
     /** Handles the change if the text in TextField is modified. */

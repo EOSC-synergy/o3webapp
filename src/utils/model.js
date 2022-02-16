@@ -15,11 +15,11 @@
 
    // modelGroups = [
     //     {
-    //         name: "Somehting",
+    //         name: "Something",
     //         models: [
     //             {
     //                 name: "Something 2",
-    //                 institute: "Something elese"
+    //                 institute: "Something else"
     //                 dataset: "more something"
     //                 mean: true,
     //                 derivative: true,

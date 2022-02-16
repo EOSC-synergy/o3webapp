@@ -24,8 +24,8 @@ import {
 import { STATISTICAL_VALUES } from "../../../../../../utils/constants";
 
 /**
- * a card containing information about the a modal group
- * @param {OBject} props 
+ * A card containing information about a modal group.
+ * @param {Object} props
  * @param {String} props.reportError - error function
  * @param {int} props.modelGroupId -> id of the model group
  * @returns {JSX.Element} a jsx containing a modal with a data grid with all models from the model group
@@ -137,7 +137,7 @@ function ModelGroupCard(props) {
                         <Grid item key={idx} xs={6} sx={{paddingLeft: '1em'}}>
                             <FormControlLabel
                                 label={key}
-                                id={`ModelGroupCoard-toggle-${key}-label`}
+                                id={`ModelGroupCard-toggle-${key}-label`}
                                 control={
                                     <Checkbox
                                         onChange={
