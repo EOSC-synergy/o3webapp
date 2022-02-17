@@ -1,19 +1,18 @@
 import { createTestStore } from "../../store/store";
 import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, START_YEAR, MODEL_LINE_THICKNESS } from "../constants";
-import { 
-    colorNameToHex, 
-    convertToStrokeStyle, 
-    generateSeries, 
-    getOptions, 
-    normalizeArray, 
-    preTransformApiData, 
-    default_TCO3_return, 
-    getDefaultYAxisTco3Return, 
-    getOptimalTickAmount, 
-    getTickAmountYAxisTco3Zm, 
-    getTickAmountYAxisTco3Return, 
-    roundUpToMultipleOfTen, 
-    roundDownToMultipleOfTen, 
+import {
+    colorNameToHex,
+    convertToStrokeStyle,
+    generateSeries,
+    getOptions,
+    normalizeArray,
+    preTransformApiData,
+    default_TCO3_return,
+    getDefaultYAxisTco3Return,
+    getOptimalTickAmount,
+    getTickAmountYAxis,
+    roundUpToMultipleOfTen,
+    roundDownToMultipleOfTen,
     formatYLabelsNicely,
     parseSvName,
     getDefaultYAxisTco3Zm,
@@ -179,12 +178,8 @@ describe("testing optionsFormatter functionality", () => {
         expect(getOptimalTickAmount(0, max)).toEqual(max / factor);
     });
 
-    it('should calculate the optimal tick amount for the y-axis for the tco3_zm', () => {
-        expect(getTickAmountYAxisTco3Zm(0, 100)).toEqual(20);
-    });
-
-    it('should calculate the optimal tick amount for the y-axis for the tco3_return', () => {
-        expect(getTickAmountYAxisTco3Return(0, 100)).toEqual(20);
+    it('should calculate the optimal tick amount for the y-axis', () => {
+        expect(getTickAmountYAxis(0, 100)).toEqual(20);
     });
 
     it('should round up to a multiple of ten correctly', () => {

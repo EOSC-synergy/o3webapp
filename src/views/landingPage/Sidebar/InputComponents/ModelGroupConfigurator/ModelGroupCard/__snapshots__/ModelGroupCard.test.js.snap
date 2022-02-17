@@ -86,7 +86,7 @@ exports[`test ModelGroupCard functionality opens add model group modal 1`] = `
         >
           <label
             class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-            id="ModelGroupCoard-toggle-mean-label"
+            id="ModelGroupCard-toggle-mean-label"
           >
             <span
               class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
@@ -127,7 +127,7 @@ exports[`test ModelGroupCard functionality opens add model group modal 1`] = `
         >
           <label
             class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-            id="ModelGroupCoard-toggle-median-label"
+            id="ModelGroupCard-toggle-median-label"
           >
             <span
               class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
@@ -168,7 +168,7 @@ exports[`test ModelGroupCard functionality opens add model group modal 1`] = `
         >
           <label
             class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-            id="ModelGroupCoard-toggle-standard deviation-label"
+            id="ModelGroupCard-toggle-standard deviation-label"
           >
             <span
               class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
@@ -209,7 +209,7 @@ exports[`test ModelGroupCard functionality opens add model group modal 1`] = `
         >
           <label
             class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-            id="ModelGroupCoard-toggle-percentile-label"
+            id="ModelGroupCard-toggle-percentile-label"
           >
             <span
               class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
@@ -615,7 +615,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
         >
           <label
             class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-            id="ModelGroupCoard-toggle-mean-label"
+            id="ModelGroupCard-toggle-mean-label"
           >
             <span
               class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
@@ -656,7 +656,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
         >
           <label
             class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-            id="ModelGroupCoard-toggle-median-label"
+            id="ModelGroupCard-toggle-median-label"
           >
             <span
               class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
@@ -697,7 +697,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
         >
           <label
             class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-            id="ModelGroupCoard-toggle-standard deviation-label"
+            id="ModelGroupCard-toggle-standard deviation-label"
           >
             <span
               class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
@@ -738,7 +738,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
         >
           <label
             class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-            id="ModelGroupCoard-toggle-percentile-label"
+            id="ModelGroupCard-toggle-percentile-label"
           >
             <span
               class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
@@ -831,7 +831,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
       tabindex="0"
     />
     <div
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-g63ge1-MuiPaper-root-MuiCard-root"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-ltqr34-MuiPaper-root-MuiCard-root"
       tabindex="-1"
     >
       <div
@@ -2385,7 +2385,7 @@ exports[`test ModelGroupCard rendering renders correctly 1`] = `
       >
         <label
           class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-          id="ModelGroupCoard-toggle-mean-label"
+          id="ModelGroupCard-toggle-mean-label"
         >
           <span
             class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
@@ -2426,7 +2426,7 @@ exports[`test ModelGroupCard rendering renders correctly 1`] = `
       >
         <label
           class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-          id="ModelGroupCoard-toggle-median-label"
+          id="ModelGroupCard-toggle-median-label"
         >
           <span
             class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
@@ -2467,7 +2467,7 @@ exports[`test ModelGroupCard rendering renders correctly 1`] = `
       >
         <label
           class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-          id="ModelGroupCoard-toggle-standard deviation-label"
+          id="ModelGroupCard-toggle-standard deviation-label"
         >
           <span
             class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
@@ -2508,7 +2508,7 @@ exports[`test ModelGroupCard rendering renders correctly 1`] = `
       >
         <label
           class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-          id="ModelGroupCoard-toggle-percentile-label"
+          id="ModelGroupCard-toggle-percentile-label"
         >
           <span
             class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
