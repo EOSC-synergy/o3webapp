@@ -2,8 +2,8 @@ import React from "react";
 import {Grid, Typography, FormControl, TextField, Checkbox} from "@mui/material";
 import {useDispatch} from "react-redux"
 import {useSelector} from "react-redux";
-import {END_YEAR, START_YEAR, modelListBegin, modelListEnd, O3AS_PLOTS} from "../../../../../utils/constants";
-import {fetchPlotData, fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice";
+import {END_YEAR, START_YEAR, O3AS_PLOTS} from "../../../../../utils/constants";
+import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice";
 import {setYear, setVisibility, selectRefYear, selectVisibility} from "../../../../../store/referenceSlice/referenceSlice";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import MuiVisibilityIcon from '@mui/icons-material/Visibility';

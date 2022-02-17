@@ -5,8 +5,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { setModel, selectRefModel } from "../../../../../store/referenceSlice/referenceSlice";
 import PropTypes from 'prop-types';
-import {modelListBegin, modelListEnd, O3AS_PLOTS} from "../../../../../utils/constants";
-import {fetchPlotData, fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice";
+import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice";
 import { REQUEST_STATE } from "../../../../../services/API/apiSlice";
 /**
  * enables the user to select a reference model

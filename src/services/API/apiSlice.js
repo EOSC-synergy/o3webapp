@@ -2,7 +2,7 @@ import {createSlice, createAsyncThunk, createAction} from "@reduxjs/toolkit";
 import {getModels, getPlotTypes, getPlotData} from "./client";
 import {preTransformApiData} from "../../utils/optionsFormatter/optionsFormatter";
 import {START_YEAR, END_YEAR, O3AS_PLOTS} from "../../utils/constants";
-import {setDisplayYRange, setDisplayYRangeForPlot} from "../../store/plotSlice/plotSlice";
+import {setDisplayYRangeForPlot} from "../../store/plotSlice/plotSlice";
 
 /**
  * This object models an "enum" in JavaScript. Each of the values is used
