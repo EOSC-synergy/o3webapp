@@ -150,11 +150,11 @@ export const fetchPlotData = ({plotId, models}) => {
 
             if (required.length === 0) { // fetched data already satisfies users needs
                 // old: status == success
-                console.log("here!")
                 dispatch(selectExistingPlotData({plotId, cacheKey}));
-                const {min, max} = getState().api.plotSpecific[plotId].cachedRequests[cacheKey].suggested; // suggested min/max is availabe
-                
-                dispatch(setDisplayYRangeForPlot({plotId, minY: Math.floor(min), maxY: Math.floor(max)}));
+                if (cachedRequest.status === REQUEST_STATE.success) {
+                    const {min, max} = cachedRequest.suggested; // suggested min/max is availabe
+                    dispatch(setDisplayYRangeForPlot({plotId, minY: Math.floor(min), maxY: Math.floor(max)}));
+                }
                 return Promise.resolve(); // request is already satisfied
 
             } 
