@@ -4,6 +4,7 @@ import Footer from "./components/Footer/Footer";
 import ErrorMessageModal from './components/ErrorMessageModal/ErrorMessageModal';
 import LandingPage from './views/landingPage/LandingPage';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 
 
 /**
@@ -18,6 +19,8 @@ function App() {
     // const [isCookieConsentModalVisible, setCookieConsentModalVisibility] = React.useState(true);
     const [errorMessages, setErrorMessages] = React.useState([]);
     const [isSidebarOpen, setSidebarOpen] = React.useState(false);
+
+    isSidebarOpen ? disableBodyScroll(document) : enableBodyScroll(document);
 
     /**
      * Function to open sidebar

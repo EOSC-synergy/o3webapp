@@ -8,8 +8,7 @@ import DownloadModal from './DownloadModal/DownloadModal.js';
 import { selectPlotId } from "../../../store/plotSlice/plotSlice";
 import {useSelector} from "react-redux";
 import PlotTypeSelector from './InputComponents/PlotTypeSelector/PlotTypeSelector.js';
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import { Button, Typography, Divider } from '@mui/material';
+import {Button, Typography, Divider, SwipeableDrawer, Drawer} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import PropTypes from 'prop-types';
@@ -113,22 +112,29 @@ function Sidebar(props) {
     }
 
     return (
-            <SwipeableDrawer
+        <SwipeableDrawer
+            anchor="right"
+            open={props.isOpen}
+            onClose={props.onClose}
+            onOpen={props.onOpen}
+            variant="persistent"
+            sx= {{
+                '& .MuiDrawer-paper': {
+                    width: DRAWER_WIDTH,
+                    maxWidth: "100%",
+                }
+            }}
+            data-testid="sidebar"
+        >
+            <Drawer
                 anchor="right"
-                open={props.isOpen}
-                onClose={props.onClose}
-                onOpen={props.onOpen}
+                open={true}
                 variant="persistent"
                 sx= {{
-                    width: DRAWER_WIDTH,
-                    maxWidth: "100vw",
-                    flexShrink: 0,
                     '& .MuiDrawer-paper': {
-                        width: DRAWER_WIDTH,
-                        maxWidth: "100vw",
-                    },
+                        height: '92%',
+                    }
                 }}
-                data-testid="sidebar"
             > 
                 <DrawerHeader>
                     <IconButton
@@ -163,18 +169,26 @@ function Sidebar(props) {
                         />
                         </div>
                     )}
-
-                    <Button                 
-                        startIcon={<FileDownloadIcon />}
-                        variant="contained"
-                        position="fixed"
-                        sx={{ position: 'fixed', bottom: 0, right: 0, width:DRAWER_WIDTH, backgroundColor: theme.palette.primary.light, height: "8%" }}
-                        elevation={3}
-                        onClick={openDownloadModal}
-                    >
-                    Download
-                    </Button>
-                    <DownloadModal reportError={props.reportError} isOpen={isDownloadModalVisible} onClose={closeDownloadModal} />
+            </Drawer>
+            <Button
+                startIcon={<FileDownloadIcon />}
+                variant="contained"
+                position="fixed"
+                sx={{
+                    position: 'fixed',
+                    bottom: 0,
+                    right: 0,
+                    width: DRAWER_WIDTH + 1,
+                    backgroundColor: theme.palette.primary.light,
+                    height: "8%",
+                    borderRadius: 0,
+                }}
+                elevation={3}
+                onClick={openDownloadModal}
+            >
+                Download
+            </Button>
+            <DownloadModal reportError={props.reportError} isOpen={isDownloadModalVisible} onClose={closeDownloadModal} />
         </SwipeableDrawer>
     );
 }
