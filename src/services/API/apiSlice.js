@@ -1,7 +1,7 @@
 import {createSlice, createAsyncThunk, createAction} from "@reduxjs/toolkit";
 import {getModels, getPlotTypes, getPlotData} from "./client";
 import {preTransformApiData} from "../../utils/optionsFormatter/optionsFormatter";
-import {START_YEAR, END_YEAR} from "../../utils/constants";
+import {START_YEAR, END_YEAR, O3AS_PLOTS} from "../../utils/constants";
 import {setDisplayYRange, setDisplayYRangeForPlot} from "../../store/plotSlice/plotSlice";
 
 /**
@@ -88,9 +88,7 @@ const selectExistingPlotData = createAction("api/selectPlotData");
 export const updateDataAndDisplaySuggestions = ({plotId, cacheKey, data, modelsSlice}) => {
     
     return (dispatch, getState) => {
-        console.log("here1");
         dispatch(fetchPlotDataSuccess({data, plotId, cacheKey, modelsSlice}));
-        console.log("here2");
         const {min, max} = getState().api.plotSpecific[plotId].cachedRequests[cacheKey].suggested; // suggested min/max is availabe
         dispatch(setDisplayYRangeForPlot({plotId, minY: Math.floor(min / 10) * 10, maxY: Math.ceil(max / 10) * 10}));
     }
@@ -98,10 +96,14 @@ export const updateDataAndDisplaySuggestions = ({plotId, cacheKey, data, modelsS
 
 
 
-export const fetchPlotDataForCurrentModels = ({plotId}) => {
+export const fetchPlotDataForCurrentModels = () => {
     return (dispatch, getState) => {
         dispatch(
-            fetchPlotData({plotId, models: getAllSelectedModels(getState)})
+            
+            fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, models: getAllSelectedModels(getState)})
+        );
+        dispatch(
+            fetchPlotData({plotId:  O3AS_PLOTS.tco3_return, models: getAllSelectedModels(getState)})
         )
     } 
 }
@@ -144,9 +146,11 @@ export const fetchPlotData = ({plotId, models}) => {
             const loading = cachedRequest.loadingModels; // models that are beeing loaded at the moment
             
             const required = allSelected.filter(model => !loaded.includes(model) && !loading.includes(model)); // keep only models that are not loaded and currently not loading
-            
+            console.log(allSelected);
+
             if (required.length === 0) { // fetched data already satisfies users needs
                 // old: status == success
+                console.log("here!")
                 dispatch(selectExistingPlotData({plotId, cacheKey}));
                 const {min, max} = getState().api.plotSpecific[plotId].cachedRequests[cacheKey].suggested; // suggested min/max is availabe
                 
@@ -185,7 +189,7 @@ export function getAllSelectedModels(getState) {
     let allModels = [];
     const modelGroups = getState().models.modelGroups;
     for (const groupId in modelGroups) {
-        const models = modelGroups[groupId].modelList;
+        const models = Object.keys(modelGroups[groupId].models);
         const filteredModels = models.filter((item) => !allModels.includes(item));
         allModels = [...allModels, ...filteredModels];
     }
@@ -300,14 +304,6 @@ const apiSlice = createSlice({
                 console.log(storage.status)
                 const {lookUpTable, min, max} = preTransformApiData({plotId, data, modelsSlice});
                 Object.assign(storage.data, lookUpTable); // copy over new values
-                
-                /*
-                console.log(lookUpTable);
-                for (const key in lookUpTable) {
-
-                    storage.data[key] = lookUpTable[key];
-                }
-                */
 
                 // update loaded / loading
                 const fetchedModels = Object.keys(lookUpTable)

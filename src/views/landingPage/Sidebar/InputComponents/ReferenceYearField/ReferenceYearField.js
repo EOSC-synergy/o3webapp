@@ -3,7 +3,7 @@ import {Grid, Typography, FormControl, TextField, Checkbox} from "@mui/material"
 import {useDispatch} from "react-redux"
 import {useSelector} from "react-redux";
 import {END_YEAR, START_YEAR, modelListBegin, modelListEnd, O3AS_PLOTS} from "../../../../../utils/constants";
-import {fetchPlotData} from "../../../../../services/API/apiSlice";
+import {fetchPlotData, fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice";
 import {setYear, setVisibility, selectRefYear, selectVisibility} from "../../../../../store/referenceSlice/referenceSlice";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import MuiVisibilityIcon from '@mui/icons-material/Visibility';
@@ -36,8 +36,7 @@ function ReferenceYearField(props) {
             dispatch(setYear({year: event.target.value}));
             if (event.target.value >= START_YEAR && event.target.value <= END_YEAR) {
                 // fetch for tco3_zm and tco3_return
-            dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, modelListBegin, modelListEnd}));
-            dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_return, modelListBegin, modelListEnd}));
+                dispatch(fetchPlotDataForCurrentModels());
             }
         }
     };

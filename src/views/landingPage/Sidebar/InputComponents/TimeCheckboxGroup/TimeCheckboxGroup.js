@@ -14,7 +14,7 @@ import {
     SEASONS_ARRAY
 } from "../../../../../utils/constants";
 import Typography from "@mui/material/Typography";
-import {fetchPlotData} from "../../../../../services/API/apiSlice";
+import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { selectPlotMonths, setMonths } from "../../../../../store/plotSlice/plotSlice";
 import PropTypes from 'prop-types';
@@ -97,8 +97,7 @@ function TimeCheckBoxGroup(props) {
 
         dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
 
-        dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, modelListBegin, modelListEnd}));
-        dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_return, modelListBegin, modelListEnd}));
+        dispatch(fetchPlotDataForCurrentModels());
     }
 
     /**

@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { setModel, selectRefModel } from "../../../../../store/referenceSlice/referenceSlice";
 import PropTypes from 'prop-types';
 import {modelListBegin, modelListEnd, O3AS_PLOTS} from "../../../../../utils/constants";
-import {fetchPlotData} from "../../../../../services/API/apiSlice";
+import {fetchPlotData, fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice";
 import { REQUEST_STATE } from "../../../../../services/API/apiSlice";
 /**
  * enables the user to select a reference model
@@ -43,8 +43,8 @@ function ReferenceModelSelector(props) {
     const handleChangeForRefModel = (event) => {
         dispatch(setModel({model: event.target.value}));
         // fetch for tco3_zm and tco3_return
-        dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, modelListBegin, modelListEnd}));
-        dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_return, modelListBegin, modelListEnd}));
+        dispatch(fetchPlotDataForCurrentModels());
+
     };
 
 
