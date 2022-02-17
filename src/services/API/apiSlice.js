@@ -61,7 +61,10 @@ export const generateCacheKey = ({latMin, latMax, months, refModel, refYear}) =>
  * This action creator generates an action that is dispatched against the store
  * when the request of the data is started. The payload contains the plotId and the cacheKey.
  */
-const fetchPlotDataPending = createAction("api/fetchPlotData/pending");
+const fetchPlotDataInitiallyPending = createAction("api/fetchPlotData/initiallyPending");
+
+const fetchPlotDataRefetching = createAction("api/fetchPlotData/refetching");
+
 /**
  * This action creator generates an action that is dispatched against the store
  * when the request of the data succeded. The payload object contains the data, the cacheKey and
@@ -83,12 +86,24 @@ const selectExistingPlotData = createAction("api/selectPlotData");
 
 
 export const updateDataAndDisplaySuggestions = ({plotId, cacheKey, data, modelsSlice}) => {
-
+    
     return (dispatch, getState) => {
-        dispatch(fetchPlotDataSuccess({data, plotId, cacheKey, modelsSlice}))
+        console.log("here1");
+        dispatch(fetchPlotDataSuccess({data, plotId, cacheKey, modelsSlice}));
+        console.log("here2");
         const {min, max} = getState().api.plotSpecific[plotId].cachedRequests[cacheKey].suggested; // suggested min/max is availabe
         dispatch(setDisplayYRangeForPlot({plotId, minY: Math.floor(min / 10) * 10, maxY: Math.ceil(max / 10) * 10}));
     }
+}
+
+
+
+export const fetchPlotDataForCurrentModels = ({plotId}) => {
+    return (dispatch, getState) => {
+        dispatch(
+            fetchPlotData({plotId, models: getAllSelectedModels(getState)})
+        )
+    } 
 }
 
 /**
@@ -99,19 +114,13 @@ export const updateDataAndDisplaySuggestions = ({plotId, cacheKey, data, modelsS
  * @param {number} modelListEnd for faster testing limit fetching of model list
  * @returns the async thunk action
  */
-export const fetchPlotData = ({plotId, modelListBegin, modelListEnd}) => {
+export const fetchPlotData = ({plotId, models}) => {
 
     return (dispatch, getState) => {
         if (typeof plotId === "undefined") plotId = getState().plot.plotId; // backwards compatible
         const latMin = getState().plot.generalSettings.location.minLat;
         const latMax = getState().plot.generalSettings.location.maxLat;
         const months = getState().plot.generalSettings.months;
-        let modelList = getState().api.models.data.filter(modelName => modelName.includes("refC2") || modelName.includes("ACCESS"));
-        /*
-        if (typeof modelListBegin !== 'undefined' && typeof modelListEnd !== 'undefined') {
-            modelList = modelList.slice(modelListBegin, modelListEnd);
-        }
-        */
         const startYear = START_YEAR;
         const endYear = END_YEAR;
         const refModel = getState().reference.settings.model;
@@ -122,26 +131,36 @@ export const fetchPlotData = ({plotId, modelListBegin, modelListEnd}) => {
         // if the request is already loading
         const cachedRequest = getState().api.plotSpecific[plotId].cachedRequests[cacheKey];
 
+        let toBeFetched;
+
         if (typeof cachedRequest === "undefined") {
-            // do nothing
-        } else if (cachedRequest.status === REQUEST_STATE.loading) {
-            // just select the current data obj (=> display loading spinner accordingly)
-            dispatch(selectExistingPlotData({plotId, cacheKey}));
-            return;
-        } else if (cachedRequest.status === REQUEST_STATE.success) {
-            dispatch(selectExistingPlotData({plotId, cacheKey}));
-            const {min, max} = getState().api.plotSpecific[plotId].cachedRequests[cacheKey].suggested; // suggested min/max is availabe
+            // Initial action dispatched
+            toBeFetched = models;
+            dispatch(fetchPlotDataInitiallyPending({plotId, cacheKey, loadingModels: toBeFetched}));
             
-            dispatch(setDisplayYRangeForPlot({plotId, minY: Math.floor(min), maxY: Math.floor(max)}));
-            return Promise.resolve(); // request is already satisfied
+        } else {
+            const allSelected = getAllSelectedModels(getState);
+            const loaded = cachedRequest.loadedModels;   // models that are already loaded
+            const loading = cachedRequest.loadingModels; // models that are beeing loaded at the moment
+            
+            const required = allSelected.filter(model => !loaded.includes(model) && !loading.includes(model)); // keep only models that are not loaded and currently not loading
+            
+            if (required.length === 0) { // fetched data already satisfies users needs
+                // old: status == success
+                dispatch(selectExistingPlotData({plotId, cacheKey}));
+                const {min, max} = getState().api.plotSpecific[plotId].cachedRequests[cacheKey].suggested; // suggested min/max is availabe
+                
+                dispatch(setDisplayYRangeForPlot({plotId, minY: Math.floor(min), maxY: Math.floor(max)}));
+                return Promise.resolve(); // request is already satisfied
+
+            } 
+            // new fetch is required
+            toBeFetched = required;
+            dispatch(fetchPlotDataRefetching({plotId, cacheKey, loadingModels: toBeFetched}));
         }
 
-        // Initial action dispatched
-        dispatch(fetchPlotDataPending({plotId, cacheKey}));
-
         // Return promise with success and failure actions
-
-        return getPlotData({plotId, latMin, latMax, months, modelList, startYear, endYear, refModel, refYear})
+        return getPlotData({plotId, latMin, latMax, months, modelList: toBeFetched, startYear, endYear, refModel, refYear})
             .then(
                 response => dispatch(updateDataAndDisplaySuggestions({
                     plotId,
@@ -151,9 +170,27 @@ export const fetchPlotData = ({plotId, modelListBegin, modelListEnd}) => {
                 })),
                 error => dispatch(fetchPlotDataRejected({error: error.message, plotId, cacheKey})),
             );
+        
 
     };
 };
+
+/**
+ * Get's all selected models from the models slice.
+ * 
+ * @param {function} getState a function to get the state of the store
+ * @returns all selected models from the store
+ */
+export function getAllSelectedModels(getState) {
+    let allModels = [];
+    const modelGroups = getState().models.modelGroups;
+    for (const groupId in modelGroups) {
+        const models = modelGroups[groupId].modelList;
+        const filteredModels = models.filter((item) => !allModels.includes(item));
+        allModels = [...allModels, ...filteredModels];
+    }
+    return allModels;
+}
 
 /**
  * This initial state describes how the data fetched from the api is stored in this
@@ -233,26 +270,62 @@ const apiSlice = createSlice({
             })
 
             // fetch plot data
-            .addCase(fetchPlotDataPending, (state, action) => {
-                const {plotId, cacheKey} = action.payload;
+            .addCase(fetchPlotDataInitiallyPending, (state, action) => {
+                const {plotId, cacheKey, loadingModels} = action.payload;
                 const plotSpecificSection = state.plotSpecific[plotId];
 
                 plotSpecificSection.cachedRequests[cacheKey] = {
                     status: REQUEST_STATE.loading,
+                    loadingModels: [...loadingModels], // models that are currently beeing fetched
+                    loadedModels: [],
                     error: null,
-                    data: [],
+                    data: {},
                     suggested: null, // this holds the suggested min / max values
                 };
                 plotSpecificSection.active = cacheKey; // select this request after dispatching it
             })
+            .addCase(fetchPlotDataRefetching, (state, action) => {
+                const {plotId, cacheKey, loadingModels} = action.payload;
+                const plotSpecificSection = state.plotSpecific[plotId];
+                
+                const cachedRequest = plotSpecificSection.cachedRequests[cacheKey];
+                cachedRequest.status = REQUEST_STATE.loading;
+                cachedRequest.loadingModels.push(...loadingModels);
+
+                plotSpecificSection.active = cacheKey; // select this request after dispatching it
+            }) 
             .addCase(fetchPlotDataSuccess, (state, action) => {
                 const {data, plotId, cacheKey, modelsSlice} = action.payload;
                 const storage = state.plotSpecific[plotId].cachedRequests[cacheKey];
-                storage.status = REQUEST_STATE.success;
+                console.log(storage.status)
                 const {lookUpTable, min, max} = preTransformApiData({plotId, data, modelsSlice});
-                storage.data = lookUpTable;
-                storage.suggested = {min, max};
+                Object.assign(storage.data, lookUpTable); // copy over new values
+                
+                /*
+                console.log(lookUpTable);
+                for (const key in lookUpTable) {
 
+                    storage.data[key] = lookUpTable[key];
+                }
+                */
+
+                // update loaded / loading
+                const fetchedModels = Object.keys(lookUpTable)
+                storage.loadingModels = storage.loadingModels.filter(model => !fetchedModels.includes(model)); // remove all models that are now fetched
+                storage.loadedModels = [...storage.loadedModels, ...fetchedModels];
+
+                storage.status = REQUEST_STATE.success; // display models
+
+                // update suggestions
+                if (storage.suggested) {
+                    const {min: oldMin, max: oldMax} = storage.suggested;
+                    storage.suggested = {
+                        min: Math.min(min, oldMin), 
+                        max: Math.max(max, oldMax)
+                    };
+                } else {
+                    storage.suggested = {min, max};
+                }
             })
             .addCase(fetchPlotDataRejected, (state, action) => {
                 const {error, plotId, cacheKey} = action.payload;

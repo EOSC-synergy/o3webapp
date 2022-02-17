@@ -1,4 +1,4 @@
-import reducer, { fetchModels, fetchPlotData, fetchPlotTypes, generateCacheKey, REQUEST_STATE, selectActivePlotData } from "./apiSlice";
+import reducer, { fetchModels, fetchPlotData, fetchPlotTypes, generateCacheKey, REQUEST_STATE, selectActivePlotData, getAllSelectedModels } from "./apiSlice";
 import axios from 'axios';
 import { configureStore } from "@reduxjs/toolkit";
 import { createTestStore } from "../../store/store";
@@ -273,5 +273,16 @@ describe('testing selectors', () => {
             }
         }
         expect(selectActivePlotData(previousState, "tco3_return")).toEqual("precious data");
+    });
+});
+
+describe('testing utils functions', () => {
+    beforeEach(() => {
+        store = createTestStore();
+    });
+
+    test("getAllSelectedModels selects all models", () => {
+        const selectedModels = getAllSelectedModels(store.getState);
+        expect(selectedModels).toEqual(["CCMI-1_ACCESS_ACCESS-CCM-refC2", "CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG", "CCMI-1_CCCma_CMAM-refC2"])
     });
 });

@@ -3,12 +3,11 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import store from './store/store';
 import {Provider} from 'react-redux';
-import { fetchModels, fetchPlotData, fetchPlotTypes } from './services/API/apiSlice';
-import {modelListBegin, modelListEnd} from "./utils/constants";
+import { fetchModels, fetchPlotDataForCurrentModels, fetchPlotTypes } from './services/API/apiSlice';
 
 const reloadInitialData = () => {
     store.getState().api.plotTypes.data.map((name) => {
-        store.dispatch(fetchPlotData({plotId: name, modelListBegin, modelListEnd}));
+        store.dispatch(fetchPlotDataForCurrentModels({plotId: name}));
     });
 }
 
