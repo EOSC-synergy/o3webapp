@@ -303,7 +303,6 @@ const apiSlice = createSlice({
                 const storage = state.plotSpecific[plotId].cachedRequests[cacheKey];
 
                 const {lookUpTable, min, max} = preTransformApiData({plotId, data, modelsSlice});
-                console.log(min, max);
                 Object.assign(storage.data, lookUpTable); // copy over new values
 
                 // update loaded / loading
@@ -316,7 +315,6 @@ const apiSlice = createSlice({
                 // update suggestions
                 if (storage.suggested) {
                     const {min: oldMin, max: oldMax} = storage.suggested;
-                    //console.log(oldMin, oldMax)
                     
                     storage.suggested = {
                         min: Math.min(min, oldMin), 

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { configureStore } from "@reduxjs/toolkit";
 import { createTestStore } from "../../store/store";
 import * as optionsFormatter from "../../utils/optionsFormatter/optionsFormatter";
+import { O3AS_PLOTS } from "../../utils/constants";
 
 /*
 const spy = jest.spyOn(optionsFormatter, 'preTransformApiData');
@@ -217,7 +218,7 @@ describe('tests fetchPlotData thunk action creator', () => {
         ).toEqual("lat_min=-90&lat_min=90&months=1,2&ref_meas=modelRef&ref_year=420");
     })
 
-    it('should dispatch a loading status', () => {
+    it('should dispatch a loading status and add the models to loading', () => {
         axios.post.mockResolvedValue({data: [
             {
               "legalinfo": "https://o3as.data.kit.edu/policies/terms-of-use.html",
@@ -230,15 +231,17 @@ describe('tests fetchPlotData thunk action creator', () => {
               "x": [],
               "y": [],
             }]});
-        store.dispatch(fetchPlotData(exampleRequestData));
+        store.dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, models: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"]}));
         
         const plotSpecificSection = store.getState().api.plotSpecific["tco3_zm"];
         expect(plotSpecificSection.active).toEqual(exampleCacheKey);
         expect(plotSpecificSection.cachedRequests[exampleCacheKey]).toEqual({
-            data: [],
+            data: {},
             error: null,
             status: REQUEST_STATE.loading,
             suggested: null,
+            loadedModels: [],
+            loadingModels: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"]
         });
         
     });
