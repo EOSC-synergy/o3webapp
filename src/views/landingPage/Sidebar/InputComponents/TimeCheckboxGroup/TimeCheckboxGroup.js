@@ -8,9 +8,6 @@ import {
     Autumn,
     NUM_MONTHS_IN_SEASON,
     NUM_MONTHS,
-    modelListBegin,
-    modelListEnd,
-    O3AS_PLOTS,
     SEASONS_ARRAY
 } from "../../../../../utils/constants";
 import Typography from "@mui/material/Typography";
