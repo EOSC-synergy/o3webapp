@@ -278,7 +278,7 @@ function DownloadModal(props) {
                       </Select>
                   </FormControl>
               </CardContent>
-              <CardActions sx={{justifyContent: "flex-end"}}>
+              <CardActions sx={{justifyContent: "flex-end", marginTop: "2%"}}>
                   <Button
                       disabled={activeData.status !== REQUEST_STATE.success}
                       variant="contained"
