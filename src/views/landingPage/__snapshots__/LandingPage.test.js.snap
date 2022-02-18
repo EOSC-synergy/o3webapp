@@ -939,62 +939,72 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                               <p
                                 class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
                               >
-                                LATITUDE BAND
-                              </p>
-                            </span>
-                          </div>
-                          <div
-                            class="MuiBox-root css-1n3sbe4"
+                                ​
+                              </span>
+                            </legend>
+                          </fieldset>
+                        </div>
+                      </div>
+                      <div
+                        class="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-1ws8119-MuiDivider-root"
+                        role="separator"
+                        style="margin-top: 5%;"
+                      >
+                        <span
+                          class="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
+                        >
+                          <p
+                            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
                           >
-                            <div
-                              class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary css-vwjx0e-MuiInputBase-root-MuiOutlinedInput-root"
+                            TIME
+                          </p>
+                        </span>
+                      </div>
+                      <div
+                        class="MuiGrid-root MuiGrid-container css-1lym95h-MuiGrid-root"
+                      >
+                        <div
+                          class="MuiGrid-root MuiGrid-container MuiGrid-item css-1h16bbz-MuiGrid-root"
+                        >
+                          <div
+                            class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                          >
+                            <label
+                              class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                             >
-                              <div
-                                aria-expanded="false"
-                                aria-haspopup="listbox"
-                                aria-labelledby="latitudeBandSelector"
-                                class="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
-                                id="latitudeBandSelector"
-                                role="button"
-                                tabindex="0"
+                              <span
+                                class="MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-indeterminate MuiCheckbox-colorPrimary PrivateSwitchBase-root css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
                               >
-                                Global (90°S–90°N)
-                              </div>
-                              <input
-                                aria-hidden="true"
-                                class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
-                                tabindex="-1"
-                                value="[object Object]"
-                              />
-                              <svg
-                                aria-hidden="true"
-                                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
-                                data-testid="ArrowDropDownIcon"
-                                focusable="false"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  d="M7 10l5 5 5-5z"
+                                <input
+                                  class="PrivateSwitchBase-input css-1m9pwf3"
+                                  data-indeterminate="true"
+                                  data-testid="CheckboxAllYear"
+                                  type="checkbox"
                                 />
-                              </svg>
-                              <fieldset
-                                aria-hidden="true"
-                                class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
-                              >
-                                <legend
-                                  class="css-nnbavb"
+                                <svg
+                                  aria-hidden="true"
+                                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                                  data-testid="IndeterminateCheckBoxIcon"
+                                  focusable="false"
+                                  viewBox="0 0 24 24"
                                 >
-                                  <span
-                                    class="notranslate"
-                                  >
-                                    ​
-                                  </span>
-                                </legend>
-                              </fieldset>
-                            </div>
+                                  <path
+                                    d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10H7v-2h10v2z"
+                                  />
+                                </svg>
+                                <span
+                                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                                />
+                              </span>
+                              <span
+                                class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
+                              >
+                                All year
+                              </span>
+                            </label>
                           </div>
                           <div
-                            style="margin-top: 5%;"
+                            class="MuiGrid-root MuiGrid-container MuiGrid-item css-1h16bbz-MuiGrid-root"
                           >
                             <div
                               class="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-1ws8119-MuiDivider-root"
@@ -1053,10 +1063,10 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                   class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                                 >
                                   <div
-                                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
+                                    class="MuiGrid-root MuiGrid-container css-1lym95h-MuiGrid-root"
                                   >
                                     <div
-                                      data-test-id="CheckboxSeason0"
+                                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                                     >
                                       <label
                                         class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
@@ -1092,6 +1102,10 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                           Winter
                                         </span>
                                       </label>
+                                    </div>
+                                    <div
+                                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                                    >
                                       <div
                                         class="MuiBox-root css-agnjr6"
                                       >
@@ -1203,11 +1217,19 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                       </div>
                                     </div>
                                   </div>
+                                </div>
+                              </div>
+                              <div
+                                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
+                              >
+                                <div
+                                  data-test-id="CheckboxSeason1"
+                                >
                                   <div
-                                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
+                                    class="MuiGrid-root MuiGrid-container css-1lym95h-MuiGrid-root"
                                   >
                                     <div
-                                      data-test-id="CheckboxSeason1"
+                                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                                     >
                                       <label
                                         class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
@@ -1242,6 +1264,10 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                           Spring
                                         </span>
                                       </label>
+                                    </div>
+                                    <div
+                                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                                    >
                                       <div
                                         class="MuiBox-root css-agnjr6"
                                       >
@@ -1355,10 +1381,10 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                   class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
                                 >
                                   <div
-                                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
+                                    class="MuiGrid-root MuiGrid-container css-1lym95h-MuiGrid-root"
                                   >
                                     <div
-                                      data-test-id="CheckboxSeason2"
+                                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                                     >
                                       <label
                                         class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
@@ -1393,6 +1419,10 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                           Summer
                                         </span>
                                       </label>
+                                    </div>
+                                    <div
+                                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                                    >
                                       <div
                                         class="MuiBox-root css-agnjr6"
                                       >
@@ -1501,11 +1531,19 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                       </div>
                                     </div>
                                   </div>
+                                </div>
+                              </div>
+                              <div
+                                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
+                              >
+                                <div
+                                  data-test-id="CheckboxSeason3"
+                                >
                                   <div
-                                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 css-1osj8n2-MuiGrid-root"
+                                    class="MuiGrid-root MuiGrid-container css-1lym95h-MuiGrid-root"
                                   >
                                     <div
-                                      data-test-id="CheckboxSeason3"
+                                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                                     >
                                       <label
                                         class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
@@ -1540,6 +1578,10 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                           Autumn
                                         </span>
                                       </label>
+                                    </div>
+                                    <div
+                                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+                                    >
                                       <div
                                         class="MuiBox-root css-agnjr6"
                                       >
