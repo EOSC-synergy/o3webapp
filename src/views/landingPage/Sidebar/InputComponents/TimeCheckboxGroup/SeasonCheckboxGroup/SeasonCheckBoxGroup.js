@@ -1,5 +1,5 @@
 import React from "react";
-import {Box, Checkbox, FormControlLabel} from "@mui/material";
+import {Box, Checkbox, FormControlLabel, Grid} from "@mui/material";
 import { months, NUM_MONTHS_IN_SEASON } from "../../../../../../utils/constants";
 import PropTypes from 'prop-types';
 
@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
  * @param {function} props.handleSeasonClicked - function to handle if the whole season got selected / deselected
  * @param {function} props.handleMonthClicked - function to handle if a month got selected / deselected
  * @param {function} props.reportError - a function to report an error
- * @returns {JSX} a jsx containing a checkbox-group with given months and label
+ * @returns {JSX.Element} a jsx containing a checkbox-group with given months and label
  */
 function SeasonCheckBoxGroup(props) {
 
@@ -52,35 +52,41 @@ function SeasonCheckBoxGroup(props) {
 
     return (
         <div data-test-id={`CheckboxSeason${props.seasonId}`}>
-            <FormControlLabel
-                label={props.label}
-                control={
-                    <Checkbox
-                        inputProps={{'data-testid':`CheckboxSeasonNum${props.seasonId}`}}
-                        indeterminate={isIndeterminate()}
-                        checked={isEveryMonthChecked()}
-                        onChange={() => props.handleSeasonClicked(props.seasonId)}
+            <Grid container justifyContent="center">
+                <Grid item>
+                    <FormControlLabel
+                        label={props.label}
+                        control={
+                            <Checkbox
+                                inputProps={{'data-testid':`CheckboxSeasonNum${props.seasonId}`}}
+                                indeterminate={isIndeterminate()}
+                                checked={isEveryMonthChecked()}
+                                onChange={() => props.handleSeasonClicked(props.seasonId)}
 
+                            />
+                        }
                     />
-                }
-            />
-            <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
-                {props.months.map(({monthId, checked}) => {
-                    return (<React.Fragment key={monthId}> {
-                        <FormControlLabel
-                            label={months[monthId - 1].description}
-                            control={
-                                <Checkbox 
-                                    inputProps={{'data-testid':"CheckboxMonth" + monthId}}
-                                    checked={checked} 
-                                    onChange={() => props.handleMonthClicked(monthId) }
+                </Grid>
+                <Grid item>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
+                        {props.months.map(({monthId, checked}) => {
+                            return (<React.Fragment key={monthId}> {
+                                <FormControlLabel
+                                    label={months[monthId - 1].description}
+                                    control={
+                                        <Checkbox
+                                            inputProps={{'data-testid':"CheckboxMonth" + monthId}}
+                                            checked={checked}
+                                            onChange={() => props.handleMonthClicked(monthId) }
+                                        />
+                                    }
                                 />
                             }
-                        />
-                    }
-                    </React.Fragment>)}
-                )}
-            </Box>
+                            </React.Fragment>)}
+                        )}
+                    </Box>
+                </Grid>
+            </Grid>
         </div>
     );
 }
