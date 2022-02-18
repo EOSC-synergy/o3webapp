@@ -84,7 +84,7 @@ export const modelGroups = {
  */
 const initialState = {
     idCounter: 1,
-    // currently active plot
+    // the currently active plot
     modelGroups: modelGroups
 }
 
@@ -115,7 +115,7 @@ const modelsSlice = createSlice({
          * 
          * @param {object} state the current store state of: state/models
          * @param {object} action accepts the action returned from updateModelGroup()
-         * @param {object} action.payload the payload is an object containg the given data
+         * @param {object} action.payload the payload is an object containing the given data
          * @param {int} action.payload.groupId the name of the group to set
          * @param {string} action.payload.groupName the name of the group
          * @param {string} action.payload.modelList the list of models the group should have
@@ -139,7 +139,7 @@ const modelsSlice = createSlice({
                     if (!(model in selectedModelGroup.models)){ // initialize with default settings
                         selectedModelGroup.models[model] = JSON.parse(JSON.stringify(MODEL_DATA_TEMPLATE));
                     }
-                };
+                }
                 
             } else { // create new group
                 const newGroupId = state.idCounter++;
@@ -148,7 +148,7 @@ const modelsSlice = createSlice({
 
                 for (let model of modelList) {
                     currentGroup.models[model] = JSON.parse(JSON.stringify(MODEL_DATA_TEMPLATE));
-                };
+                }
                 
                 state.modelGroups[newGroupId] = currentGroup;
             }
@@ -171,14 +171,13 @@ const modelsSlice = createSlice({
          * 
          * @param {object} state the current store state of: state/models
          * @param {object} action accepts the action returned from deleteModelGroup()
-         * @param {object} action.payload the payload is an object containg the given data
-         * @param {int} action.payload.groupId the name of the group that should be deleted
+         * containing         * @param {int} action.payload.groupId the name of the group that should be deleted
          */
         deleteModelGroup(state, action) {
             const { groupId } = action.payload;
             if (!(groupId in state.modelGroups)) { // no group with this name in store
-                throw `tried to access "${groupId}" which is not a valid group`;
-            };
+                throw new Error(`tried to access "${groupId}" which is not a valid group`);
+            }
 
             delete state.modelGroups[groupId]; // delete from lookup table
 
@@ -197,7 +196,7 @@ const modelsSlice = createSlice({
          * 
          * @param {object} state the current store state of: state/models
          * @param {object} action accepts the action returned from deleteModelGroup()
-         * @param {object} action.payload the payload is an object containg the given data
+         * @param {object} action.payload the payload is an object containing the given data
          * @param {int} action.payload.groupId the name of the group whose model properties should be updated
          * @param {object} action.payload.data holds the information that should be updated 
          */
@@ -205,8 +204,8 @@ const modelsSlice = createSlice({
             const { groupId, data } = action.payload;
 
             if (!(groupId in state.modelGroups)) { // no group with this name in store
-                throw `tried to access "${groupId}" which is not a valid group`;
-            };
+                throw new Error(`tried to access "${groupId}" which is not a valid group`);
+            }
 
             for (let model of Object.keys(state.modelGroups[groupId].models)) {
                 const { color, mean, median, std, percentile, isVisible } = data[model]; // expect data to meet certain scheme
@@ -218,7 +217,7 @@ const modelsSlice = createSlice({
                     percentile,
                     isVisible,
                 };
-            };
+            }
         },
 
         /**
@@ -234,7 +233,7 @@ const modelsSlice = createSlice({
          * 
          * @param {object} state the current store state of: state/models
          * @param {object} action accepts the action returned from updateModelGroup()
-         * @param {object} action.payload the payload is an object containg the given data
+         * @param {object} action.payload the payload is an object containing the given data
          * @param {int} action.payload.groupId a string specifying the group
          * @param {string} action.payload.svType the SV as a string
          * @param {boolean} action.payload.isIncluded should the SV be displayed for the given group
@@ -243,11 +242,11 @@ const modelsSlice = createSlice({
             const { groupId, svType, isIncluded } = action.payload;
             
             if (!STATISTICAL_VALUES_LIST.includes(svType)) { // svType doesn't represent a valid statistical value
-                throw `tried to set statistial value "${svType}" that is not a valid statistical value (${STATISTICAL_VALUES_LIST.join("|")})`;
+                throw new Error(`tried to set statistical value "${svType}" that is not a valid statistical value (${STATISTICAL_VALUES_LIST.join("|")})`);
             }
             if (!(groupId in state.modelGroups)) { // no group with this name in store
-                throw `tried to access "${groupId}" which is not a valid group`;
-            };
+                throw new Error(`tried to access "${groupId}" which is not a valid group`);
+            }
 
             state.modelGroups[groupId].visibleSV[svType] = isIncluded;
         },
@@ -255,16 +254,16 @@ const modelsSlice = createSlice({
         /**
          * This reducer accepts an action object returned from setVisibilityForGroup()
          *      e.g. dispatch(setVisibilityForGroup(
-         *          {groupID: 0, isVisibile: true}
+         *          {groupID: 0, isVisible: true}
          *      ));
          * and calculates the new state based on the action and the action 
          * data given in action.payload.
          * 
-         * In this case for a given group is set whether it should be visibile or not.
+         * In this case for a given group is set whether it should be visible or not.
          * 
          * @param {object} state the current store state of: state/models
          * @param {object} action accepts the action returned from updateModelGroup()
-         * @param {object} action.payload the payload is an object containg the given data
+         * @param {object} action.payload the payload is an object containing the given data
          * @param {int} action.payload.groupId a string specifying the group
          * @param {string} action.payload.svType the SV as a string
          * @param {boolean} action.payload.isIncluded should the SV be displayed for the given group
@@ -273,8 +272,8 @@ const modelsSlice = createSlice({
             const { groupId, isVisible } = action.payload;
 
             if (!(groupId in state.modelGroups)) {
-                throw `tried to access "${groupId}" which is not a valid group`;
-            };
+                throw new Error(`tried to access "${groupId}" which is not a valid group`);
+            }
 
             state.modelGroups[groupId].isVisible = isVisible;
         },
@@ -283,7 +282,7 @@ const modelsSlice = createSlice({
 
 /**
  * The here listed actions are exported and serve as an interface for
- * the view (our react components).
+ * the view (our React components).
  */
 export const { 
     setModelsOfModelGroup,
@@ -304,7 +303,7 @@ export default modelsSlice.reducer;
  *
  * @param {object} state the global redux state
  * @param {int} groupId the group id specifies which group should be retrieved
- * @returns an array containg all models currently in the given group
+ * @returns an array containing all models currently in the given group
  */
 export const selectModelsOfGroup = (state, groupId) => Object.keys(state.models.modelGroups[groupId].models);
 /**
@@ -312,7 +311,7 @@ export const selectModelsOfGroup = (state, groupId) => Object.keys(state.models.
  * 
  * @param {object} state the global redux state
  * @param {int} groupId the group id specifies which group data should be retrieved
- * @returns an object containg all the data for each model present in the group. The model names are the keys.
+ * @returns an object containing all the data for each model present in the group. The model names are the keys.
  */
 export const selectModelDataOfGroup = (state, groupId) => 
 {

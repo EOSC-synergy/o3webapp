@@ -1,9 +1,10 @@
 import React from "react";
-import { Box, Checkbox, FormControlLabel, Typography } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { selectPlotXRange, setDisplayXRange } from "../../../../../store/plotSlice/plotSlice";
-import { ALL_REGIONS_ORDERED, LATITUDE_BAND_LIST } from "../../../../../utils/constants";
-import { Grid } from "@mui/material";
+import {Box, Checkbox, FormControlLabel, Typography} from "@mui/material";
+import {useDispatch, useSelector} from "react-redux";
+import {selectPlotXRange, setDisplayXRange} from "../../../../../store/plotSlice/plotSlice";
+import {ALL_REGIONS_ORDERED} from "../../../../../utils/constants";
+import {Grid} from "@mui/material";
+
 /**
  * enables the user to select / deselect regions as well as entering a private region {@link LatitudeBandSelector}
  * @todo add redux connection
@@ -53,7 +54,13 @@ function RegionSelector(props) {
     return (
         <Grid container sx={{width: "90%", marginLeft: "auto", marginRight: "auto", marginTop: "3%"}}>
             <Typography style={{marginTop: '2.5%'}}>X-Axis:</Typography>
-            <Box sx={{paddingLeft: '8%', paddingRight: '8%', alignItems: "left", display: "flex", flexDirection: "column"}}>
+            <Box sx={{
+                paddingLeft: '8%',
+                paddingRight: '8%',
+                alignItems: "left",
+                display: "flex",
+                flexDirection: "column"
+            }}>
                 {
                     getDefaultRegions().map((r, idx) => (
                         <React.Fragment key={idx}>
@@ -62,7 +69,7 @@ function RegionSelector(props) {
                                 control={
                                     <Checkbox
                                         checked={yRange.regions.includes(idx)}
-                                        onClick={() => handleRegionChecked(idx) }
+                                        onClick={() => handleRegionChecked(idx)}
                                     />
                                 }
                             />

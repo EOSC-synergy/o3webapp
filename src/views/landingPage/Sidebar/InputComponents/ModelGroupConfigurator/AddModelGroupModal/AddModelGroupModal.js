@@ -24,7 +24,6 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from "react-redux";
 import { REQUEST_STATE } from "../../../../../../services/API/apiSlice";
 import { selectNameOfGroup, selectModelDataOfGroup } from "../../../../../../store/modelsSlice/modelsSlice";
-import DoneIcon from '@mui/icons-material/Done';
 
 
 /**
@@ -43,10 +42,6 @@ function AddModelGroupModal(props) {
      * the label in the card heading
      */
     const addModelLabel = 'modelGroupId' in props ? "Edit Model Group Members" : "Add Model Group";
-    /**
-     * the label for the submit button
-     */
-    const buttonLabel = 'modelGroupId' in props? "Save changes" : "Add group";
     
     const dispatch = useDispatch();
 

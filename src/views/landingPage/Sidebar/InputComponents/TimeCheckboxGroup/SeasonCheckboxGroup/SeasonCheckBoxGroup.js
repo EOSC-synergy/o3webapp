@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
  * @param {Object} props
  * @param {String} props.label - label of this season
  * @param {int} props.seasonId - the id of the season
- * @param {Array of Object: {int, boolean}} props.months - array containing the months with monthId and selected status.
+ * @param {Array.<Object>} props.months - array containing the months with monthId and selected status.
  * @param {function} props.handleSeasonClicked - function to handle if the whole season got selected / deselected
  * @param {function} props.handleMonthClicked - function to handle if a month got selected / deselected
  * @param {function} props.reportError - a function to report an error

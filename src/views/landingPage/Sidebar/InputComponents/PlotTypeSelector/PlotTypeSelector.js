@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
@@ -6,15 +6,14 @@ import InputLabel from '@mui/material/InputLabel';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
-import { useDispatch, useSelector } from "react-redux";
-import { selectPlotId, setActivePlotId } from "../../../../../store/plotSlice/plotSlice";
-import { REQUEST_STATE } from "../../../../../services/API/apiSlice"
-import { Divider, Typography, Grid } from "@mui/material";
+import {useDispatch, useSelector} from "react-redux";
+import {selectPlotId, setActivePlotId} from "../../../../../store/plotSlice/plotSlice";
+import {REQUEST_STATE} from "../../../../../services/API/apiSlice";
 
 
 /**
  * enables the user to select a different plot type
- * @param {Object} props 
+ * @param {Object} props
  * @param {function} props.reportError - function for error handling
  * @returns {JSX.Element} a jsx containing a dropdown to select the plot type
  */
@@ -34,24 +33,24 @@ function PlotTypeSelector(props) {
     }
 
     let dropdownData;
-    if (plotTypesRequestData.status === REQUEST_STATE.loading 
+    if (plotTypesRequestData.status === REQUEST_STATE.loading
         || plotTypesRequestData.status === REQUEST_STATE.idle) {
         dropdownData = (<Box
-                            sx={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center'
-                            }}
-                        >
-                            <CircularProgress data-testid="plotTypeSelectorLoading"/>
-                        </Box>);
+            sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}
+        >
+            <CircularProgress data-testid="plotTypeSelectorLoading"/>
+        </Box>);
     } else if (plotTypesRequestData.status === REQUEST_STATE.success) {
         dropdownData = plotTypesRequestData.data.map((name, idx) => {
-                return (
-                    <MenuItem key={idx} value={name}>{name}</MenuItem>
-                )
+            return (
+                <MenuItem key={idx} value={name}>{name}</MenuItem>
+            )
         });
-    } 
+    }
 
     useEffect(() => {
         if (plotTypesRequestData.status === REQUEST_STATE.error) {
@@ -60,7 +59,8 @@ function PlotTypeSelector(props) {
     });
 
     return (<>
-        <FormControl sx={{ width: '80%', marginRight: "auto", marginLeft: "auto", marginTop: "2%", marginBottom: "2%"}} data-testid="plotTypeSelectorForm">
+        <FormControl sx={{width: '80%', marginRight: "auto", marginLeft: "auto", marginTop: "2%", marginBottom: "2%"}}
+                     data-testid="plotTypeSelectorForm">
             <InputLabel id="plotTypeLabel" data-testid="plotTypeSelector">Plot Type</InputLabel>
             <Select
                 labelId="plotTypeLabel"
@@ -72,7 +72,7 @@ function PlotTypeSelector(props) {
                 {dropdownData}
             </Select>
         </FormControl>
-        </>);
+    </>);
 }
 
 PlotTypeSelector.propTypes = {

@@ -446,7 +446,7 @@ exports[`Section renders correclty renders correctly from config file 2`] = `
                   >
                     <label
                       class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-                      id="ModelGroupCoard-toggle-mean-label"
+                      id="ModelGroupCard-toggle-mean-label"
                     >
                       <span
                         class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
@@ -487,7 +487,7 @@ exports[`Section renders correclty renders correctly from config file 2`] = `
                   >
                     <label
                       class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-                      id="ModelGroupCoard-toggle-median-label"
+                      id="ModelGroupCard-toggle-median-label"
                     >
                       <span
                         class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
@@ -528,7 +528,7 @@ exports[`Section renders correclty renders correctly from config file 2`] = `
                   >
                     <label
                       class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-                      id="ModelGroupCoard-toggle-standard deviation-label"
+                      id="ModelGroupCard-toggle-standard deviation-label"
                     >
                       <span
                         class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
@@ -569,7 +569,7 @@ exports[`Section renders correclty renders correctly from config file 2`] = `
                   >
                     <label
                       class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-                      id="ModelGroupCoard-toggle-percentile-label"
+                      id="ModelGroupCard-toggle-percentile-label"
                     >
                       <span
                         class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"

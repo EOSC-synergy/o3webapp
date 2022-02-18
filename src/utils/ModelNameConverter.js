@@ -9,7 +9,7 @@
  */
 export const convertModelName = (name) => {
     if (typeof name !== 'string') {
-        throw("provided name that is not of type string");
+        throw new Error("provided name that is not of type string");
     }
     const regex = new RegExp("^([^_]+)_([^_]+)_(.*)$");
     const info = name.match(regex);

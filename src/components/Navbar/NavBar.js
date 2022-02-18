@@ -1,11 +1,8 @@
 import * as React from 'react';
-import {AppBar, Box, Button, Container, Grid, Toolbar} from '@mui/material';
-import { indigo } from '@mui/material/colors';
-import MenuIcon from '@mui/icons-material/Menu';
+import {AppBar, Button, Container, Grid, Toolbar} from '@mui/material';
 import Logo from './Logo/Logo';
 import EditIcon from '@mui/icons-material/Edit';
 import Typography from "@mui/material/Typography";
-
 
 /**
  * A component for the navigation of the website.

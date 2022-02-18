@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { selectPlotId, selectPlotTitle, selectPlotXRange, selectPlotYRange } from '../../../store/plotSlice/plotSlice';
 import { selectVisibility } from '../../../store/referenceSlice/referenceSlice';
 import { REQUEST_STATE, selectActivePlotData } from '../../../services/API/apiSlice';
-import { Typography, CircularProgress, Grid } from '@mui/material';
+import { Typography, CircularProgress } from '@mui/material';
 import { APEXCHART_PLOT_TYPE, HEIGHT_LOADING_SPINNER, HEIGHT_GRAPH, NO_MONTH_SELECTED } from '../../../utils/constants';
 
 /**
@@ -59,10 +59,10 @@ function Graph(props) {
         const options = getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, seriesNames});
         const uniqueNumber = Date.now(); // forces apexcharts to re-render correctly!
         return <Chart key={uniqueNumber} options={options} series={data} type={APEXCHART_PLOT_TYPE[plotId]} height={HEIGHT_GRAPH} />
-    };
+    }
 
     // this "case" should not happen
     return <Typography>CRITICAL: an internal error occurred that shouldn't happen!</Typography>;
 }
 
-export default React.memo(Graph, () => true); // prevent graph from rerendering if sidebar is opened and closed
+export default React.memo(Graph, () => true); // prevent graph from re-rendering if sidebar is opened and closed

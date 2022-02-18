@@ -6,12 +6,12 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 /**
  * This Method adjusts the svg element in order to scale it right in the pdf file.
- * the viewBox parameter of the svg element will be set to the width and hight
+ * the viewBox parameter of the svg element will be set to the width and height
  * values of the svg element.
  * visit the following website for more details about the viewBox parameter:
  * https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/viewBox
  *
- * @param {the svgElement element.} svg
+ * @param {svg} svgElement svgElement element.
  * @returns returns the adjusted svg element.
  */
 function getAdjustedSVG(svgElement) {
@@ -24,10 +24,10 @@ function getAdjustedSVG(svgElement) {
 /**
  * Downloads the PDF which contains the Graph in SVG format and contains the List of models.
  *
- * @param {the plot id of the graph (tco3_zm, tco3_return etc.)} plotId
- * @param {the File name of the PDF} fileName
- * @param {the Model Groups which contains the names of the models.} modelGroups 
- * @param {the current Model data contains the properties of the models(color, linestyle etc.)} currentData 
+ * @param plotId the plot id of the graph (tco3_zm, tco3_return etc.)
+ * @param fileName the File name of the PDF
+ * @param modelGroups the Model Groups which contains the names of the models
+ * @param currentData the current Model data contains the properties of the models (color, line style, etc.)
  */
 export async function downloadGraphAsPDF(
   plotId,
@@ -78,11 +78,11 @@ export async function downloadGraphAsPDF(
 
 
 /**
- * returns the List of models in the format which the pdfMake libary accepts.
+ * Returns the List of models in the format which the pdfMake library accepts.
  *
- * @param {the plot id of the graph (tco3_zm, tco3_return etc.)} plotId
- * @param {the Model Groups which contains the names of the models.} modelGroups 
- * @param {the current Model data contains the properties of the models(color, linestyle etc.)} currentData 
+ * @param plotId the plot id of the graph (tco3_zm, tco3_return etc.)
+ * @param modelGroups the Model Groups which contains the names of the models
+ * @param currentData the current Model data contains the properties of the models(color, line style, etc.)
  */
 function getListOfModelsForPdf(plotId, modelGroups, currentData) {
   let modelGroupsList = [
@@ -100,9 +100,9 @@ function getListOfModelsForPdf(plotId, modelGroups, currentData) {
 
       let textOfCurrentLineOfList;
 
-      if (plotId == O3AS_PLOTS.tco3_zm) {
-        textOfCurrentLineOfList = `${model} (linetype = ${currentData[model].plotStyle.linestyle})`;
-      } else if (plotId == O3AS_PLOTS.tco3_return) {
+      if (plotId === O3AS_PLOTS.tco3_zm) {
+        textOfCurrentLineOfList = `${model} (line type = ${currentData[model].plotStyle.linestyle})`;
+      } else if (plotId === O3AS_PLOTS.tco3_return) {
         textOfCurrentLineOfList = `${model}`;
       }
 

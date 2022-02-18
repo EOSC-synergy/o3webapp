@@ -18,7 +18,7 @@ import FileDownloadIcon from '@mui/icons-material/FileDownload';
 const DRAWER_WIDTH = 400;
 
 /**
- * Defining a drawerheader section at the beginning of a drawer
+ * Defining a drawer-header section at the beginning of a drawer
  */
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -66,7 +66,7 @@ function Sidebar(props) {
     }
 
     /**
-     * expands section with id (index in section array) i
+     * expands section with id (index in section array) 'i'
      * collapses all other currently expanded sections
      * @param {int} i the section that should be expanded
      */

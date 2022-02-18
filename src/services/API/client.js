@@ -73,7 +73,7 @@ export const postModelsPlotStyle = (plotType) => {
 /**
  * Performs a request to /plots/plotId to fetch the plot data from the api formatted with the given parameters.
  * 
- * @param {string} plotId a string describing the plot - has to be the offical plot name (e.g. tco3_zm)
+ * @param {string} plotId a string describing the plot - has to be the official plot name (e.g. tco3_zm)
  * @param {int} latMin specifies the minimum latitude
  * @param {int} latMax specifies specifying the maximum latitude
  * @param {Array.<int>} months represents the selected months
