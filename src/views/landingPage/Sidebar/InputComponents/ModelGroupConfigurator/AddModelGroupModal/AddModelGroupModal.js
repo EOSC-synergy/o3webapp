@@ -277,11 +277,13 @@ function AddModelGroupModal(props) {
         left: '50%',
         transform: 'translate(-50%, -50%)',
         width: '90%',
+        height: '75%',
         boxShadow: 24,
-        p: 4,
-        overflow: 'auto',
+        overflow: "auto",
+        bgcolor: theme.palette.background.default,
+        minHeight: "75%",
         maxHeight: "100vh",
-        minHeight: "75%"
+        p: 4,
       };
 
     /**
@@ -378,7 +380,7 @@ function AddModelGroupModal(props) {
                     </Box>
                     {errorMessage && <Alert severity="error" sx={{marginTop: '2em'}}>{errorMessage}</Alert>}
                 </CardContent>
-                <CardActions sx={{justifyContent: "flex-end"}}>
+                <CardActions sx={{justifyContent: "flex-end", marginTop: "2%"}}>
                     <Button onClick={addOrEditGroup} variant="contained">{'modelGroupId' in props? "Edit group members" : "Add group"}</Button>
                 </CardActions>
             </Card>

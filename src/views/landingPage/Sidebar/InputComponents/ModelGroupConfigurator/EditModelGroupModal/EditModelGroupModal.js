@@ -77,11 +77,11 @@ function EditModelGroupModal(props) {
         transform: 'translate(-50%, -50%)',
         width: '90%',
         height: '75%',
-        minHeight: "75%",
-        maxHeight: "100vh",
+        boxShadow: 24,
         overflow: "auto",
         bgcolor: theme.palette.background.default,
-        boxShadow: 24,
+        minHeight: "75%",
+        maxHeight: "100vh",
         p: 4,
     };
 
@@ -477,6 +477,7 @@ function EditModelGroupModal(props) {
                     onColumnHeaderClick={columnHeaderClick}
                     disableColumnMenu
                     columnBuffer={8}
+                    sx={{height: '65%'}}
                 />
                 <CardActions sx={{justifyContent: "flex-end", marginTop: "2%"}}>
                     <Button onClick={applyChanges} variant="contained" startIcon={<DoneIcon/>}
