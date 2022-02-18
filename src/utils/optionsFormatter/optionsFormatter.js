@@ -12,7 +12,6 @@ import {
     MODEL_LINE_THICKNESS,
     START_YEAR,
     END_YEAR,
-    std
 } from "../constants"
 import {convertModelName} from "../ModelNameConverter";
 
@@ -691,12 +690,12 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
 
         for (const [sv, svData] of Object.entries(svHolder)) {
 
-            if (sv === STATISTICAL_VALUES[std] // std
+            if (sv === STATISTICAL_VALUES.std
                 || sv === STATISTICAL_VALUES.percentile) continue; // skip for now
 
 
             if (groupData.visibleSV[sv] // mean und median
-                || (sv.includes("std") && groupData.visibleSV[STATISTICAL_VALUES[std]])) {
+                || (sv.includes("std") && groupData.visibleSV[STATISTICAL_VALUES.std])) {
             } else {
                 continue;
             }
@@ -745,9 +744,9 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
 
     svHolder["mean+std"] = [];
     svHolder["mean-std"] = [];
-    for (let i = 0; i < svHolder[STATISTICAL_VALUES[std]].length; ++i) {
-        svHolder["mean+std"].push(svHolder.stdMean[i] + svHolder[STATISTICAL_VALUES[std]][i]);
-        svHolder["mean-std"].push(svHolder.stdMean[i] - svHolder[STATISTICAL_VALUES[std]][i]);
+    for (let i = 0; i < svHolder[STATISTICAL_VALUES.std].length; ++i) {
+        svHolder["mean+std"].push(svHolder.stdMean[i] + svHolder[STATISTICAL_VALUES.std][i]);
+        svHolder["mean-std"].push(svHolder.stdMean[i] - svHolder[STATISTICAL_VALUES.std][i]);
     }
     delete svHolder["stdMean"];
     return svHolder;
@@ -1077,7 +1076,7 @@ function create2dArray(i) {
  * @returns                     True if the given model should be included in the SV calculation of the given SV-Type
  */
 function isIncludedInSv(model, groupData, svType) {
-    if (svType === "stdMean") return groupData.models[model][STATISTICAL_VALUES[std]]; // the std mean should only be calculated if the std is necessary
+    if (svType === "stdMean") return groupData.models[model][STATISTICAL_VALUES.std]; // the std mean should only be calculated if the std is necessary
 
     return groupData.models[model][svType];
 }

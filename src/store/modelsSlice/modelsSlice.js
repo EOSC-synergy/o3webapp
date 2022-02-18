@@ -9,7 +9,7 @@ const MODEL_DATA_TEMPLATE = {   // single model
     color: null,                // if not set it defaults to standard value from api
     isVisible: true,            // show/hide individual models from a group
     mean: true,
-    "standard deviation": true,
+    std: true,
     median: true,
     percentile: true,
 }
@@ -21,7 +21,7 @@ const MODEL_GROUP_TEMPLATE = {
     isVisible: true,    // show/hide complete group
     visibleSV: {       // lookup table so the reducer impl. can be more convenient
         mean: true,
-        "standard deviation": true,
+        std: true,
         median: true,
         percentile: true,
     }
@@ -42,7 +42,7 @@ export const modelGroups = {
                 color: null, // if not set it defaults to standard value from api
                 isVisible: true, // show/hide individual models from a group
                 mean: true,
-                "standard deviation": true,
+                std: true,
                 median: true,
                 percentile: true,
             },
@@ -50,7 +50,7 @@ export const modelGroups = {
                 color: null, // if not set it defaults to standard value from api
                 isVisible: true, // show/hide individual models from a group
                 mean: true,
-                "standard deviation": true,
+                std: true,
                 median: true,
                 percentile: true,
 
@@ -59,7 +59,7 @@ export const modelGroups = {
                 color: null, // if not set it defaults to standard value from api
                 isVisible: true, // show/hide individual models from a group
                 mean: true,
-                "standard deviation": true,
+                std: true,
                 median: true,
                 percentile: true,
 
@@ -68,7 +68,7 @@ export const modelGroups = {
         isVisible: true, // show/hide complete group
         visibleSV: { // lookup table so the reducer impl. can be more convenient
             mean: true,
-            "standard deviation": true,
+            std: true,
             median: true,
             percentile: true,
         }
@@ -212,8 +212,8 @@ const modelsSlice = createSlice({
                 state.modelGroups[groupId].models[model] = {
                     color,
                     mean,
+                    std,
                     median,
-                    "standard deviation": std,
                     percentile,
                     isVisible,
                 };

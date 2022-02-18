@@ -1,7 +1,7 @@
 import {
     mean as calculateMean,
-    median as calculateMedian,
     std as calculateStd,
+    median as calculateMedian,
     q25 as calculatePercentile, // TODO import actual percentile
 } from "../services/math/math";
 
@@ -172,8 +172,8 @@ export const ALL_REGIONS_ORDERED = [ANTARCTIC, SH_MID, NH_MID, TROPICS, ARCTIC, 
 
 
 const mean = "mean";
+const std = "std";
 const median = "median";
-export const std = "standard deviation";
 const percentile = "percentile";
 /**
  * The statistical values that are computable are listed here as
@@ -181,8 +181,8 @@ const percentile = "percentile";
  */
 export const STATISTICAL_VALUES = {
     mean,
+    std,
     median,
-    "standard deviation": std,
     percentile,
 }
 
@@ -194,19 +194,19 @@ export const STATISTICAL_VALUES_LIST = Object.values(STATISTICAL_VALUES);
 
 export const SV_CALCULATION = {
     mean: calculateMean,
+    std: calculateStd,
     median: calculateMedian,
-    "standard deviation": calculateStd,
     percentile: calculatePercentile,
     stdMean: calculateMean, // mean for std+-
 }
 
 export const SV_COLORING = {
     mean: "#000",
-    median: "#000",
-    "standard deviation": "#000",
-    percentile: "#000",
+    std: "#000",
     "mean+std": "#000",
     "mean-std": "#000",
+    median: "#000",
+    percentile: "#000",
 }
 
 export const SV_DASHING = {
