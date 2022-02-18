@@ -482,8 +482,7 @@ function EditModelGroupModal(props) {
                     sx={{height: '65%'}}
                 />
                 <CardActions sx={{justifyContent: "flex-end", marginTop: "2%"}}>
-                    <Button onClick={applyChanges} variant="contained" startIcon={<DoneIcon/>}
-                            data-testid="ApplyButton">{applyButtonLabel}</Button>
+                    <Button onClick={applyChanges} variant="contained" data-testid="ApplyButton">{applyButtonLabel}</Button>
                 </CardActions>
             </Card>
         </Modal>
