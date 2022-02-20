@@ -333,7 +333,9 @@ const apiSlice = createSlice({
                 storage.loadingModels = storage.loadingModels.filter(model => !fetchedModels.includes(model)); // remove all models that are now fetched
                 storage.loadedModels = [...storage.loadedModels, ...fetchedModels];
 
-                storage.status = REQUEST_STATE.success; // display models
+                if (storage.loadingModels.length === 0) {
+                    storage.status = REQUEST_STATE.success; // display models
+                }
 
                 // update suggestions
                 if (storage.suggested) {
@@ -353,6 +355,8 @@ const apiSlice = createSlice({
                 const storage = state.plotSpecific[plotId].cachedRequests[cacheKey];
                 storage.status = REQUEST_STATE.error;
                 storage.error = error;
+                storage.loadedModels = []; // everything should be refetched if an error occurred
+                storage.loadingModels = []; // loading failed, reset all, otherwise re-loading wouldn't be possible
             })
 
             // select existing data from cache
