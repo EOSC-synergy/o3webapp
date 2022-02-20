@@ -35,7 +35,7 @@ const MODEL_GROUP_TEMPLATE = {
  * corresponding test file, that tests the initial state.
  */
 const initialState = {
-    idCounter: 1,
+    idCounter: 0,
     // currently active plot
     modelGroups: {}
 }

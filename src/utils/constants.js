@@ -14,7 +14,7 @@ import {
  * the WebApp is initially loaded.
  */
 export const DEFAULT_MODEL_GROUP = {
-    groupId: 0, 
+    groupId: null, // no valid id => add new group 
     groupName: "Example Group", 
     modelList: [
         "CCMI-1_ACCESS_ACCESS-CCM-refC2", 
