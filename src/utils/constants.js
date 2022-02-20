@@ -5,6 +5,24 @@ import {
     q25 as calculatePercentile, // TODO import actual percentile
 } from "../services/math/math";
 
+// index.js
+
+/**
+ * Stores the default model group.
+ * 
+ * Modify this object to change the name or the models that appear when 
+ * the WebApp is initially loaded.
+ */
+export const DEFAULT_MODEL_GROUP = {
+    groupId: 0, 
+    groupName: "Example Group", 
+    modelList: [
+        "CCMI-1_ACCESS_ACCESS-CCM-refC2", 
+        "CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG", 
+        "CCMI-1_CCCma_CMAM-refC2"
+    ]
+};
+
 // apiSlice
 /** For reducing loading time while implementing: starting value for how many models should be fetched */
 export const modelListBegin = 0;
