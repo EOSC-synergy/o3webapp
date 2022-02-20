@@ -1,24 +1,27 @@
 import { render, fireEvent, waitForElementToBeRemoved } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { createTestStore } from '../../../../../../store/store';
-import ModelGroupCard, { getGroupName } from './ModelGroupCard';
+import ModelGroupCard from './ModelGroupCard';
 import { Provider } from "react-redux";
-import * as redux from 'react-redux';
 import userEvent from '@testing-library/user-event';
-import { REQUEST_STATE } from "../../../../../../services/API/apiSlice";
-import { modelGroups } from "../../../../../../store/modelsSlice/modelsSlice";
-import { STATISTICAL_VALUES } from '../../../../../../utils/constants';
+import { setModelsOfModelGroup } from "../../../../../../store/modelsSlice/modelsSlice";
+import { DEFAULT_MODEL_GROUP, STATISTICAL_VALUES } from '../../../../../../utils/constants';
 
 let store;
 let reportError;
-const groupId = parseInt(Object.keys(modelGroups)[0]);
-const groupName = modelGroups[groupId].name;
-const visibleSV = modelGroups[groupId].visibleSV;
-const isVisble = modelGroups[groupId].isVisible;
+let groupId;
+let groupName;
+let visibleSV;
+
 describe('test ModelGroupCard rendering', () => {
 
     beforeEach(() => {
         store = createTestStore();
+        store.dispatch(setModelsOfModelGroup(DEFAULT_MODEL_GROUP)); // fill with default group
+        const modelGroups = store.getState().models.modelGroups;
+        groupId = parseInt(Object.keys(modelGroups)[0]);
+        groupName = modelGroups[groupId].name;
+        visibleSV = modelGroups[groupId].visibleSV;
         reportError = jest.fn();
     });
     
@@ -87,6 +90,12 @@ describe('test ModelGroupCard functionality', () => {
 
     beforeEach(() => {
         store = createTestStore();
+        store.dispatch(setModelsOfModelGroup(DEFAULT_MODEL_GROUP)); // fill with default group
+        console.log(store.getState().models);
+        const modelGroups = store.getState().models.modelGroups;
+        groupId = parseInt(Object.keys(modelGroups)[0]);
+        groupName = modelGroups[groupId].name;
+        visibleSV = modelGroups[groupId].visibleSV;
     });
 
     it('checks / unchecks statistical values, when visibility icon is clicked', () => {
