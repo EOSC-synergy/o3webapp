@@ -8,6 +8,7 @@ import { createTestStore } from "../../../../../../store/store";
 let store
 beforeEach(() => {
     store = createTestStore();
+    store.dispatch(setModelsOfModelGroup(DEFAULT_MODEL_GROUP)); // fill with default group
 });
 
 describe("test EditModelGroupModal rendering", () => {

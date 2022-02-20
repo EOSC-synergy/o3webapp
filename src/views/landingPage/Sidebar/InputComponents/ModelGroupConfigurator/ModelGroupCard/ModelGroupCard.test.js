@@ -17,7 +17,6 @@ describe('test ModelGroupCard rendering', () => {
 
     beforeEach(() => {
         store = createTestStore();
-        store.dispatch(setModelsOfModelGroup(DEFAULT_MODEL_GROUP)); // fill with default group
         const modelGroups = store.getState().models.modelGroups;
         groupId = parseInt(Object.keys(modelGroups)[0]);
         groupName = modelGroups[groupId].name;
@@ -90,7 +89,6 @@ describe('test ModelGroupCard functionality', () => {
 
     beforeEach(() => {
         store = createTestStore();
-        store.dispatch(setModelsOfModelGroup(DEFAULT_MODEL_GROUP)); // fill with default group
         console.log(store.getState().models);
         const modelGroups = store.getState().models.modelGroups;
         groupId = parseInt(Object.keys(modelGroups)[0]);
