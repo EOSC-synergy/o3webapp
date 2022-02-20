@@ -14,7 +14,8 @@ import {
     std,
     percentile,
     EXTENDED_SV_LIST,
-    stdMean
+    stdMean,
+    STATISTICAL_VALUE_LINE_THICKNESS
 } from "../constants"
 import {convertModelName} from "../ModelNameConverter";
 
@@ -705,7 +706,7 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
             }
             svSeries.data.push(generateSingleSvSeries(`${sv}(${groupData.name})`, svData));
             svSeries.colors.push(SV_COLORING[sv]);   // coloring?
-            svSeries.width.push(MODEL_LINE_THICKNESS);                  // thicker?
+            svSeries.width.push(STATISTICAL_VALUE_LINE_THICKNESS);                  // thicker?
             svSeries.dashArray.push(SV_DASHING[sv]);              // solid?       
         }
     }
