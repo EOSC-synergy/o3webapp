@@ -1,0 +1,30 @@
+
+{
+    "legalinfo": "https://o3as.data.kit.edu/policies/terms-of-use.html",
+    "model": "CCMI-1_ACCESS_ACCESS-CCM-refC2",
+    "plotstyle": {
+    "color": "purple",
+    "linestyle": "none",
+    "marker": "o"
+    },
+    "x": [
+    "Antarctic(Oct)",
+    "SH mid-lat",
+    "Tropics",
+    "NH mid-lat",
+    "Arctic(Mar)",
+    "Near global",
+    "Global",
+    "User region"
+    ],
+    "y": [
+    2064,
+    2051,
+    2060,
+    2041,
+    2040,
+    2049,
+    2052,
+    2052
+    ]
+}
