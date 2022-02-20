@@ -43,7 +43,7 @@ export const std = (arr) => {
  * @param {number} q the quantile 
  * @returns the number corresponding to the given quantile
  */
-const quantile = (arr, q) => {
+export const quantile = (arr, q) => {
     const sorted = asc(arr);
     const pos = (sorted.length * q) - 1;
     if (sorted[pos] !== undefined) {
