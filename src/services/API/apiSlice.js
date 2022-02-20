@@ -48,7 +48,7 @@ export const fetchPlotTypes = createAsyncThunk('api/fetchPlotTypes', async () =>
  *
  * @param {int} latMin specifies the minimum latitude
  * @param {int} latMax specifies the maximum latitude
- * @param {Array.<int>} months represents the selected months
+ * @param {array} months represents the selected months
  * @param {string} refModel the reference model to "normalize the data"
  * @param {int} refYear the reference year to "normalize the data"
  * @returns the generated string
@@ -59,10 +59,20 @@ export const generateCacheKey = ({latMin, latMax, months, refModel, refYear}) =>
 
 /**
  * This action creator generates an action that is dispatched against the store
- * when the request of the data is started. The payload contains the plotId and the cacheKey.
+ * when the request of the data is initially started. The payload contains the plotId and the cacheKey.
+ * 
+ * This differs from the refetching action because the reducer has to handle the initialization of the
+ * object that caches this specific request.
  */
 const fetchPlotDataInitiallyPending = createAction("api/fetchPlotData/initiallyPending");
 
+/**
+ * This action creator generates an action that is dispatched against the store
+ * when a request of existing settings is re-fetched with other models.
+ * 
+ * This differs from the initially fetching action because the existing data structure which stores
+ * the cached values only needs to be updated.
+ */
 const fetchPlotDataRefetching = createAction("api/fetchPlotData/refetching");
 
 /**
@@ -84,27 +94,41 @@ const fetchPlotDataRejected = createAction("api/fetchPlotData/rejected");
  */
 const selectExistingPlotData = createAction("api/selectPlotData");
 
-
-export const updateDataAndDisplaySuggestions = ({plotId, cacheKey, data, modelsSlice}) => {
+/**
+ * This action encapsulates the operation of fetching the data, unpacking the calculated min and max values of the
+ * fetched data which are then used to update the plot with the "suggestions". They are named suggestions because
+ * the y-axis of the plot axis is initially set to these values. The user can change them ofcourse. 
+ * 
+ * @param {string} obj.plotId the name for which the data is fetched
+ * @param {string} obj.cacheKey the cache key specifying the settings for the fetched data and where the data is fetched
+ * @param {object} obj.data the fetched data from the api
+ * @returns the async thunk action that is dispatched against the store.
+ */
+export const updateDataAndDisplaySuggestions = ({plotId, cacheKey, data}) => {
     
     return (dispatch, getState) => {
-        dispatch(fetchPlotDataSuccess({data, plotId, cacheKey, modelsSlice}));
+        dispatch(fetchPlotDataSuccess({data, plotId, cacheKey, modelsSlice: getState().models}));
         const {min, max} = getState().api.plotSpecific[plotId].cachedRequests[cacheKey].suggested; // suggested min/max is availabe
         dispatch(setDisplayYRangeForPlot({plotId, minY: Math.floor(min / 10) * 10, maxY: Math.ceil(max / 10) * 10}));
     }
 }
 
 
-
+/**
+ * This action serves as the interface the components use to dispatch a fetching request for all current models.
+ * It simplifies the interface for the components as they don't need to access the store before and calculate
+ * which models should be fetched.
+ * 
+ * @returns the async thunk function that is dispatched against the store.
+ */
 export const fetchPlotDataForCurrentModels = () => {
     return (dispatch, getState) => {
         dispatch(
-            
             fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, models: getAllSelectedModels(getState)})
         );
         dispatch(
             fetchPlotData({plotId:  O3AS_PLOTS.tco3_return, models: getAllSelectedModels(getState)})
-        )
+        );
     } 
 }
 
@@ -170,7 +194,6 @@ export const fetchPlotData = ({plotId, models}) => {
                     plotId,
                     cacheKey,
                     data: response.data,
-                    modelsSlice: getState().models
                 })),
                 error => dispatch(fetchPlotDataRejected({error: error.message, plotId, cacheKey})),
             );
