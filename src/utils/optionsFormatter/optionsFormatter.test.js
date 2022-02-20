@@ -108,23 +108,27 @@ describe("testing optionsFormatter functionality", () => {
               { name: 'CCMI-1_CCCma_CMAM-refC2', data: testArray},
               { name: 'mean(Example Group)', data: testArray},
               { name: 'median(Example Group)', data: testArray},
+              { name: 'lowerPercentile(Example Group)', data: testArray},
+              { name: 'upperPercentile(Example Group)', data: testArray},
               { name: 'mean+std(Example Group)', data: testArray},
-              { name: 'mean-std(Example Group)', data: testArray}
+              { name: 'mean-std(Example Group)', data: testArray},
             ],
             styling: {
               colors: [
                 '#000000', '#000000',
                 '#000000', '#000',
-                '#000',    '#000',
-                '#000'
+                '#000',    
+                "#1e8509", "#1e8509",
+                '#000', '#000'
               ],
               dashArray: [
                 0, 0, 0, 0,
-                2, 8, 8
+                2, 4, 4, 
+                8, 8
               ],
               width: [
                 MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS,
-                MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS
+                MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS
               ]
             }
           }
