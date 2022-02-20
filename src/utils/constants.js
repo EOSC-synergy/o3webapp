@@ -9,7 +9,7 @@ import {
 /** For reducing loading time while implementing: starting value for how many models should be fetched */
 export const modelListBegin = 0;
 /** For reducing loading time while implementing: starting value for how many models should be fetched */
-export const modelListEnd = 20;
+export const modelListEnd = 105;
 
 // client.js
 
