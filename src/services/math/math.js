@@ -37,7 +37,7 @@ export const std = (arr) => {
 
 /**
  * Calculate quantiles so, that the calculation of 
- * quartiles are based on method 2: https://en.wikipedia.org/wiki/Quartile
+ * quartiles are based on method 1: https://en.wikipedia.org/wiki/Quartile
  * 
  * @param {array} arr the array to calculate the quantile of
  * @param {number} q the quantile 
@@ -45,13 +45,11 @@ export const std = (arr) => {
  */
 const quantile = (arr, q) => {
     const sorted = asc(arr);
-    const pos = (sorted.length - 1) * q;
-    const base = Math.floor(pos);
-    const rest = pos - base;
-    if (sorted[base + 1] !== undefined) {
-        return sorted[base] + rest * (sorted[base + 1] - sorted[base]);
+    const pos = (sorted.length * q) - 1;
+    if (sorted[pos] !== undefined) {
+        return (sorted[pos] + sorted[pos + 1]) / 2;
     } else {
-        return sorted[base];
+        return sorted[Math.floor(pos) + 1];
     }
 };
 
