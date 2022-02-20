@@ -850,7 +850,6 @@ export const preTransformApiData = ({plotId, data, modelsSlice}) => {
             }
         }
     }
-    console.log(minimums)
     return {lookUpTable, min: Math.min(...minimums), max: Math.max(...maximums)};
 }
 
