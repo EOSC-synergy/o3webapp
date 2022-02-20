@@ -170,8 +170,6 @@ export const fetchPlotData = ({plotId, models}) => {
             const loading = cachedRequest.loadingModels; // models that are beeing loaded at the moment
             
             const required = allSelected.filter(model => !loaded.includes(model) && !loading.includes(model)); // keep only models that are not loaded and currently not loading
-            console.log(allSelected);
-
             if (required.length === 0) { // fetched data already satisfies users needs
                 // old: status == success
                 dispatch(selectExistingPlotData({plotId, cacheKey}));
@@ -314,7 +312,6 @@ const apiSlice = createSlice({
             .addCase(fetchPlotDataRefetching, (state, action) => {
                 const {plotId, cacheKey, loadingModels} = action.payload;
                 const plotSpecificSection = state.plotSpecific[plotId];
-                
                 const cachedRequest = plotSpecificSection.cachedRequests[cacheKey];
                 cachedRequest.status = REQUEST_STATE.loading;
                 cachedRequest.loadingModels.push(...loadingModels);
