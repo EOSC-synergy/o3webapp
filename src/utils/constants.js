@@ -2,14 +2,14 @@ import {
     mean as calculateMean,
     median as calculateMedian,
     std as calculateStd,
-    q25 as calculatePercentile, // TODO import actual percentile
+    quantile as calculatePercentile, // TODO import actual percentile
 } from "../services/math/math";
 
 // apiSlice
 /** For reducing loading time while implementing: starting value for how many models should be fetched */
 export const modelListBegin = 0;
 /** For reducing loading time while implementing: starting value for how many models should be fetched */
-export const modelListEnd = 105;
+export const modelListEnd = 20;
 
 // client.js
 
@@ -174,7 +174,7 @@ export const ALL_REGIONS_ORDERED = [ANTARCTIC, SH_MID, NH_MID, TROPICS, ARCTIC, 
 const mean = "mean";
 const median = "median";
 export const std = "standard deviation";
-const percentile = "percentile";
+export const percentile = "percentile";
 /**
  * The statistical values that are computable are listed here as
  * an "enum"
@@ -186,25 +186,43 @@ export const STATISTICAL_VALUES = {
     percentile,
 }
 
+export const stdMean = "stdMean";
+export const lowerPercentile = "lowerPercentile";
+export const upperPercentile = "upperPercentile";
+
+
+export const EXTENDED_SV_LIST = [stdMean, lowerPercentile, upperPercentile];
+
+
 /**
  * The same statistical values as a list to verify certain payload data
  */
 export const STATISTICAL_VALUES_LIST = Object.values(STATISTICAL_VALUES);
 
 
+/* 
+It would be good if you could include the 84.13th and 15.87th percentiles
+which corresponds +1σ standard dev of the Gaussian distribution. 
+A workflow to calculate the percentiles is described on the following 
+website for example: 
+https://www.indeed.com/career-advice/career-development/how-to-calculate-percentile
+*/
+
 export const SV_CALCULATION = {
     mean: calculateMean,
     median: calculateMedian,
-    "standard deviation": calculateStd,
-    percentile: calculatePercentile,
-    stdMean: calculateMean, // mean for std+-
 }
+SV_CALCULATION[STATISTICAL_VALUES[std]] = calculateStd;
+SV_CALCULATION[lowerPercentile] = arr => calculatePercentile(arr, .1587);
+SV_CALCULATION[upperPercentile] = arr => calculatePercentile(arr, .8413);
+SV_CALCULATION[stdMean] = calculateMean;
 
 export const SV_COLORING = {
     mean: "#000",
     median: "#000",
     "standard deviation": "#000",
-    percentile: "#000",
+    "lowerPercentile": "#1e8509",
+    "upperPercentile": "#1e8509",
     "mean+std": "#000",
     "mean-std": "#000",
 }
@@ -215,6 +233,8 @@ export const SV_DASHING = {
     percentile: 0,
     "mean+std": 8,
     "mean-std": 8,
+    "lowerPercentile": 4,
+    "upperPercentile": 4,
 }
 
 export const MODEL_LINE_THICKNESS = 2;
