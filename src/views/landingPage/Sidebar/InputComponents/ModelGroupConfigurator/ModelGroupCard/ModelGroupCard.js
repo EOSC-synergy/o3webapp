@@ -182,7 +182,15 @@ function ModelGroupCard(props) {
     } else {
         return (
             <Card style={{margin: "3%", padding: '2%', width: '300px', height: '210px'}} elevation={2}>
-                Do you want to delete this model group?
+                <Grid container>
+                    <Grid item xs={12}>
+                        <Typography>Do you want to delete this group?</Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Button size="small" variant="outlined" onClick={deleteGroup}>Delete</Button>
+                        <Button size="small" variant="outlined" onClick={toggleDeleteRequest}>Keep</Button>
+                    </Grid>
+                </Grid>
             </Card>
         );
     }
