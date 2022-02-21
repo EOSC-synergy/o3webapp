@@ -4,13 +4,13 @@ import Typography from '@mui/material/Typography';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import MuiVisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Checkbox, Divider, IconButton, FormControlLabel } from '@mui/material';
+import {Checkbox, Divider, IconButton, FormControlLabel} from '@mui/material';
 import Grid from '@mui/material/Grid';
 import EditModelGroupModal from "../EditModelGroupModal/EditModelGroupModal";
 import AddModelGroupModal from "../AddModelGroupModal/AddModelGroupModal";
 import PropTypes from 'prop-types';
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import {useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {CardActions, Button} from '@mui/material';
 import {
     setStatisticalValueForGroup,
@@ -21,7 +21,7 @@ import {
     deleteModelGroup
 } from "../../../../../../store/modelsSlice/modelsSlice";
 
-import { STATISTICAL_VALUES } from "../../../../../../utils/constants";
+import {STATISTICAL_VALUES} from "../../../../../../utils/constants";
 
 /**
  * A card containing information about a modal group.
@@ -31,7 +31,7 @@ import { STATISTICAL_VALUES } from "../../../../../../utils/constants";
  * @returns {JSX.Element} a jsx containing a modal with a data grid with all models from the model group
  */
 function ModelGroupCard(props) {
-    
+
     const dispatch = useDispatch();
     const modelGroupName = useSelector(state => selectNameOfGroup(state, props.modelGroupId));
     const modelGroupStatisticalValue = useSelector(state => selectStatisticalValueSettingsOfGroup(state, props.modelGroupId));
@@ -49,18 +49,18 @@ function ModelGroupCard(props) {
         ));
     }
 
-        /**
+    /**
      * toggles the visibility of the whole group in the graph
      * by dispatching an action to the redux store
      */
-         const toggleModelGroupVisibility = () => {
-            dispatch(setVisibilityForGroup({groupId: props.modelGroupId, isVisible: !isModelGroupVisible}));
-            for (const key in STATISTICAL_VALUES) {
-                dispatch(setStatisticalValueForGroup(
-                    {groupId: props.modelGroupId, svType: key, isIncluded: !isModelGroupVisible}
-                ));
-            }
+    const toggleModelGroupVisibility = () => {
+        dispatch(setVisibilityForGroup({groupId: props.modelGroupId, isVisible: !isModelGroupVisible}));
+        for (const key in STATISTICAL_VALUES) {
+            dispatch(setStatisticalValueForGroup(
+                {groupId: props.modelGroupId, svType: key, isIncluded: !isModelGroupVisible}
+            ));
         }
+    }
 
     /**
      * state to keep track of whether the edit group modal is currently visible or not
@@ -70,6 +70,8 @@ function ModelGroupCard(props) {
      * state to keep track of whether the add group modal (used to edit group members) is currently visible or not
      */
     const [isAddModalVisible, setAddModalVisible] = React.useState(false);
+
+    const [isDeleteRequest, setDeleteRequest] = React.useState(false);
 
     /**
      * shows the edit group modal
@@ -81,11 +83,11 @@ function ModelGroupCard(props) {
 
     /**
      * closes the edit modal
-     */   
+     */
     const closeEditModal = () => {
         setEditModalVisible(false);
     }
-    
+
     /**
      * shows the add model group modal (used to edit group members)
      */
@@ -105,66 +107,86 @@ function ModelGroupCard(props) {
      * function to return the visibility icon, depending on whether the group is currently visible or not
      */
     const VisibilityIcon = () => {
-        return isModelGroupVisible ? <MuiVisibilityIcon data-testid="ModelGroupCard-VisibilityIcon-visible" /> : <VisibilityOffIcon data-testid="ModelGroupCard-VisibilityIcon-invisible" />
+        return isModelGroupVisible ? <MuiVisibilityIcon data-testid="ModelGroupCard-VisibilityIcon-visible"/> :
+            <VisibilityOffIcon data-testid="ModelGroupCard-VisibilityIcon-invisible"/>
+    }
+
+    const toggleDeleteRequest = () => {
+        setDeleteRequest(!isDeleteRequest);
     }
 
     /**
-     * 
+     *
      */
     const deleteGroup = () => {
         dispatch(deleteModelGroup({groupId: props.modelGroupId}));
     }
 
-    return (
-        <Card style={{margin: "5%"}} elevation={2}>
-            <EditModelGroupModal modelGroupId={props.modelGroupId} isOpen={isEditModalVisible} onClose={closeEditModal} />
-            <AddModelGroupModal modelGroupId={props.modelGroupId} isOpen={isAddModalVisible} onClose={closeAddModal} reportError={props.reportError} />
-            <Grid container>
-                <Grid item xs={2}>
-                    <IconButton aria-label="change visibility" onClick={toggleModelGroupVisibility}><VisibilityIcon /></IconButton>
+    if (!isDeleteRequest) {
+        return (
+            <Card style={{margin: "3%", padding: '2%', width: '300px', height: '210px'}} elevation={2}>
+                <EditModelGroupModal modelGroupId={props.modelGroupId} isOpen={isEditModalVisible}
+                                     onClose={closeEditModal}/>
+                <AddModelGroupModal modelGroupId={props.modelGroupId} isOpen={isAddModalVisible} onClose={closeAddModal}
+                                    reportError={props.reportError}/>
+                <Grid container>
+                    <Grid item xs={2}>
+                        <IconButton aria-label="change visibility"
+                                    onClick={toggleModelGroupVisibility}><VisibilityIcon/></IconButton>
+                    </Grid>
+                    <Grid item xs={8} textAlign="center">
+                        <Typography variant="h6" data-testid="ModelGroupCard-groupName">{modelGroupName}</Typography>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <IconButton aria-label="delete model group"
+                                    onClick={toggleDeleteRequest}><DeleteIcon/></IconButton>
+                    </Grid>
                 </Grid>
-                <Grid item xs={8} textAlign="center">
-                    <Typography variant="h6" data-testid="ModelGroupCard-groupName">{modelGroupName}</Typography>
+                <Divider/>
+                <Grid container sx={{paddingTop: '0.5em'}}>
+                    {Object.keys(STATISTICAL_VALUES).map((key, idx) => {
+                        return (
+                            <Grid item key={idx} xs={6} sx={{paddingLeft: '1em'}}>
+                                <FormControlLabel
+                                    label={key}
+                                    id={`ModelGroupCard-toggle-${key}-label`}
+                                    control={
+                                        <Checkbox
+                                            onChange={
+                                                event => toggleModelGroupStatisticalValueVisibility(event, key)
+                                            }
+                                            checked={modelGroupStatisticalValue[key]}
+                                            id={`ModelGroupCard-toggle-${key}-checkbox`}
+                                            labelid={`ModelGroupCard-toggle-${key}-label`}
+                                            data-testid={`ModelGroupCard-toggle-${key}-checkbox`}
+                                        />
+                                    }
+                                />
+                            </Grid>
+                        );
+                    })}
                 </Grid>
-                <Grid item xs={2}>
-                    <IconButton aria-label="delete model group" onClick={deleteGroup}><DeleteIcon /></IconButton>
-                </Grid>
-            </Grid>
-            <Divider />
-            <Grid container sx={{paddingTop: '0.5em'}}>
-                {Object.keys(STATISTICAL_VALUES).map((key, idx) => {
-                    return (
-                        <Grid item key={idx} xs={6} sx={{paddingLeft: '1em'}}>
-                            <FormControlLabel
-                                label={key}
-                                id={`ModelGroupCard-toggle-${key}-label`}
-                                control={
-                                    <Checkbox
-                                        onChange={
-                                            event => toggleModelGroupStatisticalValueVisibility(event, key)
-                                        }
-                                        checked={modelGroupStatisticalValue[key]}
-                                        id={`ModelGroupCard-toggle-${key}-checkbox`}
-                                        labelid={`ModelGroupCard-toggle-${key}-label`}
-                                        data-testid={`ModelGroupCard-toggle-${key}-checkbox`}
-                                    />
-                                }
-                            />
-                        </Grid>
-                    );
-                })}
-            </Grid>
-            <Divider />
-            <CardActions>
-                <Button size="small" variant="outlined" onClick={showEditModal} data-testid="ModelGroupCard-EditModelGroupModal-button-open">
-                    Edit statistical values
-                </Button>
-                <Button size="small" variant="outlined" onClick={showAddModal} data-testid="ModelGroupCard-AddModelGroupModal-button-open">
-                    Edit group members
-                </Button>
-            </CardActions>
-        </Card>
-    )
+                <Divider/>
+                <CardActions>
+                    <Button size="small" variant="outlined" onClick={showEditModal}
+                            data-testid="ModelGroupCard-EditModelGroupModal-button-open">
+                        Edit statistical values
+                    </Button>
+                    <Button size="small" variant="outlined" onClick={showAddModal}
+                            data-testid="ModelGroupCard-AddModelGroupModal-button-open">
+                        Edit group members
+                    </Button>
+                </CardActions>
+            </Card>
+        )
+    } else {
+        return (
+            <Card style={{margin: "3%", padding: '2%', width: '300px', height: '210px'}} elevation={2}>
+                Do you want to delete this model group?
+            </Card>
+        );
+    }
+
 }
 
 ModelGroupCard.propTypes = {
