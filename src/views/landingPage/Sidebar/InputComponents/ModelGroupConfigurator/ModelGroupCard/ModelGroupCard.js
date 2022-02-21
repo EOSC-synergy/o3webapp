@@ -181,14 +181,49 @@ function ModelGroupCard(props) {
         )
     } else {
         return (
-            <Card style={{margin: "3%", padding: '2%', width: '300px', height: '210px'}} elevation={2}>
-                <Grid container>
-                    <Grid item xs={12}>
-                        <Typography>Do you want to delete this group?</Typography>
+            <Card
+                style={{
+                    margin: "3%",
+                    padding: '2%',
+                    width: '300px',
+                    height: '210px',
+                }}
+                elevation={2}
+                justifyContent="center"
+                alignItems="center"
+            >
+                <Grid container sx={{mt: '60px'}}>
+                    <Grid item xs={12} sx={{mb: '5px', textAlign: "center"}}>
+                        <Typography variant="h6">
+                            Delete this model group?
+                        </Typography>
                     </Grid>
-                    <Grid item xs={12}>
-                        <Button size="small" variant="outlined" onClick={deleteGroup}>Delete</Button>
-                        <Button size="small" variant="outlined" onClick={toggleDeleteRequest}>Keep</Button>
+                    <Grid item xs={12} sx={{mt: '5px', textAlign: "center"}}>
+                        <Button
+                            size="medium"
+                            variant="outlined"
+                            onClick={toggleDeleteRequest}
+                            sx={{
+                                mr: '10px'
+                            }}
+                        >
+                            Keep
+                        </Button>
+                        <Button
+                            size="medium"
+                            variant="filled"
+                            onClick={deleteGroup}
+                            sx={{
+                                ml: '10px',
+                                color: 'black',
+                                backgroundColor: '#fed136',
+                                '&:hover': {
+                                    backgroundColor: '#b19225'
+                                }
+                            }}
+                        >
+                            Delete
+                        </Button>
                     </Grid>
                 </Grid>
             </Card>
