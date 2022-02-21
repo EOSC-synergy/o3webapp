@@ -2,7 +2,7 @@ import React from "react";
 import {useTheme} from "@mui/material/styles";
 import {Button, Card, Grid, Modal, Typography} from "@mui/material";
 import PropTypes from 'prop-types';
-import { BiCookie } from "react-icons/bi";
+import CookieOutlinedIcon from '@mui/icons-material/CookieOutlined';
 
 /**
  * Forces the user to accept cookies.
@@ -53,14 +53,14 @@ function CookieConsentModal(props) {
                         key="cookie"
                         sx={{display: "flex", justifyContent: "center", pt: 5, mb: -3}}
                     >
-                        <BiCookie size={100} />
+                        <CookieOutlinedIcon sx={{fontSize: "100px"}}/>
                     </Grid>
                     <Grid
                         item
                         key="text"
                         sx={{px: 5, pt: 5, pb: 3}}>
                         <Typography variant="h3" sx={{textAlign: "center"}}><b>We Use Cookies!</b></Typography>
-                        <br />
+                        <br/>
                         <Typography>By using this website, you automatically accept that we use cookies.</Typography>
                     </Grid>
                     <Grid
@@ -68,7 +68,8 @@ function CookieConsentModal(props) {
                         key="acceptButton"
                         sx={{px: 5, pb: 5, display: "flex", justifyContent: "left"}}
                     >
-                        <Button variant="outlined" onClick={disagreeToCookies} sx={{marginRight: '1em'}}>Disagree</Button>
+                        <Button variant="outlined" onClick={disagreeToCookies}
+                                sx={{marginRight: '1em'}}>Disagree</Button>
                         <Button variant="contained" onClick={agreeToCookies}>Agree</Button>
                     </Grid>
                 </Grid>
