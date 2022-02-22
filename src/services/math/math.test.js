@@ -21,18 +21,37 @@ describe("tests the functions provided in the math package", () => {
         expect(std(numbers)).toEqual(2);
     });
 
-    it('takes the lower quartile of an array', () => {
+    describe('it tests the example 1 from wikipedia (odd amount of numbers)', () => {
         const numbers = [6, 7, 15, 36, 39, 40, 41, 42, 43, 47, 49];
-        expect(q25(numbers)).toEqual(25.5);
-    });
+
+        it('takes the lower quartile of an array', () => {
+            expect(q25(numbers)).toEqual(15);
+        });
+        
+        it('takes the median of an arry', () => {
+            expect(median(numbers)).toEqual(40);
+        });
     
-    it('takes the median of an arry', () => {
-        const numbers = [6, 7, 15, 36, 39, 40, 41, 42, 43, 47, 49];
-        expect(median(numbers)).toEqual(40);
+        it('takes the upper quartile of an array', () => {
+            expect(q75(numbers)).toEqual(43);
+        });
     });
 
-    it('takes the upper quartile of an array', () => {
-        const numbers = [6, 7, 15, 36, 39, 40, 41, 42, 43, 47, 49];
-        expect(q75(numbers)).toEqual(42.5);
+    describe('it tests the example 2 from wikipedia (even amount of numbers)', () => {
+        const numbers = [7, 15, 36, 39, 40, 41];
+
+        it('takes the lower quartile of an array', () => {
+            expect(q25(numbers)).toEqual(15);
+        });
+        
+        it('takes the median of an arry', () => {
+            expect(median(numbers)).toEqual(37.5);
+        });
+    
+        it('takes the upper quartile of an array', () => {
+            expect(q75(numbers)).toEqual(40);
+        });
     });
+
+    
 });
