@@ -505,7 +505,7 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                       >
                         <div
                           class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 MuiCard-root css-935hc6-MuiPaper-root-MuiCard-root"
-                          style="margin: 5%;"
+                          style="margin: 3%; padding: 2%; width: 300px; height: 210px;"
                         >
                           <div
                             class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
@@ -2380,7 +2380,7 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                       >
                         <div
                           class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 MuiCard-root css-935hc6-MuiPaper-root-MuiCard-root"
-                          style="margin: 5%;"
+                          style="margin: 3%; padding: 2%; width: 300px; height: 210px;"
                         >
                           <div
                             class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"

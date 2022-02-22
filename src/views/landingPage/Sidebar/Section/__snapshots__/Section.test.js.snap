@@ -369,7 +369,7 @@ exports[`Section renders correclty renders correctly from config file 2`] = `
             >
               <div
                 class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2 MuiCard-root css-935hc6-MuiPaper-root-MuiCard-root"
-                style="margin: 5%;"
+                style="margin: 3%; padding: 2%; width: 300px; height: 210px;"
               >
                 <div
                   class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
