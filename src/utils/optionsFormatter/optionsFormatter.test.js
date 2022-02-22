@@ -142,8 +142,7 @@ describe("testing optionsFormatter functionality", () => {
                 data[key].plotStyle.linestyle = "solid";
                 data[key].data = Array(141).fill(0);
             })
-            const series = generateSeries({plotId: O3AS_PLOTS.tco3_zm, data: data, modelsSlice: modelsSlice})
-            console.log(series);
+            const series = generateSeries({plotId: O3AS_PLOTS.tco3_zm, data: data, modelsSlice: modelsSlice});
             expect(series).toEqual(dataExpected);
         });
     });
