@@ -839,7 +839,7 @@ export const preTransformApiData = ({plotId, data, modelsSlice}) => {
             };
             if (visibleModels.includes(datum.model)) { // min and max values of visible values are relevant!
                 maximums.push(Math.max(...normalizedArray));
-                minimums.push(Math.min(...normalizedArray));
+                minimums.push(Math.min(...normalizedArray.filter(x => x !== null)));
             }
         }
 
@@ -861,7 +861,7 @@ export const preTransformApiData = ({plotId, data, modelsSlice}) => {
             
             if (visibleModels.includes(datum.model)) { // min and max values of visible values are relevant!
                 maximums.push(Math.max(...temp));
-                minimums.push(Math.min(...temp));
+                minimums.push(Math.min(...temp.filter(x => x !== null)));
             }
         }
     }

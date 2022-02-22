@@ -1,10 +1,8 @@
 import {useDispatch, useSelector} from "react-redux"
 import {Grid, TextField, Typography, FormControl, Divider} from "@mui/material";
 import {selectPlotLocation, setLocation} from "../../../../../../store/plotSlice/plotSlice";
-import {fetchPlotData} from "../../../../../../services/API/apiSlice";
+import {fetchPlotDataForCurrentModels} from "../../../../../../services/API/apiSlice";
 import {
-    modelListBegin,
-    modelListEnd,
     LATITUDE_BAND_MAX_VALUE,
     LATITUDE_BAND_MIN_VALUE
 } from "../../../../../../utils/constants";
@@ -63,7 +61,7 @@ function CustomLatitudeSelector(props) {
             }
             selectedLocationCopy.minLat = val;
             dispatch(setLocation({minLat: selectedLocationCopy.minLat, maxLat: selectedLocationCopy.maxLat}));
-            dispatch(fetchPlotData(modelListBegin, modelListEnd));
+            dispatch(fetchPlotDataForCurrentModels());
             setMinLatState(val);
         } else {
             setMinLatState(event.target.value);
@@ -86,9 +84,8 @@ function CustomLatitudeSelector(props) {
             }
             selectedLocationCopy.maxLat = val;
             dispatch(setLocation({minLat: selectedLocationCopy.minLat, maxLat: selectedLocationCopy.maxLat}));
-            dispatch(fetchPlotData(modelListBegin, modelListEnd));
+            dispatch(fetchPlotDataForCurrentModels());
             setMaxLatState(val);
-
         } else {
             setMaxLatState(event.target.value);
         }
