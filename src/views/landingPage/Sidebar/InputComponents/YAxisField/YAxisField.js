@@ -45,7 +45,7 @@ function YAxisField(props) {
      */
     const handleChangeMin = (event) => {
         if (!isNaN(event.target.value)) {
-            if (plotId === 'tc03_zm') setStateY_zm({minY: event.target.value, maxY: maxY});
+            if (plotId === 'tco3_zm') setStateY_zm({minY: event.target.value, maxY: maxY});
             else setStateY_return({minY: event.target.value, maxY: maxY});
             if (event.target.value > 0 && event.target.value <= maxY) {
                 dispatch(setDisplayYRange({minY: parseInt(event.target.value), maxY: maxY}));
