@@ -1,14 +1,14 @@
 import React from "react";
 import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Modal,
-  Select,
-  Typography,
-  Card,
-  Grid,
-  Button,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Modal,
+    Select,
+    Typography,
+    Card,
+    Grid,
+    Button, IconButton, CardContent,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import PropTypes from "prop-types";
@@ -20,6 +20,9 @@ import { selectActivePlotData} from "../../../../services/API/apiSlice";
 import { selectAllModelGroups } from "../../../../store/modelsSlice/modelsSlice";
 import { REQUEST_STATE } from "../../../../services/API/apiSlice";
 import { generateCsv } from "../../../../services/csv/csvParser";
+import CloseIcon from "@mui/icons-material/Close";
+import CardHeader from "@mui/material/CardHeader";
+import CardActions from "@mui/material/CardActions";
 
 /**
  * Opens a modal where the user can select the file format and download the plot.
@@ -75,7 +78,7 @@ function DownloadModal(props) {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: "50%",
+    width: "30%",
     bgColor: useTheme().palette.grey[200],
     boxShadow: 24,
     p: 5,
@@ -247,50 +250,45 @@ function DownloadModal(props) {
   };
 
   return (
-    <Modal open={props.isOpen} onClose={props.onClose}>
-      <Card sx={style}>
-        <Grid container spacing={5} justifyContent="center" alignItems="center">
-          <Grid
-            item
-            xs={12}
-            sm={12}
-            md={12}
-            lg={12}
-            xl={12}
-            key="heading"
-            sx={{ textAlign: "center" }}
-          >
-            <Typography variant={"h3"}>Download Plot</Typography>
-          </Grid>
-          <Grid item xs={12} sm={12} md={3} lg={3} xl={3} key="text">
-            <Typography variant={"h6"}>Choose File Format:</Typography>
-          </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={6} xl={6} key="select">
-            <FormControl style={{ width: "100%", minWidth: 150 }}>
-              <InputLabel id="formatSelectLabel">Format</InputLabel>
-              <Select
-                labelId="formatSelectLabel"
-                id="formatSelection"
-                label="format"
-                value={selectedFileFormat}
-                onChange={changeFileFormat}
-              >
-                {fileFormats.map((elem, idx) => (
-                  <MenuItem key={idx} value={elem.description}>
-                    {elem.description}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={12} md={3} lg={3} xl={3} key="button">
-            <Button disabled={activeData.status !== REQUEST_STATE.success} variant="outlined" onClick={handleDownloadPlot}>
-              <Typography>Download</Typography>
-            </Button>
-          </Grid>
-        </Grid>
-      </Card>
-    </Modal>
+      <Modal open={props.isOpen} onClose={props.onClose}>
+          <Card sx={style}>
+              <CardHeader
+                  title="Download Plot"
+                  action={
+                      <IconButton onClick={props.onClose} aria-label="close">
+                          <CloseIcon />
+                      </IconButton>
+                  }
+              />
+              <CardContent>
+                  <FormControl style={{ width: "100%", minWidth: 150 }}>
+                      <InputLabel id="formatSelectLabel">Format</InputLabel>
+                      <Select
+                          labelId="formatSelectLabel"
+                          id="formatSelection"
+                          label="format"
+                          value={selectedFileFormat}
+                          onChange={changeFileFormat}
+                      >
+                          {fileFormats.map((elem, idx) => (
+                              <MenuItem key={idx} value={elem.description}>
+                                  {elem.description}
+                              </MenuItem>
+                          ))}
+                      </Select>
+                  </FormControl>
+              </CardContent>
+              <CardActions sx={{justifyContent: "flex-end", marginTop: "2%"}}>
+                  <Button
+                      disabled={activeData.status !== REQUEST_STATE.success}
+                      variant="contained"
+                      onClick={handleDownloadPlot}
+                  >
+                      <Typography>Download</Typography>
+                  </Button>
+              </CardActions>
+          </Card>
+      </Modal>
   );
 }
 
