@@ -1,6 +1,6 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux"
-import {Modal, Card, Button, Checkbox, IconButton, CardActions} from "@mui/material";
+import {Modal, Card, Button, Checkbox, IconButton, CardActions, Box} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
 import SearchBar from "../../../../../../components/Searchbar/Searchbar";
 import {styled} from '@mui/material/styles';
@@ -15,6 +15,7 @@ import CardHeader from '@mui/material/CardHeader';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material/styles';
 import { convertModelName } from "../../../../../../utils/ModelNameConverter";
+import { alpha } from '@mui/system';
 
 /**
  * A DataGrid with applied CSS styling.
@@ -351,30 +352,45 @@ function EditModelGroupModal(props) {
      * @returns                 JSX with the generated header name.
      */
     const generateHeaderName = (type) => {
-        if (areAllCheckboxesSelected(type)) {
-            return (
-                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                    <CheckBoxIcon fontSize="small" style={{marginRight: "5px"}} color="primary"
-                                  data-testid={`ColumnCheckboxCheckedType${type}`}/>
-                    {type}
-                </div>)
-        } else {
-            if (areNoCheckboxesSelected(type)) {
-                return (
-                    <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                        <CheckBoxOutlineBlankIcon fontSize="small" style={{marginRight: "5px"}}
-                                                  data-testid={`ColumnCheckboxUncheckedType${type}`}/>
-                        {type}
-                    </div>)
-            } else {
-                return (
-                    <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                        <IntermediateCheckBoxIcon fontSize="small" style={{marginRight: "5px"}} color="primary"
-                                                  data-testid={`ColumnCheckboxIntermediateType${type}`}/>
-                        {type}
-                    </div>)
-            }
-        }
+        return (
+            <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap', cursor: 'pointer'}}>
+                <Box
+                    sx={{
+                        textAlign: 'center',
+                        marginRight: '5px',
+                        width: '42px',
+                        height: '42px',
+                        borderRadius: '50%',
+                        '&:hover': {
+                            backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity),
+                        },
+                    }}
+                >
+                    {
+                        areAllCheckboxesSelected(type) ?
+                            <CheckBoxIcon
+                                fontSize="medium"
+                                color="primary"
+                                data-testid={`ColumnCheckboxCheckedType${type}`}
+                            />
+                        : (
+                            areNoCheckboxesSelected(type) ?
+                                <CheckBoxOutlineBlankIcon
+                                    fontSize="medium"
+                                    data-testid={`ColumnCheckboxUncheckedType${type}`}
+                                />
+                            :
+                                <IntermediateCheckBoxIcon
+                                    fontSize="medium"
+                                    color="primary"
+                                    data-testid={`ColumnCheckboxIntermediateType${type}`}
+                                />
+                            )
+                    }
+                </Box>
+                {type}
+            </div>
+        );
     }
 
     /**
@@ -386,7 +402,7 @@ function EditModelGroupModal(props) {
     const CustomCheckbox = (props) => {
         return (
             <div className="d-flex justify-content-between align-items-center" style={{cursor: "pointer"}}>
-                <Checkbox checked={props.isChecked} onClick={props.handleChecked}/>
+                <Checkbox size='medium' checked={props.isChecked} onClick={props.handleChecked} sx={{ml: '4px'}}/>
             </div>
         );
     }
@@ -429,7 +445,7 @@ function EditModelGroupModal(props) {
             }
         },
         {
-            field: "std", headerName: 'Standard deviation', sortable: false, width: 180, disableClickEventBubbling: true,
+            field: "std", headerName: 'Standard deviation', sortable: false, width: 200, disableClickEventBubbling: true,
             renderHeader: () => generateHeaderName("Standard deviation"),
             renderCell: (params) => {return createCellCheckBox(params, "Standard deviation")}
         },
@@ -441,7 +457,7 @@ function EditModelGroupModal(props) {
             }
         },
         {
-            field: 'percentile', headerName: "Percentile", width: 140, sortable: false, disableClickEventBubbling: true,
+            field: 'percentile', headerName: "Percentile", width: 150, sortable: false, disableClickEventBubbling: true,
             renderHeader: () => generateHeaderName("Percentile"),
             renderCell: (params) => {
                 return createCellCheckBox(params, "Percentile")
