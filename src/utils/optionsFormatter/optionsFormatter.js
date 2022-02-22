@@ -692,7 +692,6 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
 
         const svHolder = calculateSvForModels(Object.keys(groupData.models), data, groupData, buildMatrix);
 
-        console.log(svHolder);
         for (const [sv, svData] of Object.entries(svHolder)) {
 
             if (sv === STATISTICAL_VALUES[std] // std
