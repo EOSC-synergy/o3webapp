@@ -282,16 +282,21 @@ function EditModelGroupModal(props) {
      * @param {String} params.colDef.headerName     The name of the column that is displayed
      */
     const columnHeaderClick = (params) => {
+        console.log("hi");
         if (!typeList.includes(params.colDef.field)) return;
         const type = params.colDef.headerName;
+        console.log(type);
         const visibleCopy = [...getCheckedListByType(type)];
+        console.log(visibleCopy);
         const allCheckboxesSelected = areAllCheckboxesSelected(type);
+        console.log(allCheckboxesSelected);
         filteredRows.forEach(
             prop => {
                 visibleCopy[prop["id"]] = !allCheckboxesSelected
             }
         )
         const setter = getCheckedSetterByType(type);
+        console.log(setter);
         setter(visibleCopy);
     }
 
@@ -424,7 +429,7 @@ function EditModelGroupModal(props) {
             }
         },
         {
-            field: "standard deviation", headerName: 'Standard deviation', sortable: false, width: 180, disableClickEventBubbling: true,
+            field: "std", headerName: 'Standard deviation', sortable: false, width: 180, disableClickEventBubbling: true,
             renderHeader: () => generateHeaderName("Standard deviation"),
             renderCell: (params) => {return createCellCheckBox(params, "Standard deviation")}
         },
