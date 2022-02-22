@@ -8,10 +8,12 @@ import {
     SV_COLORING,
     SV_DASHING,
     STATISTICAL_VALUES,
-    APEXCHART_PLOT_TYPE,
     MODEL_LINE_THICKNESS,
     START_YEAR,
     END_YEAR,
+    EXTENDED_SV_LIST,
+    stdMean,
+    STATISTICAL_VALUE_LINE_THICKNESS
 } from "../constants"
 import {convertModelName} from "../ModelNameConverter";
 
@@ -693,15 +695,15 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
             if (sv === STATISTICAL_VALUES.std
                 || sv === STATISTICAL_VALUES.percentile) continue; // skip for now
 
-
             if (groupData.visibleSV[sv] // mean und median
-                || (sv.includes("std") && groupData.visibleSV[STATISTICAL_VALUES.std])) {
+                || (sv.includes("std") && groupData.visibleSV[STATISTICAL_VALUES.std])
+                || (sv.includes("percentile") && groupData.visibleSV[STATISTICAL_VALUES.percentile])) {
             } else {
                 continue;
             }
             svSeries.data.push(generateSingleSvSeries(`${sv}(${groupData.name})`, svData));
             svSeries.colors.push(SV_COLORING[sv]);   // coloring?
-            svSeries.width.push(MODEL_LINE_THICKNESS);                  // thicker?
+            svSeries.width.push(STATISTICAL_VALUE_LINE_THICKNESS);                  // thicker?
             svSeries.dashArray.push(SV_DASHING[sv]);              // solid?       
         }
     }
@@ -723,13 +725,15 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
 
     const matrix = buildMatrix({modelList, data}); // function supplied by caller
 
-    const svHolder = {stdMean: []};
-    STATISTICAL_VALUES_LIST.forEach(
+    const PROCESS_SV = [...STATISTICAL_VALUES_LIST.filter(x => x !== STATISTICAL_VALUES.percentile), ...EXTENDED_SV_LIST];
+
+    const svHolder = {};
+    PROCESS_SV.forEach(
         sv => svHolder[sv] = [] // init with empty array
     )
 
     for (const arr of matrix) { // fill with calculated sv
-        for (const sv of [...STATISTICAL_VALUES_LIST, "stdMean"]) {
+        for (const sv of PROCESS_SV) {
             // filter out values from not included models or null values
             const filtered = arr.filter((value, idx) => value !== null && isIncludedInSv(modelList[idx], groupData, sv));
 
@@ -745,8 +749,8 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
     svHolder["mean+std"] = [];
     svHolder["mean-std"] = [];
     for (let i = 0; i < svHolder[STATISTICAL_VALUES.std].length; ++i) {
-        svHolder["mean+std"].push(svHolder.stdMean[i] + svHolder[STATISTICAL_VALUES.std][i]);
-        svHolder["mean-std"].push(svHolder.stdMean[i] - svHolder[STATISTICAL_VALUES.std][i]);
+        svHolder["mean+std"].push(svHolder[stdMean][i] + svHolder[STATISTICAL_VALUES.std][i]);
+        svHolder["mean-std"].push(svHolder[stdMean][i] - svHolder[STATISTICAL_VALUES.std][i]);
     }
     delete svHolder["stdMean"];
     return svHolder;
@@ -832,7 +836,7 @@ export const preTransformApiData = ({plotId, data, modelsSlice}) => {
             };
             if (visibleModels.includes(datum.model)) { // min and max values of visible values are relevant!
                 maximums.push(Math.max(...normalizedArray));
-                minimums.push(Math.min(...normalizedArray));
+                minimums.push(Math.min(...normalizedArray.filter(x => x !== null)));
             }
         }
 
@@ -854,7 +858,7 @@ export const preTransformApiData = ({plotId, data, modelsSlice}) => {
             
             if (visibleModels.includes(datum.model)) { // min and max values of visible values are relevant!
                 maximums.push(Math.max(...temp));
-                minimums.push(Math.min(...temp));
+                minimums.push(Math.min(...temp.filter(x => x !== null)));
             }
         }
     }
@@ -1077,7 +1081,7 @@ function create2dArray(i) {
  */
 function isIncludedInSv(model, groupData, svType) {
     if (svType === "stdMean") return groupData.models[model][STATISTICAL_VALUES.std]; // the std mean should only be calculated if the std is necessary
-
+    if (svType.includes("percentile")) return groupData.models[model][STATISTICAL_VALUES.percentile];
     return groupData.models[model][svType];
 }
 

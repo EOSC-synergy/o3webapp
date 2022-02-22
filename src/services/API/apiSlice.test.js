@@ -1,15 +1,11 @@
-import reducer, { fetchModels, fetchPlotData, fetchPlotTypes, generateCacheKey, REQUEST_STATE, selectActivePlotData } from "./apiSlice";
+import reducer, { fetchModels, fetchPlotData, fetchPlotTypes, generateCacheKey, REQUEST_STATE, selectActivePlotData, getAllSelectedModels } from "./apiSlice";
 import axios from 'axios';
 import { configureStore } from "@reduxjs/toolkit";
 import { createTestStore } from "../../store/store";
-import * as optionsFormatter from "../../utils/optionsFormatter/optionsFormatter";
-
-/*
-const spy = jest.spyOn(optionsFormatter, 'preTransformApiData');
-spy.mockImplementation(x => {
-    return {lookUpTable: x, min: 0, max: 0}
-});*/
-
+import tco3zmResponse from "./testing/tco3zm-response.json";
+import tco3returnResponse from "./testing/tco3return-response.json";
+import { O3AS_PLOTS } from "../../utils/constants";
+import { preTransformApiData } from "../../utils/optionsFormatter/optionsFormatter";
 
 jest.mock('axios');
 
@@ -193,7 +189,8 @@ describe("tests the REQUEST_STATE enum", () => {
 });
 
 let store;
-describe('tests fetchPlotData thunk action creator', () => {
+let modelsInGroup;
+describe('tests fetchPlotData api interaction (integration)', () => {
     const exampleRequestData = {
         plotId: "tco3_zm",
         latMin: -90, 
@@ -209,6 +206,7 @@ describe('tests fetchPlotData thunk action creator', () => {
 
     beforeEach(() => {
         store = createTestStore();
+        modelsInGroup = Object.keys(store.getState().models.modelGroups[0].models);
     });
 
     it('should generate the correct cacheKey', () => {
@@ -217,31 +215,122 @@ describe('tests fetchPlotData thunk action creator', () => {
         ).toEqual("lat_min=-90&lat_min=90&months=1,2&ref_meas=modelRef&ref_year=420");
     })
 
-    it('should dispatch a loading status', () => {
-        axios.post.mockResolvedValue({data: [
-            {
-              "legalinfo": "https://o3as.data.kit.edu/policies/terms-of-use.html",
-              "model": "CCMI-1_ACCESS_ACCESS-CCM-refC2",
-              "plotstyle": {
-                "color": "purple",
-                "linestyle": "solid",
-                "marker": ""
-              },
-              "x": [],
-              "y": [],
-            }]});
-        store.dispatch(fetchPlotData(exampleRequestData));
+    it('should dispatch a loading status and add the models to loading', () => {
+        axios.post.mockResolvedValue({data: []});
+        store.dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, models: modelsInGroup}));
         
-        const plotSpecificSection = store.getState().api.plotSpecific["tco3_zm"];
-        expect(plotSpecificSection.active).toEqual(exampleCacheKey);
+        const plotSpecificSection = store.getState().api.plotSpecific[O3AS_PLOTS.tco3_zm];
+        expect(plotSpecificSection.active).toEqual(exampleCacheKey); // active request gets selected
+
         expect(plotSpecificSection.cachedRequests[exampleCacheKey]).toEqual({
-            data: [],
+            data: {},
             error: null,
             status: REQUEST_STATE.loading,
             suggested: null,
+            loadedModels: [],
+            loadingModels: modelsInGroup,
         });
         
     });
+
+    it('should handle the re-fetching correctly', async () => {
+        axios.post.mockResolvedValue({data: []});
+        store.dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, models: [modelsInGroup[0]]}));
+        
+        const plotSpecificSection = store.getState().api.plotSpecific[O3AS_PLOTS.tco3_zm];
+        expect(plotSpecificSection.active).toEqual(exampleCacheKey); // active request gets selected
+
+        expect(plotSpecificSection.cachedRequests[exampleCacheKey]).toEqual({
+            data: {},
+            error: null,
+            status: REQUEST_STATE.loading,
+            suggested: null,
+            loadedModels: [],
+            loadingModels: [modelsInGroup[0]],
+        });
+
+        // try to refetch exact same model
+        store.dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, models: [modelsInGroup[0]]}));
+
+        expect(plotSpecificSection.cachedRequests[exampleCacheKey]).toEqual({
+            data: {},
+            error: null,
+            status: REQUEST_STATE.loading,
+            suggested: null,
+            loadedModels: [],
+            loadingModels: [modelsInGroup[0]], // expect the loading list to not contain a duplicate if a re-fetch is requested
+        });
+        
+    });
+
+    it('should add loaded models to the list, update the status and save the transformed data for tco3_zm', async () => {
+        axios.post.mockResolvedValue({data: tco3zmResponse});
+        await store.dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, models: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"]}));
+        
+        const plotSpecificSection = store.getState().api.plotSpecific["tco3_zm"];
+        expect(plotSpecificSection.active).toEqual(exampleCacheKey);
+        const cachedRequest = plotSpecificSection.cachedRequests[exampleCacheKey];
+
+        const {lookUpTable: transformedData, min, max} = preTransformApiData({
+            plotId: O3AS_PLOTS.tco3_zm, 
+            data: tco3zmResponse,
+            modelsSlice: store.getState().models,
+        });        
+        expect(cachedRequest).toEqual({
+            data: transformedData, // expect data to be transformed
+            error: null,
+            status: REQUEST_STATE.success,
+            suggested: {max, min},
+            loadedModels: Object.values(tco3zmResponse).map(x => x.model),
+            loadingModels: [],
+        });
+        
+    });
+
+    it('should add loaded models to the list, update the status and save the transformed data for tco3_return', async () => {
+        axios.post.mockResolvedValue({data: tco3returnResponse});
+        await store.dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_return, models: modelsInGroup}));
+        
+        const plotSpecificSection = store.getState().api.plotSpecific[O3AS_PLOTS.tco3_return];
+        expect(plotSpecificSection.active).toEqual(exampleCacheKey);
+        const cachedRequest = plotSpecificSection.cachedRequests[exampleCacheKey];
+
+        const {lookUpTable: transformedData, min, max} = preTransformApiData({
+            plotId: O3AS_PLOTS.tco3_return, 
+            data: tco3returnResponse,
+            modelsSlice: store.getState().models,
+        });
+
+        expect(cachedRequest).toEqual({
+            data: transformedData, // expect data to be transformed
+            error: null,
+            status: REQUEST_STATE.success,
+            suggested: {max, min},
+            loadedModels: Object.values(tco3returnResponse).map(x => x.model),
+            loadingModels: [],
+        });
+        
+    });
+
+    it('should set an error accordingly', async () => {
+        const errorMessage = "This is an error message [500]"
+        axios.post.mockReturnValue(Promise.reject({message: errorMessage}));
+        await store.dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_return, models: modelsInGroup}));
+        
+        const plotSpecificSection = store.getState().api.plotSpecific[O3AS_PLOTS.tco3_return];
+        expect(plotSpecificSection.active).toEqual(exampleCacheKey);
+        const cachedRequest = plotSpecificSection.cachedRequests[exampleCacheKey];
+
+        expect(cachedRequest).toEqual({
+            data: {}, // expect data to be transformed
+            error: errorMessage,
+            status: REQUEST_STATE.error,
+            suggested: null,
+            loadedModels: [],
+            loadingModels: [],
+        });
+        
+    })
 
 });
 
@@ -273,5 +362,16 @@ describe('testing selectors', () => {
             }
         }
         expect(selectActivePlotData(previousState, "tco3_return")).toEqual("precious data");
+    });
+});
+
+describe('testing utils functions', () => {
+    beforeEach(() => {
+        store = createTestStore();
+    });
+
+    test("getAllSelectedModels selects all models", () => {
+        const selectedModels = getAllSelectedModels(store.getState);
+        expect(selectedModels).toEqual(["CCMI-1_ACCESS_ACCESS-CCM-refC2", "CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG", "CCMI-1_CCCma_CMAM-refC2"])
     });
 });

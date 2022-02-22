@@ -2,8 +2,26 @@ import {
     mean as calculateMean,
     std as calculateStd,
     median as calculateMedian,
-    q25 as calculatePercentile, // TODO import actual percentile
+    quantile as calculatePercentile, // TODO import actual percentile
 } from "../services/math/math";
+
+// index.js
+
+/**
+ * Stores the default model group.
+ *
+ * Modify this object to change the name or the models that appear when
+ * the WebApp is initially loaded.
+ */
+export const DEFAULT_MODEL_GROUP = {
+    groupId: null, // no valid id => add new group
+    groupName: "Example Group",
+    modelList: [
+        "CCMI-1_ACCESS_ACCESS-CCM-refC2",
+        "CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG",
+        "CCMI-1_CCCma_CMAM-refC2"
+    ]
+};
 
 // apiSlice
 /** For reducing loading time while implementing: starting value for how many models should be fetched */
@@ -128,35 +146,63 @@ export const PLOT_NAME_MAX_LEN = 40;
 // GRAPH
 */
 
+/**
+ * An "enum" which stores the plot types as they come from the api.
+ */
 export const O3AS_PLOTS = { // used for internal testing or manual if-else
     tco3_zm: "tco3_zm",
     tco3_return: "tco3_return",
 };
 
+/**
+ * Maps the plots provided by the api to their apexcharts plot type
+ */
 export const APEXCHART_PLOT_TYPE = {
     tco3_zm: "line",
     tco3_return: "boxPlot"
 };
 
+/**
+ * How large the loading spinner should appear.
+ */
 export const HEIGHT_LOADING_SPINNER = "300px";
+/**
+ * How tall the graph should appear
+ */
 export const HEIGHT_GRAPH = `${window.innerHeight * 0.75}px`;
 
 /*
 // Options Formatter, XAxisField, YAxisField, apiSlice
 */
+/**
+ * The start year, no data is fetched for years before this point in time
+ */
 export const START_YEAR = 1960;
+/**
+ * The end year, no data is fetched for years after this point in time
+ */
 export const END_YEAR = 2100;
-// year list: 1959 - 2100
+/**
+ * This array provides a list from start to end year with each year as a string
+ */
 export const IMPLICIT_YEAR_LIST = [...Array(END_YEAR - START_YEAR + 1).keys()].map(number => `${START_YEAR + number}`);
 
 // important for api data transformation
+/** This string stores the description of the antarctic region */
 const ANTARCTIC = "Antarctic(Oct)";
+/** This string stores the description of the south hemisphere region */
 const SH_MID = "SH mid-lat";
+/** This string stores the description of the north hemisphere region */
 const NH_MID = "NH mid-lat";
+/** This string stores the description of the tropics region */
 const TROPICS = "Tropics";
+/** This string stores the description of the arctic region */
 const ARCTIC = "Arctic(Mar)";
+/** This string stores the description of the near global region */
 const NEAR_GLOBAL = "Near global";
+/** This string stores the description of the global region */
 const GLOBAL = "Global";
+/** This string stores the description of the user region */
 const USER_REGION = "User region";
 export const O3AS_REGIONS = {
     ANTARCTIC,
@@ -170,11 +216,23 @@ export const O3AS_REGIONS = {
 }
 export const ALL_REGIONS_ORDERED = [ANTARCTIC, SH_MID, NH_MID, TROPICS, ARCTIC, NEAR_GLOBAL, GLOBAL, USER_REGION];
 
-
+/**
+ * The mean: this appears in the model group card and is used to identify its statistical value settings.
+ */
 const mean = "mean";
+/**
+ * The standard deviation: this appears in the model group card and is used to identify its statistical value settings.
+ */
 const std = "std";
+/**
+ * The median: this appears in the model group card and is used to identify its statistical value settings.
+ */
 const median = "median";
+/**
+ * The percentile: this appears in the model group card and is used to identify its statistical value settings.
+ */
 const percentile = "percentile";
+
 /**
  * The statistical values that are computable are listed here as
  * an "enum"
@@ -187,11 +245,46 @@ export const STATISTICAL_VALUES = {
 }
 
 /**
- * The same statistical values as a list to verify certain payload data
+ * Name for the helper statistical value series: This line is used to calculate the mean+/-std
+ */
+export const stdMean = "stdMean";
+/**
+ * The lower percentile ~15.87th
+ */
+export const lowerPercentile = "lowerPercentile";
+/**
+ * The lower percentile ~84.13th
+ */
+export const upperPercentile = "upperPercentile";
+/*
+ * Regarding the percentile (message from Tobias):
+ *
+ * It would be good if you could include the 84.13th and 15.87th percentiles
+ * which corresponds +1σ standard dev of the Gaussian distribution.
+ * A workflow to calculate the percentiles is described on the following
+ * website for example:
+ *
+ * https://www.indeed.com/career-advice/career-development/how-to-calculate-percentile
+*/
+
+/**
+ * This extended sv list is used in the calculation to handle some changes that
+ * came up after the specification / design phase: standard deviation is not one
+ * but TWO lines. Same goes for percentile which is lower- AND upper-percentile.
+ */
+export const EXTENDED_SV_LIST = [stdMean, lowerPercentile, upperPercentile];
+
+
+/**
+ * The same statistical values as a list to verify certain payload data.
  */
 export const STATISTICAL_VALUES_LIST = Object.values(STATISTICAL_VALUES);
 
 
+/**
+ * This object maps each statistical value that should be calculated
+ * to a corresponding function describing HOW it should be calculated.
+ */
 export const SV_CALCULATION = {
     mean: calculateMean,
     std: calculateStd,
@@ -199,25 +292,52 @@ export const SV_CALCULATION = {
     percentile: calculatePercentile,
     stdMean: calculateMean, // mean for std+-
 }
+SV_CALCULATION[STATISTICAL_VALUES.std] = calculateStd;
+SV_CALCULATION[lowerPercentile] = arr => calculatePercentile(arr, .1587);
+SV_CALCULATION[upperPercentile] = arr => calculatePercentile(arr, .8413);
+SV_CALCULATION[stdMean] = calculateMean;
 
+/**
+ * This object maps each statistical value that should be calculated
+ * to a color it should be appear in.
+ */
 export const SV_COLORING = {
     mean: "#000",
     std: "#000",
-    "mean+std": "#000",
-    "mean-std": "#000",
     median: "#000",
     percentile: "#000",
+    "lowerPercentile": "#1e8509",
+    "upperPercentile": "#1e8509",
+    "mean+std": "#000",
+    "mean-std": "#000",
 }
 
+/**
+ * This object maps each statistical value that should be calculated
+ * to its line dashing allowing an easy customization if e.g. the
+ * mean should be dashed too.
+ *
+ * The integer values correspond to the dashing format that is
+ * expected by apexcharts.
+ */
 export const SV_DASHING = {
     mean: 0,
     median: 2,
     percentile: 0,
     "mean+std": 8,
     "mean-std": 8,
+    "lowerPercentile": 4,
+    "upperPercentile": 4,
 }
 
+/**
+ * This parameter specifies how thick the line of plotted models should appear.
+ */
 export const MODEL_LINE_THICKNESS = 2;
+/**
+ * This parameter specifies how thick the line of plotted statistical values should appear.
+ */
+export const STATISTICAL_VALUE_LINE_THICKNESS = 2;
 
 /**
  * the Legal Notice links which will be parsed into the PDF.

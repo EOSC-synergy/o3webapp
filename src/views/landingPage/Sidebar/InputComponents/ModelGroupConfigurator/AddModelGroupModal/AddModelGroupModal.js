@@ -22,7 +22,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Alert from "@mui/material/Alert";
 import PropTypes from 'prop-types'; 
 import { useDispatch, useSelector } from "react-redux";
-import { REQUEST_STATE } from "../../../../../../services/API/apiSlice";
+import { fetchPlotDataForCurrentModels, REQUEST_STATE } from "../../../../../../services/API/apiSlice";
 import { selectNameOfGroup, selectModelDataOfGroup } from "../../../../../../store/modelsSlice/modelsSlice";
 import DoneIcon from "@mui/icons-material/Done";
 
@@ -181,6 +181,7 @@ function AddModelGroupModal(props) {
             return;
         }
         dispatch(setModelsOfModelGroup({groupId: props.modelGroupId, groupName: groupName, modelList: right}));
+        dispatch(fetchPlotDataForCurrentModels());
         props.onClose();
     }
 

@@ -8,13 +8,10 @@ import {
     Autumn,
     NUM_MONTHS_IN_SEASON,
     NUM_MONTHS,
-    modelListBegin,
-    modelListEnd,
-    O3AS_PLOTS,
     SEASONS_ARRAY
 } from "../../../../../utils/constants";
 import Typography from "@mui/material/Typography";
-import {fetchPlotData} from "../../../../../services/API/apiSlice";
+import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { selectPlotMonths, setMonths } from "../../../../../store/plotSlice/plotSlice";
 import PropTypes from 'prop-types';
@@ -24,7 +21,7 @@ import PropTypes from 'prop-types';
  * enables the user to select a month, season or the whole year
  * @param {Object} props
  * @param {function} props.reportError - function for error handling
- * @returns {JSX} a jsx containing a checkbox-group per season and an "all year" checkbox
+ * @returns {JSX.Element} a jsx containing a checkboxgroup per season and a "all year" checkbox
  */
 function TimeCheckBoxGroup(props) {
     
@@ -97,8 +94,7 @@ function TimeCheckBoxGroup(props) {
 
         dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
 
-        dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, modelListBegin, modelListEnd}));
-        dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_return, modelListBegin, modelListEnd}));
+        dispatch(fetchPlotDataForCurrentModels());
     }
 
     /**
@@ -204,41 +200,45 @@ function TimeCheckBoxGroup(props) {
     }
 
     return (
-        <div style={{marginTop: "5%"}}>
-            <Divider><Typography>TIME</Typography></Divider>
-            
-            {
-                !correctSelection
-                &&
-                <Alert severity="warning">
-                    No month was selected. Data can only be fetched if atleast one month is selected.
-                </Alert>
-            }
-
-            <Box sx={{paddingLeft: '8%', paddingRight: '8%', alignItems: "center", display: "flex", flexDirection: "column"}}>
-                <FormControlLabel
-                    label="All year"
-                    control={
-                        <Checkbox 
-                            inputProps={{'data-testid':"CheckboxAllYear"}} 
-                            onClick={handleYearChecked} 
-                            checked={isEveryMonthChecked()} 
-                            indeterminate={isIndeterminate()}
-                        />
-                    }
-                />
-                <Grid container>
-                    <Grid item container>
-                        {toSeasonCheckbox(Winter)}
-                        {toSeasonCheckbox(Spring)}
+        <>
+            <Divider style={{marginTop: "5%"}}><Typography>TIME</Typography></Divider>
+            <Grid container justifyContent="center">
+                {
+                    !correctSelection
+                    &&
+                    <Grid item>
+                        <Alert severity="warning">
+                            No month was selected. Data can only be fetched if at least one month is selected.
+                        </Alert>
                     </Grid>
-                    <Grid item container>
-                        {toSeasonCheckbox(Summer)}
-                        {toSeasonCheckbox(Autumn)}
+                }
+                <Grid item container justifyContent="center">
+                    <Grid item>
+                        <FormControlLabel
+                            label="All year"
+                            control={
+                                <Checkbox
+                                    inputProps={{'data-testid':"CheckboxAllYear"}}
+                                    onClick={handleYearChecked}
+                                    checked={isEveryMonthChecked()}
+                                    indeterminate={isIndeterminate()}
+                                />
+                            }
+                        />
+                    </Grid>
+                    <Grid item container justifyContent="center">
+                        <Grid item container>
+                            {toSeasonCheckbox(Winter)}
+                            {toSeasonCheckbox(Spring)}
+                        </Grid>
+                        <Grid item container>
+                            {toSeasonCheckbox(Summer)}
+                            {toSeasonCheckbox(Autumn)}
+                        </Grid>
                     </Grid>
                 </Grid>
-            </Box>
-        </div>
+            </Grid>
+        </>
     );
 }
 

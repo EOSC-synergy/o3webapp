@@ -3,9 +3,9 @@ import {useDispatch, useSelector} from "react-redux"
 import {selectPlotLocation, setLocation} from "../../../../../store/plotSlice/plotSlice";
 import {Box, Divider, MenuItem, Select} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import {latitudeBands, modelListBegin, modelListEnd, O3AS_PLOTS} from "../../../../../utils/constants";
+import {latitudeBands} from "../../../../../utils/constants";
 import PropTypes from 'prop-types';
-import {fetchPlotData} from "../../../../../services/API/apiSlice";
+import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice";
 import CustomLatitudeSelector from "./CustomLatitudeSelector/CustomLatitudeSelector";
 
 
@@ -44,8 +44,7 @@ function LatitudeBandSelector(props) {
             setIsCustomizable(false);
             dispatch(setLocation({minLat: event.target.value.minLat, maxLat: event.target.value.maxLat}));
             // fetch for tco3_zm and tco3_return
-            dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, modelListBegin, modelListEnd}));
-            dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_return, modelListBegin, modelListEnd}));
+            dispatch(fetchPlotDataForCurrentModels());
         }
     };
 
