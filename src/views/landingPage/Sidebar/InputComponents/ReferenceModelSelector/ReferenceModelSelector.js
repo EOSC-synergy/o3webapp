@@ -1,5 +1,5 @@
-import React, {useEffect} from "react";
-import {Typography, MenuItem} from "@mui/material";
+import React, {useEffect, useState} from "react";
+import {Typography, MenuItem, Autocomplete, TextField, Alert, Grid} from "@mui/material";
 import {Select, InputLabel, FormControl} from "@mui/material";
 import {useDispatch} from "react-redux";
 import {useSelector} from "react-redux";
@@ -11,17 +11,22 @@ import { REQUEST_STATE } from "../../../../../services/API/apiSlice";
  * enables the user to select a reference model
  * @param {Object} props
  * @param {function} props.reportError - function to handle errors
- * @returns {JSX} a jsx containing a dropdown to select the reference model from all currently visible models
+ * @returns {JSX.Element} a jsx containing a dropdown to select the reference model from all currently visible models
  */
 function ReferenceModelSelector(props) {
-    const dispatch = useDispatch()
+
+    const dispatch = useDispatch();
 
     const modelListRequestedData = useSelector(state => state.api.models);
+
+    const selectedModel = useSelector(selectRefModel);
+    console.log(selectedModel);
 
     let allModels = [];
     if (modelListRequestedData.status === REQUEST_STATE.success) {
         allModels = modelListRequestedData.data;
     }
+    console.log(allModels);
 
     useEffect(() => {
         if (modelListRequestedData.status === REQUEST_STATE.error) {
@@ -29,35 +34,24 @@ function ReferenceModelSelector(props) {
         }
     });
 
-
-    const selectedModel = useSelector(selectRefModel);
-
     /** Handles the change of the reference model selection when it is modified.*/
     const handleChangeForRefModel = (event) => {
+        console.log(event.target.value);
         dispatch(setModel({model: event.target.value}));
         // fetch for tco3_zm and tco3_return
         dispatch(fetchPlotDataForCurrentModels());
-
     };
 
-
     return (
-        <div>
-            <FormControl sx={{m: 1, width: "100%", size: "small"}}>
-                <Select
-                    labelId="locationSelectLabel"
-                    id="locationSelect"
-                    label="Reference Model"
-                    onChange={handleChangeForRefModel}
-                    value={selectedModel}
-                >
-                    {allModels.map((elem) => {
-                        return <MenuItem key={elem} value={elem}> {elem} </MenuItem>
-                    })}
-                </Select>
-                <InputLabel id="locationSelectLabel"><Typography>Reference Model</Typography></InputLabel>
-            </FormControl>
-        </div>
+        <Autocomplete
+            id="locationAutocomplete"
+            value={selectedModel}
+            onChange={handleChangeForRefModel}
+            disableClearable //maybe remove later?
+            options={allModels}
+            renderInput={(params) => <TextField {...params} label="Reference Model" />}
+            sx={{width: "100%"}}
+        />
     );
 }
 
