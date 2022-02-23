@@ -695,9 +695,11 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
             if (sv === STATISTICAL_VALUES.std
                 || sv === STATISTICAL_VALUES.percentile) continue; // skip for now
 
+
             if (groupData.visibleSV[sv] // mean und median
                 || (sv.includes("std") && groupData.visibleSV[STATISTICAL_VALUES.std])
-                || (sv.includes("percentile") && groupData.visibleSV[STATISTICAL_VALUES.percentile])) {
+                || (sv.toLowerCase().includes("percentile") && groupData.visibleSV[STATISTICAL_VALUES.percentile])) {
+                    
             } else {
                 continue;
             }
@@ -1081,7 +1083,7 @@ function create2dArray(i) {
  */
 function isIncludedInSv(model, groupData, svType) {
     if (svType === "stdMean") return groupData.models[model][STATISTICAL_VALUES.std]; // the std mean should only be calculated if the std is necessary
-    if (svType.includes("percentile")) return groupData.models[model][STATISTICAL_VALUES.percentile];
+    if (svType.toLowerCase().includes("percentile")) return groupData.models[model][STATISTICAL_VALUES.percentile];
     return groupData.models[model][svType];
 }
 
