@@ -127,31 +127,18 @@ exports[`test ModelGroupCard functionality opens add model group modal 1`] = `
         >
           <label
             class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-<<<<<<< HEAD
             id="ModelGroupCard-toggle-standard deviation-label"
           >
             <span
               class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
               data-testid="ModelGroupCard-toggle-standard deviation-checkbox"
               labelid="ModelGroupCard-toggle-standard deviation-label"
-=======
-            id="ModelGroupCard-toggle-std-label"
-          >
-            <span
-              class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
-              data-testid="ModelGroupCard-toggle-std-checkbox"
-              labelid="ModelGroupCard-toggle-std-label"
->>>>>>> issue_OrderOfSV_#16
             >
               <input
                 checked=""
                 class="PrivateSwitchBase-input css-1m9pwf3"
                 data-indeterminate="false"
-<<<<<<< HEAD
                 id="ModelGroupCard-toggle-standard deviation-checkbox"
-=======
-                id="ModelGroupCard-toggle-std-checkbox"
->>>>>>> issue_OrderOfSV_#16
                 type="checkbox"
               />
               <svg
@@ -172,11 +159,7 @@ exports[`test ModelGroupCard functionality opens add model group modal 1`] = `
             <span
               class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
             >
-<<<<<<< HEAD
               standard deviation
-=======
-              std
->>>>>>> issue_OrderOfSV_#16
             </span>
           </label>
         </div>
@@ -673,31 +656,18 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
         >
           <label
             class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-<<<<<<< HEAD
             id="ModelGroupCard-toggle-standard deviation-label"
           >
             <span
               class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
               data-testid="ModelGroupCard-toggle-standard deviation-checkbox"
               labelid="ModelGroupCard-toggle-standard deviation-label"
-=======
-            id="ModelGroupCard-toggle-std-label"
-          >
-            <span
-              class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
-              data-testid="ModelGroupCard-toggle-std-checkbox"
-              labelid="ModelGroupCard-toggle-std-label"
->>>>>>> issue_OrderOfSV_#16
             >
               <input
                 checked=""
                 class="PrivateSwitchBase-input css-1m9pwf3"
                 data-indeterminate="false"
-<<<<<<< HEAD
                 id="ModelGroupCard-toggle-standard deviation-checkbox"
-=======
-                id="ModelGroupCard-toggle-std-checkbox"
->>>>>>> issue_OrderOfSV_#16
                 type="checkbox"
               />
               <svg
@@ -718,11 +688,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
             <span
               class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
             >
-<<<<<<< HEAD
               standard deviation
-=======
-              std
->>>>>>> issue_OrderOfSV_#16
             </span>
           </label>
         </div>
@@ -1224,7 +1190,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
               <div
                 aria-colindex="5"
                 class="MuiDataGrid-columnHeader"
-                data-field="std"
+                data-field="standard deviation"
                 role="columnheader"
                 style="width: 200px; min-width: 200px; max-width: 200px;"
                 tabindex="-1"
@@ -1542,7 +1508,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                       aria-colindex="5"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="4"
-                      data-field="std"
+                      data-field="standard deviation"
                       role="cell"
                       style="min-width: 200px; max-width: 200px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
@@ -1800,7 +1766,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                       aria-colindex="5"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="4"
-                      data-field="std"
+                      data-field="standard deviation"
                       role="cell"
                       style="min-width: 200px; max-width: 200px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
@@ -2058,7 +2024,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                       aria-colindex="5"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="4"
-                      data-field="std"
+                      data-field="standard deviation"
                       role="cell"
                       style="min-width: 200px; max-width: 200px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
@@ -2460,31 +2426,18 @@ exports[`test ModelGroupCard rendering renders correctly 1`] = `
       >
         <label
           class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
-<<<<<<< HEAD
           id="ModelGroupCard-toggle-standard deviation-label"
         >
           <span
             class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
             data-testid="ModelGroupCard-toggle-standard deviation-checkbox"
             labelid="ModelGroupCard-toggle-standard deviation-label"
-=======
-          id="ModelGroupCard-toggle-std-label"
-        >
-          <span
-            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
-            data-testid="ModelGroupCard-toggle-std-checkbox"
-            labelid="ModelGroupCard-toggle-std-label"
->>>>>>> issue_OrderOfSV_#16
           >
             <input
               checked=""
               class="PrivateSwitchBase-input css-1m9pwf3"
               data-indeterminate="false"
-<<<<<<< HEAD
               id="ModelGroupCard-toggle-standard deviation-checkbox"
-=======
-              id="ModelGroupCard-toggle-std-checkbox"
->>>>>>> issue_OrderOfSV_#16
               type="checkbox"
             />
             <svg
@@ -2505,11 +2458,7 @@ exports[`test ModelGroupCard rendering renders correctly 1`] = `
           <span
             class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
           >
-<<<<<<< HEAD
             standard deviation
-=======
-            std
->>>>>>> issue_OrderOfSV_#16
           </span>
         </label>
       </div>
