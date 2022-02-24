@@ -181,6 +181,9 @@ function AddModelGroupModal(props) {
         }
         dispatch(setModelsOfModelGroup({groupId: props.modelGroupId, groupName: groupName, modelList: right}));
         dispatch(fetchPlotDataForCurrentModels());
+        setVisible(allModels);
+        setChecked([]);
+        setRight([]);
         props.onClose();
     }
 
@@ -297,6 +300,9 @@ function AddModelGroupModal(props) {
      * @todo open a "discard changes?" popup here
      */
     const closeWithChanges = () => {
+        setVisible(allModels);
+        setChecked([]);
+        setRight([]);
         props.onClose();
     }
 
