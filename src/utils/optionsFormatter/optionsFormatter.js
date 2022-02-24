@@ -694,12 +694,12 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
 
         for (const [sv, svData] of Object.entries(svHolder)) {
 
-            if (sv === STATISTICAL_VALUES[std] // std
-                || sv === STATISTICAL_VALUES.percentile) continue; // skip for now
+            if (sv === std // std
+                || sv === percentile) continue; // skip for now
 
             if (groupData.visibleSV[sv] // mean und median
-                || (sv.includes("std") && groupData.visibleSV[STATISTICAL_VALUES[std]])
-                || (sv.toLowerCase().includes(percentile) && groupData.visibleSV[STATISTICAL_VALUES[percentile]])) {
+                || (sv.includes("std") && groupData.visibleSV[std])
+                || (sv.toLowerCase().includes(percentile) && groupData.visibleSV[percentile])) {
             } else {
                 continue;
             }
@@ -750,11 +750,11 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
 
     svHolder["mean+std"] = [];
     svHolder["mean-std"] = [];
-    for (let i = 0; i < svHolder[STATISTICAL_VALUES[std]].length; ++i) {
-        svHolder["mean+std"].push(svHolder[stdMean][i] + svHolder[STATISTICAL_VALUES[std]][i]);
-        svHolder["mean-std"].push(svHolder[stdMean][i] - svHolder[STATISTICAL_VALUES[std]][i]);
+    for (let i = 0; i < svHolder[std].length; ++i) {
+        svHolder["mean+std"].push(svHolder[stdMean][i] + svHolder[std][i]);
+        svHolder["mean-std"].push(svHolder[stdMean][i] - svHolder[std][i]);
     }
-    delete svHolder["stdMean"];
+    delete svHolder["stdMean"]; // this should not be displayed
     console.log(svHolder);
     return svHolder;
 }
@@ -1083,8 +1083,8 @@ function create2dArray(i) {
  * @returns                     True if the given model should be included in the SV calculation of the given SV-Type
  */
 function isIncludedInSv(model, groupData, svType) {
-    if (svType === "stdMean") return groupData.models[model][STATISTICAL_VALUES[std]]; // the std mean should only be calculated if the std is necessary
-    if (svType.toLowerCase().includes(percentile)) return groupData.models[model][STATISTICAL_VALUES[percentile]];
+    if (svType === "stdMean") return groupData.models[model][std]; // the std mean should only be calculated if the std is necessary
+    if (svType.toLowerCase().includes(percentile)) return groupData.models[model][percentile];
     return groupData.models[model][svType];
 }
 
