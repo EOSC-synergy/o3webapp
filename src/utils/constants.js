@@ -237,12 +237,10 @@ export const percentile = "percentile";
  * The statistical values that are computable are listed here as
  * an "enum"
  */
-export const STATISTICAL_VALUES = {
-    mean,
-    median,
-    "standard deviation": std,
-    percentile,
-}
+export const STATISTICAL_VALUES = {}
+// populate object automatically with the values: 
+// the order corresponds to the order in the interface
+[mean, std, median, percentile].forEach(sv => STATISTICAL_VALUES[sv] = sv);
 
 /**
  * Name for the helper statistical value series: This line is used to calculate the mean+/-std
