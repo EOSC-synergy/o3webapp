@@ -219,19 +219,19 @@ export const ALL_REGIONS_ORDERED = [ANTARCTIC, SH_MID, NH_MID, TROPICS, ARCTIC, 
 /**
  * The mean: this appears in the model group card and is used to identify its statistical value settings.
  */
-const mean = "mean";
+export const mean = "mean";
 /**
  * The standard deviation: this appears in the model group card and is used to identify its statistical value settings.
  */
-const std = "std";
+export const std = "standard deviation";
 /**
  * The median: this appears in the model group card and is used to identify its statistical value settings.
  */
-const median = "median";
+export const median = "median";
 /**
  * The percentile: this appears in the model group card and is used to identify its statistical value settings.
  */
-const percentile = "percentile";
+export const percentile = "percentile";
 
 /**
  * The statistical values that are computable are listed here as
@@ -286,12 +286,11 @@ export const STATISTICAL_VALUES_LIST = Object.values(STATISTICAL_VALUES);
  */
 export const SV_CALCULATION = {
     mean: calculateMean,
-    std: calculateStd,
     median: calculateMedian,
     percentile: calculatePercentile,
     stdMean: calculateMean, // mean for std+-
 }
-SV_CALCULATION[STATISTICAL_VALUES.std] = calculateStd;
+SV_CALCULATION[std] = calculateStd;
 SV_CALCULATION[lowerPercentile] = arr => calculatePercentile(arr, .1587);
 SV_CALCULATION[upperPercentile] = arr => calculatePercentile(arr, .8413);
 SV_CALCULATION[stdMean] = calculateMean;
@@ -302,7 +301,7 @@ SV_CALCULATION[stdMean] = calculateMean;
  */
 export const SV_COLORING = {
     mean: "#000",
-    std: "#000",
+    "standard deviation": "#000",
     median: "#000",
     percentile: "#000",
     "lowerPercentile": "#1e8509",
