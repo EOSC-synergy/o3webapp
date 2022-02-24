@@ -77,15 +77,15 @@ export const defaultTCO3_zm = {
             easing: "linear"
         },
         toolbar: {
-            show: true,
+            show: false,
             offsetX: -60,
             offsetY: 10,
             tools: {
-                download: true,
+                download: false,
                 pan: false,
                 zoomin: false,
                 zoomout: false,
-                zoom: true, // enabled, otherwise the zoom is disabled
+                zoom: false,
             },
         },
         zoom: {
@@ -247,6 +247,9 @@ export const default_TCO3_return = {
             enabled: false,
             type: 'xy',
         },
+        toolbar: {
+            show: false,
+        }
     },
     colors: [undefined], // , ...styling.colors
     title: {
@@ -732,7 +735,7 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
     const svHolder = {};
     PROCESS_SV.forEach(
         sv => svHolder[sv] = [] // init with empty array
-    )
+    );
 
     for (const arr of matrix) { // fill with calculated sv
         for (const sv of PROCESS_SV) {
@@ -755,7 +758,6 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
         svHolder["mean-std"].push(svHolder[stdMean][i] - svHolder[STATISTICAL_VALUES[std]][i]);
     }
     delete svHolder["stdMean"];
-    console.log(svHolder);
     return svHolder;
 }
 
@@ -1249,9 +1251,7 @@ function getIncludedModels(modelsSlice) {
     const visible = [];
 
     for (const modelGroup of Object.values(modelsSlice.modelGroups)) {
-        if (!modelGroup.isVisible) continue;
-        for (const [model, modelData] of Object.entries(modelGroup.models)) {
-            if (!modelData.isVisible) continue;
+        for (const model of Object.keys(modelGroup.models)) {
             visible.push(model);
         }
     }
