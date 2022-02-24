@@ -136,7 +136,7 @@ export const defaultTCO3_zm = {
  * @param {boolean} opposite whether to show the y-axis on the right side (default is false)
  * @param {number} offsetX how many px the y-axis should be adjusted
  * @param {number} tickAmount how many ticks (on the y-axis) should be displayed (should be calculated by functions to provide a nice formatting)
- * @returns
+ * @returns defaults YAxis of Tco3Zm plot
  */
 export function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show = false, opposite = false, offsetX = -1, tickAmount = 0) {
     return {
@@ -183,7 +183,7 @@ export function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show = false, oppo
  * @param {boolean} opposite whether to show the y-axis on the right side (default is false)
  * @param {number} offsetX how many px the y-axis should be adjusted
  * @param {number} tickAmount how many ticks (on the y-axis) should be displayed (should be calculated by functions to provide a nice formatting)
- * @returns
+ * @returns defaults YAxis of Tco3Zm return
  */
 export function getDefaultYAxisTco3Return(seriesName, minY, maxY, show = false, opposite = false, offsetX = -1, tickAmount = 0) {
     return {

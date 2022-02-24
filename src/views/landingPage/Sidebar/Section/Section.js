@@ -90,8 +90,8 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 /**
  * an expandable section containing a list of inputComponents as well as a name
  * @param {Object} props
- * @param {Array of String} props.components -> an array containing a string representation of all components that should be plotted
- * @param {String} props.name -> the name of the section
+ * @param {string[]} props.components -> an array containing a string representation of all components that should be plotted
+ * @param {string} props.name -> the name of the section
  * @param {function} props.reportError -> used for error handling
  * @param {boolean} props.isExpanded -> whether this section should be expanded
  * @param {function} props.onCollapse -> function to collapse this section
