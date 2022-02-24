@@ -703,18 +703,31 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                               >
                                 <label
                                   class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+<<<<<<< HEAD
                                   id="ModelGroupCard-toggle-standard deviation-label"
                                 >
                                   <span
                                     class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
                                     data-testid="ModelGroupCard-toggle-standard deviation-checkbox"
                                     labelid="ModelGroupCard-toggle-standard deviation-label"
+=======
+                                  id="ModelGroupCard-toggle-std-label"
+                                >
+                                  <span
+                                    class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                                    data-testid="ModelGroupCard-toggle-std-checkbox"
+                                    labelid="ModelGroupCard-toggle-std-label"
+>>>>>>> issue_OrderOfSV_#16
                                   >
                                     <input
                                       checked=""
                                       class="PrivateSwitchBase-input css-1m9pwf3"
                                       data-indeterminate="false"
+<<<<<<< HEAD
                                       id="ModelGroupCard-toggle-standard deviation-checkbox"
+=======
+                                      id="ModelGroupCard-toggle-std-checkbox"
+>>>>>>> issue_OrderOfSV_#16
                                       type="checkbox"
                                     />
                                     <svg
@@ -735,7 +748,11 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                   <span
                                     class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
                                   >
+<<<<<<< HEAD
                                     standard deviation
+=======
+                                    std
+>>>>>>> issue_OrderOfSV_#16
                                   </span>
                                 </label>
                               </div>

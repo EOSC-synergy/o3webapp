@@ -11,7 +11,7 @@ import {
     MODEL_LINE_THICKNESS,
     START_YEAR,
     END_YEAR,
-    std,
+    std, 
     percentile,
     EXTENDED_SV_LIST,
     stdMean,
@@ -697,6 +697,7 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
             if (sv === std // std
                 || sv === percentile) continue; // skip for now
 
+
             if (groupData.visibleSV[sv] // mean und median
                 || (sv.includes("std") && groupData.visibleSV[std])
                 || (sv.toLowerCase().includes(percentile) && groupData.visibleSV[percentile])) {
@@ -727,7 +728,7 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
 
     const matrix = buildMatrix({modelList, data}); // function supplied by caller
 
-    const PROCESS_SV = [...STATISTICAL_VALUES_LIST.filter(x => x !== percentile), ...EXTENDED_SV_LIST];
+    const PROCESS_SV = [...STATISTICAL_VALUES_LIST.filter(x => x !== STATISTICAL_VALUES.percentile), ...EXTENDED_SV_LIST];
 
     const svHolder = {};
     PROCESS_SV.forEach(

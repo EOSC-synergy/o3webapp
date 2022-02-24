@@ -127,18 +127,31 @@ exports[`test ModelGroupCard functionality opens add model group modal 1`] = `
         >
           <label
             class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+<<<<<<< HEAD
             id="ModelGroupCard-toggle-standard deviation-label"
           >
             <span
               class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
               data-testid="ModelGroupCard-toggle-standard deviation-checkbox"
               labelid="ModelGroupCard-toggle-standard deviation-label"
+=======
+            id="ModelGroupCard-toggle-std-label"
+          >
+            <span
+              class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+              data-testid="ModelGroupCard-toggle-std-checkbox"
+              labelid="ModelGroupCard-toggle-std-label"
+>>>>>>> issue_OrderOfSV_#16
             >
               <input
                 checked=""
                 class="PrivateSwitchBase-input css-1m9pwf3"
                 data-indeterminate="false"
+<<<<<<< HEAD
                 id="ModelGroupCard-toggle-standard deviation-checkbox"
+=======
+                id="ModelGroupCard-toggle-std-checkbox"
+>>>>>>> issue_OrderOfSV_#16
                 type="checkbox"
               />
               <svg
@@ -159,7 +172,11 @@ exports[`test ModelGroupCard functionality opens add model group modal 1`] = `
             <span
               class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
             >
+<<<<<<< HEAD
               standard deviation
+=======
+              std
+>>>>>>> issue_OrderOfSV_#16
             </span>
           </label>
         </div>
@@ -303,7 +320,7 @@ exports[`test ModelGroupCard functionality opens add model group modal 1`] = `
       tabindex="0"
     />
     <div
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-11i9df3-MuiPaper-root-MuiCard-root"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-50j5vj-MuiPaper-root-MuiCard-root"
       tabindex="-1"
     >
       <div
@@ -507,14 +524,14 @@ exports[`test ModelGroupCard functionality opens add model group modal 1`] = `
         
       </div>
       <div
-        class="MuiCardActions-root MuiCardActions-spacing css-1kj8htw-MuiCardActions-root"
+        class="MuiCardActions-root MuiCardActions-spacing css-19l6csj-MuiCardActions-root"
       >
         <button
           class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-sghohy-MuiButtonBase-root-MuiButton-root"
           tabindex="0"
           type="button"
         >
-          Edit group members
+          Save Changes
           <span
             class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
           />
@@ -656,18 +673,31 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
         >
           <label
             class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+<<<<<<< HEAD
             id="ModelGroupCard-toggle-standard deviation-label"
           >
             <span
               class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
               data-testid="ModelGroupCard-toggle-standard deviation-checkbox"
               labelid="ModelGroupCard-toggle-standard deviation-label"
+=======
+            id="ModelGroupCard-toggle-std-label"
+          >
+            <span
+              class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+              data-testid="ModelGroupCard-toggle-std-checkbox"
+              labelid="ModelGroupCard-toggle-std-label"
+>>>>>>> issue_OrderOfSV_#16
             >
               <input
                 checked=""
                 class="PrivateSwitchBase-input css-1m9pwf3"
                 data-indeterminate="false"
+<<<<<<< HEAD
                 id="ModelGroupCard-toggle-standard deviation-checkbox"
+=======
+                id="ModelGroupCard-toggle-std-checkbox"
+>>>>>>> issue_OrderOfSV_#16
                 type="checkbox"
               />
               <svg
@@ -688,7 +718,11 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
             <span
               class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
             >
+<<<<<<< HEAD
               standard deviation
+=======
+              std
+>>>>>>> issue_OrderOfSV_#16
             </span>
           </label>
         </div>
@@ -831,7 +865,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
       tabindex="0"
     />
     <div
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-ltqr34-MuiPaper-root-MuiCard-root"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-50j5vj-MuiPaper-root-MuiCard-root"
       tabindex="-1"
     >
       <div
@@ -913,7 +947,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
         aria-colcount="3"
         aria-multiselectable="false"
         aria-rowcount="3"
-        class="MuiDataGrid-root css-e7hp59-MuiDataGrid-root"
+        class="MuiDataGrid-root css-ph8yah-MuiDataGrid-root"
         role="grid"
       >
         <div>
@@ -1136,7 +1170,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
               <div
                 aria-colindex="4"
                 class="MuiDataGrid-columnHeader"
-                data-field="median"
+                data-field="mean"
                 role="columnheader"
                 style="width: 140px; min-width: 140px; max-width: 140px;"
                 tabindex="-1"
@@ -1149,21 +1183,24 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                     class="MuiDataGrid-columnHeaderTitleContainer"
                   >
                     <div
-                      style="display: flex; align-items: center; flex-wrap: wrap;"
+                      style="display: flex; align-items: center; flex-wrap: wrap; cursor: pointer;"
                     >
-                      <svg
-                        aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeSmall css-1bptiuh-MuiSvgIcon-root"
-                        data-testid="ColumnCheckboxCheckedTypeMedian"
-                        focusable="false"
-                        style="margin-right: 5px;"
-                        viewBox="0 0 24 24"
+                      <div
+                        class="MuiBox-root css-kp3790"
                       >
-                        <path
-                          d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-                        />
-                      </svg>
-                      Median
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-ci5apu-MuiSvgIcon-root"
+                          data-testid="ColumnCheckboxCheckedTypeMean"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                          />
+                        </svg>
+                      </div>
+                      Mean
                     </div>
                   </div>
                 </div>
@@ -1187,9 +1224,9 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
               <div
                 aria-colindex="5"
                 class="MuiDataGrid-columnHeader"
-                data-field="mean"
+                data-field="std"
                 role="columnheader"
-                style="width: 140px; min-width: 140px; max-width: 140px;"
+                style="width: 200px; min-width: 200px; max-width: 200px;"
                 tabindex="-1"
               >
                 <div
@@ -1200,21 +1237,24 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                     class="MuiDataGrid-columnHeaderTitleContainer"
                   >
                     <div
-                      style="display: flex; align-items: center; flex-wrap: wrap;"
+                      style="display: flex; align-items: center; flex-wrap: wrap; cursor: pointer;"
                     >
-                      <svg
-                        aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeSmall css-1bptiuh-MuiSvgIcon-root"
-                        data-testid="ColumnCheckboxCheckedTypeMean"
-                        focusable="false"
-                        style="margin-right: 5px;"
-                        viewBox="0 0 24 24"
+                      <div
+                        class="MuiBox-root css-kp3790"
                       >
-                        <path
-                          d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-                        />
-                      </svg>
-                      Mean
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-ci5apu-MuiSvgIcon-root"
+                          data-testid="ColumnCheckboxCheckedTypeStandard deviation"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                          />
+                        </svg>
+                      </div>
+                      Standard deviation
                     </div>
                   </div>
                 </div>
@@ -1238,9 +1278,9 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
               <div
                 aria-colindex="6"
                 class="MuiDataGrid-columnHeader"
-                data-field="standard deviation"
+                data-field="median"
                 role="columnheader"
-                style="width: 180px; min-width: 180px; max-width: 180px;"
+                style="width: 140px; min-width: 140px; max-width: 140px;"
                 tabindex="-1"
               >
                 <div
@@ -1251,21 +1291,24 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                     class="MuiDataGrid-columnHeaderTitleContainer"
                   >
                     <div
-                      style="display: flex; align-items: center; flex-wrap: wrap;"
+                      style="display: flex; align-items: center; flex-wrap: wrap; cursor: pointer;"
                     >
-                      <svg
-                        aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeSmall css-1bptiuh-MuiSvgIcon-root"
-                        data-testid="ColumnCheckboxCheckedTypeStandard deviation"
-                        focusable="false"
-                        style="margin-right: 5px;"
-                        viewBox="0 0 24 24"
+                      <div
+                        class="MuiBox-root css-kp3790"
                       >
-                        <path
-                          d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-                        />
-                      </svg>
-                      Standard deviation
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-ci5apu-MuiSvgIcon-root"
+                          data-testid="ColumnCheckboxCheckedTypeMedian"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                          />
+                        </svg>
+                      </div>
+                      Median
                     </div>
                   </div>
                 </div>
@@ -1291,7 +1334,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                 class="MuiDataGrid-columnHeader"
                 data-field="percentile"
                 role="columnheader"
-                style="width: 140px; min-width: 140px; max-width: 140px;"
+                style="width: 150px; min-width: 150px; max-width: 150px;"
                 tabindex="-1"
               >
                 <div
@@ -1302,20 +1345,23 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                     class="MuiDataGrid-columnHeaderTitleContainer"
                   >
                     <div
-                      style="display: flex; align-items: center; flex-wrap: wrap;"
+                      style="display: flex; align-items: center; flex-wrap: wrap; cursor: pointer;"
                     >
-                      <svg
-                        aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeSmall css-1bptiuh-MuiSvgIcon-root"
-                        data-testid="ColumnCheckboxCheckedTypePercentile"
-                        focusable="false"
-                        style="margin-right: 5px;"
-                        viewBox="0 0 24 24"
+                      <div
+                        class="MuiBox-root css-kp3790"
                       >
-                        <path
-                          d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-                        />
-                      </svg>
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-ci5apu-MuiSvgIcon-root"
+                          data-testid="ColumnCheckboxCheckedTypePercentile"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                          />
+                        </svg>
+                      </div>
                       Percentile
                     </div>
                   </div>
@@ -1353,20 +1399,23 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                     class="MuiDataGrid-columnHeaderTitleContainer"
                   >
                     <div
-                      style="display: flex; align-items: center; flex-wrap: wrap;"
+                      style="display: flex; align-items: center; flex-wrap: wrap; cursor: pointer;"
                     >
-                      <svg
-                        aria-hidden="true"
-                        class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeSmall css-1bptiuh-MuiSvgIcon-root"
-                        data-testid="ColumnCheckboxCheckedTypeVisible"
-                        focusable="false"
-                        style="margin-right: 5px;"
-                        viewBox="0 0 24 24"
+                      <div
+                        class="MuiBox-root css-kp3790"
                       >
-                        <path
-                          d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-                        />
-                      </svg>
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-ci5apu-MuiSvgIcon-root"
+                          data-testid="ColumnCheckboxCheckedTypeVisible"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                          />
+                        </svg>
+                      </div>
                       Visible
                     </div>
                   </div>
@@ -1450,20 +1499,20 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                       aria-colindex="4"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="3"
-                      data-field="median"
+                      data-field="mean"
                       role="cell"
                       style="min-width: 140px; max-width: 140px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
                       <div
-                        data-testid="CellCheckboxRow0TypeMedian"
+                        data-testid="CellCheckboxRow0TypeMean"
                       >
                         <div
                           class="d-flex justify-content-between align-items-center"
                           style="cursor: pointer;"
                         >
                           <span
-                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-160lja8-MuiButtonBase-root-MuiCheckbox-root"
                           >
                             <input
                               checked=""
@@ -1493,20 +1542,20 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                       aria-colindex="5"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="4"
-                      data-field="mean"
+                      data-field="std"
                       role="cell"
-                      style="min-width: 140px; max-width: 140px; min-height: 52px; max-height: 52px;"
+                      style="min-width: 200px; max-width: 200px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
                       <div
-                        data-testid="CellCheckboxRow0TypeMean"
+                        data-testid="CellCheckboxRow0TypeStandard deviation"
                       >
                         <div
                           class="d-flex justify-content-between align-items-center"
                           style="cursor: pointer;"
                         >
                           <span
-                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-160lja8-MuiButtonBase-root-MuiCheckbox-root"
                           >
                             <input
                               checked=""
@@ -1536,20 +1585,20 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                       aria-colindex="6"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="5"
-                      data-field="standard deviation"
+                      data-field="median"
                       role="cell"
-                      style="min-width: 180px; max-width: 180px; min-height: 52px; max-height: 52px;"
+                      style="min-width: 140px; max-width: 140px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
                       <div
-                        data-testid="CellCheckboxRow0TypeStandard deviation"
+                        data-testid="CellCheckboxRow0TypeMedian"
                       >
                         <div
                           class="d-flex justify-content-between align-items-center"
                           style="cursor: pointer;"
                         >
                           <span
-                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-160lja8-MuiButtonBase-root-MuiCheckbox-root"
                           >
                             <input
                               checked=""
@@ -1581,7 +1630,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                       data-colindex="6"
                       data-field="percentile"
                       role="cell"
-                      style="min-width: 140px; max-width: 140px; min-height: 52px; max-height: 52px;"
+                      style="min-width: 150px; max-width: 150px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
                       <div
@@ -1592,7 +1641,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                           style="cursor: pointer;"
                         >
                           <span
-                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-160lja8-MuiButtonBase-root-MuiCheckbox-root"
                           >
                             <input
                               checked=""
@@ -1635,7 +1684,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                           style="cursor: pointer;"
                         >
                           <span
-                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-160lja8-MuiButtonBase-root-MuiCheckbox-root"
                           >
                             <input
                               checked=""
@@ -1708,20 +1757,20 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                       aria-colindex="4"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="3"
-                      data-field="median"
+                      data-field="mean"
                       role="cell"
                       style="min-width: 140px; max-width: 140px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
                       <div
-                        data-testid="CellCheckboxRow1TypeMedian"
+                        data-testid="CellCheckboxRow1TypeMean"
                       >
                         <div
                           class="d-flex justify-content-between align-items-center"
                           style="cursor: pointer;"
                         >
                           <span
-                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-160lja8-MuiButtonBase-root-MuiCheckbox-root"
                           >
                             <input
                               checked=""
@@ -1751,20 +1800,20 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                       aria-colindex="5"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="4"
-                      data-field="mean"
+                      data-field="std"
                       role="cell"
-                      style="min-width: 140px; max-width: 140px; min-height: 52px; max-height: 52px;"
+                      style="min-width: 200px; max-width: 200px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
                       <div
-                        data-testid="CellCheckboxRow1TypeMean"
+                        data-testid="CellCheckboxRow1TypeStandard deviation"
                       >
                         <div
                           class="d-flex justify-content-between align-items-center"
                           style="cursor: pointer;"
                         >
                           <span
-                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-160lja8-MuiButtonBase-root-MuiCheckbox-root"
                           >
                             <input
                               checked=""
@@ -1794,20 +1843,20 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                       aria-colindex="6"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="5"
-                      data-field="standard deviation"
+                      data-field="median"
                       role="cell"
-                      style="min-width: 180px; max-width: 180px; min-height: 52px; max-height: 52px;"
+                      style="min-width: 140px; max-width: 140px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
                       <div
-                        data-testid="CellCheckboxRow1TypeStandard deviation"
+                        data-testid="CellCheckboxRow1TypeMedian"
                       >
                         <div
                           class="d-flex justify-content-between align-items-center"
                           style="cursor: pointer;"
                         >
                           <span
-                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-160lja8-MuiButtonBase-root-MuiCheckbox-root"
                           >
                             <input
                               checked=""
@@ -1839,7 +1888,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                       data-colindex="6"
                       data-field="percentile"
                       role="cell"
-                      style="min-width: 140px; max-width: 140px; min-height: 52px; max-height: 52px;"
+                      style="min-width: 150px; max-width: 150px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
                       <div
@@ -1850,7 +1899,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                           style="cursor: pointer;"
                         >
                           <span
-                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-160lja8-MuiButtonBase-root-MuiCheckbox-root"
                           >
                             <input
                               checked=""
@@ -1893,7 +1942,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                           style="cursor: pointer;"
                         >
                           <span
-                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-160lja8-MuiButtonBase-root-MuiCheckbox-root"
                           >
                             <input
                               checked=""
@@ -1966,20 +2015,20 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                       aria-colindex="4"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="3"
-                      data-field="median"
+                      data-field="mean"
                       role="cell"
                       style="min-width: 140px; max-width: 140px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
                       <div
-                        data-testid="CellCheckboxRow2TypeMedian"
+                        data-testid="CellCheckboxRow2TypeMean"
                       >
                         <div
                           class="d-flex justify-content-between align-items-center"
                           style="cursor: pointer;"
                         >
                           <span
-                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-160lja8-MuiButtonBase-root-MuiCheckbox-root"
                           >
                             <input
                               checked=""
@@ -2009,20 +2058,20 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                       aria-colindex="5"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="4"
-                      data-field="mean"
+                      data-field="std"
                       role="cell"
-                      style="min-width: 140px; max-width: 140px; min-height: 52px; max-height: 52px;"
+                      style="min-width: 200px; max-width: 200px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
                       <div
-                        data-testid="CellCheckboxRow2TypeMean"
+                        data-testid="CellCheckboxRow2TypeStandard deviation"
                       >
                         <div
                           class="d-flex justify-content-between align-items-center"
                           style="cursor: pointer;"
                         >
                           <span
-                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-160lja8-MuiButtonBase-root-MuiCheckbox-root"
                           >
                             <input
                               checked=""
@@ -2052,20 +2101,20 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                       aria-colindex="6"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="5"
-                      data-field="standard deviation"
+                      data-field="median"
                       role="cell"
-                      style="min-width: 180px; max-width: 180px; min-height: 52px; max-height: 52px;"
+                      style="min-width: 140px; max-width: 140px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
                       <div
-                        data-testid="CellCheckboxRow2TypeStandard deviation"
+                        data-testid="CellCheckboxRow2TypeMedian"
                       >
                         <div
                           class="d-flex justify-content-between align-items-center"
                           style="cursor: pointer;"
                         >
                           <span
-                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-160lja8-MuiButtonBase-root-MuiCheckbox-root"
                           >
                             <input
                               checked=""
@@ -2097,7 +2146,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                       data-colindex="6"
                       data-field="percentile"
                       role="cell"
-                      style="min-width: 140px; max-width: 140px; min-height: 52px; max-height: 52px;"
+                      style="min-width: 150px; max-width: 150px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
                       <div
@@ -2108,7 +2157,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                           style="cursor: pointer;"
                         >
                           <span
-                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-160lja8-MuiButtonBase-root-MuiCheckbox-root"
                           >
                             <input
                               checked=""
@@ -2151,7 +2200,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
                           style="cursor: pointer;"
                         >
                           <span
-                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-160lja8-MuiButtonBase-root-MuiCheckbox-root"
                           >
                             <input
                               checked=""
@@ -2274,21 +2323,6 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
           tabindex="0"
           type="button"
         >
-          <span
-            class="MuiButton-startIcon MuiButton-iconSizeMedium css-1d6wzja-MuiButton-startIcon"
-          >
-            <svg
-              aria-hidden="true"
-              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-              data-testid="DoneIcon"
-              focusable="false"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"
-              />
-            </svg>
-          </span>
           Save Changes
           <span
             class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
@@ -2426,18 +2460,31 @@ exports[`test ModelGroupCard rendering renders correctly 1`] = `
       >
         <label
           class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+<<<<<<< HEAD
           id="ModelGroupCard-toggle-standard deviation-label"
         >
           <span
             class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
             data-testid="ModelGroupCard-toggle-standard deviation-checkbox"
             labelid="ModelGroupCard-toggle-standard deviation-label"
+=======
+          id="ModelGroupCard-toggle-std-label"
+        >
+          <span
+            class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+            data-testid="ModelGroupCard-toggle-std-checkbox"
+            labelid="ModelGroupCard-toggle-std-label"
+>>>>>>> issue_OrderOfSV_#16
           >
             <input
               checked=""
               class="PrivateSwitchBase-input css-1m9pwf3"
               data-indeterminate="false"
+<<<<<<< HEAD
               id="ModelGroupCard-toggle-standard deviation-checkbox"
+=======
+              id="ModelGroupCard-toggle-std-checkbox"
+>>>>>>> issue_OrderOfSV_#16
               type="checkbox"
             />
             <svg
@@ -2458,7 +2505,11 @@ exports[`test ModelGroupCard rendering renders correctly 1`] = `
           <span
             class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
           >
+<<<<<<< HEAD
             standard deviation
+=======
+            std
+>>>>>>> issue_OrderOfSV_#16
           </span>
         </label>
       </div>

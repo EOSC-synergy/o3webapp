@@ -18,7 +18,7 @@ const MODEL_DATA_TEMPLATE = {
     color: null,                
     isVisible: true,          
     mean: true,
-    "standard deviation": true,
+    std: true,
     median: true,
     percentile: true,
 }
@@ -96,7 +96,7 @@ describe("reducer tests", () => {
                     isVisible: true,    // show/hide complete group
                     visibleSV: {       // lookup table so the reducer impl. can be more convenient
                         mean: true,
-                        "standard deviation": true,
+                        std: true,
                         median: true,
                         percentile: true,
                     }
@@ -204,7 +204,7 @@ describe("reducer tests", () => {
                             color: null,              
                             isVisible: false,          
                             mean: true,
-                            "standard deviation": true,
+                            std: true,
                             median: true,
                             percentile: true,
                         },
@@ -212,7 +212,7 @@ describe("reducer tests", () => {
                             color: null,              
                             isVisible: true,          
                             mean: false,
-                            "standard deviation": false,
+                            std: false,
                             median: false,
                             percentile: false,
                         },
@@ -231,7 +231,7 @@ describe("reducer tests", () => {
                             color: null,              
                             isVisible: true,          
                             mean: false,
-                            "standard deviation": false,
+                            std: false,
                             median: false,
                             percentile: false,
                         },
@@ -239,7 +239,7 @@ describe("reducer tests", () => {
                             color: null,              
                             isVisible: false,          
                             mean: true,
-                            "standard deviation": true,
+                            std: true,
                             median: true,
                             percentile: true,
                         },
@@ -284,7 +284,7 @@ describe("reducer tests", () => {
                     models: {},
                     visibleSV: {
                         mean: true,
-                        "standard deviation": true,
+                        std: true,
                         median: true,
                         percentile: true,
                     }
@@ -300,7 +300,7 @@ describe("reducer tests", () => {
                     models: {},
                     visibleSV: {
                         mean: false,
-                        "standard deviation": true,
+                        std: true,
                         median: true,
                         percentile: true,
                     }
@@ -385,7 +385,7 @@ describe("selector tests", () => {
         const visibleSV = {
             mean: true,
             median: false,
-            "standard deviation": true,
+            std: true,
             percentile: false,
         }
         
