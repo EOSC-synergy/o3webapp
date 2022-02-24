@@ -240,7 +240,8 @@ export const percentile = "percentile";
 export const STATISTICAL_VALUES = {}
 // populate object automatically with the values: 
 // the order corresponds to the order in the interface
-[mean, std, median, percentile].forEach(sv => STATISTICAL_VALUES[sv] = sv);
+const asList = [mean, std, median, percentile];
+asList.forEach(sv => STATISTICAL_VALUES[sv] = sv);
 
 /**
  * Name for the helper statistical value series: This line is used to calculate the mean+/-std
