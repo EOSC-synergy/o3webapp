@@ -12,16 +12,13 @@ import reducer,
     selectStatisticalValueSettingsOfGroup,
     selectVisibilityOfGroup,
 } from "./modelsSlice"
-import { STATISTICAL_VALUES } from "../../utils/constants";
+import { mean, STATISTICAL_VALUES_LIST } from "../../utils/constants";
 
 const MODEL_DATA_TEMPLATE = {   
     color: null,                
     isVisible: true,          
-    mean: true,
-    std: true,
-    median: true,
-    percentile: true,
 }
+STATISTICAL_VALUES_LIST.forEach(sv => MODEL_DATA_TEMPLATE[sv] = true);
 
 
 describe("reducer tests", () => {
@@ -83,6 +80,9 @@ describe("reducer tests", () => {
                 
             },
         };
+
+        const visibleSV = {};
+        STATISTICAL_VALUES_LIST.forEach(sv => visibleSV[sv] = true);
     
         const expected = {
             idCounter: 1,
@@ -94,12 +94,7 @@ describe("reducer tests", () => {
                         modelB: MODEL_DATA_TEMPLATE,
                     },
                     isVisible: true,    // show/hide complete group
-                    visibleSV: {       // lookup table so the reducer impl. can be more convenient
-                        mean: true,
-                        std: true,
-                        median: true,
-                        percentile: true,
-                    }
+                    visibleSV
                 },
             },
         };
@@ -311,7 +306,7 @@ describe("reducer tests", () => {
         expect(
             reducer(
                 previousState,
-                setStatisticalValueForGroup({groupId: 0, svType: STATISTICAL_VALUES.mean, isIncluded: false})
+                setStatisticalValueForGroup({groupId: 0, svType: mean, isIncluded: false})
             )
         ).toEqual(expected);
 
