@@ -51,8 +51,9 @@ export const FONT_FAMILY = [
  * @returns {string} the subtitle
  */
 const createSubtitle = () => {
-    let stLocationText = findLatitudeBandByLocation(true);
-    if (stLocationText === 'Custom') {
+    let stLocationText =
+        store.getState().plot.plotId === 'tco3_zm' ? findLatitudeBandByLocation(true) : 'User-Region';
+    if (stLocationText === 'Custom' || stLocationText === 'User-Region') {
         const stLocationValue = store.getState().plot.generalSettings.location;
         const hemisphereExtensionMin = (stLocationValue.minLat < 0 && stLocationValue.maxLat > 0 ? '°S' : '');
         const hemisphereExtensionMax = (stLocationValue.maxLat <= 0 ? '°S' : '°N');
@@ -65,9 +66,6 @@ const createSubtitle = () => {
     if (stMonths.length === NUM_MONTHS) stMonths = ["All year"];
     return `${stLocationText} | ${stMonths.join(", ")}`;
 };
-
-console.log(createSubtitle());
-console.log(typeof createSubtitle());
 
 /**
  * The default settings for the tco3_zm plot.
@@ -299,6 +297,17 @@ export const default_TCO3_return = {
             color: "#000000"
         }
     },
+    subtitle: {
+        text: "[subtitle]", // subtitle can only be changed in createSubtitle function
+        align: "center",
+        floating: false,
+        offsetY: 40,
+        style: {
+            fontSize: "20px",
+            fontFamily: FONT_FAMILY,
+            color: "#000000",
+        }
+    },
     tooltip: {
         shared: false,
         intersect: true,
@@ -388,6 +397,8 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.colors.push(...styling.colors); // for the legend!
         newOptions.title = JSON.parse(JSON.stringify(newOptions.title));  // this is necessary in order for apexcharts to update the title
         newOptions.title.text = plotTitle;
+        newOptions.subtitle = JSON.parse(JSON.stringify(newOptions.subtitle)); // this is necessary in order for apexcharts to update the subtitle
+        newOptions.subtitle.text = createSubtitle();
 
         const minY = roundDownToMultipleOfTen(yAxisRange.minY); 
         const maxY = roundUpToMultipleOfTen(yAxisRange.maxY);
