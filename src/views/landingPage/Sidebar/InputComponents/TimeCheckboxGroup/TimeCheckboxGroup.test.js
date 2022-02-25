@@ -54,7 +54,7 @@ it('selects a month correctly', () => {
         </Provider>
         </>);
     
-    expect(store.getState().plot.generalSettings.months).toEqual([12, 1, 2]); // assert: if it fails the initial state may have changed
+    expect(store.getState().plot.generalSettings.months).toEqual([1, 2, 12]); // assert: if it fails the initial state may have changed
     fireEvent.click(getByTestId("CheckboxMonth2"));
     expect(store.getState().plot.generalSettings.months).toEqual([1, 12]);
     fireEvent.click(getByTestId("CheckboxMonth2"));
@@ -71,7 +71,7 @@ it('selects a season correctly', () => {
         </Provider>
         </>);
     
-    expect(store.getState().plot.generalSettings.months).toEqual([12, 1, 2]); // assert: if it fails the initial state may have changed
+    expect(store.getState().plot.generalSettings.months).toEqual([1, 2, 12]); // assert: if it fails the initial state may have changed
 })
 
 it('selects the "All Year" checkbox correctly', () => {
@@ -82,7 +82,7 @@ it('selects the "All Year" checkbox correctly', () => {
         </Provider>
         </>);
     
-    expect(store.getState().plot.generalSettings.months).toEqual([12, 1, 2]); // assert: if it fails the initial state may have changed
+    expect(store.getState().plot.generalSettings.months).toEqual([1, 2, 12]); // assert: if it fails the initial state may have changed
     fireEvent.click(getByTestId("CheckboxAllYear"));
     expect(store.getState().plot.generalSettings.months).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
 
