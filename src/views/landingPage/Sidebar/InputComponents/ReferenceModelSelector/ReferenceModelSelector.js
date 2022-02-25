@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {Typography, MenuItem, Autocomplete, TextField, Alert, Grid} from "@mui/material";
-import {Select, InputLabel, FormControl} from "@mui/material";
+import React, {useEffect} from "react";
+import {Autocomplete, TextField} from "@mui/material";
 import {useDispatch} from "react-redux";
 import {useSelector} from "react-redux";
 import {setModel, selectRefModel} from "../../../../../store/referenceSlice/referenceSlice";
@@ -20,13 +19,11 @@ function ReferenceModelSelector(props) {
     const modelListRequestedData = useSelector(state => state.api.models);
 
     const selectedModel = useSelector(selectRefModel);
-    console.log(selectedModel);
 
     let allModels = [];
     if (modelListRequestedData.status === REQUEST_STATE.success) {
         allModels = modelListRequestedData.data;
     }
-    console.log(allModels);
 
     useEffect(() => {
         if (modelListRequestedData.status === REQUEST_STATE.error) {
@@ -35,9 +32,8 @@ function ReferenceModelSelector(props) {
     });
 
     /** Handles the change of the reference model selection when it is modified.*/
-    const handleChangeForRefModel = (event) => {
-        console.log(event.target.value);
-        dispatch(setModel({model: event.target.value}));
+    const handleChangeForRefModel = (event, value) => {
+        dispatch(setModel({model: value}));
         // fetch for tco3_zm and tco3_return
         dispatch(fetchPlotDataForCurrentModels());
     };
