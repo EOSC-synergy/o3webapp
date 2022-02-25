@@ -55,6 +55,7 @@ function ModelGroupCard(props) {
      */
     const toggleModelGroupVisibility = () => {
         dispatch(setVisibilityForGroup({groupId: props.modelGroupId, isVisible: !isModelGroupVisible}));
+        // change the following lines based on response on gitlab
         for (const key in STATISTICAL_VALUES) {
             dispatch(setStatisticalValueForGroup(
                 {groupId: props.modelGroupId, svType: key, isIncluded: !isModelGroupVisible}
