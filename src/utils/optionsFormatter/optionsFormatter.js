@@ -89,8 +89,7 @@ export const defaultTCO3_zm = {
             },
         },
         zoom: {
-            enabled: true,
-            type: "xy",
+            enabled: false,
         },
         width: "100%"
     },
@@ -245,7 +244,6 @@ export const default_TCO3_return = {
         },
         zoom: {
             enabled: false,
-            type: 'xy',
         },
     },
     colors: [undefined], // , ...styling.colors
