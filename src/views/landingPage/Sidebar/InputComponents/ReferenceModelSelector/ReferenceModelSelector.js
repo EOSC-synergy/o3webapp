@@ -14,12 +14,25 @@ import { REQUEST_STATE } from "../../../../../services/API/apiSlice";
  */
 function ReferenceModelSelector(props) {
 
+    /**
+     * A dispatch function to dispatch actions to the Redux store.
+     */
     const dispatch = useDispatch();
 
+    /**
+     * Selects the model list from the Redux store.
+     */
     const modelListRequestedData = useSelector(state => state.api.models);
 
+    /**
+     * Selects the current reference model.
+     */
     const selectedModel = useSelector(selectRefModel);
 
+    /**
+     * The Array with all the models.
+     * @type {Array.<String>}
+     */
     let allModels = [];
     if (modelListRequestedData.status === REQUEST_STATE.success) {
         allModels = modelListRequestedData.data;
@@ -31,7 +44,9 @@ function ReferenceModelSelector(props) {
         }
     });
 
-    /** Handles the change of the reference model selection when it is modified.*/
+    /**
+     * Handles the change of the reference model selection.
+     */
     const handleChangeForRefModel = (event, value) => {
         if (value !== null) {
             dispatch(setModel({model: value}));
