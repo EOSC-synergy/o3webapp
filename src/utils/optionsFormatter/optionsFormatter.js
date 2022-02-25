@@ -15,9 +15,13 @@ import {
     percentile,
     EXTENDED_SV_LIST,
     stdMean,
-    STATISTICAL_VALUE_LINE_THICKNESS
+    STATISTICAL_VALUE_LINE_THICKNESS, months, NUM_MONTHS
 } from "../constants"
 import {convertModelName} from "../ModelNameConverter";
+import store from "../../store/store";
+import {
+    findLatitudeBandByLocation
+} from "../../views/landingPage/Sidebar/InputComponents/LatitudeBandSelector/LatitudeBandSelector";
 
 /**
  * Maps the plotId to a function that describes how the series are going
@@ -39,7 +43,31 @@ export const FONT_FAMILY = [
     '"Apple Color Emoji"',
     '"Segoe UI Emoji"',
     '"Segoe UI Symbol"',
-].join(',')
+].join(',');
+
+/**
+ * Creates the subtitle based on location and time.
+ *
+ * @returns {string} the subtitle
+ */
+const createSubtitle = () => {
+    let stLocationText = findLatitudeBandByLocation(true);
+    if (stLocationText === 'Custom') {
+        const stLocationValue = store.getState().plot.generalSettings.location;
+        const hemisphereExtensionMin = (stLocationValue.minLat < 0 && stLocationValue.maxLat > 0 ? '°S' : '');
+        const hemisphereExtensionMax = (stLocationValue.maxLat <= 0 ? '°S' : '°N');
+        stLocationText =
+            `${stLocationText} (${Math.abs(stLocationValue.minLat)}${hemisphereExtensionMin}-${Math.abs(stLocationValue.maxLat)}${hemisphereExtensionMax})`;
+    }
+
+    let stMonths = [];
+    store.getState().plot.generalSettings.months.map((month) => stMonths.push(months[month - 1].description));
+    if (stMonths.length === NUM_MONTHS) stMonths = ["All year"];
+    return `${stLocationText} | ${stMonths.join(", ")}`;
+};
+
+console.log(createSubtitle());
+console.log(typeof createSubtitle());
 
 /**
  * The default settings for the tco3_zm plot.
@@ -113,12 +141,23 @@ export const defaultTCO3_zm = {
         dashArray: null, //styling.dashArray,
     },
     title: {
-        text: "OCTS Plot", // title can only be changed in store/plotSlice.js
+        text: "[title]", // title can only be changed in store/plotSlice.js
         align: "center",
         floating: false,
         style: {
             fontSize: "30px",
             fontWeight: "bold",
+            fontFamily: FONT_FAMILY,
+            color: "#000000",
+        }
+    },
+    subtitle: {
+        text: "[subtitle]", // subtitle can only be changed in createSubtitle function
+        align: "center",
+        floating: false,
+        offsetY: 40,
+        style: {
+            fontSize: "20px",
             fontFamily: FONT_FAMILY,
             color: "#000000",
         }
@@ -250,7 +289,7 @@ export const default_TCO3_return = {
     },
     colors: [undefined], // , ...styling.colors
     title: {
-        text: "Return/Recovery", // title can only be changed in store/plotSlice.js
+        text: "[title]", // title can only be changed in store/plotSlice.js
         align: "center",
         floating: false,
         style: {
@@ -339,6 +378,8 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.stroke.dashArray = styling.dashArray;
         newOptions.title = JSON.parse(JSON.stringify(newOptions.title)); // this is necessary in order for apexcharts to update the title
         newOptions.title.text = plotTitle;
+        newOptions.subtitle = JSON.parse(JSON.stringify(newOptions.subtitle)); // this is necessary in order for apexcharts to update the subtitle
+        newOptions.subtitle.text = createSubtitle();
         newOptions.tooltip.custom = customTooltipFormatter;
         return newOptions;
 
@@ -755,7 +796,6 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
         svHolder["mean-std"].push(svHolder[stdMean][i] - svHolder[STATISTICAL_VALUES[std]][i]);
     }
     delete svHolder["stdMean"];
-    console.log(svHolder);
     return svHolder;
 }
 

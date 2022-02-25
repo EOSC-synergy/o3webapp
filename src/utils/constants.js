@@ -23,14 +23,7 @@ export const DEFAULT_MODEL_GROUP = {
     ]
 };
 
-// apiSlice
-/** For reducing loading time while implementing: starting value for how many models should be fetched */
-export const modelListBegin = 0;
-/** For reducing loading time while implementing: starting value for how many models should be fetched */
-export const modelListEnd = 105;
-
 // client.js
-
 /** Stores the error message that is shown if no month is selected. */
 export const NO_MONTH_SELECTED = "Invalid Selection: Selecting at least one month should make this error go away.";
 
@@ -93,7 +86,7 @@ export const NUM_MONTHS_IN_SEASON = 3;
 export const NUM_MONTHS = 12;
 
 /** These months are selected when the webapp starts */
-export const DEFAULT_MONTHS = [12, 1, 2];
+export const DEFAULT_MONTHS = [1, 2, 12];
 
 // LatitudeBandSelector.js
 /** Stores the latitude bands and its min/max values */
