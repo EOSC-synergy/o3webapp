@@ -9,7 +9,7 @@ import { Grid, Link } from '@mui/material';
  */
 export const links = [
     {
-        label: "Home",
+        label: "O3as",
         href: "https://o3as.data.kit.edu/#page-top"
     },
     {
@@ -19,6 +19,10 @@ export const links = [
     {
         label: "Terms of Use",
         href: "https://o3as.data.kit.edu/policies/terms-of-use.html"
+    },
+    {
+        label: "Gitlab",
+        href: "https://git.scc.kit.edu/synergy.o3as/o3webapp"
     },
     // last element will be in a separate line (except on mobile)
     {
