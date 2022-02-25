@@ -52,7 +52,7 @@ export const FONT_FAMILY = [
  */
 const createSubtitle = () => {
     let stLocationText =
-        store.getState().plot.plotId === 'tco3_zm' ? findLatitudeBandByLocation(true) : 'User-Region';
+        store.getState().plot.plotId === 'tco3_zm' ? findLatitudeBandByLocation(false, true) : 'User-Region';
     if (stLocationText === 'Custom' || stLocationText === 'User-Region') {
         const stLocationValue = store.getState().plot.generalSettings.location;
         const hemisphereExtensionMin = (stLocationValue.minLat < 0 && stLocationValue.maxLat > 0 ? '°S' : '');

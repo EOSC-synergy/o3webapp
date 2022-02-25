@@ -60,9 +60,9 @@ function LatitudeBandSelector(props) {
                 <Select
                     sx={{width: '100%' }}
                     id="latitudeBandSelector"
-                    value={findLatitudeBandByLocation(false)}
+                    value={findLatitudeBandByLocation(false, false)}
                     onChange={handleChangeLatitudeBand}
-                    defaultValue={findLatitudeBandByLocation(false)}
+                    defaultValue={findLatitudeBandByLocation(false, false)}
                 >
                     {
                         // maps all latitude bands from constants.js to ´MenuItem´s
@@ -87,12 +87,14 @@ export default LatitudeBandSelector;
 
 /**
  * Finds selectedLocation in latitudeBands.
+ *
+ * @param {boolean} forceCustomizable if true, acts like isCustomizable is true - if false, does nothing
  * @param {boolean} returnText if true, return the text - if false, return the value
  * @returns the location
  */
-export const findLatitudeBandByLocation = (returnText) => {
+export const findLatitudeBandByLocation = (forceCustomizable, returnText) => {
     if (typeof selectedLocation === 'undefined') return null;
-    if (isCustomizable) {
+    if (isCustomizable  || forceCustomizable) {
         if (returnText) {
             return latitudeBands[latitudeBands.length - 1].text.description;
         } else {
@@ -108,4 +110,6 @@ export const findLatitudeBandByLocation = (returnText) => {
             }
         }
     }
+    setIsCustomizable(true);
+    findLatitudeBandByLocation(true, false);
 }
