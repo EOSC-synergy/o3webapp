@@ -41,7 +41,7 @@ exports[`renders correctly 1`] = `
             <p
               class="MuiTypography-root MuiTypography-body1 css-h0dnht-MuiTypography-root"
             >
-              Home
+              O3as
             </p>
           </a>
         </div>
@@ -74,6 +74,22 @@ exports[`renders correctly 1`] = `
               class="MuiTypography-root MuiTypography-body1 css-h0dnht-MuiTypography-root"
             >
               Terms of Use
+            </p>
+          </a>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-md-auto css-1qkvljz-MuiGrid-root"
+          data-testid="footer-grid-item"
+        >
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-1ie09l3-MuiTypography-root-MuiLink-root"
+            data-testid="footer-link-undefined"
+            href="https://git.scc.kit.edu/synergy.o3as/o3webapp"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-h0dnht-MuiTypography-root"
+            >
+              Gitlab
             </p>
           </a>
         </div>
