@@ -33,9 +33,11 @@ function ReferenceModelSelector(props) {
 
     /** Handles the change of the reference model selection when it is modified.*/
     const handleChangeForRefModel = (event, value) => {
-        dispatch(setModel({model: value}));
-        // fetch for tco3_zm and tco3_return
-        dispatch(fetchPlotDataForCurrentModels());
+        if (value !== null) {
+            dispatch(setModel({model: value}));
+            // fetch for tco3_zm and tco3_return
+            dispatch(fetchPlotDataForCurrentModels());
+        }
     };
 
     return (
@@ -43,7 +45,6 @@ function ReferenceModelSelector(props) {
             id="locationAutocomplete"
             value={selectedModel}
             onChange={handleChangeForRefModel}
-            disableClearable //maybe remove later?
             options={allModels}
             renderInput={(params) => <TextField {...params} label="Reference Model" />}
             sx={{width: "100%"}}
