@@ -119,6 +119,7 @@ function ModelGroupCard(props) {
      *
      */
     const deleteGroup = () => {
+        toggleDeleteRequest();
         dispatch(deleteModelGroup({groupId: props.modelGroupId}));
     }
 
