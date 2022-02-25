@@ -25,6 +25,7 @@ import {STATISTICAL_VALUES} from "../../../../../../utils/constants";
 
 /**
  * A card containing information about a modal group.
+ *
  * @param {Object} props
  * @param {String} props.reportError - error function
  * @param {int} props.modelGroupId -> id of the model group
@@ -38,8 +39,9 @@ function ModelGroupCard(props) {
     const isModelGroupVisible = useSelector(state => selectVisibilityOfGroup(state, props.modelGroupId));
 
     /**
-     * toggles the visibility of the given statistical value
-     * by dispatching an action to the redux store
+     * Toggles the visibility of the given statistical value
+     * by dispatching an action to the redux store.
+     *
      * @param {event} event the event that called this function
      * @param {string} statisticalValue the name of the statistical value that should be toggled
      */
@@ -50,8 +52,8 @@ function ModelGroupCard(props) {
     }
 
     /**
-     * toggles the visibility of the whole group in the graph
-     * by dispatching an action to the redux store
+     * Toggles the visibility of the whole group in the graph
+     * by dispatching an action to the redux store.
      */
     const toggleModelGroupVisibility = () => {
         dispatch(setVisibilityForGroup({groupId: props.modelGroupId, isVisible: !isModelGroupVisible}));
@@ -63,18 +65,25 @@ function ModelGroupCard(props) {
     }
 
     /**
-     * state to keep track of whether the edit group modal is currently visible or not
+     * State to keep track of whether the edit group modal is currently visible or not.
+     * Default is false.
      */
     const [isEditModalVisible, setEditModalVisible] = React.useState(false);
+
     /**
-     * state to keep track of whether the add group modal (used to edit group members) is currently visible or not
+     * State to keep track of whether the add group modal (used to edit group members) is currently visible or not.
+     * Default is false.
      */
     const [isAddModalVisible, setAddModalVisible] = React.useState(false);
 
+    /**
+     * State to keep track of whether a delete request is open or not.
+     * Default is false.
+     */
     const [isDeleteRequest, setDeleteRequest] = React.useState(false);
 
     /**
-     * shows the edit group modal
+     * Shows the edit group modal.
      */
     const showEditModal = () => {
         setAddModalVisible(false);  // avoid two modals being visible under all circumstances
@@ -82,14 +91,14 @@ function ModelGroupCard(props) {
     }
 
     /**
-     * closes the edit modal
+     * Closes the edit modal.
      */
     const closeEditModal = () => {
         setEditModalVisible(false);
     }
 
     /**
-     * shows the add model group modal (used to edit group members)
+     * Shows the add model group modal (used to edit group members).
      */
     const showAddModal = () => {
         setEditModalVisible(false);  // avoid two modals being visible under all circumstances
@@ -97,26 +106,31 @@ function ModelGroupCard(props) {
     }
 
     /**
-     * closes the add model group modal (used to edit group members)
+     * Closes the add model group modal (used to edit group members).
      */
     const closeAddModal = () => {
         setAddModalVisible(false);
     }
 
     /**
-     * function to return the visibility icon, depending on whether the group is currently visible or not
+     * Returns the visibility icon, depending on whether the group is currently visible or not.
      */
     const VisibilityIcon = () => {
         return isModelGroupVisible ? <MuiVisibilityIcon data-testid="ModelGroupCard-VisibilityIcon-visible"/> :
             <VisibilityOffIcon data-testid="ModelGroupCard-VisibilityIcon-invisible"/>
     }
 
+    /**
+     * Toggles the visibility of the delete request card.
+     * Always sets it to the opposite of what it is now.
+     */
     const toggleDeleteRequest = () => {
         setDeleteRequest(!isDeleteRequest);
     }
 
     /**
-     *
+     * Deletes a model group.
+     * Dispatches the deletion to Redux with the group id of the model group card.
      */
     const deleteGroup = () => {
         toggleDeleteRequest();
