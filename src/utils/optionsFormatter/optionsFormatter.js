@@ -113,7 +113,7 @@ export const defaultTCO3_zm = {
         dashArray: null, //styling.dashArray,
     },
     title: {
-        text: "OCTS Plot",
+        text: "OCTS Plot", // title can only be changed in store/plotSlice.js
         align: "center",
         floating: false,
         style: {
@@ -250,7 +250,7 @@ export const default_TCO3_return = {
     },
     colors: [undefined], // , ...styling.colors
     title: {
-        text: "Return/Recovery",
+        text: "Return/Recovery", // title can only be changed in store/plotSlice.js
         align: "center",
         floating: false,
         style: {
