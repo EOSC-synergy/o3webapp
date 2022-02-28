@@ -61,6 +61,7 @@ const createSubtitle = () => {
     let stMonths = [];
     store.getState().plot.generalSettings.months.map((month) => stMonths.push(months[month - 1].description));
     if (stMonths.length === NUM_MONTHS) stMonths = ["All year"];
+
     if (store.getState().plot.plotId === 'tco3_zm') return `${stLocationText} | ${stMonths.join(", ")}`;
     else return stMonths.join(", ");
 };

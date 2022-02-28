@@ -203,6 +203,15 @@ const plotSlice = createSlice({
             state.generalSettings.months = action.payload.months;
         },
 
+        /**
+         * This reducer accepts an action object returned from setUserRegionName()
+         *     e.g. dispatch(setUserRegionName('(-90°S, 90°N)'))
+         * and updates the state accordingly.
+         *
+         * @param {object} state the current store state of: state/plot
+         * @param {object} action accepts the action returned from setUserRegionName()
+         * @param {object} action.payload the payload is an object containing the given data
+         */
         setUserRegionName(state, action) {
             state.plotSpecificSettings.tco3_return.userRegionName = action.payload;
         }
@@ -276,7 +285,6 @@ export const selectPlotXRange = state => state.plot.plotSpecificSettings[state.p
  * @param {object} state the global redux state
  * @returns {object} holds the current x range that includes minY and maxY
  */
-
 export const selectPlotYRange = state => state.plot.plotSpecificSettings[state.plot.plotId].displayYRange;
 
 /**
@@ -286,7 +294,12 @@ export const selectPlotYRange = state => state.plot.plotSpecificSettings[state.p
  * @param {object} state the global redux state
  * @returns {array} array of integers describing the current selected months
  */
-
 export const selectPlotMonths = state => state.plot.generalSettings.months;
 
+/**
+ * This selector allows components to select the current user region name.
+ *
+ * @param {object} state the global redux state
+ * @returns {string} the user region name
+ */
 export const selectUserRegionName = state => state.plot.plotSpecificSettings.tco3_return.userRegionName;
