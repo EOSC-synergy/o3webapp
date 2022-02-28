@@ -1,6 +1,6 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux"
-import {selectPlotLocation, setLocation} from "../../../../../store/plotSlice/plotSlice";
+import {selectPlotLocation, setLocation, setUserRegionName} from "../../../../../store/plotSlice/plotSlice";
 import {Box, Divider, MenuItem, Select} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {latitudeBands} from "../../../../../utils/constants";
@@ -36,7 +36,7 @@ function LatitudeBandSelector(props) {
     const dispatch = useDispatch();
 
     /**
-     * handles the change when the user clicked on a new latitude band option 
+     * handles the change when the user clicked on a new latitude band option
      * if the user selected custom sets isCustomizable to true
      * @param {event} event the event that triggered this function call
      */
@@ -45,7 +45,14 @@ function LatitudeBandSelector(props) {
             setIsCustomizable(true);
         } else {
             setIsCustomizable(false);
-            dispatch(setLocation({minLat: event.target.value.minLat, maxLat: event.target.value.maxLat}));
+            dispatch(setLocation({
+                minLat: event.target.value.minLat,
+                maxLat: event.target.value.maxLat
+            }));
+            dispatch(setUserRegionName(formatLatitude({
+                minLat: event.target.value.minLat,
+                maxLat: event.target.value.maxLat
+            })));
             // fetch for tco3_zm and tco3_return
             dispatch(fetchPlotDataForCurrentModels());
         }
@@ -58,7 +65,7 @@ function LatitudeBandSelector(props) {
             </Divider>
             <Box sx={{paddingLeft: '8%', paddingRight: '8%', paddingTop: '3%'}}>
                 <Select
-                    sx={{width: '100%' }}
+                    sx={{width: '100%'}}
                     id="latitudeBandSelector"
                     value={findLatitudeBandByLocation(false, false)}
                     onChange={handleChangeLatitudeBand}
@@ -71,7 +78,7 @@ function LatitudeBandSelector(props) {
                         )
                     }
                 </Select>
-                {isCustomizable && <CustomLatitudeSelector />}
+                {isCustomizable && <CustomLatitudeSelector/>}
             </Box>
         </>
     );
@@ -83,8 +90,6 @@ LatitudeBandSelector.propTypes = {
 
 export default LatitudeBandSelector;
 
-
-
 /**
  * Finds selectedLocation in latitudeBands.
  *
@@ -94,7 +99,7 @@ export default LatitudeBandSelector;
  */
 export const findLatitudeBandByLocation = (forceCustomizable, returnText) => {
     if (typeof selectedLocation === 'undefined') return null;
-    if (isCustomizable  || forceCustomizable) {
+    if (isCustomizable || forceCustomizable) {
         if (returnText) {
             return latitudeBands[latitudeBands.length - 1].text.description;
         } else {
@@ -112,4 +117,18 @@ export const findLatitudeBandByLocation = (forceCustomizable, returnText) => {
     }
     setIsCustomizable(true);
     findLatitudeBandByLocation(true, false);
+}
+
+
+/**
+ * This method formats a latitude object into a good-looking string.
+ * E.g. {minLat: -20, maxLat: 20} ==> '(20°S-20°N)'
+ *
+ * @param {object} locationValue the minLat and maxLat values
+ * @return {string} the formatted latitude band
+ */
+export const formatLatitude = (locationValue) => {
+    const hemisphereExtensionMin = (locationValue.minLat < 0 && locationValue.maxLat > 0 ? '°S' : '');
+    const hemisphereExtensionMax = (locationValue.maxLat <= 0 ? '°S' : '°N');
+    return `(${Math.abs(locationValue.minLat)}${hemisphereExtensionMin}-${Math.abs(locationValue.maxLat)}${hemisphereExtensionMax})`;
 }
