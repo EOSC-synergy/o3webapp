@@ -1,12 +1,16 @@
+import React from "react";
 import {useDispatch, useSelector} from "react-redux"
 import {Grid, TextField, Typography, FormControl, Divider} from "@mui/material";
-import {selectPlotLocation, setLocation} from "../../../../../../store/plotSlice/plotSlice";
+import {
+    selectPlotLocation,
+    setLocation,
+    setUserRegionName
+} from "../../../../../../store/plotSlice/plotSlice";
 import {fetchPlotDataForCurrentModels} from "../../../../../../services/API/apiSlice";
 import {
     LATITUDE_BAND_MAX_VALUE,
     LATITUDE_BAND_MIN_VALUE
 } from "../../../../../../utils/constants";
-import React from "react";
 
 
 /**
@@ -61,12 +65,12 @@ function CustomLatitudeSelector(props) {
             }
             selectedLocationCopy.minLat = val;
             dispatch(setLocation({minLat: selectedLocationCopy.minLat, maxLat: selectedLocationCopy.maxLat}));
+            dispatch(setUserRegionName(formatLatitude(selectedLocationCopy)));
             dispatch(fetchPlotDataForCurrentModels());
             setMinLatState(val);
         } else {
             setMinLatState(event.target.value);
         }
-
     }
 
     /**
@@ -84,13 +88,12 @@ function CustomLatitudeSelector(props) {
             }
             selectedLocationCopy.maxLat = val;
             dispatch(setLocation({minLat: selectedLocationCopy.minLat, maxLat: selectedLocationCopy.maxLat}));
+            dispatch(setUserRegionName(formatLatitude(selectedLocationCopy)));
             dispatch(fetchPlotDataForCurrentModels());
             setMaxLatState(val);
         } else {
             setMaxLatState(event.target.value);
         }
-
-
     }
 
     /**
@@ -104,8 +107,6 @@ function CustomLatitudeSelector(props) {
         if (minLatState < LATITUDE_BAND_MIN_VALUE) return `> ${LATITUDE_BAND_MIN_VALUE}`;
         if (minLatState > LATITUDE_BAND_MAX_VALUE) return `< ${LATITUDE_BAND_MAX_VALUE}`;
         if (minLatState > maxLatState) return maxLatState >= LATITUDE_BAND_MAX_VALUE ? "" : `< ${maxLatState}`
-
-
     }
 
     /**
@@ -119,8 +120,19 @@ function CustomLatitudeSelector(props) {
         if (maxLatState < LATITUDE_BAND_MIN_VALUE) return `> ${LATITUDE_BAND_MIN_VALUE}`;
         if (maxLatState > LATITUDE_BAND_MAX_VALUE) return `< ${LATITUDE_BAND_MAX_VALUE}`;
         if (minLatState > maxLatState) return minLatState >= LATITUDE_BAND_MAX_VALUE ? "" : `> ${minLatState}`
+    }
 
-
+    /**
+     * This method formats a latitude object into a good-looking string.
+     * E.g. {minLat: -20, maxLat: 20} ==> '(20°S-20°N)'
+     *
+     * @param {object} locationValue the minLat and maxLat values
+     * @return {string} the formatted latitude band
+     */
+    const formatLatitude = (locationValue) => {
+        const hemisphereExtensionMin = (locationValue.minLat < 0 && locationValue.maxLat > 0 ? '°S' : '');
+        const hemisphereExtensionMax = (locationValue.maxLat <= 0 ? '°S' : '°N');
+        return `(${Math.abs(locationValue.minLat)}${hemisphereExtensionMin}-${Math.abs(locationValue.maxLat)}${hemisphereExtensionMax})`;
     }
 
     return (<>

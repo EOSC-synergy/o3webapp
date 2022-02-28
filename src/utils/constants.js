@@ -9,16 +9,16 @@ import {
 
 /**
  * Stores the default model group.
- * 
- * Modify this object to change the name or the models that appear when 
+ *
+ * Modify this object to change the name or the models that appear when
  * the WebApp is initially loaded.
  */
 export const DEFAULT_MODEL_GROUP = {
     groupId: null, // no valid id => add new group 
-    groupName: "Example Group", 
+    groupName: "Example Group",
     modelList: [
-        "CCMI-1_ACCESS_ACCESS-CCM-refC2", 
-        "CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG", 
+        "CCMI-1_ACCESS_ACCESS-CCM-refC2",
+        "CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG",
         "CCMI-1_CCCma_CMAM-refC2"
     ]
 };
@@ -196,7 +196,8 @@ const NEAR_GLOBAL = "Near global";
 /** This string stores the description of the global region */
 const GLOBAL = "Global";
 /** This string stores the description of the user region */
-const USER_REGION = "User region";
+export const USER_REGION = "User region";
+
 export const O3AS_REGIONS = {
     ANTARCTIC,
     SH_MID,
@@ -205,8 +206,11 @@ export const O3AS_REGIONS = {
     ARCTIC,
     NEAR_GLOBAL,
     GLOBAL,
+    // user region must be last element
     USER_REGION
 }
+
+// user region must be last element
 export const ALL_REGIONS_ORDERED = [ANTARCTIC, SH_MID, NH_MID, TROPICS, ARCTIC, NEAR_GLOBAL, GLOBAL, USER_REGION];
 
 /**
@@ -305,8 +309,8 @@ export const SV_COLORING = {
  * This object maps each statistical value that should be calculated
  * to its line dashing allowing an easy customization if e.g. the
  * mean should be dashed too.
- * 
- * The integer values correspond to the dashing format that is 
+ *
+ * The integer values correspond to the dashing format that is
  * expected by apexcharts.
  */
 export const SV_DASHING = {

@@ -1,21 +1,23 @@
-import {q25, q75, median} from "../../services/math/math"
+import {median, q25, q75} from "../../services/math/math"
 import {
-    IMPLICIT_YEAR_LIST,
-    O3AS_PLOTS,
     ALL_REGIONS_ORDERED,
+    END_YEAR,
+    EXTENDED_SV_LIST,
+    IMPLICIT_YEAR_LIST,
+    MODEL_LINE_THICKNESS,
+    months,
+    NUM_MONTHS,
+    O3AS_PLOTS,
+    percentile,
+    START_YEAR,
+    STATISTICAL_VALUE_LINE_THICKNESS,
+    STATISTICAL_VALUES,
     STATISTICAL_VALUES_LIST,
+    std,
+    stdMean,
     SV_CALCULATION,
     SV_COLORING,
-    SV_DASHING,
-    STATISTICAL_VALUES,
-    MODEL_LINE_THICKNESS,
-    START_YEAR,
-    END_YEAR,
-    std,
-    percentile,
-    EXTENDED_SV_LIST,
-    stdMean,
-    STATISTICAL_VALUE_LINE_THICKNESS, months, NUM_MONTHS
+    SV_DASHING, USER_REGION
 } from "../constants"
 import {convertModelName} from "../ModelNameConverter";
 import store from "../../store/store";
@@ -51,20 +53,16 @@ export const FONT_FAMILY = [
  * @returns {string} the subtitle
  */
 const createSubtitle = () => {
-    let stLocationText =
-        store.getState().plot.plotId === 'tco3_zm' ? findLatitudeBandByLocation(false, true) : 'User-Region';
-    if (stLocationText === 'Custom' || stLocationText === 'User-Region') {
-        const stLocationValue = store.getState().plot.generalSettings.location;
-        const hemisphereExtensionMin = (stLocationValue.minLat < 0 && stLocationValue.maxLat > 0 ? '°S' : '');
-        const hemisphereExtensionMax = (stLocationValue.maxLat <= 0 ? '°S' : '°N');
-        stLocationText =
-            `${stLocationText} (${Math.abs(stLocationValue.minLat)}${hemisphereExtensionMin}-${Math.abs(stLocationValue.maxLat)}${hemisphereExtensionMax})`;
+    let stLocationText = findLatitudeBandByLocation(false, true);
+    if (stLocationText === 'Custom') {
+        stLocationText = stLocationText + " " + store.getState().plot.plotSpecificSettings.tco3_return.userRegionName;
     }
 
     let stMonths = [];
     store.getState().plot.generalSettings.months.map((month) => stMonths.push(months[month - 1].description));
     if (stMonths.length === NUM_MONTHS) stMonths = ["All year"];
-    return `${stLocationText} | ${stMonths.join(", ")}`;
+    if (store.getState().plot.plotId === 'tco3_zm') return `${stLocationText} | ${stMonths.join(", ")}`;
+    else return stMonths.join(", ");
 };
 
 /**
@@ -352,7 +350,7 @@ export const default_TCO3_return = {
 /**
  * The interface the graph component accesses to generate the options for the plot
  * given the plot id, the styling (depends on plot type) and the plot title.
- * 
+ *
  * @param {string} plotId an element of O3AS_PLOTS
  * @param {object} styling the styling
  * @param {array} styling.colors an array of strings with hex code. Has to match the length of the given series
@@ -366,11 +364,11 @@ export const default_TCO3_return = {
  * @returns an default_TCO3_plotId object formatted with the given data
  */
 export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, seriesNames}) {
-    const minY = roundDownToMultipleOfTen(yAxisRange.minY); 
+    const minY = roundDownToMultipleOfTen(yAxisRange.minY);
     const maxY = roundUpToMultipleOfTen(yAxisRange.maxY);
 
     const tickAmount = getTickAmountYAxis(minY, maxY);
-    
+
     if (plotId === O3AS_PLOTS.tco3_zm) {
         const newOptions = JSON.parse(JSON.stringify(defaultTCO3_zm)); // dirt simple and not overly horrible
 
@@ -401,7 +399,7 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.subtitle = JSON.parse(JSON.stringify(newOptions.subtitle)); // this is necessary in order for apexcharts to update the subtitle
         newOptions.subtitle.text = createSubtitle();
 
-        const minY = roundDownToMultipleOfTen(yAxisRange.minY); 
+        const minY = roundDownToMultipleOfTen(yAxisRange.minY);
         const maxY = roundUpToMultipleOfTen(yAxisRange.maxY);
         newOptions.yaxis.push(...seriesNames.map(name => getDefaultYAxisTco3Return(name, minY, maxY, false, false, 0, tickAmount)))
         newOptions.yaxis.push(getDefaultYAxisTco3Return(undefined, minY, maxY, true, false, 3, tickAmount)); // on left side
@@ -520,7 +518,7 @@ function generateSingleTco3ZmSeries(name, svData) {
  * The data arrangement is basically a transposition.
  * The first datapoint of each model ist grouped into the first array.
  * and so on...
- * 
+ *
  * @param {array} modelList list of models of a group that should be included
  * @param {object} data an object holding all the data from the api
  * @returns a 2D array containing all the data (transpose matrix of given data)
@@ -562,14 +560,20 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange}) 
 
     // 1. build boxplot
     const boxPlotValues = calculateBoxPlotValues({data, modelsSlice});
+    let regionData = ALL_REGIONS_ORDERED.map(region => ({
+        x: region,
+        y: boxPlotValues[region],
+    }));
+    regionData.pop();
+    regionData.push({
+        x: store.getState().plot.plotSpecificSettings.tco3_return.userRegionName,
+        y: boxPlotValues[USER_REGION]
+    });
     series.data.push({
             name: '', // removed name of box, so it doesn't show up in the legend!
             type: 'boxPlot',
 
-            data: ALL_REGIONS_ORDERED.map(region => ({
-                x: region,
-                y: boxPlotValues[region],
-            })),
+            data: regionData
         }
     );
 
@@ -587,6 +591,11 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange}) 
                 x: region,
                 y: filterOutOfRange(modelData.data[region], minY, maxY) || null, // null as default if data is missing
             }));
+            sortedData.pop();
+            sortedData.push({
+                x: store.getState().plot.plotSpecificSettings.tco3_return.userRegionName,
+                y: filterOutOfRange(modelData.data[USER_REGION], minY, maxY) || null, // null as default if data is missing
+            });
 
             series.data.push({
                 name: model,
@@ -634,9 +643,16 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange}) 
  */
 function generateSingleTco3ReturnSeries(name, svData) {
     const transformedData = ALL_REGIONS_ORDERED.map((region, index) => {
-        return {
-            x: region,
-            y: svData[index],
+        if (index !== ALL_REGIONS_ORDERED.length - 1) {
+            return {
+                x: region,
+                y: svData[index],
+            }
+        } else {
+            return {
+                x: store.getState().plot.plotSpecificSettings.tco3_return.userRegionName,
+                y: svData[index],
+            }
         }
     });
 
@@ -655,7 +671,7 @@ function generateSingleTco3ReturnSeries(name, svData) {
  * The data arrangement is basically a transposition.
  * The first datapoint of each model ist grouped into the first array.
  * and so on...
- * 
+ *
  * @param {array} modelList list of models of a group that should be included
  * @param {object} data an object holding all the data from the api
  * @returns a 2D array containing all the data (transpose matrix of given data)
@@ -721,8 +737,8 @@ function calculateBoxPlotValues({data, modelsSlice}) {
 }
 
 /**
- * This method builds the statistical series using the passed buildMatrix method 
- * that brings the data into the desired format and uses the 
+ * This method builds the statistical series using the passed buildMatrix method
+ * that brings the data into the desired format and uses the
  * passed generateSingleSvSeries function to transform each generated series into
  * the correct format.
  *
@@ -910,7 +926,7 @@ export const preTransformApiData = ({plotId, data, modelsSlice}) => {
                 temp.push(datum.y[index]);
                 lookUpTable[datum.model].data[datum.x[index]] = datum.y[index];
             }
-            
+
             if (visibleModels.includes(datum.model)) { // min and max values of visible values are relevant!
                 maximums.push(Math.max(...temp));
                 minimums.push(Math.min(...temp.filter(x => x !== null)));
@@ -1102,7 +1118,7 @@ export function convertToStrokeStyle(apiStyle) {
  * Combines 2 data series objects into a new one.
  * The copied elements of series2 get appended to a copy of series1.
  * A series object has the following structure: { data: Array, colors: Array, width: Array, dashArray: Array}
- * 
+ *
  * @param {object} series1     The first data series object
  * @param {object} series2     The second data series object
  * @returns                 New series containing series1 and series2
@@ -1118,7 +1134,7 @@ function combineSeries(series1, series2) {
 
 /**
  * Utility function to create an array of size i with empty arrays inside it.
- * 
+ *
  * @param {number} i    The size of the array containing the empty arrays
  * @returns             The array of size 'i' containing empty arrays
  */
@@ -1229,7 +1245,7 @@ export const formatYLabelsNicely = value => value % 10 ? "" : value
 /**
  * This function parses the auto-generated sv names to separate
  * them into the sv type (e.g. mean, median) and the group.
- * 
+ *
  * @param {string} name the name of the data series (e.g. mean+std(Example Group))
  * @returns an object holding the sv type and the group name
  */
@@ -1247,7 +1263,7 @@ export function parseSvName(name) {
  * A plugin-method for apexcharts to provide a custom tooltip.
  * In this case the tooltip is for the octs line chart. It provides
  * a richer tooltip and shows the data points correctly.
- * 
+ *
  * @param {array} series an array of series
  * @param {number} seriesIndex the index of the hovered data series
  * @param {number} dataPointIndex the index of the data point in the hovered data series
