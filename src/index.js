@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import store from './store/store';
 import {Provider} from 'react-redux';
-import {fetchModels, fetchPlotDataForCurrentModels, fetchPlotTypes} from './services/API/apiSlice';
+import {cacheKey, fetchModels, fetchPlotDataForCurrentModels, fetchPlotTypes} from './services/API/apiSlice';
 import {setModelsOfModelGroup} from "./store/modelsSlice/modelsSlice";
 import {DEFAULT_MODEL_GROUP, O3AS_PLOTS} from './utils/constants';
 import {setLocation, setMonths} from "./store/plotSlice/plotSlice";
@@ -47,9 +47,8 @@ ReactDOM.render(
     document.getElementById('root')
 );
 
-export let cacheKey = '';
-
 export const updateURL = () => {
     const otherSettings = [];
+
     window.history.pushState('', '', `?${cacheKey}&${otherSettings.join("&")}`);
 }

@@ -5,7 +5,6 @@ import ErrorMessageModal from './components/ErrorMessageModal/ErrorMessageModal'
 import LandingPage from './views/landingPage/LandingPage';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {disableBodyScroll, enableBodyScroll} from 'body-scroll-lock';
-import store from "./store/store";
 
 
 /**

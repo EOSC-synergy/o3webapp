@@ -3,7 +3,8 @@ import {getModels, getPlotTypes, getPlotData} from "./client";
 import {preTransformApiData} from "../../utils/optionsFormatter/optionsFormatter";
 import {START_YEAR, END_YEAR, O3AS_PLOTS} from "../../utils/constants";
 import {setDisplayYRangeForPlot} from "../../store/plotSlice/plotSlice";
-import {cacheKey} from '../../index';
+
+export let cacheKey = '';
 
 /**
  * This object models an "enum" in JavaScript. Each of the values is used
