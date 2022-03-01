@@ -19,6 +19,11 @@ export const updateURL = () => {
     otherSettings.push(`y_return=${plotSpecific.tco3_return.displayYRange.minY}-${plotSpecific.tco3_return.displayYRange.maxY}`);
     otherSettings.push(`title_zm=${plotSpecific.tco3_zm.title}`);
     otherSettings.push(`title_return=${plotSpecific.tco3_return.title}`);
+    let modelGroups = [];
+    for (let i = 0; i < store.getState().models.idCounter; i++) {
+        modelGroups.push(store.getState().models.modelGroups[i].name);
+    }
+    otherSettings.push(`groups=${modelGroups.join(",")}`);
 
     window.history.pushState('', '', `?plot=${store.getState().plot.plotId}&${cacheKey}&${otherSettings.join("&")}`);
 }
