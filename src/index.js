@@ -9,6 +9,20 @@ import {DEFAULT_MODEL_GROUP, O3AS_PLOTS} from './utils/constants';
 import {setLocation, setMonths} from "./store/plotSlice/plotSlice";
 import {setModel, setYear} from "./store/referenceSlice/referenceSlice";
 
+export const updateURL = () => {
+    const plotSpecific = store.getState().plot.plotSpecificSettings;
+    const otherSettings = [];
+    otherSettings.push(`ref_visible=${+store.getState().reference.settings.visible}`);
+    otherSettings.push(`x_zm=${plotSpecific.tco3_zm.displayXRange.years.minX}-${plotSpecific.tco3_zm.displayXRange.years.maxX}`);
+    otherSettings.push(`y_zm=${plotSpecific.tco3_zm.displayYRange.minY}-${plotSpecific.tco3_zm.displayYRange.maxY}`);
+    otherSettings.push(`x_return=${plotSpecific.tco3_return.displayXRange.regions.join(",")}`);
+    otherSettings.push(`y_return=${plotSpecific.tco3_return.displayYRange.minY}-${plotSpecific.tco3_return.displayYRange.maxY}`);
+    otherSettings.push(`title_zm=${plotSpecific.tco3_zm.title}`);
+    otherSettings.push(`title_return=${plotSpecific.tco3_return.title}`);
+
+    window.history.pushState('', '', `?plot=${store.getState().plot.plotId}&${cacheKey}&${otherSettings.join("&")}`);
+}
+
 const queryString = window.location.search;
 if (queryString !== '') {
     const urlParams = new URLSearchParams(queryString);
@@ -37,6 +51,7 @@ store.dispatch(fetchPlotTypes());
 store.dispatch(fetchModels());
 store.dispatch(fetchPlotDataForCurrentModels({plotId: O3AS_PLOTS.tco3_zm}));
 store.dispatch(fetchPlotDataForCurrentModels({plotId: O3AS_PLOTS.tco3_return}));
+updateURL();
 
 ReactDOM.render(
     <React.StrictMode>
@@ -46,9 +61,3 @@ ReactDOM.render(
     </React.StrictMode>,
     document.getElementById('root')
 );
-
-export const updateURL = () => {
-    const otherSettings = [];
-
-    window.history.pushState('', '', `?${cacheKey}&${otherSettings.join("&")}`);
-}
