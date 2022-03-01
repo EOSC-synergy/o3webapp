@@ -186,7 +186,7 @@ export const fetchPlotData = ({plotId, models}) => {
             dispatch(fetchPlotDataRefetching({plotId, cacheKey, loadingModels: toBeFetched}));
         }
 
-        window.history.pushState('', '', `#${cacheKey}`);
+        window.history.pushState('', '', `?${cacheKey}`);
 
         // Return promise with success and failure actions
         return getPlotData({
