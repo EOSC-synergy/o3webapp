@@ -6,8 +6,28 @@ import {Provider} from 'react-redux';
 import {fetchModels, fetchPlotDataForCurrentModels, fetchPlotTypes} from './services/API/apiSlice';
 import {setModelsOfModelGroup} from "./store/modelsSlice/modelsSlice";
 import {DEFAULT_MODEL_GROUP, O3AS_PLOTS} from './utils/constants';
+import {setLocation, setMonths} from "./store/plotSlice/plotSlice";
+import {setModel, setYear} from "./store/referenceSlice/referenceSlice";
 
 const queryString = window.location.search;
+if (queryString !== '') {
+    const urlParams = new URLSearchParams(queryString);
+
+    const latMin = parseInt(urlParams.get('lat_min'));
+    const latMax = parseInt(urlParams.get('lat_max'));
+    store.dispatch(setLocation({minLat: latMin, maxLat: latMax}));
+
+    const months = urlParams.get('months').split(",").map((item) => {
+        return parseInt(item)
+    });
+    store.dispatch(setMonths({months}));
+
+    const refModel = urlParams.get('ref_meas');
+    store.dispatch(setModel({model: refModel}));
+
+    const refYear = parseInt(urlParams.get('ref_year'));
+    store.dispatch(setYear({year: refYear}));
+}
 
 // add default model group
 store.dispatch(setModelsOfModelGroup(DEFAULT_MODEL_GROUP));
