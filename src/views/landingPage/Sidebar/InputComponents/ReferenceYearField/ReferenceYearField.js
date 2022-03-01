@@ -4,10 +4,16 @@ import {useDispatch} from "react-redux"
 import {useSelector} from "react-redux";
 import {END_YEAR, START_YEAR, O3AS_PLOTS} from "../../../../../utils/constants";
 import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice";
-import {setYear, setVisibility, selectRefYear, selectVisibility} from "../../../../../store/referenceSlice/referenceSlice";
+import {
+    setYear,
+    setVisibility,
+    selectRefYear,
+    selectVisibility
+} from "../../../../../store/referenceSlice/referenceSlice";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import MuiVisibilityIcon from '@mui/icons-material/Visibility';
-import { selectPlotId } from "../../../../../store/plotSlice/plotSlice";
+import {selectPlotId} from "../../../../../store/plotSlice/plotSlice";
+import {updateURL} from "../../../../../index";
 
 /**
  * Enables the user to select a reference year.
@@ -37,6 +43,7 @@ function ReferenceYearField(props) {
             if (event.target.value >= START_YEAR && event.target.value <= END_YEAR) {
                 // fetch for tco3_zm and tco3_return
                 dispatch(fetchPlotDataForCurrentModels());
+                updateURL();
             }
         }
     };
@@ -45,7 +52,8 @@ function ReferenceYearField(props) {
      * Handles the change of the reference line visibility field if it is modified.
      */
     const handleShowRefLineClicked = (event) => {
-        dispatch(setVisibility({visible: event.target.checked}))
+        dispatch(setVisibility({visible: event.target.checked}));
+        updateURL();
     }
 
     return (
@@ -68,7 +76,7 @@ function ReferenceYearField(props) {
                     </FormControl>
                     {
                         plotId === O3AS_PLOTS.tco3_zm
-                        && 
+                        &&
                         <FormControl>
                             <Checkbox
                                 checked={refLineVisibility}
@@ -77,7 +85,7 @@ function ReferenceYearField(props) {
                                 onClick={handleShowRefLineClicked}
                             />
                         </FormControl>
-                    }   
+                    }
                 </Grid>
             </Grid>
         </>

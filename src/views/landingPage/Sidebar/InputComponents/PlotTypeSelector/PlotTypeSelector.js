@@ -9,6 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import {useDispatch, useSelector} from "react-redux";
 import {selectPlotId, setActivePlotId} from "../../../../../store/plotSlice/plotSlice";
 import {REQUEST_STATE} from "../../../../../services/API/apiSlice";
+import {updateURL} from "../../../../../index";
 
 
 /**
@@ -29,7 +30,8 @@ function PlotTypeSelector(props) {
      * @todo connect with redux store
      */
     const changePlotType = (event) => {
-        dispatch(setActivePlotId({plotId: event.target.value}))
+        dispatch(setActivePlotId({plotId: event.target.value}));
+        updateURL();
     }
 
     let dropdownData;

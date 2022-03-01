@@ -22,6 +22,7 @@ import {
 } from "../../../../../../store/modelsSlice/modelsSlice";
 
 import {STATISTICAL_VALUES} from "../../../../../../utils/constants";
+import {updateURL} from "../../../../../../index";
 
 /**
  * A card containing information about a modal group.
@@ -62,6 +63,7 @@ function ModelGroupCard(props) {
                 {groupId: props.modelGroupId, svType: key, isIncluded: !isModelGroupVisible}
             ));
         }
+        updateURL();
     }
 
     /**
@@ -135,6 +137,7 @@ function ModelGroupCard(props) {
     const deleteGroup = () => {
         toggleDeleteRequest();
         dispatch(deleteModelGroup({groupId: props.modelGroupId}));
+        updateURL();
     }
 
     if (!isDeleteRequest) {

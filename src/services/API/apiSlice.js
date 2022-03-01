@@ -3,6 +3,7 @@ import {getModels, getPlotTypes, getPlotData} from "./client";
 import {preTransformApiData} from "../../utils/optionsFormatter/optionsFormatter";
 import {START_YEAR, END_YEAR, O3AS_PLOTS} from "../../utils/constants";
 import {setDisplayYRangeForPlot} from "../../store/plotSlice/plotSlice";
+import {cacheKey} from '../../index';
 
 /**
  * This object models an "enum" in JavaScript. Each of the values is used
@@ -153,7 +154,7 @@ export const fetchPlotData = ({plotId, models}) => {
         const refModel = getState().reference.settings.model;
         const refYear = getState().reference.settings.year;
 
-        const cacheKey = generateCacheKey({latMin, latMax, months, refModel, refYear});
+        cacheKey = generateCacheKey({latMin, latMax, months, refModel, refYear});
         // it shouldn't reload the same request if the data is already present (previous successful request) or 
         // if the request is already loading
         const cachedRequest = getState().api.plotSpecific[plotId].cachedRequests[cacheKey];
@@ -185,8 +186,6 @@ export const fetchPlotData = ({plotId, models}) => {
             toBeFetched = required;
             dispatch(fetchPlotDataRefetching({plotId, cacheKey, loadingModels: toBeFetched}));
         }
-
-        window.history.pushState('', '', `?${cacheKey}`);
 
         // Return promise with success and failure actions
         return getPlotData({

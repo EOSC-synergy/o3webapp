@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {setDisplayXRange, selectPlotXRange} from "../../../../../store/plotSlice/plotSlice";
 import {Typography, Grid, TextField, FormControl} from "@mui/material";
 import {START_YEAR, END_YEAR} from '../../../../../utils/constants';
+import {updateURL} from "../../../../../index";
 
 /**
  * Enables the user to choose the range that should be visible on the x-axis of the plot.
@@ -37,6 +38,7 @@ function XAxisField(props) {
             setStateX({minX: event.target.value, maxX: maxX});
             if (event.target.value >= START_YEAR && event.target.value <= END_YEAR && event.target.value <= maxX) {
                 dispatch(setDisplayXRange({years: {minX: parseInt(event.target.value), maxX: maxX}}));
+                updateURL();
             }
         }
     }
@@ -51,6 +53,7 @@ function XAxisField(props) {
             setStateX({minX: minX, maxX: event.target.value});
             if (event.target.value >= START_YEAR && event.target.value <= END_YEAR && minX <= event.target.value) {
                 dispatch(setDisplayXRange({years: {minX: minX, maxX: parseInt(event.target.value)}}));
+                updateURL();
             }
         }
     }

@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux"
-import { selectPlotId, setTitle } from "../../../../../store/plotSlice/plotSlice";
-import { Divider, Typography, Box, FormControl, TextField} from '@mui/material';
-import { useSelector } from 'react-redux';
-import { selectPlotTitle } from "../../../../../store/plotSlice/plotSlice";
+import React, {useEffect} from "react";
+import {useDispatch} from "react-redux"
+import {selectPlotId, setTitle} from "../../../../../store/plotSlice/plotSlice";
+import {Divider, Typography, Box, FormControl, TextField} from '@mui/material';
+import {useSelector} from 'react-redux';
+import {selectPlotTitle} from "../../../../../store/plotSlice/plotSlice";
 import PropTypes from 'prop-types';
-import { PLOT_NAME_MAX_LEN } from "../../../../../utils/constants"
+import {PLOT_NAME_MAX_LEN} from "../../../../../utils/constants"
+import {updateURL} from "../../../../../index";
 
 /**
  * Enables the user to rename and change the plot title.
@@ -14,13 +15,13 @@ import { PLOT_NAME_MAX_LEN } from "../../../../../utils/constants"
  * @returns {JSX.Element} a jsx containing a text-field to change the plot name
  */
 function PlotNameField() {
-    
+
     /** The title that should be displayed above the TextField. */
     const componentTitle = "PLOT NAME";
 
     /** The label displayed inside the TextField while nothing is typed in. */
     const textFieldLabel = "New Plot Name";
-     
+
     /** Dispatcher to dispatch the plot name change action. */
     const dispatch = useDispatch();
 
@@ -41,12 +42,13 @@ function PlotNameField() {
             event.target.value = event.target.value.slice(0, PLOT_NAME_MAX_LEN);
         }
         dispatch(setTitle({title: event.target.value}));
+        updateURL();
     }
     return (
         <>
             <Divider><Typography>{componentTitle}</Typography></Divider>
             <Box sx={{paddingLeft: '8%', paddingRight: '8%', paddingTop: '3%', paddingBottom: '3%'}}>
-                <FormControl sx={{width: '100%' }}>
+                <FormControl sx={{width: '100%'}}>
                     <TextField
                         data-testid="plot-field"
                         id="standard-basic-plot-title-input"

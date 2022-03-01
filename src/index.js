@@ -46,3 +46,10 @@ ReactDOM.render(
     </React.StrictMode>,
     document.getElementById('root')
 );
+
+export let cacheKey = '';
+
+export const updateURL = () => {
+    const otherSettings = [];
+    window.history.pushState('', '', `?${cacheKey}&${otherSettings.join("&")}`);
+}

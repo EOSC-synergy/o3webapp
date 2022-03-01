@@ -3,8 +3,9 @@ import Navbar from "./components/Navbar/NavBar";
 import Footer from "./components/Footer/Footer";
 import ErrorMessageModal from './components/ErrorMessageModal/ErrorMessageModal';
 import LandingPage from './views/landingPage/LandingPage';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
+import {disableBodyScroll, enableBodyScroll} from 'body-scroll-lock';
+import store from "./store/store";
 
 
 /**
@@ -93,16 +94,17 @@ function App() {
                 paper: "#262626"
             }
         }
-      });
+    });
 
 
     return (
         <ThemeProvider theme={theme}>
             <div style={{minHeight: "100vh", display: 'flex', flexDirection: 'column'}}>
-                <Navbar reportError={reportError} openSidebar={openSidebar} />
-                <LandingPage reportError={reportError} openSidebar={openSidebar} closeSidebar={closeSidebar} isSidebarOpen={isSidebarOpen} />
-                <Footer reportError={reportError} />
-                <ErrorMessageModal isOpen={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />
+                <Navbar reportError={reportError} openSidebar={openSidebar}/>
+                <LandingPage reportError={reportError} openSidebar={openSidebar} closeSidebar={closeSidebar}
+                             isSidebarOpen={isSidebarOpen}/>
+                <Footer reportError={reportError}/>
+                <ErrorMessageModal isOpen={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal}/>
                 {/* <CookieConsentModal isOpen={isCookieConsentModalVisible} onClose={onCloseCookieConsentModal} /> */}
             </div>
         </ThemeProvider>
