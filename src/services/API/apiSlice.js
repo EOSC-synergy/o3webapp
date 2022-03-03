@@ -101,17 +101,24 @@ const selectExistingPlotData = createAction("api/selectPlotData");
  * fetched data which are then used to update the plot with the "suggestions". They are named suggestions because
  * the y-axis of the plot axis is initially set to these values. The user can change them ofcourse.
  *
- * @param {string} obj.plotId the name for which the data is fetched
- * @param {string} obj.cacheKey the cache key specifying the settings for the fetched data and where the data is fetched
- * @param {object} obj.data the fetched data from the api
+ * @param {string} plotId the name for which the data is fetched
+ * @param {string} cacheKey the cache key specifying the settings for the fetched data and where the data is fetched
+ * @param {object} data the fetched data from the api
+ * @param {boolean} suggest whether the suggestions should be calculated or not
  * @returns the async thunk action that is dispatched against the store.
  */
-export const updateDataAndDisplaySuggestions = ({plotId, cacheKey, data}) => {
+export const updateDataAndDisplaySuggestions = ({plotId, cacheKey, data, suggest}) => {
 
     return (dispatch, getState) => {
         dispatch(fetchPlotDataSuccess({data, plotId, cacheKey, modelsSlice: getState().models}));
-        const {min, max} = getState().api.plotSpecific[plotId].cachedRequests[cacheKey].suggested; // suggested min/max is availabe
-        dispatch(setDisplayYRangeForPlot({plotId, minY: Math.floor(min / 10) * 10, maxY: Math.ceil(max / 10) * 10}));
+        if (suggest) {
+            const {min, max} = getState().api.plotSpecific[plotId].cachedRequests[cacheKey].suggested; // suggested min/max is availabe
+            dispatch(setDisplayYRangeForPlot({
+                plotId,
+                minY: Math.floor(min / 10) * 10,
+                maxY: Math.ceil(max / 10) * 10
+            }));
+        }
     }
 }
 
@@ -121,15 +128,19 @@ export const updateDataAndDisplaySuggestions = ({plotId, cacheKey, data}) => {
  * It simplifies the interface for the components as they don't need to access the store before and calculate
  * which models should be fetched.
  *
+ * @param {boolean} suggest whether the suggestions should be calculated or not
+ *
  * @returns the async thunk function that is dispatched against the store.
  */
-export const fetchPlotDataForCurrentModels = () => {
+export const fetchPlotDataForCurrentModels = (suggest) => {
+    if (typeof suggest === "undefined") suggest = true;
+
     return (dispatch, getState) => {
         dispatch(
-            fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, models: getAllSelectedModels(getState)})
+            fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, models: getAllSelectedModels(getState), suggest})
         );
         dispatch(
-            fetchPlotData({plotId: O3AS_PLOTS.tco3_return, models: getAllSelectedModels(getState)})
+            fetchPlotData({plotId: O3AS_PLOTS.tco3_return, models: getAllSelectedModels(getState), suggest})
         );
     }
 }
@@ -139,12 +150,12 @@ export const fetchPlotDataForCurrentModels = () => {
  * against the store to start fetching new plot data from the api.
  *
  * @param {String} plotId the plotId
- * @param {number} modelListBegin for faster testing limit fetching of model list
- * @param {number} modelListEnd for faster testing limit fetching of model list
+ * @param {Array.<string>} models all selected models
+ * @param {boolean} suggest whether the suggestions should be calculated or not
+ *
  * @returns the async thunk action
  */
-export const fetchPlotData = ({plotId, models}) => {
-
+export const fetchPlotData = ({plotId, models, suggest}) => {
     return (dispatch, getState) => {
         if (typeof plotId === "undefined") plotId = getState().plot.plotId; // backwards compatible
         const latMin = getState().plot.generalSettings.location.minLat;
@@ -205,6 +216,7 @@ export const fetchPlotData = ({plotId, models}) => {
                     plotId,
                     cacheKey,
                     data: response.data,
+                    suggest,
                 })),
                 error => dispatch(fetchPlotDataRejected({error: error.message, plotId, cacheKey})),
             );
@@ -217,7 +229,7 @@ export const fetchPlotData = ({plotId, models}) => {
  * Get's all selected models from the models slice.
  *
  * @param {function} getState a function to get the state of the store
- * @returns all selected models from the store
+ * @returns {Array.<string>} all selected models from the store
  */
 export function getAllSelectedModels(getState) {
     let allModels = [];

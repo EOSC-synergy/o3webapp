@@ -84,7 +84,7 @@ const plotSlice = createSlice({
          * @param {object} state the current store state of: state/plot
          * @param {object} action accepts the action returned from setTitle()
          * @param {object} action.payload the payload is an object containing the given data
-         * @param {string} action.payload.id a string that contains the new plot title
+         * @param {string} action.payload.title a string that contains the new plot title
          */
         setTitle(state, action) {
             const {title} = action.payload;
@@ -115,7 +115,8 @@ const plotSlice = createSlice({
         //TODO: update following JSDoc
         /**
          * This reducer accepts an action object returned from setDisplayXRange()
-         *     e.g. dispatch(setDisplayXRange({minX: 1960, maxX: 2100}))
+         *     e.g. dispatch(setDisplayXRange({years: {minX: 1960, maxX: 2100}}))
+         *     e.g. dispatch(setDisplayXRange({{regions: [0, 1, 2, 3]}}))
          * and calculates the new state based on the action and the action
          * data given in action.payload.
          *
@@ -129,8 +130,8 @@ const plotSlice = createSlice({
          * @param {object} state the current store state of: state/plot
          * @param {object} action accepts the action returned from setDisplayXRange()
          * @param {object} action.payload the payload is an object containing the given data
-         * @param {number} action.payload.minX a number specifying the start of the x range
-         * @param {number} action.payload.maxX a number specifying the end of the x range
+         * @param {number} action.payload.years.minX a number specifying the start of the x range
+         * @param {number} action.payload.years.maxX a number specifying the end of the x range
          */
         setDisplayXRange(state, action) {
             const currentPlotId = state.plotId;
