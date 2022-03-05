@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import { Grid, Link } from '@mui/material';
 
 /**
- * The links in the footer with label and href.
+ * The links on the right-hand side in the footer with label and href.
  *
  * @type {Array.<{label: string, href: string}>}
  */
@@ -80,7 +80,19 @@ function Footer () {
                                 lineHeight: 3
                             }}
                         >
-                            Copyright © KIT – The Research University in the Helmholtz Association
+                            Copyright © KIT – The&nbsp;
+                            <Link
+                                href={"https://www.kit.edu/kit/english/research-university.php"}
+                                data-testid={`footer-link-research-university}`}
+                                sx={{
+                                    color: '#fed136',
+                                    textDecoration: 'none',
+                                }}
+                                underline='hover'
+                            >
+                                Research University
+                            </Link>
+                            &nbsp;in the Helmholtz Association
                         </Typography>
                     </span>
                     </Grid>
