@@ -271,7 +271,7 @@ function DownloadModal(props) {
               </CardContent>
               <CardActions sx={{justifyContent: "flex-end", marginTop: "2%"}}>
                   <Button
-                      disabled={activeData.status !== REQUEST_STATE.success}
+                      disabled={selectedFileFormat === '' || activeData.status !== REQUEST_STATE.success}
                       variant="contained"
                       onClick={handleDownloadPlot}
                   >
