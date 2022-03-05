@@ -59,7 +59,7 @@ function DownloadModal(props) {
   /**
    * The Selectedfile format which will be selected by the selection.
    */
-  const [selectedFileFormat, setSelectedFileFormat] = React.useState("PDF");
+  const [selectedFileFormat, setSelectedFileFormat] = React.useState('');
 
  
 
