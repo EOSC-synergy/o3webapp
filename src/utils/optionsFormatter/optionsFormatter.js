@@ -55,7 +55,7 @@ export const FONT_FAMILY = [
 const createSubtitle = () => {
     let stLocationText = findLatitudeBandByLocation(false, true);
     if (stLocationText === 'Custom') {
-        stLocationText = stLocationText + " " + store.getState().plot.plotSpecificSettings.tco3_return.userRegionName;
+        stLocationText = store.getState().plot.plotSpecificSettings.tco3_return.userRegionName;
     }
 
     let stMonths = [];
