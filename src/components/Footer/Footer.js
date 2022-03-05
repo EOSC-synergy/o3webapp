@@ -24,7 +24,6 @@ export const links = [
         label: "Gitlab",
         href: "https://git.scc.kit.edu/synergy.o3as/o3webapp"
     },
-    // last element will be in a separate line (except on mobile)
     {
         label: "How to Acknowledge",
         href: "https://o3as.data.kit.edu/policies/how-to-acknowledge.html"
@@ -102,7 +101,7 @@ function Footer () {
                         return (
                             <Grid
                                 item
-                                md={idx === links.length - 1 ? 12 : "auto"}
+                                md={"auto"}
                                 key={idx}
                                 sx={{
                                     mx: 1
