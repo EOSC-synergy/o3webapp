@@ -36,17 +36,17 @@ import CardActions from "@mui/material/CardActions";
 function DownloadModal(props) {
 
   /**
-   * An array containing all Model Groups
+   * An array containing all model groups.
    */
   const modelGroups = useSelector(state => selectAllModelGroups(state));
 
   /**
-   * the plot id of the graph (tco3_zm, tco3_return etc.)
+   * The plot id of the graph (tco3_zm, tco3_return etc.).
    */
   const plotId = useSelector(selectPlotId);
 
   /**
-   * the active data of the current plot which contains usefull information about the models.
+   * The active data of the current plot which contains information about the models.
    */
   const activeData = useSelector(state => selectActivePlotData(state, plotId));
 
@@ -55,15 +55,10 @@ function DownloadModal(props) {
    */
   const plotTitle = useSelector(selectPlotTitle);
 
-
   /**
-   * The Selectedfile format which will be selected by the selection.
+   * The selected file format.
    */
   const [selectedFileFormat, setSelectedFileFormat] = React.useState('');
-
- 
-
-
 
   /**
    * The style of the DownloadModal.
@@ -85,10 +80,10 @@ function DownloadModal(props) {
   };
 
   /**
-   * Downloads the Graph image as a PNG file. 
+   * Downloads the graph as a PNG file.
    *
-   * @param {the File name of the PNG} fileName
-   * @returns a Promise which provides the user to download the PNG file if it was successful.
+   * @param {string} fileName the file name of the PNG
+   * @returns a promise which provides the user to download the PNG file, if it was successful.
    */
   function downloadGraphAsPNG(fileName) {
     return new Promise((resolve, reject) => {
@@ -116,10 +111,10 @@ function DownloadModal(props) {
   }
 
   /**
-   * Downloads the Graph image as a SVG file. 
+   * Downloads the graph as an SVG file.
    *
-   * @param {the File name of the SVG} fileName
-   * @returns a Promise which provides the user to download the SVG file if it was successful.
+   * @param {string} fileName the File name of the SVG
+   * @returns a promise which provides the user to download the SVG file, if it was successful.
    */
   function downloadGraphAsSVG(fileName) {
     return new Promise((resolve, reject) => {
@@ -133,7 +128,7 @@ function DownloadModal(props) {
   }
 
   /**
-   * Downloads the data present in the graph as a csv file.
+   * Downloads the graph as a CSV file.
    * 
    * @param {string} plotTitle the title of the plot
    * @param {string} plotId the current id of the plot
@@ -189,7 +184,7 @@ function DownloadModal(props) {
   }
 
   /**
-   * Downloads a given string interpreted as csv
+   * Downloads a given string interpreted as CSV.
    * 
    * @param {string} fileName name of the downloadable file
    * @param {string} csvString the content of this file
@@ -209,10 +204,10 @@ function DownloadModal(props) {
 
 
   /**
-   * Downloads the Base64 file concerning to the given base64 data. 
+   * Downloads the Base64 file to the specified Base64 data.
    * 
-   * @param {the given base64 data} base64Data 
-   * @param {the desired file name} fileName 
+   * @param {string} base64Data the given Base64 data
+   * @param {string} fileName the file name
    */
   function downloadBase64File(base64Data, fileName) {
     const downloadLink = document.createElement("a");
@@ -222,9 +217,7 @@ function DownloadModal(props) {
   }
 
   /**
-   * Gets active if the download plot button is clicked.
-   * and downloads concerning to the file format the desired file or image.
-   *
+   * Handles the download of the plot, if the download button is clicked.
    */
   const handleDownloadPlot = () => {
     if (selectedFileFormat === "PDF") {
@@ -236,14 +229,12 @@ function DownloadModal(props) {
     } else if (selectedFileFormat === "CSV") {
       downloadGraphAsCsv(plotTitle, plotId);
     }
-
   };
 
   /**
-   * Calls the redux store and changes the selected file format.
+   * Changes the selected file format in the Redux store.
    *
    * @param {event} event the event that called this function
-   *
    */
   const changeFileFormat = (event) => {
     setSelectedFileFormat(event.target.value);
