@@ -130,5 +130,5 @@ export const findLatitudeBandByLocation = (forceCustomizable, returnText) => {
 export const formatLatitude = (locationValue) => {
     const hemisphereExtensionMin = (locationValue.minLat < 0 && locationValue.maxLat > 0 ? '°S' : '');
     const hemisphereExtensionMax = (locationValue.maxLat <= 0 ? '°S' : '°N');
-    return `(${Math.abs(locationValue.minLat)}${hemisphereExtensionMin}-${Math.abs(locationValue.maxLat)}${hemisphereExtensionMax})`;
+    return `${Math.abs(locationValue.minLat)}${hemisphereExtensionMin}-${Math.abs(locationValue.maxLat)}${hemisphereExtensionMax}`;
 }
