@@ -85,7 +85,7 @@ function DownloadModal(props) {
    * @param {string} fileName the file name of the PNG
    * @returns a promise which provides the user to download the PNG file, if it was successful.
    */
-  function downloadGraphAsPNG(fileName) {
+  const downloadGraphAsPNG = (fileName) => {
     return new Promise((resolve, reject) => {
       const img = new Image();
       const svgElement = document.querySelector(".apexcharts-svg");
@@ -116,7 +116,7 @@ function DownloadModal(props) {
    * @param {string} fileName the File name of the SVG
    * @returns a promise which provides the user to download the SVG file, if it was successful.
    */
-  function downloadGraphAsSVG(fileName) {
+  const downloadGraphAsSVG = (fileName) => {
     return new Promise((resolve, reject) => {
       const svgElement = document.querySelector(".apexcharts-svg");
       const imageBlobURL =
@@ -133,7 +133,7 @@ function DownloadModal(props) {
    * @param {string} plotTitle the title of the plot
    * @param {string} plotId the current id of the plot
    */
-  function downloadGraphAsCsv(plotTitle, plotId) {
+  const downloadGraphAsCsv = (plotTitle, plotId) => {
       let series, seriesX, categoryLabels, seriesNames;
       try {
           const global = window.ApexCharts.getChartByID(plotId).w.globals;
@@ -189,7 +189,7 @@ function DownloadModal(props) {
    * @param {string} fileName name of the downloadable file
    * @param {string} csvString the content of this file
    */
-  function downloadCsvFile({fileName, csvString}) {
+  const downloadCsvFile = ({fileName, csvString}) => {
     const blob = new Blob([csvString]);
     const a = window.document.createElement("a");
 
@@ -209,7 +209,7 @@ function DownloadModal(props) {
    * @param {string} base64Data the given Base64 data
    * @param {string} fileName the file name
    */
-  function downloadBase64File(base64Data, fileName) {
+  const downloadBase64File = (base64Data, fileName) => {
     const downloadLink = document.createElement("a");
     downloadLink.href = base64Data;
     downloadLink.download = fileName;
