@@ -67,11 +67,6 @@ function DownloadModal(props) {
 
   /**
    * The style of the DownloadModal.
-   *
-   * @type {{
-   *          p: number, boxShadow: number, transform: string, top: string,
-   *          bgColor: *, left: string, width: string, position: string
-   *       }} the props
    */
   const style = {
     position: "absolute",
@@ -87,7 +82,7 @@ function DownloadModal(props) {
   /**
    * Downloads the Graph image as a PNG file. 
    *
-   * @param {the File name of the PNG} fileName
+   * @param {string} fileName - the File name of the PNG.
    * @returns a Promise which provides the user to download the PNG file if it was successful.
    */
   function downloadGraphAsPNG(fileName) {
@@ -118,7 +113,7 @@ function DownloadModal(props) {
   /**
    * Downloads the Graph image as a SVG file. 
    *
-   * @param {the File name of the SVG} fileName
+   * @param {string} fileName - the File name of the SVG
    * @returns a Promise which provides the user to download the SVG file if it was successful.
    */
   function downloadGraphAsSVG(fileName) {
@@ -135,8 +130,8 @@ function DownloadModal(props) {
   /**
    * Downloads the data present in the graph as a csv file.
    * 
-   * @param {string} plotTitle the title of the plot
-   * @param {string} plotId the current id of the plot
+   * @param {string} plotTitle - the title of the plot
+   * @param {string} plotId - the current id of the plot
    */
   function downloadGraphAsCsv(plotTitle, plotId) {
       let series, seriesX, categoryLabels, seriesNames;
@@ -211,8 +206,8 @@ function DownloadModal(props) {
   /**
    * Downloads the Base64 file concerning to the given base64 data. 
    * 
-   * @param {the given base64 data} base64Data 
-   * @param {the desired file name} fileName 
+   * @param {base64Data}   the given base64 data
+   * @param {fileName}  the desired file name
    */
   function downloadBase64File(base64Data, fileName) {
     const downloadLink = document.createElement("a");

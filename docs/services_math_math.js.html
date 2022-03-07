@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: services/math/math.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,61 +17,105 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: services/math/math.js</h1>
 
     
 
 
 
     
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
     <section>
-        <article><p>Add components inside to auto-generate a live UML diagram from the existing strucure.</p>
-<p>The parser is alreay setup to generate the code from this <strong>src/</strong> directory and put the .txt file in the <strong>generated-uml/</strong> directory.</p>
-<p>Notes on frameworks we want to use:</p>
-<ul>
-<li>React</li>
-<li>Redux (state handling)</li>
-<li>Jest (testing, also mantained by Facebook)</li>
-<li>React Testing Library (RTL) to test React components (recommended by React)</li>
-<li>Material UI (components, a lot of input components, in our experience better documented than Bootstrap)</li>
-<li>axios (API Calls)</li>
-</ul>
-<p>Configuration can be done in the config file
-The default config specifies where to put certain fields, if after calling the API it is necessary to place them somewhere.
-Special config files for endpoints can be specified.</p>
-<p>To run tests with showing test coverage run:</p>
-<pre class="prettyprint source"><code>    npm run test -- --coverage .
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * This functions accepts an array, sorts it in-place and returns a reference to the same array.
+ * 
+ * @param {array} arr of numbers
+ * @returns the array sorted ascending
+ */
+export const asc = arr => arr.sort((a, b) => a - b);
+
+/**
+ * This function accepts an array of numbers and sums over its elements.
+ * 
+ * @param {array} arr of numbers
+ * @returns the sum of all elements
+ */
+export const sum = arr => arr.reduce((a, b) => a + b, 0);
+
+/**
+ * This function calculates the mean of a given array of numbers
+ * 
+ * @param {array} arr of numbers
+ * @returns the mean of all elements in the given array
+ */
+export const mean = arr => sum(arr) / arr.length;
+
+
+/**
+ * This function calculates the standard deviation of a given array.
+ * 
+ * @param {array} arr of numbers
+ * @returns the standard deviation of the given array
+ */
+export const std = (arr) => {
+    const mu = mean(arr);
+    const diffArr = arr.map(a => (a - mu) ** 2);
+    return Math.sqrt(sum(diffArr) / arr.length);
+};
+
+/**
+ * Calculate quantiles so, that the calculation of 
+ * quartiles are based on method 1: https://en.wikipedia.org/wiki/Quartile
+ * 
+ * @param {array} arr the array to calculate the quantile of
+ * @param {number} q the quantile 
+ * @returns the number corresponding to the given quantile
+ */
+export const quantile = (arr, q) => {
+    const sorted = asc(arr);
+    const pos = (sorted.length * q) - 1;
+    if (sorted[pos] !== undefined) {
+        return (sorted[pos] + sorted[pos + 1]) / 2;
+    } else {
+        return sorted[Math.floor(pos) + 1];
+    }
+};
+
+
+/**
+ * Returns the lower quartile of the given array
+ * 
+ * @param {array} arr the given array
+ * @returns the lower quartile
+ */
+export const q25 = arr => quantile(arr, .25);
+
+/**
+ * Returns the middle quartile of the given array
+ * 
+ * @param {array} arr the given array
+ * @returns the middle quartile
+ */
+const q50 = arr => quantile(arr, .50);
+
+/**
+ * Returns the lower quartile of the given array
+ * 
+ * @param {array} arr the given array
+ * @returns the upper quartile
+ */
+export const q75 = arr => quantile(arr, .75);
+
+/**
+ * Returns the median of the given array
+ * 
+ * @param {array} arr the given array
+ * @returns the median
+ */
+export const median = arr => q50(arr);
 </code></pre>
-<p>To generate docs run:</p>
-<pre class="prettyprint source"><code>    npm run docs
-</code></pre>
-<p>To connect to the VM where the WebApp is deployed:</p>
-<pre class="prettyprint source"><code>    ssh -i private_key cloudadm@o3web.test.fedcloud.eu
-</code></pre>
-<p>Shows the logging of the application, including whatever messages from the container.</p>
-<pre class="prettyprint source"><code>    sudo docker-compose -f app
-</code></pre></article>
+        </article>
     </section>
-
-
 
 
 
