@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: views/landingPage/Sidebar/InputComponents/ReferenceModelSelector/ReferenceModelSelector.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,61 +17,85 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: views/landingPage/Sidebar/InputComponents/ReferenceModelSelector/ReferenceModelSelector.js</h1>
 
     
 
 
 
     
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
     <section>
-        <article><p>Add components inside to auto-generate a live UML diagram from the existing strucure.</p>
-<p>The parser is alreay setup to generate the code from this <strong>src/</strong> directory and put the .txt file in the <strong>generated-uml/</strong> directory.</p>
-<p>Notes on frameworks we want to use:</p>
-<ul>
-<li>React</li>
-<li>Redux (state handling)</li>
-<li>Jest (testing, also mantained by Facebook)</li>
-<li>React Testing Library (RTL) to test React components (recommended by React)</li>
-<li>Material UI (components, a lot of input components, in our experience better documented than Bootstrap)</li>
-<li>axios (API Calls)</li>
-</ul>
-<p>Configuration can be done in the config file
-The default config specifies where to put certain fields, if after calling the API it is necessary to place them somewhere.
-Special config files for endpoints can be specified.</p>
-<p>To run tests with showing test coverage run:</p>
-<pre class="prettyprint source"><code>    npm run test -- --coverage .
-</code></pre>
-<p>To generate docs run:</p>
-<pre class="prettyprint source"><code>    npm run docs
-</code></pre>
-<p>To connect to the VM where the WebApp is deployed:</p>
-<pre class="prettyprint source"><code>    ssh -i private_key cloudadm@o3web.test.fedcloud.eu
-</code></pre>
-<p>Shows the logging of the application, including whatever messages from the container.</p>
-<pre class="prettyprint source"><code>    sudo docker-compose -f app
-</code></pre></article>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, {useEffect} from "react";
+import {Typography, MenuItem} from "@mui/material";
+import {Select, InputLabel, FormControl} from "@mui/material";
+import {useDispatch} from "react-redux";
+import {useSelector} from "react-redux";
+import {setModel, selectRefModel} from "../../../../../store/referenceSlice/referenceSlice";
+import PropTypes from 'prop-types';
+import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice";
+import { REQUEST_STATE } from "../../../../../services/API/apiSlice";
+/**
+ * enables the user to select a reference model
+ * @param {Object} props
+ * @param {function} props.reportError - function to handle errors
+ * @returns {JSX} a jsx containing a dropdown to select the reference model from all currently visible models
+ */
+function ReferenceModelSelector(props) {
+    const dispatch = useDispatch()
+
+    const modelListRequestedData = useSelector(state => state.api.models);
+
+    let allModels = [];
+    if (modelListRequestedData.status === REQUEST_STATE.success) {
+        allModels = modelListRequestedData.data;
+    }
+
+    useEffect(() => {
+        if (modelListRequestedData.status === REQUEST_STATE.error) {
+            props.reportError("API not responding: " + modelListRequestedData.error);
+        }
+    });
+
+
+    const selectedModel = useSelector(selectRefModel);
+
+    /** Handles the change of the reference model selection when it is modified.*/
+    const handleChangeForRefModel = (event) => {
+        dispatch(setModel({model: event.target.value}));
+        // fetch for tco3_zm and tco3_return
+        dispatch(fetchPlotDataForCurrentModels());
+
+    };
+
+
+    return (
+        &lt;div>
+            &lt;FormControl sx={{m: 1, width: "100%", size: "small"}}>
+                &lt;Select
+                    labelId="locationSelectLabel"
+                    id="locationSelect"
+                    label="Reference Model"
+                    onChange={handleChangeForRefModel}
+                    value={selectedModel}
+                >
+                    {allModels.map((elem) => {
+                        return &lt;MenuItem key={elem} value={elem}> {elem} &lt;/MenuItem>
+                    })}
+                &lt;/Select>
+                &lt;InputLabel id="locationSelectLabel">&lt;Typography>Reference Model&lt;/Typography>&lt;/InputLabel>
+            &lt;/FormControl>
+        &lt;/div>
+    );
+}
+
+ReferenceModelSelector.propTypes = {
+    reportError: PropTypes.func
+}
+
+export default ReferenceModelSelector;</code></pre>
+        </article>
     </section>
-
-
 
 
 

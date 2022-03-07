@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: utils/textSearch.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,61 +17,64 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: utils/textSearch.js</h1>
 
     
 
 
 
     
-
-
-    <h3> </h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
     <section>
-        <article><p>Add components inside to auto-generate a live UML diagram from the existing strucure.</p>
-<p>The parser is alreay setup to generate the code from this <strong>src/</strong> directory and put the .txt file in the <strong>generated-uml/</strong> directory.</p>
-<p>Notes on frameworks we want to use:</p>
-<ul>
-<li>React</li>
-<li>Redux (state handling)</li>
-<li>Jest (testing, also mantained by Facebook)</li>
-<li>React Testing Library (RTL) to test React components (recommended by React)</li>
-<li>Material UI (components, a lot of input components, in our experience better documented than Bootstrap)</li>
-<li>axios (API Calls)</li>
-</ul>
-<p>Configuration can be done in the config file
-The default config specifies where to put certain fields, if after calling the API it is necessary to place them somewhere.
-Special config files for endpoints can be specified.</p>
-<p>To run tests with showing test coverage run:</p>
-<pre class="prettyprint source"><code>    npm run test -- --coverage .
-</code></pre>
-<p>To generate docs run:</p>
-<pre class="prettyprint source"><code>    npm run docs
-</code></pre>
-<p>To connect to the VM where the WebApp is deployed:</p>
-<pre class="prettyprint source"><code>    ssh -i private_key cloudadm@o3web.test.fedcloud.eu
-</code></pre>
-<p>Shows the logging of the application, including whatever messages from the container.</p>
-<pre class="prettyprint source"><code>    sudo docker-compose -f app
-</code></pre></article>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Performs a simple full text search on the given element and looks
+ * for the given search string.
+ * 
+ * @param {object|string} elem single nested object or a string
+ * @param {*} searchStr what shall be searched for
+ * @returns {boolean} whether the search string was found
+ */
+export const fullTextSearch = (elem, searchStr) => {
+    if (typeof elem === "object") {
+        const elemValues = Object.values(elem);
+        
+        for (let value of elemValues) {
+            if (String(value).toLowerCase().includes(searchStr.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+
+    } else if (typeof elem === "string") {
+        return elem.toLowerCase().includes(searchStr.toLowerCase());
+    } else {
+        throw new Error("fullTextSearch only supports objects and string to search in");
+    }
+};
+
+/**
+ * Searches for occurrences of a string in an array. Searches either
+ * the strings in the array or the values of given objects.
+ * Each item in the array that has the searchString as a substring is a valid search result.
+ * 
+ * @param {Array.&lt;String, Object>} array holds the items that are searched
+ * @param {String} searchString specifies what should be searched for
+ * @param {boolean} shouldReturnValues specifies whether performSearch returns values or indices of
+ *          found matches
+ * @returns {array} containing the indices of all elements in the array where the searchString matched
+ */
+ export const performSearch = (array, searchString, shouldReturnValues) => {
+    let arrayMappedToIndices = array.map(
+        (elem, index) => ({index, value: elem})
+    )
+    arrayMappedToIndices = arrayMappedToIndices.filter(
+        ({index, value}) => fullTextSearch(value, searchString)
+    )
+    
+    return arrayMappedToIndices.map(({index, value}) => shouldReturnValues ? value : index)
+}</code></pre>
+        </article>
     </section>
-
-
 
 
 
