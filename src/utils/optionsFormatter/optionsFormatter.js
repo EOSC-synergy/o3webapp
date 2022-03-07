@@ -15,9 +15,13 @@ import {
     percentile,
     EXTENDED_SV_LIST,
     stdMean,
-    STATISTICAL_VALUE_LINE_THICKNESS
+    STATISTICAL_VALUE_LINE_THICKNESS, months, NUM_MONTHS
 } from "../constants"
 import {convertModelName} from "../ModelNameConverter";
+import store from "../../store/store";
+import {
+    findLatitudeBandByLocation
+} from "../../views/landingPage/Sidebar/InputComponents/LatitudeBandSelector/LatitudeBandSelector";
 
 /**
  * Maps the plotId to a function that describes how the series are going
@@ -39,7 +43,29 @@ export const FONT_FAMILY = [
     '"Apple Color Emoji"',
     '"Segoe UI Emoji"',
     '"Segoe UI Symbol"',
-].join(',')
+].join(',');
+
+/**
+ * Creates the subtitle based on location and time.
+ *
+ * @returns {string} the subtitle
+ */
+const createSubtitle = () => {
+    let stLocationText =
+        store.getState().plot.plotId === 'tco3_zm' ? findLatitudeBandByLocation(false, true) : 'User-Region';
+    if (stLocationText === 'Custom' || stLocationText === 'User-Region') {
+        const stLocationValue = store.getState().plot.generalSettings.location;
+        const hemisphereExtensionMin = (stLocationValue.minLat < 0 && stLocationValue.maxLat > 0 ? '°S' : '');
+        const hemisphereExtensionMax = (stLocationValue.maxLat <= 0 ? '°S' : '°N');
+        stLocationText =
+            `${stLocationText} (${Math.abs(stLocationValue.minLat)}${hemisphereExtensionMin}-${Math.abs(stLocationValue.maxLat)}${hemisphereExtensionMax})`;
+    }
+
+    let stMonths = [];
+    store.getState().plot.generalSettings.months.map((month) => stMonths.push(months[month - 1].description));
+    if (stMonths.length === NUM_MONTHS) stMonths = ["All year"];
+    return `${stLocationText} | ${stMonths.join(", ")}`;
+};
 
 /**
  * The default settings for the tco3_zm plot.
@@ -77,20 +103,19 @@ export const defaultTCO3_zm = {
             easing: "linear"
         },
         toolbar: {
-            show: true,
+            show: false,
             offsetX: -60,
             offsetY: 10,
             tools: {
-                download: true,
+                download: false,
                 pan: false,
                 zoomin: false,
                 zoomout: false,
-                zoom: true, // enabled, otherwise the zoom is disabled
+                zoom: false,
             },
         },
         zoom: {
-            enabled: true,
-            type: "xy",
+            enabled: false,
         },
         width: "100%"
     },
@@ -113,12 +138,23 @@ export const defaultTCO3_zm = {
         dashArray: null, //styling.dashArray,
     },
     title: {
-        text: "OCTS Plot",
+        text: "[title]", // title can only be changed in store/plotSlice.js
         align: "center",
         floating: false,
         style: {
             fontSize: "30px",
             fontWeight: "bold",
+            fontFamily: FONT_FAMILY,
+            color: "#000000",
+        }
+    },
+    subtitle: {
+        text: "[subtitle]", // subtitle can only be changed in createSubtitle function
+        align: "center",
+        floating: false,
+        offsetY: 40,
+        style: {
+            fontSize: "20px",
             fontFamily: FONT_FAMILY,
             color: "#000000",
         }
@@ -245,12 +281,14 @@ export const default_TCO3_return = {
         },
         zoom: {
             enabled: false,
-            type: 'xy',
         },
+        toolbar: {
+            show: false,
+        }
     },
     colors: [undefined], // , ...styling.colors
     title: {
-        text: "Return/Recovery",
+        text: "[title]", // title can only be changed in store/plotSlice.js
         align: "center",
         floating: false,
         style: {
@@ -258,6 +296,17 @@ export const default_TCO3_return = {
             fontWeight: "bold",
             fontFamily: FONT_FAMILY,
             color: "#000000"
+        }
+    },
+    subtitle: {
+        text: "[subtitle]", // subtitle can only be changed in createSubtitle function
+        align: "center",
+        floating: false,
+        offsetY: 40,
+        style: {
+            fontSize: "20px",
+            fontFamily: FONT_FAMILY,
+            color: "#000000",
         }
     },
     tooltip: {
@@ -339,6 +388,8 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.stroke.dashArray = styling.dashArray;
         newOptions.title = JSON.parse(JSON.stringify(newOptions.title)); // this is necessary in order for apexcharts to update the title
         newOptions.title.text = plotTitle;
+        newOptions.subtitle = JSON.parse(JSON.stringify(newOptions.subtitle)); // this is necessary in order for apexcharts to update the subtitle
+        newOptions.subtitle.text = createSubtitle();
         newOptions.tooltip.custom = customTooltipFormatter;
         return newOptions;
 
@@ -347,6 +398,8 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.colors.push(...styling.colors); // for the legend!
         newOptions.title = JSON.parse(JSON.stringify(newOptions.title));  // this is necessary in order for apexcharts to update the title
         newOptions.title.text = plotTitle;
+        newOptions.subtitle = JSON.parse(JSON.stringify(newOptions.subtitle)); // this is necessary in order for apexcharts to update the subtitle
+        newOptions.subtitle.text = createSubtitle();
 
         const minY = roundDownToMultipleOfTen(yAxisRange.minY); 
         const maxY = roundUpToMultipleOfTen(yAxisRange.maxY);
@@ -732,7 +785,7 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
     const svHolder = {};
     PROCESS_SV.forEach(
         sv => svHolder[sv] = [] // init with empty array
-    )
+    );
 
     for (const arr of matrix) { // fill with calculated sv
         for (const sv of PROCESS_SV) {
@@ -755,7 +808,6 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
         svHolder["mean-std"].push(svHolder[stdMean][i] - svHolder[STATISTICAL_VALUES[std]][i]);
     }
     delete svHolder["stdMean"];
-    console.log(svHolder);
     return svHolder;
 }
 
@@ -1249,9 +1301,7 @@ function getIncludedModels(modelsSlice) {
     const visible = [];
 
     for (const modelGroup of Object.values(modelsSlice.modelGroups)) {
-        if (!modelGroup.isVisible) continue;
-        for (const [model, modelData] of Object.entries(modelGroup.models)) {
-            if (!modelData.isVisible) continue;
+        for (const model of Object.keys(modelGroup.models)) {
             visible.push(model);
         }
     }

@@ -17,8 +17,9 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 function getAdjustedSVG(svgElement) {
   let bBox = svgElement.getBBox();
   let viewBoxParameters = "0 0 " + bBox.width + " " + bBox.height;
-  svgElement.setAttribute("viewBox", viewBoxParameters);
-  return svgElement.outerHTML;
+  let clone = svgElement.cloneNode(true);
+  clone.setAttribute("viewBox", viewBoxParameters);
+  return clone.outerHTML;
 }
 
 /**
@@ -36,7 +37,9 @@ export async function downloadGraphAsPDF(
   currentData
 ) {
   let modelGroupsList = getListOfModelsForPdf(plotId, modelGroups, currentData);
-  const svgElement = document.querySelector(".apexcharts-svg");
+  
+  const svgElement = document.querySelector(".apexcharts-svg")
+
   let docDefinition = null;
 
   if (plotId === O3AS_PLOTS.tco3_zm || plotId === O3AS_PLOTS.tco3_return) {
@@ -53,17 +56,17 @@ export async function downloadGraphAsPDF(
         {
           text: "List Of Used Models:",
           style: "header",
-          fontSize: 12,
+          fontSize: 10,
           bold: true,
          
         },
         "\n",
         {
-          fontSize: 11,
+          fontSize: 9,
           ol: modelGroupsList,
         },
         {
-          fontSize: 10,
+          fontSize: 9,
           ul: legalNoticeLinks,
           pageBreak: "before",
           bold: true,
