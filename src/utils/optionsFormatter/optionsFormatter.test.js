@@ -1,4 +1,4 @@
-import { createTestStore } from "../../store/store";
+import store, { createTestStore } from "../../store/store";
 import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, START_YEAR, MODEL_LINE_THICKNESS } from "../constants";
 import {
     colorNameToHex,
@@ -152,13 +152,13 @@ describe("testing optionsFormatter functionality", () => {
         const expected = JSON.parse(JSON.stringify(default_TCO3_return));
         const yaxis = [getDefaultYAxisTco3Return(undefined, 0, 10, true, false, 3, 2), getDefaultYAxisTco3Return(undefined, 0, 10, true, true, -3, 2),]
         expected.title.text = "title";
-        expected.subtitle.text = "null | Jan, Feb, Dec";
+        expected.subtitle.text = "Global (90°S–90°N) | Jan, Feb, Dec";
         
         expected.yaxis.push(...yaxis);
 
         const xAxisRange = {minX: 0, maxY: 10};
         const yAxisRange = {minY: 0, maxY: 10};
-        const result = getOptions({plotId: O3AS_PLOTS.tco3_return, styling: {colors:[]}, plotTitle: "title", xAxisRange, yAxisRange, seriesNames: []});
+        const result = getOptions({plotId: O3AS_PLOTS.tco3_return, styling: {colors:[]}, plotTitle: "title", xAxisRange, yAxisRange, seriesNames: [], getState: store.getState});
         expect(result).toEqual(expected);
     });
 

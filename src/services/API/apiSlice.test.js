@@ -212,7 +212,7 @@ describe('tests fetchPlotData api interaction (integration)', () => {
     it('should generate the correct cacheKey', () => {
         expect(
             generateCacheKey({latMin: -90, latMax: 90, months: [1,2], refModel: "modelRef", refYear: 420})
-        ).toEqual("lat_min=-90&lat_min=90&months=1,2&ref_meas=modelRef&ref_year=420");
+        ).toEqual("lat_min=-90&lat_max=90&months=1,2&ref_meas=modelRef&ref_year=420");
     })
 
     it('should dispatch a loading status and add the models to loading', () => {

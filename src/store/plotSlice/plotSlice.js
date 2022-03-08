@@ -43,7 +43,6 @@ export const initialState = {
                 minY: 2000,
                 maxY: 2100,
             },
-            userRegionName: "(90°S–90°N)"
         }
     }
 };

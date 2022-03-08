@@ -48,7 +48,7 @@ export const FONT_FAMILY = [
  *
  * @returns {string} the subtitle
  */
-const createSubtitle = (getState) => {
+function createSubtitle(getState) {
     let stLocationText = findLatitudeBandByLocation(getState);
     console.log(stLocationText)
 
