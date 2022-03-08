@@ -322,6 +322,7 @@ export const SV_DASHING = {
     "lowerPercentile": 4,
     "upperPercentile": 4,
 }
+
 /**
  * This object maps each statistical value to its corresponding name that 
  * should be displayed in the legend of the plot and inside the tooltip when

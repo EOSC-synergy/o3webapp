@@ -1261,11 +1261,13 @@ export function customTooltipFormatter({series, seriesIndex, dataPointIndex, w})
     const listOfSv = Object.keys(SV_COLORING); // included mean+/-std
     const numDecimalsInDatapoint = 2;
     if (modelName.startsWith("Reference")) {
+        let displayName = modelName.split("value")
+
         return (
             `
                 <div>
                     <div style="margin:2px"><strong>${w.globals.seriesX[seriesIndex][dataPointIndex]}</strong></div>
-                    <div>Reference: <strong>${series[seriesIndex][dataPointIndex].toFixed(numDecimalsInDatapoint)}</strong></div>
+                    <div>Reference ${displayName[1]}: <strong>${series[seriesIndex][dataPointIndex].toFixed(numDecimalsInDatapoint)}</strong></div>
                 </div>
             `
         )

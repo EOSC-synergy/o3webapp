@@ -106,12 +106,12 @@ describe("testing optionsFormatter functionality", () => {
                 data: testArray
               },
               { name: 'CCMI-1_CCCma_CMAM-refC2', data: testArray},
-              { name: 'mean(Example Group)', data: testArray},
-              { name: 'median(Example Group)', data: testArray},
-              { name: 'lowerPercentile(Example Group)', data: testArray},
-              { name: 'upperPercentile(Example Group)', data: testArray},
-              { name: 'mean+std(Example Group)', data: testArray},
-              { name: 'mean-std(Example Group)', data: testArray},
+              { name: 'Mean (Example Group)', data: testArray},
+              { name: 'Median (Example Group)', data: testArray},
+              { name: 'Lower % (Example Group)', data: testArray},
+              { name: 'Upper % (Example Group)', data: testArray},
+              { name: 'μ + σ (Example Group)', data: testArray},
+              { name: 'μ - σ (Example Group)', data: testArray},
             ],
             styling: {
               colors: [
