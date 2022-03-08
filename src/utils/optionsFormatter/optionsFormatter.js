@@ -508,7 +508,10 @@ function generateTco3_ZmSeries({data, modelsSlice, refLineVisible, getState}) {
         generateSingleSvSeries: generateSingleTco3ZmSeries
     });
 
-    return Object.assign(combineSeries(series, svSeries), {points: calcRecoveryPoints(getState, data.reference_value, svSeries)});
+    return Object.assign(
+        combineSeries(series, svSeries),
+        {points: refLineVisible ? calcRecoveryPoints(getState, data.reference_value, svSeries) : []}
+    );
 }
 
 /**
