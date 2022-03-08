@@ -196,7 +196,7 @@ export const fetchPlotData = ({plotId, models}) => {
                 })),
                 error => {
                     let errorMessage = error.message;
-                    if (error.response.data) errorMessage += ": " + error.response.data[0]?.message;
+                    if (error?.response?.data) errorMessage += ": " + error.response.data[0]?.message;
                     dispatch(fetchPlotDataRejected({error: errorMessage, plotId, cacheKey}));
                 } 
             );
