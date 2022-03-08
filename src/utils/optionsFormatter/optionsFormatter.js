@@ -93,6 +93,67 @@ export const defaultTCO3_zm = {
         }
     },
     yaxis: [],
+    annotations: {
+        points: [
+            {
+                x: null,
+                y: null,
+                marker: {
+                    size: 6,
+                    fillColor: "#fff",
+                    strokeColor: "#2698FF",
+                    radius: 2
+                },
+                label: {
+                    borderColor: "#FF4560",
+                    offsetY: 0,
+                    style: {
+                        color: "#fff",
+                        background: "#FF4560"
+                    },
+                    text: "mean"
+                }
+            },
+            {
+                x: null,
+                y: null,
+                marker: {
+                    size: 6,
+                    fillColor: "#fff",
+                    strokeColor: "#2698FF",
+                    radius: 2
+                },
+                label: {
+                    borderColor: "#FF4560",
+                    offsetY: 0,
+                    style: {
+                        color: "#fff",
+                        background: "#FF4560"
+                    },
+                    text: "mean+std"
+                }
+            },
+            {
+                x: null,
+                y: null,
+                marker: {
+                    size: 6,
+                    fillColor: "#fff",
+                    strokeColor: "#2698FF",
+                    radius: 2
+                },
+                label: {
+                    borderColor: "#FF4560",
+                    offsetY: 0,
+                    style: {
+                        color: "#fff",
+                        background: "#FF4560"
+                    },
+                    text: "mean-std"
+                }
+            },
+        ],
+    },
     grid: {
         show: false,
     },
@@ -358,6 +419,7 @@ export const default_TCO3_return = {
  * @param {array} styling.colors an array of strings with hex code. Has to match the length of the given series
  * @param {array} styling.width (tco3_zm only!): array of integer defining the line width
  * @param {array} styling.dashArray (tco3_zm only!): array of integer defining if the line is solid or dashed
+ * @param {array} styling.points the recovery points
  * @param {string} plotTitle contains the plot title
  * @param {object} xAxisRange the range of the x-axis
  * @param {object} yAxisRange the range of the y-axis
@@ -381,6 +443,18 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.xaxis.min = xAxisRange.years.minX;
         newOptions.xaxis.max = xAxisRange.years.maxX;
         newOptions.xaxis.tickAmount = getOptimalTickAmount(xAxisRange.years.minX, xAxisRange.years.maxX);
+
+        const meanIdx = 0;
+        const meanPlusStdIdx = 1;
+        const meanMinusStdIdx = 2;
+        const xIdx = 0;
+        const yIdx = 1;
+        newOptions.annotations.points[meanIdx].x = styling.points[meanIdx][xIdx];
+        newOptions.annotations.points[meanIdx].y = styling.points[meanIdx][yIdx];
+        newOptions.annotations.points[meanPlusStdIdx].x = styling.points[meanPlusStdIdx][xIdx];
+        newOptions.annotations.points[meanPlusStdIdx].y = styling.points[meanPlusStdIdx][yIdx];
+        newOptions.annotations.points[meanMinusStdIdx].x = styling.points[meanMinusStdIdx][xIdx];
+        newOptions.annotations.points[meanMinusStdIdx].y = styling.points[meanMinusStdIdx][yIdx];
 
         newOptions.colors = styling.colors;
 
@@ -439,6 +513,7 @@ export function generateSeries({plotId, data, modelsSlice, xAxisRange, yAxisRang
             colors: series.colors,
             dashArray: series.dashArray,
             width: series.width,
+            points: series.points,
         }
     }; // return generated series with styling to pass to apexcharts chart
 }
@@ -493,8 +568,8 @@ function generateTco3_ZmSeries({data, modelsSlice, refLineVisible, getState}) {
         buildMatrix: buildSvMatrixTco3Zm,
         generateSingleSvSeries: generateSingleTco3ZmSeries
     });
-    calcRecoveryPoints(getState, data.reference_value, svSeries);
-    return combineSeries(series, svSeries);
+
+    return Object.assign(combineSeries(series, svSeries), {points: calcRecoveryPoints(getState, data.reference_value, svSeries)});
 }
 
 /**
@@ -1328,15 +1403,15 @@ function calcRecoveryPoints(getState, referenceValue, svSeries) {
     const yearIdx = 0;
     const valIdx = 1;
 
-    for (let idx of dataIndices) {
+    for (let idx = 0; idx < dataIndices.length; idx++) {
         for (let i = 0; i < svSeries.data[idx].data.length; i++) {
-            if (svSeries.data[idx].data[i][yearIdx] <= refYear) continue;
-            if (svSeries.data[idx].data[i][valIdx] >= refValue) {
-                console.log(svSeries.data[idx].data[i][yearIdx]);
-                points.push([svSeries.data[idx].data[i][yearIdx], svSeries.data[idx].data[i][valIdx]]);
+            if (svSeries.data[dataIndices[idx]].data[i][yearIdx] <= refYear) continue;
+            if (svSeries.data[dataIndices[idx]].data[i][valIdx] >= refValue) {
+                points.push([svSeries.data[dataIndices[idx]].data[i][yearIdx], svSeries.data[dataIndices[idx]].data[i][valIdx]]);
                 break;
             }
         }
+        if (points.length < idx + 1) points.push([null, null]);
     }
     return points;
 }
