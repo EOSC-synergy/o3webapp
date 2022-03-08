@@ -1,4 +1,3 @@
-import { objectTraps } from "immer/dist/internal";
 import store, { createTestStore } from "../../store/store";
 import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, START_YEAR, MODEL_LINE_THICKNESS } from "../constants";
 import {
@@ -98,7 +97,6 @@ describe("testing optionsFormatter functionality", () => {
             modelsSlice = store.getState().models;
         })
 
-        Object.assign(combineSeries, )
 
         it("generates the tco3_zm series correctly", () => {
             const dataExpected = {
