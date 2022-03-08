@@ -11,8 +11,9 @@ import React from "react";
 
 /**
  * A component to select the specific min and max latitude values for the custom region.
- *
- * @returns     JSX with the component
+ * @memberof LatitudeBandSelector
+ * @component
+ * @returns {JSX.Element}    JSX with the component
  */
 function CustomLatitudeSelector(props) {
 

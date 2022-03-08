@@ -65,8 +65,10 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.4.0",
+    "better-docs": "^2.7.2",
     "clean-jsdoc-theme": "^3.3.1",
-    "jsdoc": "^3.6.7",
+    "jsdoc": "^3.6.10",
+    "parcel-bundler": "^1.12.5",
     "webpack": "^4.44.2"
   }
 }

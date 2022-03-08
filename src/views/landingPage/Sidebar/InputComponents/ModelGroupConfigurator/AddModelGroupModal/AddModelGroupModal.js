@@ -29,6 +29,7 @@ import DoneIcon from "@mui/icons-material/Done";
 
 /**
  * opens a modal where the user can add a new model group
+ * @component
  * @param {Object} props 
  * @param {function} props.onClose -> function to call if modal should be closed
  * @param {boolean} props.isOpen -> boolean whether the modal should be visible

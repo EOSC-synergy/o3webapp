@@ -7,6 +7,7 @@ import { BACKGROUND_BASE_COLOR } from '../../utils/constants';
 
 /**
  * A component for the navigation of the website.
+ * @component
  */
 function Navbar(props) {
 

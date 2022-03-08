@@ -7,6 +7,8 @@ import { BACKGROUND_BASE_COLOR } from '../../utils/constants';
  * The links on the right-hand side in the footer with label and href.
  *
  * @type {Array.<{label: string, href: string}>}
+ * @constant
+ * @memberof Footer
  */
 export const links = [
     {
@@ -34,8 +36,10 @@ export const links = [
 /**
  * A container for copyright text and important links at the bottom of the Website.
  * Contains links to home page, privacy policy, terms of use and how to acknowledge
+ * @component
  */
-function Footer () {
+const Footer = (props) => {
+
     return (
         <div
             style={{

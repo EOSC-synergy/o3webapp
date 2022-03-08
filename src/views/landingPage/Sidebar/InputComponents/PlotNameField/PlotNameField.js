@@ -9,6 +9,7 @@ import { PLOT_NAME_MAX_LEN } from "../../../../../utils/constants"
 
 /**
  * Enables the user to rename and change the plot title.
+ * @component
  * @param {Object} props
  * @param {function} props.reportError - function for error handling
  * @returns {JSX.Element} a jsx containing a text-field to change the plot name

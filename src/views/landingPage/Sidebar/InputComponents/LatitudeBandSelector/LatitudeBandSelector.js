@@ -10,16 +10,19 @@ import CustomLatitudeSelector from "./CustomLatitudeSelector/CustomLatitudeSelec
 
 /**
  * An object containing the current minLat and maxLat Values.
+ * @memberof LatitudeBandSelector
  */
 let selectedLocation;
 
 /**
  * whether the user selected to enter a custom latitude band
+ * @memberof LatitudeBandSelector
  */
 let [isCustomizable, setIsCustomizable] = [null, null];
 
 /**
  * Enables the user to choose minimum and maximum latitude
+ * @component
  * @param {Object} props
  * @param {function} props.reportError - error handling
  * @returns {JSX.Element} a JSX containing a dropdown and if "individual latitude band" is selected a number input field

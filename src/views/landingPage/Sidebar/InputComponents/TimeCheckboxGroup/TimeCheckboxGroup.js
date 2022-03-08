@@ -19,6 +19,7 @@ import PropTypes from 'prop-types';
 
 /**
  * enables the user to select a month, season or the whole year
+ * @component
  * @param {Object} props
  * @param {function} props.reportError - function for error handling
  * @returns {JSX.Element} a jsx containing a checkboxgroup per season and a "all year" checkbox

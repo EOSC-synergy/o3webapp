@@ -5,6 +5,8 @@
  * @param {object|string} elem single nested object or a string
  * @param {*} searchStr what shall be searched for
  * @returns {boolean} whether the search string was found
+ * @constant {function}
+ * @category Utils
  */
 export const fullTextSearch = (elem, searchStr) => {
     if (typeof elem === "object") {
@@ -34,6 +36,8 @@ export const fullTextSearch = (elem, searchStr) => {
  * @param {boolean} shouldReturnValues specifies whether performSearch returns values or indices of
  *          found matches
  * @returns {array} containing the indices of all elements in the array where the searchString matched
+ * @constant {function}
+ * @category Utils
  */
  export const performSearch = (array, searchString, shouldReturnValues) => {
     let arrayMappedToIndices = array.map(
