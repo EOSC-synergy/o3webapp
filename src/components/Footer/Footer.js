@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import { Grid, Link } from '@mui/material';
+import { BACKGROUND_BASE_COLOR } from '../../utils/constants';
 
 /**
  * The links on the right-hand side in the footer with label and href.
@@ -50,7 +51,7 @@ function Footer () {
                 data-testid="footer-grid-container"
                 sx={{
                     position: 'relative',
-                    backgroundColor: '#111',
+                    backgroundColor: BACKGROUND_BASE_COLOR,
                     textAlign: 'center',
                     marginTop: '10px',
                     paddingTop: '3px',

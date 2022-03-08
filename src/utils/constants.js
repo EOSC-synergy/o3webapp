@@ -352,3 +352,9 @@ export const LATITUDE_BAND_MAX_VALUE = 90;
  */
 export const LATITUDE_BAND_MIN_VALUE = -90;
 
+
+/**´
+ * The default color of the backgrounds (Navbar, Footer, Sidebar, ...)
+ * @constant {string}
+ */
+export const BACKGROUND_BASE_COLOR = '#111';

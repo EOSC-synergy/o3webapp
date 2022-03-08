@@ -30,7 +30,8 @@ import {
     TCG_Symbol,
     XAF_Symbol,
     YAF_Symbol,
-    CLS_Symbol
+    CLS_Symbol,
+    BACKGROUND_BASE_COLOR
 } from "../../../../utils/constants";
 import CustomLatitudeSelector from "../InputComponents/LatitudeBandSelector/CustomLatitudeSelector/CustomLatitudeSelector";
 
