@@ -17,13 +17,9 @@ import {
     stdMean,
     SV_CALCULATION,
     SV_COLORING,
-    SV_DASHING, USER_REGION
+    SV_DASHING, USER_REGION, latitudeBands
 } from "../constants"
 import {convertModelName} from "../ModelNameConverter";
-import store from "../../store/store";
-import {
-    findLatitudeBandByLocation
-} from "../../views/landingPage/Sidebar/InputComponents/LatitudeBandSelector/LatitudeBandSelector";
 
 /**
  * Maps the plotId to a function that describes how the series are going
@@ -52,17 +48,19 @@ export const FONT_FAMILY = [
  *
  * @returns {string} the subtitle
  */
-const createSubtitle = () => {
-    let stLocationText = findLatitudeBandByLocation(false, true);
+const createSubtitle = (getState) => {
+    let stLocationText = findLatitudeBandByLocation(getState);
+    console.log(stLocationText)
+
     if (stLocationText === 'Custom') {
-        stLocationText = store.getState().plot.plotSpecificSettings.tco3_return.userRegionName;
+        stLocationText = formatLatitude(getState().plot.generalSettings.location);
     }
 
     let stMonths = [];
-    store.getState().plot.generalSettings.months.map((month) => stMonths.push(months[month - 1].description));
+    getState().plot.generalSettings.months.map((month) => stMonths.push(months[month - 1].description));
     if (stMonths.length === NUM_MONTHS) stMonths = ["All year"];
 
-    if (store.getState().plot.plotId === 'tco3_zm') return `${stLocationText} | ${stMonths.join(", ")}`;
+    if (getState().plot.plotId === 'tco3_zm') return `${stLocationText} | ${stMonths.join(", ")}`;
     else return stMonths.join(", ");
 };
 
@@ -364,7 +362,7 @@ export const default_TCO3_return = {
  *
  * @returns an default_TCO3_plotId object formatted with the given data
  */
-export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, seriesNames}) {
+export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, seriesNames, getState}) {
     const minY = roundDownToMultipleOfTen(yAxisRange.minY);
     const maxY = roundUpToMultipleOfTen(yAxisRange.maxY);
 
@@ -388,7 +386,7 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.title = JSON.parse(JSON.stringify(newOptions.title)); // this is necessary in order for apexcharts to update the title
         newOptions.title.text = plotTitle;
         newOptions.subtitle = JSON.parse(JSON.stringify(newOptions.subtitle)); // this is necessary in order for apexcharts to update the subtitle
-        newOptions.subtitle.text = createSubtitle();
+        newOptions.subtitle.text = createSubtitle(getState);
         newOptions.tooltip.custom = customTooltipFormatter;
         return newOptions;
 
@@ -398,7 +396,7 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.title = JSON.parse(JSON.stringify(newOptions.title));  // this is necessary in order for apexcharts to update the title
         newOptions.title.text = plotTitle;
         newOptions.subtitle = JSON.parse(JSON.stringify(newOptions.subtitle)); // this is necessary in order for apexcharts to update the subtitle
-        newOptions.subtitle.text = createSubtitle();
+        newOptions.subtitle.text = createSubtitle(getState);
 
         const minY = roundDownToMultipleOfTen(yAxisRange.minY);
         const maxY = roundUpToMultipleOfTen(yAxisRange.maxY);
@@ -430,8 +428,8 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
  * @param {object} refLineVisible visibility status of the reference line
  * @returns series object which includes a subdivision into a data and a styling object.
  */
-export function generateSeries({plotId, data, modelsSlice, xAxisRange, yAxisRange, refLineVisible}) {
-    const series = SERIES_GENERATION[plotId]({data, modelsSlice, xAxisRange, yAxisRange, refLineVisible}); // execute correct function based on mapping
+export function generateSeries({plotId, data, modelsSlice, xAxisRange, yAxisRange, refLineVisible, getState}) {
+    const series = SERIES_GENERATION[plotId]({data, modelsSlice, xAxisRange, yAxisRange, refLineVisible, getState}); // execute correct function based on mapping
     return {
         data: series.data,
         styling: {
@@ -551,7 +549,7 @@ function buildSvMatrixTco3Zm({modelList, data}) {
  * @param {object} yAxisRange the range of the y-axis
  * @returns a combination of data and statistical values series
  */
-function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange}) {
+function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange, getState}) {
     const series = {
         data: [],
         colors: [],
@@ -567,7 +565,7 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange}) 
     }));
     regionData.pop();
     regionData.push({
-        x: formatLatitude({minLat: -20, maxLat: 20}),
+        x: formatLatitude(getState().plot.generalSettings.location), // generate title according to custom min-max values
         y: boxPlotValues[USER_REGION]
     });
     series.data.push({
@@ -594,7 +592,7 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange}) 
             }));
             sortedData.pop();
             sortedData.push({
-                x: formatLatitude({minLat: -20, maxLat: 20}),
+                x: formatLatitude(getState().plot.generalSettings.location),
                 y: filterOutOfRange(modelData.data[USER_REGION], minY, maxY) || null, // null as default if data is missing
             });
 
@@ -616,6 +614,7 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange}) 
         yAxisRange,
         buildMatrix: buildSvMatrixTco3Return,
         generateSingleSvSeries: generateSingleTco3ReturnSeries,
+        getState,
     });
 
     // clear out data points which are outside min-max display range (scatter points are displayed in the legend otherwise)
@@ -642,7 +641,7 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange}) 
  * @param {array} svData array of plaint numbers
  * @returns a series matching the tco3_return style for apexcharts.
  */
-function generateSingleTco3ReturnSeries(name, svData) {
+function generateSingleTco3ReturnSeries(name, svData, getState) {
     const transformedData = ALL_REGIONS_ORDERED.map((region, index) => {
         if (index !== ALL_REGIONS_ORDERED.length - 1) {
             return {
@@ -651,7 +650,7 @@ function generateSingleTco3ReturnSeries(name, svData) {
             }
         } else {
             return {
-                x: formatLatitude({minLat: -20, maxLat: 20}),
+                x: formatLatitude(getState().plot.generalSettings.location),
                 y: svData[index],
             }
         }
@@ -749,7 +748,7 @@ function calculateBoxPlotValues({data, modelsSlice}) {
  * @param {function} generateSingleSvSeries either generateSingleTco3ZmSeries | generateSingleTco3ReturnSeries, specifies how the series should be generated
  * @returns an array holding all statistical series for the given modelSlice
  */
-function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleSvSeries}) {
+function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleSvSeries, getState}) {
     const svSeries = {
         data: [],
         colors: [],
@@ -758,7 +757,7 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
     };
 
     const modelGroups = modelsSlice.modelGroups;
-    for (const [id, groupData] of Object.entries(modelGroups)) { // don't remove 'id'
+    for (const [_, groupData] of Object.entries(modelGroups)) {
 
         const svHolder = calculateSvForModels(Object.keys(groupData.models), data, groupData, buildMatrix);
 
@@ -773,10 +772,10 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
             } else {
                 continue;
             }
-            svSeries.data.push(generateSingleSvSeries(`${sv}(${groupData.name})`, svData));
-            svSeries.colors.push(SV_COLORING[sv]);   // coloring?
-            svSeries.width.push(STATISTICAL_VALUE_LINE_THICKNESS);                  // thicker?
-            svSeries.dashArray.push(SV_DASHING[sv]);              // solid?       
+            svSeries.data.push(generateSingleSvSeries(`${sv}(${groupData.name})`, svData, getState));
+            svSeries.colors.push(SV_COLORING[sv]);                  // coloring
+            svSeries.width.push(STATISTICAL_VALUE_LINE_THICKNESS);  // thickness
+            svSeries.dashArray.push(SV_DASHING[sv]);                // solid/dashed       
         }
     }
     return svSeries;
@@ -1337,4 +1336,17 @@ function getIncludedModels(modelsSlice) {
     const hemisphereExtensionMin = (locationValue.minLat < 0 && locationValue.maxLat > 0 ? '°S' : '');
     const hemisphereExtensionMax = (locationValue.maxLat <= 0 ? '°S' : '°N');
     return `${Math.abs(locationValue.minLat)}${hemisphereExtensionMin}-${Math.abs(locationValue.maxLat)}${hemisphereExtensionMax}`;
+}
+
+const findLatitudeBandByLocation = (getState) => {
+    const selectedLocation = getState().plot.generalSettings.location;
+    if (typeof selectedLocation === 'undefined') return null;
+
+    for (let i = 0; i < latitudeBands.length - 1; i++) {
+        if (latitudeBands[i].value.minLat === selectedLocation.minLat && latitudeBands[i].value.maxLat === selectedLocation.maxLat) {
+            return latitudeBands[i].text.description;
+        }
+    }
+
+    return latitudeBands[latitudeBands.length - 1].text.description; // Custom (fallback, has to be custom if none of the predefined regions matched)
 }
