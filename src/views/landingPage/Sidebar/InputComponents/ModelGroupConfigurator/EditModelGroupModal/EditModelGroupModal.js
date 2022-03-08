@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {useDispatch, useSelector} from "react-redux"
 import {Modal, Card, Button, Checkbox, IconButton, CardActions, Box} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
@@ -199,6 +199,17 @@ function EditModelGroupModal(props) {
         }
 
     }
+
+    useEffect(() => {
+        setFilteredRows(rows);
+        setPercentileVisible(modelList.map(model => modelData[model][percentile]));
+        setIsVisible(modelList.map(model => modelData[model].isVisible));
+        setStd(modelList.map(model => modelData[model]["standard deviation"]));
+        console.log(modelList.map(model => modelData[model]["standard deviation"]));
+        console.log(modelData);
+        setMedianVisible(modelList.map(model => modelData[model][median]));
+        setMeanVisible(modelList.map(model => modelData[model][mean]));
+    },[props.isOpen]);
 
     /**
      * Gets the setter for the boolean list of checked and unchecked models of the selected type.
