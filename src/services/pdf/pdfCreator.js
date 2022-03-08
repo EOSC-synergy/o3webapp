@@ -29,17 +29,18 @@ pdfMake.fonts = {
  * @returns {object} the Line Presentation which will be shown in the PDF.*/
 function getLinePresentation(currentData, model) {
 
-  let linePattern;
+  let linePattern = "";
   console.log(currentData[model].plotStyle.linestyle);
-  if(currentData[model].plotStyle.linestyle == 'solid') {
+  if(currentData[model].plotStyle.linestyle === 'solid') {
     linePattern = `────`
   }
-  else if(currentData[model].plotStyle.linestyle == 'dashed') {
+  else if(currentData[model].plotStyle.linestyle === 'dashed') {
     linePattern = `----`
   }
-  else if(currentData[model].plotStyle.linestyle == 'dotted') {
+  else if(currentData[model].plotStyle.linestyle === 'dotted') {
     linePattern = `••••`
   }
+
   return {
     text: linePattern,
     font: 'JetBrainsFont',
