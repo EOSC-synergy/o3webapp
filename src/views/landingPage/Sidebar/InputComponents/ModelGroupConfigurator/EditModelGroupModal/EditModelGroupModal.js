@@ -142,7 +142,7 @@ function EditModelGroupModal(props) {
      * The index of each model in the array is its corresponding row id.
      * @constant {array}
      */
-    const [stdVisible, setStd] = React.useState(modelList.map(model => modelData[model][std]));
+    const [stdVisible, setStdVisible] = React.useState(modelList.map(model => modelData[model][std]));
 
     /**
      * An array filled with boolean values that indicate whether a model is included in the median calculation or not.
@@ -203,10 +203,8 @@ function EditModelGroupModal(props) {
     useEffect(() => {
         setFilteredRows(rows);
         setPercentileVisible(modelList.map(model => modelData[model][percentile]));
-        setIsVisible(modelList.map(model => modelData[model].isVisible));
-        setStd(modelList.map(model => modelData[model]["standard deviation"]));
-        console.log(modelList.map(model => modelData[model]["standard deviation"]));
-        console.log(modelData);
+        setIsVisible(modelList.map(model => modelData[model]["isVisible"]));
+        setStdVisible(modelList.map(model => modelData[model][std]));
         setMedianVisible(modelList.map(model => modelData[model][median]));
         setMeanVisible(modelList.map(model => modelData[model][mean]));
     }, [props.isOpen]);
@@ -225,7 +223,7 @@ function EditModelGroupModal(props) {
             case "mean":
                 return setMeanVisible;
             case "standard deviation":
-                return setStd;
+                return setStdVisible;
             case "median":
                 return setMedianVisible;
             case "percentile":
@@ -333,14 +331,14 @@ function EditModelGroupModal(props) {
      */
     const applyChanges = () => {
         const dataCpy = JSON.parse(JSON.stringify(modelData));
-
+        console.log()
         for (let i = 0; i < modelList.length; i++) {
             const model = modelList[i];
             dataCpy[model][mean] = meanVisible[i];
             dataCpy[model][std] = stdVisible[i];
             dataCpy[model][median] = medianVisible[i];
             dataCpy[model][percentile] = percentileVisible[i];
-            dataCpy[model][isVisible] = isVisible[i];
+            dataCpy[model]["isVisible"] = isVisible[i];
         }
         console.log(dataCpy)
         dispatch(updatePropertiesOfModelGroup({groupId: props.modelGroupId, data: dataCpy}))
@@ -364,7 +362,7 @@ function EditModelGroupModal(props) {
         }
 
         setMeanVisible(meanData);
-        setStd(stdData);
+        setStdVisible(stdData);
         setMedianVisible(medianData);
         setPercentileVisible(percentileData);
         setIsVisible(visibleData);
