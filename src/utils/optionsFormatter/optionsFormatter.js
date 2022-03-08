@@ -361,7 +361,7 @@ export const default_TCO3_return = {
  * @param {array} styling.colors an array of strings with hex code. Has to match the length of the given series
  * @param {array} styling.width (tco3_zm only!): array of integer defining the line width
  * @param {array} styling.dashArray (tco3_zm only!): array of integer defining if the line is solid or dashed
- * @param {array} styling.points the recovery points
+ * @param {array} styling.points an array containing data for the recovery points
  * @param {string} plotTitle contains the plot title
  * @param {object} xAxisRange the range of the x-axis
  * @param {object} yAxisRange the range of the y-axis
@@ -1327,9 +1327,9 @@ function getIncludedModels(modelsSlice) {
 /**
  * Calculates the points when the mean, mean+std, mean-std reach the value of the reference year.
  *
- * @param getState
- * @param referenceValue
- * @param svSeries
+ * @param {function} getState store.getState
+ * @param {Object} referenceValue an object with an array with the values for the reference line among other things
+ * @param {Object} svSeries an object with an array with the values for the statistical values linesy among other things
  */
 function calcRecoveryPoints(getState, referenceValue, svSeries) {
     const points = [];
