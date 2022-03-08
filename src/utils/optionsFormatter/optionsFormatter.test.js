@@ -1,5 +1,5 @@
-import { createTestStore } from "../../store/store";
-import { IMPLICIT_YEAR_LIST, O3AS_PLOTS, START_YEAR, MODEL_LINE_THICKNESS } from "../constants";
+import {createTestStore} from "../../store/store";
+import {IMPLICIT_YEAR_LIST, O3AS_PLOTS, START_YEAR, MODEL_LINE_THICKNESS} from "../constants";
 import {
     colorNameToHex,
     convertToStrokeStyle,
@@ -37,11 +37,11 @@ describe("testing optionsFormatter functionality", () => {
         // generate an array of years describing the valid data points.
         // the normalized array should contain the valid data points at
         // the index of where the implicit year list lists this year.
-        
+
         expect(normalizeArray(spacedYearArray, valueArray)).toEqual(expectedNormalize);
     });
 
-    
+
     describe("preTransform for all plot types", () => {
         it('should pre-tranform the api data for tco3_zm correctly', () => {
             const apiData = [{
@@ -50,15 +50,19 @@ describe("testing optionsFormatter functionality", () => {
                 x: spacedYearArray,
                 y: valueArray,
             }];
-            
-            const {lookUpTable} = preTransformApiData({plotId: O3AS_PLOTS.tco3_zm, data: apiData, modelsSlice: {modelGroups: {}}})
+
+            const {lookUpTable} = preTransformApiData({
+                plotId: O3AS_PLOTS.tco3_zm,
+                data: apiData,
+                modelsSlice: {modelGroups: {}}
+            })
             expect(lookUpTable).toEqual({
                 "modelA": {
                     data: expectedNormalize,
                     plotStyle: "plotstyleData",
                 },
             });
-    
+
         });
 
         it('should pre-transform the api data for tco3_return correctly', () => {
@@ -69,7 +73,11 @@ describe("testing optionsFormatter functionality", () => {
                 y: [2010, 2022],
             }];
 
-            const { lookUpTable } = preTransformApiData({plotId: O3AS_PLOTS.tco3_return, data: apiData, modelsSlice: {modelGroups: {}}});
+            const {lookUpTable} = preTransformApiData({
+                plotId: O3AS_PLOTS.tco3_return,
+                data: apiData,
+                modelsSlice: {modelGroups: {}}
+            });
             expect(
                 lookUpTable
             ).toEqual({
@@ -97,41 +105,42 @@ describe("testing optionsFormatter functionality", () => {
 
         const dataExpected = {
             data: [
-              {
-                name: 'CCMI-1_ACCESS_ACCESS-CCM-refC2',
-                data: testArray
-              },
-              {
-                name: 'CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG',
-                data: testArray
-              },
-              { name: 'CCMI-1_CCCma_CMAM-refC2', data: testArray},
-              { name: 'mean(Example Group)', data: testArray},
-              { name: 'median(Example Group)', data: testArray},
-              { name: 'lowerPercentile(Example Group)', data: testArray},
-              { name: 'upperPercentile(Example Group)', data: testArray},
-              { name: 'mean+std(Example Group)', data: testArray},
-              { name: 'mean-std(Example Group)', data: testArray},
+                {
+                    name: 'CCMI-1_ACCESS_ACCESS-CCM-refC2',
+                    data: testArray
+                },
+                {
+                    name: 'CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG',
+                    data: testArray
+                },
+                {name: 'CCMI-1_CCCma_CMAM-refC2', data: testArray},
+                {name: 'mean(Example Group)', data: testArray},
+                {name: 'median(Example Group)', data: testArray},
+                {name: 'lowerPercentile(Example Group)', data: testArray},
+                {name: 'upperPercentile(Example Group)', data: testArray},
+                {name: 'mean+std(Example Group)', data: testArray},
+                {name: 'mean-std(Example Group)', data: testArray},
             ],
             styling: {
-              colors: [
-                '#000000', '#000000',
-                '#000000', '#000',
-                '#000',    
-                "#1e8509", "#1e8509",
-                '#000', '#000'
-              ],
-              dashArray: [
-                0, 0, 0, 0,
-                2, 4, 4, 
-                8, 8
-              ],
-              width: [
-                MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS,
-                MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS
-              ]
+                colors: [
+                    '#000000', '#000000',
+                    '#000000', '#000',
+                    '#000',
+                    "#1e8509", "#1e8509",
+                    '#000', '#000'
+                ],
+                dashArray: [
+                    0, 0, 0, 0,
+                    2, 4, 4,
+                    8, 8
+                ],
+                width: [
+                    MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS,
+                    MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS
+                ],
+                points: [],
             }
-          }
+        }
 
         it("generates the series correctly", () => {
             const data = {}
@@ -142,7 +151,12 @@ describe("testing optionsFormatter functionality", () => {
                 data[key].plotStyle.linestyle = "solid";
                 data[key].data = Array(141).fill(0);
             })
-            const series = generateSeries({plotId: O3AS_PLOTS.tco3_zm, data: data, modelsSlice: modelsSlice});
+            const series = generateSeries({
+                plotId: O3AS_PLOTS.tco3_zm,
+                data: data,
+                modelsSlice: modelsSlice,
+                getState: store.getState
+            });
             expect(series).toEqual(dataExpected);
         });
     });
@@ -153,12 +167,19 @@ describe("testing optionsFormatter functionality", () => {
         const yaxis = [getDefaultYAxisTco3Return(undefined, 0, 10, true, false, 3, 2), getDefaultYAxisTco3Return(undefined, 0, 10, true, true, -3, 2),]
         expected.title.text = "title";
         expected.subtitle.text = "null | Jan, Feb, Dec";
-        
+
         expected.yaxis.push(...yaxis);
 
         const xAxisRange = {minX: 0, maxY: 10};
         const yAxisRange = {minY: 0, maxY: 10};
-        const result = getOptions({plotId: O3AS_PLOTS.tco3_return, styling: {colors:[]}, plotTitle: "title", xAxisRange, yAxisRange, seriesNames: []});
+        const result = getOptions({
+            plotId: O3AS_PLOTS.tco3_return,
+            styling: {colors: []},
+            plotTitle: "title",
+            xAxisRange,
+            yAxisRange,
+            seriesNames: []
+        });
         expect(result).toEqual(expected);
     });
 
@@ -169,7 +190,7 @@ describe("testing optionsFormatter functionality", () => {
 
         expect(colorNameToHex("no color")).toEqual(false);
     });
-    
+
     it('converts the stroke style to to apexcharts syntax', () => {
         const lineStyle = "solid";
         const apexChartsLineStyle = 0;
@@ -211,7 +232,7 @@ describe("testing optionsFormatter functionality", () => {
     });
 
     it('should return the default y-axis config for the tco3_zm', () => {
-        
+
 
         const expectedYAxisConfig = {
             show: true,
@@ -244,7 +265,7 @@ describe("testing optionsFormatter functionality", () => {
     });
 
     it('should return a correct formatted tooltip for a normal series', () => {
-        
+
         const expected = `
         <div>
             <div style="margin:2px"><strong>2021</strong></div>
@@ -253,12 +274,14 @@ describe("testing optionsFormatter functionality", () => {
             <div>Institue: INSTITUTE-Y</div>
         </div>
         `
-        
-        expect(customTooltipFormatter({series: [[42]], seriesIndex: 0, dataPointIndex: 0, w: {
-            globals: {
-                seriesX: [[2021]],
-                seriesNames: ["PROJECT-X_INSTITUTE-Y_MODELNAME"],
+
+        expect(customTooltipFormatter({
+            series: [[42]], seriesIndex: 0, dataPointIndex: 0, w: {
+                globals: {
+                    seriesX: [[2021]],
+                    seriesNames: ["PROJECT-X_INSTITUTE-Y_MODELNAME"],
+                }
             }
-        }})).toEqual(expected);
+        })).toEqual(expected);
     });
 });
