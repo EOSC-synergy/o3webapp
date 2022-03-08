@@ -4,6 +4,49 @@ import { O3AS_PLOTS, legalNoticeLinks } from "../../utils/constants";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
+pdfMake.fonts = {
+
+  Roboto: {
+    normal: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf',
+    bold: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf',
+    italics: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf',
+    bolditalics: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf'
+  },
+
+
+  JetBrainsFont: {
+    normal: 'https://fonts.cdnfonts.com/s/36131/JetbrainsMonoExtrabold-ywLd5.woff',
+    bold: 'https://fonts.cdnfonts.com/s/36131/JetbrainsMonoExtrabold-ywLd5.woff',
+    italics: 'https://fonts.cdnfonts.com/s/36131/JetbrainsMonoExtrabold-ywLd5.woff',
+    bolditalics: 'https://fonts.cdnfonts.com/s/36131/JetbrainsMonoExtrabold-ywLd5.woff'
+  },
+}
+
+
+function getLine(currentData, model) {
+
+  let linePattern;
+  console.log(currentData[model].plotStyle.linestyle);
+  if(currentData[model].plotStyle.linestyle == 'solid') {
+    linePattern = `────`
+  }
+  else if(currentData[model].plotStyle.linestyle == 'dashed') {
+    linePattern = `----`
+  }
+  else if(currentData[model].plotStyle.linestyle == 'dotted') {
+    linePattern = `••••`
+  }
+  return {
+    text: linePattern,
+    font: 'JetBrainsFont',
+    fontSize: 10,
+    characterSpacing: 0,
+    border: [false, false, false, false],
+    color: `${currentData[model].plotStyle.color}`
+  }
+}
+
+
 /**
  * This Method adjusts the svg element in order to scale it right in the pdf file.
  * the viewBox parameter of the svg element will be set to the width and height
@@ -93,30 +136,50 @@ function getListOfModelsForPdf(plotId, modelGroups, currentData) {
   ];
 
   for (const modelGroup of Object.values(modelGroups)) {
+
+    // if the model group is invisible, it won't be shown in the PDF.
     if (!modelGroup.isVisible) continue;
+
 
     let modelsInTheGroup = [];
 
     for (const [model, modelData] of Object.entries(modelGroup.models)) {
+      
+      // if the model is invisible, it won't be shown in the PDF.
       if (!modelData.isVisible) continue;
+
+      // if the data of the model is undefined, it won't be shown in the PDF.
       if (typeof currentData[model] === "undefined") continue;
 
       let textOfCurrentLineOfList;
 
       if (plotId === O3AS_PLOTS.tco3_zm) {
-        textOfCurrentLineOfList = `${model} (line type = ${currentData[model].plotStyle.linestyle})`;
+        textOfCurrentLineOfList = `${model}`;
       } else if (plotId === O3AS_PLOTS.tco3_return) {
         textOfCurrentLineOfList = `${model}`;
       }
 
-      modelsInTheGroup.push({
+      modelsInTheGroup.push([
+        
+        getLine(currentData, model),
+
+      {
         text: textOfCurrentLineOfList,
-        color: `${currentData[model].plotStyle.color}`,
-      });
+        fontSize: 9,
+        border: [false, false, false, false],
+      },    
+
+    ]);
     }
     modelGroupsList.push([
-      { text: modelGroup.name, style: "header" },
-      { ul: modelsInTheGroup },
+      { text: modelGroup.name,
+         style: "header",
+          bold: true,
+          fontSize: 10, },
+      { table: {
+				widths: ['auto', 'auto'],
+				body:  modelsInTheGroup 
+			} },
     ]);
   }
 
