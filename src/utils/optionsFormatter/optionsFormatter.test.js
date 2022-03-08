@@ -8,6 +8,7 @@ import {
     normalizeArray,
     preTransformApiData,
     default_TCO3_return,
+    defaultTCO3_zm,
     getDefaultYAxisTco3Return,
     getOptimalTickAmount,
     getTickAmountYAxis,
@@ -20,7 +21,6 @@ import {
     customTooltipFormatter,
 
 } from "./optionsFormatter";
-import tco3ReturnData from "./testData.json";
 
 describe("testing optionsFormatter functionality", () => {
     const spacedYearArray = [...Array(10).keys()].map(number => `${START_YEAR + 2 * number}`);
@@ -238,26 +238,30 @@ describe("testing optionsFormatter functionality", () => {
                 }
             }
             
-            const series = generateSeries({plotId: O3AS_PLOTS.tco3_return, data: data, modelsSlice: modelsSlice, refLineVisible: true, getState: store.getState, xAxisRange: { regions: ["Global"] }, yAxisRange: {minY: 270, maxY: 330}});
+            const series = generateSeries({plotId: O3AS_PLOTS.tco3_return, data: data, modelsSlice: modelsSlice, getState: store.getState, xAxisRange: { regions: ["Global"] }, yAxisRange: {minY: 270, maxY: 330}});
             expect(series).toEqual(dataExpected);
         });
 
 
     });
 
-
-    it('returns the correct options formatted correctly for tco3_return', () => {
-        const expected = JSON.parse(JSON.stringify(default_TCO3_return));
-        const yaxis = [getDefaultYAxisTco3Return(undefined, 0, 10, true, false, 3, 2), getDefaultYAxisTco3Return(undefined, 0, 10, true, true, -3, 2),]
-        expected.title.text = "title";
-        expected.subtitle.text = "Global (90°S–90°N) | Jan, Feb, Dec";
+    describe("tests the generation of the plot options", () => {
+        it('returns the correct options formatted correctly for tco3_return', () => {
+            const expected = JSON.parse(JSON.stringify(default_TCO3_return));
+            const yaxis = [getDefaultYAxisTco3Return(undefined, 0, 10, true, false, 3, 2), getDefaultYAxisTco3Return(undefined, 0, 10, true, true, -3, 2),]
+            expected.title.text = "title";
+            expected.subtitle.text = "Global (90°S–90°N) | Jan, Feb, Dec";
+            
+            expected.yaxis.push(...yaxis);
+    
+            const xAxisRange = {minX: 0, maxY: 10};
+            const yAxisRange = {minY: 0, maxY: 10};
+            const result = getOptions({plotId: O3AS_PLOTS.tco3_return, styling: {colors:[]}, plotTitle: "title", xAxisRange, yAxisRange, seriesNames: [], getState: store.getState});
+            expect(result).toEqual(expected);
+        });
         
-        expected.yaxis.push(...yaxis);
+        test.todo('returns the correct options formatted correctly for tco3_zm');
 
-        const xAxisRange = {minX: 0, maxY: 10};
-        const yAxisRange = {minY: 0, maxY: 10};
-        const result = getOptions({plotId: O3AS_PLOTS.tco3_return, styling: {colors:[]}, plotTitle: "title", xAxisRange, yAxisRange, seriesNames: [], getState: store.getState});
-        expect(result).toEqual(expected);
     });
 
     it('converts the color name to hex codes', () => {
