@@ -22,8 +22,12 @@ pdfMake.fonts = {
   },
 }
 
-
-function getLine(currentData, model) {
+/**
+ * Returns a Line presentation for the PDF concerning to the current line data.
+ * @param {array} currentData the current Model data contains the properties of the models(color, line style, etc.)
+ * @param {string} model the model name which the Line presentation belongs to
+ * @returns {object} the Line Presentation which will be shown in the PDF.*/
+function getLinePresentation(currentData, model) {
 
   let linePattern;
   console.log(currentData[model].plotStyle.linestyle);
@@ -68,10 +72,10 @@ function getAdjustedSVG(svgElement) {
 /**
  * Downloads the PDF which contains the Graph in SVG format and contains the List of models.
  *
- * @param plotId the plot id of the graph (tco3_zm, tco3_return etc.)
- * @param fileName the File name of the PDF
- * @param modelGroups the Model Groups which contains the names of the models
- * @param currentData the current Model data contains the properties of the models (color, line style, etc.)
+ * @param {string} plotId the plot id of the graph (tco3_zm, tco3_return etc.)
+ * @param {string} fileName the File name of the PDF
+ * @param {array} modelGroups the Model Groups which contains the names of the models
+ * @param {array} currentData the current Model data contains the properties of the models (color, line style, etc.)
  */
 export async function downloadGraphAsPDF(
   plotId,
@@ -126,10 +130,11 @@ export async function downloadGraphAsPDF(
 /**
  * Returns the List of models in the format which the pdfMake library accepts.
  *
- * @param plotId the plot id of the graph (tco3_zm, tco3_return etc.)
- * @param modelGroups the Model Groups which contains the names of the models
- * @param currentData the current Model data contains the properties of the models(color, line style, etc.)
- */
+ * @param {string} plotId the plot id of the graph (tco3_zm, tco3_return etc.)
+ * @param {array} modelGroups the Model Groups which contains the names of the models
+ * @param {array} currentData the current Model data contains the properties of the models(color, line style, etc.)
+ * @return {object} the List of all Model Groups which will be shown at the PDF.
+*/
 function getListOfModelsForPdf(plotId, modelGroups, currentData) {
   let modelGroupsList = [
     [{ text: "", style: "header" }, { ul: [{ text: "", color: "red" }] }],
@@ -161,7 +166,7 @@ function getListOfModelsForPdf(plotId, modelGroups, currentData) {
 
       modelsInTheGroup.push([
         
-        getLine(currentData, model),
+        getLinePresentation(currentData, model),
 
       {
         text: textOfCurrentLineOfList,
