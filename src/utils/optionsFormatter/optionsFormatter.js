@@ -820,8 +820,13 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
     svHolder["mean+std"] = [];
     svHolder["mean-std"] = [];
     for (let i = 0; i < svHolder[std].length; ++i) {
-        svHolder["mean+std"].push(svHolder[stdMean][i] + svHolder[std][i]);
-        svHolder["mean-std"].push(svHolder[stdMean][i] - svHolder[std][i]);
+        if (svHolder[stdMean][i] === null || svHolder[std][i] === null) {
+            svHolder["mean+std"].push(null);
+            svHolder["mean-std"].push(null);
+        } else {
+            svHolder["mean+std"].push(svHolder[stdMean][i] + svHolder[std][i]);
+            svHolder["mean-std"].push(svHolder[stdMean][i] - svHolder[std][i]);
+        }
     }
     delete svHolder["stdMean"];
     return svHolder;
