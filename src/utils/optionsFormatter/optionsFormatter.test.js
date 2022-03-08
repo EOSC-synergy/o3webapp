@@ -18,6 +18,10 @@ import {
     getDefaultYAxisTco3Zm,
     FONT_FAMILY,
     customTooltipFormatter,
+    getIncludedModels,
+    formatLatitude,
+    findLatitudeBandByLocation,
+
 } from "./optionsFormatter";
 
 describe("testing optionsFormatter functionality", () => {
@@ -97,39 +101,37 @@ describe("testing optionsFormatter functionality", () => {
 
         const dataExpected = {
             data: [
-              {
-                name: 'CCMI-1_ACCESS_ACCESS-CCM-refC2',
-                data: testArray
-              },
-              {
-                name: 'CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG',
-                data: testArray
-              },
-              { name: 'CCMI-1_CCCma_CMAM-refC2', data: testArray},
-              { name: 'mean(Example Group)', data: testArray},
-              { name: 'median(Example Group)', data: testArray},
-              { name: 'lowerPercentile(Example Group)', data: testArray},
-              { name: 'upperPercentile(Example Group)', data: testArray},
-              { name: 'mean+std(Example Group)', data: testArray},
-              { name: 'mean-std(Example Group)', data: testArray},
+                { name: undefined, data: testArray}, // is the reference line
+                {
+                    name: 'CCMI-1_ACCESS_ACCESS-CCM-refC2',
+                    data: testArray
+                },
+                {
+                    name: 'CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG',
+                    data: testArray
+                },
+                { name: 'CCMI-1_CCCma_CMAM-refC2', data: testArray},
+                { name: 'mean(Example Group)', data: testArray},
+                { name: 'median(Example Group)', data: testArray},
+                { name: 'lowerPercentile(Example Group)', data: testArray},
+                { name: 'upperPercentile(Example Group)', data: testArray},
+                { name: 'mean+std(Example Group)', data: testArray},
+                { name: 'mean-std(Example Group)', data: testArray},
             ],
             styling: {
               colors: [
                 '#000000', '#000000',
-                '#000000', '#000',
-                '#000',    
+                '#000000','#000000', 
+                '#000', '#000',    
                 "#1e8509", "#1e8509",
                 '#000', '#000'
               ],
               dashArray: [
                 0, 0, 0, 0,
-                2, 4, 4, 
+                0, 2, 4, 4, 
                 8, 8
               ],
-              width: [
-                MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS,
-                MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS
-              ]
+              width: Array(10).fill(MODEL_LINE_THICKNESS),
             }
           }
 
@@ -142,7 +144,14 @@ describe("testing optionsFormatter functionality", () => {
                 data[key].plotStyle.linestyle = "solid";
                 data[key].data = Array(141).fill(0);
             })
-            const series = generateSeries({plotId: O3AS_PLOTS.tco3_zm, data: data, modelsSlice: modelsSlice})
+            data["reference_value"] = {
+                plotStyle: {
+                    color: "black",
+                    linestyle: "solid",
+                },
+                data: Array(141).fill(0),
+            }
+            const series = generateSeries({plotId: O3AS_PLOTS.tco3_zm, data: data, modelsSlice: modelsSlice, refLineVisible: true})
             expect(series).toEqual(dataExpected);
         });
     });
@@ -261,4 +270,6 @@ describe("testing optionsFormatter functionality", () => {
             }
         }})).toEqual(expected);
     });
+
+    it('should ', () => {});
 });

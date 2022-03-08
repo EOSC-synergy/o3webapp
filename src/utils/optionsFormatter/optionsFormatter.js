@@ -50,7 +50,6 @@ export const FONT_FAMILY = [
  */
 function createSubtitle(getState) {
     let stLocationText = findLatitudeBandByLocation(getState);
-    console.log(stLocationText)
 
     if (stLocationText === 'Custom') {
         stLocationText = formatLatitude(getState().plot.generalSettings.location);
@@ -1313,7 +1312,7 @@ export function customTooltipFormatter({series, seriesIndex, dataPointIndex, w})
     )
 }
 
-function getIncludedModels(modelsSlice) {
+export function getIncludedModels(modelsSlice) {
     const visible = [];
 
     for (const modelGroup of Object.values(modelsSlice.modelGroups)) {
@@ -1338,7 +1337,7 @@ function getIncludedModels(modelsSlice) {
     return `${Math.abs(locationValue.minLat)}${hemisphereExtensionMin}-${Math.abs(locationValue.maxLat)}${hemisphereExtensionMax}`;
 }
 
-const findLatitudeBandByLocation = (getState) => {
+export const findLatitudeBandByLocation = (getState) => {
     const selectedLocation = getState().plot.generalSettings.location;
     if (typeof selectedLocation === 'undefined') return null;
 
