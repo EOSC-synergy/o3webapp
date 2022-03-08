@@ -97,74 +97,27 @@ describe("testing optionsFormatter functionality", () => {
             modelsSlice = store.getState().models;
         })
 
-<<<<<<< HEAD
-        const dataExpected = {
-            data: [
-              {
-                name: 'CCMI-1_ACCESS_ACCESS-CCM-refC2',
-                data: testArray
-              },
-              {
-                name: 'CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG',
-                data: testArray
-              },
-              { name: 'CCMI-1_CCCma_CMAM-refC2', data: testArray},
-              { name: 'Mean (Example Group)', data: testArray},
-              { name: 'Median (Example Group)', data: testArray},
-              { name: 'Lower % (Example Group)', data: testArray},
-              { name: 'Upper % (Example Group)', data: testArray},
-              { name: 'μ + σ (Example Group)', data: testArray},
-              { name: 'μ - σ (Example Group)', data: testArray},
-            ],
-            styling: {
-              colors: [
-                '#000000', '#000000',
-                '#000000', '#696969',
-                '#000',  
-                "#1e8509", "#1e8509",  
-                "#0e4e78", "#0e4e78",
-              ],
-              dashArray: [
-                0, 0, 0, 0,
-                2, 4, 4, 
-                8, 8
-              ],
-              width: [
-                MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS,
-                MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS, MODEL_LINE_THICKNESS
-              ]
-            }
-          }
-=======
->>>>>>> develop
-
         it("generates the tco3_zm series correctly", () => {
             const dataExpected = {
                 data: [
-                    { name: undefined, data: testArray}, // is the reference line
-                    {
-                        name: 'CCMI-1_ACCESS_ACCESS-CCM-refC2',
-                        data: testArray
-                    },
-                    {
-                        name: 'CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG',
-                        data: testArray
-                    },
-                    { name: 'CCMI-1_CCCma_CMAM-refC2', data: testArray},
-                    { name: 'mean(Example Group)', data: testArray},
-                    { name: 'median(Example Group)', data: testArray},
-                    { name: 'lowerPercentile(Example Group)', data: testArray},
-                    { name: 'upperPercentile(Example Group)', data: testArray},
-                    { name: 'mean+std(Example Group)', data: testArray},
-                    { name: 'mean-std(Example Group)', data: testArray},
+                  { name: undefined, data: testArray}, // for the reference line
+                  { name: 'CCMI-1_ACCESS_ACCESS-CCM-refC2', data: testArray},
+                  { name: 'CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG', data: testArray},
+                  { name: 'CCMI-1_CCCma_CMAM-refC2', data: testArray},
+                  { name: 'Mean (Example Group)', data: testArray},
+                  { name: 'Median (Example Group)', data: testArray},
+                  { name: 'Lower % (Example Group)', data: testArray},
+                  { name: 'Upper % (Example Group)', data: testArray},
+                  { name: 'μ + σ (Example Group)', data: testArray},
+                  { name: 'μ - σ (Example Group)', data: testArray},
                 ],
                 styling: {
                   colors: [
                     '#000000', '#000000',
-                    '#000000','#000000', 
-                    '#000', '#000',    
-                    "#1e8509", "#1e8509",
-                    '#000', '#000'
+                    '#000000', '#000000',
+                    '#696969', '#000',  
+                    "#1e8509", "#1e8509",  
+                    "#0e4e78", "#0e4e78",
                   ],
                   dashArray: [
                     0, 0, 0, 0,
@@ -173,7 +126,7 @@ describe("testing optionsFormatter functionality", () => {
                   ],
                   width: Array(10).fill(MODEL_LINE_THICKNESS),
                 }
-            }
+              }
             const data = {}
             Object.keys(modelsSlice.modelGroups[0].models).forEach(key => {
                 data[key] = {};
@@ -253,21 +206,22 @@ describe("testing optionsFormatter functionality", () => {
                     { name: 'CCMI-1_ACCESS_ACCESS-CCM-refC2', data: [], type: "scatter"},
                     { name: 'CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG', data: [], type: "scatter"},
                     { name: 'CCMI-1_CCCma_CMAM-refC2', data: [], type: "scatter",},
-                    { name: 'mean(Example Group)', data: [], type: "scatter",},
-                    { name: 'median(Example Group)', data: [], type: "scatter",},
-                    { name: 'lowerPercentile(Example Group)', data: [], type: "scatter",},
-                    { name: 'upperPercentile(Example Group)', data: [], type: "scatter",},
-                    { name: 'mean+std(Example Group)', data: [], type: "scatter",},
-                    { name: 'mean-std(Example Group)', data: [], type: "scatter",},
+                    { name: 'Mean (Example Group)', data: [], type: "scatter",},
+                    { name: 'Median (Example Group)', data: [], type: "scatter",},
+                    { name: 'Lower % (Example Group)', data: [], type: "scatter",},
+                    { name: 'Upper % (Example Group)', data: [], type: "scatter",},
+                    { name: 'μ + σ (Example Group)', data: [], type: "scatter",},
+                    { name: 'μ - σ (Example Group)', data: [], type: "scatter",},
                 ],
                 styling: {
                   colors: [
                     "#800080",
                     "#800080",
-                    "#ff0000", 
-                    '#000', '#000',    
+                    "#ff0000",
+                    "#696969",
+                    '#000',
                     "#1e8509", "#1e8509",
-                    '#000', '#000'
+                    "#0e4e78", "#0e4e78",
                   ],
                   dashArray: [
                     0, 2, 4, 4, 
