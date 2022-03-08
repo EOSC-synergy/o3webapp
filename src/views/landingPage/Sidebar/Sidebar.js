@@ -18,6 +18,8 @@ const DRAWER_WIDTH = 400;
 
 /**
  * Defining a drawer-header section at the beginning of a drawer
+ * @constant {JSX.Element}
+ * @memberof Sidebar
  */
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',

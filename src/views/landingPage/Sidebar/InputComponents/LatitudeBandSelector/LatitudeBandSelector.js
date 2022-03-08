@@ -10,11 +10,13 @@ import CustomLatitudeSelector from "./CustomLatitudeSelector/CustomLatitudeSelec
 
 /**
  * An object containing the current minLat and maxLat Values.
+ * @memberof LatitudeBandSelector
  */
 let selectedLocation;
 
 /**
  * whether the user selected to enter a custom latitude band
+ * @memberof LatitudeBandSelector
  */
 let [isCustomizable, setIsCustomizable] = [null, null];
 

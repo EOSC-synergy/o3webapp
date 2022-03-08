@@ -20,7 +20,6 @@ import {
     selectVisibilityOfGroup,
     deleteModelGroup
 } from "../../../../../../store/modelsSlice/modelsSlice";
-
 import {STATISTICAL_VALUES} from "../../../../../../utils/constants";
 
 /**

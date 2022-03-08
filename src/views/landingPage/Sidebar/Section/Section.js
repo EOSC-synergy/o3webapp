@@ -41,6 +41,9 @@ import CustomLatitudeSelector from "../InputComponents/LatitudeBandSelector/Cust
  
 /**
  * custom Accordion component
+ * @const {function}
+ * @returns {JSX.Element}
+ * @memberof Section
  */
 const Accordion = styled((props) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -56,6 +59,9 @@ const Accordion = styled((props) => (
   
 /**
  * custom Accordion summary component
+ * @const {function}
+ * @returns {JSX.Element}
+ * @memberof Section
  */
 const AccordionSummary = styled((props) => (
     <MuiAccordionSummary
@@ -81,6 +87,9 @@ const AccordionSummary = styled((props) => (
   
 /**
  * custom AccordionDetails component
+ * @const {function}
+ * @returns {JSX.Element}
+ * @memberof Section
  */
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
     padding: theme.spacing(2),

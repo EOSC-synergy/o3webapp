@@ -26,7 +26,7 @@ import CardActions from "@mui/material/CardActions";
 
 /**
  * Opens a modal where the user can select the file format and download the plot.
- *
+ * @component
  * @param {Object} props
  * @param {boolean} props.isOpen -> whether modal should be visible
  * @param {function} props.onClose -> handles closing the modal

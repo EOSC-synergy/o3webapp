@@ -8,10 +8,10 @@
       "includePattern": ".+\\.js(doc|x)?$",
       "excludePattern": "(^|\\/|\\\\)_"
     },
-    "plugins": ["plugins/markdown", "better-docs/component"],
+    "plugins": ["plugins/markdown", "better-docs/component", "better-docs/category"],
     "templates": {
       "better-docs": {
-        "name": "My React components"
+        "name": "O3as Webapp documentation"
       }
     },
     "opts": {

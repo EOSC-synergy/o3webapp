@@ -6,6 +6,8 @@ import { Grid, Link } from '@mui/material';
  * The links on the right-hand side in the footer with label and href.
  *
  * @type {Array.<{label: string, href: string}>}
+ * @constant
+ * @memberof Footer
  */
 export const links = [
     {
@@ -36,6 +38,7 @@ export const links = [
  * @component
  */
 const Footer = (props) => {
+
     return (
         <div
             style={{
