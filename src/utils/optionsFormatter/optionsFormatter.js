@@ -1258,12 +1258,13 @@ export function parseSvName(name) {
 export function customTooltipFormatter({series, seriesIndex, dataPointIndex, w}) {
     const modelName = w.globals.seriesNames[seriesIndex];
     const listOfSv = Object.keys(SV_COLORING); // included mean+/-std
+    const numDecimalsInDatapoint = 2;
     if (modelName.startsWith("Reference")) {
         return (
             `
                 <div>
                     <div style="margin:2px"><strong>${w.globals.seriesX[seriesIndex][dataPointIndex]}</strong></div>
-                    <div>Reference: <strong>${series[seriesIndex][dataPointIndex]}</strong></div>
+                    <div>Reference: <strong>${series[seriesIndex][dataPointIndex].toFixed(numDecimalsInDatapoint)}</strong></div>
                 </div>
             `
         )
@@ -1277,8 +1278,8 @@ export function customTooltipFormatter({series, seriesIndex, dataPointIndex, w})
                 `
                 <div>
                     <div style="margin:2px"><strong>${w.globals.seriesX[seriesIndex][dataPointIndex]}</strong></div>
-                    <div>${sv}: <strong>${series[seriesIndex][dataPointIndex]}</strong></div>
-                    <div>Group: ${groupName}</div>
+                    <div>${sv}: <strong>${series[seriesIndex][dataPointIndex].toFixed(numDecimalsInDatapoint)}</strong></div>
+                    <div>Group: ${groupName}</div>g
                 </div>
                 `
             )
@@ -1290,7 +1291,7 @@ export function customTooltipFormatter({series, seriesIndex, dataPointIndex, w})
         `
         <div>
             <div style="margin:2px"><strong>${w.globals.seriesX[seriesIndex][dataPointIndex]}</strong></div>
-            <div>${name}: <strong>${series[seriesIndex][dataPointIndex]}</strong></div>
+            <div>${name}: <strong>${series[seriesIndex][dataPointIndex].toFixed(numDecimalsInDatapoint)}</strong></div>
             <div>Project: ${project}</div>
             <div>Institue: ${institute}</div>
         </div>

@@ -295,14 +295,14 @@ SV_CALCULATION[stdMean] = calculateMean;
  * to a color it should be appear in.
  */
 export const SV_COLORING = {
-    mean: "#000",
-    "standard deviation": "#000",
+    mean: "#696969",
+    "standard deviation": "#0e4e78",//"#000",
     median: "#000",
     percentile: "#000",
     "lowerPercentile": "#1e8509",
     "upperPercentile": "#1e8509",
-    "mean+std": "#000",
-    "mean-std": "#000",
+    "mean+std": "#0e4e78",
+    "mean-std": "#0e4e78",
 }
 
 /**

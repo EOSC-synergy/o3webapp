@@ -116,10 +116,10 @@ describe("testing optionsFormatter functionality", () => {
             styling: {
               colors: [
                 '#000000', '#000000',
-                '#000000', '#000',
-                '#000',    
-                "#1e8509", "#1e8509",
-                '#000', '#000'
+                '#000000', '#696969',
+                '#000',  
+                "#1e8509", "#1e8509",  
+                "#0e4e78", "#0e4e78",
               ],
               dashArray: [
                 0, 0, 0, 0,
@@ -248,7 +248,7 @@ describe("testing optionsFormatter functionality", () => {
         const expected = `
         <div>
             <div style="margin:2px"><strong>2021</strong></div>
-            <div>MODELNAME: <strong>42</strong></div>
+            <div>MODELNAME: <strong>42.00</strong></div>
             <div>Project: PROJECT-X</div>
             <div>Institue: INSTITUTE-Y</div>
         </div>
