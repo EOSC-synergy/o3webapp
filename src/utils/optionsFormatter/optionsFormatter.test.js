@@ -34,8 +34,8 @@ describe("testing optionsFormatter functionality", () => {
     }
 
     it('should normalize arrays as expected', () => {
-        // generate an array of years describing the valid datapoints. 
-        // the normalized array should contain the valid datapoints at
+        // generate an array of years describing the valid data points.
+        // the normalized array should contain the valid data points at
         // the index of where the implicit year list lists this year.
         
         expect(normalizeArray(spacedYearArray, valueArray)).toEqual(expectedNormalize);
@@ -152,6 +152,7 @@ describe("testing optionsFormatter functionality", () => {
         const expected = JSON.parse(JSON.stringify(default_TCO3_return));
         const yaxis = [getDefaultYAxisTco3Return(undefined, 0, 10, true, false, 3, 2), getDefaultYAxisTco3Return(undefined, 0, 10, true, true, -3, 2),]
         expected.title.text = "title";
+        expected.subtitle.text = "null | Jan, Feb, Dec";
         
         expected.yaxis.push(...yaxis);
 

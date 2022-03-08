@@ -1,4 +1,32 @@
-import {q25, q75, median} from "../../services/math/math"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: utils/optionsFormatter/optionsFormatter.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: utils/optionsFormatter/optionsFormatter.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import {q25, q75, median} from "../../services/math/math"
 import {
     IMPLICIT_YEAR_LIST,
     O3AS_PLOTS,
@@ -11,7 +39,7 @@ import {
     MODEL_LINE_THICKNESS,
     START_YEAR,
     END_YEAR,
-    std, 
+    std,
     percentile,
     EXTENDED_SV_LIST,
     stdMean,
@@ -55,8 +83,8 @@ const createSubtitle = () => {
         store.getState().plot.plotId === 'tco3_zm' ? findLatitudeBandByLocation(false, true) : 'User-Region';
     if (stLocationText === 'Custom' || stLocationText === 'User-Region') {
         const stLocationValue = store.getState().plot.generalSettings.location;
-        const hemisphereExtensionMin = (stLocationValue.minLat < 0 && stLocationValue.maxLat > 0 ? '°S' : '');
-        const hemisphereExtensionMax = (stLocationValue.maxLat <= 0 ? '°S' : '°N');
+        const hemisphereExtensionMin = (stLocationValue.minLat &lt; 0 &amp;&amp; stLocationValue.maxLat > 0 ? '°S' : '');
+        const hemisphereExtensionMax = (stLocationValue.maxLat &lt;= 0 ? '°S' : '°N');
         stLocationText =
             `${stLocationText} (${Math.abs(stLocationValue.minLat)}${hemisphereExtensionMin}-${Math.abs(stLocationValue.maxLat)}${hemisphereExtensionMax})`;
     }
@@ -530,7 +558,7 @@ function buildSvMatrixTco3Zm({modelList, data}) {
 
     const matrix = create2dArray(SERIES_LENGTH); // for arr of matrix: mean(arr), etc.
 
-    for (let i = 0; i < SERIES_LENGTH; ++i) {
+    for (let i = 0; i &lt; SERIES_LENGTH; ++i) {
         for (const model of modelList) {
             const modelData = data[model];
             if (typeof modelData === "undefined") continue;
@@ -747,13 +775,12 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
 
         for (const [sv, svData] of Object.entries(svHolder)) {
 
-            if (sv === std // std
-                || sv === percentile) continue; // skip for now
-
+            if (sv === STATISTICAL_VALUES[std] // std
+                || sv === STATISTICAL_VALUES.percentile) continue; // skip for now
 
             if (groupData.visibleSV[sv] // mean und median
-                || (sv.includes("std") && groupData.visibleSV[std])
-                || (sv.toLowerCase().includes(percentile) && groupData.visibleSV[percentile])) {
+                || (sv.includes("std") &amp;&amp; groupData.visibleSV[STATISTICAL_VALUES[std]])
+                || (sv.toLowerCase().includes(percentile) &amp;&amp; groupData.visibleSV[STATISTICAL_VALUES[percentile]])) {
             } else {
                 continue;
             }
@@ -781,7 +808,7 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
 
     const matrix = buildMatrix({modelList, data}); // function supplied by caller
 
-    const PROCESS_SV = [...STATISTICAL_VALUES_LIST.filter(x => x !== STATISTICAL_VALUES.percentile), ...EXTENDED_SV_LIST];
+    const PROCESS_SV = [...STATISTICAL_VALUES_LIST.filter(x => x !== percentile), ...EXTENDED_SV_LIST];
 
     const svHolder = {};
     PROCESS_SV.forEach(
@@ -791,7 +818,7 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
     for (const arr of matrix) { // fill with calculated sv
         for (const sv of PROCESS_SV) {
             // filter out values from not included models or null values
-            const filtered = arr.filter((value, idx) => value !== null && isIncludedInSv(modelList[idx], groupData, sv));
+            const filtered = arr.filter((value, idx) => value !== null &amp;&amp; isIncludedInSv(modelList[idx], groupData, sv));
 
             const value = SV_CALCULATION[sv](filtered); // null as default if NaN or undefined
             if (isNaN(value) || typeof value === "undefined") {
@@ -804,9 +831,9 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
 
     svHolder["mean+std"] = [];
     svHolder["mean-std"] = [];
-    for (let i = 0; i < svHolder[std].length; ++i) {
-        svHolder["mean+std"].push(svHolder[stdMean][i] + svHolder[std][i]);
-        svHolder["mean-std"].push(svHolder[stdMean][i] - svHolder[std][i]);
+    for (let i = 0; i &lt; svHolder[STATISTICAL_VALUES[std]].length; ++i) {
+        svHolder["mean+std"].push(svHolder[stdMean][i] + svHolder[STATISTICAL_VALUES[std]][i]);
+        svHolder["mean-std"].push(svHolder[stdMean][i] - svHolder[STATISTICAL_VALUES[std]][i]);
     }
     delete svHolder["stdMean"];
     return svHolder;
@@ -1136,8 +1163,8 @@ function create2dArray(i) {
  * @returns                     True if the given model should be included in the SV calculation of the given SV-Type
  */
 function isIncludedInSv(model, groupData, svType) {
-    if (svType === "stdMean") return groupData.models[model][std]; // the std mean should only be calculated if the std is necessary
-    if (svType.toLowerCase().includes(percentile)) return groupData.models[model][percentile];
+    if (svType === "stdMean") return groupData.models[model][STATISTICAL_VALUES[std]]; // the std mean should only be calculated if the std is necessary
+    if (svType.toLowerCase().includes(percentile)) return groupData.models[model][STATISTICAL_VALUES[percentile]];
     return groupData.models[model][svType];
 }
 
@@ -1150,11 +1177,11 @@ function isIncludedInSv(model, groupData, svType) {
  */
 export function getOptimalTickAmount(min, max) {
     const diff = max - min;
-    if (diff <= 40) {
+    if (diff &lt;= 40) {
         return diff;
-    } else if (diff <= 80) {
+    } else if (diff &lt;= 80) {
         return Math.floor(diff / 2);
-    } else if (diff <= 150) {
+    } else if (diff &lt;= 150) {
         return Math.floor(diff / 5);
     } else {
         return Math.floor(diff / 10)
@@ -1170,9 +1197,9 @@ export function getOptimalTickAmount(min, max) {
  */
 export function getTickAmountYAxis(min, max) {
     const diff = max - min;
-    if (diff <= 200) {
+    if (diff &lt;= 200) {
         return Math.floor(diff / 5);
-    } else if (diff <= 400) {
+    } else if (diff &lt;= 400) {
         if (diff % 20 === 0) {
             return Math.floor(diff / 20);
         } else if (diff % 30 === 0) {
@@ -1215,7 +1242,7 @@ export function roundUpToMultipleOfTen(maxY) {
  * @returns the value or null if the value is outside the allowed range
  */
 export function filterOutOfRange(value, min, max) {
-    return (min <= value && value <= max) ? value : null;
+    return (min &lt;= value &amp;&amp; value &lt;= max) ? value : null;
 }
 
 /**
@@ -1261,10 +1288,10 @@ export function customTooltipFormatter({series, seriesIndex, dataPointIndex, w})
     if (modelName.startsWith("Reference")) {
         return (
             `
-                <div>
-                    <div style="margin:2px"><strong>${w.globals.seriesX[seriesIndex][dataPointIndex]}</strong></div>
-                    <div>Reference: <strong>${series[seriesIndex][dataPointIndex]}</strong></div>
-                </div>
+                &lt;div>
+                    &lt;div style="margin:2px">&lt;strong>${w.globals.seriesX[seriesIndex][dataPointIndex]}&lt;/strong>&lt;/div>
+                    &lt;div>Reference: &lt;strong>${series[seriesIndex][dataPointIndex]}&lt;/strong>&lt;/div>
+                &lt;/div>
             `
         )
     }
@@ -1275,11 +1302,11 @@ export function customTooltipFormatter({series, seriesIndex, dataPointIndex, w})
             const {sv, groupName} = parseSvName(modelName);
             return (
                 `
-                <div>
-                    <div style="margin:2px"><strong>${w.globals.seriesX[seriesIndex][dataPointIndex]}</strong></div>
-                    <div>${sv}: <strong>${series[seriesIndex][dataPointIndex]}</strong></div>
-                    <div>Group: ${groupName}</div>
-                </div>
+                &lt;div>
+                    &lt;div style="margin:2px">&lt;strong>${w.globals.seriesX[seriesIndex][dataPointIndex]}&lt;/strong>&lt;/div>
+                    &lt;div>${sv}: &lt;strong>${series[seriesIndex][dataPointIndex]}&lt;/strong>&lt;/div>
+                    &lt;div>Group: ${groupName}&lt;/div>
+                &lt;/div>
                 `
             )
         }
@@ -1288,12 +1315,12 @@ export function customTooltipFormatter({series, seriesIndex, dataPointIndex, w})
     let {project, institute, name} = convertModelName(modelName);
     return (
         `
-        <div>
-            <div style="margin:2px"><strong>${w.globals.seriesX[seriesIndex][dataPointIndex]}</strong></div>
-            <div>${name}: <strong>${series[seriesIndex][dataPointIndex]}</strong></div>
-            <div>Project: ${project}</div>
-            <div>Institue: ${institute}</div>
-        </div>
+        &lt;div>
+            &lt;div style="margin:2px">&lt;strong>${w.globals.seriesX[seriesIndex][dataPointIndex]}&lt;/strong>&lt;/div>
+            &lt;div>${name}: &lt;strong>${series[seriesIndex][dataPointIndex]}&lt;/strong>&lt;/div>
+            &lt;div>Project: ${project}&lt;/div>
+            &lt;div>Institue: ${institute}&lt;/div>
+        &lt;/div>
         `
     )
 }
@@ -1309,3 +1336,26 @@ function getIncludedModels(modelsSlice) {
 
     return visible;
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#Accordion">Accordion</a></li><li><a href="global.html#AccordionDetails">AccordionDetails</a></li><li><a href="global.html#AccordionSummary">AccordionSummary</a></li><li><a href="global.html#AddModelGroupModal">AddModelGroupModal</a></li><li><a href="global.html#ANTARCTIC">ANTARCTIC</a></li><li><a href="global.html#APEXCHART_PLOT_TYPE">APEXCHART_PLOT_TYPE</a></li><li><a href="global.html#apiSlice">apiSlice</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#ARCTIC">ARCTIC</a></li><li><a href="global.html#asc">asc</a></li><li><a href="global.html#Autumn">Autumn</a></li><li><a href="global.html#baseURL">baseURL</a></li><li><a href="global.html#buildStatisticalSeries">buildStatisticalSeries</a></li><li><a href="global.html#buildSvMatrixTco3Return">buildSvMatrixTco3Return</a></li><li><a href="global.html#buildSvMatrixTco3Zm">buildSvMatrixTco3Zm</a></li><li><a href="global.html#calculateBoxPlotValues">calculateBoxPlotValues</a></li><li><a href="global.html#calculateSvForModels">calculateSvForModels</a></li><li><a href="global.html#CLS_Symbol">CLS_Symbol</a></li><li><a href="global.html#colorNameToHex">colorNameToHex</a></li><li><a href="global.html#combineSeries">combineSeries</a></li><li><a href="global.html#convertModelName">convertModelName</a></li><li><a href="global.html#convertToStrokeStyle">convertToStrokeStyle</a></li><li><a href="global.html#CookieConsentModal">CookieConsentModal</a></li><li><a href="global.html#create2dArray">create2dArray</a></li><li><a href="global.html#createRows">createRows</a></li><li><a href="global.html#createSubtitle">createSubtitle</a></li><li><a href="global.html#CustomLatitudeSelector">CustomLatitudeSelector</a></li><li><a href="global.html#customTooltipFormatter">customTooltipFormatter</a></li><li><a href="global.html#DEFAULT_MODEL_GROUP">DEFAULT_MODEL_GROUP</a></li><li><a href="global.html#DEFAULT_MONTHS">DEFAULT_MONTHS</a></li><li><a href="global.html#default_TCO3_return">default_TCO3_return</a></li><li><a href="global.html#defaultTCO3_zm">defaultTCO3_zm</a></li><li><a href="global.html#DiscardChangesModal">DiscardChangesModal</a></li><li><a href="global.html#downloadGraphAsPDF">downloadGraphAsPDF</a></li><li><a href="global.html#DownloadModal">DownloadModal</a></li><li><a href="global.html#DrawerHeader">DrawerHeader</a></li><li><a href="global.html#EditModelGroupModal">EditModelGroupModal</a></li><li><a href="global.html#END_YEAR">END_YEAR</a></li><li><a href="global.html#ErrorMessageModal">ErrorMessageModal</a></li><li><a href="global.html#EXTENDED_SV_LIST">EXTENDED_SV_LIST</a></li><li><a href="global.html#extraReducers">extraReducers</a></li><li><a href="global.html#fetchModels">fetchModels</a></li><li><a href="global.html#fetchPlotData">fetchPlotData</a></li><li><a href="global.html#fetchPlotDataForCurrentModels">fetchPlotDataForCurrentModels</a></li><li><a href="global.html#fetchPlotDataInitiallyPending">fetchPlotDataInitiallyPending</a></li><li><a href="global.html#fetchPlotDataRefetching">fetchPlotDataRefetching</a></li><li><a href="global.html#fetchPlotDataRejected">fetchPlotDataRejected</a></li><li><a href="global.html#fetchPlotDataSuccess">fetchPlotDataSuccess</a></li><li><a href="global.html#fetchPlotTypes">fetchPlotTypes</a></li><li><a href="global.html#filterOutOfRange">filterOutOfRange</a></li><li><a href="global.html#findLatitudeBandByLocation">findLatitudeBandByLocation</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#formatYLabelsNicely">formatYLabelsNicely</a></li><li><a href="global.html#fullTextSearch">fullTextSearch</a></li><li><a href="global.html#generateCacheKey">generateCacheKey</a></li><li><a href="global.html#generateCsv">generateCsv</a></li><li><a href="global.html#generateSeries">generateSeries</a></li><li><a href="global.html#generateSingleTco3ReturnSeries">generateSingleTco3ReturnSeries</a></li><li><a href="global.html#generateSingleTco3ZmSeries">generateSingleTco3ZmSeries</a></li><li><a href="global.html#generateTco3_ReturnSeries">generateTco3_ReturnSeries</a></li><li><a href="global.html#generateTco3_ZmSeries">generateTco3_ZmSeries</a></li><li><a href="global.html#getAdjustedSVG">getAdjustedSVG</a></li><li><a href="global.html#getAllSelectedModels">getAllSelectedModels</a></li><li><a href="global.html#getDefaultYAxisTco3Return">getDefaultYAxisTco3Return</a></li><li><a href="global.html#getDefaultYAxisTco3Zm">getDefaultYAxisTco3Zm</a></li><li><a href="global.html#getFromAPI">getFromAPI</a></li><li><a href="global.html#getListOfModelsForPdf">getListOfModelsForPdf</a></li><li><a href="global.html#getModels">getModels</a></li><li><a href="global.html#getOptimalTickAmount">getOptimalTickAmount</a></li><li><a href="global.html#getOptions">getOptions</a></li><li><a href="global.html#getPlotData">getPlotData</a></li><li><a href="global.html#getPlotTypes">getPlotTypes</a></li><li><a href="global.html#getTickAmountYAxis">getTickAmountYAxis</a></li><li><a href="global.html#GLOBAL">GLOBAL</a></li><li><a href="global.html#Graph">Graph</a></li><li><a href="global.html#HEIGHT_GRAPH">HEIGHT_GRAPH</a></li><li><a href="global.html#HEIGHT_LOADING_SPINNER">HEIGHT_LOADING_SPINNER</a></li><li><a href="global.html#IMPLICIT_YEAR_LIST">IMPLICIT_YEAR_LIST</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#intersection">intersection</a></li><li><a href="global.html#isIncludedInSv">isIncludedInSv</a></li><li><a href="global.html#LandingPage">LandingPage</a></li><li><a href="global.html#LATITUDE_BAND_MAX_VALUE">LATITUDE_BAND_MAX_VALUE</a></li><li><a href="global.html#LATITUDE_BAND_MIN_VALUE">LATITUDE_BAND_MIN_VALUE</a></li><li><a href="global.html#latitudeBands">latitudeBands</a></li><li><a href="global.html#LatitudeBandSelector">LatitudeBandSelector</a></li><li><a href="global.html#LBS_Symbol">LBS_Symbol</a></li><li><a href="global.html#legalNoticeLinks">legalNoticeLinks</a></li><li><a href="global.html#links">links</a></li><li><a href="global.html#Logo">Logo</a></li><li><a href="global.html#logoSrc">logoSrc</a></li><li><a href="global.html#lowerPercentile">lowerPercentile</a></li><li><a href="global.html#LS_Symbol">LS_Symbol</a></li><li><a href="global.html#mean">mean</a></li><li><a href="global.html#median">median</a></li><li><a href="global.html#MGC_Symbol">MGC_Symbol</a></li><li><a href="global.html#MODEL_DATA_TEMPLATE">MODEL_DATA_TEMPLATE</a></li><li><a href="global.html#MODEL_LINE_THICKNESS">MODEL_LINE_THICKNESS</a></li><li><a href="global.html#ModelGroupCard">ModelGroupCard</a></li><li><a href="global.html#ModelGroupConfigurator">ModelGroupConfigurator</a></li><li><a href="global.html#modelsSlice">modelsSlice</a></li><li><a href="global.html#months">months</a></li><li><a href="global.html#Navbar">Navbar</a></li><li><a href="global.html#NEAR_GLOBAL">NEAR_GLOBAL</a></li><li><a href="global.html#NH_MID">NH_MID</a></li><li><a href="global.html#NO_MONTH_SELECTED">NO_MONTH_SELECTED</a></li><li><a href="global.html#normalizeArray">normalizeArray</a></li><li><a href="global.html#not">not</a></li><li><a href="global.html#NUM_MONTHS">NUM_MONTHS</a></li><li><a href="global.html#NUM_MONTHS_IN_SEASON">NUM_MONTHS_IN_SEASON</a></li><li><a href="global.html#O3AS_PLOTS">O3AS_PLOTS</a></li><li><a href="global.html#O3ASLink">O3ASLink</a></li><li><a href="global.html#OC_Symbol">OC_Symbol</a></li><li><a href="global.html#OffsetConfigurator">OffsetConfigurator</a></li><li><a href="global.html#parseSvName">parseSvName</a></li><li><a href="global.html#percentile">percentile</a></li><li><a href="global.html#performSearch">performSearch</a></li><li><a href="global.html#PLOT_NAME_MAX_LEN">PLOT_NAME_MAX_LEN</a></li><li><a href="global.html#PlotNameField">PlotNameField</a></li><li><a href="global.html#plotSlice">plotSlice</a></li><li><a href="global.html#PlotTypeSelector">PlotTypeSelector</a></li><li><a href="global.html#PNF_Symbol">PNF_Symbol</a></li><li><a href="global.html#postAtAPI">postAtAPI</a></li><li><a href="global.html#postModelsPlotStyle">postModelsPlotStyle</a></li><li><a href="global.html#preTransformApiData">preTransformApiData</a></li><li><a href="global.html#q25">q25</a></li><li><a href="global.html#q50">q50</a></li><li><a href="global.html#q75">q75</a></li><li><a href="global.html#quantile">quantile</a></li><li><a href="global.html#ReferenceModelSelector">ReferenceModelSelector</a></li><li><a href="global.html#referenceSlice">referenceSlice</a></li><li><a href="global.html#ReferenceYearField">ReferenceYearField</a></li><li><a href="global.html#RegionSelector">RegionSelector</a></li><li><a href="global.html#REQUEST_STATE">REQUEST_STATE</a></li><li><a href="global.html#RMS_Symbol">RMS_Symbol</a></li><li><a href="global.html#roundDownToMultipleOfTen">roundDownToMultipleOfTen</a></li><li><a href="global.html#roundUpToMultipleOfTen">roundUpToMultipleOfTen</a></li><li><a href="global.html#RS_Symbol">RS_Symbol</a></li><li><a href="global.html#RYF_Symbol">RYF_Symbol</a></li><li><a href="global.html#SeasonCheckBoxGroup">SeasonCheckBoxGroup</a></li><li><a href="global.html#SEASONS_ARRAY">SEASONS_ARRAY</a></li><li><a href="global.html#Section">Section</a></li><li><a href="global.html#selectActivePlotData">selectActivePlotData</a></li><li><a href="global.html#selectAllGroupIds">selectAllGroupIds</a></li><li><a href="global.html#selectAllModelGroups">selectAllModelGroups</a></li><li><a href="global.html#selectedLocation">selectedLocation</a></li><li><a href="global.html#selectExistingPlotData">selectExistingPlotData</a></li><li><a href="global.html#selectIsOffsetApplied">selectIsOffsetApplied</a></li><li><a href="global.html#selectModelDataOfGroup">selectModelDataOfGroup</a></li><li><a href="global.html#selectModelsOfGroup">selectModelsOfGroup</a></li><li><a href="global.html#selectNameOfGroup">selectNameOfGroup</a></li><li><a href="global.html#selectPlotId">selectPlotId</a></li><li><a href="global.html#selectPlotLocation">selectPlotLocation</a></li><li><a href="global.html#selectPlotMonths">selectPlotMonths</a></li><li><a href="global.html#selectPlotTitle">selectPlotTitle</a></li><li><a href="global.html#selectPlotXRange">selectPlotXRange</a></li><li><a href="global.html#selectPlotYRange">selectPlotYRange</a></li><li><a href="global.html#selectRefModel">selectRefModel</a></li><li><a href="global.html#selectRefYear">selectRefYear</a></li><li><a href="global.html#selectStatisticalValueSettingsOfGroup">selectStatisticalValueSettingsOfGroup</a></li><li><a href="global.html#selectVisibility">selectVisibility</a></li><li><a href="global.html#selectVisibilityOfGroup">selectVisibilityOfGroup</a></li><li><a href="global.html#SERIES_GENERATION">SERIES_GENERATION</a></li><li><a href="global.html#SH_MID">SH_MID</a></li><li><a href="global.html#Sidebar">Sidebar</a></li><li><a href="global.html#Spring">Spring</a></li><li><a href="global.html#START_YEAR">START_YEAR</a></li><li><a href="global.html#STATISTICAL_VALUE_LINE_THICKNESS">STATISTICAL_VALUE_LINE_THICKNESS</a></li><li><a href="global.html#STATISTICAL_VALUES">STATISTICAL_VALUES</a></li><li><a href="global.html#STATISTICAL_VALUES_LIST">STATISTICAL_VALUES_LIST</a></li><li><a href="global.html#std">std</a></li><li><a href="global.html#stdMean">stdMean</a></li><li><a href="global.html#StyledDataGrid">StyledDataGrid</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#Summer">Summer</a></li><li><a href="global.html#SV_CALCULATION">SV_CALCULATION</a></li><li><a href="global.html#SV_COLORING">SV_COLORING</a></li><li><a href="global.html#SV_DASHING">SV_DASHING</a></li><li><a href="global.html#TCG_Symbol">TCG_Symbol</a></li><li><a href="global.html#TimeCheckBoxGroup">TimeCheckBoxGroup</a></li><li><a href="global.html#timeoutVal">timeoutVal</a></li><li><a href="global.html#TROPICS">TROPICS</a></li><li><a href="global.html#union">union</a></li><li><a href="global.html#updateDataAndDisplaySuggestions">updateDataAndDisplaySuggestions</a></li><li><a href="global.html#upperPercentile">upperPercentile</a></li><li><a href="global.html#USER_REGION">USER_REGION</a></li><li><a href="global.html#Winter">Winter</a></li><li><a href="global.html#XAF_Symbol">XAF_Symbol</a></li><li><a href="global.html#XAxisField">XAxisField</a></li><li><a href="global.html#YAF_Symbol">YAF_Symbol</a></li><li><a href="global.html#YAxisField">YAxisField</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Mon Mar 07 2022 08:49:38 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -3,13 +3,13 @@ import Typography from '@mui/material/Typography';
 import { Grid, Link } from '@mui/material';
 
 /**
- * The links in the footer with label and href.
+ * The links on the right-hand side in the footer with label and href.
  *
  * @type {Array.<{label: string, href: string}>}
  */
 export const links = [
     {
-        label: "Home",
+        label: "O3as",
         href: "https://o3as.data.kit.edu/#page-top"
     },
     {
@@ -20,7 +20,10 @@ export const links = [
         label: "Terms of Use",
         href: "https://o3as.data.kit.edu/policies/terms-of-use.html"
     },
-    // last element will be in a separate line (except on mobile)
+    {
+        label: "Gitlab",
+        href: "https://git.scc.kit.edu/synergy.o3as/o3webapp"
+    },
     {
         label: "How to Acknowledge",
         href: "https://o3as.data.kit.edu/policies/how-to-acknowledge.html"
@@ -77,7 +80,19 @@ function Footer () {
                                 lineHeight: 3
                             }}
                         >
-                            Copyright © KIT – The Research University in the Helmholtz Association
+                            Copyright © KIT – The&nbsp;
+                            <Link
+                                href={"https://www.kit.edu/kit/english/research-university.php"}
+                                data-testid={`footer-link-research-university}`}
+                                sx={{
+                                    color: '#fed136',
+                                    textDecoration: 'none',
+                                }}
+                                underline='hover'
+                            >
+                                Research University
+                            </Link>
+                            &nbsp;in the Helmholtz Association
                         </Typography>
                     </span>
                     </Grid>
@@ -98,7 +113,7 @@ function Footer () {
                         return (
                             <Grid
                                 item
-                                md={idx === links.length - 1 ? 12 : "auto"}
+                                md={"auto"}
                                 key={idx}
                                 sx={{
                                     mx: 1

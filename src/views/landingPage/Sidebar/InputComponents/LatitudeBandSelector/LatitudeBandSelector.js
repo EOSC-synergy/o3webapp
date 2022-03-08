@@ -8,6 +8,15 @@ import PropTypes from 'prop-types';
 import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice";
 import CustomLatitudeSelector from "./CustomLatitudeSelector/CustomLatitudeSelector";
 
+/**
+ * An object containing the current minLat and maxLat Values.
+ */
+let selectedLocation;
+
+/**
+ * whether the user selected to enter a custom latitude band
+ */
+let [isCustomizable, setIsCustomizable] = [null, null];
 
 /**
  * Enables the user to choose minimum and maximum latitude
@@ -17,20 +26,14 @@ import CustomLatitudeSelector from "./CustomLatitudeSelector/CustomLatitudeSelec
  */
 function LatitudeBandSelector(props) {
 
+    selectedLocation = useSelector(selectPlotLocation);
+
+    [isCustomizable, setIsCustomizable] = React.useState(false);
+
     /**
      * A dispatch function to dispatch actions to the redux store.
      */
     const dispatch = useDispatch();
-
-    /**
-     * An object containing the current minLat and maxLat Values.
-     */
-    const selectedLocation = useSelector(selectPlotLocation);
-
-    /**
-     * whether the user selected to enter a custom latitude band
-     */
-    const [isCustomizable, setIsCustomizable] = React.useState(false);
 
     /**
      * handles the change when the user clicked on a new latitude band option 
@@ -48,21 +51,6 @@ function LatitudeBandSelector(props) {
         }
     };
 
-    /**
-     * Finds selectedLocation in latitudeBands.
-     * @returns {{number, number}} the location
-     */
-    const findLatitudeBandByLocation = () => {
-        if (isCustomizable) {
-            return latitudeBands[latitudeBands.length - 1].value;
-        }
-        for (let i = 0; i < latitudeBands.length; i++) {
-            if (latitudeBands[i].value.minLat === selectedLocation.minLat && latitudeBands[i].value.maxLat === selectedLocation.maxLat) {
-                return latitudeBands[i].value;
-            }
-        }
-    }
-
     return (
         <>
             <Divider>
@@ -72,9 +60,9 @@ function LatitudeBandSelector(props) {
                 <Select
                     sx={{width: '100%' }}
                     id="latitudeBandSelector"
-                    value={findLatitudeBandByLocation()}
+                    value={findLatitudeBandByLocation(false, false)}
                     onChange={handleChangeLatitudeBand}
-                    defaultValue={findLatitudeBandByLocation()}
+                    defaultValue={findLatitudeBandByLocation(false, false)}
                 >
                     {
                         // maps all latitude bands from constants.js to ´MenuItem´s
@@ -94,3 +82,34 @@ LatitudeBandSelector.propTypes = {
 }
 
 export default LatitudeBandSelector;
+
+
+
+/**
+ * Finds selectedLocation in latitudeBands.
+ *
+ * @param {boolean} forceCustomizable if true, acts like isCustomizable is true - if false, does nothing
+ * @param {boolean} returnText if true, return the text - if false, return the value
+ * @returns the location
+ */
+export const findLatitudeBandByLocation = (forceCustomizable, returnText) => {
+    if (typeof selectedLocation === 'undefined') return null;
+    if (isCustomizable  || forceCustomizable) {
+        if (returnText) {
+            return latitudeBands[latitudeBands.length - 1].text.description;
+        } else {
+            return latitudeBands[latitudeBands.length - 1].value;
+        }
+    }
+    for (let i = 0; i < latitudeBands.length; i++) {
+        if (latitudeBands[i].value.minLat === selectedLocation.minLat && latitudeBands[i].value.maxLat === selectedLocation.maxLat) {
+            if (returnText) {
+                return latitudeBands[i].text.description;
+            } else {
+                return latitudeBands[i].value;
+            }
+        }
+    }
+    setIsCustomizable(true);
+    findLatitudeBandByLocation(true, false);
+}

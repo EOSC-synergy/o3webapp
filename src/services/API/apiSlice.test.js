@@ -195,7 +195,7 @@ describe('tests fetchPlotData api interaction (integration)', () => {
         plotId: "tco3_zm",
         latMin: -90, 
         latMax: 90, 
-        months: [12, 1, 2], 
+        months: [1, 2, 12],
         startYear: 1959, 
         endYear: 2100, 
         modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"], 
