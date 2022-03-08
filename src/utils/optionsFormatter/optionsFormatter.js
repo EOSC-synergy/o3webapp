@@ -11,7 +11,7 @@ import {
     MODEL_LINE_THICKNESS,
     START_YEAR,
     END_YEAR,
-    std, 
+    std,
     percentile,
     EXTENDED_SV_LIST,
     stdMean,
@@ -352,7 +352,7 @@ export const default_TCO3_return = {
 /**
  * The interface the graph component accesses to generate the options for the plot
  * given the plot id, the styling (depends on plot type) and the plot title.
- * 
+ *
  * @param {string} plotId an element of O3AS_PLOTS
  * @param {object} styling the styling
  * @param {array} styling.colors an array of strings with hex code. Has to match the length of the given series
@@ -366,11 +366,11 @@ export const default_TCO3_return = {
  * @returns an default_TCO3_plotId object formatted with the given data
  */
 export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, seriesNames}) {
-    const minY = roundDownToMultipleOfTen(yAxisRange.minY); 
+    const minY = roundDownToMultipleOfTen(yAxisRange.minY);
     const maxY = roundUpToMultipleOfTen(yAxisRange.maxY);
 
     const tickAmount = getTickAmountYAxis(minY, maxY);
-    
+
     if (plotId === O3AS_PLOTS.tco3_zm) {
         const newOptions = JSON.parse(JSON.stringify(defaultTCO3_zm)); // dirt simple and not overly horrible
 
@@ -401,7 +401,7 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.subtitle = JSON.parse(JSON.stringify(newOptions.subtitle)); // this is necessary in order for apexcharts to update the subtitle
         newOptions.subtitle.text = createSubtitle();
 
-        const minY = roundDownToMultipleOfTen(yAxisRange.minY); 
+        const minY = roundDownToMultipleOfTen(yAxisRange.minY);
         const maxY = roundUpToMultipleOfTen(yAxisRange.maxY);
         newOptions.yaxis.push(...seriesNames.map(name => getDefaultYAxisTco3Return(name, minY, maxY, false, false, 0, tickAmount)))
         newOptions.yaxis.push(getDefaultYAxisTco3Return(undefined, minY, maxY, true, false, 3, tickAmount)); // on left side
@@ -431,8 +431,8 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
  * @param {object} refLineVisible visibility status of the reference line
  * @returns series object which includes a subdivision into a data and a styling object.
  */
-export function generateSeries({plotId, data, modelsSlice, xAxisRange, yAxisRange, refLineVisible}) {
-    const series = SERIES_GENERATION[plotId]({data, modelsSlice, xAxisRange, yAxisRange, refLineVisible}); // execute correct function based on mapping
+export function generateSeries({plotId, data, modelsSlice, xAxisRange, yAxisRange, refLineVisible, getState}) {
+    const series = SERIES_GENERATION[plotId]({data, modelsSlice, xAxisRange, yAxisRange, refLineVisible, getState}); // execute correct function based on mapping
     return {
         data: series.data,
         styling: {
@@ -452,7 +452,7 @@ export function generateSeries({plotId, data, modelsSlice, xAxisRange, yAxisRang
  * @param {boolean} refLineVisible visibility status of the reference line
  * @returns a combination of data and statistical values series
  */
-function generateTco3_ZmSeries({data, modelsSlice, refLineVisible}) {
+function generateTco3_ZmSeries({data, modelsSlice, refLineVisible, getState}) {
     const series = {
         data: [],
         colors: [],
@@ -463,13 +463,13 @@ function generateTco3_ZmSeries({data, modelsSlice, refLineVisible}) {
         series.data.push({
             name: data.reference_value.plotStyle.label,
             data: data.reference_value.data.map((e, idx) => [START_YEAR + idx, e]),
-        })
+        });
         series.colors.push(colorNameToHex(data.reference_value.plotStyle.color));
         series.width.push(MODEL_LINE_THICKNESS);
         series.dashArray.push(convertToStrokeStyle(data.reference_value.plotStyle.linestyle));
     }
 
-    for (const [id, groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups  // don't remove 'id'
+    for (const [_, groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups  // don't remove 'id'
         if (!groupData.isVisible) continue; // skip hidden groups
         for (const [model, modelInfo] of Object.entries(groupData.models)) {
             if (!modelInfo.isVisible) continue; // skip hidden models
@@ -493,7 +493,7 @@ function generateTco3_ZmSeries({data, modelsSlice, refLineVisible}) {
         buildMatrix: buildSvMatrixTco3Zm,
         generateSingleSvSeries: generateSingleTco3ZmSeries
     });
-
+    calcRecoveryPoints(getState, data.reference_value, svSeries);
     return combineSeries(series, svSeries);
 }
 
@@ -520,7 +520,7 @@ function generateSingleTco3ZmSeries(name, svData) {
  * The data arrangement is basically a transposition.
  * The first datapoint of each model ist grouped into the first array.
  * and so on...
- * 
+ *
  * @param {array} modelList list of models of a group that should be included
  * @param {object} data an object holding all the data from the api
  * @returns a 2D array containing all the data (transpose matrix of given data)
@@ -655,7 +655,7 @@ function generateSingleTco3ReturnSeries(name, svData) {
  * The data arrangement is basically a transposition.
  * The first datapoint of each model ist grouped into the first array.
  * and so on...
- * 
+ *
  * @param {array} modelList list of models of a group that should be included
  * @param {object} data an object holding all the data from the api
  * @returns a 2D array containing all the data (transpose matrix of given data)
@@ -721,8 +721,8 @@ function calculateBoxPlotValues({data, modelsSlice}) {
 }
 
 /**
- * This method builds the statistical series using the passed buildMatrix method 
- * that brings the data into the desired format and uses the 
+ * This method builds the statistical series using the passed buildMatrix method
+ * that brings the data into the desired format and uses the
  * passed generateSingleSvSeries function to transform each generated series into
  * the correct format.
  *
@@ -911,7 +911,7 @@ export const preTransformApiData = ({plotId, data, modelsSlice}) => {
                 temp.push(datum.y[index]);
                 lookUpTable[datum.model].data[datum.x[index]] = datum.y[index];
             }
-            
+
             if (visibleModels.includes(datum.model)) { // min and max values of visible values are relevant!
                 maximums.push(Math.max(...temp));
                 minimums.push(Math.min(...temp.filter(x => x !== null)));
@@ -1103,7 +1103,7 @@ export function convertToStrokeStyle(apiStyle) {
  * Combines 2 data series objects into a new one.
  * The copied elements of series2 get appended to a copy of series1.
  * A series object has the following structure: { data: Array, colors: Array, width: Array, dashArray: Array}
- * 
+ *
  * @param {object} series1     The first data series object
  * @param {object} series2     The second data series object
  * @returns                 New series containing series1 and series2
@@ -1119,7 +1119,7 @@ function combineSeries(series1, series2) {
 
 /**
  * Utility function to create an array of size i with empty arrays inside it.
- * 
+ *
  * @param {number} i    The size of the array containing the empty arrays
  * @returns             The array of size 'i' containing empty arrays
  */
@@ -1230,7 +1230,7 @@ export const formatYLabelsNicely = value => value % 10 ? "" : value
 /**
  * This function parses the auto-generated sv names to separate
  * them into the sv type (e.g. mean, median) and the group.
- * 
+ *
  * @param {string} name the name of the data series (e.g. mean+std(Example Group))
  * @returns an object holding the sv type and the group name
  */
@@ -1248,7 +1248,7 @@ export function parseSvName(name) {
  * A plugin-method for apexcharts to provide a custom tooltip.
  * In this case the tooltip is for the octs line chart. It provides
  * a richer tooltip and shows the data points correctly.
- * 
+ *
  * @param {array} series an array of series
  * @param {number} seriesIndex the index of the hovered data series
  * @param {number} dataPointIndex the index of the data point in the hovered data series
@@ -1308,4 +1308,35 @@ function getIncludedModels(modelsSlice) {
     }
 
     return visible;
+}
+
+/**
+ * Calculates the points when the mean, mean+std, mean-std reach the value of the reference year.
+ *
+ * @param getState
+ * @param referenceValue
+ * @param svSeries
+ */
+function calcRecoveryPoints(getState, referenceValue, svSeries) {
+    const points = [];
+
+    const refYear = getState().reference.settings.year;
+    const refValue = Math.max(...referenceValue.data);
+
+    const dataIndices = [0, 4, 5]; // 0=mean, 4=mean+std, 5=mean-std
+
+    const yearIdx = 0;
+    const valIdx = 1;
+
+    for (let idx of dataIndices) {
+        for (let i = 0; i < svSeries.data[idx].data.length; i++) {
+            if (svSeries.data[idx].data[i][yearIdx] <= refYear) continue;
+            if (svSeries.data[idx].data[i][valIdx] >= refValue) {
+                console.log(svSeries.data[idx].data[i][yearIdx]);
+                points.push([svSeries.data[idx].data[i][yearIdx], svSeries.data[idx].data[i][valIdx]]);
+                break;
+            }
+        }
+    }
+    return points;
 }
