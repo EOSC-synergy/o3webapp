@@ -13,6 +13,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import PropTypes from 'prop-types';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import { BACKGROUND_BASE_COLOR } from '../../../utils/constants.js';
 
 const DRAWER_WIDTH = 400;
 
@@ -24,6 +25,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     alignItems: 'center',
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
+    backgroundColor: BACKGROUND_BASE_COLOR,
   }));
 
 /**
@@ -122,6 +124,7 @@ function Sidebar(props) {
                 '& .MuiDrawer-paper': {
                     width: DRAWER_WIDTH,
                     maxWidth: "100%",
+                    backgroundColor: BACKGROUND_BASE_COLOR
                 }
             }}
             data-testid="sidebar"
@@ -133,6 +136,7 @@ function Sidebar(props) {
                 sx= {{
                     '& .MuiDrawer-paper': {
                         height: '92%',
+                        backgroundColor: BACKGROUND_BASE_COLOR
                     }
                 }}
             > 
