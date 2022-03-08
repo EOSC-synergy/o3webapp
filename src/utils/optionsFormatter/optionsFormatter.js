@@ -95,63 +95,9 @@ export const defaultTCO3_zm = {
     yaxis: [],
     annotations: {
         points: [
-            {
-                x: null,
-                y: null,
-                marker: {
-                    size: 6,
-                    fillColor: "#fff",
-                    strokeColor: "#2698FF",
-                    radius: 2
-                },
-                label: {
-                    borderColor: "#FF4560",
-                    offsetY: 0,
-                    style: {
-                        color: "#fff",
-                        background: "#FF4560"
-                    },
-                    text: "mean"
-                }
-            },
-            {
-                x: null,
-                y: null,
-                marker: {
-                    size: 6,
-                    fillColor: "#fff",
-                    strokeColor: "#2698FF",
-                    radius: 2
-                },
-                label: {
-                    borderColor: "#FF4560",
-                    offsetY: 0,
-                    style: {
-                        color: "#fff",
-                        background: "#FF4560"
-                    },
-                    text: "mean+std"
-                }
-            },
-            {
-                x: null,
-                y: null,
-                marker: {
-                    size: 6,
-                    fillColor: "#fff",
-                    strokeColor: "#2698FF",
-                    radius: 2
-                },
-                label: {
-                    borderColor: "#FF4560",
-                    offsetY: 0,
-                    style: {
-                        color: "#fff",
-                        background: "#FF4560"
-                    },
-                    text: "mean-std"
-                }
-            },
+            {x: null, y: null, marker: {size: 4}, label: {text: null}},
+            {x: null, y: null, marker: {size: 4}, label: {text: null}},
+            {x: null, y: null, marker: {size: 4}, label: {text: null}},
         ],
     },
     grid: {
@@ -451,10 +397,13 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         const yIdx = 1;
         newOptions.annotations.points[meanIdx].x = styling.points[meanIdx][xIdx];
         newOptions.annotations.points[meanIdx].y = styling.points[meanIdx][yIdx];
+        newOptions.annotations.points[meanIdx].label.text = styling.points[meanIdx][xIdx];
         newOptions.annotations.points[meanPlusStdIdx].x = styling.points[meanPlusStdIdx][xIdx];
         newOptions.annotations.points[meanPlusStdIdx].y = styling.points[meanPlusStdIdx][yIdx];
+        newOptions.annotations.points[meanPlusStdIdx].label.text = styling.points[meanPlusStdIdx][xIdx];
         newOptions.annotations.points[meanMinusStdIdx].x = styling.points[meanMinusStdIdx][xIdx];
         newOptions.annotations.points[meanMinusStdIdx].y = styling.points[meanMinusStdIdx][yIdx];
+        newOptions.annotations.points[meanMinusStdIdx].label.text = styling.points[meanMinusStdIdx][xIdx];
 
         newOptions.colors = styling.colors;
 
@@ -525,6 +474,7 @@ export function generateSeries({plotId, data, modelsSlice, xAxisRange, yAxisRang
  * @param {object} data the raw data from the api for the current options
  * @param {object} modelsSlice the slice of the store containing information about the model groups
  * @param {boolean} refLineVisible visibility status of the reference line
+ * @param {function} getState store.getState
  * @returns a combination of data and statistical values series
  */
 function generateTco3_ZmSeries({data, modelsSlice, refLineVisible, getState}) {
@@ -568,6 +518,7 @@ function generateTco3_ZmSeries({data, modelsSlice, refLineVisible, getState}) {
         buildMatrix: buildSvMatrixTco3Zm,
         generateSingleSvSeries: generateSingleTco3ZmSeries
     });
+    console.log(svSeries);
 
     return Object.assign(combineSeries(series, svSeries), {points: calcRecoveryPoints(getState, data.reference_value, svSeries)});
 }
