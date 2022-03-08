@@ -18,11 +18,9 @@ import {
     getDefaultYAxisTco3Zm,
     FONT_FAMILY,
     customTooltipFormatter,
-    getIncludedModels,
-    formatLatitude,
-    findLatitudeBandByLocation,
 
 } from "./optionsFormatter";
+import tco3ReturnData from "./testData.json";
 
 describe("testing optionsFormatter functionality", () => {
     const spacedYearArray = [...Array(10).keys()].map(number => `${START_YEAR + 2 * number}`);
@@ -90,7 +88,7 @@ describe("testing optionsFormatter functionality", () => {
     })
 
 
-    describe("tests the generation of a series", () => {
+    describe("tests the generation of plot series", () => {
         let store;
         let modelsSlice;
         const testArray = Array(141).fill(0).map((e, i) => [START_YEAR + i, e]);
@@ -99,43 +97,44 @@ describe("testing optionsFormatter functionality", () => {
             modelsSlice = store.getState().models;
         })
 
-        const dataExpected = {
-            data: [
-                { name: undefined, data: testArray}, // is the reference line
-                {
-                    name: 'CCMI-1_ACCESS_ACCESS-CCM-refC2',
-                    data: testArray
-                },
-                {
-                    name: 'CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG',
-                    data: testArray
-                },
-                { name: 'CCMI-1_CCCma_CMAM-refC2', data: testArray},
-                { name: 'mean(Example Group)', data: testArray},
-                { name: 'median(Example Group)', data: testArray},
-                { name: 'lowerPercentile(Example Group)', data: testArray},
-                { name: 'upperPercentile(Example Group)', data: testArray},
-                { name: 'mean+std(Example Group)', data: testArray},
-                { name: 'mean-std(Example Group)', data: testArray},
-            ],
-            styling: {
-              colors: [
-                '#000000', '#000000',
-                '#000000','#000000', 
-                '#000', '#000',    
-                "#1e8509", "#1e8509",
-                '#000', '#000'
-              ],
-              dashArray: [
-                0, 0, 0, 0,
-                0, 2, 4, 4, 
-                8, 8
-              ],
-              width: Array(10).fill(MODEL_LINE_THICKNESS),
-            }
-          }
+        
 
-        it("generates the series correctly", () => {
+        it("generates the tco3_zm series correctly", () => {
+            const dataExpected = {
+                data: [
+                    { name: undefined, data: testArray}, // is the reference line
+                    {
+                        name: 'CCMI-1_ACCESS_ACCESS-CCM-refC2',
+                        data: testArray
+                    },
+                    {
+                        name: 'CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG',
+                        data: testArray
+                    },
+                    { name: 'CCMI-1_CCCma_CMAM-refC2', data: testArray},
+                    { name: 'mean(Example Group)', data: testArray},
+                    { name: 'median(Example Group)', data: testArray},
+                    { name: 'lowerPercentile(Example Group)', data: testArray},
+                    { name: 'upperPercentile(Example Group)', data: testArray},
+                    { name: 'mean+std(Example Group)', data: testArray},
+                    { name: 'mean-std(Example Group)', data: testArray},
+                ],
+                styling: {
+                  colors: [
+                    '#000000', '#000000',
+                    '#000000','#000000', 
+                    '#000', '#000',    
+                    "#1e8509", "#1e8509",
+                    '#000', '#000'
+                  ],
+                  dashArray: [
+                    0, 0, 0, 0,
+                    0, 2, 4, 4, 
+                    8, 8
+                  ],
+                  width: Array(10).fill(MODEL_LINE_THICKNESS),
+                }
+            }
             const data = {}
             Object.keys(modelsSlice.modelGroups[0].models).forEach(key => {
                 data[key] = {};
@@ -154,6 +153,96 @@ describe("testing optionsFormatter functionality", () => {
             const series = generateSeries({plotId: O3AS_PLOTS.tco3_zm, data: data, modelsSlice: modelsSlice, refLineVisible: true})
             expect(series).toEqual(dataExpected);
         });
+
+        
+        it("generates the tco3_return series correctly", () => {
+            const data = {
+                "CCMI-1_ACCESS_ACCESS-CCM-refC2":{
+                   "plotStyle":{
+                      "color":"purple",
+                      "linestyle":"none",
+                      "marker":"o"
+                   },
+                   "data":{
+                      "Antarctic(Oct)":2064,
+                      "SH mid-lat":2051,
+                      "Tropics":2060,
+                      "NH mid-lat":2041,
+                      "Arctic(Mar)":2040,
+                      "Near global":2049,
+                      "Global":2052,
+                      "User region":2046
+                   }
+                },
+                "CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG":{
+                   "plotStyle":{
+                      "color":"purple",
+                      "linestyle":"none",
+                      "marker":"o"
+                   },
+                   "data":{
+                      "Antarctic(Oct)":2071,
+                      "SH mid-lat":2071,
+                      "Tropics":2046,
+                      "NH mid-lat":2066,
+                      "Arctic(Mar)":2064,
+                      "Near global":2065,
+                      "Global":2066,
+                      "User region":2064
+                   }
+                },
+                "CCMI-1_CCCma_CMAM-refC2":{
+                   "plotStyle":{
+                      "color":"red",
+                      "linestyle":"none",
+                      "marker":"x"
+                   },
+                   "data":{
+                      "Antarctic(Oct)":2087,
+                      "SH mid-lat":2049,
+                      "NH mid-lat":1986,
+                      "Arctic(Mar)":1986,
+                      "Near global":2045,
+                      "Global":2048,
+                      "User region":2046
+                   }
+                }
+            }
+            const dataExpected = {
+                data: [
+                    { name: '', data: [], type: "boxPlot"},
+                    { name: 'CCMI-1_ACCESS_ACCESS-CCM-refC2', data: [], type: "scatter"},
+                    { name: 'CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG', data: [], type: "scatter"},
+                    { name: 'CCMI-1_CCCma_CMAM-refC2', data: [], type: "scatter",},
+                    { name: 'mean(Example Group)', data: [], type: "scatter",},
+                    { name: 'median(Example Group)', data: [], type: "scatter",},
+                    { name: 'lowerPercentile(Example Group)', data: [], type: "scatter",},
+                    { name: 'upperPercentile(Example Group)', data: [], type: "scatter",},
+                    { name: 'mean+std(Example Group)', data: [], type: "scatter",},
+                    { name: 'mean-std(Example Group)', data: [], type: "scatter",},
+                ],
+                styling: {
+                  colors: [
+                    "#800080",
+                    "#800080",
+                    "#ff0000", 
+                    '#000', '#000',    
+                    "#1e8509", "#1e8509",
+                    '#000', '#000'
+                  ],
+                  dashArray: [
+                    0, 2, 4, 4, 
+                    8, 8
+                  ],
+                  width: Array(6).fill(MODEL_LINE_THICKNESS),
+                }
+            }
+            
+            const series = generateSeries({plotId: O3AS_PLOTS.tco3_return, data: data, modelsSlice: modelsSlice, refLineVisible: true, getState: store.getState, xAxisRange: { regions: ["Global"] }, yAxisRange: {minY: 270, maxY: 330}});
+            expect(series).toEqual(dataExpected);
+        });
+
+
     });
 
 
@@ -270,6 +359,4 @@ describe("testing optionsFormatter functionality", () => {
             }
         }})).toEqual(expected);
     });
-
-    it('should ', () => {});
 });
