@@ -6,6 +6,7 @@ import {START_YEAR, END_YEAR} from '../../../../../utils/constants';
 
 /**
  * Enables the user to choose the range that should be visible on the x-axis of the plot.
+ * @component
  * @param {Object} props
  * @param {function} props.reportError function for error handling
  * @returns {JSX.Element} a jsx containing two text-fields and labels

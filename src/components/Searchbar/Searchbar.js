@@ -56,7 +56,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
  * A searchbar component that is used for searching a string in a data array
  * that either contains strings or objects. If the array contains objects the
  * values of these objects are searched.
- 
+ * @component
  * @param {Object} props holds all props passed to the component
  * @param {array} props.inputArray an array of either only strings or only objects.
  *                                 The input typed in the searchbar is used as a search

@@ -7,14 +7,15 @@ import { selectVisibility } from '../../../store/referenceSlice/referenceSlice';
 import { REQUEST_STATE, selectActivePlotData } from '../../../services/API/apiSlice';
 import { Typography, CircularProgress } from '@mui/material';
 import { APEXCHART_PLOT_TYPE, HEIGHT_LOADING_SPINNER, HEIGHT_GRAPH, NO_MONTH_SELECTED } from '../../../utils/constants';
+import store from '../../../store/store';
 
 /**
  * Currently there is no dynamic data linking. The graph will always
  * render the data from default-data.json in this folder. This is
  * just a preview to work with until the API is implemented and
  * synced with redux and the UI (input components).
- * 
- * @param {*} props currently not used
+ * @component
+ * @param {object} props currently not used
  * @returns a svg rendered element that represents a graph, this is done by 
  *          the apexcharts library
  */
@@ -54,9 +55,9 @@ function Graph(props) {
         )
 
     } else if (activeData.status === REQUEST_STATE.success) {
-        const {data, styling} = generateSeries({plotId, data: activeData.data, modelsSlice, xAxisRange, yAxisRange, refLineVisible});
+        const {data, styling} = generateSeries({plotId, data: activeData.data, modelsSlice, xAxisRange, yAxisRange, refLineVisible, getState: store.getState});
         const seriesNames = data.map(series => series.name);
-        const options = getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, seriesNames});
+        const options = getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, seriesNames, getState: store.getState});
         const uniqueNumber = Date.now(); // forces apexcharts to re-render correctly!
         return <Chart key={uniqueNumber} options={options} series={data} type={APEXCHART_PLOT_TYPE[plotId]} height={HEIGHT_GRAPH} />
     }

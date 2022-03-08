@@ -6,15 +6,20 @@ import Typography from '@mui/material/Typography';
 
 /**
  * The link that provides the image logo
+ * @constant {string}
+ * @memberof Logo
  */
 export const logoSrc = "https://o3as.data.kit.edu/img/logos/o3as-logo.svg";
 /**
  * The link to the O3AS Webapp
+ * @constant {string}
+ * @memberof Logo
  */
 export const O3ASLink = "#page-top";
 
 /**
  * Returns a logo from O3AS and the text "O3AS Webapp"
+ * @component
  * @param {Object} props 
  * @param {Object|String} props.display when the logo should be displayed
  * @returns {JSX.Element} containing one Image and one Text wrapped in a Link component

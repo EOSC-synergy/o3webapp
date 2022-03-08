@@ -6,6 +6,7 @@ import store from '../../../../../store/store';
 
 /**
  * Enables the user to choose the range that should be visible on the y-axis of the plot.
+ * @component
  * @param {Object} props
  * @param {function} props.reportError function for error handling
  * @returns {JSX.Element} a jsx containing two text-fields and labels

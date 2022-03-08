@@ -18,6 +18,9 @@ import { alpha } from '@mui/system';
 
 /**
  * A DataGrid with applied CSS styling.
+ * @memberof EditModelGroupModal
+ * @constant {function}
+ * @returns {object}
  */
 const StyledDataGrid = styled(DataGrid)(() => ({
     height: "70%",
@@ -26,9 +29,9 @@ const StyledDataGrid = styled(DataGrid)(() => ({
 
 /**
  * Parses the rows out of the given modelList
- *
+ * @memberof EditModelGroupModal
  * @param {String[]} modelList  A list of models that will be parsed into data grid rows
- * @returns                     The rows representing the models of the modelList in the data grid
+ * @returns {array}             The rows representing the models of the modelList in the data grid
  */
 function createRows(modelList) {
     const rows = [];
@@ -56,6 +59,7 @@ function createRows(modelList) {
  * A modal where the user can edit the visibility and the inclusion in statistical value calculation
  * of each model in an existing model group.
  *
+ * @component
  * @param {Object} props
  * @param {function} props.onClose      Function to call if modal should be closed
  * @param {boolean} props.isOpen        Boolean whether the modal should be visible
