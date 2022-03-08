@@ -507,7 +507,6 @@ function generateTco3_ZmSeries({data, modelsSlice, refLineVisible, getState}) {
         buildMatrix: buildSvMatrixTco3Zm,
         generateSingleSvSeries: generateSingleTco3ZmSeries
     });
-    console.log(svSeries);
 
     return Object.assign(combineSeries(series, svSeries), {points: calcRecoveryPoints(getState, data.reference_value, svSeries)});
 }
@@ -1338,29 +1337,29 @@ function calcRecoveryPoints(getState, referenceValue, svSeries) {
     const refYear = getState().reference.settings.year;
     const refValue = Math.max(...referenceValue.data);
 
-    const dataIndices = [0, 4, 5]; // 0=mean, 4=mean+std, 5=mean-std
+    const dataName = ["mean", "mean+std", "mean-std"];
 
     const yearIdx = 0;
     const valIdx = 1;
 
-    const amountSV = 6;
-
-    for (let mg = 0; mg < svSeries.data.length / amountSV; mg++) {
-        for (let idx = 0; idx < dataIndices.length; idx++) {
-            for (let i = 0; i < mg * amountSV + svSeries.data[idx].data.length; i++) {
-                if (svSeries.data[mg * amountSV + dataIndices[idx]].data[i][yearIdx] <= refYear) continue;
-                if (svSeries.data[mg * amountSV + dataIndices[idx]].data[i][valIdx] >= refValue) {
-                    points.push(
-                        [
-                            svSeries.data[mg * amountSV + dataIndices[idx]].data[i][yearIdx],
-                            svSeries.data[mg * amountSV + dataIndices[idx]].data[i][valIdx]
-                        ]
-                    );
-                    break;
-                }
-            }
-            if (points.length < idx + 1) points.push([null, null]);
+    for (let idx = 0; idx < svSeries.data.length; idx++) {
+        if (!dataName.includes(svSeries.data[idx].name.split("(")[0])) {
+            points.push([null, null]);
+            continue;
         }
+        for (let i = 0; i < svSeries.data[idx].data.length; i++) {
+            if (svSeries.data[idx].data[i][yearIdx] <= refYear) continue;
+            if (svSeries.data[idx].data[i][valIdx] >= refValue) {
+                points.push(
+                    [
+                        svSeries.data[idx].data[i][yearIdx],
+                        svSeries.data[idx].data[i][valIdx]
+                    ]
+                );
+                break;
+            }
+        }
+        if (points.length < idx + 1) points.push([null, null]);
     }
     return points;
 }
