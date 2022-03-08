@@ -94,11 +94,7 @@ export const defaultTCO3_zm = {
     },
     yaxis: [],
     annotations: {
-        points: [
-            {x: null, y: null, marker: {size: 4}, label: {text: null}},
-            {x: null, y: null, marker: {size: 4}, label: {text: null}},
-            {x: null, y: null, marker: {size: 4}, label: {text: null}},
-        ],
+        points: [],
     },
     grid: {
         show: false,
@@ -390,20 +386,13 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.xaxis.max = xAxisRange.years.maxX;
         newOptions.xaxis.tickAmount = getOptimalTickAmount(xAxisRange.years.minX, xAxisRange.years.maxX);
 
-        const meanIdx = 0;
-        const meanPlusStdIdx = 1;
-        const meanMinusStdIdx = 2;
         const xIdx = 0;
         const yIdx = 1;
-        newOptions.annotations.points[meanIdx].x = styling.points[meanIdx][xIdx];
-        newOptions.annotations.points[meanIdx].y = styling.points[meanIdx][yIdx];
-        newOptions.annotations.points[meanIdx].label.text = styling.points[meanIdx][xIdx];
-        newOptions.annotations.points[meanPlusStdIdx].x = styling.points[meanPlusStdIdx][xIdx];
-        newOptions.annotations.points[meanPlusStdIdx].y = styling.points[meanPlusStdIdx][yIdx];
-        newOptions.annotations.points[meanPlusStdIdx].label.text = styling.points[meanPlusStdIdx][xIdx];
-        newOptions.annotations.points[meanMinusStdIdx].x = styling.points[meanMinusStdIdx][xIdx];
-        newOptions.annotations.points[meanMinusStdIdx].y = styling.points[meanMinusStdIdx][yIdx];
-        newOptions.annotations.points[meanMinusStdIdx].label.text = styling.points[meanMinusStdIdx][xIdx];
+        for (let point of styling.points) {
+            newOptions.annotations.points.push(
+                {x: point[xIdx], y: point[yIdx], marker: {size: 4}/*, label: {text: point[xIdx]}*/}
+            );
+        }
 
         newOptions.colors = styling.colors;
 
@@ -1354,15 +1343,24 @@ function calcRecoveryPoints(getState, referenceValue, svSeries) {
     const yearIdx = 0;
     const valIdx = 1;
 
-    for (let idx = 0; idx < dataIndices.length; idx++) {
-        for (let i = 0; i < svSeries.data[idx].data.length; i++) {
-            if (svSeries.data[dataIndices[idx]].data[i][yearIdx] <= refYear) continue;
-            if (svSeries.data[dataIndices[idx]].data[i][valIdx] >= refValue) {
-                points.push([svSeries.data[dataIndices[idx]].data[i][yearIdx], svSeries.data[dataIndices[idx]].data[i][valIdx]]);
-                break;
+    const amountSV = 6;
+
+    for (let mg = 0; mg < svSeries.data.length / amountSV; mg++) {
+        for (let idx = 0; idx < dataIndices.length; idx++) {
+            for (let i = 0; i < mg * amountSV + svSeries.data[idx].data.length; i++) {
+                if (svSeries.data[mg * amountSV + dataIndices[idx]].data[i][yearIdx] <= refYear) continue;
+                if (svSeries.data[mg * amountSV + dataIndices[idx]].data[i][valIdx] >= refValue) {
+                    points.push(
+                        [
+                            svSeries.data[mg * amountSV + dataIndices[idx]].data[i][yearIdx],
+                            svSeries.data[mg * amountSV + dataIndices[idx]].data[i][valIdx]
+                        ]
+                    );
+                    break;
+                }
             }
+            if (points.length < idx + 1) points.push([null, null]);
         }
-        if (points.length < idx + 1) points.push([null, null]);
     }
     return points;
 }
