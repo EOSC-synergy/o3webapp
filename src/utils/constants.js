@@ -322,6 +322,21 @@ export const SV_DASHING = {
     "lowerPercentile": 4,
     "upperPercentile": 4,
 }
+/**
+ * This object maps each statistical value to its corresponding name that 
+ * should be displayed in the legend of the plot and inside the tooltip when
+ * hovering over a datapoint.
+ */
+export const SV_DISPLAY_NAME = {
+    mean: "Mean",
+    median: "Median",
+    percentile: "Percentile",
+    "mean+std": "μ + σ",
+    "mean-std": "μ - σ",
+    "lowerPercentile": "Lower %",
+    "upperPercentile": "Upper %",
+
+}
 
 /**
  * This parameter specifies how thick the line of plotted models should appear.

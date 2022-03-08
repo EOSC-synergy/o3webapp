@@ -15,7 +15,8 @@ import {
     percentile,
     EXTENDED_SV_LIST,
     stdMean,
-    STATISTICAL_VALUE_LINE_THICKNESS, months, NUM_MONTHS
+    STATISTICAL_VALUE_LINE_THICKNESS, months, NUM_MONTHS,
+    SV_DISPLAY_NAME
 } from "../constants"
 import {convertModelName} from "../ModelNameConverter";
 import store from "../../store/store";
@@ -757,7 +758,7 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
             } else {
                 continue;
             }
-            svSeries.data.push(generateSingleSvSeries(`${sv}(${groupData.name})`, svData));
+            svSeries.data.push(generateSingleSvSeries(`${SV_DISPLAY_NAME[sv]} (${groupData.name})`, svData));
             svSeries.colors.push(SV_COLORING[sv]);   // coloring?
             svSeries.width.push(STATISTICAL_VALUE_LINE_THICKNESS);                  // thicker?
             svSeries.dashArray.push(SV_DASHING[sv]);              // solid?       
@@ -1270,8 +1271,8 @@ export function customTooltipFormatter({series, seriesIndex, dataPointIndex, w})
         )
     }
 
-    for (const sv of listOfSv) {
-        if (modelName.startsWith(sv)) {
+    for (const svName in SV_DISPLAY_NAME) {
+        if (modelName.startsWith(SV_DISPLAY_NAME[svName])) {
             // parse sv
             const {sv, groupName} = parseSvName(modelName);
             return (
@@ -1279,7 +1280,7 @@ export function customTooltipFormatter({series, seriesIndex, dataPointIndex, w})
                 <div>
                     <div style="margin:2px"><strong>${w.globals.seriesX[seriesIndex][dataPointIndex]}</strong></div>
                     <div>${sv}: <strong>${series[seriesIndex][dataPointIndex].toFixed(numDecimalsInDatapoint)}</strong></div>
-                    <div>Group: ${groupName}</div>g
+                    <div>Group: ${groupName}</div>
                 </div>
                 `
             )
