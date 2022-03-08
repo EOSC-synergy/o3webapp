@@ -32,13 +32,15 @@ export function updateURL() {
     otherSettings.push(`y_return=${plotSpecific.tco3_return.displayYRange.minY}-${plotSpecific.tco3_return.displayYRange.maxY}`);
     otherSettings.push(`title_zm=${plotSpecific.tco3_zm.title}`);
     otherSettings.push(`title_return=${plotSpecific.tco3_return.title}`);
-    /*
-    let modelGroups = [];
+
     for (let i = 0; i < store.getState().models.idCounter; i++) {
-        modelGroups.push(store.getState().models.modelGroups[i].name);
+        let models = [];
+        for (let model of Object.keys(store.getState().models.modelGroups[i].models)) {
+            models.push(store.getState().api.models.data.indexOf(model));
+        }
+        otherSettings.push(`group${i}=${store.getState().models.modelGroups[i].name},${models.join(",")}`);
     }
-    otherSettings.push(`groups=${modelGroups.join(",")}`);
-     */
+
 
     window.history.pushState('', '', `?plot=${store.getState().plot.plotId}&${otherSettings.join("&")}`);
 }
