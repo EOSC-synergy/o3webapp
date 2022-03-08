@@ -6,7 +6,11 @@ import { selectPlotId, selectPlotTitle, selectPlotXRange, selectPlotYRange } fro
 import { selectVisibility } from '../../../store/referenceSlice/referenceSlice';
 import { REQUEST_STATE, selectActivePlotData } from '../../../services/API/apiSlice';
 import { Typography, CircularProgress } from '@mui/material';
+import { Alert, Link } from '@mui/material';
+import { O3AS_PLOTS } from '../../../utils/constants';
 import { APEXCHART_PLOT_TYPE, HEIGHT_LOADING_SPINNER, HEIGHT_GRAPH, NO_MONTH_SELECTED } from '../../../utils/constants';
+import { createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/private-theming';
 
 /**
  * Currently there is no dynamic data linking. The graph will always
@@ -19,6 +23,7 @@ import { APEXCHART_PLOT_TYPE, HEIGHT_LOADING_SPINNER, HEIGHT_GRAPH, NO_MONTH_SEL
  *          the apexcharts library
  */
 function Graph(props) {
+
 
     const plotId = useSelector(selectPlotId);
     const plotTitle = useSelector(selectPlotTitle);
@@ -38,6 +43,23 @@ function Graph(props) {
         }
     }, [activeData]);
 
+    if (!(plotId in O3AS_PLOTS)) {
+        const style = {
+            color: "rgb(1, 67, 97)",
+            backgroundColor: "rgb(229, 246, 253)",
+            height: "200px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "1.5em"
+        }
+        return (
+            <Alert severity="info" sx={style}>
+                This plot type is not supported yet by the Webapp! But you can check it out at the <Link href="https://o3as.data.kit.edu/">O3as API</Link>.
+            </Alert>
+        );
+    }
+
     if (activeData.status === REQUEST_STATE.loading || activeData.status === REQUEST_STATE.idle) {
         return <div style={{display: "flex", alignItems: "center", justifyContent: "center", height: HEIGHT_LOADING_SPINNER}}>
             <div>
@@ -46,7 +68,8 @@ function Graph(props) {
             </div>
             
         </div>
-    } else if (activeData.status === REQUEST_STATE.error) {
+    }
+    else if (activeData.status === REQUEST_STATE.error) {
         return (
             <React.Fragment>
                 <Typography style={{display: "flex", justifyContent: "center", width: "100%"}}>Error: {activeData.error}</Typography>
