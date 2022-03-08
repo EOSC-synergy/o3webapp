@@ -209,7 +209,7 @@ function EditModelGroupModal(props) {
         console.log(modelData);
         setMedianVisible(modelList.map(model => modelData[model][median]));
         setMeanVisible(modelList.map(model => modelData[model][mean]));
-    },[props.isOpen]);
+    }, [props.isOpen]);
 
     /**
      * Gets the setter for the boolean list of checked and unchecked models of the selected type.
@@ -342,7 +342,7 @@ function EditModelGroupModal(props) {
             dataCpy[model][percentile] = percentileVisible[i];
             dataCpy[model][isVisible] = isVisible[i];
         }
-
+        console.log(dataCpy)
         dispatch(updatePropertiesOfModelGroup({groupId: props.modelGroupId, data: dataCpy}))
         props.onClose();
     }
