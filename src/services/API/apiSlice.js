@@ -9,6 +9,8 @@ import {setDisplayYRangeForPlot} from "../../store/plotSlice/plotSlice";
  * to determine the state of an async request in the redux store. By accessing
  * the stored status components can render differently e.g. displaying a spinner,
  * displaying the fetched data on success or report an error.
+ * @constant {object}
+ * @category API
  */
 export const REQUEST_STATE = {
     idle: "idle",

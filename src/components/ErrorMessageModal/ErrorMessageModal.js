@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 
 /**
  * Displays an error message.
+ * @component
  * @param {Object} props
  * @param {boolean} props.isOpen -> whether the error message modal should be displayed
  * @param {function} props.onClose -> handles closing of the modal

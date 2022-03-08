@@ -89,6 +89,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 
 /**
  * an expandable section containing a list of inputComponents as well as a name
+ * @component
  * @param {Object} props
  * @param {string[]} props.components -> an array containing a string representation of all components that should be plotted
  * @param {string} props.name -> the name of the section

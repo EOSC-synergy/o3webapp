@@ -33,8 +33,9 @@ export const links = [
 /**
  * A container for copyright text and important links at the bottom of the Website.
  * Contains links to home page, privacy policy, terms of use and how to acknowledge
+ * @component
  */
-function Footer () {
+const Footer = (props) => {
     return (
         <div
             style={{

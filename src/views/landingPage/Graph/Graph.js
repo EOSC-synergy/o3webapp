@@ -13,7 +13,7 @@ import { APEXCHART_PLOT_TYPE, HEIGHT_LOADING_SPINNER, HEIGHT_GRAPH, NO_MONTH_SEL
  * render the data from default-data.json in this folder. This is
  * just a preview to work with until the API is implemented and
  * synced with redux and the UI (input components).
- * 
+ * @component
  * @param {*} props currently not used
  * @returns a svg rendered element that represents a graph, this is done by 
  *          the apexcharts library

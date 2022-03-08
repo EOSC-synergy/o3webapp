@@ -8,6 +8,7 @@ import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlic
 import { REQUEST_STATE } from "../../../../../services/API/apiSlice";
 /**
  * enables the user to select a reference model
+ * @component
  * @param {Object} props
  * @param {function} props.reportError - function to handle errors
  * @returns {JSX.Element} a jsx containing a dropdown to select the reference model from all currently visible models

@@ -25,7 +25,7 @@ import {STATISTICAL_VALUES} from "../../../../../../utils/constants";
 
 /**
  * A card containing information about a modal group.
- *
+ * @component
  * @param {Object} props
  * @param {String} props.reportError - error function
  * @param {int} props.modelGroupId -> id of the model group

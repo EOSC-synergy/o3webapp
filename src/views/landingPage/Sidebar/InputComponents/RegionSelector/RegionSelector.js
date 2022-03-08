@@ -7,7 +7,8 @@ import {Grid} from "@mui/material";
 
 /**
  * enables the user to select / deselect regions as well as entering a private region {@link LatitudeBandSelector}
- * @todo add redux connection
+ * 
+ * @component
  * @param {Object} props
  * @param {function} props.reportError - used to report error functions
  * @returns {JSX.Element}

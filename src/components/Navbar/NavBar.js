@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 
 /**
  * A component for the navigation of the website.
+ * @component
  */
 function Navbar(props) {
 

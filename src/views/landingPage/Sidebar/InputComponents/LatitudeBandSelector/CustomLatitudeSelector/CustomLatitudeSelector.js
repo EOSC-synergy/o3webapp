@@ -11,6 +11,7 @@ import React from "react";
 
 /**
  * A component to select the specific min and max latitude values for the custom region.
+ * @component
  *
  * @returns     JSX with the component
  */

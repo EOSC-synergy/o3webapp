@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 
 /**
  * main view of web page
+ * @component
  * @param {Object} props
  * @param {function} props.reportError - function to report an error
  * @param {function} props.openSidebar - function to open the sidebar

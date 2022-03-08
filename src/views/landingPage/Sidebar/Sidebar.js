@@ -29,6 +29,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 /**
  * Contains all input components responsible for the modification 
  * of the plot settings.
+ * @component
  * @param {Object} props 
  * @param {boolean} props.isOpen -  whether sideBar should be open
  * @param {function} props.onClose - handles closing of the sidebar

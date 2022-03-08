@@ -26,7 +26,7 @@ const StyledDataGrid = styled(DataGrid)(() => ({
 
 /**
  * Parses the rows out of the given modelList
- *
+ * @component
  * @param {String[]} modelList  A list of models that will be parsed into data grid rows
  * @returns                     The rows representing the models of the modelList in the data grid
  */
