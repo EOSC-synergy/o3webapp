@@ -37,11 +37,13 @@ import { selectNameOfGroup, selectModelDataOfGroup } from "../../../../../../sto
  * @returns {JSX} a jsx containing a modal with a transfer list with all available models
  */
 function AddModelGroupModal(props) {
+    
+    const isEditMode = 'modelGroupId' in props;
 
     /**
      * the label in the card heading
      */
-    const addModelLabel = 'modelGroupId' in props ? "Edit Model Group Members" : "Add Model Group";
+    const addModelLabel = isEditMode ? "Edit Model Group Members" : "Add Model Group";
     
     const dispatch = useDispatch();
 
@@ -58,7 +60,7 @@ function AddModelGroupModal(props) {
         isLoading = false;
     }
 
-    const modelGroupId = 'modelGroupId' in props ? props.modelGroupId : -1;
+    const modelGroupId = isEditMode ? props.modelGroupId : -1;
 
     /**
      * Array containing all currently checked models
@@ -68,7 +70,8 @@ function AddModelGroupModal(props) {
      * Array containing all models, that are currently plotted in the right transfer list
      * -> models that should eventually be added
      */
-    const [right, setRight] = React.useState(Object.keys(useSelector(state => selectModelDataOfGroup(state, modelGroupId))));
+    const storeRight = Object.keys(useSelector(state => selectModelDataOfGroup(state, modelGroupId)));
+    const [right, setRight] = React.useState(storeRight);
     /**
      * Array containing all models that should currently be visibile
      * because of the search function those might differ from all models
@@ -77,7 +80,8 @@ function AddModelGroupModal(props) {
     /**
      * The currently enetered group name
      */
-    const [groupName, setGroupName] = React.useState(useSelector(state => selectNameOfGroup(state, modelGroupId)));
+    const storeGroupName = useSelector(state => selectNameOfGroup(state, modelGroupId));
+    const [groupName, setGroupName] = React.useState(storeGroupName);
     const [errorMessage, setErrorMessage] = React.useState('');
     const theme = useTheme();
 
@@ -181,6 +185,7 @@ function AddModelGroupModal(props) {
         }
         dispatch(setModelsOfModelGroup({groupId: props.modelGroupId, groupName: groupName, modelList: right}));
         dispatch(fetchPlotDataForCurrentModels());
+        setGroupName("");
         setVisible(allModels);
         setChecked([]);
         setRight([]);
@@ -300,9 +305,18 @@ function AddModelGroupModal(props) {
      * @todo open a "discard changes?" popup here
      */
     const closeWithChanges = () => {
-        setVisible(allModels);
-        setChecked([]);
-        setRight([]);
+        if(isEditMode) {
+            setGroupName(storeGroupName);
+            setVisible(allModels);
+            setChecked([]);
+            setRight(storeRight);
+        } else {
+            setGroupName("");
+            setVisible(allModels);
+            setChecked([]);
+            setRight([]);
+        }
+        
         props.onClose();
     }
 
