@@ -151,7 +151,7 @@ function TimeCheckBoxGroup(props) {
     /**
      * Handles the change if a month is clicked (selected/deselected).
      * 
-     * @param {int} monthId The id of the month that was clicked
+     * @param {int} monthId - The id of the month that was clicked
      */
     const handleMonthChecked = (monthId) => {
         let monthCpy = [...selectedMonths]
@@ -173,10 +173,10 @@ function TimeCheckBoxGroup(props) {
     /**
      * Constructs a SeasonCheckbox for a given season
      * 
-     * @param {Object} param            The parameter object representing a season
-     * @param {String} param.name       The season name
-     * @param {Array of int} param.months     An array of monthId's of the months included in this season
-     * @param {int} param.seasonId   The id of this season
+     * @param {Object} param - The parameter object representing a season
+     * @param {string} param.name - The season name
+     * @param {int[]} param.months - An array of monthId's of the months included in this season
+     * @param {int} param.seasonId - The id of this season
      * @returns {JSX.Element}                   A preconfigured SeasonCheckbox
      */
     const toSeasonCheckbox = ({name, months, seasonId}) => {

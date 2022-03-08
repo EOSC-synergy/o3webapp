@@ -168,7 +168,7 @@ export const defaultTCO3_zm = {
  * @param {boolean} opposite whether to show the y-axis on the right side (default is false)
  * @param {number} offsetX how many px the y-axis should be adjusted
  * @param {number} tickAmount how many ticks (on the y-axis) should be displayed (should be calculated by functions to provide a nice formatting)
- * @returns
+ * @returns defaults YAxis of Tco3Zm plot
  */
 export function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show = false, opposite = false, offsetX = -1, tickAmount = 0) {
     return {
@@ -215,7 +215,7 @@ export function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show = false, oppo
  * @param {boolean} opposite whether to show the y-axis on the right side (default is false)
  * @param {number} offsetX how many px the y-axis should be adjusted
  * @param {number} tickAmount how many ticks (on the y-axis) should be displayed (should be calculated by functions to provide a nice formatting)
- * @returns
+ * @returns defaults YAxis of Tco3Zm return
  */
 export function getDefaultYAxisTco3Return(seriesName, minY, maxY, show = false, opposite = false, offsetX = -1, tickAmount = 0) {
     return {
@@ -762,12 +762,13 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
 
         for (const [sv, svData] of Object.entries(svHolder)) {
 
-            if (sv === STATISTICAL_VALUES[std] // std
-                || sv === STATISTICAL_VALUES.percentile) continue; // skip for now
+            if (sv === std // std
+                || sv === percentile) continue; // skip for now
+
 
             if (groupData.visibleSV[sv] // mean und median
-                || (sv.includes("std") && groupData.visibleSV[STATISTICAL_VALUES[std]])
-                || (sv.toLowerCase().includes(percentile) && groupData.visibleSV[STATISTICAL_VALUES[percentile]])) {
+                || (sv.includes("std") && groupData.visibleSV[std])
+                || (sv.toLowerCase().includes(percentile) && groupData.visibleSV[percentile])) {
             } else {
                 continue;
             }
@@ -795,7 +796,7 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
 
     const matrix = buildMatrix({modelList, data}); // function supplied by caller
 
-    const PROCESS_SV = [...STATISTICAL_VALUES_LIST.filter(x => x !== percentile), ...EXTENDED_SV_LIST];
+    const PROCESS_SV = [...STATISTICAL_VALUES_LIST.filter(x => x !== STATISTICAL_VALUES.percentile), ...EXTENDED_SV_LIST];
 
     const svHolder = {};
     PROCESS_SV.forEach(
@@ -818,9 +819,9 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
 
     svHolder["mean+std"] = [];
     svHolder["mean-std"] = [];
-    for (let i = 0; i < svHolder[STATISTICAL_VALUES[std]].length; ++i) {
-        svHolder["mean+std"].push(svHolder[stdMean][i] + svHolder[STATISTICAL_VALUES[std]][i]);
-        svHolder["mean-std"].push(svHolder[stdMean][i] - svHolder[STATISTICAL_VALUES[std]][i]);
+    for (let i = 0; i < svHolder[std].length; ++i) {
+        svHolder["mean+std"].push(svHolder[stdMean][i] + svHolder[std][i]);
+        svHolder["mean-std"].push(svHolder[stdMean][i] - svHolder[std][i]);
     }
     delete svHolder["stdMean"];
     return svHolder;
@@ -1150,8 +1151,8 @@ function create2dArray(i) {
  * @returns                     True if the given model should be included in the SV calculation of the given SV-Type
  */
 function isIncludedInSv(model, groupData, svType) {
-    if (svType === "stdMean") return groupData.models[model][STATISTICAL_VALUES[std]]; // the std mean should only be calculated if the std is necessary
-    if (svType.toLowerCase().includes(percentile)) return groupData.models[model][STATISTICAL_VALUES[percentile]];
+    if (svType === "stdMean") return groupData.models[model][std]; // the std mean should only be calculated if the std is necessary
+    if (svType.toLowerCase().includes(percentile)) return groupData.models[model][percentile];
     return groupData.models[model][svType];
 }
 

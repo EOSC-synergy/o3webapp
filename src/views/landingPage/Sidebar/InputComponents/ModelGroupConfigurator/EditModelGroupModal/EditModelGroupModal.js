@@ -1,20 +1,20 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux"
-import {Modal, Card, Button, Checkbox, IconButton, CardActions} from "@mui/material";
+import {Modal, Card, Button, Checkbox, IconButton, CardActions, Box} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
 import SearchBar from "../../../../../../components/Searchbar/Searchbar";
 import {styled} from '@mui/material/styles';
-import DoneIcon from '@mui/icons-material/Done';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import IntermediateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
 import { selectModelsOfGroup, selectModelDataOfGroup, updatePropertiesOfModelGroup } from "../../../../../../store/modelsSlice/modelsSlice";
-import { STATISTICAL_VALUES, std } from "../../../../../../utils/constants";
+import { STATISTICAL_VALUES, mean, std, median, percentile } from "../../../../../../utils/constants";
 import PropTypes from "prop-types";
 import CardHeader from '@mui/material/CardHeader';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material/styles';
 import { convertModelName } from "../../../../../../utils/ModelNameConverter";
+import { alpha } from '@mui/system';
 
 /**
  * A DataGrid with applied CSS styling.
@@ -42,10 +42,10 @@ function createRows(modelList) {
             "project": matchResult.project,
             "institute": matchResult.institute,
             "model": matchResult.name,
-            "median": false,
             "mean": false,
-            "percentile": false,
             "standard deviation": false,
+            "median": false,
+            "percentile": false,
             "visible": false
         })
     }
@@ -77,11 +77,11 @@ function EditModelGroupModal(props) {
         transform: 'translate(-50%, -50%)',
         width: '90%',
         height: '75%',
-        minHeight: "75%",
-        maxHeight: "100vh",
+        boxShadow: 24,
         overflow: "auto",
         bgcolor: theme.palette.background.default,
-        boxShadow: 24,
+        minHeight: "75%",
+        maxHeight: "100vh",
         p: 4,
     };
 
@@ -124,28 +124,28 @@ function EditModelGroupModal(props) {
     const [filteredRows, setFilteredRows] = React.useState(rows);
 
     /**
-     * An array filled with boolean values that indicate whether a model is included in the median calculation or not.
-     * The index of each model in the array is its corresponding row id.
-     */
-    const [medianVisible, setMedianVisible] = React.useState(modelList.map(model => modelData[model].median));
-
-    /**
      * An array filled with boolean values that indicate whether a model is included in the mean calculation or not.
      * The index of each model in the array is its corresponding row id.
      */
-    const [meanVisible, setMeanVisible] = React.useState(modelList.map(model => modelData[model].mean));
+    const [meanVisible, setMeanVisible] = React.useState(modelList.map(model => modelData[model][mean]));
 
     /**
      * An array filled with boolean values that indicate whether a model is included in the standard deviation (std) calculation or not.
-     * The index of each model in the array is its corresponding row id.  
+     * The index of each model in the array is its corresponding row id.
      */
     const [stdVisible, setStd] = React.useState(modelList.map(model => modelData[model][std]));
+
+    /**
+     * An array filled with boolean values that indicate whether a model is included in the median calculation or not.
+     * The index of each model in the array is its corresponding row id.
+     */
+    const [medianVisible, setMedianVisible] = React.useState(modelList.map(model => modelData[model][median]));
 
     /**
      * An array filled with boolean values that indicate whether a model is included in the percentile calculation or not.
      * The index of each model in the array is its corresponding row id.
      */
-    const [percentileVisible, setPercentileVisible] = React.useState(modelList.map(model => modelData[model].percentile));
+    const [percentileVisible, setPercentileVisible] = React.useState(modelList.map(model => modelData[model][percentile]));
 
     /**
      * An array filled with boolean values that indicate whether a model should be visible in the plot or not.
@@ -170,12 +170,12 @@ function EditModelGroupModal(props) {
      */
     const getCheckedListByType = (type) => {
         switch (type.toLowerCase()) {
-            case "median":
-                return medianVisible;
             case "mean":
                 return meanVisible;
-            case std:
+            case "standard deviation":
                 return stdVisible;
+            case "median":
+                return medianVisible;
             case "percentile":
                 return percentileVisible;
             case "visible":
@@ -196,12 +196,12 @@ function EditModelGroupModal(props) {
      */
     const getCheckedSetterByType = (type) => {
         switch (type.toLowerCase()) {
-            case "median":
-                return setMedianVisible;
             case "mean":
                 return setMeanVisible;
-            case std:
+            case "standard deviation":
                 return setStd;
+            case "median":
+                return setMedianVisible;
             case "percentile":
                 return setPercentileVisible;
             case "visible":
@@ -304,11 +304,11 @@ function EditModelGroupModal(props) {
 
         for (let i = 0; i < modelList.length; i++) {
             const model = modelList[i];
-            dataCpy[model].mean = meanVisible[i];
-            dataCpy[model].median = medianVisible[i];
-            dataCpy[model].std = stdVisible[i];
-            dataCpy[model].percentile = percentileVisible[i];
-            dataCpy[model].isVisible = isVisible[i];
+            dataCpy[model][mean] = meanVisible[i];
+            dataCpy[model][std] = stdVisible[i];
+            dataCpy[model][median] = medianVisible[i];
+            dataCpy[model][percentile] = percentileVisible[i];
+            dataCpy[model][isVisible] = isVisible[i];
         }
 
         dispatch(updatePropertiesOfModelGroup({groupId: props.modelGroupId, data: dataCpy}))
@@ -320,19 +320,19 @@ function EditModelGroupModal(props) {
      * All changes are lost in the process.
      */
     const discardChanges = () => {
-        const meanData = [], medianData = [], stdData = [], percentileData = [], visibleData = [];
+        const meanData = [], stdData = [], medianData = [], percentileData = [], visibleData = [];
 
         for (const model of modelList) {
-            meanData.push(modelData[model].mean);
-            medianData.push(modelData[model].median);
+            meanData.push(modelData[model][mean]);
             stdData.push(modelData[model][std]);
-            percentileData.push(modelData[model].percentile);
+            medianData.push(modelData[model][median]);
+            percentileData.push(modelData[model][percentile]);
             visibleData.push(modelData[model].isVisible);
         }
 
         setMeanVisible(meanData);
-        setMedianVisible(medianData);
         setStd(stdData);
+        setMedianVisible(medianData);
         setPercentileVisible(percentileData);
         setIsVisible(visibleData);
 
@@ -346,30 +346,45 @@ function EditModelGroupModal(props) {
      * @returns                 JSX with the generated header name.
      */
     const generateHeaderName = (type) => {
-        if (areAllCheckboxesSelected(type)) {
-            return (
-                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                    <CheckBoxIcon fontSize="small" style={{marginRight: "5px"}} color="primary"
-                                  data-testid={`ColumnCheckboxCheckedType${type}`}/>
-                    {type}
-                </div>)
-        } else {
-            if (areNoCheckboxesSelected(type)) {
-                return (
-                    <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                        <CheckBoxOutlineBlankIcon fontSize="small" style={{marginRight: "5px"}}
-                                                  data-testid={`ColumnCheckboxUncheckedType${type}`}/>
-                        {type}
-                    </div>)
-            } else {
-                return (
-                    <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                        <IntermediateCheckBoxIcon fontSize="small" style={{marginRight: "5px"}} color="primary"
-                                                  data-testid={`ColumnCheckboxIntermediateType${type}`}/>
-                        {type}
-                    </div>)
-            }
-        }
+        return (
+            <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap', cursor: 'pointer'}}>
+                <Box
+                    sx={{
+                        textAlign: 'center',
+                        marginRight: '5px',
+                        width: '42px',
+                        height: '42px',
+                        borderRadius: '50%',
+                        '&:hover': {
+                            backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity),
+                        },
+                    }}
+                >
+                    {
+                        areAllCheckboxesSelected(type) ?
+                            <CheckBoxIcon
+                                fontSize="medium"
+                                color="primary"
+                                data-testid={`ColumnCheckboxCheckedType${type}`}
+                            />
+                        : (
+                            areNoCheckboxesSelected(type) ?
+                                <CheckBoxOutlineBlankIcon
+                                    fontSize="medium"
+                                    data-testid={`ColumnCheckboxUncheckedType${type}`}
+                                />
+                            :
+                                <IntermediateCheckBoxIcon
+                                    fontSize="medium"
+                                    color="primary"
+                                    data-testid={`ColumnCheckboxIntermediateType${type}`}
+                                />
+                            )
+                    }
+                </Box>
+                {type}
+            </div>
+        );
     }
 
     /**
@@ -381,7 +396,7 @@ function EditModelGroupModal(props) {
     const CustomCheckbox = (props) => {
         return (
             <div className="d-flex justify-content-between align-items-center" style={{cursor: "pointer"}}>
-                <Checkbox checked={props.isChecked} onClick={props.handleChecked}/>
+                <Checkbox size='medium' checked={props.isChecked} onClick={props.handleChecked} sx={{ml: '4px'}}/>
             </div>
         );
     }
@@ -416,25 +431,27 @@ function EditModelGroupModal(props) {
         { field: 'project', headerName: 'Project', width: 120, editable: false},
         { field: 'institute', headerName: 'Institute', width: 150, editable: false },
         { field: 'model', headerName: 'Model', width: 225, editable: false },
-        { field: 'median', headerName: 'Median', sortable: false, width: 140, disableClickEventBubbling: true,
+        {
+            field: mean, headerName: 'Mean', sortable: false, width: 140, disableClickEventBubbling: true,
+            renderHeader: () => generateHeaderName("Mean"),
+            renderCell: (params) => {
+                return createCellCheckBox(params, "Mean")
+            }
+        },
+        {
+            field: std, headerName: 'Standard deviation', sortable: false, width: 200, disableClickEventBubbling: true,
+            renderHeader: () => generateHeaderName("Standard deviation"),
+            renderCell: (params) => {return createCellCheckBox(params, "Standard deviation")}
+        },
+        {
+            field: median, headerName: 'Median', sortable: false, width: 140, disableClickEventBubbling: true,
             renderHeader: () => generateHeaderName("Median"),
             renderCell: (params) => {
                 return createCellCheckBox(params, "Median")
             }
         },
         {
-            field: 'mean', headerName: 'Mean', sortable: false, width: 140, disableClickEventBubbling: true,
-            renderHeader: () => generateHeaderName("Mean"),
-            renderCell: (params) => {
-                return createCellCheckBox(params, "Mean")
-            }
-        },
-        { field: std, headerName: 'Standard deviation', sortable: false, width: 180, disableClickEventBubbling: true,
-            renderHeader: () => generateHeaderName("Standard deviation"),
-            renderCell: (params) => {return createCellCheckBox(params, "Standard deviation")}
-        },
-        {
-            field: 'percentile', headerName: "Percentile", width: 140, sortable: false, disableClickEventBubbling: true,
+            field: percentile, headerName: "Percentile", width: 150, sortable: false, disableClickEventBubbling: true,
             renderHeader: () => generateHeaderName("Percentile"),
             renderCell: (params) => {
                 return createCellCheckBox(params, "Percentile")
@@ -477,10 +494,10 @@ function EditModelGroupModal(props) {
                     onColumnHeaderClick={columnHeaderClick}
                     disableColumnMenu
                     columnBuffer={8}
+                    sx={{height: '65%'}}
                 />
                 <CardActions sx={{justifyContent: "flex-end", marginTop: "2%"}}>
-                    <Button onClick={applyChanges} variant="contained" startIcon={<DoneIcon/>}
-                            data-testid="ApplyButton">{applyButtonLabel}</Button>
+                    <Button onClick={applyChanges} variant="contained" data-testid="ApplyButton">{applyButtonLabel}</Button>
                 </CardActions>
             </Card>
         </Modal>

@@ -1,7 +1,7 @@
 import {
     mean as calculateMean,
-    median as calculateMedian,
     std as calculateStd,
+    median as calculateMedian,
     quantile as calculatePercentile, // TODO import actual percentile
 } from "../services/math/math";
 
@@ -129,7 +129,9 @@ export const latitudeBands = [
 export const LATITUDE_BAND_LIST = latitudeBands.map(obj => obj.text.description);
 
 // DownloadModal.js
-export const fileFormats = [Symbol("PDF"), Symbol("PNG"), Symbol("SVG"), Symbol("CSV")];
+export const fileFormats = [
+    Symbol("CSV"), Symbol("PDF"), Symbol("PNG"), Symbol("SVG")
+];
 
 // PlotNameField.js
 
@@ -216,15 +218,15 @@ export const ALL_REGIONS_ORDERED = [ANTARCTIC, SH_MID, NH_MID, TROPICS, ARCTIC, 
 /**
  * The mean: this appears in the model group card and is used to identify its statistical value settings.
  */
-const mean = "mean";
-/**
- * The median: this appears in the model group card and is used to identify its statistical value settings.
- */
-const median = "median";
+export const mean = "mean";
 /**
  * The standard deviation: this appears in the model group card and is used to identify its statistical value settings.
  */
 export const std = "standard deviation";
+/**
+ * The median: this appears in the model group card and is used to identify its statistical value settings.
+ */
+export const median = "median";
 /**
  * The percentile: this appears in the model group card and is used to identify its statistical value settings.
  */
@@ -234,12 +236,11 @@ export const percentile = "percentile";
  * The statistical values that are computable are listed here as
  * an "enum"
  */
-export const STATISTICAL_VALUES = {
-    mean,
-    median,
-    "standard deviation": std,
-    percentile,
-}
+export const STATISTICAL_VALUES = {}
+// populate object automatically with the values: 
+// the order corresponds to the order in the interface
+const asList = [mean, std, median, percentile];
+asList.forEach(sv => STATISTICAL_VALUES[sv] = sv);
 
 /**
  * Name for the helper statistical value series: This line is used to calculate the mean+/-std
@@ -255,12 +256,12 @@ export const lowerPercentile = "lowerPercentile";
 export const upperPercentile = "upperPercentile";
 /*
  * Regarding the percentile (message from Tobias):
- * 
+ *
  * It would be good if you could include the 84.13th and 15.87th percentiles
- * which corresponds +1σ standard dev of the Gaussian distribution. 
+ * which corresponds +1σ standard dev of the Gaussian distribution.
  * A workflow to calculate the percentiles is described on the following
- * website for example: 
- * 
+ * website for example:
+ *
  * https://www.indeed.com/career-advice/career-development/how-to-calculate-percentile
 */
 
@@ -285,8 +286,10 @@ export const STATISTICAL_VALUES_LIST = Object.values(STATISTICAL_VALUES);
 export const SV_CALCULATION = {
     mean: calculateMean,
     median: calculateMedian,
+    percentile: calculatePercentile,
+    stdMean: calculateMean, // mean for std+-
 }
-SV_CALCULATION[STATISTICAL_VALUES[std]] = calculateStd;
+SV_CALCULATION[std] = calculateStd;
 SV_CALCULATION[lowerPercentile] = arr => calculatePercentile(arr, .1587);
 SV_CALCULATION[upperPercentile] = arr => calculatePercentile(arr, .8413);
 SV_CALCULATION[stdMean] = calculateMean;
@@ -297,8 +300,9 @@ SV_CALCULATION[stdMean] = calculateMean;
  */
 export const SV_COLORING = {
     mean: "#000",
-    median: "#000",
     "standard deviation": "#000",
+    median: "#000",
+    percentile: "#000",
     "lowerPercentile": "#1e8509",
     "upperPercentile": "#1e8509",
     "mean+std": "#000",
