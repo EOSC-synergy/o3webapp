@@ -11,7 +11,6 @@ import {
     LATITUDE_BAND_MAX_VALUE,
     LATITUDE_BAND_MIN_VALUE
 } from "../../../../../../utils/constants";
-import {formatLatitude} from "../LatitudeBandSelector";
 
 
 /**
@@ -66,7 +65,6 @@ function CustomLatitudeSelector(props) {
             }
             selectedLocationCopy.minLat = val;
             dispatch(setLocation({minLat: selectedLocationCopy.minLat, maxLat: selectedLocationCopy.maxLat}));
-            dispatch(setUserRegionName(formatLatitude(selectedLocationCopy)));
             dispatch(fetchPlotDataForCurrentModels());
             setMinLatState(val);
         } else {
@@ -89,7 +87,6 @@ function CustomLatitudeSelector(props) {
             }
             selectedLocationCopy.maxLat = val;
             dispatch(setLocation({minLat: selectedLocationCopy.minLat, maxLat: selectedLocationCopy.maxLat}));
-            dispatch(setUserRegionName(formatLatitude(selectedLocationCopy)));
             dispatch(fetchPlotDataForCurrentModels());
             setMaxLatState(val);
         } else {

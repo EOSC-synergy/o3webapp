@@ -7,7 +7,6 @@ import {latitudeBands} from "../../../../../utils/constants";
 import PropTypes from 'prop-types';
 import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice";
 import CustomLatitudeSelector from "./CustomLatitudeSelector/CustomLatitudeSelector";
-
 /**
  * An object containing the current minLat and maxLat Values.
  */
@@ -49,10 +48,6 @@ function LatitudeBandSelector(props) {
                 minLat: event.target.value.minLat,
                 maxLat: event.target.value.maxLat
             }));
-            dispatch(setUserRegionName(formatLatitude({
-                minLat: event.target.value.minLat,
-                maxLat: event.target.value.maxLat
-            })));
             // fetch for tco3_zm and tco3_return
             dispatch(fetchPlotDataForCurrentModels());
         }
@@ -119,18 +114,4 @@ export const findLatitudeBandByLocation = (forceCustomizable, returnText) => {
     }
     setIsCustomizable(true);
     findLatitudeBandByLocation(true, false);
-}
-
-
-/**
- * This method formats a latitude object into a good-looking string.
- * E.g. {minLat: -20, maxLat: 20} ==> '(20°S-20°N)'
- *
- * @param {object} locationValue the minLat and maxLat values
- * @return {string} the formatted latitude band
- */
-export const formatLatitude = (locationValue) => {
-    const hemisphereExtensionMin = (locationValue.minLat < 0 && locationValue.maxLat > 0 ? '°S' : '');
-    const hemisphereExtensionMax = (locationValue.maxLat <= 0 ? '°S' : '°N');
-    return `${Math.abs(locationValue.minLat)}${hemisphereExtensionMin}-${Math.abs(locationValue.maxLat)}${hemisphereExtensionMax}`;
 }
