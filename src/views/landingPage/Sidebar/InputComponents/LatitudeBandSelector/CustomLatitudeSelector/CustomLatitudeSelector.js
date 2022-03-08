@@ -1,12 +1,16 @@
+import React from "react";
 import {useDispatch, useSelector} from "react-redux"
 import {Grid, TextField, Typography, FormControl, Divider} from "@mui/material";
-import {selectPlotLocation, setLocation} from "../../../../../../store/plotSlice/plotSlice";
+import {
+    selectPlotLocation,
+    setLocation,
+    setUserRegionName
+} from "../../../../../../store/plotSlice/plotSlice";
 import {fetchPlotDataForCurrentModels} from "../../../../../../services/API/apiSlice";
 import {
     LATITUDE_BAND_MAX_VALUE,
     LATITUDE_BAND_MIN_VALUE
 } from "../../../../../../utils/constants";
-import React from "react";
 
 
 /**
@@ -67,7 +71,6 @@ function CustomLatitudeSelector(props) {
         } else {
             setMinLatState(event.target.value);
         }
-
     }
 
     /**
@@ -90,8 +93,6 @@ function CustomLatitudeSelector(props) {
         } else {
             setMaxLatState(event.target.value);
         }
-
-
     }
 
     /**
@@ -105,8 +106,6 @@ function CustomLatitudeSelector(props) {
         if (minLatState < LATITUDE_BAND_MIN_VALUE) return `> ${LATITUDE_BAND_MIN_VALUE}`;
         if (minLatState > LATITUDE_BAND_MAX_VALUE) return `< ${LATITUDE_BAND_MAX_VALUE}`;
         if (minLatState > maxLatState) return maxLatState >= LATITUDE_BAND_MAX_VALUE ? "" : `< ${maxLatState}`
-
-
     }
 
     /**
@@ -120,8 +119,6 @@ function CustomLatitudeSelector(props) {
         if (maxLatState < LATITUDE_BAND_MIN_VALUE) return `> ${LATITUDE_BAND_MIN_VALUE}`;
         if (maxLatState > LATITUDE_BAND_MAX_VALUE) return `< ${LATITUDE_BAND_MAX_VALUE}`;
         if (minLatState > maxLatState) return minLatState >= LATITUDE_BAND_MAX_VALUE ? "" : `> ${minLatState}`
-
-
     }
 
     return (<>

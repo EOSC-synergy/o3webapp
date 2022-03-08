@@ -17,7 +17,7 @@ import {
  * @subcategory Constants
  */
 export const DEFAULT_MODEL_GROUP = {
-    groupId: null, // no valid id => add new group
+    groupId: null, // no valid id => add new group 
     groupName: "Example Group",
     modelList: [
         "CCMI-1_ACCESS_ACCESS-CCM-refC2",
@@ -345,7 +345,8 @@ const GLOBAL = "Global";
  * @category Utils
  * @subcategory Constants
 */
-const USER_REGION = "User region";
+export const USER_REGION = "User region";
+
 export const O3AS_REGIONS = {
     ANTARCTIC,
     SH_MID,
@@ -354,8 +355,11 @@ export const O3AS_REGIONS = {
     ARCTIC,
     NEAR_GLOBAL,
     GLOBAL,
+    // user region must be last element
     USER_REGION
 }
+
+// user region must be last element
 export const ALL_REGIONS_ORDERED = [ANTARCTIC, SH_MID, NH_MID, TROPICS, ARCTIC, NEAR_GLOBAL, GLOBAL, USER_REGION];
 
 /**

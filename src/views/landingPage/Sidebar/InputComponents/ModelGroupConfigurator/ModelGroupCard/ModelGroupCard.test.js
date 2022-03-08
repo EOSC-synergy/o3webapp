@@ -89,7 +89,6 @@ describe('test ModelGroupCard functionality', () => {
 
     beforeEach(() => {
         store = createTestStore();
-        console.log(store.getState().models);
         const modelGroups = store.getState().models.modelGroups;
         groupId = parseInt(Object.keys(modelGroups)[0]);
         groupName = modelGroups[groupId].name;

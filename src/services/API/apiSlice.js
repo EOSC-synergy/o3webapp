@@ -62,7 +62,7 @@ export const fetchPlotTypes = createAsyncThunk('api/fetchPlotTypes', async () =>
  * @returns the generated string
  */
 export const generateCacheKey = ({ latMin, latMax, months, refModel, refYear }) => {
-    return `lat_min=${latMin}&lat_min=${latMax}&months=${months.join(',')}&ref_meas=${refModel}&ref_year=${refYear}`;
+    return `lat_min=${latMin}&lat_max=${latMax}&months=${months.join(',')}&ref_meas=${refModel}&ref_year=${refYear}`;
 }
 
 /**
