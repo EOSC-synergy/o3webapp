@@ -8,6 +8,7 @@ import { selectAllGroupIds } from "../../../../../store/modelsSlice/modelsSlice"
 
 /**
  * enables the user to configure models that should be visible in the plot clustered as model groups
+ * @component
  * @param {Object} props 
  * @param {function} props.reportError - function to report errors
  * @returns {JSX} a jsx containing a ModelGroupModal and a ModelGroupCard and EditModelGroupModal per model group

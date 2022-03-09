@@ -111,5 +111,6 @@ describe('test addModelGroupModal functionality', () => {
     test.todo("check if models can be moved from left to right");
     test.todo("check if models not being selected by search are being hidden");
     test.todo("check default model group name is rendered when props.modelGroupId is provided");
-    test.todo("check default models on the right are rendered when props.modelGroupId is provided")
+    test.todo("check default models on the right are rendered when props.modelGroupId is provided");
+    test.todo("check if onClosing the modal resets all model groups on the right and checked");
 });

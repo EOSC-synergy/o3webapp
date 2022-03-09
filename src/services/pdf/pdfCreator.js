@@ -4,6 +4,54 @@ import { O3AS_PLOTS, legalNoticeLinks } from "../../utils/constants";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
+pdfMake.fonts = {
+
+  Roboto: {
+    normal: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf',
+    bold: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf',
+    italics: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf',
+    bolditalics: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf'
+  },
+
+
+  JetBrainsFont: {
+    normal: 'https://fonts.cdnfonts.com/s/36131/JetbrainsMonoExtrabold-ywLd5.woff',
+    bold: 'https://fonts.cdnfonts.com/s/36131/JetbrainsMonoExtrabold-ywLd5.woff',
+    italics: 'https://fonts.cdnfonts.com/s/36131/JetbrainsMonoExtrabold-ywLd5.woff',
+    bolditalics: 'https://fonts.cdnfonts.com/s/36131/JetbrainsMonoExtrabold-ywLd5.woff'
+  },
+}
+
+/**
+ * Returns a Line presentation for the PDF concerning to the current line data.
+ * @param {array} currentData the current Model data contains the properties of the models(color, line style, etc.)
+ * @param {string} model the model name which the Line presentation belongs to
+ * @returns {object} the Line Presentation which will be shown in the PDF.*/
+function getLinePresentation(currentData, model) {
+
+  let linePattern = "";
+  console.log(currentData[model].plotStyle.linestyle);
+  if(currentData[model].plotStyle.linestyle === 'solid') {
+    linePattern = `────`
+  }
+  else if(currentData[model].plotStyle.linestyle === 'dashed') {
+    linePattern = `----`
+  }
+  else if(currentData[model].plotStyle.linestyle === 'dotted') {
+    linePattern = `••••`
+  }
+
+  return {
+    text: linePattern,
+    font: 'JetBrainsFont',
+    fontSize: 10,
+    characterSpacing: 0,
+    border: [false, false, false, false],
+    color: `${currentData[model].plotStyle.color}`
+  }
+}
+
+
 /**
  * This Method adjusts the svg element in order to scale it right in the pdf file.
  * the viewBox parameter of the svg element will be set to the width and height
@@ -25,10 +73,10 @@ function getAdjustedSVG(svgElement) {
 /**
  * Downloads the PDF which contains the Graph in SVG format and contains the List of models.
  *
- * @param plotId the plot id of the graph (tco3_zm, tco3_return etc.)
- * @param fileName the File name of the PDF
- * @param modelGroups the Model Groups which contains the names of the models
- * @param currentData the current Model data contains the properties of the models (color, line style, etc.)
+ * @param {string} plotId the plot id of the graph (tco3_zm, tco3_return etc.)
+ * @param {string} fileName the File name of the PDF
+ * @param {array} modelGroups the Model Groups which contains the names of the models
+ * @param {array} currentData the current Model data contains the properties of the models (color, line style, etc.)
  */
 export async function downloadGraphAsPDF(
   plotId,
@@ -83,40 +131,61 @@ export async function downloadGraphAsPDF(
 /**
  * Returns the List of models in the format which the pdfMake library accepts.
  *
- * @param plotId the plot id of the graph (tco3_zm, tco3_return etc.)
- * @param modelGroups the Model Groups which contains the names of the models
- * @param currentData the current Model data contains the properties of the models(color, line style, etc.)
- */
+ * @param {string} plotId the plot id of the graph (tco3_zm, tco3_return etc.)
+ * @param {array} modelGroups the Model Groups which contains the names of the models
+ * @param {array} currentData the current Model data contains the properties of the models(color, line style, etc.)
+ * @return {object} the List of all Model Groups which will be shown at the PDF.
+*/
 function getListOfModelsForPdf(plotId, modelGroups, currentData) {
   let modelGroupsList = [
     [{ text: "", style: "header" }, { ul: [{ text: "", color: "red" }] }],
   ];
 
   for (const modelGroup of Object.values(modelGroups)) {
+
+    // if the model group is invisible, it won't be shown in the PDF.
     if (!modelGroup.isVisible) continue;
+
 
     let modelsInTheGroup = [];
 
     for (const [model, modelData] of Object.entries(modelGroup.models)) {
+      
+      // if the model is invisible, it won't be shown in the PDF.
       if (!modelData.isVisible) continue;
+
+      // if the data of the model is undefined, it won't be shown in the PDF.
       if (typeof currentData[model] === "undefined") continue;
 
       let textOfCurrentLineOfList;
 
       if (plotId === O3AS_PLOTS.tco3_zm) {
-        textOfCurrentLineOfList = `${model} (line type = ${currentData[model].plotStyle.linestyle})`;
+        textOfCurrentLineOfList = `${model}`;
       } else if (plotId === O3AS_PLOTS.tco3_return) {
         textOfCurrentLineOfList = `${model}`;
       }
 
-      modelsInTheGroup.push({
+      modelsInTheGroup.push([
+        
+        getLinePresentation(currentData, model),
+
+      {
         text: textOfCurrentLineOfList,
-        color: `${currentData[model].plotStyle.color}`,
-      });
+        fontSize: 9,
+        border: [false, false, false, false],
+      },    
+
+    ]);
     }
     modelGroupsList.push([
-      { text: modelGroup.name, style: "header" },
-      { ul: modelsInTheGroup },
+      { text: modelGroup.name,
+         style: "header",
+          bold: true,
+          fontSize: 10, },
+      { table: {
+				widths: ['auto', 'auto'],
+				body:  modelsInTheGroup 
+			} },
     ]);
   }
 

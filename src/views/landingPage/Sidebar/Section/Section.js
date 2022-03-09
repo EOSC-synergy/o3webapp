@@ -30,7 +30,8 @@ import {
     TCG_Symbol,
     XAF_Symbol,
     YAF_Symbol,
-    CLS_Symbol
+    CLS_Symbol,
+    BACKGROUND_BASE_COLOR
 } from "../../../../utils/constants";
 import CustomLatitudeSelector from "../InputComponents/LatitudeBandSelector/CustomLatitudeSelector/CustomLatitudeSelector";
 
@@ -41,6 +42,9 @@ import CustomLatitudeSelector from "../InputComponents/LatitudeBandSelector/Cust
  
 /**
  * custom Accordion component
+ * @const {function}
+ * @returns {JSX.Element}
+ * @memberof Section
  */
 const Accordion = styled((props) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -56,6 +60,9 @@ const Accordion = styled((props) => (
   
 /**
  * custom Accordion summary component
+ * @const {function}
+ * @returns {JSX.Element}
+ * @memberof Section
  */
 const AccordionSummary = styled((props) => (
     <MuiAccordionSummary
@@ -81,6 +88,9 @@ const AccordionSummary = styled((props) => (
   
 /**
  * custom AccordionDetails component
+ * @const {function}
+ * @returns {JSX.Element}
+ * @memberof Section
  */
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
     padding: theme.spacing(2),
@@ -89,6 +99,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 
 /**
  * an expandable section containing a list of inputComponents as well as a name
+ * @component
  * @param {Object} props
  * @param {string[]} props.components -> an array containing a string representation of all components that should be plotted
  * @param {string} props.name -> the name of the section

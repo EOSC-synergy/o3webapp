@@ -1,27 +1,28 @@
-import {q25, q75, median} from "../../services/math/math"
+import {median, q25, q75} from "../../services/math/math"
 import {
-    IMPLICIT_YEAR_LIST,
-    O3AS_PLOTS,
     ALL_REGIONS_ORDERED,
+    END_YEAR,
+    EXTENDED_SV_LIST,
+    IMPLICIT_YEAR_LIST,
+    MODEL_LINE_THICKNESS,
+    months,
+    NUM_MONTHS,
+    O3AS_PLOTS,
+    percentile,
+    START_YEAR,
+    STATISTICAL_VALUE_LINE_THICKNESS,
+    STATISTICAL_VALUES,
     STATISTICAL_VALUES_LIST,
+    std,
+    stdMean,
     SV_CALCULATION,
     SV_COLORING,
     SV_DASHING,
-    STATISTICAL_VALUES,
-    MODEL_LINE_THICKNESS,
-    START_YEAR,
-    END_YEAR,
-    std,
-    percentile,
-    EXTENDED_SV_LIST,
-    stdMean,
-    STATISTICAL_VALUE_LINE_THICKNESS, months, NUM_MONTHS
+    USER_REGION,
+    latitudeBands,
+    SV_DISPLAY_NAME,
 } from "../constants"
 import {convertModelName} from "../ModelNameConverter";
-import store from "../../store/store";
-import {
-    findLatitudeBandByLocation
-} from "../../views/landingPage/Sidebar/InputComponents/LatitudeBandSelector/LatitudeBandSelector";
 
 /**
  * Maps the plotId to a function that describes how the series are going
@@ -50,21 +51,19 @@ export const FONT_FAMILY = [
  *
  * @returns {string} the subtitle
  */
-const createSubtitle = () => {
-    let stLocationText =
-        store.getState().plot.plotId === 'tco3_zm' ? findLatitudeBandByLocation(false, true) : 'User-Region';
-    if (stLocationText === 'Custom' || stLocationText === 'User-Region') {
-        const stLocationValue = store.getState().plot.generalSettings.location;
-        const hemisphereExtensionMin = (stLocationValue.minLat < 0 && stLocationValue.maxLat > 0 ? '°S' : '');
-        const hemisphereExtensionMax = (stLocationValue.maxLat <= 0 ? '°S' : '°N');
-        stLocationText =
-            `${stLocationText} (${Math.abs(stLocationValue.minLat)}${hemisphereExtensionMin}-${Math.abs(stLocationValue.maxLat)}${hemisphereExtensionMax})`;
+function createSubtitle(getState) {
+    let stLocationText = findLatitudeBandByLocation(getState);
+
+    if (stLocationText === 'Custom') {
+        stLocationText = formatLatitude(getState().plot.generalSettings.location);
     }
 
     let stMonths = [];
-    store.getState().plot.generalSettings.months.map((month) => stMonths.push(months[month - 1].description));
+    getState().plot.generalSettings.months.map((month) => stMonths.push(months[month - 1].description));
     if (stMonths.length === NUM_MONTHS) stMonths = ["All year"];
-    return `${stLocationText} | ${stMonths.join(", ")}`;
+
+    if (getState().plot.plotId === 'tco3_zm') return `${stLocationText} | ${stMonths.join(", ")}`;
+    else return stMonths.join(", ");
 };
 
 /**
@@ -366,10 +365,11 @@ export const default_TCO3_return = {
  * @param {object} xAxisRange the range of the x-axis
  * @param {object} yAxisRange the range of the y-axis
  * @param {object} seriesNames the names of the series
+ * @param {function} getState store.getState
  *
  * @returns an default_TCO3_plotId object formatted with the given data
  */
-export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, seriesNames}) {
+export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, seriesNames, getState}) {
     const minY = roundDownToMultipleOfTen(yAxisRange.minY);
     const maxY = roundUpToMultipleOfTen(yAxisRange.maxY);
 
@@ -401,7 +401,7 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.title = JSON.parse(JSON.stringify(newOptions.title)); // this is necessary in order for apexcharts to update the title
         newOptions.title.text = plotTitle;
         newOptions.subtitle = JSON.parse(JSON.stringify(newOptions.subtitle)); // this is necessary in order for apexcharts to update the subtitle
-        newOptions.subtitle.text = createSubtitle();
+        newOptions.subtitle.text = createSubtitle(getState);
         newOptions.tooltip.custom = customTooltipFormatter;
         return newOptions;
 
@@ -411,7 +411,7 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.title = JSON.parse(JSON.stringify(newOptions.title));  // this is necessary in order for apexcharts to update the title
         newOptions.title.text = plotTitle;
         newOptions.subtitle = JSON.parse(JSON.stringify(newOptions.subtitle)); // this is necessary in order for apexcharts to update the subtitle
-        newOptions.subtitle.text = createSubtitle();
+        newOptions.subtitle.text = createSubtitle(getState);
 
         const minY = roundDownToMultipleOfTen(yAxisRange.minY);
         const maxY = roundUpToMultipleOfTen(yAxisRange.maxY);
@@ -441,6 +441,7 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
  * @param {object} xAxisRange the range of the x-axis
  * @param {object} yAxisRange the range of the y-axis
  * @param {object} refLineVisible visibility status of the reference line
+ * @param {function} getState store.getState
  * @returns series object which includes a subdivision into a data and a styling object.
  */
 export function generateSeries({plotId, data, modelsSlice, xAxisRange, yAxisRange, refLineVisible, getState}) {
@@ -569,7 +570,7 @@ function buildSvMatrixTco3Zm({modelList, data}) {
  * @param {object} yAxisRange the range of the y-axis
  * @returns a combination of data and statistical values series
  */
-function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange}) {
+function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange, getState}) {
     const series = {
         data: [],
         colors: [],
@@ -579,14 +580,20 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange}) 
 
     // 1. build boxplot
     const boxPlotValues = calculateBoxPlotValues({data, modelsSlice});
+    let regionData = ALL_REGIONS_ORDERED.map(region => ({
+        x: region,
+        y: boxPlotValues[region],
+    }));
+    regionData.pop();
+    regionData.push({
+        x: formatLatitude(getState().plot.generalSettings.location), // generate title according to custom min-max values
+        y: boxPlotValues[USER_REGION]
+    });
     series.data.push({
             name: '', // removed name of box, so it doesn't show up in the legend!
             type: 'boxPlot',
 
-            data: ALL_REGIONS_ORDERED.map(region => ({
-                x: region,
-                y: boxPlotValues[region],
-            })),
+            data: regionData
         }
     );
 
@@ -604,6 +611,11 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange}) 
                 x: region,
                 y: filterOutOfRange(modelData.data[region], minY, maxY) || null, // null as default if data is missing
             }));
+            sortedData.pop();
+            sortedData.push({
+                x: formatLatitude(getState().plot.generalSettings.location),
+                y: filterOutOfRange(modelData.data[USER_REGION], minY, maxY) || null, // null as default if data is missing
+            });
 
             series.data.push({
                 name: model,
@@ -623,6 +635,7 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange}) 
         yAxisRange,
         buildMatrix: buildSvMatrixTco3Return,
         generateSingleSvSeries: generateSingleTco3ReturnSeries,
+        getState,
     });
 
     // clear out data points which are outside min-max display range (scatter points are displayed in the legend otherwise)
@@ -649,11 +662,18 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange}) 
  * @param {array} svData array of plaint numbers
  * @returns a series matching the tco3_return style for apexcharts.
  */
-function generateSingleTco3ReturnSeries(name, svData) {
+function generateSingleTco3ReturnSeries(name, svData, getState) {
     const transformedData = ALL_REGIONS_ORDERED.map((region, index) => {
-        return {
-            x: region,
-            y: svData[index],
+        if (index !== ALL_REGIONS_ORDERED.length - 1) {
+            return {
+                x: region,
+                y: svData[index],
+            }
+        } else {
+            return {
+                x: formatLatitude(getState().plot.generalSettings.location),
+                y: svData[index],
+            }
         }
     });
 
@@ -749,7 +769,7 @@ function calculateBoxPlotValues({data, modelsSlice}) {
  * @param {function} generateSingleSvSeries either generateSingleTco3ZmSeries | generateSingleTco3ReturnSeries, specifies how the series should be generated
  * @returns an array holding all statistical series for the given modelSlice
  */
-function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleSvSeries}) {
+function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleSvSeries, getState}) {
     const svSeries = {
         data: [],
         colors: [],
@@ -758,7 +778,7 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
     };
 
     const modelGroups = modelsSlice.modelGroups;
-    for (const [id, groupData] of Object.entries(modelGroups)) { // don't remove 'id'
+    for (const [_, groupData] of Object.entries(modelGroups)) {
 
         const svHolder = calculateSvForModels(Object.keys(groupData.models), data, groupData, buildMatrix);
 
@@ -774,10 +794,10 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
             } else {
                 continue;
             }
-            svSeries.data.push(generateSingleSvSeries(`${sv}(${groupData.name})`, svData));
-            svSeries.colors.push(SV_COLORING[sv]);   // coloring?
-            svSeries.width.push(STATISTICAL_VALUE_LINE_THICKNESS);                  // thicker?
-            svSeries.dashArray.push(SV_DASHING[sv]);              // solid?       
+            svSeries.data.push(generateSingleSvSeries(`${SV_DISPLAY_NAME[sv]} (${groupData.name})`, svData, getState));
+            svSeries.colors.push(SV_COLORING[sv]);
+            svSeries.width.push(STATISTICAL_VALUE_LINE_THICKNESS);
+            svSeries.dashArray.push(SV_DASHING[sv]);
         }
     }
     return svSeries;
@@ -822,8 +842,13 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
     svHolder["mean+std"] = [];
     svHolder["mean-std"] = [];
     for (let i = 0; i < svHolder[std].length; ++i) {
-        svHolder["mean+std"].push(svHolder[stdMean][i] + svHolder[std][i]);
-        svHolder["mean-std"].push(svHolder[stdMean][i] - svHolder[std][i]);
+        if (svHolder[stdMean][i] === null || svHolder[std][i] === null) {
+            svHolder["mean+std"].push(null);
+            svHolder["mean-std"].push(null);
+        } else {
+            svHolder["mean+std"].push(svHolder[stdMean][i] + svHolder[std][i]);
+            svHolder["mean-std"].push(svHolder[stdMean][i] - svHolder[std][i]);
+        }
     }
     delete svHolder["stdMean"];
     return svHolder;
@@ -1275,26 +1300,29 @@ export function parseSvName(name) {
 export function customTooltipFormatter({series, seriesIndex, dataPointIndex, w}) {
     const modelName = w.globals.seriesNames[seriesIndex];
     const listOfSv = Object.keys(SV_COLORING); // included mean+/-std
+    const numDecimalsInDatapoint = 2;
     if (modelName.startsWith("Reference")) {
+        let displayName = modelName.split("value")
+
         return (
             `
                 <div>
                     <div style="margin:2px"><strong>${w.globals.seriesX[seriesIndex][dataPointIndex]}</strong></div>
-                    <div>Reference: <strong>${series[seriesIndex][dataPointIndex]}</strong></div>
+                    <div>Reference ${displayName[1]}: <strong>${series[seriesIndex][dataPointIndex].toFixed(numDecimalsInDatapoint)}</strong></div>
                 </div>
             `
         )
     }
 
-    for (const sv of listOfSv) {
-        if (modelName.startsWith(sv)) {
+    for (const svName in SV_DISPLAY_NAME) {
+        if (modelName.startsWith(SV_DISPLAY_NAME[svName])) {
             // parse sv
             const {sv, groupName} = parseSvName(modelName);
             return (
                 `
                 <div>
                     <div style="margin:2px"><strong>${w.globals.seriesX[seriesIndex][dataPointIndex]}</strong></div>
-                    <div>${sv}: <strong>${series[seriesIndex][dataPointIndex]}</strong></div>
+                    <div>${sv}: <strong>${series[seriesIndex][dataPointIndex].toFixed(numDecimalsInDatapoint)}</strong></div>
                     <div>Group: ${groupName}</div>
                 </div>
                 `
@@ -1307,7 +1335,7 @@ export function customTooltipFormatter({series, seriesIndex, dataPointIndex, w})
         `
         <div>
             <div style="margin:2px"><strong>${w.globals.seriesX[seriesIndex][dataPointIndex]}</strong></div>
-            <div>${name}: <strong>${series[seriesIndex][dataPointIndex]}</strong></div>
+            <div>${name}: <strong>${series[seriesIndex][dataPointIndex].toFixed(numDecimalsInDatapoint)}</strong></div>
             <div>Project: ${project}</div>
             <div>Institue: ${institute}</div>
         </div>
@@ -1315,7 +1343,7 @@ export function customTooltipFormatter({series, seriesIndex, dataPointIndex, w})
     )
 }
 
-function getIncludedModels(modelsSlice) {
+export function getIncludedModels(modelsSlice) {
     const visible = [];
 
     for (const modelGroup of Object.values(modelsSlice.modelGroups)) {
@@ -1365,4 +1393,30 @@ function calcRecoveryPoints(getState, referenceValue, svSeries) {
         if (points.length < idx + 1) points.push([null, null]);
     }
     return points;
+}
+
+/**
+ * This method formats a latitude object into a good-looking string.
+ * E.g. {minLat: -20, maxLat: 20} ==> '(20°S-20°N)'
+ *
+ * @param {object} locationValue the minLat and maxLat values
+ * @return {string} the formatted latitude band
+ */
+export const formatLatitude = (locationValue) => {
+    const hemisphereExtensionMin = (locationValue.minLat < 0 && locationValue.maxLat > 0 ? '°S' : '');
+    const hemisphereExtensionMax = (locationValue.maxLat <= 0 ? '°S' : '°N');
+    return `${Math.abs(locationValue.minLat)}${hemisphereExtensionMin}-${Math.abs(locationValue.maxLat)}${hemisphereExtensionMax}`;
+}
+
+export const findLatitudeBandByLocation = (getState) => {
+    const selectedLocation = getState().plot.generalSettings.location;
+    if (typeof selectedLocation === 'undefined') return null;
+
+    for (let i = 0; i < latitudeBands.length - 1; i++) {
+        if (latitudeBands[i].value.minLat === selectedLocation.minLat && latitudeBands[i].value.maxLat === selectedLocation.maxLat) {
+            return latitudeBands[i].text.description;
+        }
+    }
+
+    return latitudeBands[latitudeBands.length - 1].text.description; // Custom (fallback, has to be custom if none of the predefined regions matched)
 }

@@ -17,7 +17,7 @@ exports[`renders correctly 1`] = `
           data-testid="Toolbar_Navbar"
         >
           <div
-            class="MuiGrid-root MuiGrid-container css-1hbmzt3-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container css-zvblfl-MuiGrid-root"
           >
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8 css-vok43g-MuiGrid-root"
