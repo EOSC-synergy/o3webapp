@@ -4,10 +4,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectPlotXRange, setDisplayXRange} from "../../../../../store/plotSlice/plotSlice";
 import {ALL_REGIONS_ORDERED} from "../../../../../utils/constants";
 import {Grid} from "@mui/material";
+import CustomLatitudeSelector from "../LatitudeBandSelector/CustomLatitudeSelector/CustomLatitudeSelector";
 
 /**
  * enables the user to select / deselect regions as well as entering a private region {@link LatitudeBandSelector}
- * 
+ *
  * @component
  * @param {Object} props
  * @param {function} props.reportError - used to report error functions
@@ -53,8 +54,8 @@ function RegionSelector(props) {
     }
 
     return (
-        <Grid container sx={{width: "90%", marginLeft: "auto", marginRight: "auto", marginTop: "3%"}}>
-            <Typography style={{marginTop: '2.5%'}}>X-Axis:</Typography>
+        <Grid container sx={{width: "90%", marginLeft: "auto", marginRight: "auto"}}>
+            <Typography>X-Axis:</Typography>
             <Box sx={{
                 paddingLeft: '8%',
                 paddingRight: '8%',
@@ -66,7 +67,11 @@ function RegionSelector(props) {
                     getDefaultRegions().map((r, idx) => (
                         <React.Fragment key={idx}>
                             <FormControlLabel
-                                label={r}
+                                label={
+                                    idx !== getDefaultRegions().length - 1 ?
+                                        r :
+                                        <CustomLatitudeSelector/>
+                                }
                                 control={
                                     <Checkbox
                                         checked={yRange.regions.includes(idx)}

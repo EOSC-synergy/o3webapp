@@ -7,6 +7,7 @@ import {latitudeBands} from "../../../../../utils/constants";
 import PropTypes from 'prop-types';
 import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice";
 import CustomLatitudeSelector from "./CustomLatitudeSelector/CustomLatitudeSelector";
+
 /**
  * An object containing the current minLat and maxLat Values.
  * @memberof LatitudeBandSelector
@@ -73,7 +74,8 @@ function LatitudeBandSelector(props) {
                     {
                         // maps all latitude bands from constants.js to ´MenuItem´s
                         latitudeBands.map(
-                            (s, idx) => <MenuItem key={idx} value={s.value}>{s.text.description}</MenuItem>
+                            (s, idx) =>
+                                <MenuItem key={idx} value={s.value}>{s.text.description}</MenuItem>
                         )
                     }
                 </Select>

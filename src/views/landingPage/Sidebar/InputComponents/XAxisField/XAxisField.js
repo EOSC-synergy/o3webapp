@@ -57,7 +57,7 @@ function XAxisField(props) {
     }
 
     return (
-        <Grid container sx={{width: "90%", marginLeft: "auto", marginRight: "auto", marginTop: "5%"}}>
+        <Grid container sx={{width: "90%", marginLeft: "auto", marginRight: "auto"}}>
             <Grid item xs={3}>
                 <Typography>X-Axis:</Typography>
             </Grid>
