@@ -242,7 +242,10 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container css-wts08w-MuiGrid-root"
+                          style="height: 20px;"
+                        />
+                        <div
+                          class="MuiGrid-root MuiGrid-container css-1kbc05j-MuiGrid-root"
                         >
                           <div
                             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3 css-1equabv-MuiGrid-root"
@@ -340,7 +343,10 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container css-wts08w-MuiGrid-root"
+                          style="height: 20px;"
+                        />
+                        <div
+                          class="MuiGrid-root MuiGrid-container css-1kbc05j-MuiGrid-root"
                         >
                           <div
                             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3 css-1equabv-MuiGrid-root"
@@ -914,9 +920,11 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                           </div>
                         </div>
                         <div
+                          style="height: 20px;"
+                        />
+                        <div
                           class="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-1ws8119-MuiDivider-root"
                           role="separator"
-                          style="margin-top: 5%;"
                         >
                           <span
                             class="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
@@ -1784,6 +1792,9 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                             </div>
                           </div>
                         </div>
+                        <div
+                          style="height: 20px;"
+                        />
                         <div
                           class="MuiGrid-root MuiGrid-container css-wts08w-MuiGrid-root"
                         >
@@ -2145,7 +2156,10 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container css-wts08w-MuiGrid-root"
+                          style="height: 20px;"
+                        />
+                        <div
+                          class="MuiGrid-root MuiGrid-container css-1kbc05j-MuiGrid-root"
                         >
                           <div
                             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3 css-1equabv-MuiGrid-root"
@@ -2243,7 +2257,10 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                           </div>
                         </div>
                         <div
-                          class="MuiGrid-root MuiGrid-container css-wts08w-MuiGrid-root"
+                          style="height: 20px;"
+                        />
+                        <div
+                          class="MuiGrid-root MuiGrid-container css-1kbc05j-MuiGrid-root"
                         >
                           <div
                             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3 css-1equabv-MuiGrid-root"
@@ -2817,9 +2834,11 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                           </div>
                         </div>
                         <div
+                          style="height: 20px;"
+                        />
+                        <div
                           class="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-1ws8119-MuiDivider-root"
                           role="separator"
-                          style="margin-top: 5%;"
                         >
                           <span
                             class="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
@@ -3687,6 +3706,9 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                             </div>
                           </div>
                         </div>
+                        <div
+                          style="height: 20px;"
+                        />
                         <div
                           class="MuiGrid-root MuiGrid-container css-wts08w-MuiGrid-root"
                         >

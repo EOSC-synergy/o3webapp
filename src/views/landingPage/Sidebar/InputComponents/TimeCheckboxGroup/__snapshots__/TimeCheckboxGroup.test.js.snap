@@ -5,7 +5,6 @@ exports[`renders correctly 1`] = `
   <div
     class="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-1ws8119-MuiDivider-root"
     role="separator"
-    style="margin-top: 5%;"
   >
     <span
       class="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"

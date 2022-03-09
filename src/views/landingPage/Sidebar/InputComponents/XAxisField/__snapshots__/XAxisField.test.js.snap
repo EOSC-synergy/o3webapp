@@ -3,7 +3,7 @@
 exports[`renders correctly 1`] = `
 <div>
   <div
-    class="MuiGrid-root MuiGrid-container css-wts08w-MuiGrid-root"
+    class="MuiGrid-root MuiGrid-container css-1kbc05j-MuiGrid-root"
   >
     <div
       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-3 css-1equabv-MuiGrid-root"
