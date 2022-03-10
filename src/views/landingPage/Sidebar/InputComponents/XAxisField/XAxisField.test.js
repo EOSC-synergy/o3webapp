@@ -117,4 +117,18 @@ describe('test error handling functionality', () => {
         expect(store.getState().plot.plotSpecificSettings.tco3_zm.displayXRange.years.maxX).toEqual(previousState); // no update took place on the right side
         expect(container).toHaveTextContent("min>=max"); // expect that error is displayed
     });
+
+    it("doesn't accept non-numerical input", () => {
+        const previousState = store.getState().plot.plotSpecificSettings.tco3_zm.displayXRange.years.maxX;
+
+        const { getByTestId } = render(
+            <Provider store={store}>
+                <XAxisField />
+            </Provider>
+        );     
+        const inputFieldRight = getByTestId("XAxisField-right-input");
+        fireEvent.change(inputFieldRight, {target: {value: "test"}}); // change input (should have no effect)
+        expect(store.getState().plot.plotSpecificSettings.tco3_zm.displayXRange.years.maxX).toEqual(previousState); // no update took place
+    });
+
 });
