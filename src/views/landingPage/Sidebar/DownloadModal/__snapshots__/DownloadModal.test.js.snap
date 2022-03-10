@@ -55,6 +55,7 @@ exports[`testing DownloadModal rendering renders correctly when open 1`] = `
           <button
             aria-label="close"
             class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            data-testid="DownloadModal-close"
             tabindex="0"
             type="button"
           >

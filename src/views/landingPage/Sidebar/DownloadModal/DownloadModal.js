@@ -241,7 +241,7 @@ function DownloadModal(props) {
               <CardHeader
                   title="Download Plot"
                   action={
-                      <IconButton onClick={props.onClose} aria-label="close">
+                      <IconButton onClick={props.onClose} aria-label="close" data-testid="DownloadModal-close">
                           <CloseIcon />
                       </IconButton>
                   }

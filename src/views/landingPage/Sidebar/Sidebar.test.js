@@ -60,22 +60,19 @@ describe('test sidebar component', () => {
         const { getByTestId } = render(<Provider store={store}>
             <Sidebar isOpen={true} onClose={jest.fn()} reportError={jest.fn()} onOpen={jest.fn()} />
         </Provider>);
-        console.log(getByTestId("Section-Summary-Appearance"));
         userEvent.click(getByTestId("Section-Summary-Appearance"));
         userEvent.click(getByTestId("Section-Summary-Appearance"));
     })
 
     
-    it('expands and closes the appearence section without crashing', () => {
-
-        const { getByTestId } = render(<Provider store={store}>
+    it('opens and closes the download modal without crashing', () => {
+        const {getByText, getByTestId} = render(<Provider store={store}>
             <Sidebar isOpen={true} onClose={jest.fn()} reportError={jest.fn()} onOpen={jest.fn()} />
         </Provider>);
-        console.log(getByTestId("Section-Summary-Appearance"));
-        userEvent.click(getByTestId("Section-Summary-Appearance"));
-        userEvent.click(getByTestId("Section-Summary-Appearance"));
+        userEvent.click(getByText(/Download/i));
+        userEvent.click(getByTestId("DownloadModal-close"));
+        
     })
-
     
 
 
