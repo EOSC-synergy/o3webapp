@@ -121,7 +121,8 @@ const queryString = window.location.search;
 store.dispatch(fetchModels()).then(
     () => {
         updateStoreWithURL();
-        store.dispatch(fetchPlotDataForCurrentModels(queryString === '')).then(updateURL);
+        store.dispatch(fetchPlotDataForCurrentModels(queryString === ''));
+        updateURL();
     }
 );
 

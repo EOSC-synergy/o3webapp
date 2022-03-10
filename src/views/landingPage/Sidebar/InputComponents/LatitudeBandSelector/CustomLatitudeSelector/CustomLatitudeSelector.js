@@ -62,7 +62,7 @@ function CustomLatitudeSelector(props) {
             }
             selectedLocationCopy.minLat = val;
             dispatch(setLocation({minLat: selectedLocationCopy.minLat, maxLat: selectedLocationCopy.maxLat}));
-            dispatch(fetchPlotDataForCurrentModels()).then(updateURL);
+            dispatch(fetchPlotDataForCurrentModels());
             setMinLatState(val);
         } else {
             setMinLatState(event.target.value);
@@ -85,7 +85,8 @@ function CustomLatitudeSelector(props) {
             }
             selectedLocationCopy.maxLat = val;
             dispatch(setLocation({minLat: selectedLocationCopy.minLat, maxLat: selectedLocationCopy.maxLat}));
-            dispatch(fetchPlotDataForCurrentModels()).then(updateURL);
+            dispatch(fetchPlotDataForCurrentModels());
+            updateURL();
             setMaxLatState(val);
         } else {
             setMaxLatState(event.target.value);

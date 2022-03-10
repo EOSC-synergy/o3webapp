@@ -179,7 +179,8 @@ function AddModelGroupModal(props) {
             return;
         }
         dispatch(setModelsOfModelGroup({groupId: props.modelGroupId, groupName: groupName, modelList: right}));
-        dispatch(fetchPlotDataForCurrentModels()).then(updateURL);
+        dispatch(fetchPlotDataForCurrentModels());
+        updateURL();
         props.onClose();
     }
 
