@@ -46,6 +46,11 @@
       "react-app/jest"
     ]
   },
+  "jest": {
+    "coveragePathIgnorePatterns" : [
+      "src/services/downloading" 
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",
