@@ -331,7 +331,6 @@ function EditModelGroupModal(props) {
      */
     const applyChanges = () => {
         const dataCpy = JSON.parse(JSON.stringify(modelData));
-        console.log()
         for (let i = 0; i < modelList.length; i++) {
             const model = modelList[i];
             dataCpy[model][mean] = meanVisible[i];
@@ -340,7 +339,6 @@ function EditModelGroupModal(props) {
             dataCpy[model][percentile] = percentileVisible[i];
             dataCpy[model]["isVisible"] = isVisible[i];
         }
-        console.log(dataCpy)
         dispatch(updatePropertiesOfModelGroup({groupId: props.modelGroupId, data: dataCpy}))
         props.onClose();
     }
