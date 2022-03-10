@@ -13,7 +13,7 @@ import {Grid} from "@mui/material";
  * @param {function} props.reportError - used to report error functions
  * @returns {JSX.Element}
  */
-function RegionSelector(props) {
+function RegionSelector() {
     /**
      * A dispatch function to dispatch actions to the redux store.
      */
@@ -63,14 +63,15 @@ function RegionSelector(props) {
                 flexDirection: "column"
             }}>
                 {
-                    getDefaultRegions().map((r, idx) => (
+                    getDefaultRegions().map((region, idx) => (
                         <React.Fragment key={idx}>
                             <FormControlLabel
-                                label={r}
+                                label={region}
                                 control={
                                     <Checkbox
                                         checked={xRangeRegions.regions.includes(idx)}
                                         onClick={() => handleRegionChecked(idx)}
+                                        data-testid={`RegionSelector-${idx}`}
                                     />
                                 }
                             />
