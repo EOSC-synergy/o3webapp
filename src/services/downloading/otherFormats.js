@@ -4,7 +4,7 @@
  * @param {string} fileName the file name of the PNG
  * @returns a promise which provides the user to download the PNG file, if it was successful.
  */
-export const downloadGraphAsPNG = (fileName, reportError) => {
+export const downloadGraphAsPNG = (fileName) => {
     return new Promise((resolve, reject) => {
       const img = new Image();
       const svgElement = document.querySelector(".apexcharts-svg");
@@ -35,7 +35,7 @@ export const downloadGraphAsPNG = (fileName, reportError) => {
  * @param {string} fileName the File name of the SVG
  * @returns a promise which provides the user to download the SVG file, if it was successful.
  */
-export const downloadGraphAsSVG = (fileName, reportError) => {
+export const downloadGraphAsSVG = (fileName) => {
     return new Promise(resolve => {
       const svgElement = document.querySelector(".apexcharts-svg");
       const imageBlobURL =
