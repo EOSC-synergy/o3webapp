@@ -48,7 +48,9 @@
   },
   "jest": {
     "coveragePathIgnorePatterns" : [
-      "src/services/downloading" 
+      "src/services/downloading",
+      "src/App.js", 
+      "src/index.js"
     ]
   },
   "browserslist": {
