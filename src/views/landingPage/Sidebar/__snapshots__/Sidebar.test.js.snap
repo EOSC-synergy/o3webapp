@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`test sidebar component closed Sidebar renders correctly 1`] = `
+exports[`test sidebar component renders closed sidebar correctly 1`] = `
 <div>
   <div
     class="MuiDrawer-root MuiDrawer-docked css-fvsm27-MuiDrawer-docked"
@@ -141,7 +141,7 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
           >
             <div
               class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
-              data-testid="section"
+              data-testid="Section-Appearance"
             >
               <div
                 aria-controls="panel1a-content"
@@ -449,7 +449,7 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
           >
             <div
               class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
-              data-testid="section"
+              data-testid="Section-Models"
             >
               <div
                 aria-controls="panel1a-content"
@@ -795,7 +795,7 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
           >
             <div
               class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
-              data-testid="section"
+              data-testid="Section-Filter Data"
             >
               <div
                 aria-controls="panel1a-content"
@@ -1637,7 +1637,7 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
           >
             <div
               class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
-              data-testid="section"
+              data-testid="Section-Reference Year"
             >
               <div
                 aria-controls="panel1a-content"
@@ -1904,7 +1904,7 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
 </div>
 `;
 
-exports[`test sidebar component opened Sidebar renders correctly 1`] = `
+exports[`test sidebar component renders opened sidebar correctly 1`] = `
 <div>
   <div
     class="MuiDrawer-root MuiDrawer-docked css-fvsm27-MuiDrawer-docked"
@@ -2044,7 +2044,7 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
           >
             <div
               class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
-              data-testid="section"
+              data-testid="Section-Appearance"
             >
               <div
                 aria-controls="panel1a-content"
@@ -2352,7 +2352,7 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
           >
             <div
               class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
-              data-testid="section"
+              data-testid="Section-Models"
             >
               <div
                 aria-controls="panel1a-content"
@@ -2698,7 +2698,7 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
           >
             <div
               class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
-              data-testid="section"
+              data-testid="Section-Filter Data"
             >
               <div
                 aria-controls="panel1a-content"
@@ -3540,7 +3540,7 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
           >
             <div
               class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
-              data-testid="section"
+              data-testid="Section-Reference Year"
             >
               <div
                 aria-controls="panel1a-content"

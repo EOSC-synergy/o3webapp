@@ -221,7 +221,7 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
             >
               <div
                 class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
-                data-testid="section"
+                data-testid="Section-Appearance"
               >
                 <div
                   aria-controls="panel1a-content"
@@ -529,7 +529,7 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
             >
               <div
                 class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
-                data-testid="section"
+                data-testid="Section-Models"
               >
                 <div
                   aria-controls="panel1a-content"
@@ -875,7 +875,7 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
             >
               <div
                 class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
-                data-testid="section"
+                data-testid="Section-Filter Data"
               >
                 <div
                   aria-controls="panel1a-content"
@@ -1717,7 +1717,7 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
             >
               <div
                 class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
-                data-testid="section"
+                data-testid="Section-Reference Year"
               >
                 <div
                   aria-controls="panel1a-content"

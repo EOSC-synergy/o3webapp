@@ -165,15 +165,15 @@ function Sidebar(props) {
 
                     {createSectionStructure().map((s, idx) =>
                         <div key={idx} style={{width: "95%", marginBottom: "2%", marginLeft: "auto", marginRight: "auto"}}>
-                        <Section
-                            name={s.name}
-                            key={idx}    
-                            isExpanded={idx === expandedSection}                     
-                            components={s.components}
-                            onCollapse={() => collapseSection(idx)}
-                            onExpand={() => expandSection(idx)}
-                            reportError={props.reportError}
-                        />
+                            <Section
+                                name={s.name}
+                                key={idx}    
+                                isExpanded={idx === expandedSection}                     
+                                components={s.components}
+                                onCollapse={() => collapseSection(idx)}
+                                onExpand={() => expandSection(idx)}
+                                reportError={props.reportError}
+                            />
                         </div>
                     )}
             </Drawer>

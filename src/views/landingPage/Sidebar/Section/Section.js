@@ -171,7 +171,7 @@ function Section(props) {
 
     return (
         <Accordion
-            data-testid="section"
+            data-testid={`Section-${props.name}`}
             sx={{
                 maxWidth: "100vw"       // make sure accordion is not wider than the full screen
             }}
