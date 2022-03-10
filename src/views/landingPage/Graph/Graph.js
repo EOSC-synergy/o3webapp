@@ -61,15 +61,15 @@ function Graph(props) {
     }
 
     if (activeData.status === REQUEST_STATE.loading || activeData.status === REQUEST_STATE.idle) {
-        return <div style={{display: "flex", alignItems: "center", justifyContent: "center", height: HEIGHT_LOADING_SPINNER}}>
+        return (<div style={{display: "flex", alignItems: "center", justifyContent: "center", height: HEIGHT_LOADING_SPINNER}}>
             <div>
                 <CircularProgress size={100}/> <br/>
                 <Typography component="p">Loading Data...</Typography>
             </div>
             
-        </div>
-    }
-    else if (activeData.status === REQUEST_STATE.error) {
+        </div>);
+
+    } else if (activeData.status === REQUEST_STATE.error) {
         return (
             <React.Fragment>
                 <Typography style={{display: "flex", justifyContent: "center", width: "100%"}}>Error: {activeData.error}</Typography>
