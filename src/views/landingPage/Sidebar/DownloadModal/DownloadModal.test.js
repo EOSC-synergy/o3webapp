@@ -51,9 +51,10 @@ describe('testing DownloadModal rendering', () => {
 
     it('renders correctly when closed', async () => {
         
+        const mock = jest.fn();
         let { getByTestId } = render(
             <Provider store ={store}> 
-                <DownloadModal isOpen={true} onClose={() => {}} reportError={() => {}} />
+                <DownloadModal isOpen={true} onClose={() => {}} reportError={mock} />
             </Provider>
         );
         
@@ -62,11 +63,11 @@ describe('testing DownloadModal rendering', () => {
 
         fireEvent.change(wrap, { target: { value: "CSV" } });
         fireEvent.click(getByTestId("DownloadModal-download-plot"));
+        // mock api => data
         axios.post.mockResolvedValue({data: tco3zmResponse});
         await store.dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, models: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"]}))
         fireEvent.click(getByTestId("DownloadModal-download-plot"));
-
-    
+        expect(mock).toHaveBeenCalledWith("Can't download the chart if it hasn't been fully loaded.");
     });
 
 });
