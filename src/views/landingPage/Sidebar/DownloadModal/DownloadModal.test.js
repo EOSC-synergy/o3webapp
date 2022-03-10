@@ -64,7 +64,10 @@ describe('testing DownloadModal rendering', () => {
         fireEvent.change(wrap, { target: { value: "CSV" } });
         fireEvent.click(getByTestId("DownloadModal-download-plot"));
         // mock api => data
-        axios.post.mockResolvedValue({data: tco3zmResponse});
+        // simpler, but less powerful: axios.post.mockResolvedValue({data: tco3zmResponse});
+        axios.post.mockImplementation((requestUrl) => {
+            return Promise.resolve({data: tco3zmResponse})
+        });
         await store.dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, models: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"]}))
         fireEvent.click(getByTestId("DownloadModal-download-plot"));
         expect(mock).toHaveBeenCalledWith("Can't download the chart if it hasn't been fully loaded.");
