@@ -1,3 +1,6 @@
+import { O3AS_PLOTS } from "../../utils/constants";
+import { generateCsv } from "../csv/csvParser";
+
 /**
  * Downloads the graph as a PNG file.
  *
