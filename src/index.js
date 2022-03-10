@@ -30,15 +30,15 @@ export function updateURL() {
     otherSettings.push(`y_zm=${plotSpecific.tco3_zm.displayYRange.minY}-${plotSpecific.tco3_zm.displayYRange.maxY}`);
     otherSettings.push(`x_return=${plotSpecific.tco3_return.displayXRange.regions.join(",")}`);
     otherSettings.push(`y_return=${plotSpecific.tco3_return.displayYRange.minY}-${plotSpecific.tco3_return.displayYRange.maxY}`);
-    otherSettings.push(`title_zm=${plotSpecific.tco3_zm.title}`);
-    otherSettings.push(`title_return=${plotSpecific.tco3_return.title}`);
+    otherSettings.push(`title_zm="${plotSpecific.tco3_zm.title}"`);
+    otherSettings.push(`title_return="${plotSpecific.tco3_return.title}"`);
 
     for (let i = 0; i < store.getState().models.idCounter; i++) {
         let models = [];
         for (let model of Object.keys(store.getState().models.modelGroups[i].models)) {
             models.push(store.getState().api.models.data.indexOf(model));
         }
-        otherSettings.push(`group${i}=${store.getState().models.modelGroups[i].name},${models.join(",")}`);
+        otherSettings.push(`group${i}="${store.getState().models.modelGroups[i].name}",${models.join(",")}`);
     }
 
 
@@ -77,7 +77,7 @@ function updateStoreWithURL() {
         });
         store.dispatch(setDisplayYRange({minY: yZM[0], maxY: yZM[1]}));
 
-        store.dispatch(setTitle({title: urlParams.get('title_zm')}));
+        store.dispatch(setTitle({title: urlParams.get('title_zm').split('"')[1]}));
 
         store.dispatch(setActivePlotId({plotId: O3AS_PLOTS.tco3_return}));
 
@@ -93,10 +93,25 @@ function updateStoreWithURL() {
         });
         store.dispatch(setDisplayYRange({minY: yReturn[0], maxY: yReturn[1]}));
 
-        store.dispatch(setTitle({title: urlParams.get('title_return')}));
+        store.dispatch(setTitle({title: urlParams.get('title_return').split('"')[1]}));
 
         const plotId = urlParams.get('plot');
         store.dispatch(setActivePlotId({plotId: plotId}));
+
+        let groupStrings = []
+        while (urlParams.get(`group${groupStrings.length}`) !== null) {
+            groupStrings.push(urlParams.get(`group${groupStrings.length}`));
+        }
+        const groups = groupStrings.map((elem) => {
+            const name = elem.split('"')[1];
+            const models = elem.split('"')[2].split(',').slice(1).map((e) => {
+                return store.getState().api.models.data[parseInt(e)];
+            });
+            return {name: name, models: models};
+        });
+        for (let i = 0; i < groups.length; i++) {
+            store.dispatch(setModelsOfModelGroup({groupId: i, groupName: groups[i].name, modelList: groups[i].models}));
+        }
     }
 }
 
@@ -111,8 +126,10 @@ store.dispatch(fetchModels()).then(
     }
 );
 
-// add default model group
-store.dispatch(setModelsOfModelGroup(DEFAULT_MODEL_GROUP));
+if (queryString === '') {
+    // add default model group
+    store.dispatch(setModelsOfModelGroup(DEFAULT_MODEL_GROUP));
+}
 
 
 ReactDOM.render(
