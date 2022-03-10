@@ -42,8 +42,7 @@ function ReferenceYearField(props) {
             dispatch(setYear({year: event.target.value}));
             if (event.target.value >= START_YEAR && event.target.value <= END_YEAR) {
                 // fetch for tco3_zm and tco3_return
-                dispatch(fetchPlotDataForCurrentModels());
-                updateURL();
+                dispatch(fetchPlotDataForCurrentModels()).then(updateURL);
             }
         }
     };

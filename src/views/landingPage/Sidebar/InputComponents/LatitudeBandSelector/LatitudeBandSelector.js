@@ -48,8 +48,7 @@ function LatitudeBandSelector(props) {
             setIsCustomizable(false);
             dispatch(setLocation({minLat: event.target.value.minLat, maxLat: event.target.value.maxLat}));
             // fetch for tco3_zm and tco3_return
-            dispatch(fetchPlotDataForCurrentModels());
-            updateURL();
+            dispatch(fetchPlotDataForCurrentModels()).then(updateURL);
         }
     };
 

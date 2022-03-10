@@ -38,8 +38,7 @@ function ReferenceModelSelector(props) {
     const handleChangeForRefModel = (event) => {
         dispatch(setModel({model: event.target.value}));
         // fetch for tco3_zm and tco3_return
-        dispatch(fetchPlotDataForCurrentModels());
-        updateURL();
+        dispatch(fetchPlotDataForCurrentModels()).then(updateURL);
 
     };
 
