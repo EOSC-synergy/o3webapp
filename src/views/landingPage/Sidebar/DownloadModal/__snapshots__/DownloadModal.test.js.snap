@@ -111,6 +111,7 @@ exports[`testing DownloadModal rendering renders correctly when open 1`] = `
             <input
               aria-hidden="true"
               class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+              data-testid="DownloadModal-select-file-format"
               tabindex="-1"
               value=""
             />
@@ -145,6 +146,7 @@ exports[`testing DownloadModal rendering renders correctly when open 1`] = `
       >
         <button
           class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root Mui-disabled  css-sghohy-MuiButtonBase-root-MuiButton-root"
+          data-testid="DownloadModal-download-plot"
           disabled=""
           tabindex="-1"
           type="button"

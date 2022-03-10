@@ -255,6 +255,8 @@ function DownloadModal(props) {
                           label="format"
                           value={selectedFileFormat}
                           onChange={changeFileFormat}
+                          inputProps={{"data-testid":"DownloadModal-select-file-format"}}
+                          
                       >
                           {fileFormats.map((elem, idx) => (
                               <MenuItem key={idx} value={elem.description}>
@@ -269,6 +271,7 @@ function DownloadModal(props) {
                       disabled={selectedFileFormat === '' || activeData.status !== REQUEST_STATE.success}
                       variant="contained"
                       onClick={handleDownloadPlot}
+                      data-testid="DownloadModal-download-plot"
                   >
                       <Typography>Download</Typography>
                   </Button>
