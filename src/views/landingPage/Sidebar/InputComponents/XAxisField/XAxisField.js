@@ -36,7 +36,7 @@ function XAxisField() {
     const handleChangeMin = (event) => {
         if (!isNaN(event.target.value)) {
             setStateX({minX: event.target.value, maxX: maxX});
-            if (event.target.value >= START_YEAR && event.target.value <= END_YEAR && event.target.value <= maxX) {
+            if (event.target.value >= START_YEAR && event.target.value <= END_YEAR && event.target.value < maxX) {
                 dispatch(setDisplayXRange({years: {minX: parseInt(event.target.value), maxX: maxX}}));
             }
         }
@@ -50,7 +50,7 @@ function XAxisField() {
     const handleChangeMax = (event) => {
         if (!isNaN(event.target.value)) {
             setStateX({minX: minX, maxX: event.target.value});
-            if (event.target.value >= START_YEAR && event.target.value <= END_YEAR && minX <= event.target.value) {
+            if (event.target.value >= START_YEAR && event.target.value <= END_YEAR && minX < event.target.value) {
                 dispatch(setDisplayXRange({years: {minX: minX, maxX: parseInt(event.target.value)}}));
             }
         }
