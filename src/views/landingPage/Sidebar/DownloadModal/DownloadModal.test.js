@@ -10,12 +10,12 @@ import { O3AS_PLOTS } from '../../../../utils/constants';
 jest.mock('axios');
 
 
-let store;
-beforeEach(() => {
-  store = createTestStore();
-});
 
 describe('testing DownloadModal rendering', () => {
+    let store;
+    beforeEach(() => {
+      store = createTestStore();
+    });
 
     it('renders without crashing', () => {
         render(<Provider store ={store}> <DownloadModal reportError={() => {}} onClose={()=>{}} isOpen={true} /></Provider>);
