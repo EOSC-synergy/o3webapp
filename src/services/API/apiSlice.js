@@ -3,6 +3,7 @@ import {getModels, getPlotTypes, getPlotData} from "./client";
 import {preTransformApiData} from "../../utils/optionsFormatter/optionsFormatter";
 import {START_YEAR, END_YEAR, O3AS_PLOTS} from "../../utils/constants";
 import {setDisplayYRangeForPlot} from "../../store/plotSlice/plotSlice";
+import {updateURL} from "../../index";
 
 export let cacheKey = '';
 
@@ -118,6 +119,7 @@ export const updateDataAndDisplaySuggestions = ({plotId, cacheKey, data, suggest
                 minY: Math.floor(min / 10) * 10,
                 maxY: Math.ceil(max / 10) * 10
             }));
+            updateURL();
         }
     }
 }
