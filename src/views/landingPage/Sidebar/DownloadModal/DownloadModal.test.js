@@ -51,7 +51,7 @@ describe('testing DownloadModal rendering', () => {
 
     it('renders correctly when closed', async () => {
         
-        let { getByTestId, getByRole, container, getAllByRole } = render(
+        let { getByTestId } = render(
             <Provider store ={store}> 
                 <DownloadModal isOpen={true} onClose={() => {}} reportError={() => {}} />
             </Provider>
@@ -59,21 +59,8 @@ describe('testing DownloadModal rendering', () => {
         
         const wrap = getByTestId("DownloadModal-select-file-format")
         fireEvent.mouseDown(wrap);
-        /*
-        const wrapperNode = getByTestId("DownloadModal-select-file-format")
-        console.log(wrapperNode)
-        // Dig deep to find the actual <select>
-        const selectNode = wrapperNode.childNodes[0].childNodes[0].childNodes[0];
-        fireEvent.change(selectNode, { target: { value: "3" } });
-        */
 
-        //Object.defineProperty(window, 'Apexcharts', {getChartByID: () => ({w: {globals: {series: ""}}})});
-        window.Apexcharts = {};
-        window.Apexcharts.getChartByID = (plotId) => {
-            console.log("X")
-        }
-
-        fireEvent.change(wrap, { target: { value: "SVG" } });
+        fireEvent.change(wrap, { target: { value: "CSV" } });
         fireEvent.click(getByTestId("DownloadModal-download-plot"));
         axios.post.mockResolvedValue({data: tco3zmResponse});
         await store.dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, models: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"]}))
