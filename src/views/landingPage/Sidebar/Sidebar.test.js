@@ -55,6 +55,27 @@ describe('test sidebar component', () => {
         expect(container).toHaveTextContent("Global"); // if it has at least one region this means the tco3_return was rendered
     })
 
+    it('expands and closes the appearence section without crashing', () => {
+
+        const { getByTestId } = render(<Provider store={store}>
+            <Sidebar isOpen={true} onClose={jest.fn()} reportError={jest.fn()} onOpen={jest.fn()} />
+        </Provider>);
+        console.log(getByTestId("Section-Summary-Appearance"));
+        userEvent.click(getByTestId("Section-Summary-Appearance"));
+        userEvent.click(getByTestId("Section-Summary-Appearance"));
+    })
+
+    
+    it('expands and closes the appearence section without crashing', () => {
+
+        const { getByTestId } = render(<Provider store={store}>
+            <Sidebar isOpen={true} onClose={jest.fn()} reportError={jest.fn()} onOpen={jest.fn()} />
+        </Provider>);
+        console.log(getByTestId("Section-Summary-Appearance"));
+        userEvent.click(getByTestId("Section-Summary-Appearance"));
+        userEvent.click(getByTestId("Section-Summary-Appearance"));
+    })
+
     
 
 

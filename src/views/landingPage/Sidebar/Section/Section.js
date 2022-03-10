@@ -182,6 +182,7 @@ function Section(props) {
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
+                data-testid={`Section-Summary-${props.name}`}
             >
                 <Typography>{
                 (props.name     // check if props.name exists
