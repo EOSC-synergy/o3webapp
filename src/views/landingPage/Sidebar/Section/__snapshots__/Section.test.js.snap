@@ -231,6 +231,7 @@ exports[`Section renders correclty renders correctly from config file 1`] = `
                         <input
                           aria-invalid="false"
                           class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                          data-testid="YAxisField-left-input"
                           id="outlined-basic"
                           type="text"
                           value="280"
@@ -278,6 +279,7 @@ exports[`Section renders correclty renders correctly from config file 1`] = `
                         <input
                           aria-invalid="false"
                           class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                          data-testid="YAxisField-right-input"
                           id="outlined-basic"
                           type="text"
                           value="330"
