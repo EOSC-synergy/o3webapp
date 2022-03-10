@@ -131,7 +131,9 @@ function DownloadModal(props) {
   const downloadGraphAsCsv = (plotTitle, plotId) => {
       let series, seriesX, categoryLabels, seriesNames;
       try {
+          console.log("hi");
           const global = window.ApexCharts.getChartByID(plotId).w.globals;
+          console.log(global);
           series = global.series;
           seriesX = global.seriesX;
           categoryLabels = global.categoryLabels;

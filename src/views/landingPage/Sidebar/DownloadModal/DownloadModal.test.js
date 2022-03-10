@@ -67,9 +67,13 @@ describe('testing DownloadModal rendering', () => {
         fireEvent.change(selectNode, { target: { value: "3" } });
         */
 
-        Object.defineProperty(window, 'Apexcharts', {getChartByID: () => ({w: {globals: {series: ""}}})});
+        //Object.defineProperty(window, 'Apexcharts', {getChartByID: () => ({w: {globals: {series: ""}}})});
+        window.Apexcharts = {};
+        window.Apexcharts.getChartByID = (plotId) => {
+            console.log("X")
+        }
 
-        fireEvent.change(wrap, { target: { value: "CSV" } });
+        fireEvent.change(wrap, { target: { value: "SVG" } });
         fireEvent.click(getByTestId("DownloadModal-download-plot"));
         axios.post.mockResolvedValue({data: tco3zmResponse});
         await store.dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, models: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"]}))
