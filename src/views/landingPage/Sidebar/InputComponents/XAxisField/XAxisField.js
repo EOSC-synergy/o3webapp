@@ -11,7 +11,7 @@ import {START_YEAR, END_YEAR} from '../../../../../utils/constants';
  * @param {function} props.reportError function for error handling
  * @returns {JSX.Element} a jsx containing two text-fields and labels
  */
-function XAxisField(props) {
+function XAxisField() {
     /**
      * A dispatch function to dispatch actions to the redux store.
      */
@@ -71,6 +71,7 @@ function XAxisField(props) {
                         onChange={handleChangeMin}
                         error={stateX.minX < START_YEAR || stateX.minX > END_YEAR || stateX.minX >= maxX}
                         helperText={stateX.minX < START_YEAR ? `<${START_YEAR}` : (stateX.minX > END_YEAR ? `>${END_YEAR}` : (stateX.minX >= maxX ? `min>=max` : ''))}
+                        inputProps={{ "data-testid": "XAxisField-left-input" }}
                     />
                 </FormControl>
             </Grid>
@@ -87,6 +88,7 @@ function XAxisField(props) {
                         onChange={handleChangeMax}
                         error={stateX.maxX < START_YEAR || stateX.maxX > END_YEAR || minX >= stateX.maxX}
                         helperText={stateX.maxX < START_YEAR ? `<${START_YEAR}` : (stateX.maxX > END_YEAR ? `>${END_YEAR}` : (minX >= stateX.maxX ? `min>=max` : ''))}
+                        inputProps={{ "data-testid": "XAxisField-right-input" }}
                     />
                 </FormControl>
             </Grid>
