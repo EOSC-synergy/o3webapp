@@ -4,6 +4,8 @@ import '@testing-library/jest-dom';
 import { Provider } from 'react-redux'
 import YAxisField from './YAxisField';
 import { createTestStore } from "../../../../../store/store"
+import { setActivePlotId } from '../../../../../store/plotSlice/plotSlice';
+import { O3AS_PLOTS } from '../../../../../utils/constants';
 
 describe("tests basic rendering", () => {
     let store;
@@ -31,7 +33,7 @@ describe("tests basic rendering", () => {
     });
 });
 
-describe('test functionality redux', () => {
+describe('test functionality redux for tco3_zm', () => {
     let store;
     beforeEach(() => {
         store = createTestStore();
@@ -63,6 +65,42 @@ describe('test functionality redux', () => {
         const inputField = getByTestId("YAxisField-right-input");
         fireEvent.change(inputField, {target: {value: newValue}}); // change input
         expect(store.getState().plot.plotSpecificSettings.tco3_zm.displayYRange.maxY).toEqual(newValue);
+    });
+});
+
+describe('test functionality redux for tco3_return', () => {
+    let store;
+    beforeEach(() => {
+        store = createTestStore();
+        store.dispatch(setActivePlotId({plotId: O3AS_PLOTS.tco3_return}))
+    });
+
+    it('should update the store on user input (left field)', () => {
+        const startValue = store.getState().plot.plotSpecificSettings.tco3_return.displayYRange.minY;
+        const newValue = startValue - 20;
+
+        const { getByTestId } = render(
+            <Provider store={store}>
+                <YAxisField />
+            </Provider>
+        );     fireEvent
+        const inputField = getByTestId("YAxisField-left-input");
+        fireEvent.change(inputField, {target: {value: newValue}}); // change input
+        expect(store.getState().plot.plotSpecificSettings.tco3_return.displayYRange.minY).toEqual(newValue);
+    });
+
+    it('should update the store on user input (right field)', () => {
+        const startValue = store.getState().plot.plotSpecificSettings.tco3_return.displayYRange.maxY;
+        const newValue = startValue + 20;
+
+        const { getByTestId } = render(
+            <Provider store={store}>
+                <YAxisField />
+            </Provider>
+        );     fireEvent
+        const inputField = getByTestId("YAxisField-right-input");
+        fireEvent.change(inputField, {target: {value: newValue}}); // change input
+        expect(store.getState().plot.plotSpecificSettings.tco3_return.displayYRange.maxY).toEqual(newValue);
     });
 });
 
