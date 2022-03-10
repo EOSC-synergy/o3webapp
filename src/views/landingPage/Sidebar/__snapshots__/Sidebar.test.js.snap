@@ -3,7 +3,7 @@
 exports[`test sidebar component closed Sidebar renders correctly 1`] = `
 <div>
   <div
-    class="MuiDrawer-root MuiDrawer-docked css-166y8pw-MuiDrawer-docked"
+    class="MuiDrawer-root MuiDrawer-docked css-fvsm27-MuiDrawer-docked"
     data-testid="sidebar"
   >
     <div
@@ -11,13 +11,13 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
       style="visibility: hidden; webkit-transform: translateX(1024px); transform: translateX(1024px);"
     >
       <div
-        class="MuiDrawer-root MuiDrawer-docked css-mg5ol1-MuiDrawer-docked"
+        class="MuiDrawer-root MuiDrawer-docked css-1gsudvg-MuiDrawer-docked"
       >
         <div
           class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiDrawer-paper MuiDrawer-paperAnchorRight MuiDrawer-paperAnchorDockedRight css-18sg6k4-MuiPaper-root-MuiDrawer-paper"
         >
           <div
-            class="css-cfiwj7"
+            class="css-1jjqm8e"
           >
             <button
               class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
@@ -268,6 +268,7 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                                   <input
                                     aria-invalid="false"
                                     class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                                    data-testid="XAxisField-left-input"
                                     id="outlined-basic"
                                     type="text"
                                     value="1960"
@@ -315,6 +316,7 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                                   <input
                                     aria-invalid="false"
                                     class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                                    data-testid="XAxisField-right-input"
                                     id="outlined-basic"
                                     type="text"
                                     value="2100"
@@ -366,6 +368,7 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                                   <input
                                     aria-invalid="false"
                                     class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                                    data-testid="YAxisField-left-input"
                                     id="outlined-basic"
                                     type="text"
                                     value="280"
@@ -413,6 +416,7 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                                   <input
                                     aria-invalid="false"
                                     class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                                    data-testid="YAxisField-right-input"
                                     id="outlined-basic"
                                     type="text"
                                     value="330"
@@ -1907,20 +1911,20 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
 exports[`test sidebar component opened Sidebar renders correctly 1`] = `
 <div>
   <div
-    class="MuiDrawer-root MuiDrawer-docked css-166y8pw-MuiDrawer-docked"
+    class="MuiDrawer-root MuiDrawer-docked css-fvsm27-MuiDrawer-docked"
     data-testid="sidebar"
   >
     <div
       class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiDrawer-paper MuiDrawer-paperAnchorRight MuiDrawer-paperAnchorDockedRight css-18sg6k4-MuiPaper-root-MuiDrawer-paper"
     >
       <div
-        class="MuiDrawer-root MuiDrawer-docked css-mg5ol1-MuiDrawer-docked"
+        class="MuiDrawer-root MuiDrawer-docked css-1gsudvg-MuiDrawer-docked"
       >
         <div
           class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiDrawer-paper MuiDrawer-paperAnchorRight MuiDrawer-paperAnchorDockedRight css-18sg6k4-MuiPaper-root-MuiDrawer-paper"
         >
           <div
-            class="css-cfiwj7"
+            class="css-1jjqm8e"
           >
             <button
               class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
@@ -2171,6 +2175,7 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                                   <input
                                     aria-invalid="false"
                                     class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                                    data-testid="XAxisField-left-input"
                                     id="outlined-basic"
                                     type="text"
                                     value="1960"
@@ -2218,6 +2223,7 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                                   <input
                                     aria-invalid="false"
                                     class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                                    data-testid="XAxisField-right-input"
                                     id="outlined-basic"
                                     type="text"
                                     value="2100"
@@ -2269,6 +2275,7 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                                   <input
                                     aria-invalid="false"
                                     class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                                    data-testid="YAxisField-left-input"
                                     id="outlined-basic"
                                     type="text"
                                     value="280"
@@ -2316,6 +2323,7 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                                   <input
                                     aria-invalid="false"
                                     class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                                    data-testid="YAxisField-right-input"
                                     id="outlined-basic"
                                     type="text"
                                     value="330"

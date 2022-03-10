@@ -4,6 +4,7 @@ import ReferenceYearField from "../ReferenceYearField/ReferenceYearField";
 
 /**
  * enables the user to select a referenceYear, referenceModel and to toggle an offset according to those two inputs
+ * @component
  * @param {Object} props 
  * @param {function} props.reportError - function for error handling
  * @returns {JSX} a jsx containing a referenceYearSlider, a referenceModelSelector and a button to toggle the offset

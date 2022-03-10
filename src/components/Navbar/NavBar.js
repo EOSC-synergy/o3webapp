@@ -3,9 +3,11 @@ import {AppBar, Button, Container, Grid, Toolbar} from '@mui/material';
 import Logo from './Logo/Logo';
 import EditIcon from '@mui/icons-material/Edit';
 import Typography from "@mui/material/Typography";
+import { BACKGROUND_BASE_COLOR } from '../../utils/constants';
 
 /**
  * A component for the navigation of the website.
+ * @component
  */
 function Navbar(props) {
 
@@ -41,7 +43,7 @@ function Navbar(props) {
 
     return (
         <div id="Navbar">
-            <AppBar position="static" sx={{ margin: 0, bgcolor: '#111'}} data-testid="Navbar" >
+            <AppBar position="static" sx={{ margin: 0, bgcolor: BACKGROUND_BASE_COLOR}} data-testid="Navbar" >
                 <Container disableGutters maxWidth={false} sx={{ margin: 0 }} >
                     <Toolbar disableGutters data-testid="Toolbar_Navbar">
                         <Grid
@@ -50,6 +52,7 @@ function Navbar(props) {
                             justifyContent="center"
                             alignItems="center"
                             key="navbar grid container"
+                            sx={{backgroundColor: BACKGROUND_BASE_COLOR}}
                         >
                             <Grid
                                 item

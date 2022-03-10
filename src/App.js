@@ -10,6 +10,7 @@ import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 /**
  * Main container of the Webapp
  * Contains all GUI elements
+ * @component
  * @returns {JSX.Element} a jsx containing all main components
  */
 function App() {

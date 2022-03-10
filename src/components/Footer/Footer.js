@@ -1,11 +1,14 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import { Grid, Link } from '@mui/material';
+import { BACKGROUND_BASE_COLOR } from '../../utils/constants';
 
 /**
  * The links on the right-hand side in the footer with label and href.
  *
  * @type {Array.<{label: string, href: string}>}
+ * @constant
+ * @memberof Footer
  */
 export const links = [
     {
@@ -33,8 +36,10 @@ export const links = [
 /**
  * A container for copyright text and important links at the bottom of the Website.
  * Contains links to home page, privacy policy, terms of use and how to acknowledge
+ * @component
  */
-function Footer () {
+const Footer = (props) => {
+
     return (
         <div
             style={{
@@ -50,7 +55,7 @@ function Footer () {
                 data-testid="footer-grid-container"
                 sx={{
                     position: 'relative',
-                    backgroundColor: '#111',
+                    backgroundColor: BACKGROUND_BASE_COLOR,
                     textAlign: 'center',
                     marginTop: '10px',
                     paddingTop: '3px',

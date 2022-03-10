@@ -17,7 +17,7 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
           data-testid="Toolbar_Navbar"
         >
           <div
-            class="MuiGrid-root MuiGrid-container css-1hbmzt3-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container css-zvblfl-MuiGrid-root"
           >
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8 css-vok43g-MuiGrid-root"
@@ -84,20 +84,20 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
     style="width: 100%; height: 100%;"
   >
     <div
-      class="MuiDrawer-root MuiDrawer-docked css-166y8pw-MuiDrawer-docked"
+      class="MuiDrawer-root MuiDrawer-docked css-fvsm27-MuiDrawer-docked"
       data-testid="sidebar"
     >
       <div
         class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiDrawer-paper MuiDrawer-paperAnchorRight MuiDrawer-paperAnchorDockedRight css-18sg6k4-MuiPaper-root-MuiDrawer-paper"
       >
         <div
-          class="MuiDrawer-root MuiDrawer-docked css-mg5ol1-MuiDrawer-docked"
+          class="MuiDrawer-root MuiDrawer-docked css-1gsudvg-MuiDrawer-docked"
         >
           <div
             class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiDrawer-paper MuiDrawer-paperAnchorRight MuiDrawer-paperAnchorDockedRight css-18sg6k4-MuiPaper-root-MuiDrawer-paper"
           >
             <div
-              class="css-cfiwj7"
+              class="css-1jjqm8e"
             >
               <button
                 class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
@@ -348,6 +348,7 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                     <input
                                       aria-invalid="false"
                                       class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                                      data-testid="XAxisField-left-input"
                                       id="outlined-basic"
                                       type="text"
                                       value="1960"
@@ -395,6 +396,7 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                     <input
                                       aria-invalid="false"
                                       class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                                      data-testid="XAxisField-right-input"
                                       id="outlined-basic"
                                       type="text"
                                       value="2100"
@@ -446,6 +448,7 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                     <input
                                       aria-invalid="false"
                                       class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                                      data-testid="YAxisField-left-input"
                                       id="outlined-basic"
                                       type="text"
                                       value="280"
@@ -493,6 +496,7 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                     <input
                                       aria-invalid="false"
                                       class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                                      data-testid="YAxisField-right-input"
                                       id="outlined-basic"
                                       type="text"
                                       value="330"

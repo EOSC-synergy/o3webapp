@@ -13,22 +13,27 @@ import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import PropTypes from 'prop-types';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import { BACKGROUND_BASE_COLOR } from '../../../utils/constants.js';
 
 const DRAWER_WIDTH = 400;
 
 /**
  * Defining a drawer-header section at the beginning of a drawer
+ * @constant {JSX.Element}
+ * @memberof Sidebar
  */
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
+    backgroundColor: BACKGROUND_BASE_COLOR,
   }));
 
 /**
  * Contains all input components responsible for the modification 
  * of the plot settings.
+ * @component
  * @param {Object} props 
  * @param {boolean} props.isOpen -  whether sideBar should be open
  * @param {function} props.onClose - handles closing of the sidebar
@@ -122,6 +127,7 @@ function Sidebar(props) {
                 '& .MuiDrawer-paper': {
                     width: DRAWER_WIDTH,
                     maxWidth: "100%",
+                    backgroundColor: BACKGROUND_BASE_COLOR
                 }
             }}
             data-testid="sidebar"
@@ -133,6 +139,7 @@ function Sidebar(props) {
                 sx= {{
                     '& .MuiDrawer-paper': {
                         height: '92%',
+                        backgroundColor: BACKGROUND_BASE_COLOR
                     }
                 }}
             > 
