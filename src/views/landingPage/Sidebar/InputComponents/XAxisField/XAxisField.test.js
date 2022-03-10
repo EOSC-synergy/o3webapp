@@ -60,8 +60,9 @@ describe('test functionality redux', () => {
                 <XAxisField />
             </Provider>
         );     
-        const inputField = getByTestId("XAxisField-left-input");
+        const inputField = getByTestId("XAxisField-right-input");
         fireEvent.change(inputField, {target: {value: "2010"}}); // change input
-        expect(store.getState().plot.plotSpecificSettings.tco3_zm.displayXRange.years.minX).toEqual(2010);
+        expect(store.getState().plot.plotSpecificSettings.tco3_zm.displayXRange.years.maxX).toEqual(2010);
     });
 });
+
