@@ -4,12 +4,13 @@ exports[`Section renders correclty renders correctly from config file 1`] = `
 <div>
   <div
     class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root Mui-expanded css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
-    data-testid="section"
+    data-testid="Section-Appearance"
   >
     <div
       aria-controls="panel1a-content"
       aria-expanded="true"
       class="MuiButtonBase-root MuiAccordionSummary-root Mui-expanded css-1icm36a-MuiButtonBase-root-MuiAccordionSummary-root"
+      data-testid="Section-Summary-Appearance"
       id="panel1a-header"
       role="button"
       tabindex="0"
@@ -317,12 +318,13 @@ exports[`Section renders correclty renders correctly from config file 2`] = `
 <div>
   <div
     class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root Mui-expanded css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
-    data-testid="section"
+    data-testid="Section-Models"
   >
     <div
       aria-controls="panel1a-content"
       aria-expanded="true"
       class="MuiButtonBase-root MuiAccordionSummary-root Mui-expanded css-1icm36a-MuiButtonBase-root-MuiAccordionSummary-root"
+      data-testid="Section-Summary-Models"
       id="panel1a-header"
       role="button"
       tabindex="0"
@@ -664,12 +666,13 @@ exports[`Section renders correclty renders correctly from config file 3`] = `
 <div>
   <div
     class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root Mui-expanded css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
-    data-testid="section"
+    data-testid="Section-Filter Data"
   >
     <div
       aria-controls="panel1a-content"
       aria-expanded="true"
       class="MuiButtonBase-root MuiAccordionSummary-root Mui-expanded css-1icm36a-MuiButtonBase-root-MuiAccordionSummary-root"
+      data-testid="Section-Summary-Filter Data"
       id="panel1a-header"
       role="button"
       tabindex="0"
@@ -1507,12 +1510,13 @@ exports[`Section renders correclty renders correctly from config file 4`] = `
 <div>
   <div
     class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root Mui-expanded css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
-    data-testid="section"
+    data-testid="Section-Reference Year"
   >
     <div
       aria-controls="panel1a-content"
       aria-expanded="true"
       class="MuiButtonBase-root MuiAccordionSummary-root Mui-expanded css-1icm36a-MuiButtonBase-root-MuiAccordionSummary-root"
+      data-testid="Section-Summary-Reference Year"
       id="panel1a-header"
       role="button"
       tabindex="0"

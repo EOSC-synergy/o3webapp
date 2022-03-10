@@ -8,24 +8,26 @@ import {setActivePlotId} from "../../../../../store/plotSlice/plotSlice";
 let store;
 beforeEach(() => {
     store = createTestStore();
-    store.dispatch(setActivePlotId({plotId: "tco3_return"}));
+    store.dispatch(setActivePlotId({plotId: "tco3_return"})); // this component is only for the 
 });
 
-it('renders without crashing', () => {
-    render(<>
-        <Provider store={store}>
-            <RegionSelector reportError={() => {}} />
-        </Provider>
-    </>)
-});
-
-it('renders correctly', () => {
-
-    const { container } = render(<>
-        <Provider store={store}>
-            <RegionSelector reportError={() => {}} />
-        </Provider>
-    </>);
-
-    expect(container).toMatchSnapshot();
+describe("tests basic rendering", () => {
+    it('renders without crashing', () => {
+        render(<>
+            <Provider store={store}>
+                <RegionSelector reportError={() => {}} />
+            </Provider>
+        </>)
+    });
+    
+    it('renders correctly', () => {
+    
+        const { container } = render(<>
+            <Provider store={store}>
+                <RegionSelector reportError={() => {}} />
+            </Provider>
+        </>);
+    
+        expect(container).toMatchSnapshot();
+    });
 });
