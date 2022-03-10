@@ -11,36 +11,6 @@ import { BACKGROUND_BASE_COLOR } from '../../utils/constants';
  */
 function Navbar(props) {
 
-    /**
-     * whether the menu (when the navbar collapsed) is currently visible
-     */
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-
-    /**
-     * Opens the nav menu.
-     *
-     * @param event the event that triggered this function
-     */
-    const handleOpenNavMenu = (event) => {
-        setAnchorElNav(event.currentTarget);
-    };
-
-    /**
-     * Closes the nav menu.
-     */
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
-
-    /**
-     * When the edit graph button is clicked in collapsed mode,
-     * the nav menu will close first before the sidebar will open.
-     */
-    const handleEditGraphButtonCollapsed = () => {
-        handleCloseNavMenu();
-        props.openSidebar();
-    }
-
     return (
         <div id="Navbar">
             <AppBar position="static" sx={{ margin: 0, bgcolor: BACKGROUND_BASE_COLOR}} data-testid="Navbar" >
