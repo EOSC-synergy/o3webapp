@@ -79,6 +79,7 @@ function LatitudeBandSelector(props) {
                         )
                     }
                 </Select>
+                {isCustomizable && <div style={{height: '10px'}}/>}
                 {isCustomizable && <CustomLatitudeSelector/>}
             </Box>
         </>
