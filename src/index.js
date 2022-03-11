@@ -20,6 +20,21 @@ import {
 } from "./store/plotSlice/plotSlice";
 import {setModel, setVisibility, setYear} from "./store/referenceSlice/referenceSlice";
 
+if (typeof BigInt === 'undefined') global.BigInt = require('big-integer');
+
+function parseBigInt(str, base) {
+    if (typeof BigInt === 'undefined') global.BigInt = require('big-integer');
+
+    base = BigInt(base);
+    let bigint = BigInt(0);
+    for (let i = 0; i < str.length; i++) {
+        let code = str[str.length-1-i].charCodeAt(0) - 48;
+        if(code >= 10) code -= 39;
+        bigint += base**BigInt(i) * BigInt(code);
+    }
+    return bigint;
+}
+
 export function updateURL() {
     const plotSpecific = store.getState().plot.plotSpecificSettings;
     const otherSettings = [];
@@ -57,7 +72,7 @@ export function updateURL() {
             modelSettings.push(+modelGroup.models[model].median);
             modelSettings.push(+modelGroup.models[model].percentile);
         }
-        modelSettings = parseInt(modelSettings.join(""), 2).toString(16).toUpperCase();
+        modelSettings = parseBigInt(modelSettings.join(""), 2).toString(16).toUpperCase();
         otherSettings.push(`group${i}="${name}",${visibilities.join("")},${models.join(",")},${modelSettings}`);
     }
 
@@ -131,7 +146,7 @@ function updateStoreWithURL() {
                 return store.getState().api.models.data[parseInt(e)];
             });
             let modelSettings = elem.split('"')[2].split(',').slice(-1)[0];
-            const binary = parseInt(modelSettings, 16).toString(2);
+            const binary = parseBigInt(modelSettings, 16).toString(2);
             let leadingZeros = "0" * (models.length * dataPerModel - binary.length);
             if (typeof leadingZeros === 'number') leadingZeros = "";
             modelSettings = leadingZeros + binary;
