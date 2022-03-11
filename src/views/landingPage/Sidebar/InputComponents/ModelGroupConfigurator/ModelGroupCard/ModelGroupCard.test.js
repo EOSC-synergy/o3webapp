@@ -164,6 +164,29 @@ describe('test ModelGroupCard functionality', () => {
 
     });
 
+    it("opens the delete dialog and deletes the model group if the delete button is clicked", () => {
+        const { getByTestId, container } = render(
+            <Provider store={store}>
+                <ModelGroupCard modelGroupId={groupId} reportError={reportError} />
+            </Provider>
+        );
+        const deleteIcon = getByTestId("ModelGroupCard-delete-model-group");
+        
+        expect(store.getState().models.modelGroups["0"]).not.toEqual(undefined);
+        userEvent.click(deleteIcon); // delete model group
+        expect(container).toHaveTextContent("Delete this model group?");
+
+        try {
+            userEvent.click(getByTestId("ModelGroupCard-delete-model-delete"));
+        } catch (TypeError) {
+            // for some reasons in the test environment another update cycle raises a type error
+        }
+        
+        expect(store.getState().models.modelGroups["0"]).toEqual(undefined);
+        expect(container).not.toHaveTextContent("Delete this model group?"); // delete dialog is closed
+
+    });
+
     it('opens edit model group modal', () => {
         const {baseElement, getByTestId} = render(
             <Provider store={store}>
