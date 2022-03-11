@@ -10,8 +10,6 @@ import axios from 'axios';
 import { fetchModels } from '../../../../../../services/API/apiSlice';
 jest.mock('axios');
 
-const TEST_MODEL_NAME = "CCMI-1_ACCESS_ACCESS-CCM-refC2";
-
 let store;
 describe('test addModelGroupModal rendering', () => {
     beforeEach(() => {
@@ -130,19 +128,19 @@ describe('test addModelGroupModal functionality', () => {
 });
 
 let rendered;
-describe('test addModelGroupModal functionality', () => {
+describe('test addModelGroupModal functionality without model group id', () => {
 
     beforeEach(async () => {
         store = createTestStore();
         axios.get.mockImplementation(() => {
             return Promise.resolve({data: modelsResponse})
         });
+        await store.dispatch(fetchModels());
         
         rendered = render(<Provider store={store}>
             <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} />
         </Provider>);
 
-        await store.dispatch(fetchModels());
         await waitFor(() => {
             expect(rendered.baseElement).toHaveTextContent("105");
         });
@@ -161,7 +159,6 @@ describe('test addModelGroupModal functionality', () => {
     });
 
     it("check if models can be moved from left to right", async () => {
-        const firstListElementText = "ACCESS-CCM-refC2Institute: ACCESS\nProject: CCMI-1";
         const {getByTestId} = rendered;
 
         const listItems = within(getByTestId("AddModelGroupModal-card-header-left")).queryAllByRole("listitem");
@@ -186,8 +183,32 @@ describe('test addModelGroupModal functionality', () => {
         expect(filteredModels.map(item => item.textContent)).toEqual(accessModels); // compare length
     });
 
+});
 
-    test.todo("check default model group name is rendered when props.modelGroupId is provided");
+describe('test addModelGroupModal functionality without model group id', () => {
+
+    beforeEach(async () => {
+        store = createTestStore();
+        axios.get.mockImplementation(() => {
+            return Promise.resolve({data: modelsResponse})
+        });
+        await store.dispatch(fetchModels());
+        
+        rendered = render(<Provider store={store}>
+            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} modelGroupId={0} />
+        </Provider>);
+
+        
+        await waitFor(() => {
+            expect(rendered.baseElement).toHaveTextContent("102");
+        });
+    });
+
+    it("renders default model group name if props.modelGroupId is provided", () => {
+        expect(rendered.baseElement).toHaveTextContent(store.getState().models.modelGroups["0"].name);
+    });
+
+    
     test.todo("check default models on the right are rendered when props.modelGroupId is provided");
     test.todo("check if onClosing the modal resets all model groups on the right and checked");
 });
