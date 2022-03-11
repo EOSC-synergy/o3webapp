@@ -1,7 +1,7 @@
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import {within} from '@testing-library/dom';
-
+import userEvent from '@testing-library/user-event';
 import AddModelGroupModal from './AddModelGroupModal';
 import { Provider } from "react-redux";
 import { createTestStore } from '../../../../../../store/store';
@@ -128,7 +128,7 @@ describe('test addModelGroupModal functionality', () => {
 
     it("loads all 105 models correctly", async () => {
         axios.get.mockImplementation(() => {
-            return Promise.resolve({data: modelsResponse}); //Promise.resolve({data: modelsResponse})
+            return Promise.resolve({data: modelsResponse})
         });
         
         const { baseElement, getAllByRole } = render(<Provider store={store}>
@@ -144,7 +144,7 @@ describe('test addModelGroupModal functionality', () => {
         
     it("check if all models are rendered on the left at beginning and none on the right", async () => {
         axios.get.mockImplementation(() => {
-            return Promise.resolve({data: modelsResponse}); //Promise.resolve({data: modelsResponse})
+            return Promise.resolve({data: modelsResponse});
         });
         
         const { baseElement, getByTestId } = render(<Provider store={store}>
@@ -159,7 +159,29 @@ describe('test addModelGroupModal functionality', () => {
         expect(within(getByTestId("AddModelGroupModal-card-header-right")).queryAllByRole("listitem").length).toEqual(0);
     });
 
-    test.todo("check if models can be moved from left to right");
+    it("check if models can be moved from left to right", async () => {
+        const firstListElementText = "ACCESS-CCM-refC2Institute: ACCESS\nProject: CCMI-1";
+        axios.get.mockImplementation(() => {
+            return Promise.resolve({data: modelsResponse});
+        });
+        
+        const { baseElement, getByTestId } = render(<Provider store={store}>
+            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} />
+        </Provider>);
+
+        await store.dispatch(fetchModels());
+        await waitFor(() => {
+            expect(baseElement).toHaveTextContent("105");
+        });
+        const listItems = within(getByTestId("AddModelGroupModal-card-header-left")).queryAllByRole("listitem");
+        userEvent.click(listItems[0]);
+        expect(listItems[0].textContent).toEqual(firstListElementText);
+        userEvent.click(getByTestId("AddModelGroupModal-button-move-allChecked-right"));
+        const rightListItems = within(getByTestId("AddModelGroupModal-card-header-right")).queryAllByRole("listitem")
+        expect(within(getByTestId("AddModelGroupModal-card-header-right")).queryAllByRole("listitem").length).toEqual(1); // expect one model was moved to the right
+        expect(rightListItems[0].textContent).toEqual(firstListElementText);
+    });
+
     test.todo("check if models not being selected by search are being hidden");
     test.todo("check default model group name is rendered when props.modelGroupId is provided");
     test.todo("check default models on the right are rendered when props.modelGroupId is provided");

@@ -417,6 +417,7 @@ exports[`test ModelGroupCard functionality opens add model group modal 1`] = `
           >
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-5 css-11lxi55-MuiGrid-root"
+              data-testid="AddModelGroupModal-card-header-left"
             >
               <p
                 class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
@@ -474,6 +475,7 @@ exports[`test ModelGroupCard functionality opens add model group modal 1`] = `
             </div>
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-5 css-11lxi55-MuiGrid-root"
+              data-testid="AddModelGroupModal-card-header-right"
             >
               <p
                 class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
