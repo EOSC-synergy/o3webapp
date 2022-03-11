@@ -9,16 +9,16 @@ import {
 
 /**
  * Stores the default model group.
- * 
- * Modify this object to change the name or the models that appear when 
+ *
+ * Modify this object to change the name or the models that appear when
  * the WebApp is initially loaded.
  */
 export const DEFAULT_MODEL_GROUP = {
     groupId: null, // no valid id => add new group 
-    groupName: "Example Group", 
+    groupName: "Example Group",
     modelList: [
-        "CCMI-1_ACCESS_ACCESS-CCM-refC2", 
-        "CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG", 
+        "CCMI-1_ACCESS_ACCESS-CCM-refC2",
+        "CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG",
         "CCMI-1_CCCma_CMAM-refC2"
     ]
 };
@@ -214,13 +214,13 @@ export const ALL_REGIONS_ORDERED = [ANTARCTIC, SH_MID, NH_MID, TROPICS, ARCTIC, 
  */
 const mean = "mean";
 /**
- * The median: this appears in the model group card and is used to identify its statistical value settings.
- */
-const median = "median";
-/**
  * The standard deviation: this appears in the model group card and is used to identify its statistical value settings.
  */
 export const std = "standard deviation";
+/**
+ * The median: this appears in the model group card and is used to identify its statistical value settings.
+ */
+const median = "median";
 /**
  * The percentile: this appears in the model group card and is used to identify its statistical value settings.
  */
@@ -232,8 +232,8 @@ export const percentile = "percentile";
  */
 export const STATISTICAL_VALUES = {
     mean,
-    median,
     "standard deviation": std,
+    median,
     percentile,
 }
 
@@ -293,8 +293,8 @@ SV_CALCULATION[stdMean] = calculateMean;
  */
 export const SV_COLORING = {
     mean: "#000",
-    median: "#000",
     "standard deviation": "#000",
+    median: "#000",
     "lowerPercentile": "#1e8509",
     "upperPercentile": "#1e8509",
     "mean+std": "#000",
@@ -305,8 +305,8 @@ export const SV_COLORING = {
  * This object maps each statistical value that should be calculated
  * to its line dashing allowing an easy customization if e.g. the
  * mean should be dashed too.
- * 
- * The integer values correspond to the dashing format that is 
+ *
+ * The integer values correspond to the dashing format that is
  * expected by apexcharts.
  */
 export const SV_DASHING = {

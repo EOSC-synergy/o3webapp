@@ -164,8 +164,8 @@ const modelsSlice = createSlice({
                 state.modelGroups[groupId].models[model] = {
                     color,
                     mean,
-                    median,
                     "standard deviation": std,
+                    median,
                     percentile,
                     isVisible,
                 };

@@ -50,6 +50,7 @@ function ModelGroupCard(props) {
         dispatch(setStatisticalValueForGroup(
             {groupId: props.modelGroupId, svType: statisticalValue, isIncluded: event.target.checked}
         ));
+        updateURL();
     }
 
     /**

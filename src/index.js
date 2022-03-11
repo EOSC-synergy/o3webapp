@@ -4,8 +4,12 @@ import App from './App';
 import store from './store/store';
 import {Provider} from 'react-redux';
 import {fetchModels, fetchPlotDataForCurrentModels, fetchPlotTypes} from './services/API/apiSlice';
-import {setModelsOfModelGroup} from "./store/modelsSlice/modelsSlice";
-import {DEFAULT_MODEL_GROUP, O3AS_PLOTS} from './utils/constants';
+import {
+    setModelsOfModelGroup,
+    setStatisticalValueForGroup,
+    setVisibilityForGroup
+} from "./store/modelsSlice/modelsSlice";
+import {DEFAULT_MODEL_GROUP, O3AS_PLOTS, STATISTICAL_VALUES_LIST} from './utils/constants';
 import {
     setActivePlotId,
     setDisplayXRange,
@@ -34,11 +38,20 @@ export function updateURL() {
     otherSettings.push(`title_return="${plotSpecific.tco3_return.title}"`);
 
     for (let i = 0; i < store.getState().models.idCounter; i++) {
+        const modelGroup = store.getState().models.modelGroups[i];
+        const name = modelGroup.name;
         let models = [];
-        for (let model of Object.keys(store.getState().models.modelGroups[i].models)) {
+        const visibilities = [
+            +modelGroup.isVisible,
+            +modelGroup.visibleSV.mean,
+            +modelGroup.visibleSV["standard deviation"],
+            +modelGroup.visibleSV.median,
+            +modelGroup.visibleSV.percentile,
+        ];
+        for (let model of Object.keys(modelGroup.models)) {
             models.push(store.getState().api.models.data.indexOf(model));
         }
-        otherSettings.push(`group${i}="${store.getState().models.modelGroups[i].name}",${models.join(",")}`);
+        otherSettings.push(`group${i}="${name}",${visibilities.join("")},${models.join(",")}`);
     }
 
 
@@ -104,13 +117,22 @@ function updateStoreWithURL() {
         }
         const groups = groupStrings.map((elem) => {
             const name = elem.split('"')[1];
-            const models = elem.split('"')[2].split(',').slice(1).map((e) => {
+            const visibilities = elem.split('"')[2].split(',')[1].split("").map((elem) => {
+                return Boolean(parseInt(elem));
+            });
+            const models = elem.split('"')[2].split(',').slice(2).map((e) => {
                 return store.getState().api.models.data[parseInt(e)];
             });
-            return {name: name, models: models};
+            return {name: name, visibilities: visibilities, models: models};
         });
         for (let i = 0; i < groups.length; i++) {
             store.dispatch(setModelsOfModelGroup({groupId: i, groupName: groups[i].name, modelList: groups[i].models}));
+            store.dispatch(setVisibilityForGroup({groupId: i, isVisible: groups[i].visibilities[0]}));
+            for (let j = 1; j < groups[i].visibilities.length; j++) {
+                store.dispatch(setStatisticalValueForGroup(
+                    {groupId: i, svType: STATISTICAL_VALUES_LIST[j - 1], isIncluded: groups[i].visibilities[j]}
+                ));
+            }
         }
     }
 }

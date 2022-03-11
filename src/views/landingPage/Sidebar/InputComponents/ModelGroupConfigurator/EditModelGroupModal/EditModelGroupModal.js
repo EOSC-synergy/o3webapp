@@ -47,10 +47,10 @@ function createRows(modelList) {
             "project": matchResult.project,
             "institute": matchResult.institute,
             "model": matchResult.name,
-            "median": false,
             "mean": false,
-            "percentile": false,
             "standard deviation": false,
+            "median": false,
+            "percentile": false,
             "visible": false
         })
     }
