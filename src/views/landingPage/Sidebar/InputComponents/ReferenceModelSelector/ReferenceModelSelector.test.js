@@ -10,18 +10,22 @@ beforeEach(() => {
   store = createTestStore();
 });
 
-it('Component renders without crashing', () => {
-    render(<Provider store={store}><ReferenceModelSelector /></Provider>);
+describe("tests basic rendering", () => {
+    it('Component renders without crashing', () => {
+        render(<Provider store={store}><ReferenceModelSelector /></Provider>);
+    
+    });
+    
+    
+    // Snapshot test
+    it('renders correctly', () => {
+        const { container } = render(<Provider store={store}><ReferenceModelSelector /></Provider>);
+        expect(container).toMatchSnapshot();
+    });
+});
 
+describe("tests redux functionality", () => {
+    
 });
 
 
-// Snapshot test
-it('renders correctly', () => {
-    const { container } = render(<Provider store={store}><ReferenceModelSelector /></Provider>);
-    expect(container).toMatchSnapshot();
-  });
-
-
-
-test.todo('changes the reference model correctly');
