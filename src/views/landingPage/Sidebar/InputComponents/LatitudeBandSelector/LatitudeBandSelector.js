@@ -1,12 +1,13 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux"
-import {selectPlotLocation, setLocation, setUserRegionName} from "../../../../../store/plotSlice/plotSlice";
+import {selectPlotLocation, setLocation} from "../../../../../store/plotSlice/plotSlice";
 import {Box, Divider, MenuItem, Select} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {latitudeBands} from "../../../../../utils/constants";
 import PropTypes from 'prop-types';
 import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice";
 import CustomLatitudeSelector from "./CustomLatitudeSelector/CustomLatitudeSelector";
+
 /**
  * An object containing the current minLat and maxLat Values.
  * @memberof LatitudeBandSelector

@@ -1,63 +1,118 @@
 import React from "react";
-import { styled } from '@mui/material/styles';
-import LocationSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
-import ModelGroupConfigurator from "../InputComponents/ModelGroupConfigurator/ModelGroupConfigurator";
-import OffsetConfigurator from "../InputComponents/OffsetConfigurator/OffsetConfigurator";
-import PlotNameField from "../InputComponents/PlotNameField/PlotNameField";
-import ReferenceYearField from "../InputComponents/ReferenceYearField/ReferenceYearField";
-import RegionSelector from "../InputComponents/RegionSelector/RegionSelector";
-import TimeCheckBoxGroup from "../InputComponents/TimeCheckboxGroup/TimeCheckboxGroup";
-import XAxisField from "../InputComponents/XAxisField/XAxisField";
-import YAxisField from "../InputComponents/YAxisField/YAxisField";
-import PropTypes from 'prop-types'; 
-import LatitudeBandSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
-import ReferenceModelSelector from "../InputComponents/ReferenceModelSelector/ReferenceModelSelector";
+import {styled} from '@mui/material/styles';
+import PropTypes from 'prop-types';
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import {
-    LBS_Symbol,
-    LS_Symbol,
-    MGC_Symbol,
-    OC_Symbol,
-    PNF_Symbol,
-    RMS_Symbol,
-    RS_Symbol,
-    RYF_Symbol,
-    TCG_Symbol,
-    XAF_Symbol,
-    YAF_Symbol,
-    CLS_Symbol,
-    BACKGROUND_BASE_COLOR
-} from "../../../../utils/constants";
-import CustomLatitudeSelector from "../InputComponents/LatitudeBandSelector/CustomLatitudeSelector/CustomLatitudeSelector";
+import CustomLatitudeSelector
+    from "../InputComponents/LatitudeBandSelector/CustomLatitudeSelector/CustomLatitudeSelector";
+import LatitudeBandSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
+import LocationSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
+import ModelGroupConfigurator from "../InputComponents/ModelGroupConfigurator/ModelGroupConfigurator";
+import OffsetConfigurator from "../InputComponents/OffsetConfigurator/OffsetConfigurator";
+import PlotNameField from "../InputComponents/PlotNameField/PlotNameField";
+import ReferenceModelSelector from "../InputComponents/ReferenceModelSelector/ReferenceModelSelector";
+import ReferenceYearField from "../InputComponents/ReferenceYearField/ReferenceYearField";
+import RegionSelector from "../InputComponents/RegionSelector/RegionSelector";
+import TimeCheckBoxGroup from "../InputComponents/TimeCheckboxGroup/TimeCheckboxGroup";
+import XAxisField from "../InputComponents/XAxisField/XAxisField";
+import YAxisField from "../InputComponents/YAxisField/YAxisField";
 
+/** Stores the name of the CustomLatitudeSelector component as a Symbol.
+ * @constant {string}
+ * @memberof Section
+ */
+const CLS_Symbol = Symbol("CustomLatitudeSelector");
 
+/** Stores the name of the LatitudeBandSelector component as a Symbol.
+ * @constant {string}
+ * @memberof Section
+ */
+const LBS_Symbol = Symbol("LatitudeBandSelector");
+
+/** Stores the name of the LocationSelector component as a Symbol.
+ * @constant {string}
+ * @memberof Section
+ */
+const LS_Symbol = Symbol("LocationSelector");
+
+/** Stores the name of the ModelGroupConfigurator component as a Symbol.
+ * @constant {string}
+ * @memberof Section
+ */
+const MGC_Symbol = Symbol("ModelGroupConfigurator");
+
+/** Stores the name of the OffsetConfigurator component as a Symbol.
+ * @constant {string}
+ * @memberof Section
+ */
+const OC_Symbol = Symbol("OffsetConfigurator");
+
+/** Stores the name of the PlotNameField component as a Symbol.
+ * @constant {string}
+ * @memberof Section
+ */
+const PNF_Symbol = Symbol("PlotNameField");
+
+/** Stores the name of the ReferenceModelSelector component as a Symbol.
+ * @constant {string}
+ * @memberof Section
+ */
+const RMS_Symbol = Symbol("ReferenceModelSelector");
+
+/** Stores the name of the ReferenceYearField component as a Symbol.
+ * @constant {string}
+ * @memberof Section
+ */
+const RYF_Symbol = Symbol("ReferenceYearField");
+
+/** Stores the name of the RegionSelector component as a Symbol.
+ * @constant {string}
+ * @memberof Section
+ */
+const RS_Symbol = Symbol("RegionSelector");
+
+/** Stores the name of the TimeCheckBoxGroup component as a Symbol.
+ * @constant {string}
+ * @memberof Section
+ */
+const TCG_Symbol = Symbol("TimeCheckBoxGroup");
+
+/** Stores the name of the XAxisField component as a Symbol.
+ * @constant {string}
+ * @memberof Section
+ */
+const XAF_Symbol = Symbol("XAxisField");
+
+/** Stores the name of the YAxisField component as a Symbol.
+ * @constant {string}
+ * @memberof Section
+ */
+const YAF_Symbol = Symbol("YAxisField");
 
 // custom Accordion components are 
-// inspired by: https://mui.com/components/accordion/#customization 
- 
+// inspired by: https://mui.com/components/accordion/#customization
 /**
- * custom Accordion component
+ * Custom Accordion component
  * @const {function}
  * @returns {JSX.Element}
  * @memberof Section
  */
 const Accordion = styled((props) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
-  ))(({ theme }) => ({
+))(({theme}) => ({
     border: `1px solid ${theme.palette.divider}`,
     '&:not(:last-child)': {
-      borderBottom: 0,
+        borderBottom: 0,
     },
     '&:before': {
-      display: 'none',
+        display: 'none',
     },
-  }));
-  
+}));
+
 /**
  * custom Accordion summary component
  * @const {function}
@@ -66,36 +121,36 @@ const Accordion = styled((props) => (
  */
 const AccordionSummary = styled((props) => (
     <MuiAccordionSummary
-      expandIcon={<ArrowForwardIosIcon sx={{ fontSize: '0.9rem' }} />}
-      {...props}
+        expandIcon={<ArrowForwardIosIcon sx={{fontSize: '0.9rem'}}/>}
+        {...props}
     />
-  ))(({ theme }) => ({
+))(({theme}) => ({
     backgroundColor:
-      theme.palette.mode === 'dark'
-        ? 'rgba(255, 255, 255, .05)'
-        : 'rgba(0, 0, 0, .03)',
+        theme.palette.mode === 'dark'
+            ? 'rgba(255, 255, 255, .05)'
+            : 'rgba(0, 0, 0, .03)',
     flexDirection: 'row-reverse',
     '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
-      transform: 'rotate(0deg)',
+        transform: 'rotate(0deg)',
     },
     '& .MuiAccordionSummary-expandIconWrapper': {
         transform: 'rotate(-90deg)',
-      },
-    '& .MuiAccordionSummary-content': {
-      marginLeft: theme.spacing(1),
     },
-  }));
-  
+    '& .MuiAccordionSummary-content': {
+        marginLeft: theme.spacing(1),
+    },
+}));
+
 /**
  * custom AccordionDetails component
  * @const {function}
  * @returns {JSX.Element}
  * @memberof Section
  */
-const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+const AccordionDetails = styled(MuiAccordionDetails)(({theme}) => ({
     padding: theme.spacing(2),
     borderTop: '1px solid rgba(0, 0, 0, .125)',
-  }));
+}));
 
 /**
  * an expandable section containing a list of inputComponents as well as a name
@@ -123,50 +178,50 @@ function Section(props) {
     function mapNameToComponent(name, key) {
 
         if ('reportError' in props && typeof props.reportError === 'function') {
-            switch (name){
+            switch (name) {
+                case CLS_Symbol.description:
+                    return <CustomLatitudeSelector key={key} reportError={props.reportError}/>
                 case LBS_Symbol.description:
-                    return <LatitudeBandSelector key={key } reportError={props.reportError}/>;
+                    return <LatitudeBandSelector key={key} reportError={props.reportError}/>;
                 case LS_Symbol.description:
                     return <LocationSelector key={key} reportError={props.reportError}/>
                 case MGC_Symbol.description:
                     return <ModelGroupConfigurator key={key} reportError={props.reportError}/>;
                 case OC_Symbol.description:
-                    return <OffsetConfigurator key={key} reportError={props.reportError} />;
+                    return <OffsetConfigurator key={key} reportError={props.reportError}/>;
                 case PNF_Symbol.description:
-                    return <PlotNameField key={key} reportError={props.reportError} />;
+                    return <PlotNameField key={key} reportError={props.reportError}/>;
                 case RMS_Symbol.description:
                     return <ReferenceModelSelector key={key} reportError={props.reportError}/>;
                 case RYF_Symbol.description:
-                    return <ReferenceYearField key={key} reportError={props.reportError} />;
+                    return <ReferenceYearField key={key} reportError={props.reportError}/>;
                 case RS_Symbol.description:
-                    return <RegionSelector key={key} reportError={props.reportError} />;
+                    return <RegionSelector key={key} reportError={props.reportError}/>;
                 case TCG_Symbol.description:
-                    return <TimeCheckBoxGroup key={key} reportError={props.reportError} />;
+                    return <TimeCheckBoxGroup key={key} reportError={props.reportError}/>;
                 case XAF_Symbol.description:
-                    return <XAxisField key={key} reportError={props.reportError} />;
+                    return <XAxisField key={key} reportError={props.reportError}/>;
                 case YAF_Symbol.description:
-                    return <YAxisField key={key} reportError={props.reportError} />;
-                case CLS_Symbol.description:
-                    return <CustomLatitudeSelector key={key} reportError={props.reportError} />
+                    return <YAxisField key={key} reportError={props.reportError}/>;
                 default:
                     props.reportError(`Section ${props.name} found no match for an input component ${name}`);
             }
         } else {
-            return(
+            return (
                 <> `props.ReportError` not defined </>
             );
         }
     }
 
     if (!props.components || props.components.length === 0) {
-       if('reportError' in props && typeof props.reportError === 'function') {
-           props.reportError(`Section ${props.name} was provided with no components`);
-           return <></>;
+        if ('reportError' in props && typeof props.reportError === 'function') {
+            props.reportError(`Section ${props.name} was provided with no components`);
+            return <></>;
         } else {
-           return(
-               <> `props.ReportError` not defined </>
-           );
-       }
+            return (
+                <> `props.ReportError` not defined </>
+            );
+        }
     }
 
     return (
@@ -179,14 +234,14 @@ function Section(props) {
             onChange={props.isExpanded ? props.onCollapse : props.onExpand}
         >
             <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
+                expandIcon={<ExpandMoreIcon/>}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
                 data-testid={`Section-Summary-${props.name}`}
             >
                 <Typography>{
-                (props.name     // check if props.name exists
-                    && (typeof props.name === 'string' || props.name instanceof String))  // and whether its a string (https://stackoverflow.com/questions/4059147/check-if-a-variable-is-a-string-in-javascript)
+                    (props.name     // check if props.name exists
+                        && (typeof props.name === 'string' || props.name instanceof String))  // and whether its a string (https://stackoverflow.com/questions/4059147/check-if-a-variable-is-a-string-in-javascript)
                     && props.name.toUpperCase()}
                 </Typography>
             </AccordionSummary>

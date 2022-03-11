@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { setModelsOfModelGroup } from "../../../../../../store/modelsSlice/modelsSlice";
-import { useTheme } from '@mui/material/styles';
-import { CardContent, Divider, IconButton, Modal, TextField } from '@mui/material';
-import { Box } from '@mui/system';
-import { Typography } from '@mui/material';
+import React, {useEffect} from "react";
+import {setModelsOfModelGroup} from "../../../../../../store/modelsSlice/modelsSlice";
+import {useTheme} from '@mui/material/styles';
+import {CardContent, Divider, IconButton, Modal, TextField} from '@mui/material';
+import {Box} from '@mui/system';
+import {Typography} from '@mui/material';
 import Grid from '@mui/material/Grid';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -11,26 +11,25 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
-import { Card } from '@mui/material';
+import {Card} from '@mui/material';
 import CardActions from '@mui/material/CardActions';
 import CircularProgress from '@mui/material/CircularProgress';
 import CardHeader from '@mui/material/CardHeader';
 import Searchbar from "../../../../../../components/Searchbar/Searchbar";
-import { convertModelName } from "../../../../../../utils/ModelNameConverter";
-import { union, not, intersection } from "../../../../../../utils/arrayOperations";
+import {convertModelName} from "../../../../../../utils/ModelNameConverter";
+import {union, not, intersection} from "../../../../../../utils/arrayOperations";
 import CloseIcon from '@mui/icons-material/Close';
 import Alert from "@mui/material/Alert";
-import PropTypes from 'prop-types'; 
-import { useDispatch, useSelector } from "react-redux";
-import { fetchPlotDataForCurrentModels, REQUEST_STATE } from "../../../../../../services/API/apiSlice";
-import { selectNameOfGroup, selectModelDataOfGroup } from "../../../../../../store/modelsSlice/modelsSlice";
-import DoneIcon from "@mui/icons-material/Done";
+import PropTypes from 'prop-types';
+import {useDispatch, useSelector} from "react-redux";
+import {fetchPlotDataForCurrentModels, REQUEST_STATE} from "../../../../../../services/API/apiSlice";
+import {selectNameOfGroup, selectModelDataOfGroup} from "../../../../../../store/modelsSlice/modelsSlice";
 
 
 /**
  * opens a modal where the user can add a new model group
  * @component
- * @param {Object} props 
+ * @param {Object} props
  * @param {function} props.onClose -> function to call if modal should be closed
  * @param {boolean} props.isOpen -> boolean whether the modal should be visible
  * @param {function} props.reportError -> error handling
@@ -39,14 +38,14 @@ import DoneIcon from "@mui/icons-material/Done";
  * @returns {JSX} a jsx containing a modal with a transfer list with all available models
  */
 function AddModelGroupModal(props) {
-    
+
     const isEditMode = 'modelGroupId' in props;
 
     /**
      * the label in the card heading
      */
     const addModelLabel = isEditMode ? "Edit Model Group Members" : "Add Model Group";
-    
+
     const dispatch = useDispatch();
 
     const modelListRequestedData = useSelector(state => state.api.models);
@@ -55,9 +54,8 @@ function AddModelGroupModal(props) {
     let allModels = [];
     if (modelListRequestedData.status === REQUEST_STATE.idle
         || modelListRequestedData.status === REQUEST_STATE.loading) {
-            isLoading = true;
-    }
-    else if (modelListRequestedData.status === REQUEST_STATE.success) {
+        isLoading = true;
+    } else if (modelListRequestedData.status === REQUEST_STATE.success) {
         allModels = modelListRequestedData.data;
         isLoading = false;
     }
@@ -96,7 +94,6 @@ function AddModelGroupModal(props) {
         }
     }, [allModels]);
 
-    
 
     /**
      * Returns how many models in the provided array are currently checked
@@ -135,11 +132,11 @@ function AddModelGroupModal(props) {
     const handleChangeElement = (value) => () => {
         const currentIndex = checked.indexOf(value);
         const newChecked = [...checked];
-    
+
         if (currentIndex === -1) {
-          newChecked.push(value);
+            newChecked.push(value);
         } else {
-          newChecked.splice(currentIndex, 1);
+            newChecked.splice(currentIndex, 1);
         }
         setChecked(newChecked);
     };
@@ -175,7 +172,7 @@ function AddModelGroupModal(props) {
         setRight(not(right, rightChecked));
         setChecked(not(checked, rightChecked));
     };
-    
+
     const addOrEditGroup = () => {
         if (groupName === '') {
             setErrorMessage("Please provide a model group name");
@@ -215,7 +212,7 @@ function AddModelGroupModal(props) {
         return (
             <Card sx={{backgroundColor: theme.palette.background.paper}}>
                 <CardHeader
-                    sx={{ px: 2, py: 1 }}
+                    sx={{px: 2, py: 1}}
                     avatar={
                         <Checkbox
                             onClick={handleToggleAll(modelsVisible)}
@@ -231,7 +228,7 @@ function AddModelGroupModal(props) {
                     }
                     title={`${numberOfChecked(modelsVisible)}/${modelsVisible.length} selected`}
                 />
-                <Divider />
+                <Divider/>
                 <List
                     sx={{
                         width: "100%",
@@ -246,13 +243,13 @@ function AddModelGroupModal(props) {
                     {modelsVisible.map((modelId, idx) => {
                         const labelId = `transfer-list-all-item-${modelId}-label`;
                         let model = convertModelName(modelId);
-                            return (
-                                <ListItem
-                                    key={idx}
-                                    role="listitem"
-                                    button
-                                    onClick={handleChangeElement(modelId)}
-                                >
+                        return (
+                            <ListItem
+                                key={idx}
+                                role="listitem"
+                                button
+                                onClick={handleChangeElement(modelId)}
+                            >
                                 <ListItemIcon>
                                     <Checkbox
                                         checked={checked.indexOf(modelId) !== -1}
@@ -264,23 +261,25 @@ function AddModelGroupModal(props) {
                                         data-testid={`AddModelGroupModal-transfer-list-item-${labelId}-checkbox`}
                                     />
                                 </ListItemIcon>
-                                <ListItemText id={labelId} primary={model.name} secondary={`Institute: ${model.institute}\nProject: ${model.project}`} />
-                                </ListItem>
-                            );
+                                <ListItemText id={labelId} primary={model.name}
+                                              secondary={`Institute: ${model.institute}\nProject: ${model.project}`}/>
+                            </ListItem>
+                        );
                     })}
                 </List>
-                    {
-                        modelsCheckedInvisible
-                        &&
-                        modelsCheckedInvisible.length > 0 
-                        &&
-                        <Alert severity="warning">
-                            Currently {modelsCheckedInvisible.length} hidden model{modelsCheckedInvisible.length > 1 ? 's are' : ' is'} checked.
-                        </Alert>
-                    }
+                {
+                    modelsCheckedInvisible
+                    &&
+                    modelsCheckedInvisible.length > 0
+                    &&
+                    <Alert severity="warning">
+                        Currently {modelsCheckedInvisible.length} hidden
+                        model{modelsCheckedInvisible.length > 1 ? 's are' : ' is'} checked.
+                    </Alert>
+                }
             </Card>
         );
-    }   
+    }
 
     const style = {
         position: 'absolute',
@@ -295,7 +294,7 @@ function AddModelGroupModal(props) {
         minHeight: "75%",
         maxHeight: "100vh",
         p: 4,
-      };
+    };
 
     /**
      * updates the current group name
@@ -309,7 +308,7 @@ function AddModelGroupModal(props) {
      * @todo open a "discard changes?" popup here
      */
     const closeWithChanges = () => {
-        if(isEditMode) {
+        if (isEditMode) {
             setGroupName(storeGroupName);
             setVisible(allModels);
             setChecked([]);
@@ -320,7 +319,7 @@ function AddModelGroupModal(props) {
             setChecked([]);
             setRight([]);
         }
-        
+
         props.onClose();
     }
 
@@ -331,13 +330,14 @@ function AddModelGroupModal(props) {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
             data-testid="AddModelGroupModal-modal-wrapper"
-        >   
+        >
             <Card sx={style}>
                 <CardHeader
                     title={addModelLabel}
                     action={
-                        <IconButton onClick={closeWithChanges} aria-label="close" data-testid="addModelGroupModal-close-button">
-                            <CloseIcon />
+                        <IconButton onClick={closeWithChanges} aria-label="close"
+                                    data-testid="addModelGroupModal-close-button">
+                            <CloseIcon/>
                         </IconButton>
                     }
                 />
@@ -352,22 +352,24 @@ function AddModelGroupModal(props) {
                             placeholder="Your group"
                         />
                     </Grid>
-                    <Box id="modal-modal-description" sx={{ mt: 2 }}>
-                        <Searchbar inputArray={allModels} foundIndicesCallback={setCurrentlyVisibleModels} shouldReturnValues={true} />
-                        <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ marginTop: '0.5em' }}>
+                    <Box id="modal-modal-description" sx={{mt: 2}}>
+                        <Searchbar inputArray={allModels} foundIndicesCallback={setCurrentlyVisibleModels}
+                                   shouldReturnValues={true}/>
+                        <Grid container spacing={2} justifyContent="center" alignItems="center"
+                              sx={{marginTop: '0.5em'}}>
                             <Grid item sm={5} xs={12}>
                                 <Typography>All Available Models</Typography>
                                 {
-                                    isLoading ? 
-                                        <CircularProgress data-testid="AddModelGroupModal-spinner-left" />
-                                    :
+                                    isLoading ?
+                                        <CircularProgress data-testid="AddModelGroupModal-spinner-left"/>
+                                        :
                                         customList(left, leftChecked, leftVisible)
                                 }
                             </Grid>
                             <Grid item sm={2} xs={12}>
                                 <Grid container direction="column" alignItems="center">
                                     <Button
-                                        sx={{ my: 0.5 }}
+                                        sx={{my: 0.5}}
                                         variant="outlined"
                                         size="small"
                                         onClick={handleCheckedRight}
@@ -378,7 +380,7 @@ function AddModelGroupModal(props) {
                                         &gt;
                                     </Button>
                                     <Button
-                                        sx={{ my: 0.5 }}
+                                        sx={{my: 0.5}}
                                         variant="outlined"
                                         size="small"
                                         onClick={handleCheckedLeft}
@@ -393,9 +395,9 @@ function AddModelGroupModal(props) {
                             <Grid item sm={5} xs={12}>
                                 <Typography>Models in {groupName ? groupName : "your group"}</Typography>
                                 {
-                                    isLoading ? 
-                                        <CircularProgress data-testid="AddModelGroupModal-spinner-right" />
-                                    :
+                                    isLoading ?
+                                        <CircularProgress data-testid="AddModelGroupModal-spinner-right"/>
+                                        :
                                         customList(right, rightChecked, rightVisible)
                                 }
                             </Grid>
@@ -404,7 +406,8 @@ function AddModelGroupModal(props) {
                     {errorMessage && <Alert severity="error" sx={{marginTop: '2em'}}>{errorMessage}</Alert>}
                 </CardContent>
                 <CardActions sx={{justifyContent: "flex-end", marginTop: "2%"}}>
-                    <Button onClick={addOrEditGroup} variant="contained">{'modelGroupId' in props? "Save Changes" : "Add group"}</Button>
+                    <Button onClick={addOrEditGroup}
+                            variant="contained">{'modelGroupId' in props ? "Save Changes" : "Add group"}</Button>
                 </CardActions>
             </Card>
         </Modal>

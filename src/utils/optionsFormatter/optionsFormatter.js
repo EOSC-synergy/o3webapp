@@ -1,33 +1,138 @@
-import {median, q25, q75} from "../../services/math/math"
+import {
+    mean as calculateMean,
+    median as calculateMedian,
+    median,
+    q25,
+    q75,
+    quantile as calculatePercentile, std as calculateStd
+} from "../../services/math/math"
 import {
     ALL_REGIONS_ORDERED,
     END_YEAR,
     EXTENDED_SV_LIST,
-    IMPLICIT_YEAR_LIST,
-    MODEL_LINE_THICKNESS,
     months,
     NUM_MONTHS,
     O3AS_PLOTS,
     percentile,
     START_YEAR,
-    STATISTICAL_VALUE_LINE_THICKNESS,
     STATISTICAL_VALUES,
     STATISTICAL_VALUES_LIST,
     std,
     stdMean,
-    SV_CALCULATION,
-    SV_COLORING,
-    SV_DASHING, 
-    USER_REGION, 
+    USER_REGION,
     latitudeBands,
-    SV_DISPLAY_NAME
+    lowerPercentile,
+    upperPercentile,
 } from "../constants"
 import {convertModelName} from "../ModelNameConverter";
+
+/**
+ * This array provides a list from start to end year with each year as a string
+ * @constant {array}
+ * @category Utils
+ * @subcategory optionsFormatter
+ */
+export const IMPLICIT_YEAR_LIST = [...Array(END_YEAR - START_YEAR + 1).keys()].map(number => `${START_YEAR + number}`);
+
+/**
+ * This parameter specifies how thick the line of plotted models should appear.
+ * @constant {number}
+ * @category Utils
+ * @subcategory optionsFormatter
+ */
+export const MODEL_LINE_THICKNESS = 2;
+
+/**
+ * This parameter specifies how thick the line of plotted statistical values should appear.
+ * @constant {number}
+ * @category Utils
+ * @subcategory optionsFormatter
+ */
+const STATISTICAL_VALUE_LINE_THICKNESS = 2;
+
+/**
+ * This object maps each statistical value that should be calculated
+ * to a corresponding function describing HOW it should be calculated.
+ * @constant {object}
+ * @category Utils
+ * @subcategory optionsFormatter
+ */
+const SV_CALCULATION = {
+    mean: calculateMean,
+    median: calculateMedian,
+    percentile: calculatePercentile,
+    stdMean: calculateMean, // mean for std+-
+}
+SV_CALCULATION[std] = calculateStd;
+SV_CALCULATION[lowerPercentile] = arr => calculatePercentile(arr, .1587);
+SV_CALCULATION[upperPercentile] = arr => calculatePercentile(arr, .8413);
+SV_CALCULATION[stdMean] = calculateMean;
+
+
+/**
+ * This object maps each statistical value that should be calculated
+ * to a color it should appear in.
+ * @constant {object}
+ * @category Utils
+ * @subcategory optionsFormatter
+ */
+const SV_COLORING = {
+    mean: "#696969",
+    "standard deviation": "#0e4e78",//"#000",
+    median: "#000",
+    percentile: "#000",
+    "lowerPercentile": "#1e8509",
+    "upperPercentile": "#1e8509",
+    "mean+std": "#0e4e78",
+    "mean-std": "#0e4e78",
+}
+
+/**
+ * This object maps each statistical value that should be calculated
+ * to its line dashing allowing an easy customization if e.g. the
+ * mean should be dashed too.
+ *
+ * The integer values correspond to the dashing format that is
+ * expected by apexcharts.
+ * @constant {object}
+ * @category Utils
+ * @subcategory optionsFormatter
+ */
+const SV_DASHING = {
+    mean: 0,
+    median: 2,
+    percentile: 0,
+    "mean+std": 8,
+    "mean-std": 8,
+    "lowerPercentile": 4,
+    "upperPercentile": 4,
+}
+
+/**
+ * This object maps each statistical value to its corresponding name that
+ * should be displayed in the legend of the plot and inside the tooltip when
+ * hovering over a datapoint.
+ * @constant {object}
+ * @category Utils
+ * @subcategory optionsFormatter
+ */
+const SV_DISPLAY_NAME = {
+    mean: "Mean",
+    median: "Median",
+    percentile: "Percentile",
+    "mean+std": "μ + σ",
+    "mean-std": "μ - σ",
+    "lowerPercentile": "Lower %",
+    "upperPercentile": "Upper %",
+}
 
 /**
  * Maps the plotId to a function that describes how the series are going
  * to be generated in order to make the generateSeries Function (interface) more
  * generic.
+ * @constant {object}
+ * @category Utils
+ * @subcategory optionsFormatter
  */
 const SERIES_GENERATION = {}; // Map plotId to corresponding generation function
 SERIES_GENERATION[O3AS_PLOTS.tco3_zm] = generateTco3_ZmSeries;
@@ -776,7 +881,7 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
                 continue;
             }
             svSeries.data.push(generateSingleSvSeries(`${SV_DISPLAY_NAME[sv]} (${groupData.name})`, svData, getState));
-            svSeries.colors.push(SV_COLORING[sv]); 
+            svSeries.colors.push(SV_COLORING[sv]);
             svSeries.width.push(STATISTICAL_VALUE_LINE_THICKNESS);
             svSeries.dashArray.push(SV_DASHING[sv]);
         }
@@ -1343,7 +1448,7 @@ export function getIncludedModels(modelsSlice) {
  * @param {object} locationValue the minLat and maxLat values
  * @return {string} the formatted latitude band
  */
- export const formatLatitude = (locationValue) => {
+export const formatLatitude = (locationValue) => {
     const hemisphereExtensionMin = (locationValue.minLat < 0 && locationValue.maxLat > 0 ? '°S' : '');
     const hemisphereExtensionMax = (locationValue.maxLat <= 0 ? '°S' : '°N');
     return `${Math.abs(locationValue.minLat)}${hemisphereExtensionMin}-${Math.abs(locationValue.maxLat)}${hemisphereExtensionMax}`;

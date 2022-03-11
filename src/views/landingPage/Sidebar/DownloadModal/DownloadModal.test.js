@@ -1,37 +1,43 @@
-import { render, fireEvent , within} from '@testing-library/react';
+import {render, fireEvent} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import DownloadModal from './DownloadModal';
-import { Provider } from "react-redux";
-import { createTestStore } from '../../../../store/store';
+import {Provider} from "react-redux";
+import {createTestStore} from '../../../../store/store';
 import tco3zmResponse from "../../../../services/API/testing/tco3zm-response.json";
 import axios from 'axios';
-import { fetchPlotData } from '../../../../services/API/apiSlice';
-import { O3AS_PLOTS } from '../../../../utils/constants';
-jest.mock('axios');
+import {fetchPlotData} from '../../../../services/API/apiSlice';
+import {O3AS_PLOTS} from '../../../../utils/constants';
 
+jest.mock('axios');
 
 
 describe('testing DownloadModal rendering', () => {
     let store;
     beforeEach(() => {
-      store = createTestStore();
+        store = createTestStore();
     });
 
     it('renders without crashing', () => {
-        render(<Provider store ={store}> <DownloadModal reportError={() => {}} onClose={()=>{}} isOpen={true} /></Provider>);
+        render(<Provider store={store}> <DownloadModal reportError={() => {
+        }} onClose={() => {
+        }} isOpen={true}/></Provider>);
     });
 
     it('renders correctly when open', () => {
-        let { baseElement, container } = render(
-            <Provider store ={store} > <DownloadModal isOpen={true} onClose={() => {}} reportError={() => {}} /> </Provider>
+        let {baseElement, container} = render(
+            <Provider store={store}> <DownloadModal isOpen={true} onClose={() => {
+            }} reportError={() => {
+            }}/> </Provider>
         );
-        expect(baseElement).toMatchSnapshot(); 
+        expect(baseElement).toMatchSnapshot();
         expect(container).toBeVisible();
     });
 
     it('renders correctly when closed', () => {
-        let { container, baseElement } = render(
-            <Provider store ={store}> <DownloadModal isOpen={false} onClose={() => {}} reportError={() => {}} /></Provider>
+        let {container, baseElement} = render(
+            <Provider store={store}> <DownloadModal isOpen={false} onClose={() => {
+            }} reportError={() => {
+            }}/></Provider>
         );
         expect(baseElement).toMatchSnapshot();
         expect(container).not.toBeVisible;
@@ -40,28 +46,32 @@ describe('testing DownloadModal rendering', () => {
     it('raises a console.error function if a required prop is not provided', () => {
         console.error = jest.fn();
         render(
-            <Provider store ={store}> <DownloadModal onClose={()=>{}} reportError={()=>{}} /></Provider>
+            <Provider store={store}> <DownloadModal onClose={() => {
+            }} reportError={() => {
+            }}/></Provider>
         );
         expect(console.error).toHaveBeenCalled();
         render(
-            <Provider store ={store}> <DownloadModal isOpen={true} reportError={() => {}} /></Provider>
+            <Provider store={store}> <DownloadModal isOpen={true} reportError={() => {
+            }}/></Provider>
         );
         expect(console.error).toHaveBeenCalled();
     });
 
     it('renders correctly when closed', async () => {
-        
+
         const mock = jest.fn();
-        let { getByTestId } = render(
-            <Provider store ={store}> 
-                <DownloadModal isOpen={true} onClose={() => {}} reportError={mock} />
+        let {getByTestId} = render(
+            <Provider store={store}>
+                <DownloadModal isOpen={true} onClose={() => {
+                }} reportError={mock}/>
             </Provider>
         );
-        
+
         const wrap = getByTestId("DownloadModal-select-file-format")
         fireEvent.mouseDown(wrap);
 
-        fireEvent.change(wrap, { target: { value: "CSV" } });
+        fireEvent.change(wrap, {target: {value: "CSV"}});
         fireEvent.click(getByTestId("DownloadModal-download-plot"));
         // mock api => data
         // simpler, but less powerful: axios.post.mockResolvedValue({data: tco3zmResponse});

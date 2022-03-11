@@ -4,14 +4,8 @@ import {Grid, TextField, Typography, FormControl, Divider} from "@mui/material";
 import {
     selectPlotLocation,
     setLocation,
-    setUserRegionName
 } from "../../../../../../store/plotSlice/plotSlice";
 import {fetchPlotDataForCurrentModels} from "../../../../../../services/API/apiSlice";
-import {
-    LATITUDE_BAND_MAX_VALUE,
-    LATITUDE_BAND_MIN_VALUE
-} from "../../../../../../utils/constants";
-
 
 /**
  * A component to select the specific min and max latitude values for the custom region.
@@ -19,7 +13,20 @@ import {
  * @component
  * @returns {JSX.Element}    JSX with the component
  */
-function CustomLatitudeSelector(props) {
+function CustomLatitudeSelector() {
+    /**
+     * The smallest possible latitude value.
+     * @constant {number}
+     * @memberof CustomLatitudeSelector
+     */
+    const LATITUDE_BAND_MAX_VALUE = 90;
+
+    /**
+     * The biggest possible latitude value.
+     * @constant {number}
+     * @memberof CustomLatitudeSelector
+     */
+    const LATITUDE_BAND_MIN_VALUE = -90;
 
     /**
      * A dispatch function to dispatch actions to the redux store.

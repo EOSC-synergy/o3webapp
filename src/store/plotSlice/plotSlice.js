@@ -1,5 +1,12 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {ALL_REGIONS_ORDERED, O3AS_PLOTS, DEFAULT_MONTHS} from "../../utils/constants";
+import {ALL_REGIONS_ORDERED, O3AS_PLOTS} from "../../utils/constants";
+
+/** These months are selected when the webapp starts
+ * @constant {array}
+ * @category store
+ * @subcategory plotSlice
+ */
+const DEFAULT_MONTHS = [1, 2, 12];
 
 /**
  * The initial state of the plotSlice defines the data structure in the
