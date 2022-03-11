@@ -58,7 +58,18 @@ describe("tests redux functionality", () => {
     });
 
     it("toggles the visibility of the reference line in the store correctly", () => {
+      const startValue = store.getState().reference.settings.visible;
 
+
+      const { getByTestId } = render(
+          <Provider store={store}>
+              <ReferenceYearField />
+          </Provider>
+      );
+      const toggleButton = getByTestId("ReferenceYearField-toggleVisibility");
+      fireEvent.click(toggleButton); // toggle visibility
+      console.log(store.getState().reference.settings.visible);
+      expect(store.getState().reference.settings.visible).toEqual(!startValue);
     });
 
 
