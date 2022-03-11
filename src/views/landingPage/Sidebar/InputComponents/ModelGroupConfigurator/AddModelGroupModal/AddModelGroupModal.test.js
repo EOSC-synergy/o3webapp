@@ -6,6 +6,7 @@ import AddModelGroupModal from './AddModelGroupModal';
 import { Provider } from "react-redux";
 import { createTestStore } from '../../../../../../store/store';
 import modelsResponse from "../../../../../../services/API/testing/models-response.json";
+import tco3zmResponse from "../../../../../../services/API/testing/tco3zm-response.json";
 import axios from 'axios';
 import { fetchModels } from '../../../../../../services/API/apiSlice';
 jest.mock('axios');
@@ -215,12 +216,16 @@ describe('test addModelGroupModal functionality without model group id', () => {
         expect(filteredModels.length).toEqual(Object.keys(modelGroupInStore).length);
     });
 
-    it("check if onClosing the modal resets all model groups on the right and checked", () => {
-        const { getByTestId, rerender, baseElement } = rendered;
-        userEvent.click(getByTestId("addModelGroupModal-close-button"));
-        
-        //expect(baseElement).toEqual()
-        rerender();
+    it("changes the model name and updates the store on edit", () => {
+        axios.post.mockImplementation(() => Promise.resolve({data: tco3zmResponse}));
+        const { getByTestId } = rendered;
+        const nameField = getByTestId("AddModelGroupModal-card-group-name");
+        const title = "New Title";
+        const amountBackspace = store.getState().models.modelGroups["0"].name.length;
+        userEvent.type(nameField, "{backspace}".repeat(amountBackspace)); // deletes old name
+        userEvent.type(nameField, title);
+        userEvent.click(getByTestId("AddModelGroupModal-save-button")); // save changes
+        expect(store.getState().models.modelGroups["0"].name).toEqual(title);
     });
 
     

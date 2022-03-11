@@ -83,6 +83,7 @@ exports[`test addModelGroupModal rendering renders correctly if model list provi
                 aria-describedby="mui-4-helper-text"
                 aria-invalid="false"
                 class="MuiInput-input MuiInputBase-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
+                data-testid="AddModelGroupModal-card-group-name"
                 id="mui-4"
                 placeholder="Your group"
                 type="text"
@@ -234,6 +235,7 @@ exports[`test addModelGroupModal rendering renders correctly if model list provi
       >
         <button
           class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-sghohy-MuiButtonBase-root-MuiButton-root"
+          data-testid="AddModelGroupModal-save-button"
           tabindex="0"
           type="button"
         >
@@ -343,6 +345,7 @@ exports[`test addModelGroupModal rendering renders correctly when open 1`] = `
                 aria-describedby="mui-2-helper-text"
                 aria-invalid="false"
                 class="MuiInput-input MuiInputBase-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
+                data-testid="AddModelGroupModal-card-group-name"
                 id="mui-2"
                 placeholder="Your group"
                 type="text"
@@ -494,6 +497,7 @@ exports[`test addModelGroupModal rendering renders correctly when open 1`] = `
       >
         <button
           class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-sghohy-MuiButtonBase-root-MuiButton-root"
+          data-testid="AddModelGroupModal-save-button"
           tabindex="0"
           type="button"
         >

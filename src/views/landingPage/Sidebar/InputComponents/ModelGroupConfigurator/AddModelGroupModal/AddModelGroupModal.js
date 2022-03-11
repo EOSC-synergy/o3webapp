@@ -349,6 +349,7 @@ function AddModelGroupModal(props) {
                             onBlur={updateGroupName}
                             sx={{marginBottom: '0.5em', marginLeft: '0.5em'}}
                             placeholder="Your group"
+                            inputProps={{"data-testid": "AddModelGroupModal-card-group-name"}}
                         />
                     </Grid>
                     <Box id="modal-modal-description" sx={{ mt: 2 }}>
@@ -403,7 +404,13 @@ function AddModelGroupModal(props) {
                     {errorMessage && <Alert severity="error" sx={{marginTop: '2em'}}>{errorMessage}</Alert>}
                 </CardContent>
                 <CardActions sx={{justifyContent: "flex-end", marginTop: "2%"}}>
-                    <Button onClick={addOrEditGroup} variant="contained">{'modelGroupId' in props? "Save Changes" : "Add group"}</Button>
+                    <Button 
+                        onClick={addOrEditGroup} 
+                        variant="contained"
+                        data-testid="AddModelGroupModal-save-button"
+                    >
+                        {'modelGroupId' in props? "Save Changes" : "Add group"}
+                    </Button>
                 </CardActions>
             </Card>
         </Modal>
