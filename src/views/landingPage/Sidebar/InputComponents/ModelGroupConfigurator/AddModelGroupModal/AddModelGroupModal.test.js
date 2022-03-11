@@ -1,11 +1,12 @@
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import AddModelGroupModal from './AddModelGroupModal';
 import { Provider } from "react-redux";
-import * as redux from 'react-redux';
 import { createTestStore } from '../../../../../../store/store';
-import { REQUEST_STATE } from "../../../../../../services/API/apiSlice";
-import { TestScheduler } from 'jest';
+import modelsResponse from "../../../../../../services/API/testing/models-response.json";
+import axios from 'axios';
+import { fetchModels } from '../../../../../../services/API/apiSlice';
+jest.mock('axios');
 
 const TEST_MODEL_NAME = "CCMI-1_ACCESS_ACCESS-CCM-refC2";
 
@@ -16,7 +17,6 @@ describe('test addModelGroupModal rendering', () => {
     });
 
     it('renders without crashing', () => {
-        const mockFunction = jest.fn();
         render(<Provider store={store}>
             <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} />
         </Provider>);
@@ -106,8 +106,44 @@ describe('test addModelGroupModal functionality', () => {
         expect(circularProgress.length).toBe(2);
     });
 
-    test.todo("call props.reportError if fetching models failed");
-    test.todo("check if models are rendered on the left");
+    it("calls props.reportError if fetching models failed", async () => {
+        const errorMessage = "blob";
+        const mock = jest.fn();
+        axios.get.mockImplementation(() => {
+            return Promise.reject({message: errorMessage}); //Promise.resolve({data: modelsResponse})
+        });
+        
+        const { rerender } = render(<Provider store={store}>
+            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={mock} />
+        </Provider>);
+
+        await store.dispatch(fetchModels());
+        rerender(<Provider store={store}>
+            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={mock} />
+        </Provider>)
+        expect(mock).toHaveBeenCalledWith(`API not responding: ${errorMessage}`);
+    });
+
+    it("loads all 105 models correctly", async () => {
+        axios.get.mockImplementation(() => {
+            return Promise.resolve({data: modelsResponse}); //Promise.resolve({data: modelsResponse})
+        });
+        
+        const { baseElement } = render(<Provider store={store}>
+            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} />
+        </Provider>);
+
+        await store.dispatch(fetchModels());
+        await waitFor(() => {
+            expect(baseElement).toHaveTextContent("105");
+        });
+        expect(baseElement).toHaveTextContent("105")
+    });
+        
+    it("check if models are rendered on the left", () => {
+
+    });
+
     test.todo("check if models can be moved from left to right");
     test.todo("check if models not being selected by search are being hidden");
     test.todo("check default model group name is rendered when props.modelGroupId is provided");
