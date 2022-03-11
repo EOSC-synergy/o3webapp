@@ -9,21 +9,39 @@ beforeEach(() => {
     store = createTestStore();
 });
 
-it('renders without crashing', () => {
-    render(<>
-        <Provider store={store}>
-            <LatitudeBandSelector reportError={() => {}} />
-        </Provider>
-    </>)
+describe("tests basic rendering", () => {
+    it('renders without crashing', () => {
+        render(<>
+            <Provider store={store}>
+                <LatitudeBandSelector reportError={() => {}} />
+            </Provider>
+        </>)
+    });
+    
+    it('renders correctly', () => {
+    
+        const { container } = render(<>
+            <Provider store={store}>
+                <LatitudeBandSelector reportError={() => {}} />
+            </Provider>
+        </>);
+    
+        expect(container).toMatchSnapshot();
+    });
 });
 
-it('renders correctly', () => {
+describe("tests redux functionality", () => {
+    
+    it("updates the region accordingly", () => {
+        const { getByTestId } = render(
+            <Provider store={store}>
+                <LatitudeBandSelector reportError={() => {}} />
+            </Provider>
+        );
 
-    const { container } = render(<>
-        <Provider store={store}>
-            <LatitudeBandSelector reportError={() => {}} />
-        </Provider>
-    </>);
+        const element = getByTestId("LatitudeBandSelector-select-region");
+        
 
-    expect(container).toMatchSnapshot();
+    });
+    
 });

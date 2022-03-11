@@ -69,6 +69,7 @@ function LatitudeBandSelector(props) {
                     value={isCustomizable ? latitudeBands[latitudeBands.length - 1].value : findLatitudeBandByLocation(false)}
                     onChange={handleChangeLatitudeBand}
                     defaultValue={findLatitudeBandByLocation(false)}
+                    inputProps={{"data-testid": "LatitudeBandSelector-select-region"}}
                 >
                     {
                         // maps all latitude bands from constants.js to ´MenuItem´s

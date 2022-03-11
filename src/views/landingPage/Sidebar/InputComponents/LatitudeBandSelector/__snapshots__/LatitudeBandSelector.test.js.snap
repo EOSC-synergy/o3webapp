@@ -68,3 +68,72 @@ exports[`renders correctly 1`] = `
   </div>
 </div>
 `;
+
+exports[`tests basic rendering renders correctly 1`] = `
+<div>
+  <div
+    class="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-1ws8119-MuiDivider-root"
+    role="separator"
+  >
+    <span
+      class="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+      >
+        LATITUDE BAND
+      </p>
+    </span>
+  </div>
+  <div
+    class="MuiBox-root css-1n3sbe4"
+  >
+    <div
+      class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary css-vwjx0e-MuiInputBase-root-MuiOutlinedInput-root"
+    >
+      <div
+        aria-expanded="false"
+        aria-haspopup="listbox"
+        aria-labelledby="latitudeBandSelector"
+        class="MuiSelect-select MuiSelect-outlined MuiOutlinedInput-input MuiInputBase-input css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input"
+        id="latitudeBandSelector"
+        role="button"
+        tabindex="0"
+      >
+        Global (90°S–90°N)
+      </div>
+      <input
+        aria-hidden="true"
+        class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+        tabindex="-1"
+        value="[object Object]"
+      />
+      <svg
+        aria-hidden="true"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+        data-testid="ArrowDropDownIcon"
+        focusable="false"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M7 10l5 5 5-5z"
+        />
+      </svg>
+      <fieldset
+        aria-hidden="true"
+        class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+      >
+        <legend
+          class="css-nnbavb"
+        >
+          <span
+            class="notranslate"
+          >
+            ​
+          </span>
+        </legend>
+      </fieldset>
+    </div>
+  </div>
+</div>
+`;
