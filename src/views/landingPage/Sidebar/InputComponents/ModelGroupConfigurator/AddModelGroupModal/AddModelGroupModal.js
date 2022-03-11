@@ -225,6 +225,7 @@ function AddModelGroupModal(props) {
                             disabled={modelsVisible.length === 0}
                             inputProps={{
                                 'aria-label': 'all items selected',
+                                'data-testid': 'AddModelGroupModal-select-all'
                             }}
                         />
                     }
