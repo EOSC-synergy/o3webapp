@@ -50,8 +50,6 @@ describe('test ModelGroupCard rendering', () => {
         expect(getByTestId(/groupName/)).toHaveTextContent(groupName);
     });
 
-    test.todo('raises an error function if props.modelGroupId is not provided');
-
     it('raises a console.error function if props.reportError is not provided', () => {
         console.error = jest.fn();
         render(
