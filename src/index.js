@@ -48,7 +48,7 @@ export function updateURL() {
             +modelGroup.visibleSV.percentile,
         ];
         let models = [];
-        const modelSettings = [];
+        let modelSettings = [];
         for (let model of Object.keys(modelGroup.models)) {
             models.push(store.getState().api.models.data.indexOf(model));
             modelSettings.push(+modelGroup.models[model].isVisible);
@@ -57,7 +57,8 @@ export function updateURL() {
             modelSettings.push(+modelGroup.models[model].median);
             modelSettings.push(+modelGroup.models[model].percentile);
         }
-        otherSettings.push(`group${i}="${name}",${visibilities.join("")},${models.join(",")},${modelSettings.join("")}`);
+        modelSettings = parseInt(modelSettings.join(""), 2).toString(16).toUpperCase();
+        otherSettings.push(`group${i}="${name}",${visibilities.join("")},${models.join(",")},${modelSettings}`);
     }
 
     window.history.pushState('', '', `?plot=${store.getState().plot.plotId}&${otherSettings.join("&")}`);
@@ -120,6 +121,7 @@ function updateStoreWithURL() {
         while (urlParams.get(`group${groupStrings.length}`) !== null) {
             groupStrings.push(urlParams.get(`group${groupStrings.length}`));
         }
+        const dataPerModel = 5;
         const groups = groupStrings.map((elem) => {
             const name = elem.split('"')[1];
             const visibilities = elem.split('"')[2].split(',')[1].split("").map((elem) => {
@@ -128,7 +130,12 @@ function updateStoreWithURL() {
             const models = elem.split('"')[2].split(',').slice(2, -1).map((e) => {
                 return store.getState().api.models.data[parseInt(e)];
             });
-            let modelSettings = elem.split('"')[2].split(',').slice(-1)[0].split("").map((e) => {
+            let modelSettings = elem.split('"')[2].split(',').slice(-1)[0];
+            const binary = parseInt(modelSettings, 16).toString(2);
+            let leadingZeros = "0" * (models.length * dataPerModel - binary.length);
+            if (typeof leadingZeros === 'number') leadingZeros = "";
+            modelSettings = leadingZeros + binary;
+            modelSettings = modelSettings.split("").map((e) => {
                 return Boolean(parseInt(e));
             });
             return {name: name, visibilities: visibilities, models: models, modelSettings: modelSettings};
@@ -142,7 +149,6 @@ function updateStoreWithURL() {
                 ));
             }
             const dataCpy = JSON.parse(JSON.stringify(store.getState().models.modelGroups[i].models));
-            const dataPerModel = 5;
             for (let j = 0; j < groups[i].models.length; j++) {
                 const model = groups[i].models[j];
                 dataCpy[model].isVisible = groups[i].modelSettings[dataPerModel * j];
