@@ -247,8 +247,29 @@ describe('test addModelGroupModal functionality without model group id', () => {
         userEvent.click(getByTestId("AddModelGroupModal-save-button")); // save changes
         expect(store.getState().models.modelGroups["0"].name).toEqual(title);
     });
-
     
+    it("exits without changing", () => {
+        const { getByTestId } = rendered;
+
+        userEvent.type(getByTestId("AddModelGroupModal-card-group-name"), "blubblob");
+        
+        const oldName = store.getState().models.modelGroups["0"].name;
+        userEvent.click(getByTestId("addModelGroupModal-close-button")); // exit without closing
+        expect(store.getState().models.modelGroups["0"].name).toEqual(oldName);
+    });
+    
+    it("displays a warning if checked models are invisible", () => {
+        
+        const { getByTestId, getAllByTestId, baseElement } = rendered;
+
+        const selectAllLeft = getAllByTestId("AddModelGroupModal-select-all")[0];
+        userEvent.click(selectAllLeft);
+        
+        const partOfDynamicErrorMsg = "hidden model";
+        expect(baseElement).not.toHaveTextContent(partOfDynamicErrorMsg);
+        userEvent.type(getByTestId("SearchbarInput"), "ACCESS{enter}");
+        expect(baseElement).toHaveTextContent(partOfDynamicErrorMsg);
+    });
 
     
 });
