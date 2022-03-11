@@ -1,11 +1,12 @@
 import React from 'react';
 import ReferenceModelSelector from './ReferenceModelSelector';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import "@testing-library/jest-dom";
 import { createTestStore } from '../../../../../store/store';
 import { Provider } from "react-redux";
 import axios from 'axios';
 import modelsResponse from "../../../../../services/API/testing/models-response.json"
+import tco3zmResponse from "../../../../../services/API/testing/tco3zm-response.json"
 import { fetchModels } from '../../../../../services/API/apiSlice';
 jest.mock('axios');
 
@@ -35,16 +36,20 @@ describe("tests redux functionality", () => {
         axios.get.mockImplementation(
             () => Promise.resolve({data: modelsResponse})
         )
-        await store.dispatch(fetchModels());
-        render(
+        axios.post.mockResolvedValue({data: tco3zmResponse})
+        await store.dispatch(fetchModels()); // fetch models
+        const { getByRole, getAllByRole } = render(
             <Provider store={store}>
                 <ReferenceModelSelector reportError={(i) => console.log(i)}/>
             </Provider>
         );
-
-
-
-
+        
+        const model = "CCMI-1_ACCESS_ACCESS-CCM-refC2"; // this should be selected
+        const input = getByRole("textbox");
+        fireEvent.change(input, { target: { value: model } }); // type to get all options on virtual dom
+        fireEvent.click(getAllByRole("option")[0]); // select
+        
+        expect(store.getState().reference.settings.model).toEqual(model); // expect store is updated
     });
 
     it("should report an error message if no model data is available", async () => {
@@ -61,6 +66,7 @@ describe("tests redux functionality", () => {
         );
         expect(mock).toHaveBeenCalledWith(`API not responding: ${errorMessage}`);
     })
+
 });
 
 

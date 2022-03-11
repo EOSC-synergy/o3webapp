@@ -64,6 +64,7 @@ function ReferenceModelSelector(props) {
             options={allModels}
             renderInput={(params) => <TextField {...params} label="Reference Model" />}
             sx={{width: "100%"}}
+            data-testid="ReferenceModelSelector-reference-model"
         />
     );
 }

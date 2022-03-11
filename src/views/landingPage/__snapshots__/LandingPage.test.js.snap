@@ -1778,6 +1778,7 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                           <div
                             aria-expanded="false"
                             class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon css-dd2h8b-MuiAutocomplete-root"
+                            data-testid="ReferenceModelSelector-reference-model"
                             role="combobox"
                           >
                             <div

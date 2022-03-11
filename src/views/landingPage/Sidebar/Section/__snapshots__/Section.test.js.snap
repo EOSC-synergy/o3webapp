@@ -1564,6 +1564,7 @@ exports[`Section renders correclty renders correctly from config file 4`] = `
               <div
                 aria-expanded="false"
                 class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon css-dd2h8b-MuiAutocomplete-root"
+                data-testid="ReferenceModelSelector-reference-model"
                 role="combobox"
               >
                 <div
