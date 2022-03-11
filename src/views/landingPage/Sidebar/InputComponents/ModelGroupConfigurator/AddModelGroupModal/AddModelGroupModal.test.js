@@ -172,6 +172,26 @@ describe('test addModelGroupModal functionality without model group id', () => {
         expect(rightListItems[0].textContent).toEqual(moveModel);
     });
 
+    it("moves all model from the left to the right and back correctly", () => {
+        const { getByTestId, getAllByTestId } = rendered;
+        const [selectAllLeft, selectAllRight] = getAllByTestId("AddModelGroupModal-select-all");
+        
+        const moveAllRight = getByTestId("AddModelGroupModal-button-move-allChecked-right");
+        const moveAllLeft = getByTestId("AddModelGroupModal-button-move-allChecked-left");
+        
+        userEvent.click(selectAllLeft);
+        userEvent.click(moveAllRight); // move everything to the right
+
+        expect(within(getByTestId("AddModelGroupModal-card-header-right")).queryAllByRole("listitem").length).toEqual(105);
+        expect(within(getByTestId("AddModelGroupModal-card-header-left")).queryAllByRole("listitem").length).toEqual(0);
+
+        userEvent.click(selectAllRight);
+        userEvent.click(moveAllLeft); // move everything to the left
+
+        expect(within(getByTestId("AddModelGroupModal-card-header-right")).queryAllByRole("listitem").length).toEqual(0);
+        expect(within(getByTestId("AddModelGroupModal-card-header-left")).queryAllByRole("listitem").length).toEqual(105);
+    });
+
     it("hides models that doesn't match the selection", () => {
         const { getByTestId } = rendered;
 
@@ -228,25 +248,7 @@ describe('test addModelGroupModal functionality without model group id', () => {
         expect(store.getState().models.modelGroups["0"].name).toEqual(title);
     });
 
-    it("moves all model from the left to the right and back correctly", () => {
-        const { getByTestId, getAllByTestId } = rendered;
-        const [selectAllLeft, selectAllRight] = getAllByTestId("AddModelGroupModal-select-all");
-        
-        const moveAllRight = getByTestId("AddModelGroupModal-button-move-allChecked-right");
-        const moveAllLeft = getByTestId("AddModelGroupModal-button-move-allChecked-left");
-        
-        userEvent.click(selectAllLeft);
-        userEvent.click(moveAllRight); // move everything to the right
-
-        expect(within(getByTestId("AddModelGroupModal-card-header-right")).queryAllByRole("listitem").length).toEqual(105);
-        expect(within(getByTestId("AddModelGroupModal-card-header-left")).queryAllByRole("listitem").length).toEqual(0);
-
-        userEvent.click(selectAllRight);
-        userEvent.click(moveAllLeft); // move everything to the left
-
-        expect(within(getByTestId("AddModelGroupModal-card-header-right")).queryAllByRole("listitem").length).toEqual(0);
-        expect(within(getByTestId("AddModelGroupModal-card-header-left")).queryAllByRole("listitem").length).toEqual(105);
-    });
+    
 
     
 });
