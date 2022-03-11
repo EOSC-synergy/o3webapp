@@ -33,23 +33,39 @@ describe("tests basic rendering", () => {
 
 describe("tests redux functionality", () => {
     
-    it("updates the region accordingly", () => {
-        const { getByTestId, getByRole, getAllByRole } = render(
+    it("updates the region accordingly in the store", () => {
+        const { getByRole, getAllByRole } = render(
             <Provider store={store}>
                 <LatitudeBandSelector reportError={() => {}} />
             </Provider>
         );
 
         userEvent.click(getByRole("button"));
-        const element = getByTestId("LatitudeBandSelector-select-region");
-        //userEvent.click(element);
         const options = getAllByRole("option");
         userEvent.click(options[2]);
-        console.log(store.getState().plot.generalSettings.location);
-        
-        userEvent.click(options[options.length - 1]);
-        
 
+        expect(
+            store.getState().plot.generalSettings.location
+        ).toEqual(
+            { minLat: -20, maxLat: 20 }
+        ); // Tropics
+        userEvent.click(options[options.length - 1]);
+    });
+
+    it("displays a custom latitude band selector if custom region is selected", () => {
+        const { getByRole, getAllByRole, container } = render(
+            <Provider store={store}>
+                <LatitudeBandSelector reportError={() => {}} />
+            </Provider>
+        );
+
+        userEvent.click(getByRole("button"));
+        const options = getAllByRole("option");
+
+        expect(container).not.toHaveTextContent("SELECT LATITUDE RANGE");
+        userEvent.click(options[options.length - 1]);
+        expect(container).toHaveTextContent("SELECT LATITUDE RANGE");
+        
     });
     
 });
