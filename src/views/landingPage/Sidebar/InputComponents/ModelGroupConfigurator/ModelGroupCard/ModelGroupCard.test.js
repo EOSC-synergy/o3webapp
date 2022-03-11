@@ -146,7 +146,7 @@ describe('test ModelGroupCard functionality', () => {
 
     });
 
-    it("dispatches delete Model Group when delete icon is clicked (delete process)", () => {
+    it("opens the delete dialog and doesn't delete the model group if the keep button is clicked", () => {
         const { getByTestId, container } = render(
             <Provider store={store}>
                 <ModelGroupCard modelGroupId={groupId} reportError={reportError} />
@@ -157,9 +157,10 @@ describe('test ModelGroupCard functionality', () => {
         expect(store.getState().models.modelGroups["0"]).not.toEqual(undefined);
         userEvent.click(deleteIcon); // delete model group
         expect(container).toHaveTextContent("Delete this model group?");
-        getByTestId("ModelGroupCard-delete-model-delete");
+        userEvent.click(getByTestId("ModelGroupCard-delete-model-keep"));
         
-        expect(store.getState().models.modelGroups["0"]).toEqual(undefined);
+        expect(store.getState().models.modelGroups["0"]).not.toEqual(undefined);
+        expect(container).not.toHaveTextContent("Delete this model group?"); // delete dialog is closed
 
     });
 
