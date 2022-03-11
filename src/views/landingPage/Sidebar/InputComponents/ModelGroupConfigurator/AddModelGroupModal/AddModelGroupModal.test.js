@@ -142,7 +142,7 @@ describe('test addModelGroupModal functionality', () => {
         expect(getAllByRole("listitem").length).toEqual(105);
     });
         
-    it("check if models are rendered on the left", async () => {
+    it("check if all models are rendered on the left at beginning and none on the right", async () => {
         axios.get.mockImplementation(() => {
             return Promise.resolve({data: modelsResponse}); //Promise.resolve({data: modelsResponse})
         });
@@ -155,7 +155,7 @@ describe('test addModelGroupModal functionality', () => {
         await waitFor(() => {
             expect(baseElement).toHaveTextContent("105");
         });
-        expect(within(getByTestId("AddModelGroupModal-card-header-left")).getAllByRole("listitem").length).toEqual(105);
+        expect(within(getByTestId("AddModelGroupModal-card-header-left")).queryAllByRole("listitem").length).toEqual(105);
         expect(within(getByTestId("AddModelGroupModal-card-header-right")).queryAllByRole("listitem").length).toEqual(0);
     });
 
