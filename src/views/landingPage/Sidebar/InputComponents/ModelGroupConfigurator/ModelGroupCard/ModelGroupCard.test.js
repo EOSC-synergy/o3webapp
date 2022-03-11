@@ -117,6 +117,36 @@ describe('test ModelGroupCard functionality', () => {
     });
      */
 
+    it("dispatches setStatisticalValueForGroup with correct payload when checkbox is clicked", () => {
+        const {baseElement, getByTestId} = render(
+            <Provider store={store}>
+                <ModelGroupCard modelGroupId={groupId} reportError={reportError}/>
+            </Provider>
+        );
+        
+        expect(
+            store.getState().models.modelGroups["0"].visibleSV
+        ).toEqual(
+            {
+                mean: true,
+                'standard deviation': true,
+                median: true,
+                percentile: true
+            }
+        );
+        userEvent.click(getByTestId("ModelGroupCard-toggle-mean-checkbox"));
+        expect(
+            store.getState().models.modelGroups["0"].visibleSV
+        ).toEqual(
+            {
+                mean: false,
+                'standard deviation': true,
+                median: true,
+                percentile: true
+            }
+        );
+    });
+
     test.todo("dispatches setStatisticalValueForGroup with correct payload when checkbox is clicked");
     test.todo("dispatches setVisibilityForGroup with correct payload when icon is clicked");
     test.todo("dispatches delete Model Group when delete icon is clicked");
