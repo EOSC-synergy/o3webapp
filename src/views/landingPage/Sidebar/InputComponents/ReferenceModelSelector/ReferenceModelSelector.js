@@ -48,7 +48,7 @@ function ReferenceModelSelector(props) {
     /**
      * Handles the change of the reference model selection.
      */
-    const handleChangeForRefModel = (event, value) => {
+    const handleChangeForRefModel = (_, value) => {
         if (value !== null) {
             dispatch(setModel({model: value}));
             // fetch for tco3_zm and tco3_return
