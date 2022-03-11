@@ -204,11 +204,24 @@ describe('test addModelGroupModal functionality without model group id', () => {
         });
     });
 
-    it("renders default model group name if props.modelGroupId is provided", () => {
+    it("renders default model group name when props.modelGroupId is provided", () => {
         expect(rendered.baseElement).toHaveTextContent(store.getState().models.modelGroups["0"].name);
     });
 
+    it("renders default models on the right when props.modelGroupId is provided", () => {
+        const { getByTestId } = rendered;
+        const filteredModels = within(getByTestId("AddModelGroupModal-card-header-right")).queryAllByRole("listitem");
+        const modelGroupInStore = store.getState().models.modelGroups["0"].models;
+        expect(filteredModels.length).toEqual(Object.keys(modelGroupInStore).length);
+    });
+
+    it("check if onClosing the modal resets all model groups on the right and checked", () => {
+        const { getByTestId, rerender, baseElement } = rendered;
+        userEvent.click(getByTestId("addModelGroupModal-close-button"));
+        
+        //expect(baseElement).toEqual()
+        rerender();
+    });
+
     
-    test.todo("check default models on the right are rendered when props.modelGroupId is provided");
-    test.todo("check if onClosing the modal resets all model groups on the right and checked");
 });
