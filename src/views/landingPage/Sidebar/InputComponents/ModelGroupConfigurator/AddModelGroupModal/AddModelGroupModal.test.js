@@ -126,53 +126,44 @@ describe('test addModelGroupModal functionality', () => {
         expect(mock).toHaveBeenCalledWith(`API not responding: ${errorMessage}`);
     });
 
-    it("loads all 105 models correctly", async () => {
+
+});
+
+let rendered;
+describe('test addModelGroupModal functionality', () => {
+
+    beforeEach(async () => {
+        store = createTestStore();
         axios.get.mockImplementation(() => {
             return Promise.resolve({data: modelsResponse})
         });
         
-        const { baseElement, getAllByRole } = render(<Provider store={store}>
+        rendered = render(<Provider store={store}>
             <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} />
         </Provider>);
 
         await store.dispatch(fetchModels());
         await waitFor(() => {
-            expect(baseElement).toHaveTextContent("105");
+            expect(rendered.baseElement).toHaveTextContent("105");
         });
+    });
+
+    it("loads all 105 models correctly", async () => {
+        
+        const { getAllByRole } = rendered;
         expect(getAllByRole("listitem").length).toEqual(105);
     });
         
     it("check if all models are rendered on the left at beginning and none on the right", async () => {
-        axios.get.mockImplementation(() => {
-            return Promise.resolve({data: modelsResponse});
-        });
-        
-        const { baseElement, getByTestId } = render(<Provider store={store}>
-            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} />
-        </Provider>);
-
-        await store.dispatch(fetchModels());
-        await waitFor(() => {
-            expect(baseElement).toHaveTextContent("105");
-        });
+        const { getByTestId } = rendered;
         expect(within(getByTestId("AddModelGroupModal-card-header-left")).queryAllByRole("listitem").length).toEqual(105);
         expect(within(getByTestId("AddModelGroupModal-card-header-right")).queryAllByRole("listitem").length).toEqual(0);
     });
 
     it("check if models can be moved from left to right", async () => {
         const firstListElementText = "ACCESS-CCM-refC2Institute: ACCESS\nProject: CCMI-1";
-        axios.get.mockImplementation(() => {
-            return Promise.resolve({data: modelsResponse});
-        });
-        
-        const { baseElement, getByTestId } = render(<Provider store={store}>
-            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} />
-        </Provider>);
+        const {getByTestId} = rendered;
 
-        await store.dispatch(fetchModels());
-        await waitFor(() => {
-            expect(baseElement).toHaveTextContent("105");
-        });
         const listItems = within(getByTestId("AddModelGroupModal-card-header-left")).queryAllByRole("listitem");
         userEvent.click(listItems[0]);
         expect(listItems[0].textContent).toEqual(firstListElementText);
@@ -183,6 +174,8 @@ describe('test addModelGroupModal functionality', () => {
     });
 
     test.todo("check if models not being selected by search are being hidden");
+
+
     test.todo("check default model group name is rendered when props.modelGroupId is provided");
     test.todo("check default models on the right are rendered when props.modelGroupId is provided");
     test.todo("check if onClosing the modal resets all model groups on the right and checked");
