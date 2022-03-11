@@ -1,7 +1,7 @@
 import React from 'react';
 import ReferenceModelSelector from './ReferenceModelSelector';
 import { render } from '@testing-library/react';
-import "@testing-library/jest-dom/extend-expect";
+import "@testing-library/jest-dom";
 import { createTestStore } from '../../../../../store/store';
 import { Provider } from "react-redux";
 import axios from 'axios';
@@ -42,10 +42,25 @@ describe("tests redux functionality", () => {
             </Provider>
         );
 
-        
+
 
 
     });
+
+    it("should report an error message if no model data is available", async () => {
+        const errorMessage = "blubBlob";    
+        axios.get.mockImplementation(
+            () => Promise.reject({message: errorMessage})
+        )
+        await store.dispatch(fetchModels());
+        const mock = jest.fn()
+        render(
+            <Provider store={store}>
+                <ReferenceModelSelector reportError={mock}/>
+            </Provider>
+        );
+        expect(mock).toHaveBeenCalledWith(`API not responding: ${errorMessage}`);
+    })
 });
 
 
