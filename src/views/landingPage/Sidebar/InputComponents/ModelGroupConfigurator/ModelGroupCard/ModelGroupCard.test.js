@@ -95,28 +95,6 @@ describe('test ModelGroupCard functionality', () => {
         visibleSV = modelGroups[groupId].visibleSV;
     });
 
-    /*
-    it('checks / unchecks statistical values, when visibility icon is clicked', () => {
-        const { getByTestId, getByLabelText } = render(
-            <Provider store={store}>
-                <ModelGroupCard modelGroupId={groupId} reportError={reportError} />
-            </Provider>
-        );
-        const visibilityIcon = getByTestId(/VisibilityIcon-visible/)
-        expect(visibilityIcon).toBeInTheDocument();
-        for(const key in STATISTICAL_VALUES) {
-            expect(getByLabelText(key)).toBeInTheDocument();
-            expect(getByLabelText(key)).toHaveProperty('checked', true);
-        }
-        userEvent.click(visibilityIcon);
-        expect(getByTestId(/VisibilityIcon-invisible/)).toBeInTheDocument();
-        for(const key in STATISTICAL_VALUES) {
-            expect(getByLabelText(key)).toBeInTheDocument();
-            expect(getByLabelText(key)).toHaveProperty('checked', false);
-        }
-    });
-     */
-
     it("dispatches setStatisticalValueForGroup with correct payload when checkbox is clicked", () => {
         const {baseElement, getByTestId} = render(
             <Provider store={store}>
@@ -147,8 +125,27 @@ describe('test ModelGroupCard functionality', () => {
         );
     });
 
-    test.todo("dispatches setStatisticalValueForGroup with correct payload when checkbox is clicked");
-    test.todo("dispatches setVisibilityForGroup with correct payload when icon is clicked");
+    it("dispatches setVisibilityForGroup with correct payload when icon is clicked", () => {
+        const { getByTestId } = render(
+            <Provider store={store}>
+                <ModelGroupCard modelGroupId={groupId} reportError={reportError} />
+            </Provider>
+        );
+        
+        
+        const visibilityIcon = getByTestId("ModelGroupCard-VisibilityIcon-visible")
+        expect(visibilityIcon).toBeInTheDocument();
+        expect(store.getState().models.modelGroups["0"].isVisible).toEqual(true);
+
+        userEvent.click(visibilityIcon); // toggle visibility
+
+        const invisibilityIcon = getByTestId("ModelGroupCard-VisibilityIcon-invisible")
+        expect(invisibilityIcon).toBeInTheDocument();
+        expect(store.getState().models.modelGroups["0"].isVisible).toEqual(false);
+        
+
+    });
+
     test.todo("dispatches delete Model Group when delete icon is clicked");
 
     it('opens edit model group modal', () => {
