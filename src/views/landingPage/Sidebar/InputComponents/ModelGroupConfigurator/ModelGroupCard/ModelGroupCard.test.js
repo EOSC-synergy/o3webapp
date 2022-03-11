@@ -133,20 +133,35 @@ describe('test ModelGroupCard functionality', () => {
         );
         
         
-        const visibilityIcon = getByTestId("ModelGroupCard-VisibilityIcon-visible")
+        const visibilityIcon = getByTestId("ModelGroupCard-VisibilityIcon-visible");
         expect(visibilityIcon).toBeInTheDocument();
         expect(store.getState().models.modelGroups["0"].isVisible).toEqual(true);
 
         userEvent.click(visibilityIcon); // toggle visibility
 
-        const invisibilityIcon = getByTestId("ModelGroupCard-VisibilityIcon-invisible")
+        const invisibilityIcon = getByTestId("ModelGroupCard-VisibilityIcon-invisible");
         expect(invisibilityIcon).toBeInTheDocument();
         expect(store.getState().models.modelGroups["0"].isVisible).toEqual(false);
         
 
     });
 
-    test.todo("dispatches delete Model Group when delete icon is clicked");
+    it("dispatches delete Model Group when delete icon is clicked (delete process)", () => {
+        const { getByTestId, container } = render(
+            <Provider store={store}>
+                <ModelGroupCard modelGroupId={groupId} reportError={reportError} />
+            </Provider>
+        );
+        const deleteIcon = getByTestId("ModelGroupCard-delete-model-group");
+        
+        expect(store.getState().models.modelGroups["0"]).not.toEqual(undefined);
+        userEvent.click(deleteIcon); // delete model group
+        expect(container).toHaveTextContent("Delete this model group?");
+        getByTestId("ModelGroupCard-delete-model-delete");
+        
+        expect(store.getState().models.modelGroups["0"]).toEqual(undefined);
+
+    });
 
     it('opens edit model group modal', () => {
         const {baseElement, getByTestId} = render(
