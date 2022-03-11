@@ -165,15 +165,26 @@ describe('test addModelGroupModal functionality', () => {
         const {getByTestId} = rendered;
 
         const listItems = within(getByTestId("AddModelGroupModal-card-header-left")).queryAllByRole("listitem");
+        const moveModel = listItems[0].textContent;
         userEvent.click(listItems[0]);
-        expect(listItems[0].textContent).toEqual(firstListElementText);
+        
         userEvent.click(getByTestId("AddModelGroupModal-button-move-allChecked-right"));
         const rightListItems = within(getByTestId("AddModelGroupModal-card-header-right")).queryAllByRole("listitem")
         expect(within(getByTestId("AddModelGroupModal-card-header-right")).queryAllByRole("listitem").length).toEqual(1); // expect one model was moved to the right
-        expect(rightListItems[0].textContent).toEqual(firstListElementText);
+        expect(rightListItems[0].textContent).toEqual(moveModel);
     });
 
-    test.todo("check if models not being selected by search are being hidden");
+    it("hides models that doesn't match the selection", () => {
+        const { getByTestId } = rendered;
+
+        const searchString = "ACCESS";
+        const listItems = within(getByTestId("AddModelGroupModal-card-header-left")).queryAllByRole("listitem");
+        const accessModels = listItems.map(item => item.textContent).filter(item => item.includes(searchString));
+        userEvent.type(getByTestId("SearchbarInput"), "ACCESS{enter}");
+        const filteredModels = within(getByTestId("AddModelGroupModal-card-header-left")).queryAllByRole("listitem");
+        expect(filteredModels.length).toEqual(accessModels.length); // compare length
+        expect(filteredModels.map(item => item.textContent)).toEqual(accessModels); // compare length
+    });
 
 
     test.todo("check default model group name is rendered when props.modelGroupId is provided");
