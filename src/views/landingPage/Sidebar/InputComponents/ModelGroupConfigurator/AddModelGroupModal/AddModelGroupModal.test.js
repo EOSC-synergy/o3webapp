@@ -252,3 +252,55 @@ describe('test addModelGroupModal functionality without model group id', () => {
 
     
 });
+
+describe('test error handling', () => {
+
+    beforeEach(async () => {
+        store = createTestStore();
+        axios.get.mockImplementation(() => {
+            return Promise.resolve({data: modelsResponse})
+        });
+        await store.dispatch(fetchModels());
+        
+        rendered = render(<Provider store={store}>
+            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}}/>
+        </Provider>);
+
+        
+        await waitFor(() => {
+            expect(rendered.baseElement).toHaveTextContent("105");
+        });
+    });
+
+    it("it displays an error message if no name is provided before saving", () => {
+        const { baseElement, getByTestId, getAllByTestId } = rendered;
+        const expectedErrorMessage = "Please provide a model group name";
+
+        
+        // make sure that there are models on the right (=> error message can only regard the missing name)
+        const selectAllLeft = getAllByTestId("AddModelGroupModal-select-all")[0];
+        const moveAllRight = getByTestId("AddModelGroupModal-button-move-allChecked-right");
+        
+        userEvent.click(selectAllLeft);
+        userEvent.click(moveAllRight); // move everything to the right
+        
+        expect(baseElement).not.toHaveTextContent(expectedErrorMessage); // no error message
+        userEvent.click(getByTestId("AddModelGroupModal-save-button")); // save changes
+        expect(baseElement).toHaveTextContent(expectedErrorMessage); // error message
+    });
+
+    it("it displays an error message if no model on the right is provided before saving", () => {
+        const { baseElement, getByTestId } = rendered;
+        const expectedErrorMessage = "Please provide a list of models for this group";
+        
+        // make sure that a title is provided (=> error message can only regard the missing models)
+        const nameField = getByTestId("AddModelGroupModal-card-group-name");
+        const title = "blub";
+        userEvent.type(nameField, title);
+        
+        expect(baseElement).not.toHaveTextContent(expectedErrorMessage); // no error message
+        userEvent.click(getByTestId("AddModelGroupModal-save-button")); // save changes
+        expect(baseElement).toHaveTextContent(expectedErrorMessage); // error message
+    });
+
+});
