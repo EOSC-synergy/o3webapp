@@ -25,4 +25,19 @@ describe("tests the model name parsing behaviour", () => {
         });
     });
 
+    it("throws an error if no string is provided", () => {
+        expect(() => convertModelName({})).toThrowError();
+    });
+
+    it("returns the whole string if the pattern matching can't be applied correctly", () => {
+        const fullName = "NotMatching";
+        expect(
+            convertModelName(fullName)
+        ).toEqual({
+            project: "",
+            institute: "",
+            name: fullName,
+        });
+    });
+
 });

@@ -15,16 +15,15 @@ export const convertModelName = (name) => {
     }
     const regex = new RegExp("^([^_]+)_([^_]+)_(.*)$");
     const info = name.match(regex);
-    if (info.length < 4) { 
-        return {
-            project: "",
-            institute: "",
-            name: name
-        }
-    }
+
+    if (info === null) return {
+        project: "",
+        institute: "",
+        name,
+    };
     return {
-        project: info[1],//info[0],
-        institute: info[2],//info[2],
-        name: info[3],//info[4]
+        project: info[1],
+        institute: info[2],
+        name: info[3],
     }
 }
