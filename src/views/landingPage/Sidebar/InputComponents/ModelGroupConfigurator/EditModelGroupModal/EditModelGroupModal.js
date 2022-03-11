@@ -129,10 +129,10 @@ function EditModelGroupModal(props) {
     const [filteredRows, setFilteredRows] = React.useState(rows);
 
     /**
-     * An array filled with boolean values that indicate whether a model is included in the median calculation or not.
+     * An array filled with boolean values that indicate whether a model should be visible in the plot or not.
      * The index of each model in the array is its corresponding row id.
      */
-    const [medianVisible, setMedianVisible] = React.useState(modelList.map(model => modelData[model].median));
+    const [isVisible, setIsVisible] = React.useState(modelList.map(model => modelData[model].isVisible));
 
     /**
      * An array filled with boolean values that indicate whether a model is included in the mean calculation or not.
@@ -147,16 +147,16 @@ function EditModelGroupModal(props) {
     const [stdVisible, setStd] = React.useState(modelList.map(model => modelData[model][std]));
 
     /**
+     * An array filled with boolean values that indicate whether a model is included in the median calculation or not.
+     * The index of each model in the array is its corresponding row id.
+     */
+    const [medianVisible, setMedianVisible] = React.useState(modelList.map(model => modelData[model].median));
+
+    /**
      * An array filled with boolean values that indicate whether a model is included in the percentile calculation or not.
      * The index of each model in the array is its corresponding row id.
      */
     const [percentileVisible, setPercentileVisible] = React.useState(modelList.map(model => modelData[model].percentile));
-
-    /**
-     * An array filled with boolean values that indicate whether a model should be visible in the plot or not.
-     * The index of each model in the array is its corresponding row id.
-     */
-    const [isVisible, setIsVisible] = React.useState(modelList.map(model => modelData[model].isVisible));
 
     /**
      * List of all checkbox and selection types that should be editable in the data grid.
@@ -175,16 +175,16 @@ function EditModelGroupModal(props) {
      */
     const getCheckedListByType = (type) => {
         switch (type.toLowerCase()) {
-            case "median":
-                return medianVisible;
+            case "visible":
+                return isVisible;
             case "mean":
                 return meanVisible;
             case std:
                 return stdVisible;
+            case "median":
+                return medianVisible;
             case "percentile":
                 return percentileVisible;
-            case "visible":
-                return isVisible;
             default:
                 return medianVisible;
         }
@@ -201,16 +201,16 @@ function EditModelGroupModal(props) {
      */
     const getCheckedSetterByType = (type) => {
         switch (type.toLowerCase()) {
-            case "median":
-                return setMedianVisible;
+            case "visible":
+                return setIsVisible;
             case "mean":
                 return setMeanVisible;
             case std:
                 return setStd;
+            case "median":
+                return setMedianVisible;
             case "percentile":
                 return setPercentileVisible;
-            case "visible":
-                return setIsVisible;
             default:
                 return setMedianVisible;
         }
@@ -306,16 +306,14 @@ function EditModelGroupModal(props) {
      */
     const applyChanges = () => {
         const dataCpy = JSON.parse(JSON.stringify(modelData));
-
         for (let i = 0; i < modelList.length; i++) {
             const model = modelList[i];
-            dataCpy[model].mean = meanVisible[i];
-            dataCpy[model].median = medianVisible[i];
-            dataCpy[model].std = stdVisible[i];
-            dataCpy[model].percentile = percentileVisible[i];
             dataCpy[model].isVisible = isVisible[i];
+            dataCpy[model].mean = meanVisible[i];
+            dataCpy[model].std = stdVisible[i];
+            dataCpy[model].median = medianVisible[i];
+            dataCpy[model].percentile = percentileVisible[i];
         }
-
         dispatch(updatePropertiesOfModelGroup({groupId: props.modelGroupId, data: dataCpy}));
         updateURL();
         props.onClose();
@@ -329,18 +327,18 @@ function EditModelGroupModal(props) {
         const meanData = [], medianData = [], stdData = [], percentileData = [], visibleData = [];
 
         for (const model of modelList) {
-            meanData.push(modelData[model].mean);
-            medianData.push(modelData[model].median);
-            stdData.push(modelData[model][std]);
-            percentileData.push(modelData[model].percentile);
             visibleData.push(modelData[model].isVisible);
+            meanData.push(modelData[model].mean);
+            stdData.push(modelData[model][std]);
+            medianData.push(modelData[model].median);
+            percentileData.push(modelData[model].percentile);
         }
 
+        setIsVisible(visibleData);
         setMeanVisible(meanData);
-        setMedianVisible(medianData);
         setStd(stdData);
         setPercentileVisible(percentileData);
-        setIsVisible(visibleData);
+        setMedianVisible(medianData);
 
         props.onClose();
     }
@@ -423,13 +421,6 @@ function EditModelGroupModal(props) {
         {field: 'institute', headerName: 'Institute', width: 150, editable: false},
         {field: 'model', headerName: 'Model', width: 225, editable: false},
         {
-            field: 'median', headerName: 'Median', sortable: false, width: 140, disableClickEventBubbling: true,
-            renderHeader: () => generateHeaderName("Median"),
-            renderCell: (params) => {
-                return createCellCheckBox(params, "Median")
-            }
-        },
-        {
             field: 'mean', headerName: 'Mean', sortable: false, width: 140, disableClickEventBubbling: true,
             renderHeader: () => generateHeaderName("Mean"),
             renderCell: (params) => {
@@ -441,6 +432,13 @@ function EditModelGroupModal(props) {
             renderHeader: () => generateHeaderName("Standard deviation"),
             renderCell: (params) => {
                 return createCellCheckBox(params, "Standard deviation")
+            }
+        },
+        {
+            field: 'median', headerName: 'Median', sortable: false, width: 140, disableClickEventBubbling: true,
+            renderHeader: () => generateHeaderName("Median"),
+            renderCell: (params) => {
+                return createCellCheckBox(params, "Median")
             }
         },
         {

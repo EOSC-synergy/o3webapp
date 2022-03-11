@@ -7,7 +7,7 @@ import {fetchModels, fetchPlotDataForCurrentModels, fetchPlotTypes} from './serv
 import {
     setModelsOfModelGroup,
     setStatisticalValueForGroup,
-    setVisibilityForGroup
+    setVisibilityForGroup, updatePropertiesOfModelGroup
 } from "./store/modelsSlice/modelsSlice";
 import {DEFAULT_MODEL_GROUP, O3AS_PLOTS, STATISTICAL_VALUES_LIST} from './utils/constants';
 import {
@@ -40,7 +40,6 @@ export function updateURL() {
     for (let i = 0; i < store.getState().models.idCounter; i++) {
         const modelGroup = store.getState().models.modelGroups[i];
         const name = modelGroup.name;
-        let models = [];
         const visibilities = [
             +modelGroup.isVisible,
             +modelGroup.visibleSV.mean,
@@ -48,12 +47,18 @@ export function updateURL() {
             +modelGroup.visibleSV.median,
             +modelGroup.visibleSV.percentile,
         ];
+        let models = [];
+        const modelSettings = [];
         for (let model of Object.keys(modelGroup.models)) {
             models.push(store.getState().api.models.data.indexOf(model));
+            modelSettings.push(+modelGroup.models[model].isVisible);
+            modelSettings.push(+modelGroup.models[model].mean);
+            modelSettings.push(+modelGroup.models[model]["standard deviation"]);
+            modelSettings.push(+modelGroup.models[model].median);
+            modelSettings.push(+modelGroup.models[model].percentile);
         }
-        otherSettings.push(`group${i}="${name}",${visibilities.join("")},${models.join(",")}`);
+        otherSettings.push(`group${i}="${name}",${visibilities.join("")},${models.join(",")},${modelSettings.join("")}`);
     }
-
 
     window.history.pushState('', '', `?plot=${store.getState().plot.plotId}&${otherSettings.join("&")}`);
 }
@@ -120,10 +125,13 @@ function updateStoreWithURL() {
             const visibilities = elem.split('"')[2].split(',')[1].split("").map((elem) => {
                 return Boolean(parseInt(elem));
             });
-            const models = elem.split('"')[2].split(',').slice(2).map((e) => {
+            const models = elem.split('"')[2].split(',').slice(2, -1).map((e) => {
                 return store.getState().api.models.data[parseInt(e)];
             });
-            return {name: name, visibilities: visibilities, models: models};
+            let modelSettings = elem.split('"')[2].split(',').slice(-1)[0].split("").map((e) => {
+                return Boolean(parseInt(e));
+            });
+            return {name: name, visibilities: visibilities, models: models, modelSettings: modelSettings};
         });
         for (let i = 0; i < groups.length; i++) {
             store.dispatch(setModelsOfModelGroup({groupId: i, groupName: groups[i].name, modelList: groups[i].models}));
@@ -133,6 +141,17 @@ function updateStoreWithURL() {
                     {groupId: i, svType: STATISTICAL_VALUES_LIST[j - 1], isIncluded: groups[i].visibilities[j]}
                 ));
             }
+            const dataCpy = JSON.parse(JSON.stringify(store.getState().models.modelGroups[i].models));
+            const dataPerModel = 5;
+            for (let j = 0; j < groups[i].models.length; j++) {
+                const model = groups[i].models[j];
+                dataCpy[model].isVisible = groups[i].modelSettings[dataPerModel * j];
+                dataCpy[model].mean = groups[i].modelSettings[dataPerModel * j + 1];
+                dataCpy[model].std = groups[i].modelSettings[dataPerModel * j + 2];
+                dataCpy[model].median = groups[i].modelSettings[dataPerModel * j + 3];
+                dataCpy[model].percentile = groups[i].modelSettings[dataPerModel * j + 4];
+            }
+            store.dispatch(updatePropertiesOfModelGroup({groupId: i, data: dataCpy}));
         }
     }
 }
