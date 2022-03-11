@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux"
 import {Modal, Card, Button, Checkbox, IconButton, CardActions} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
@@ -412,6 +412,14 @@ function EditModelGroupModal(props) {
             </div>
         );
     }
+
+    useEffect(() => {
+        setIsVisible(modelList.map(model => modelData[model].isVisible));
+        setMeanVisible(modelList.map(model => modelData[model].mean));
+        setStd(modelList.map(model => modelData[model][std]));
+        setMedianVisible(modelList.map(model => modelData[model].median));
+        setPercentileVisible(modelList.map(model => modelData[model].percentile));
+    }, [props.isOpen]);
 
     /**
      * An Object containing the specification for the columns of the data grid.
