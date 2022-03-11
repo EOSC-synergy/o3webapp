@@ -3,39 +3,44 @@ import {useDispatch, useSelector} from "react-redux";
 import {setDisplayYRange, selectPlotYRange, selectPlotId} from "../../../../../store/plotSlice/plotSlice";
 import {Typography, Grid, FormControl, TextField} from "@mui/material";
 import store from '../../../../../store/store';
+import PropTypes from 'prop-types';
 
 /**
  * Enables the user to choose the range that should be visible on the y-axis of the plot.
  * @component
- * @param {Object} props
- * @param {function} props.reportError function for error handling
+ * @param {Object} props specified in propTypes
  * @returns {JSX.Element} a jsx containing two text-fields and labels
  */
 function YAxisField(props) {
     /**
      * A dispatch function to dispatch actions to the redux store.
+     * @constant {function}
      */
     const dispatch = useDispatch();
 
     /**
      * An object containing the minY and maxY values for the y-axis.
+     * @constant {object}
      */
     const {minY, maxY} = useSelector(selectPlotYRange);
 
     /**
      * A string containing the active plot type.
+     * @constant {string}
      */
     const plotId = useSelector(selectPlotId);
 
     /**
      * Stores the minY and maxY values for tco3_zm
      * and checks their validation before sending it to the Redux store.
+     * @constant {array}
      */
     const [stateY_zm, setStateY_zm] = React.useState(store.getState().plot.plotSpecificSettings.tco3_zm.displayYRange);
 
     /**
      * Stores the minY and maxY values for tco3_return
      * and checks their validation before sending it to the Redux store.
+     * @constant {array}
      */
     const [stateY_return, setStateY_return] = React.useState(store.getState().plot.plotSpecificSettings.tco3_return.displayYRange);
 
@@ -43,6 +48,7 @@ function YAxisField(props) {
      * Handles the change of the minimum value.
      *
      * @param event the input value
+     * @constant {function}
      */
     const handleChangeMin = (event) => {
         if (!isNaN(event.target.value)) {
@@ -58,6 +64,7 @@ function YAxisField(props) {
      * Handles the change of the maximum value.
      *
      * @param event the input value
+     * @constant {function}
      */
     const handleChangeMax = (event) => {
         if (!isNaN(event.target.value)) {
@@ -126,6 +133,13 @@ function YAxisField(props) {
             </Grid>
         </Grid>
     );
+}
+
+YAxisField.protoTypes = {
+    /**
+     * function for error handling
+     */
+    reportError: PropTypes.func
 }
 
 export default YAxisField;

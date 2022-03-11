@@ -3,12 +3,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {setDisplayXRange, selectPlotXRange} from "../../../../../store/plotSlice/plotSlice";
 import {Typography, Grid, TextField, FormControl} from "@mui/material";
 import {START_YEAR, END_YEAR} from '../../../../../utils/constants';
+import PropTypes from 'prop-types';
 
 /**
  * Enables the user to choose the range that should be visible on the x-axis of the plot.
  * @component
- * @param {Object} props
- * @param {function} props.reportError function for error handling
+ * @param {Object} props specified in propTypes
  * @returns {JSX.Element} a jsx containing two text-fields and labels
  */
 function XAxisField(props) {
@@ -92,6 +92,13 @@ function XAxisField(props) {
             </Grid>
         </Grid>
     );
+}
+
+XAxisField.propTypes = {
+    /**
+     * function for error handling
+     */
+    reportError: PropTypes.func
 }
 
 export default XAxisField;

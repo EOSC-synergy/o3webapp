@@ -35,7 +35,6 @@ const StyledDataGrid = styled(DataGrid)(() => ({
  */
 function createRows(modelList) {
     const rows = [];
-    const regex = /([a-z]|[A-Z]|[0-9]|-)*/g;
 
     for (let i = 0; i < modelList.length; i++) {
         const model = modelList[i];
@@ -58,14 +57,11 @@ function createRows(modelList) {
 /**
  * A modal where the user can edit the visibility and the inclusion in statistical value calculation
  * of each model in an existing model group.
- *
+ * Used in {@link ModelGroupConfigurator}.
+ * 
  * @component
- * @param {Object} props
- * @param {function} props.onClose      Function to call if modal should be closed
- * @param {boolean} props.isOpen        Boolean whether the modal should be visible
- * @param {function} props.reportError  Error function
- * @param {int} props.modelGroupId      Id of the model group
- * @returns                             A JSX containing a modal with a data grid with all models from the model group
+ * @param {Object} props specified in propTypes
+ * @returns A JSX containing a modal with a data grid with all models from the model group
  */
 function EditModelGroupModal(props) {
 
@@ -73,6 +69,7 @@ function EditModelGroupModal(props) {
 
     /**
      * The CSS settings for the Card component
+     * @constant {object}
      */
     const cardStyle = {
         position: 'absolute',
@@ -91,21 +88,26 @@ function EditModelGroupModal(props) {
 
     /**
      * Label displayed at the top of the modal
+     * @constant {string}
      */
     const editModalLabel = "Edit Statistical Values";
 
     /**
      * The text displayed inside the apply button
+     * @constant {string}
      */
     const applyButtonLabel = "Save Changes";
     /**
      * A dispatch function to dispatch actions to the redux store.
+     * @constant {function}
      */
     const dispatch = useDispatch();
 
     /**
      * A list of all models in the currently selected model group.
      * The data is fetched from the redux store via a selector.
+     * @constant {array}
+     * @see selectModelsOfGroup
      */
     const modelList = useSelector(state => selectModelsOfGroup(state, props.modelGroupId));
 
@@ -113,17 +115,22 @@ function EditModelGroupModal(props) {
      * An object containing all data about the visibility and inclusion in the statistical values'
      * calculation for each model.
      * The data is fetched from the redux store via a selector.
+     * @constant {object}
+     * @see selectModelDataOfGroup
      */
     const modelData = useSelector(state => selectModelDataOfGroup(state, props.modelGroupId));
 
     /**
      * All rows that are represented in the data grid.
+     * @see createRows
+     * @constant {array}
      */
     const rows = createRows(modelList);
 
     /**
      * The current filtered selection of rows.
      * This array contains all rows remaining as a search result of the Searchbar.
+     * @default rows
      */
     const [filteredRows, setFilteredRows] = React.useState(rows);
 
@@ -160,6 +167,7 @@ function EditModelGroupModal(props) {
     /**
      * List of all checkbox and selection types that should be editable in the data grid.
      * It includes all statistical values and the "visible" type.
+     * @constant {array}
      */
     const typeList = Object.values(STATISTICAL_VALUES);
     typeList.push("visible");
@@ -220,6 +228,7 @@ function EditModelGroupModal(props) {
      * Applies the filtered rows by the Searchbar to the filteredRows component state.
      *
      * @param {int[]} indexArray    Array of the filtered indexes of the search result that identify the filtered rows.
+     * @see setFilteredRows
      */
     const foundIndices = (indexArray) => {
         setFilteredRows(indexArray.map(idx => rows[idx])); // translates indices into selected rows
@@ -347,7 +356,7 @@ function EditModelGroupModal(props) {
      * Generates a column header for a given type.
      *
      * @param {String} type     The type of the column (e.g. visible)
-     * @returns                 JSX with the generated header name.
+     * @returns {JSX.Element}   JSX with the generated header name.
      */
     const generateHeaderName = (type) => {
         return (
@@ -395,7 +404,7 @@ function EditModelGroupModal(props) {
      * A customized MUI Checkbox.
      *
      * @param {Object} props    Props for the MUI Checkbox
-     * @returns                 JSX with the customized Checkbox
+     * @returns {JSX.Element}   JSX with the customized Checkbox
      */
     const CustomCheckbox = (props) => {
         return (
@@ -410,7 +419,7 @@ function EditModelGroupModal(props) {
      *
      * @param {Object} params   The params containing metadata about the row
      * @param {String} type     The type of the selection (e.g. visible)
-     * @returns                 JSX element with the customized Cell-Checkbox
+     * @returns {JSX.Element}   JSX element with the customized Cell-Checkbox
      */
     const createCellCheckBox = (params, type) => {
         const checkedList = getCheckedListByType(type);
@@ -429,7 +438,8 @@ function EditModelGroupModal(props) {
     }
 
     /**
-     * An Object containing the specification for the columns of the data grid.
+     * An array containing the specification for the columns of the data grid.
+     * @constant {array}
      */
     const columns = [
         { field: 'project', headerName: 'Project', width: 120, editable: false},
@@ -508,10 +518,23 @@ function EditModelGroupModal(props) {
     );
 }
 
+
 EditModelGroupModal.propTypes = {
+    /**
+     * Boolean whether the modal should be visible
+     */
     isOpen: PropTypes.bool.isRequired,
+    /**
+     * Function to call if modal should be closed
+     */
     onClose: PropTypes.func.isRequired,
+    /**
+     * Id of the model group
+     */
     modelGroupId: PropTypes.number.isRequired,
+    /**
+     * function for error handlinf
+     */
     reportError: PropTypes.func
 }
 

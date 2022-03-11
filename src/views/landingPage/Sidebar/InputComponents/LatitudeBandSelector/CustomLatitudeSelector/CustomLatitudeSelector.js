@@ -7,11 +7,11 @@ import {
     LATITUDE_BAND_MIN_VALUE
 } from "../../../../../../utils/constants";
 import React from "react";
-
+import PropTypes from "prop-types";
 
 /**
  * A component to select the specific min and max latitude values for the custom region.
- * @memberof LatitudeBandSelector
+ * Used in {@link LatitudeBandSelector}.
  * @component
  * @returns {JSX.Element}    JSX with the component
  */
@@ -97,7 +97,7 @@ function CustomLatitudeSelector(props) {
     /**
      * A function to generate the helper text for the min. latitude box.
      *
-     * @returns     Text that should be displayed in the helper text
+     * @returns {string}     Text that should be displayed in the helper text
      */
     const generateHelperTextMin = () => {
         if (typeof minLatState === "string") return "";
@@ -105,14 +105,12 @@ function CustomLatitudeSelector(props) {
         if (minLatState < LATITUDE_BAND_MIN_VALUE) return `> ${LATITUDE_BAND_MIN_VALUE}`;
         if (minLatState > LATITUDE_BAND_MAX_VALUE) return `< ${LATITUDE_BAND_MAX_VALUE}`;
         if (minLatState > maxLatState) return maxLatState >= LATITUDE_BAND_MAX_VALUE ? "" : `< ${maxLatState}`
-
-
     }
 
     /**
      * A function to generate the helper text for the max. latitude box.
      *
-     * @returns     Text that should be displayed in the helper text
+     * @returns {string}     Text that should be displayed in the helper text
      */
     const generateHelperTextMax = () => {
         if (typeof maxLatState === "string") return "";
@@ -190,6 +188,13 @@ function CustomLatitudeSelector(props) {
     </>);
 
 
+}
+
+CustomLatitudeSelector.proptypes = {
+    /**
+     * function for error handling
+     */
+    reportError: PropTypes.func
 }
 
 export default CustomLatitudeSelector;

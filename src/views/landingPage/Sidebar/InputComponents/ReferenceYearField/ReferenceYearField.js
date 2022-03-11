@@ -8,12 +8,12 @@ import {setYear, setVisibility, selectRefYear, selectVisibility} from "../../../
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import MuiVisibilityIcon from '@mui/icons-material/Visibility';
 import { selectPlotId } from "../../../../../store/plotSlice/plotSlice";
+import PropTypes from 'prop-types';
 
 /**
  * Enables the user to select a reference year.
  * @component
- * @param {Object} props
- * @param {function} props.reportError - function to handle errors
+ * @param {Object} props specified by propTypes
  * @returns {JSX.Element} a jsx containing a text field to select the reference year
  */
 function ReferenceYearField(props) {
@@ -83,6 +83,13 @@ function ReferenceYearField(props) {
             </Grid>
         </>
     );
+}
+
+ReferenceYearField.propTypes = {
+    /**
+     * function for error handling
+     */
+    reportError: PropTypes.func
 }
 
 export default ReferenceYearField;

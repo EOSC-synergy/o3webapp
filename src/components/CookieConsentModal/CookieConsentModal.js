@@ -7,10 +7,9 @@ import CookieOutlinedIcon from '@mui/icons-material/CookieOutlined';
 /**
  * Forces the user to accept cookies.
  * @component
- * @param {Object} props
- * @param {boolean} props.isOpen -> whether the cookie consent modal should be displayed
- * @param {function} props.onClose -> handles closing of the modal
+ * @param {Object} props specifid in propTypes
  * @returns {JSX.Element} a jsx file containing the modal
+ * @deprecated
  */
 function CookieConsentModal(props) {
 
@@ -79,7 +78,13 @@ function CookieConsentModal(props) {
 }
 
 CookieConsentModal.propTypes = {
+    /**
+     * whether the cookie consent modal should be displayed
+     */
     isOpen: PropTypes.bool.isRequired,
+    /**
+     * handles closing of the modal
+     */
     onClose: PropTypes.func.isRequired,
 }
 
