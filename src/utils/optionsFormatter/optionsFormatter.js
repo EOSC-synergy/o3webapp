@@ -1368,13 +1368,13 @@ function calcRecoveryPoints(getState, referenceValue, svSeries) {
     const refYear = getState().reference.settings.year;
     const refValue = Math.max(...referenceValue.data);
 
-    const dataName = ["mean", "mean+std", "mean-std"];
+    const dataName = [SV_DISPLAY_NAME.mean, SV_DISPLAY_NAME["mean+std"], SV_DISPLAY_NAME["mean-std"]];
 
     const yearIdx = 0;
     const valIdx = 1;
 
     for (let idx = 0; idx < svSeries.data.length; idx++) {
-        if (!dataName.includes(svSeries.data[idx].name.split("(")[0])) {
+        if (!dataName.includes(svSeries.data[idx].name.split("(")[0].slice(0, -1))) {
             points.push([null, null]);
             continue;
         }
