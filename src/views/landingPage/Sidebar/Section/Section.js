@@ -2,7 +2,6 @@ import React from "react";
 import { styled } from '@mui/material/styles';
 import LocationSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
 import ModelGroupConfigurator from "../InputComponents/ModelGroupConfigurator/ModelGroupConfigurator";
-import OffsetConfigurator from "../InputComponents/OffsetConfigurator/OffsetConfigurator";
 import PlotNameField from "../InputComponents/PlotNameField/PlotNameField";
 import ReferenceYearField from "../InputComponents/ReferenceYearField/ReferenceYearField";
 import RegionSelector from "../InputComponents/RegionSelector/RegionSelector";
@@ -130,8 +129,6 @@ function Section(props) {
                     return <LocationSelector key={key} reportError={props.reportError}/>
                 case MGC_Symbol.description:
                     return <ModelGroupConfigurator key={key} reportError={props.reportError}/>;
-                case OC_Symbol.description:
-                    return <OffsetConfigurator key={key} reportError={props.reportError} />;
                 case PNF_Symbol.description:
                     return <PlotNameField key={key} reportError={props.reportError} />;
                 case RMS_Symbol.description:
