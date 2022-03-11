@@ -1,5 +1,7 @@
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import {within} from '@testing-library/dom';
+
 import AddModelGroupModal from './AddModelGroupModal';
 import { Provider } from "react-redux";
 import { createTestStore } from '../../../../../../store/store';
@@ -129,7 +131,7 @@ describe('test addModelGroupModal functionality', () => {
             return Promise.resolve({data: modelsResponse}); //Promise.resolve({data: modelsResponse})
         });
         
-        const { baseElement } = render(<Provider store={store}>
+        const { baseElement, getAllByRole } = render(<Provider store={store}>
             <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} />
         </Provider>);
 
@@ -137,11 +139,24 @@ describe('test addModelGroupModal functionality', () => {
         await waitFor(() => {
             expect(baseElement).toHaveTextContent("105");
         });
-        expect(baseElement).toHaveTextContent("105")
+        expect(getAllByRole("listitem").length).toEqual(105);
     });
         
-    it("check if models are rendered on the left", () => {
+    it("check if models are rendered on the left", async () => {
+        axios.get.mockImplementation(() => {
+            return Promise.resolve({data: modelsResponse}); //Promise.resolve({data: modelsResponse})
+        });
+        
+        const { baseElement, getByTestId } = render(<Provider store={store}>
+            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} />
+        </Provider>);
 
+        await store.dispatch(fetchModels());
+        await waitFor(() => {
+            expect(baseElement).toHaveTextContent("105");
+        });
+        expect(within(getByTestId("AddModelGroupModal-card-header-left")).getAllByRole("listitem").length).toEqual(105);
+        expect(within(getByTestId("AddModelGroupModal-card-header-right")).queryAllByRole("listitem").length).toEqual(0);
     });
 
     test.todo("check if models can be moved from left to right");

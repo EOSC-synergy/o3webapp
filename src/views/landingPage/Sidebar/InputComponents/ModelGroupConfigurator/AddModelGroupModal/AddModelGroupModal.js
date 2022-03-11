@@ -355,7 +355,7 @@ function AddModelGroupModal(props) {
                     <Box id="modal-modal-description" sx={{ mt: 2 }}>
                         <Searchbar inputArray={allModels} foundIndicesCallback={setCurrentlyVisibleModels} shouldReturnValues={true} />
                         <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ marginTop: '0.5em' }}>
-                            <Grid item sm={5} xs={12}>
+                            <Grid item sm={5} xs={12} data-testid="AddModelGroupModal-card-header-left">
                                 <Typography>All Available Models</Typography>
                                 {
                                     isLoading ? 
@@ -390,7 +390,7 @@ function AddModelGroupModal(props) {
                                     </Button>
                                 </Grid>
                             </Grid>
-                            <Grid item sm={5} xs={12}>
+                            <Grid item sm={5} xs={12} data-testid="AddModelGroupModal-card-header-right">
                                 <Typography>Models in {groupName ? groupName : "your group"}</Typography>
                                 {
                                     isLoading ? 
