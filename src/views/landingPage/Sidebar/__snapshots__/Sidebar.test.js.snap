@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`test sidebar component closed Sidebar renders correctly 1`] = `
+exports[`test sidebar component renders closed sidebar correctly 1`] = `
 <div>
   <div
     class="MuiDrawer-root MuiDrawer-docked css-fvsm27-MuiDrawer-docked"
@@ -141,12 +141,13 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
           >
             <div
               class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
-              data-testid="section"
+              data-testid="Section-Appearance"
             >
               <div
                 aria-controls="panel1a-content"
                 aria-expanded="false"
                 class="MuiButtonBase-root MuiAccordionSummary-root css-1icm36a-MuiButtonBase-root-MuiAccordionSummary-root"
+                data-testid="Section-Summary-Appearance"
                 id="panel1a-header"
                 role="button"
                 tabindex="0"
@@ -268,6 +269,7 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                                   <input
                                     aria-invalid="false"
                                     class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                                    data-testid="XAxisField-left-input"
                                     id="outlined-basic"
                                     type="text"
                                     value="1960"
@@ -315,6 +317,7 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                                   <input
                                     aria-invalid="false"
                                     class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                                    data-testid="XAxisField-right-input"
                                     id="outlined-basic"
                                     type="text"
                                     value="2100"
@@ -366,6 +369,7 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                                   <input
                                     aria-invalid="false"
                                     class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                                    data-testid="YAxisField-left-input"
                                     id="outlined-basic"
                                     type="text"
                                     value="280"
@@ -413,6 +417,7 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
                                   <input
                                     aria-invalid="false"
                                     class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                                    data-testid="YAxisField-right-input"
                                     id="outlined-basic"
                                     type="text"
                                     value="330"
@@ -449,12 +454,13 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
           >
             <div
               class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
-              data-testid="section"
+              data-testid="Section-Models"
             >
               <div
                 aria-controls="panel1a-content"
                 aria-expanded="false"
                 class="MuiButtonBase-root MuiAccordionSummary-root css-1icm36a-MuiButtonBase-root-MuiAccordionSummary-root"
+                data-testid="Section-Summary-Models"
                 id="panel1a-header"
                 role="button"
                 tabindex="0"
@@ -795,12 +801,13 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
           >
             <div
               class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
-              data-testid="section"
+              data-testid="Section-Filter Data"
             >
               <div
                 aria-controls="panel1a-content"
                 aria-expanded="false"
                 class="MuiButtonBase-root MuiAccordionSummary-root css-1icm36a-MuiButtonBase-root-MuiAccordionSummary-root"
+                data-testid="Section-Summary-Filter Data"
                 id="panel1a-header"
                 role="button"
                 tabindex="0"
@@ -1637,12 +1644,13 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
           >
             <div
               class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
-              data-testid="section"
+              data-testid="Section-Reference Year"
             >
               <div
                 aria-controls="panel1a-content"
                 aria-expanded="false"
                 class="MuiButtonBase-root MuiAccordionSummary-root css-1icm36a-MuiButtonBase-root-MuiAccordionSummary-root"
+                data-testid="Section-Summary-Reference Year"
                 id="panel1a-header"
                 role="button"
                 tabindex="0"
@@ -1904,7 +1912,7 @@ exports[`test sidebar component closed Sidebar renders correctly 1`] = `
 </div>
 `;
 
-exports[`test sidebar component opened Sidebar renders correctly 1`] = `
+exports[`test sidebar component renders opened sidebar correctly 1`] = `
 <div>
   <div
     class="MuiDrawer-root MuiDrawer-docked css-fvsm27-MuiDrawer-docked"
@@ -2044,12 +2052,13 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
           >
             <div
               class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
-              data-testid="section"
+              data-testid="Section-Appearance"
             >
               <div
                 aria-controls="panel1a-content"
                 aria-expanded="false"
                 class="MuiButtonBase-root MuiAccordionSummary-root css-1icm36a-MuiButtonBase-root-MuiAccordionSummary-root"
+                data-testid="Section-Summary-Appearance"
                 id="panel1a-header"
                 role="button"
                 tabindex="0"
@@ -2171,6 +2180,7 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                                   <input
                                     aria-invalid="false"
                                     class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                                    data-testid="XAxisField-left-input"
                                     id="outlined-basic"
                                     type="text"
                                     value="1960"
@@ -2218,6 +2228,7 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                                   <input
                                     aria-invalid="false"
                                     class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                                    data-testid="XAxisField-right-input"
                                     id="outlined-basic"
                                     type="text"
                                     value="2100"
@@ -2269,6 +2280,7 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                                   <input
                                     aria-invalid="false"
                                     class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                                    data-testid="YAxisField-left-input"
                                     id="outlined-basic"
                                     type="text"
                                     value="280"
@@ -2316,6 +2328,7 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
                                   <input
                                     aria-invalid="false"
                                     class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                                    data-testid="YAxisField-right-input"
                                     id="outlined-basic"
                                     type="text"
                                     value="330"
@@ -2352,12 +2365,13 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
           >
             <div
               class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
-              data-testid="section"
+              data-testid="Section-Models"
             >
               <div
                 aria-controls="panel1a-content"
                 aria-expanded="false"
                 class="MuiButtonBase-root MuiAccordionSummary-root css-1icm36a-MuiButtonBase-root-MuiAccordionSummary-root"
+                data-testid="Section-Summary-Models"
                 id="panel1a-header"
                 role="button"
                 tabindex="0"
@@ -2698,12 +2712,13 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
           >
             <div
               class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
-              data-testid="section"
+              data-testid="Section-Filter Data"
             >
               <div
                 aria-controls="panel1a-content"
                 aria-expanded="false"
                 class="MuiButtonBase-root MuiAccordionSummary-root css-1icm36a-MuiButtonBase-root-MuiAccordionSummary-root"
+                data-testid="Section-Summary-Filter Data"
                 id="panel1a-header"
                 role="button"
                 tabindex="0"
@@ -3540,12 +3555,13 @@ exports[`test sidebar component opened Sidebar renders correctly 1`] = `
           >
             <div
               class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiAccordion-root css-1dm7ii1-MuiPaper-root-MuiAccordion-root"
-              data-testid="section"
+              data-testid="Section-Reference Year"
             >
               <div
                 aria-controls="panel1a-content"
                 aria-expanded="false"
                 class="MuiButtonBase-root MuiAccordionSummary-root css-1icm36a-MuiButtonBase-root-MuiAccordionSummary-root"
+                data-testid="Section-Summary-Reference Year"
                 id="panel1a-header"
                 role="button"
                 tabindex="0"

@@ -1,12 +1,14 @@
 import React, {useEffect} from 'react';
 import Chart from "react-apexcharts"
-import { getOptions, generateSeries } from "../../../utils/optionsFormatter/optionsFormatter"
-import { useSelector } from 'react-redux'
-import { selectPlotId, selectPlotTitle, selectPlotXRange, selectPlotYRange } from '../../../store/plotSlice/plotSlice';
-import { selectVisibility } from '../../../store/referenceSlice/referenceSlice';
-import { REQUEST_STATE, selectActivePlotData } from '../../../services/API/apiSlice';
-import { Typography, CircularProgress } from '@mui/material';
-import { APEXCHART_PLOT_TYPE, HEIGHT_LOADING_SPINNER, HEIGHT_GRAPH, NO_MONTH_SELECTED } from '../../../utils/constants';
+import {getOptions, generateSeries} from "../../../utils/optionsFormatter/optionsFormatter"
+import {useSelector} from 'react-redux'
+import {selectPlotId, selectPlotTitle, selectPlotXRange, selectPlotYRange} from '../../../store/plotSlice/plotSlice';
+import {selectVisibility} from '../../../store/referenceSlice/referenceSlice';
+import {REQUEST_STATE, selectActivePlotData} from '../../../services/API/apiSlice';
+import {Typography, CircularProgress} from '@mui/material';
+import {Alert, Link} from '@mui/material';
+import {O3AS_PLOTS} from '../../../utils/constants';
+import {APEXCHART_PLOT_TYPE, HEIGHT_LOADING_SPINNER, HEIGHT_GRAPH, NO_MONTH_SELECTED} from '../../../utils/constants';
 import store from '../../../store/store';
 
 /**
@@ -16,10 +18,11 @@ import store from '../../../store/store';
  * synced with redux and the UI (input components).
  * @component
  * @param {object} props currently not used
- * @returns a svg rendered element that represents a graph, this is done by 
+ * @returns a svg rendered element that represents a graph, this is done by
  *          the apexcharts library
  */
 function Graph(props) {
+
 
     const plotId = useSelector(selectPlotId);
     const plotTitle = useSelector(selectPlotTitle);
@@ -39,15 +42,33 @@ function Graph(props) {
         }
     }, [activeData]);
 
+    if (!(plotId in O3AS_PLOTS)) {
+        const style = {
+            color: "rgb(1, 67, 97)",
+            backgroundColor: "rgb(229, 246, 253)",
+            height: "200px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "1.5em"
+        }
+        return (
+            <Alert severity="info" sx={style}>
+                This plot type is not supported yet by the Webapp! But you can check it out at the <Link
+                href="https://o3as.data.kit.edu/">O3as API</Link>.
+            </Alert>
+        );
+    }
+
     if (activeData.status === REQUEST_STATE.loading || activeData.status === REQUEST_STATE.idle) {
-        return <div
+        return (<div
             style={{display: "flex", alignItems: "center", justifyContent: "center", height: HEIGHT_LOADING_SPINNER}}>
             <div>
                 <CircularProgress size={100}/> <br/>
                 <Typography component="p">Loading Data...</Typography>
             </div>
 
-        </div>
+        </div>);
     } else if (activeData.status === REQUEST_STATE.error) {
         return (
             <React.Fragment>
@@ -57,8 +78,7 @@ function Graph(props) {
                     width: "100%"
                 }}>Error: {activeData.error}</Typography>
             </React.Fragment>
-        )
-
+        );
     } else if (activeData.status === REQUEST_STATE.success) {
         const {data, styling} = generateSeries({
             plotId,
@@ -70,7 +90,15 @@ function Graph(props) {
             getState: store.getState
         });
         const seriesNames = data.map(series => series.name);
-        const options = getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, seriesNames, getState: store.getState});
+        const options = getOptions({
+            plotId,
+            styling,
+            plotTitle,
+            xAxisRange,
+            yAxisRange,
+            seriesNames,
+            getState: store.getState
+        });
         const uniqueNumber = Date.now(); // forces apexcharts to re-render correctly!
         return <Chart key={uniqueNumber} options={options} series={data} type={APEXCHART_PLOT_TYPE[plotId]}
                       height={HEIGHT_GRAPH}/>

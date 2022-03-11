@@ -171,7 +171,7 @@ function Section(props) {
 
     return (
         <Accordion
-            data-testid="section"
+            data-testid={`Section-${props.name}`}
             sx={{
                 maxWidth: "100vw"       // make sure accordion is not wider than the full screen
             }}
@@ -182,6 +182,7 @@ function Section(props) {
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
+                data-testid={`Section-Summary-${props.name}`}
             >
                 <Typography>{
                 (props.name     // check if props.name exists
