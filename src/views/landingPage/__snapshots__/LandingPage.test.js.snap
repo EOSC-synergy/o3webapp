@@ -1895,6 +1895,7 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                     <input
                                       aria-invalid="false"
                                       class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                                      data-testid="ReferenceYearField-year"
                                       id="outlined-basic"
                                       type="text"
                                       value="1980"
@@ -1922,6 +1923,7 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                               >
                                 <span
                                   class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+                                  data-testid="ReferenceYearField-toggleVisibility"
                                 >
                                   <input
                                     checked=""

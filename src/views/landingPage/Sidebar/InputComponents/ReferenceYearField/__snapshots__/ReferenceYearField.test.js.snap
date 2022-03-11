@@ -57,12 +57,12 @@ exports[`tests basic rendering renders correctly 1`] = `
       >
         <span
           class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
-          data-testid="ReferenceYearField-toggleVisibility"
         >
           <input
             checked=""
             class="PrivateSwitchBase-input css-1m9pwf3"
             data-indeterminate="false"
+            data-testid="ReferenceYearField-toggleVisibility"
             type="checkbox"
           />
           <svg

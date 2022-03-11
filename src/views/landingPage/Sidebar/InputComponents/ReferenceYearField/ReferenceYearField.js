@@ -34,9 +34,9 @@ function ReferenceYearField() {
      */
     const handleChangeForRefYear = (event) => {
         if (!isNaN(event.target.value)) {
+            dispatch(setYear({year: event.target.value}));
             if (event.target.value >= START_YEAR && event.target.value <= END_YEAR) {
                 // fetch for tco3_zm and tco3_return
-                dispatch(setYear({year: event.target.value}));
                 dispatch(fetchPlotDataForCurrentModels());
             }
         }
@@ -77,7 +77,7 @@ function ReferenceYearField() {
                                 icon={<VisibilityOffIcon data-testid="RefLineInvisibleCheckbox"/>}
                                 checkedIcon={<MuiVisibilityIcon/>}
                                 onClick={handleShowRefLineClicked}
-                                data-testid="ReferenceYearField-toggleVisibility"
+                                inputProps={{ "data-testid": "ReferenceYearField-toggleVisibility" }}
                             />
                         </FormControl>
                     }   
