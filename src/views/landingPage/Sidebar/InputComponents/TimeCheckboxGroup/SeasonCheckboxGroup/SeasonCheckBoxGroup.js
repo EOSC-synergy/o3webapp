@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 /**
  * Enables the user to select/deselect seasons.
  * 
+ * @component
  * @param {Object} props
  * @param {String} props.label - label of this season
  * @param {int} props.seasonId - the id of the season

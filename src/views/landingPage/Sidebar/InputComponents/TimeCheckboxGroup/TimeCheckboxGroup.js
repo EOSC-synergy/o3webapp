@@ -20,6 +20,7 @@ import {updateURL} from "../../../../../index";
 
 /**
  * enables the user to select a month, season or the whole year
+ * @component
  * @param {Object} props
  * @param {function} props.reportError - function for error handling
  * @returns {JSX.Element} a jsx containing a checkboxgroup per season and a "all year" checkbox
@@ -175,11 +176,11 @@ function TimeCheckBoxGroup(props) {
 
     /**
      * Constructs a SeasonCheckbox for a given season
-     *
-     * @param {Object} param            The parameter object representing a season
-     * @param {String} param.name       The season name
-     * @param {Array of int} param.months     An array of monthId's of the months included in this season
-     * @param {int} param.seasonId   The id of this season
+     * 
+     * @param {Object} param The parameter object representing a season
+     * @param {string} param.name The season name
+     * @param {int[]} param.months An array of monthId's of the months included in this season
+     * @param {int} param.seasonId The id of this season
      * @returns {JSX.Element}                   A preconfigured SeasonCheckbox
      */
     const toSeasonCheckbox = ({name, months, seasonId}) => {

@@ -8,11 +8,10 @@ import {STATISTICAL_VALUES_LIST} from "../../utils/constants";
 const MODEL_DATA_TEMPLATE = {   // single model
     color: null,                // if not set it defaults to standard value from api
     isVisible: true,            // show/hide individual models from a group
-    mean: true,
-    "standard deviation": true,
-    median: true,
-    percentile: true,
+    // init statistical values dynamically with for-loop
 }
+
+STATISTICAL_VALUES_LIST.forEach(sv => MODEL_DATA_TEMPLATE[sv] = true);
 
 
 const MODEL_GROUP_TEMPLATE = {
@@ -20,12 +19,11 @@ const MODEL_GROUP_TEMPLATE = {
     models: {},         // models is lookup table
     isVisible: true,    // show/hide complete group
     visibleSV: {       // lookup table so the reducer impl. can be more convenient
-        mean: true,
-        "standard deviation": true,
-        median: true,
-        percentile: true,
+        // init statistical values dynamically with for-loop
     }
 }
+
+STATISTICAL_VALUES_LIST.forEach(sv => MODEL_GROUP_TEMPLATE.visibleSV[sv] = true);
 
 /**
  * The initial state of the modelSlice defines the data structure in the
@@ -160,15 +158,7 @@ const modelsSlice = createSlice({
             }
 
             for (let model of Object.keys(state.modelGroups[groupId].models)) {
-                const {color, mean, median, std, percentile, isVisible} = data[model]; // expect data to meet certain scheme
-                state.modelGroups[groupId].models[model] = {
-                    color,
-                    mean,
-                    "standard deviation": std,
-                    median,
-                    percentile,
-                    isVisible,
-                };
+                state.modelGroups[groupId].models[model] = data[model];
             }
         },
 

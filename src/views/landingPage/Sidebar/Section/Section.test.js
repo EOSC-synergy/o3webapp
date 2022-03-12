@@ -53,7 +53,7 @@ describe ('Section renders correclty', () => {
                 <Section components={["LatitudeBandSelector"]} name={name} isExpanded={false} reportError={()=>{}} />
             </Provider>
         );
-        expect(screen.getByTestId('section')).toHaveTextContent(name.toUpperCase());
+        expect(screen.getByTestId('Section-Test')).toHaveTextContent(name.toUpperCase());
     });
     
     

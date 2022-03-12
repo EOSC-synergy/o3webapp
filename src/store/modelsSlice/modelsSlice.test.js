@@ -12,16 +12,13 @@ import reducer,
     selectStatisticalValueSettingsOfGroup,
     selectVisibilityOfGroup,
 } from "./modelsSlice"
-import { STATISTICAL_VALUES } from "../../utils/constants";
+import { mean, STATISTICAL_VALUES_LIST } from "../../utils/constants";
 
 const MODEL_DATA_TEMPLATE = {   
     color: null,                
     isVisible: true,          
-    mean: true,
-    "standard deviation": true,
-    median: true,
-    percentile: true,
 }
+STATISTICAL_VALUES_LIST.forEach(sv => MODEL_DATA_TEMPLATE[sv] = true);
 
 
 describe("reducer tests", () => {
@@ -83,6 +80,9 @@ describe("reducer tests", () => {
                 
             },
         };
+
+        const visibleSV = {};
+        STATISTICAL_VALUES_LIST.forEach(sv => visibleSV[sv] = true);
     
         const expected = {
             idCounter: 1,
@@ -94,12 +94,7 @@ describe("reducer tests", () => {
                         modelB: MODEL_DATA_TEMPLATE,
                     },
                     isVisible: true,    // show/hide complete group
-                    visibleSV: {       // lookup table so the reducer impl. can be more convenient
-                        mean: true,
-                        "standard deviation": true,
-                        median: true,
-                        percentile: true,
-                    }
+                    visibleSV
                 },
             },
         };
@@ -204,7 +199,7 @@ describe("reducer tests", () => {
                             color: null,              
                             isVisible: false,          
                             mean: true,
-                            "standard deviation": true,
+                            std: true,
                             median: true,
                             percentile: true,
                         },
@@ -212,7 +207,7 @@ describe("reducer tests", () => {
                             color: null,              
                             isVisible: true,          
                             mean: false,
-                            "standard deviation": false,
+                            std: false,
                             median: false,
                             percentile: false,
                         },
@@ -231,7 +226,7 @@ describe("reducer tests", () => {
                             color: null,              
                             isVisible: true,          
                             mean: false,
-                            "standard deviation": false,
+                            std: false,
                             median: false,
                             percentile: false,
                         },
@@ -239,7 +234,7 @@ describe("reducer tests", () => {
                             color: null,              
                             isVisible: false,          
                             mean: true,
-                            "standard deviation": true,
+                            std: true,
                             median: true,
                             percentile: true,
                         },
@@ -284,7 +279,7 @@ describe("reducer tests", () => {
                     models: {},
                     visibleSV: {
                         mean: true,
-                        "standard deviation": true,
+                        std: true,
                         median: true,
                         percentile: true,
                     }
@@ -300,7 +295,7 @@ describe("reducer tests", () => {
                     models: {},
                     visibleSV: {
                         mean: false,
-                        "standard deviation": true,
+                        std: true,
                         median: true,
                         percentile: true,
                     }
@@ -311,7 +306,7 @@ describe("reducer tests", () => {
         expect(
             reducer(
                 previousState,
-                setStatisticalValueForGroup({groupId: 0, svType: STATISTICAL_VALUES.mean, isIncluded: false})
+                setStatisticalValueForGroup({groupId: 0, svType: mean, isIncluded: false})
             )
         ).toEqual(expected);
 
@@ -385,7 +380,7 @@ describe("selector tests", () => {
         const visibleSV = {
             mean: true,
             median: false,
-            "standard deviation": true,
+            std: true,
             percentile: false,
         }
         

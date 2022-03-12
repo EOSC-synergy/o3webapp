@@ -7,6 +7,7 @@
     "@emotion/styled": "^11.6.0",
     "@mui/icons-material": "^5.3.0",
     "@mui/material": "^5.3.0",
+    "@mui/system": "^5.4.3",
     "@mui/x-data-grid": "^5.3.0",
     "@reduxjs/toolkit": "^1.7.0",
     "@testing-library/jest-dom": "^5.16.0",
@@ -46,6 +47,13 @@
       "react-app/jest"
     ]
   },
+  "jest": {
+    "coveragePathIgnorePatterns" : [
+      "src/services/downloading",
+      "src/App.js", 
+      "src/index.js"
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -65,8 +73,10 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.4.0",
+    "better-docs": "^2.7.2",
     "clean-jsdoc-theme": "^3.3.1",
-    "jsdoc": "^3.6.7",
+    "jsdoc": "^3.6.10",
+    "parcel-bundler": "^1.12.5",
     "webpack": "^4.44.2"
   }
 }

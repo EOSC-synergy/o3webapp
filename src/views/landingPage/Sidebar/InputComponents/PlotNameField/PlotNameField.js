@@ -10,6 +10,7 @@ import {updateURL} from "../../../../../index";
 
 /**
  * Enables the user to rename and change the plot title.
+ * @component
  * @param {Object} props
  * @param {function} props.reportError - function for error handling
  * @returns {JSX.Element} a jsx containing a text-field to change the plot name

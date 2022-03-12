@@ -20,13 +20,12 @@ import {
     selectVisibilityOfGroup,
     deleteModelGroup
 } from "../../../../../../store/modelsSlice/modelsSlice";
-
 import {STATISTICAL_VALUES} from "../../../../../../utils/constants";
 import {updateURL} from "../../../../../../index";
 
 /**
  * A card containing information about a modal group.
- *
+ * @component
  * @param {Object} props
  * @param {String} props.reportError - error function
  * @param {int} props.modelGroupId -> id of the model group
@@ -59,11 +58,14 @@ function ModelGroupCard(props) {
      */
     const toggleModelGroupVisibility = () => {
         dispatch(setVisibilityForGroup({groupId: props.modelGroupId, isVisible: !isModelGroupVisible}));
+        /*
+        // This de-/activates all statistical values when toggling the group visibility.
         for (const key in STATISTICAL_VALUES) {
             dispatch(setStatisticalValueForGroup(
                 {groupId: props.modelGroupId, svType: key, isIncluded: !isModelGroupVisible}
             ));
         }
+         */
         updateURL();
     }
 

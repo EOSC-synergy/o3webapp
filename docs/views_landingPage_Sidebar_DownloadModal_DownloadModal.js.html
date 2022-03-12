@@ -1,76 +1,408 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>JSDoc: Source: views/landingPage/Sidebar/DownloadModal/DownloadModal.js</title>
 
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> views/landingPage/Sidebar/DownloadModal/DownloadModal.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
 </head>
 
-<body>
 
-<div id="main">
 
-    <h1 class="page-title">Source: views/landingPage/Sidebar/DownloadModal/DownloadModal.js</h1>
-
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
     
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">O3as Webapp documentation</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Components</h3><ul><li><a href="AddModelGroupModal.html">AddModelGroupModal</a></li><li><a href="App.html">App</a></li><li><a href="CookieConsentModal.html">CookieConsentModal</a></li><li><a href="DiscardChangesModal.html">DiscardChangesModal</a></li><li><a href="DownloadModal.html">DownloadModal</a></li><li><a href="DownloadModal-downloadGraphAsCsv.html">downloadGraphAsCsv</a></li><li><a href="EditModelGroupModal.html">EditModelGroupModal</a></li><li><a href="ErrorMessageModal.html">ErrorMessageModal</a></li><li><a href="Footer.html">Footer</a></li><li><a href="Graph.html">Graph</a></li><li><a href="LandingPage.html">LandingPage</a></li><li><a href="LatitudeBandSelector.html">LatitudeBandSelector</a></li><li><a href="LatitudeBandSelector.CustomLatitudeSelector.html">CustomLatitudeSelector</a></li><li><a href="Logo.html">Logo</a></li><li><a href="ModelGroupCard.html">ModelGroupCard</a></li><li><a href="ModelGroupConfigurator.html">ModelGroupConfigurator</a></li><li><a href="module.html#.exports">exports</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="OffsetConfigurator.html">OffsetConfigurator</a></li><li><a href="PlotNameField.html">PlotNameField</a></li><li><a href="PlotTypeSelector.html">PlotTypeSelector</a></li><li><a href="ReferenceModelSelector.html">ReferenceModelSelector</a></li><li><a href="ReferenceYearField.html">ReferenceYearField</a></li><li><a href="RegionSelector.html">RegionSelector</a></li><li><a href="SeasonCheckBoxGroup.html">SeasonCheckBoxGroup</a></li><li><a href="Section.html">Section</a></li><li><a href="Sidebar.html">Sidebar</a></li><li><a href="TimeCheckBoxGroup.html">TimeCheckBoxGroup</a></li><li><a href="XAxisField.html">XAxisField</a></li><li><a href="YAxisField.html">YAxisField</a></li></ul><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#asc">asc</a></li><li><a href="global.html#baseURL">baseURL</a></li><li><a href="global.html#buildStatisticalSeries">buildStatisticalSeries</a></li><li><a href="global.html#buildSvMatrixTco3Return">buildSvMatrixTco3Return</a></li><li><a href="global.html#buildSvMatrixTco3Zm">buildSvMatrixTco3Zm</a></li><li><a href="global.html#calculateBoxPlotValues">calculateBoxPlotValues</a></li><li><a href="global.html#calculateSvForModels">calculateSvForModels</a></li><li><a href="global.html#colorNameToHex">colorNameToHex</a></li><li><a href="global.html#combineSeries">combineSeries</a></li><li><a href="global.html#convertToStrokeStyle">convertToStrokeStyle</a></li><li><a href="global.html#create2dArray">create2dArray</a></li><li><a href="global.html#createSubtitle">createSubtitle</a></li><li><a href="global.html#customTooltipFormatter">customTooltipFormatter</a></li><li><a href="global.html#default_TCO3_return">default_TCO3_return</a></li><li><a href="global.html#defaultTCO3_zm">defaultTCO3_zm</a></li><li><a href="global.html#downloadGraphAsPDF">downloadGraphAsPDF</a></li><li><a href="global.html#extraReducers">extraReducers</a></li><li><a href="global.html#filterOutOfRange">filterOutOfRange</a></li><li><a href="global.html#findLatitudeBandByLocation">findLatitudeBandByLocation</a></li><li><a href="global.html#formatYLabelsNicely">formatYLabelsNicely</a></li><li><a href="global.html#generateCsv">generateCsv</a></li><li><a href="global.html#generateSeries">generateSeries</a></li><li><a href="global.html#generateSingleTco3ReturnSeries">generateSingleTco3ReturnSeries</a></li><li><a href="global.html#generateSingleTco3ZmSeries">generateSingleTco3ZmSeries</a></li><li><a href="global.html#generateTco3_ReturnSeries">generateTco3_ReturnSeries</a></li><li><a href="global.html#generateTco3_ZmSeries">generateTco3_ZmSeries</a></li><li><a href="global.html#getAdjustedSVG">getAdjustedSVG</a></li><li><a href="global.html#getDefaultYAxisTco3Return">getDefaultYAxisTco3Return</a></li><li><a href="global.html#getDefaultYAxisTco3Zm">getDefaultYAxisTco3Zm</a></li><li><a href="global.html#getFromAPI">getFromAPI</a></li><li><a href="global.html#getListOfModelsForPdf">getListOfModelsForPdf</a></li><li><a href="global.html#getModels">getModels</a></li><li><a href="global.html#getOptimalTickAmount">getOptimalTickAmount</a></li><li><a href="global.html#getOptions">getOptions</a></li><li><a href="global.html#getPlotData">getPlotData</a></li><li><a href="global.html#getPlotTypes">getPlotTypes</a></li><li><a href="global.html#getTickAmountYAxis">getTickAmountYAxis</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#isIncludedInSv">isIncludedInSv</a></li><li><a href="global.html#mean">mean</a></li><li><a href="global.html#median">median</a></li><li><a href="global.html#MODEL_DATA_TEMPLATE">MODEL_DATA_TEMPLATE</a></li><li><a href="global.html#modelsSlice">modelsSlice</a></li><li><a href="global.html#normalizeArray">normalizeArray</a></li><li><a href="global.html#parseSvName">parseSvName</a></li><li><a href="global.html#plotSlice">plotSlice</a></li><li><a href="global.html#postAtAPI">postAtAPI</a></li><li><a href="global.html#postModelsPlotStyle">postModelsPlotStyle</a></li><li><a href="global.html#preTransformApiData">preTransformApiData</a></li><li><a href="global.html#q25">q25</a></li><li><a href="global.html#q50">q50</a></li><li><a href="global.html#q75">q75</a></li><li><a href="global.html#quantile">quantile</a></li><li><a href="global.html#referenceSlice">referenceSlice</a></li><li><a href="global.html#roundDownToMultipleOfTen">roundDownToMultipleOfTen</a></li><li><a href="global.html#roundUpToMultipleOfTen">roundUpToMultipleOfTen</a></li><li><a href="global.html#selectAllGroupIds">selectAllGroupIds</a></li><li><a href="global.html#selectAllModelGroups">selectAllModelGroups</a></li><li><a href="global.html#selectIsOffsetApplied">selectIsOffsetApplied</a></li><li><a href="global.html#selectModelDataOfGroup">selectModelDataOfGroup</a></li><li><a href="global.html#selectModelsOfGroup">selectModelsOfGroup</a></li><li><a href="global.html#selectNameOfGroup">selectNameOfGroup</a></li><li><a href="global.html#selectPlotId">selectPlotId</a></li><li><a href="global.html#selectPlotLocation">selectPlotLocation</a></li><li><a href="global.html#selectPlotMonths">selectPlotMonths</a></li><li><a href="global.html#selectPlotTitle">selectPlotTitle</a></li><li><a href="global.html#selectPlotXRange">selectPlotXRange</a></li><li><a href="global.html#selectPlotYRange">selectPlotYRange</a></li><li><a href="global.html#selectRefModel">selectRefModel</a></li><li><a href="global.html#selectRefYear">selectRefYear</a></li><li><a href="global.html#selectStatisticalValueSettingsOfGroup">selectStatisticalValueSettingsOfGroup</a></li><li><a href="global.html#selectVisibility">selectVisibility</a></li><li><a href="global.html#selectVisibilityOfGroup">selectVisibilityOfGroup</a></li><li><a href="global.html#SERIES_GENERATION">SERIES_GENERATION</a></li><li><a href="global.html#std">std</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#timeoutVal">timeoutVal</a></li></ul></div><div class="category"><h2>API</h2><h3>Global</h3><ul><li><a href="global.html#apiSlice">apiSlice</a></li><li><a href="global.html#fetchModels">fetchModels</a></li><li><a href="global.html#fetchPlotData">fetchPlotData</a></li><li><a href="global.html#fetchPlotDataForCurrentModels">fetchPlotDataForCurrentModels</a></li><li><a href="global.html#fetchPlotDataInitiallyPending">fetchPlotDataInitiallyPending</a></li><li><a href="global.html#fetchPlotDataRefetching">fetchPlotDataRefetching</a></li><li><a href="global.html#fetchPlotDataRejected">fetchPlotDataRejected</a></li><li><a href="global.html#fetchPlotDataSuccess">fetchPlotDataSuccess</a></li><li><a href="global.html#fetchPlotTypes">fetchPlotTypes</a></li><li><a href="global.html#generateCacheKey">generateCacheKey</a></li><li><a href="global.html#getAllSelectedModels">getAllSelectedModels</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#REQUEST_STATE">REQUEST_STATE</a></li><li><a href="global.html#selectActivePlotData">selectActivePlotData</a></li><li><a href="global.html#selectExistingPlotData">selectExistingPlotData</a></li><li><a href="global.html#updateDataAndDisplaySuggestions">updateDataAndDisplaySuggestions</a></li></ul></div><div class="category"><h2>Utils</h2><h3>Global</h3><ul><li><a href="global.html#ANTARCTIC">ANTARCTIC</a></li><li><a href="global.html#APEXCHART_PLOT_TYPE">APEXCHART_PLOT_TYPE</a></li><li><a href="global.html#ARCTIC">ARCTIC</a></li><li><a href="global.html#CLS_Symbol">CLS_Symbol</a></li><li><a href="global.html#convertModelName">convertModelName</a></li><li><a href="global.html#DEFAULT_MODEL_GROUP">DEFAULT_MODEL_GROUP</a></li><li><a href="global.html#DEFAULT_MONTHS">DEFAULT_MONTHS</a></li><li><a href="global.html#END_YEAR">END_YEAR</a></li><li><a href="global.html#EXTENDED_SV_LIST">EXTENDED_SV_LIST</a></li><li><a href="global.html#fullTextSearch">fullTextSearch</a></li><li><a href="global.html#GLOBAL">GLOBAL</a></li><li><a href="global.html#HEIGHT_GRAPH">HEIGHT_GRAPH</a></li><li><a href="global.html#HEIGHT_LOADING_SPINNER">HEIGHT_LOADING_SPINNER</a></li><li><a href="global.html#IMPLICIT_YEAR_LIST">IMPLICIT_YEAR_LIST</a></li><li><a href="global.html#intersection">intersection</a></li><li><a href="global.html#LATITUDE_BAND_MAX_VALUE">LATITUDE_BAND_MAX_VALUE</a></li><li><a href="global.html#LATITUDE_BAND_MIN_VALUE">LATITUDE_BAND_MIN_VALUE</a></li><li><a href="global.html#latitudeBands">latitudeBands</a></li><li><a href="global.html#LBS_Symbol">LBS_Symbol</a></li><li><a href="global.html#legalNoticeLinks">legalNoticeLinks</a></li><li><a href="global.html#lowerPercentile">lowerPercentile</a></li><li><a href="global.html#LS_Symbol">LS_Symbol</a></li><li><a href="global.html#mean">mean</a></li><li><a href="global.html#median">median</a></li><li><a href="global.html#MGC_Symbol">MGC_Symbol</a></li><li><a href="global.html#MODEL_LINE_THICKNESS">MODEL_LINE_THICKNESS</a></li><li><a href="global.html#months">months</a></li><li><a href="global.html#NEAR_GLOBAL">NEAR_GLOBAL</a></li><li><a href="global.html#NH_MID">NH_MID</a></li><li><a href="global.html#NO_MONTH_SELECTED">NO_MONTH_SELECTED</a></li><li><a href="global.html#not">not</a></li><li><a href="global.html#NUM_MONTHS">NUM_MONTHS</a></li><li><a href="global.html#NUM_MONTHS_IN_SEASON">NUM_MONTHS_IN_SEASON</a></li><li><a href="global.html#O3AS_PLOTS">O3AS_PLOTS</a></li><li><a href="global.html#OC_Symbol">OC_Symbol</a></li><li><a href="global.html#percentile">percentile</a></li><li><a href="global.html#performSearch">performSearch</a></li><li><a href="global.html#PLOT_NAME_MAX_LEN">PLOT_NAME_MAX_LEN</a></li><li><a href="global.html#PNF_Symbol">PNF_Symbol</a></li><li><a href="global.html#RMS_Symbol">RMS_Symbol</a></li><li><a href="global.html#RS_Symbol">RS_Symbol</a></li><li><a href="global.html#RYF_Symbol">RYF_Symbol</a></li><li><a href="global.html#SH_MID">SH_MID</a></li><li><a href="global.html#START_YEAR">START_YEAR</a></li><li><a href="global.html#STATISTICAL_VALUE_LINE_THICKNESS">STATISTICAL_VALUE_LINE_THICKNESS</a></li><li><a href="global.html#STATISTICAL_VALUES">STATISTICAL_VALUES</a></li><li><a href="global.html#STATISTICAL_VALUES_LIST">STATISTICAL_VALUES_LIST</a></li><li><a href="global.html#std">std</a></li><li><a href="global.html#stdMean">stdMean</a></li><li><a href="global.html#SV_CALCULATION">SV_CALCULATION</a></li><li><a href="global.html#SV_COLORING">SV_COLORING</a></li><li><a href="global.html#SV_DASHING">SV_DASHING</a></li><li><a href="global.html#TCG_Symbol">TCG_Symbol</a></li><li><a href="global.html#TROPICS">TROPICS</a></li><li><a href="global.html#union">union</a></li><li><a href="global.html#upperPercentile">upperPercentile</a></li><li><a href="global.html#USER_REGION">USER_REGION</a></li><li><a href="global.html#XAF_Symbol">XAF_Symbol</a></li><li><a href="global.html#YAF_Symbol">YAF_Symbol</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>views/landingPage/Sidebar/DownloadModal/DownloadModal.js</h1>
+                </header>
+                
 
 
 
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import * as React from 'react';
+            <pre class="prettyprint source linenums"><code>import React from "react";
+import {
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Modal,
+    Select,
+    Typography,
+    Card,
+    Grid,
+    Button, IconButton, CardContent,
+} from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import PropTypes from "prop-types";
+import { fileFormats, O3AS_PLOTS } from "../../../../utils/constants";
+import { downloadGraphAsPDF} from "../../../../services/pdf/pdfCreator";
+import { useSelector } from "react-redux";
+import { selectPlotId, selectPlotTitle} from "../../../../store/plotSlice/plotSlice";
+import { selectActivePlotData} from "../../../../services/API/apiSlice";
+import { selectAllModelGroups } from "../../../../store/modelsSlice/modelsSlice";
+import { REQUEST_STATE } from "../../../../services/API/apiSlice";
+import { generateCsv } from "../../../../services/csv/csvParser";
+import CloseIcon from "@mui/icons-material/Close";
+import CardHeader from "@mui/material/CardHeader";
+import CardActions from "@mui/material/CardActions";
 
 /**
- * opens a modal to ensure user can downlaod plot
- * @param {Object} props 
- * @param {boolean} props.open -> whether modal should be visible
+ * Opens a modal where the user can select the file format and download the plot.
+ * @component
+ * @param {Object} props
+ * @param {boolean} props.isOpen -> whether modal should be visible
  * @param {function} props.onClose -> handles closing the modal
- * @param {function} props.error -> enabling to report an error
- * @returns {JSX} a jsx containing a modal with a dropdown to choose the file type and a download button
+ * @param {function} props.reportError -> enabling to report an error
+ * @returns {JSX.Element} a jsx containing a modal with a dropdown to choose the file type and a download button
  */
-export default function DownloadModal(props) {
+function DownloadModal(props) {
 
-    let i = props.onClose;
-    i = props.error;
-    i = props.open;
+  /**
+   * An array containing all model groups.
+   */
+  const modelGroups = useSelector(state => selectAllModelGroups(state));
+
+  /**
+   * The plot id of the graph (tco3_zm, tco3_return etc.).
+   */
+  const plotId = useSelector(selectPlotId);
+
+  /**
+   * The active data of the current plot which contains information about the models.
+   */
+  const activeData = useSelector(state => selectActivePlotData(state, plotId));
+
+  /**
+   * The plot title which is shown above the graph.
+   */
+  const plotTitle = useSelector(selectPlotTitle);
+
+  /**
+   * The selected file format.
+   */
+  const [selectedFileFormat, setSelectedFileFormat] = React.useState('');
+
+  /**
+   * The style of the DownloadModal.
+   */
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "30%",
+    bgColor: useTheme().palette.grey[200],
+    boxShadow: 24,
+    p: 5,
+  };
+
+  /**
+   * Downloads the graph as a PNG file.
+   *
+   * @param {string} fileName the file name of the PNG
+   * @returns a promise which provides the user to download the PNG file, if it was successful.
+   */
+  const downloadGraphAsPNG = (fileName) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const svgElement = document.querySelector(".apexcharts-svg");
+      const imageBlobURL =
+        "data:image/svg+xml;charset=utf-8," +
+        encodeURIComponent(svgElement.outerHTML);
+
+      img.onload = () => {
+        let canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        const dataURL = canvas.toDataURL("image/png");
+        downloadBase64File(dataURL, fileName);
+        resolve(dataURL);
+      };
+      img.onerror = (error) => {
+        reject(error);
+      };
+      img.src = imageBlobURL;
+    });
+  }
+
+  /**
+   * Downloads the graph as an SVG file.
+   *
+   * @param {string} fileName the File name of the SVG
+   * @returns a promise which provides the user to download the SVG file, if it was successful.
+   */
+  const downloadGraphAsSVG = (fileName) => {
+    return new Promise((resolve, reject) => {
+      const svgElement = document.querySelector(".apexcharts-svg");
+      const imageBlobURL =
+        "data:image/svg+xml;charset=utf-8," +
+        encodeURIComponent(svgElement.outerHTML);
+      downloadBase64File(imageBlobURL, fileName);
+      resolve(imageBlobURL);
+    });
+  }
+
+  /**
+   * Downloads the graph as a CSV file.
+   * @component
+   * @param {string} plotTitle - the title of the plot
+   * @param {string} plotId - the current id of the plot
+   */
+  const downloadGraphAsCsv = (plotTitle, plotId) => {
+      let series, seriesX, categoryLabels, seriesNames;
+      try {
+          const global = window.ApexCharts.getChartByID(plotId).w.globals;
+          series = global.series;
+          seriesX = global.seriesX;
+          categoryLabels = global.categoryLabels;
+          seriesNames = global.seriesNames;
+      } catch (TypeError) {
+        props.reportError("Can't download the chart if it hasn't been fully loaded.");
+        return;
+      }
+      
+      const csvData = [];
+      if (plotId === O3AS_PLOTS.tco3_zm) {
+        // ### tco3_zm ###
+        const LENGTH = Math.max(...seriesX.map(series => series.length));
+        for (let lineIndex = 0; lineIndex &lt; LENGTH; ++lineIndex) {
+            const line = {
+                category: seriesX[0][lineIndex],
+            };
+            for (let index in seriesNames) {
+                const value = series[index][lineIndex];
+                line[seriesNames[index]] = value ? value.toFixed(2) : value;
+            }
+            csvData.push(line);
+        }
+      } else if (plotId === O3AS_PLOTS.tco3_return) {
+
+        for (let regionIndex in categoryLabels) {
+            
+            const line = {
+                category: categoryLabels[regionIndex],
+            };
+            for (let seriesIndex in seriesNames) {
+                if (!seriesNames[seriesIndex]) continue; // skip "box" which is empty
+                const value = series[seriesIndex][regionIndex];
+                line[seriesNames[seriesIndex]] = value ? value.toFixed(2) : value;
+            }
+            csvData.push(line);
+        }
+
+      } else {
+          throw new Error(`The given plotId: "${plotId} has not csv support (yet)!"`);
+      }
+      
+      downloadCsvFile({fileName: plotTitle + ".csv", csvString: generateCsv(csvData)}); // download data with title
+
+  }
+
+  /**
+   * Downloads a given string interpreted as CSV.
+   * 
+   * @param {string} fileName name of the downloadable file
+   * @param {string} csvString the content of this file
+   */
+  const downloadCsvFile = ({fileName, csvString}) => {
+    const blob = new Blob([csvString]);
+    const a = window.document.createElement("a");
+
+    a.href = window.URL.createObjectURL(blob, {
+    type: "text/csv"
+    });
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
 
 
-    const allAvailableDataFormats = [];
+  /**
+   * Downloads the Base64 file to the specified Base64 data.
+   * 
+   * @param {string} base64Data the given Base64 data
+   * @param {string} fileName the file name
+   */
+  const downloadBase64File = (base64Data, fileName) => {
+    const downloadLink = document.createElement("a");
+    downloadLink.href = base64Data;
+    downloadLink.download = fileName;
+    downloadLink.click();
+  }
 
-    const downloadImg = (imgType) => {};
-
-    if (props.open) {
-        return (&lt;>&lt;/>);
+  /**
+   * Handles the download of the plot, if the download button is clicked.
+   */
+  const handleDownloadPlot = () => {
+    if (selectedFileFormat === "PDF") {
+      downloadGraphAsPDF(plotId, plotTitle, modelGroups, activeData.data);
+    } else if (selectedFileFormat === "PNG") {
+      downloadGraphAsPNG(plotTitle);
+    } else if (selectedFileFormat === "SVG") {
+      downloadGraphAsSVG(plotTitle);
+    } else if (selectedFileFormat === "CSV") {
+      downloadGraphAsCsv(plotTitle, plotId);
     }
-    return (&lt;>&lt;/>);
-}</code></pre>
+  };
+
+  /**
+   * Changes the selected file format in the Redux store.
+   *
+   * @param {event} event the event that called this function
+   */
+  const changeFileFormat = (event) => {
+    setSelectedFileFormat(event.target.value);
+  };
+
+  return (
+      &lt;Modal open={props.isOpen} onClose={props.onClose}>
+          &lt;Card sx={style}>
+              &lt;CardHeader
+                  title="Download Plot"
+                  action={
+                      &lt;IconButton onClick={props.onClose} aria-label="close">
+                          &lt;CloseIcon />
+                      &lt;/IconButton>
+                  }
+              />
+              &lt;CardContent>
+                  &lt;FormControl style={{ width: "100%", minWidth: 150 }}>
+                      &lt;InputLabel id="formatSelectLabel">Format&lt;/InputLabel>
+                      &lt;Select
+                          labelId="formatSelectLabel"
+                          id="formatSelection"
+                          label="format"
+                          value={selectedFileFormat}
+                          onChange={changeFileFormat}
+                      >
+                          {fileFormats.map((elem, idx) => (
+                              &lt;MenuItem key={idx} value={elem.description}>
+                                  {elem.description}
+                              &lt;/MenuItem>
+                          ))}
+                      &lt;/Select>
+                  &lt;/FormControl>
+              &lt;/CardContent>
+              &lt;CardActions sx={{justifyContent: "flex-end", marginTop: "2%"}}>
+                  &lt;Button
+                      disabled={selectedFileFormat === '' || activeData.status !== REQUEST_STATE.success}
+                      variant="contained"
+                      onClick={handleDownloadPlot}
+                  >
+                      &lt;Typography>Download&lt;/Typography>
+                  &lt;/Button>
+              &lt;/CardActions>
+          &lt;/Card>
+      &lt;/Modal>
+  );
+}
+
+DownloadModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  reportError: PropTypes.func,
+};
+
+export default DownloadModal;
+</code></pre>
         </article>
     </section>
 
 
 
 
-</div>
-
-<nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="InputComponents.html">InputComponents</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddModelGroupModal">AddModelGroupModal</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#CookieConsentModal">CookieConsentModal</a></li><li><a href="global.html#EditModelGroupModal">EditModelGroupModal</a></li><li><a href="global.html#ErrorMessageModal">ErrorMessageModal</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Graph">Graph</a></li><li><a href="global.html#LatitudeBandSelector">LatitudeBandSelector</a></li><li><a href="global.html#ModelGroupCard">ModelGroupCard</a></li><li><a href="global.html#ModelGroupConfigurator">ModelGroupConfigurator</a></li><li><a href="global.html#NavBar">NavBar</a></li><li><a href="global.html#OffsetConfigurator">OffsetConfigurator</a></li><li><a href="global.html#PlotNameField">PlotNameField</a></li><li><a href="global.html#PlotTypeSelector">PlotTypeSelector</a></li><li><a href="global.html#ReferenceYearSlider">ReferenceYearField</a></li><li><a href="global.html#RegionSelector">RegionSelector</a></li><li><a href="global.html#SeasonCheckBoxGroup">SeasonCheckBoxGroup</a></li><li><a href="global.html#Section">Section</a></li><li><a href="global.html#Sidebar">Sidebar</a></li><li><a href="global.html#TimeCheckBoxGroup">TimeCheckBoxGroup</a></li><li><a href="global.html#XAxisSlider">XAxisField</a></li><li><a href="global.html#YAxisSlider">YAxisField</a></li></ul>
-</nav>
-
-<br class="clear">
-
-<footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Sun Dec 19 2021 18:43:24 GMT+0100 (Mitteleuropäische Normalzeit)
-</footer>
-
-<script> prettyPrint(); </script>
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.10</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
 <script src="scripts/linenumber.js"> </script>
+
+
 </body>
 </html>

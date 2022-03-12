@@ -24,7 +24,7 @@ exports[`test addModelGroupModal rendering renders correctly if model list provi
       tabindex="0"
     />
     <div
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-11i9df3-MuiPaper-root-MuiCard-root"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-50j5vj-MuiPaper-root-MuiCard-root"
       tabindex="-1"
     >
       <div
@@ -228,7 +228,7 @@ exports[`test addModelGroupModal rendering renders correctly if model list provi
         
       </div>
       <div
-        class="MuiCardActions-root MuiCardActions-spacing css-1kj8htw-MuiCardActions-root"
+        class="MuiCardActions-root MuiCardActions-spacing css-19l6csj-MuiCardActions-root"
       >
         <button
           class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-sghohy-MuiButtonBase-root-MuiButton-root"
@@ -282,7 +282,7 @@ exports[`test addModelGroupModal rendering renders correctly when open 1`] = `
       tabindex="0"
     />
     <div
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-11i9df3-MuiPaper-root-MuiCard-root"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-50j5vj-MuiPaper-root-MuiCard-root"
       tabindex="-1"
     >
       <div
@@ -486,7 +486,7 @@ exports[`test addModelGroupModal rendering renders correctly when open 1`] = `
         
       </div>
       <div
-        class="MuiCardActions-root MuiCardActions-spacing css-1kj8htw-MuiCardActions-root"
+        class="MuiCardActions-root MuiCardActions-spacing css-19l6csj-MuiCardActions-root"
       >
         <button
           class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-sghohy-MuiButtonBase-root-MuiButton-root"

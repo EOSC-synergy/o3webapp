@@ -55,6 +55,7 @@ exports[`testing DownloadModal rendering renders correctly when open 1`] = `
           <button
             aria-label="close"
             class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            data-testid="DownloadModal-close"
             tabindex="0"
             type="button"
           >
@@ -83,8 +84,8 @@ exports[`testing DownloadModal rendering renders correctly when open 1`] = `
           style="width: 100%; min-width: 150px;"
         >
           <label
-            class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary MuiFormLabel-filled css-1sumxir-MuiFormLabel-root-MuiInputLabel-root"
-            data-shrink="true"
+            class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+            data-shrink="false"
             id="formatSelectLabel"
           >
             Format
@@ -101,13 +102,18 @@ exports[`testing DownloadModal rendering renders correctly when open 1`] = `
               role="button"
               tabindex="0"
             >
-              PDF
+              <span
+                class="notranslate"
+              >
+                ​
+              </span>
             </div>
             <input
               aria-hidden="true"
               class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+              data-testid="DownloadModal-select-file-format"
               tabindex="-1"
-              value="PDF"
+              value=""
             />
             <svg
               aria-hidden="true"
@@ -125,7 +131,7 @@ exports[`testing DownloadModal rendering renders correctly when open 1`] = `
               class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
             >
               <legend
-                class="css-1z7n62"
+                class="css-173wfxe"
               >
                 <span>
                   format
@@ -140,6 +146,7 @@ exports[`testing DownloadModal rendering renders correctly when open 1`] = `
       >
         <button
           class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root Mui-disabled  css-sghohy-MuiButtonBase-root-MuiButton-root"
+          data-testid="DownloadModal-download-plot"
           disabled=""
           tabindex="-1"
           type="button"

@@ -6,19 +6,23 @@ import { selectPlotId, selectPlotTitle, selectPlotXRange, selectPlotYRange } fro
 import { selectVisibility } from '../../../store/referenceSlice/referenceSlice';
 import { REQUEST_STATE, selectActivePlotData } from '../../../services/API/apiSlice';
 import { Typography, CircularProgress } from '@mui/material';
+import { Alert, Link } from '@mui/material';
+import { O3AS_PLOTS } from '../../../utils/constants';
 import { APEXCHART_PLOT_TYPE, HEIGHT_LOADING_SPINNER, HEIGHT_GRAPH, NO_MONTH_SELECTED } from '../../../utils/constants';
+import store from '../../../store/store';
 
 /**
  * Currently there is no dynamic data linking. The graph will always
  * render the data from default-data.json in this folder. This is
  * just a preview to work with until the API is implemented and
  * synced with redux and the UI (input components).
- * 
- * @param {*} props currently not used
+ * @component
+ * @param {object} props currently not used
  * @returns a svg rendered element that represents a graph, this is done by 
  *          the apexcharts library
  */
 function Graph(props) {
+
 
     const plotId = useSelector(selectPlotId);
     const plotTitle = useSelector(selectPlotTitle);
@@ -38,14 +42,32 @@ function Graph(props) {
         }
     }, [activeData]);
 
+    if (!(plotId in O3AS_PLOTS)) {
+        const style = {
+            color: "rgb(1, 67, 97)",
+            backgroundColor: "rgb(229, 246, 253)",
+            height: "200px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "1.5em"
+        }
+        return (
+            <Alert severity="info" sx={style}>
+                This plot type is not supported yet by the Webapp! But you can check it out at the <Link href="https://o3as.data.kit.edu/">O3as API</Link>.
+            </Alert>
+        );
+    }
+
     if (activeData.status === REQUEST_STATE.loading || activeData.status === REQUEST_STATE.idle) {
-        return <div style={{display: "flex", alignItems: "center", justifyContent: "center", height: HEIGHT_LOADING_SPINNER}}>
+        return (<div style={{display: "flex", alignItems: "center", justifyContent: "center", height: HEIGHT_LOADING_SPINNER}}>
             <div>
                 <CircularProgress size={100}/> <br/>
                 <Typography component="p">Loading Data...</Typography>
             </div>
             
-        </div>
+        </div>);
+
     } else if (activeData.status === REQUEST_STATE.error) {
         return (
             <React.Fragment>
@@ -54,9 +76,9 @@ function Graph(props) {
         )
 
     } else if (activeData.status === REQUEST_STATE.success) {
-        const {data, styling} = generateSeries({plotId, data: activeData.data, modelsSlice, xAxisRange, yAxisRange, refLineVisible});
+        const {data, styling} = generateSeries({plotId, data: activeData.data, modelsSlice, xAxisRange, yAxisRange, refLineVisible, getState: store.getState});
         const seriesNames = data.map(series => series.name);
-        const options = getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, seriesNames});
+        const options = getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, seriesNames, getState: store.getState});
         const uniqueNumber = Date.now(); // forces apexcharts to re-render correctly!
         return <Chart key={uniqueNumber} options={options} series={data} type={APEXCHART_PLOT_TYPE[plotId]} height={HEIGHT_GRAPH} />
     }

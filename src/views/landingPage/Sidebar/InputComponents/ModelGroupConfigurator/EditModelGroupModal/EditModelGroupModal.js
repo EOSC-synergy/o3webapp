@@ -1,28 +1,27 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux"
-import {Modal, Card, Button, Checkbox, IconButton, CardActions} from "@mui/material";
+import {Modal, Card, Button, Checkbox, IconButton, CardActions, Box} from "@mui/material";
 import {DataGrid} from '@mui/x-data-grid';
 import SearchBar from "../../../../../../components/Searchbar/Searchbar";
 import {styled} from '@mui/material/styles';
-import DoneIcon from '@mui/icons-material/Done';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import IntermediateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
-import {
-    selectModelsOfGroup,
-    selectModelDataOfGroup,
-    updatePropertiesOfModelGroup
-} from "../../../../../../store/modelsSlice/modelsSlice";
-import {STATISTICAL_VALUES, std} from "../../../../../../utils/constants";
+import { selectModelsOfGroup, selectModelDataOfGroup, updatePropertiesOfModelGroup } from "../../../../../../store/modelsSlice/modelsSlice";
+import { STATISTICAL_VALUES, mean, std, median, percentile } from "../../../../../../utils/constants";
 import PropTypes from "prop-types";
 import CardHeader from '@mui/material/CardHeader';
 import CloseIcon from '@mui/icons-material/Close';
-import {useTheme} from '@mui/material/styles';
-import {convertModelName} from "../../../../../../utils/ModelNameConverter";
+import { useTheme } from '@mui/material/styles';
+import { convertModelName } from "../../../../../../utils/ModelNameConverter";
+import { alpha } from '@mui/system';
 import {updateURL} from "../../../../../../index";
 
 /**
  * A DataGrid with applied CSS styling.
+ * @memberof EditModelGroupModal
+ * @constant {function}
+ * @returns {object}
  */
 const StyledDataGrid = styled(DataGrid)(() => ({
     height: "70%",
@@ -31,9 +30,9 @@ const StyledDataGrid = styled(DataGrid)(() => ({
 
 /**
  * Parses the rows out of the given modelList
- *
+ * @memberof EditModelGroupModal
  * @param {String[]} modelList  A list of models that will be parsed into data grid rows
- * @returns                     The rows representing the models of the modelList in the data grid
+ * @returns {array}             The rows representing the models of the modelList in the data grid
  */
 function createRows(modelList) {
     const rows = [];
@@ -61,6 +60,7 @@ function createRows(modelList) {
  * A modal where the user can edit the visibility and the inclusion in statistical value calculation
  * of each model in an existing model group.
  *
+ * @component
  * @param {Object} props
  * @param {function} props.onClose      Function to call if modal should be closed
  * @param {boolean} props.isOpen        Boolean whether the modal should be visible
@@ -82,31 +82,35 @@ function EditModelGroupModal(props) {
         transform: 'translate(-50%, -50%)',
         width: '90%',
         height: '75%',
-        minHeight: "75%",
-        maxHeight: "100vh",
+        boxShadow: 24,
         overflow: "auto",
         bgcolor: theme.palette.background.default,
-        boxShadow: 24,
+        minHeight: "75%",
+        maxHeight: "100vh",
         p: 4,
     };
 
     /**
      * Label displayed at the top of the modal
+     * @constant {string}
      */
     const editModalLabel = "Edit Statistical Values";
 
     /**
      * The text displayed inside the apply button
+     * @constant {string}
      */
     const applyButtonLabel = "Save Changes";
     /**
      * A dispatch function to dispatch actions to the redux store.
+     * @constant {function}
      */
     const dispatch = useDispatch();
 
     /**
      * A list of all models in the currently selected model group.
      * The data is fetched from the redux store via a selector.
+     * @constant {array}
      */
     const modelList = useSelector(state => selectModelsOfGroup(state, props.modelGroupId));
 
@@ -114,53 +118,62 @@ function EditModelGroupModal(props) {
      * An object containing all data about the visibility and inclusion in the statistical values'
      * calculation for each model.
      * The data is fetched from the redux store via a selector.
+     * @constant {array}
      */
     const modelData = useSelector(state => selectModelDataOfGroup(state, props.modelGroupId));
 
     /**
      * All rows that are represented in the data grid.
+     * @constant {array}
      */
     const rows = createRows(modelList);
 
     /**
      * The current filtered selection of rows.
      * This array contains all rows remaining as a search result of the Searchbar.
+     * @constant {array}
      */
     const [filteredRows, setFilteredRows] = React.useState(rows);
 
     /**
-     * An array filled with boolean values that indicate whether a model should be visible in the plot or not.
-     * The index of each model in the array is its corresponding row id.
-     */
-    const [isVisible, setIsVisible] = React.useState(modelList.map(model => modelData[model].isVisible));
-
-    /**
      * An array filled with boolean values that indicate whether a model is included in the mean calculation or not.
      * The index of each model in the array is its corresponding row id.
+     * @constant {array}
      */
-    const [meanVisible, setMeanVisible] = React.useState(modelList.map(model => modelData[model].mean));
+    const [meanVisible, setMeanVisible] = React.useState(modelList.map(model => modelData[model][mean]));
 
     /**
      * An array filled with boolean values that indicate whether a model is included in the standard deviation (std) calculation or not.
      * The index of each model in the array is its corresponding row id.
+     * @constant {array}
      */
-    const [stdVisible, setStd] = React.useState(modelList.map(model => modelData[model][std]));
+    const [stdVisible, setStdVisible] = React.useState(modelList.map(model => modelData[model][std]));
 
     /**
      * An array filled with boolean values that indicate whether a model is included in the median calculation or not.
      * The index of each model in the array is its corresponding row id.
+     * @constant {array}
      */
-    const [medianVisible, setMedianVisible] = React.useState(modelList.map(model => modelData[model].median));
+    const [medianVisible, setMedianVisible] = React.useState(modelList.map(model => modelData[model][median]));
 
     /**
      * An array filled with boolean values that indicate whether a model is included in the percentile calculation or not.
      * The index of each model in the array is its corresponding row id.
+     * @constant {array}
      */
-    const [percentileVisible, setPercentileVisible] = React.useState(modelList.map(model => modelData[model].percentile));
+    const [percentileVisible, setPercentileVisible] = React.useState(modelList.map(model => modelData[model][percentile]));
+
+    /**
+     * An array filled with boolean values that indicate whether a model should be visible in the plot or not.
+     * The index of each model in the array is its corresponding row id.
+     * @constant {array}
+     */
+    const [isVisible, setIsVisible] = React.useState(modelList.map(model => modelData[model].isVisible));
 
     /**
      * List of all checkbox and selection types that should be editable in the data grid.
      * It includes all statistical values and the "visible" type.
+     * @constant {array}
      */
     const typeList = Object.values(STATISTICAL_VALUES);
     typeList.push("visible");
@@ -172,24 +185,34 @@ function EditModelGroupModal(props) {
      *
      * @param {String} type  The type of the list
      * @returns The boolean checked list of the selected type
+     * @constant {function}
      */
     const getCheckedListByType = (type) => {
         switch (type.toLowerCase()) {
-            case "visible":
-                return isVisible;
             case "mean":
                 return meanVisible;
-            case std:
+            case "standard deviation":
                 return stdVisible;
             case "median":
                 return medianVisible;
             case "percentile":
                 return percentileVisible;
+            case "visible":
+                return isVisible;
             default:
                 return medianVisible;
         }
 
     }
+
+    useEffect(() => {
+        setFilteredRows(rows);
+        setPercentileVisible(modelList.map(model => modelData[model][percentile]));
+        setIsVisible(modelList.map(model => modelData[model]["isVisible"]));
+        setStdVisible(modelList.map(model => modelData[model][std]));
+        setMedianVisible(modelList.map(model => modelData[model][median]));
+        setMeanVisible(modelList.map(model => modelData[model][mean]));
+    }, [props.isOpen]);
 
     /**
      * Gets the setter for the boolean list of checked and unchecked models of the selected type.
@@ -198,19 +221,20 @@ function EditModelGroupModal(props) {
      *
      * @param {String} type  The type of the setter
      * @returns The setter for the boolean checked list of the selected type
+     * @constant {function}
      */
     const getCheckedSetterByType = (type) => {
         switch (type.toLowerCase()) {
-            case "visible":
-                return setIsVisible;
             case "mean":
                 return setMeanVisible;
-            case std:
-                return setStd;
+            case "standard deviation":
+                return setStdVisible;
             case "median":
                 return setMedianVisible;
             case "percentile":
                 return setPercentileVisible;
+            case "visible":
+                return setIsVisible;
             default:
                 return setMedianVisible;
         }
@@ -221,6 +245,7 @@ function EditModelGroupModal(props) {
      * Applies the filtered rows by the Searchbar to the filteredRows component state.
      *
      * @param {int[]} indexArray    Array of the filtered indexes of the search result that identify the filtered rows.
+     * @constant {function}
      */
     const foundIndices = (indexArray) => {
         setFilteredRows(indexArray.map(idx => rows[idx])); // translates indices into selected rows
@@ -232,6 +257,7 @@ function EditModelGroupModal(props) {
      * @param {boolean[]} checkedList   The boolean list with the information on which row is checked or not (e.g. isVisible)
      * @param {function} setter         The setter function for the checkedList (e.g. setIsVisible)
      * @returns                         A function to handle the event if a Cell-Checkbox is clicked
+     * @constant {function}
      */
     const handleChecked = (checkedList, setter) => (id) => {
         let checkedListCopy = [...checkedList];
@@ -244,6 +270,7 @@ function EditModelGroupModal(props) {
      *
      * @param {String} type     The type of the checkbox (e.g. visible)
      * @returns                 True if all checkboxes of the given type are selected
+     * @constant {function}
      */
     const areAllCheckboxesSelected = (type) => {
         if (filteredRows.length === 0) return false;
@@ -264,6 +291,7 @@ function EditModelGroupModal(props) {
      *
      * @param {String} type     The type of the checkbox (e.g. visible)
      * @returns                 True if no checkboxes of the given type are selected
+     * @constant {function}
      */
     const areNoCheckboxesSelected = (type) => {
         if (filteredRows.length === 0) return true;
@@ -285,6 +313,7 @@ function EditModelGroupModal(props) {
      * @param {Object} params                       The default parameters with metadata about the clicked column
      * @param {String} params.colDef.field          The fieldId of the clicked column
      * @param {String} params.colDef.headerName     The name of the column that is displayed
+     * @constant {function}
      */
     const columnHeaderClick = (params) => {
         if (!typeList.includes(params.colDef.field)) return;
@@ -303,16 +332,17 @@ function EditModelGroupModal(props) {
     /**
      * Applies the changes made in the current session of the EditModelGroup and closes the Modal.
      * The changes are dispatched into the redux store.
+     * @constant {function}
      */
     const applyChanges = () => {
         const dataCpy = JSON.parse(JSON.stringify(modelData));
         for (let i = 0; i < modelList.length; i++) {
             const model = modelList[i];
-            dataCpy[model].isVisible = isVisible[i];
-            dataCpy[model].mean = meanVisible[i];
-            dataCpy[model].std = stdVisible[i];
-            dataCpy[model].median = medianVisible[i];
-            dataCpy[model].percentile = percentileVisible[i];
+            dataCpy[model][mean] = meanVisible[i];
+            dataCpy[model][std] = stdVisible[i];
+            dataCpy[model][median] = medianVisible[i];
+            dataCpy[model][percentile] = percentileVisible[i];
+            dataCpy[model]["isVisible"] = isVisible[i];
         }
         dispatch(updatePropertiesOfModelGroup({groupId: props.modelGroupId, data: dataCpy}));
         updateURL();
@@ -322,23 +352,24 @@ function EditModelGroupModal(props) {
     /**
      * Discards the changes made in the current session of the EditModelGroup and closes the Modal.
      * All changes are lost in the process.
+     * @constant {function}
      */
     const discardChanges = () => {
-        const meanData = [], medianData = [], stdData = [], percentileData = [], visibleData = [];
+        const meanData = [], stdData = [], medianData = [], percentileData = [], visibleData = [];
 
         for (const model of modelList) {
-            visibleData.push(modelData[model].isVisible);
-            meanData.push(modelData[model].mean);
+            meanData.push(modelData[model][mean]);
             stdData.push(modelData[model][std]);
-            medianData.push(modelData[model].median);
-            percentileData.push(modelData[model].percentile);
+            medianData.push(modelData[model][median]);
+            percentileData.push(modelData[model][percentile]);
+            visibleData.push(modelData[model].isVisible);
         }
 
-        setIsVisible(visibleData);
         setMeanVisible(meanData);
-        setStd(stdData);
-        setPercentileVisible(percentileData);
+        setStdVisible(stdData);
         setMedianVisible(medianData);
+        setPercentileVisible(percentileData);
+        setIsVisible(visibleData);
 
         props.onClose();
     }
@@ -348,32 +379,48 @@ function EditModelGroupModal(props) {
      *
      * @param {String} type     The type of the column (e.g. visible)
      * @returns                 JSX with the generated header name.
+     * @constant {function}
      */
     const generateHeaderName = (type) => {
-        if (areAllCheckboxesSelected(type)) {
-            return (
-                <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                    <CheckBoxIcon fontSize="small" style={{marginRight: "5px"}} color="primary"
-                                  data-testid={`ColumnCheckboxCheckedType${type}`}/>
-                    {type}
-                </div>)
-        } else {
-            if (areNoCheckboxesSelected(type)) {
-                return (
-                    <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                        <CheckBoxOutlineBlankIcon fontSize="small" style={{marginRight: "5px"}}
-                                                  data-testid={`ColumnCheckboxUncheckedType${type}`}/>
-                        {type}
-                    </div>)
-            } else {
-                return (
-                    <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap'}}>
-                        <IntermediateCheckBoxIcon fontSize="small" style={{marginRight: "5px"}} color="primary"
-                                                  data-testid={`ColumnCheckboxIntermediateType${type}`}/>
-                        {type}
-                    </div>)
-            }
-        }
+        return (
+            <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap', cursor: 'pointer'}}>
+                <Box
+                    sx={{
+                        textAlign: 'center',
+                        marginRight: '5px',
+                        width: '42px',
+                        height: '42px',
+                        borderRadius: '50%',
+                        '&:hover': {
+                            backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity),
+                        },
+                    }}
+                >
+                    {
+                        areAllCheckboxesSelected(type) ?
+                            <CheckBoxIcon
+                                fontSize="medium"
+                                color="primary"
+                                data-testid={`ColumnCheckboxCheckedType${type}`}
+                            />
+                        : (
+                            areNoCheckboxesSelected(type) ?
+                                <CheckBoxOutlineBlankIcon
+                                    fontSize="medium"
+                                    data-testid={`ColumnCheckboxUncheckedType${type}`}
+                                />
+                            :
+                                <IntermediateCheckBoxIcon
+                                    fontSize="medium"
+                                    color="primary"
+                                    data-testid={`ColumnCheckboxIntermediateType${type}`}
+                                />
+                            )
+                    }
+                </Box>
+                {type}
+            </div>
+        );
     }
 
     /**
@@ -381,11 +428,12 @@ function EditModelGroupModal(props) {
      *
      * @param {Object} props    Props for the MUI Checkbox
      * @returns                 JSX with the customized Checkbox
+     * @constant {function}
      */
     const CustomCheckbox = (props) => {
         return (
             <div className="d-flex justify-content-between align-items-center" style={{cursor: "pointer"}}>
-                <Checkbox checked={props.isChecked} onClick={props.handleChecked}/>
+                <Checkbox size='medium' checked={props.isChecked} onClick={props.handleChecked} sx={{ml: '4px'}}/>
             </div>
         );
     }
@@ -396,6 +444,7 @@ function EditModelGroupModal(props) {
      * @param {Object} params   The params containing metadata about the row
      * @param {String} type     The type of the selection (e.g. visible)
      * @returns                 JSX element with the customized Cell-Checkbox
+     * @constant {function}
      */
     const createCellCheckBox = (params, type) => {
         const checkedList = getCheckedListByType(type);
@@ -423,27 +472,26 @@ function EditModelGroupModal(props) {
 
     /**
      * An Object containing the specification for the columns of the data grid.
+     * @constant {array}
      */
     const columns = [
-        {field: 'project', headerName: 'Project', width: 120, editable: false},
-        {field: 'institute', headerName: 'Institute', width: 150, editable: false},
-        {field: 'model', headerName: 'Model', width: 225, editable: false},
+        { field: 'project', headerName: 'Project', width: 120, editable: false},
+        { field: 'institute', headerName: 'Institute', width: 150, editable: false },
+        { field: 'model', headerName: 'Model', width: 225, editable: false },
         {
-            field: 'mean', headerName: 'Mean', sortable: false, width: 140, disableClickEventBubbling: true,
+            field: mean, headerName: 'Mean', sortable: false, width: 140, disableClickEventBubbling: true,
             renderHeader: () => generateHeaderName("Mean"),
             renderCell: (params) => {
                 return createCellCheckBox(params, "Mean")
             }
         },
         {
-            field: std, headerName: 'Standard deviation', sortable: false, width: 180, disableClickEventBubbling: true,
+            field: std, headerName: 'Standard deviation', sortable: false, width: 200, disableClickEventBubbling: true,
             renderHeader: () => generateHeaderName("Standard deviation"),
-            renderCell: (params) => {
-                return createCellCheckBox(params, "Standard deviation")
-            }
+            renderCell: (params) => {return createCellCheckBox(params, "Standard deviation")}
         },
         {
-            field: 'median', headerName: 'Median', sortable: false, width: 140, disableClickEventBubbling: true,
+            field: median, headerName: 'Median', sortable: false, width: 140, disableClickEventBubbling: true,
             renderHeader: () => generateHeaderName("Median"),
             renderCell: (params) => {
                 return createCellCheckBox(params, "Median")
@@ -493,10 +541,10 @@ function EditModelGroupModal(props) {
                     onColumnHeaderClick={columnHeaderClick}
                     disableColumnMenu
                     columnBuffer={8}
+                    sx={{height: '65%'}}
                 />
                 <CardActions sx={{justifyContent: "flex-end", marginTop: "2%"}}>
-                    <Button onClick={applyChanges} variant="contained" startIcon={<DoneIcon/>}
-                            data-testid="ApplyButton">{applyButtonLabel}</Button>
+                    <Button onClick={applyChanges} variant="contained" data-testid="ApplyButton">{applyButtonLabel}</Button>
                 </CardActions>
             </Card>
         </Modal>

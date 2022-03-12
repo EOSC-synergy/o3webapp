@@ -7,11 +7,12 @@ import {updateURL} from "../../../../../index";
 
 /**
  * Enables the user to choose the range that should be visible on the x-axis of the plot.
+ * @component
  * @param {Object} props
  * @param {function} props.reportError function for error handling
  * @returns {JSX.Element} a jsx containing two text-fields and labels
  */
-function XAxisField(props) {
+function XAxisField() {
     /**
      * A dispatch function to dispatch actions to the redux store.
      */
@@ -36,7 +37,7 @@ function XAxisField(props) {
     const handleChangeMin = (event) => {
         if (!isNaN(event.target.value)) {
             setStateX({minX: event.target.value, maxX: maxX});
-            if (event.target.value >= START_YEAR && event.target.value <= END_YEAR && event.target.value <= maxX) {
+            if (event.target.value >= START_YEAR && event.target.value <= END_YEAR && event.target.value < maxX) {
                 dispatch(setDisplayXRange({years: {minX: parseInt(event.target.value), maxX: maxX}}));
                 updateURL();
             }
@@ -51,7 +52,7 @@ function XAxisField(props) {
     const handleChangeMax = (event) => {
         if (!isNaN(event.target.value)) {
             setStateX({minX: minX, maxX: event.target.value});
-            if (event.target.value >= START_YEAR && event.target.value <= END_YEAR && minX <= event.target.value) {
+            if (event.target.value >= START_YEAR && event.target.value <= END_YEAR && minX < event.target.value) {
                 dispatch(setDisplayXRange({years: {minX: minX, maxX: parseInt(event.target.value)}}));
                 updateURL();
             }
@@ -73,6 +74,7 @@ function XAxisField(props) {
                         onChange={handleChangeMin}
                         error={stateX.minX < START_YEAR || stateX.minX > END_YEAR || stateX.minX >= maxX}
                         helperText={stateX.minX < START_YEAR ? `<${START_YEAR}` : (stateX.minX > END_YEAR ? `>${END_YEAR}` : (stateX.minX >= maxX ? `min>=max` : ''))}
+                        inputProps={{ "data-testid": "XAxisField-left-input" }}
                     />
                 </FormControl>
             </Grid>
@@ -89,6 +91,7 @@ function XAxisField(props) {
                         onChange={handleChangeMax}
                         error={stateX.maxX < START_YEAR || stateX.maxX > END_YEAR || minX >= stateX.maxX}
                         helperText={stateX.maxX < START_YEAR ? `<${START_YEAR}` : (stateX.maxX > END_YEAR ? `>${END_YEAR}` : (minX >= stateX.maxX ? `min>=max` : ''))}
+                        inputProps={{ "data-testid": "XAxisField-right-input" }}
                     />
                 </FormControl>
             </Grid>

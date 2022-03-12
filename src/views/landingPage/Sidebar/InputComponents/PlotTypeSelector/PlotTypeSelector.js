@@ -14,6 +14,7 @@ import {updateURL} from "../../../../../index";
 
 /**
  * enables the user to select a different plot type
+ * @component
  * @param {Object} props
  * @param {function} props.reportError - function for error handling
  * @returns {JSX.Element} a jsx containing a dropdown to select the plot type

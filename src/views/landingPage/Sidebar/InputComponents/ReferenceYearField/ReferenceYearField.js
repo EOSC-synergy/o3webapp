@@ -17,6 +17,7 @@ import {updateURL} from "../../../../../index";
 
 /**
  * Enables the user to select a reference year.
+ * @component
  * @param {Object} props
  * @param {function} props.reportError - function to handle errors
  * @returns {JSX.Element} a jsx containing a text field to select the reference year

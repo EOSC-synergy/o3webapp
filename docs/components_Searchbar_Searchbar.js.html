@@ -1,0 +1,229 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> components/Searchbar/Searchbar.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">O3as Webapp documentation</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Components</h3><ul><li><a href="AddModelGroupModal.html">AddModelGroupModal</a></li><li><a href="App.html">App</a></li><li><a href="CookieConsentModal.html">CookieConsentModal</a></li><li><a href="DiscardChangesModal.html">DiscardChangesModal</a></li><li><a href="DownloadModal.html">DownloadModal</a></li><li><a href="DownloadModal-downloadGraphAsCsv.html">downloadGraphAsCsv</a></li><li><a href="EditModelGroupModal.html">EditModelGroupModal</a></li><li><a href="ErrorMessageModal.html">ErrorMessageModal</a></li><li><a href="Footer.html">Footer</a></li><li><a href="Graph.html">Graph</a></li><li><a href="LandingPage.html">LandingPage</a></li><li><a href="LatitudeBandSelector.html">LatitudeBandSelector</a></li><li><a href="LatitudeBandSelector.CustomLatitudeSelector.html">CustomLatitudeSelector</a></li><li><a href="Logo.html">Logo</a></li><li><a href="ModelGroupCard.html">ModelGroupCard</a></li><li><a href="ModelGroupConfigurator.html">ModelGroupConfigurator</a></li><li><a href="module.html#.exports">exports</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="OffsetConfigurator.html">OffsetConfigurator</a></li><li><a href="PlotNameField.html">PlotNameField</a></li><li><a href="PlotTypeSelector.html">PlotTypeSelector</a></li><li><a href="ReferenceModelSelector.html">ReferenceModelSelector</a></li><li><a href="ReferenceYearField.html">ReferenceYearField</a></li><li><a href="RegionSelector.html">RegionSelector</a></li><li><a href="SeasonCheckBoxGroup.html">SeasonCheckBoxGroup</a></li><li><a href="Section.html">Section</a></li><li><a href="Sidebar.html">Sidebar</a></li><li><a href="TimeCheckBoxGroup.html">TimeCheckBoxGroup</a></li><li><a href="XAxisField.html">XAxisField</a></li><li><a href="YAxisField.html">YAxisField</a></li></ul><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#asc">asc</a></li><li><a href="global.html#baseURL">baseURL</a></li><li><a href="global.html#buildStatisticalSeries">buildStatisticalSeries</a></li><li><a href="global.html#buildSvMatrixTco3Return">buildSvMatrixTco3Return</a></li><li><a href="global.html#buildSvMatrixTco3Zm">buildSvMatrixTco3Zm</a></li><li><a href="global.html#calculateBoxPlotValues">calculateBoxPlotValues</a></li><li><a href="global.html#calculateSvForModels">calculateSvForModels</a></li><li><a href="global.html#colorNameToHex">colorNameToHex</a></li><li><a href="global.html#combineSeries">combineSeries</a></li><li><a href="global.html#convertToStrokeStyle">convertToStrokeStyle</a></li><li><a href="global.html#create2dArray">create2dArray</a></li><li><a href="global.html#createSubtitle">createSubtitle</a></li><li><a href="global.html#customTooltipFormatter">customTooltipFormatter</a></li><li><a href="global.html#default_TCO3_return">default_TCO3_return</a></li><li><a href="global.html#defaultTCO3_zm">defaultTCO3_zm</a></li><li><a href="global.html#downloadGraphAsPDF">downloadGraphAsPDF</a></li><li><a href="global.html#extraReducers">extraReducers</a></li><li><a href="global.html#filterOutOfRange">filterOutOfRange</a></li><li><a href="global.html#findLatitudeBandByLocation">findLatitudeBandByLocation</a></li><li><a href="global.html#formatYLabelsNicely">formatYLabelsNicely</a></li><li><a href="global.html#generateCsv">generateCsv</a></li><li><a href="global.html#generateSeries">generateSeries</a></li><li><a href="global.html#generateSingleTco3ReturnSeries">generateSingleTco3ReturnSeries</a></li><li><a href="global.html#generateSingleTco3ZmSeries">generateSingleTco3ZmSeries</a></li><li><a href="global.html#generateTco3_ReturnSeries">generateTco3_ReturnSeries</a></li><li><a href="global.html#generateTco3_ZmSeries">generateTco3_ZmSeries</a></li><li><a href="global.html#getAdjustedSVG">getAdjustedSVG</a></li><li><a href="global.html#getDefaultYAxisTco3Return">getDefaultYAxisTco3Return</a></li><li><a href="global.html#getDefaultYAxisTco3Zm">getDefaultYAxisTco3Zm</a></li><li><a href="global.html#getFromAPI">getFromAPI</a></li><li><a href="global.html#getListOfModelsForPdf">getListOfModelsForPdf</a></li><li><a href="global.html#getModels">getModels</a></li><li><a href="global.html#getOptimalTickAmount">getOptimalTickAmount</a></li><li><a href="global.html#getOptions">getOptions</a></li><li><a href="global.html#getPlotData">getPlotData</a></li><li><a href="global.html#getPlotTypes">getPlotTypes</a></li><li><a href="global.html#getTickAmountYAxis">getTickAmountYAxis</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#isIncludedInSv">isIncludedInSv</a></li><li><a href="global.html#mean">mean</a></li><li><a href="global.html#median">median</a></li><li><a href="global.html#MODEL_DATA_TEMPLATE">MODEL_DATA_TEMPLATE</a></li><li><a href="global.html#modelsSlice">modelsSlice</a></li><li><a href="global.html#normalizeArray">normalizeArray</a></li><li><a href="global.html#parseSvName">parseSvName</a></li><li><a href="global.html#plotSlice">plotSlice</a></li><li><a href="global.html#postAtAPI">postAtAPI</a></li><li><a href="global.html#postModelsPlotStyle">postModelsPlotStyle</a></li><li><a href="global.html#preTransformApiData">preTransformApiData</a></li><li><a href="global.html#q25">q25</a></li><li><a href="global.html#q50">q50</a></li><li><a href="global.html#q75">q75</a></li><li><a href="global.html#quantile">quantile</a></li><li><a href="global.html#referenceSlice">referenceSlice</a></li><li><a href="global.html#roundDownToMultipleOfTen">roundDownToMultipleOfTen</a></li><li><a href="global.html#roundUpToMultipleOfTen">roundUpToMultipleOfTen</a></li><li><a href="global.html#selectAllGroupIds">selectAllGroupIds</a></li><li><a href="global.html#selectAllModelGroups">selectAllModelGroups</a></li><li><a href="global.html#selectIsOffsetApplied">selectIsOffsetApplied</a></li><li><a href="global.html#selectModelDataOfGroup">selectModelDataOfGroup</a></li><li><a href="global.html#selectModelsOfGroup">selectModelsOfGroup</a></li><li><a href="global.html#selectNameOfGroup">selectNameOfGroup</a></li><li><a href="global.html#selectPlotId">selectPlotId</a></li><li><a href="global.html#selectPlotLocation">selectPlotLocation</a></li><li><a href="global.html#selectPlotMonths">selectPlotMonths</a></li><li><a href="global.html#selectPlotTitle">selectPlotTitle</a></li><li><a href="global.html#selectPlotXRange">selectPlotXRange</a></li><li><a href="global.html#selectPlotYRange">selectPlotYRange</a></li><li><a href="global.html#selectRefModel">selectRefModel</a></li><li><a href="global.html#selectRefYear">selectRefYear</a></li><li><a href="global.html#selectStatisticalValueSettingsOfGroup">selectStatisticalValueSettingsOfGroup</a></li><li><a href="global.html#selectVisibility">selectVisibility</a></li><li><a href="global.html#selectVisibilityOfGroup">selectVisibilityOfGroup</a></li><li><a href="global.html#SERIES_GENERATION">SERIES_GENERATION</a></li><li><a href="global.html#std">std</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#timeoutVal">timeoutVal</a></li></ul></div><div class="category"><h2>API</h2><h3>Global</h3><ul><li><a href="global.html#apiSlice">apiSlice</a></li><li><a href="global.html#fetchModels">fetchModels</a></li><li><a href="global.html#fetchPlotData">fetchPlotData</a></li><li><a href="global.html#fetchPlotDataForCurrentModels">fetchPlotDataForCurrentModels</a></li><li><a href="global.html#fetchPlotDataInitiallyPending">fetchPlotDataInitiallyPending</a></li><li><a href="global.html#fetchPlotDataRefetching">fetchPlotDataRefetching</a></li><li><a href="global.html#fetchPlotDataRejected">fetchPlotDataRejected</a></li><li><a href="global.html#fetchPlotDataSuccess">fetchPlotDataSuccess</a></li><li><a href="global.html#fetchPlotTypes">fetchPlotTypes</a></li><li><a href="global.html#generateCacheKey">generateCacheKey</a></li><li><a href="global.html#getAllSelectedModels">getAllSelectedModels</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#REQUEST_STATE">REQUEST_STATE</a></li><li><a href="global.html#selectActivePlotData">selectActivePlotData</a></li><li><a href="global.html#selectExistingPlotData">selectExistingPlotData</a></li><li><a href="global.html#updateDataAndDisplaySuggestions">updateDataAndDisplaySuggestions</a></li></ul></div><div class="category"><h2>Utils</h2><h3>Global</h3><ul><li><a href="global.html#ANTARCTIC">ANTARCTIC</a></li><li><a href="global.html#APEXCHART_PLOT_TYPE">APEXCHART_PLOT_TYPE</a></li><li><a href="global.html#ARCTIC">ARCTIC</a></li><li><a href="global.html#CLS_Symbol">CLS_Symbol</a></li><li><a href="global.html#convertModelName">convertModelName</a></li><li><a href="global.html#DEFAULT_MODEL_GROUP">DEFAULT_MODEL_GROUP</a></li><li><a href="global.html#DEFAULT_MONTHS">DEFAULT_MONTHS</a></li><li><a href="global.html#END_YEAR">END_YEAR</a></li><li><a href="global.html#EXTENDED_SV_LIST">EXTENDED_SV_LIST</a></li><li><a href="global.html#fullTextSearch">fullTextSearch</a></li><li><a href="global.html#GLOBAL">GLOBAL</a></li><li><a href="global.html#HEIGHT_GRAPH">HEIGHT_GRAPH</a></li><li><a href="global.html#HEIGHT_LOADING_SPINNER">HEIGHT_LOADING_SPINNER</a></li><li><a href="global.html#IMPLICIT_YEAR_LIST">IMPLICIT_YEAR_LIST</a></li><li><a href="global.html#intersection">intersection</a></li><li><a href="global.html#LATITUDE_BAND_MAX_VALUE">LATITUDE_BAND_MAX_VALUE</a></li><li><a href="global.html#LATITUDE_BAND_MIN_VALUE">LATITUDE_BAND_MIN_VALUE</a></li><li><a href="global.html#latitudeBands">latitudeBands</a></li><li><a href="global.html#LBS_Symbol">LBS_Symbol</a></li><li><a href="global.html#legalNoticeLinks">legalNoticeLinks</a></li><li><a href="global.html#lowerPercentile">lowerPercentile</a></li><li><a href="global.html#LS_Symbol">LS_Symbol</a></li><li><a href="global.html#mean">mean</a></li><li><a href="global.html#median">median</a></li><li><a href="global.html#MGC_Symbol">MGC_Symbol</a></li><li><a href="global.html#MODEL_LINE_THICKNESS">MODEL_LINE_THICKNESS</a></li><li><a href="global.html#months">months</a></li><li><a href="global.html#NEAR_GLOBAL">NEAR_GLOBAL</a></li><li><a href="global.html#NH_MID">NH_MID</a></li><li><a href="global.html#NO_MONTH_SELECTED">NO_MONTH_SELECTED</a></li><li><a href="global.html#not">not</a></li><li><a href="global.html#NUM_MONTHS">NUM_MONTHS</a></li><li><a href="global.html#NUM_MONTHS_IN_SEASON">NUM_MONTHS_IN_SEASON</a></li><li><a href="global.html#O3AS_PLOTS">O3AS_PLOTS</a></li><li><a href="global.html#OC_Symbol">OC_Symbol</a></li><li><a href="global.html#percentile">percentile</a></li><li><a href="global.html#performSearch">performSearch</a></li><li><a href="global.html#PLOT_NAME_MAX_LEN">PLOT_NAME_MAX_LEN</a></li><li><a href="global.html#PNF_Symbol">PNF_Symbol</a></li><li><a href="global.html#RMS_Symbol">RMS_Symbol</a></li><li><a href="global.html#RS_Symbol">RS_Symbol</a></li><li><a href="global.html#RYF_Symbol">RYF_Symbol</a></li><li><a href="global.html#SH_MID">SH_MID</a></li><li><a href="global.html#START_YEAR">START_YEAR</a></li><li><a href="global.html#STATISTICAL_VALUE_LINE_THICKNESS">STATISTICAL_VALUE_LINE_THICKNESS</a></li><li><a href="global.html#STATISTICAL_VALUES">STATISTICAL_VALUES</a></li><li><a href="global.html#STATISTICAL_VALUES_LIST">STATISTICAL_VALUES_LIST</a></li><li><a href="global.html#std">std</a></li><li><a href="global.html#stdMean">stdMean</a></li><li><a href="global.html#SV_CALCULATION">SV_CALCULATION</a></li><li><a href="global.html#SV_COLORING">SV_COLORING</a></li><li><a href="global.html#SV_DASHING">SV_DASHING</a></li><li><a href="global.html#TCG_Symbol">TCG_Symbol</a></li><li><a href="global.html#TROPICS">TROPICS</a></li><li><a href="global.html#union">union</a></li><li><a href="global.html#upperPercentile">upperPercentile</a></li><li><a href="global.html#USER_REGION">USER_REGION</a></li><li><a href="global.html#XAF_Symbol">XAF_Symbol</a></li><li><a href="global.html#YAF_Symbol">YAF_Symbol</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>components/Searchbar/Searchbar.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import SearchIcon from '@mui/icons-material/Search';
+import { InputBase } from '@mui/material';
+import { styled, alpha } from '@mui/material/styles';
+import React from 'react';
+import { performSearch } from '../../utils/textSearch';
+import PropTypes from 'prop-types';
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+}));
+
+const Search = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    '&amp;:hover': {
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(3),
+      width: 'auto',
+    },
+    borderColor: "#d3d3d3",
+    borderSize: "1px",
+    borderStyle: "solid",
+    margin: "3px",
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    '&amp; .MuiInputBase-input': {
+      padding: theme.spacing(1, 1, 1, 0),
+      // vertical padding + font size from searchIcon
+      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+      transition: theme.transitions.create('width'),
+      width: '100%',
+      [theme.breakpoints.up('md')]: {
+        width: '50ch',
+      },
+    },
+}));
+
+
+
+
+/**
+ * A searchbar component that is used for searching a string in a data array
+ * that either contains strings or objects. If the array contains objects the
+ * values of these objects are searched.
+ * @component
+ * @param {Object} props holds all props passed to the component
+ * @param {array} props.inputArray an array of either only strings or only objects.
+ *                                 The input typed in the searchbar is used as a search
+ *                                 string. If an array of objects is passed the values of
+ *                                 each object are searched.
+ * @param {function} props.foundIndicesCallback this function is called with an array 
+ *                                              containing the indices that matched the 
+ *                                              search string. The function is called after the
+ *                                              search is performed.
+ * @param {boolean} props.shouldReturnValues specifies whether the searchbar should pass indices or values
+ *          to props.foundIndicesCallback
+ * @returns {JSX} a pretty searchbar component
+ */
+export default function SearchBar(props) {
+
+    const { inputArray, foundIndicesCallback } = props;
+    let shouldReturnValues = false;
+    if ('shouldReturnValues' in props) {
+      shouldReturnValues = props.shouldReturnValues;
+    }
+
+    const handleInputChange = (event) => {
+        const newInput = event.target.value
+        foundIndicesCallback(performSearch(inputArray, newInput, shouldReturnValues));
+    }
+    
+    return (
+    &lt;Search>
+        &lt;SearchIconWrapper>
+            &lt;SearchIcon />
+        &lt;/SearchIconWrapper>
+        &lt;StyledInputBase
+            placeholder="Search…"
+            inputProps={{ 'aria-label': 'search', 'alt': 'Searchbar', 'data-testid': 'SearchbarInput'}}
+            onBlur={handleInputChange}
+            onKeyPress={(event) => {
+              if (event.key === "Enter") {
+                handleInputChange(event);
+              }
+            }}
+        />
+    &lt;/Search>
+    )
+};
+
+SearchBar.propTypes = {
+  inputArray: PropTypes.array.isRequired,
+  foundIndicesCallback: PropTypes.func.isRequired,
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.10</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

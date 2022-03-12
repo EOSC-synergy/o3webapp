@@ -6,7 +6,7 @@ import CookieOutlinedIcon from '@mui/icons-material/CookieOutlined';
 
 /**
  * Forces the user to accept cookies.
- *
+ * @component
  * @param {Object} props
  * @param {boolean} props.isOpen -> whether the cookie consent modal should be displayed
  * @param {function} props.onClose -> handles closing of the modal
@@ -68,9 +68,21 @@ function CookieConsentModal(props) {
                         key="acceptButton"
                         sx={{px: 5, pb: 5, display: "flex", justifyContent: "left"}}
                     >
-                        <Button variant="outlined" onClick={disagreeToCookies}
-                                sx={{marginRight: '1em'}}>Disagree</Button>
-                        <Button variant="contained" onClick={agreeToCookies}>Agree</Button>
+                        <Button 
+                            variant="outlined" 
+                            onClick={disagreeToCookies}
+                            sx={{marginRight: '1em'}}
+                            data-testid={"CookieConsentModal-disagree-btn"}
+                        >
+                            Disagree
+                        </Button>
+                        <Button 
+                            variant="contained" 
+                            onClick={agreeToCookies}
+                            data-testid={"CookieConsentModal-agree-btn"}
+                        >
+                            Agree
+                        </Button>
                     </Grid>
                 </Grid>
             </Card>

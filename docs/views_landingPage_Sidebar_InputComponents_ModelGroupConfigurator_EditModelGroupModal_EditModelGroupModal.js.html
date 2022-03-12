@@ -1,61 +1,609 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>JSDoc: Source: views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator/EditModelGroupModal/EditModelGroupModal.js</title>
 
-    <script src="scripts/prettify/prettify.js"> </script>
-    <script src="scripts/prettify/lang-css.js"> </script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator/EditModelGroupModal/EditModelGroupModal.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
 </head>
 
-<body>
 
-<div id="main">
 
-    <h1 class="page-title">Source: views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator/EditModelGroupModal/EditModelGroupModal.js</h1>
-
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
     
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">O3as Webapp documentation</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Components</h3><ul><li><a href="AddModelGroupModal.html">AddModelGroupModal</a></li><li><a href="App.html">App</a></li><li><a href="CookieConsentModal.html">CookieConsentModal</a></li><li><a href="DiscardChangesModal.html">DiscardChangesModal</a></li><li><a href="DownloadModal.html">DownloadModal</a></li><li><a href="DownloadModal-downloadGraphAsCsv.html">downloadGraphAsCsv</a></li><li><a href="EditModelGroupModal.html">EditModelGroupModal</a></li><li><a href="ErrorMessageModal.html">ErrorMessageModal</a></li><li><a href="Footer.html">Footer</a></li><li><a href="Graph.html">Graph</a></li><li><a href="LandingPage.html">LandingPage</a></li><li><a href="LatitudeBandSelector.html">LatitudeBandSelector</a></li><li><a href="LatitudeBandSelector.CustomLatitudeSelector.html">CustomLatitudeSelector</a></li><li><a href="Logo.html">Logo</a></li><li><a href="ModelGroupCard.html">ModelGroupCard</a></li><li><a href="ModelGroupConfigurator.html">ModelGroupConfigurator</a></li><li><a href="module.html#.exports">exports</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="OffsetConfigurator.html">OffsetConfigurator</a></li><li><a href="PlotNameField.html">PlotNameField</a></li><li><a href="PlotTypeSelector.html">PlotTypeSelector</a></li><li><a href="ReferenceModelSelector.html">ReferenceModelSelector</a></li><li><a href="ReferenceYearField.html">ReferenceYearField</a></li><li><a href="RegionSelector.html">RegionSelector</a></li><li><a href="SeasonCheckBoxGroup.html">SeasonCheckBoxGroup</a></li><li><a href="Section.html">Section</a></li><li><a href="Sidebar.html">Sidebar</a></li><li><a href="TimeCheckBoxGroup.html">TimeCheckBoxGroup</a></li><li><a href="XAxisField.html">XAxisField</a></li><li><a href="YAxisField.html">YAxisField</a></li></ul><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#asc">asc</a></li><li><a href="global.html#baseURL">baseURL</a></li><li><a href="global.html#buildStatisticalSeries">buildStatisticalSeries</a></li><li><a href="global.html#buildSvMatrixTco3Return">buildSvMatrixTco3Return</a></li><li><a href="global.html#buildSvMatrixTco3Zm">buildSvMatrixTco3Zm</a></li><li><a href="global.html#calculateBoxPlotValues">calculateBoxPlotValues</a></li><li><a href="global.html#calculateSvForModels">calculateSvForModels</a></li><li><a href="global.html#colorNameToHex">colorNameToHex</a></li><li><a href="global.html#combineSeries">combineSeries</a></li><li><a href="global.html#convertToStrokeStyle">convertToStrokeStyle</a></li><li><a href="global.html#create2dArray">create2dArray</a></li><li><a href="global.html#createSubtitle">createSubtitle</a></li><li><a href="global.html#customTooltipFormatter">customTooltipFormatter</a></li><li><a href="global.html#default_TCO3_return">default_TCO3_return</a></li><li><a href="global.html#defaultTCO3_zm">defaultTCO3_zm</a></li><li><a href="global.html#downloadGraphAsPDF">downloadGraphAsPDF</a></li><li><a href="global.html#extraReducers">extraReducers</a></li><li><a href="global.html#filterOutOfRange">filterOutOfRange</a></li><li><a href="global.html#findLatitudeBandByLocation">findLatitudeBandByLocation</a></li><li><a href="global.html#formatYLabelsNicely">formatYLabelsNicely</a></li><li><a href="global.html#generateCsv">generateCsv</a></li><li><a href="global.html#generateSeries">generateSeries</a></li><li><a href="global.html#generateSingleTco3ReturnSeries">generateSingleTco3ReturnSeries</a></li><li><a href="global.html#generateSingleTco3ZmSeries">generateSingleTco3ZmSeries</a></li><li><a href="global.html#generateTco3_ReturnSeries">generateTco3_ReturnSeries</a></li><li><a href="global.html#generateTco3_ZmSeries">generateTco3_ZmSeries</a></li><li><a href="global.html#getAdjustedSVG">getAdjustedSVG</a></li><li><a href="global.html#getDefaultYAxisTco3Return">getDefaultYAxisTco3Return</a></li><li><a href="global.html#getDefaultYAxisTco3Zm">getDefaultYAxisTco3Zm</a></li><li><a href="global.html#getFromAPI">getFromAPI</a></li><li><a href="global.html#getListOfModelsForPdf">getListOfModelsForPdf</a></li><li><a href="global.html#getModels">getModels</a></li><li><a href="global.html#getOptimalTickAmount">getOptimalTickAmount</a></li><li><a href="global.html#getOptions">getOptions</a></li><li><a href="global.html#getPlotData">getPlotData</a></li><li><a href="global.html#getPlotTypes">getPlotTypes</a></li><li><a href="global.html#getTickAmountYAxis">getTickAmountYAxis</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#isIncludedInSv">isIncludedInSv</a></li><li><a href="global.html#mean">mean</a></li><li><a href="global.html#median">median</a></li><li><a href="global.html#MODEL_DATA_TEMPLATE">MODEL_DATA_TEMPLATE</a></li><li><a href="global.html#modelsSlice">modelsSlice</a></li><li><a href="global.html#normalizeArray">normalizeArray</a></li><li><a href="global.html#parseSvName">parseSvName</a></li><li><a href="global.html#plotSlice">plotSlice</a></li><li><a href="global.html#postAtAPI">postAtAPI</a></li><li><a href="global.html#postModelsPlotStyle">postModelsPlotStyle</a></li><li><a href="global.html#preTransformApiData">preTransformApiData</a></li><li><a href="global.html#q25">q25</a></li><li><a href="global.html#q50">q50</a></li><li><a href="global.html#q75">q75</a></li><li><a href="global.html#quantile">quantile</a></li><li><a href="global.html#referenceSlice">referenceSlice</a></li><li><a href="global.html#roundDownToMultipleOfTen">roundDownToMultipleOfTen</a></li><li><a href="global.html#roundUpToMultipleOfTen">roundUpToMultipleOfTen</a></li><li><a href="global.html#selectAllGroupIds">selectAllGroupIds</a></li><li><a href="global.html#selectAllModelGroups">selectAllModelGroups</a></li><li><a href="global.html#selectIsOffsetApplied">selectIsOffsetApplied</a></li><li><a href="global.html#selectModelDataOfGroup">selectModelDataOfGroup</a></li><li><a href="global.html#selectModelsOfGroup">selectModelsOfGroup</a></li><li><a href="global.html#selectNameOfGroup">selectNameOfGroup</a></li><li><a href="global.html#selectPlotId">selectPlotId</a></li><li><a href="global.html#selectPlotLocation">selectPlotLocation</a></li><li><a href="global.html#selectPlotMonths">selectPlotMonths</a></li><li><a href="global.html#selectPlotTitle">selectPlotTitle</a></li><li><a href="global.html#selectPlotXRange">selectPlotXRange</a></li><li><a href="global.html#selectPlotYRange">selectPlotYRange</a></li><li><a href="global.html#selectRefModel">selectRefModel</a></li><li><a href="global.html#selectRefYear">selectRefYear</a></li><li><a href="global.html#selectStatisticalValueSettingsOfGroup">selectStatisticalValueSettingsOfGroup</a></li><li><a href="global.html#selectVisibility">selectVisibility</a></li><li><a href="global.html#selectVisibilityOfGroup">selectVisibilityOfGroup</a></li><li><a href="global.html#SERIES_GENERATION">SERIES_GENERATION</a></li><li><a href="global.html#std">std</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#timeoutVal">timeoutVal</a></li></ul></div><div class="category"><h2>API</h2><h3>Global</h3><ul><li><a href="global.html#apiSlice">apiSlice</a></li><li><a href="global.html#fetchModels">fetchModels</a></li><li><a href="global.html#fetchPlotData">fetchPlotData</a></li><li><a href="global.html#fetchPlotDataForCurrentModels">fetchPlotDataForCurrentModels</a></li><li><a href="global.html#fetchPlotDataInitiallyPending">fetchPlotDataInitiallyPending</a></li><li><a href="global.html#fetchPlotDataRefetching">fetchPlotDataRefetching</a></li><li><a href="global.html#fetchPlotDataRejected">fetchPlotDataRejected</a></li><li><a href="global.html#fetchPlotDataSuccess">fetchPlotDataSuccess</a></li><li><a href="global.html#fetchPlotTypes">fetchPlotTypes</a></li><li><a href="global.html#generateCacheKey">generateCacheKey</a></li><li><a href="global.html#getAllSelectedModels">getAllSelectedModels</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#REQUEST_STATE">REQUEST_STATE</a></li><li><a href="global.html#selectActivePlotData">selectActivePlotData</a></li><li><a href="global.html#selectExistingPlotData">selectExistingPlotData</a></li><li><a href="global.html#updateDataAndDisplaySuggestions">updateDataAndDisplaySuggestions</a></li></ul></div><div class="category"><h2>Utils</h2><h3>Global</h3><ul><li><a href="global.html#ANTARCTIC">ANTARCTIC</a></li><li><a href="global.html#APEXCHART_PLOT_TYPE">APEXCHART_PLOT_TYPE</a></li><li><a href="global.html#ARCTIC">ARCTIC</a></li><li><a href="global.html#CLS_Symbol">CLS_Symbol</a></li><li><a href="global.html#convertModelName">convertModelName</a></li><li><a href="global.html#DEFAULT_MODEL_GROUP">DEFAULT_MODEL_GROUP</a></li><li><a href="global.html#DEFAULT_MONTHS">DEFAULT_MONTHS</a></li><li><a href="global.html#END_YEAR">END_YEAR</a></li><li><a href="global.html#EXTENDED_SV_LIST">EXTENDED_SV_LIST</a></li><li><a href="global.html#fullTextSearch">fullTextSearch</a></li><li><a href="global.html#GLOBAL">GLOBAL</a></li><li><a href="global.html#HEIGHT_GRAPH">HEIGHT_GRAPH</a></li><li><a href="global.html#HEIGHT_LOADING_SPINNER">HEIGHT_LOADING_SPINNER</a></li><li><a href="global.html#IMPLICIT_YEAR_LIST">IMPLICIT_YEAR_LIST</a></li><li><a href="global.html#intersection">intersection</a></li><li><a href="global.html#LATITUDE_BAND_MAX_VALUE">LATITUDE_BAND_MAX_VALUE</a></li><li><a href="global.html#LATITUDE_BAND_MIN_VALUE">LATITUDE_BAND_MIN_VALUE</a></li><li><a href="global.html#latitudeBands">latitudeBands</a></li><li><a href="global.html#LBS_Symbol">LBS_Symbol</a></li><li><a href="global.html#legalNoticeLinks">legalNoticeLinks</a></li><li><a href="global.html#lowerPercentile">lowerPercentile</a></li><li><a href="global.html#LS_Symbol">LS_Symbol</a></li><li><a href="global.html#mean">mean</a></li><li><a href="global.html#median">median</a></li><li><a href="global.html#MGC_Symbol">MGC_Symbol</a></li><li><a href="global.html#MODEL_LINE_THICKNESS">MODEL_LINE_THICKNESS</a></li><li><a href="global.html#months">months</a></li><li><a href="global.html#NEAR_GLOBAL">NEAR_GLOBAL</a></li><li><a href="global.html#NH_MID">NH_MID</a></li><li><a href="global.html#NO_MONTH_SELECTED">NO_MONTH_SELECTED</a></li><li><a href="global.html#not">not</a></li><li><a href="global.html#NUM_MONTHS">NUM_MONTHS</a></li><li><a href="global.html#NUM_MONTHS_IN_SEASON">NUM_MONTHS_IN_SEASON</a></li><li><a href="global.html#O3AS_PLOTS">O3AS_PLOTS</a></li><li><a href="global.html#OC_Symbol">OC_Symbol</a></li><li><a href="global.html#percentile">percentile</a></li><li><a href="global.html#performSearch">performSearch</a></li><li><a href="global.html#PLOT_NAME_MAX_LEN">PLOT_NAME_MAX_LEN</a></li><li><a href="global.html#PNF_Symbol">PNF_Symbol</a></li><li><a href="global.html#RMS_Symbol">RMS_Symbol</a></li><li><a href="global.html#RS_Symbol">RS_Symbol</a></li><li><a href="global.html#RYF_Symbol">RYF_Symbol</a></li><li><a href="global.html#SH_MID">SH_MID</a></li><li><a href="global.html#START_YEAR">START_YEAR</a></li><li><a href="global.html#STATISTICAL_VALUE_LINE_THICKNESS">STATISTICAL_VALUE_LINE_THICKNESS</a></li><li><a href="global.html#STATISTICAL_VALUES">STATISTICAL_VALUES</a></li><li><a href="global.html#STATISTICAL_VALUES_LIST">STATISTICAL_VALUES_LIST</a></li><li><a href="global.html#std">std</a></li><li><a href="global.html#stdMean">stdMean</a></li><li><a href="global.html#SV_CALCULATION">SV_CALCULATION</a></li><li><a href="global.html#SV_COLORING">SV_COLORING</a></li><li><a href="global.html#SV_DASHING">SV_DASHING</a></li><li><a href="global.html#TCG_Symbol">TCG_Symbol</a></li><li><a href="global.html#TROPICS">TROPICS</a></li><li><a href="global.html#union">union</a></li><li><a href="global.html#upperPercentile">upperPercentile</a></li><li><a href="global.html#USER_REGION">USER_REGION</a></li><li><a href="global.html#XAF_Symbol">XAF_Symbol</a></li><li><a href="global.html#YAF_Symbol">YAF_Symbol</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator/EditModelGroupModal/EditModelGroupModal.js</h1>
+                </header>
+                
 
 
 
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React, { useState } from "react";
-import { useDispatch } from "react-redux"
-import { updatedModelGroup } from "../../../../../../store/modelsSlice"
+            <pre class="prettyprint source linenums"><code>import React from "react";
+import {useDispatch, useSelector} from "react-redux"
+import {Modal, Card, Button, Checkbox, IconButton, CardActions, Box} from "@mui/material";
+import {DataGrid} from '@mui/x-data-grid';
+import SearchBar from "../../../../../../components/Searchbar/Searchbar";
+import {styled} from '@mui/material/styles';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import IntermediateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
+import { selectModelsOfGroup, selectModelDataOfGroup, updatePropertiesOfModelGroup } from "../../../../../../store/modelsSlice/modelsSlice";
+import { STATISTICAL_VALUES, mean, std, median, percentile } from "../../../../../../utils/constants";
+import PropTypes from "prop-types";
+import CardHeader from '@mui/material/CardHeader';
+import CloseIcon from '@mui/icons-material/Close';
+import { useTheme } from '@mui/material/styles';
+import { convertModelName } from "../../../../../../utils/ModelNameConverter";
+import { alpha } from '@mui/system';
 
 /**
- * opens a modal where the user can edit an existing model group
- * @param {Object} props 
- * @param {function} props.onClose -> function to call if modal should be closed
- * @param {boolean} props.open -> boolean whether the modal should be visible 
- * @param {function} props.error -> error function
- * @param {id} props.id -> id of the model group
- * @returns a jsx containing a modal with a data grid with all models from the model group
+ * A DataGrid with applied CSS styling.
+ * @memberof EditModelGroupModal
+ * @constant {function}
+ * @returns {object}
+ */
+const StyledDataGrid = styled(DataGrid)(() => ({
+    height: "70%",
+    marginTop: "3%",
+}));
+
+/**
+ * Parses the rows out of the given modelList
+ * @memberof EditModelGroupModal
+ * @param {String[]} modelList  A list of models that will be parsed into data grid rows
+ * @returns {array}             The rows representing the models of the modelList in the data grid
+ */
+function createRows(modelList) {
+    const rows = [];
+    const regex = /([a-z]|[A-Z]|[0-9]|-)*/g;
+
+    for (let i = 0; i &lt; modelList.length; i++) {
+        const model = modelList[i];
+        const matchResult = convertModelName(model);
+        rows.push({
+            "id": i,
+            "project": matchResult.project,
+            "institute": matchResult.institute,
+            "model": matchResult.name,
+            "mean": false,
+            "standard deviation": false,
+            "median": false,
+            "percentile": false,
+            "visible": false
+        })
+    }
+    return rows;
+}
+
+/**
+ * A modal where the user can edit the visibility and the inclusion in statistical value calculation
+ * of each model in an existing model group.
+ *
+ * @component
+ * @param {Object} props
+ * @param {function} props.onClose      Function to call if modal should be closed
+ * @param {boolean} props.isOpen        Boolean whether the modal should be visible
+ * @param {function} props.reportError  Error function
+ * @param {int} props.modelGroupId      Id of the model group
+ * @returns                             A JSX containing a modal with a data grid with all models from the model group
  */
 function EditModelGroupModal(props) {
 
-    const dispatch = useDispatch()
+    const theme = useTheme();
 
-    let i = props.onClose;
-    i = props.open;
-    i = props.error;
-    i = props.id
+    /**
+     * The CSS settings for the Card component
+     */
+    const cardStyle = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '90%',
+        height: '75%',
+        boxShadow: 24,
+        overflow: "auto",
+        bgcolor: theme.palette.background.default,
+        minHeight: "75%",
+        maxHeight: "100vh",
+        p: 4,
+    };
 
-    const handleOnSave = () => {
-        dispatch(updatedModelGroup(someData))
+    /**
+     * Label displayed at the top of the modal
+     */
+    const editModalLabel = "Edit Statistical Values";
+
+    /**
+     * The text displayed inside the apply button
+     */
+    const applyButtonLabel = "Save Changes";
+    /**
+     * A dispatch function to dispatch actions to the redux store.
+     */
+    const dispatch = useDispatch();
+
+    /**
+     * A list of all models in the currently selected model group.
+     * The data is fetched from the redux store via a selector.
+     */
+    const modelList = useSelector(state => selectModelsOfGroup(state, props.modelGroupId));
+
+    /**
+     * An object containing all data about the visibility and inclusion in the statistical values'
+     * calculation for each model.
+     * The data is fetched from the redux store via a selector.
+     */
+    const modelData = useSelector(state => selectModelDataOfGroup(state, props.modelGroupId));
+
+    /**
+     * All rows that are represented in the data grid.
+     */
+    const rows = createRows(modelList);
+
+    /**
+     * The current filtered selection of rows.
+     * This array contains all rows remaining as a search result of the Searchbar.
+     */
+    const [filteredRows, setFilteredRows] = React.useState(rows);
+
+    /**
+     * An array filled with boolean values that indicate whether a model is included in the mean calculation or not.
+     * The index of each model in the array is its corresponding row id.
+     */
+    const [meanVisible, setMeanVisible] = React.useState(modelList.map(model => modelData[model][mean]));
+
+    /**
+     * An array filled with boolean values that indicate whether a model is included in the standard deviation (std) calculation or not.
+     * The index of each model in the array is its corresponding row id.
+     */
+    const [stdVisible, setStd] = React.useState(modelList.map(model => modelData[model][std]));
+
+    /**
+     * An array filled with boolean values that indicate whether a model is included in the median calculation or not.
+     * The index of each model in the array is its corresponding row id.
+     */
+    const [medianVisible, setMedianVisible] = React.useState(modelList.map(model => modelData[model][median]));
+
+    /**
+     * An array filled with boolean values that indicate whether a model is included in the percentile calculation or not.
+     * The index of each model in the array is its corresponding row id.
+     */
+    const [percentileVisible, setPercentileVisible] = React.useState(modelList.map(model => modelData[model][percentile]));
+
+    /**
+     * An array filled with boolean values that indicate whether a model should be visible in the plot or not.
+     * The index of each model in the array is its corresponding row id.
+     */
+    const [isVisible, setIsVisible] = React.useState(modelList.map(model => modelData[model].isVisible));
+
+    /**
+     * List of all checkbox and selection types that should be editable in the data grid.
+     * It includes all statistical values and the "visible" type.
+     */
+    const typeList = Object.values(STATISTICAL_VALUES);
+    typeList.push("visible");
+
+    /**
+     * Gets the boolean list of checked and unchecked models of the selected type.
+     * The type is either a statistical value or the visible property.
+     * E.g. "visible" would return the isVisible boolean list.
+     *
+     * @param {String} type  The type of the list
+     * @returns The boolean checked list of the selected type
+     */
+    const getCheckedListByType = (type) => {
+        switch (type.toLowerCase()) {
+            case "mean":
+                return meanVisible;
+            case "standard deviation":
+                return stdVisible;
+            case "median":
+                return medianVisible;
+            case "percentile":
+                return percentileVisible;
+            case "visible":
+                return isVisible;
+            default:
+                return medianVisible;
+        }
+
     }
 
+    /**
+     * Gets the setter for the boolean list of checked and unchecked models of the selected type.
+     * The type is either a statistical value or the visible property.
+     * E.g. "visible" would return the setIsVisible setter.
+     *
+     * @param {String} type  The type of the setter
+     * @returns The setter for the boolean checked list of the selected type
+     */
+    const getCheckedSetterByType = (type) => {
+        switch (type.toLowerCase()) {
+            case "mean":
+                return setMeanVisible;
+            case "standard deviation":
+                return setStd;
+            case "median":
+                return setMedianVisible;
+            case "percentile":
+                return setPercentileVisible;
+            case "visible":
+                return setIsVisible;
+            default:
+                return setMedianVisible;
+        }
+
+    }
+
+    /**
+     * Applies the filtered rows by the Searchbar to the filteredRows component state.
+     *
+     * @param {int[]} indexArray    Array of the filtered indexes of the search result that identify the filtered rows.
+     */
+    const foundIndices = (indexArray) => {
+        setFilteredRows(indexArray.map(idx => rows[idx])); // translates indices into selected rows
+    }
+
+    /**
+     * Generates a function that handles if a specific cell in the data grid is checked.
+     *
+     * @param {boolean[]} checkedList   The boolean list with the information on which row is checked or not (e.g. isVisible)
+     * @param {function} setter         The setter function for the checkedList (e.g. setIsVisible)
+     * @returns                         A function to handle the event if a Cell-Checkbox is clicked
+     */
+    const handleChecked = (checkedList, setter) => (id) => {
+        let checkedListCopy = [...checkedList];
+        checkedListCopy[id] = !checkedListCopy[id];
+        setter(checkedListCopy);
+    }
+
+    /**
+     * Checks if all currently filtered checkboxes of the given type are selected.
+     *
+     * @param {String} type     The type of the checkbox (e.g. visible)
+     * @returns                 True if all checkboxes of the given type are selected
+     */
+    const areAllCheckboxesSelected = (type) => {
+        if (filteredRows.length === 0) return false;
+        const checkedList = getCheckedListByType(type);
+
+        let allRowsSelected = true;
+        filteredRows.forEach(row => {
+            if (!checkedList[row["id"]]) {
+                allRowsSelected = false;
+            }
+
+        });
+        return allRowsSelected;
+    }
+
+    /**
+     * Checks if none of the currently filtered checkboxes of the given type are selected.
+     *
+     * @param {String} type     The type of the checkbox (e.g. visible)
+     * @returns                 True if no checkboxes of the given type are selected
+     */
+    const areNoCheckboxesSelected = (type) => {
+        if (filteredRows.length === 0) return true;
+        const checkedList = getCheckedListByType(type);
+
+        let noSelectedRows = true;
+        filteredRows.forEach(row => {
+            if (checkedList[row["id"]]) {
+                noSelectedRows = false;
+            }
+
+        });
+        return noSelectedRows;
+    }
+
+    /**
+     * Handles the change if a column header is clicked.
+     *
+     * @param {Object} params                       The default parameters with metadata about the clicked column
+     * @param {String} params.colDef.field          The fieldId of the clicked column
+     * @param {String} params.colDef.headerName     The name of the column that is displayed
+     */
+    const columnHeaderClick = (params) => {
+        if (!typeList.includes(params.colDef.field)) return;
+        const type = params.colDef.headerName;
+        const visibleCopy = [...getCheckedListByType(type)];
+        const allCheckboxesSelected = areAllCheckboxesSelected(type);
+        filteredRows.forEach(
+            prop => {
+                visibleCopy[prop["id"]] = !allCheckboxesSelected
+            }
+        )
+        const setter = getCheckedSetterByType(type);
+        setter(visibleCopy);
+    }
+
+    /**
+     * Applies the changes made in the current session of the EditModelGroup and closes the Modal.
+     * The changes are dispatched into the redux store.
+     */
+    const applyChanges = () => {
+        const dataCpy = JSON.parse(JSON.stringify(modelData));
+
+        for (let i = 0; i &lt; modelList.length; i++) {
+            const model = modelList[i];
+            dataCpy[model][mean] = meanVisible[i];
+            dataCpy[model][std] = stdVisible[i];
+            dataCpy[model][median] = medianVisible[i];
+            dataCpy[model][percentile] = percentileVisible[i];
+            dataCpy[model][isVisible] = isVisible[i];
+        }
+
+        dispatch(updatePropertiesOfModelGroup({groupId: props.modelGroupId, data: dataCpy}))
+        props.onClose();
+    }
+
+    /**
+     * Discards the changes made in the current session of the EditModelGroup and closes the Modal.
+     * All changes are lost in the process.
+     */
+    const discardChanges = () => {
+        const meanData = [], stdData = [], medianData = [], percentileData = [], visibleData = [];
+
+        for (const model of modelList) {
+            meanData.push(modelData[model][mean]);
+            stdData.push(modelData[model][std]);
+            medianData.push(modelData[model][median]);
+            percentileData.push(modelData[model][percentile]);
+            visibleData.push(modelData[model].isVisible);
+        }
+
+        setMeanVisible(meanData);
+        setStd(stdData);
+        setMedianVisible(medianData);
+        setPercentileVisible(percentileData);
+        setIsVisible(visibleData);
+
+        props.onClose();
+    }
+
+    /**
+     * Generates a column header for a given type.
+     *
+     * @param {String} type     The type of the column (e.g. visible)
+     * @returns                 JSX with the generated header name.
+     */
+    const generateHeaderName = (type) => {
+        return (
+            &lt;div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap', cursor: 'pointer'}}>
+                &lt;Box
+                    sx={{
+                        textAlign: 'center',
+                        marginRight: '5px',
+                        width: '42px',
+                        height: '42px',
+                        borderRadius: '50%',
+                        '&amp;:hover': {
+                            backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.hoverOpacity),
+                        },
+                    }}
+                >
+                    {
+                        areAllCheckboxesSelected(type) ?
+                            &lt;CheckBoxIcon
+                                fontSize="medium"
+                                color="primary"
+                                data-testid={`ColumnCheckboxCheckedType${type}`}
+                            />
+                        : (
+                            areNoCheckboxesSelected(type) ?
+                                &lt;CheckBoxOutlineBlankIcon
+                                    fontSize="medium"
+                                    data-testid={`ColumnCheckboxUncheckedType${type}`}
+                                />
+                            :
+                                &lt;IntermediateCheckBoxIcon
+                                    fontSize="medium"
+                                    color="primary"
+                                    data-testid={`ColumnCheckboxIntermediateType${type}`}
+                                />
+                            )
+                    }
+                &lt;/Box>
+                {type}
+            &lt;/div>
+        );
+    }
+
+    /**
+     * A customized MUI Checkbox.
+     *
+     * @param {Object} props    Props for the MUI Checkbox
+     * @returns                 JSX with the customized Checkbox
+     */
+    const CustomCheckbox = (props) => {
+        return (
+            &lt;div className="d-flex justify-content-between align-items-center" style={{cursor: "pointer"}}>
+                &lt;Checkbox size='medium' checked={props.isChecked} onClick={props.handleChecked} sx={{ml: '4px'}}/>
+            &lt;/div>
+        );
+    }
+
+    /**
+     * Creates a checkbox for a specific cell in the data grid.
+     *
+     * @param {Object} params   The params containing metadata about the row
+     * @param {String} type     The type of the selection (e.g. visible)
+     * @returns                 JSX element with the customized Cell-Checkbox
+     */
+    const createCellCheckBox = (params, type) => {
+        const checkedList = getCheckedListByType(type);
+        const setter = getCheckedSetterByType(type);
+        return (
+            &lt;div data-testid={`CellCheckboxRow${params.row.id}Type${type}`}>
+                &lt;CustomCheckbox
+                    isChecked={checkedList[params.row.id]}
+                    handleChecked={() => {
+                        const checkedHandler = handleChecked(checkedList, setter);
+                        checkedHandler(params.row.id)
+                    }}
+                />
+            &lt;/div>
+        );
+    }
+
+    /**
+     * An Object containing the specification for the columns of the data grid.
+     */
+    const columns = [
+        { field: 'project', headerName: 'Project', width: 120, editable: false},
+        { field: 'institute', headerName: 'Institute', width: 150, editable: false },
+        { field: 'model', headerName: 'Model', width: 225, editable: false },
+        {
+            field: mean, headerName: 'Mean', sortable: false, width: 140, disableClickEventBubbling: true,
+            renderHeader: () => generateHeaderName("Mean"),
+            renderCell: (params) => {
+                return createCellCheckBox(params, "Mean")
+            }
+        },
+        {
+            field: std, headerName: 'Standard deviation', sortable: false, width: 200, disableClickEventBubbling: true,
+            renderHeader: () => generateHeaderName("Standard deviation"),
+            renderCell: (params) => {return createCellCheckBox(params, "Standard deviation")}
+        },
+        {
+            field: median, headerName: 'Median', sortable: false, width: 140, disableClickEventBubbling: true,
+            renderHeader: () => generateHeaderName("Median"),
+            renderCell: (params) => {
+                return createCellCheckBox(params, "Median")
+            }
+        },
+        {
+            field: percentile, headerName: "Percentile", width: 150, sortable: false, disableClickEventBubbling: true,
+            renderHeader: () => generateHeaderName("Percentile"),
+            renderCell: (params) => {
+                return createCellCheckBox(params, "Percentile")
+            }
+        },
+        {
+            field: 'visible', headerName: 'Visible', sortable: false, width: 140, disableClickEventBubbling: true,
+            renderHeader: () => generateHeaderName("Visible"),
+            renderCell: (params) => {
+                return createCellCheckBox(params, "Visible")
+            }
+        },
+
+    ];
+
     return (
-        &lt;>
-        &lt;/>
+        &lt;Modal
+            open={props.isOpen}
+            onClose={discardChanges}
+            aria-labelledby="EditModelGroupModal-modal"
+            data-testid="EditModelGroupModal-modal-wrapper"
+        >
+            &lt;Card sx={cardStyle}>
+                &lt;CardHeader
+                    title={editModalLabel}
+                    action={
+                        &lt;IconButton onClick={discardChanges} aria-label="close" data-testid="DiscardButton">
+                            &lt;CloseIcon/>
+                        &lt;/IconButton>
+                    }
+                />
+                &lt;div style={{width: "95%"}}>
+                    &lt;SearchBar inputArray={rows} foundIndicesCallback={foundIndices}/>
+                &lt;/div>
+                &lt;StyledDataGrid
+                    rows={filteredRows}
+                    columns={columns}
+                    pageSize={10}
+                    rowsPerPageOptions={[10]}
+                    onColumnHeaderClick={columnHeaderClick}
+                    disableColumnMenu
+                    columnBuffer={8}
+                    sx={{height: '65%'}}
+                />
+                &lt;CardActions sx={{justifyContent: "flex-end", marginTop: "2%"}}>
+                    &lt;Button onClick={applyChanges} variant="contained" data-testid="ApplyButton">{applyButtonLabel}&lt;/Button>
+                &lt;/CardActions>
+            &lt;/Card>
+        &lt;/Modal>
     );
+}
+
+EditModelGroupModal.propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    modelGroupId: PropTypes.number.isRequired,
+    reportError: PropTypes.func
 }
 
 export default EditModelGroupModal;</code></pre>
@@ -65,19 +613,26 @@ export default EditModelGroupModal;</code></pre>
 
 
 
-</div>
-
-<nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="InputComponents.html">InputComponents</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddModelGroupModal">AddModelGroupModal</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#CookieConsentModal">CookieConsentModal</a></li><li><a href="global.html#EditModelGroupModal">EditModelGroupModal</a></li><li><a href="global.html#ErrorMessageModal">ErrorMessageModal</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Graph">Graph</a></li><li><a href="global.html#LatitudeBandSelector">LatitudeBandSelector</a></li><li><a href="global.html#ModelGroupCard">ModelGroupCard</a></li><li><a href="global.html#ModelGroupConfigurator">ModelGroupConfigurator</a></li><li><a href="global.html#NavBar">NavBar</a></li><li><a href="global.html#OffsetConfigurator">OffsetConfigurator</a></li><li><a href="global.html#PlotNameField">PlotNameField</a></li><li><a href="global.html#PlotTypeSelector">PlotTypeSelector</a></li><li><a href="global.html#ReferenceYearSlider">ReferenceYearField</a></li><li><a href="global.html#RegionSelector">RegionSelector</a></li><li><a href="global.html#SeasonCheckBoxGroup">SeasonCheckBoxGroup</a></li><li><a href="global.html#Section">Section</a></li><li><a href="global.html#Sidebar">Sidebar</a></li><li><a href="global.html#TimeCheckBoxGroup">TimeCheckBoxGroup</a></li><li><a href="global.html#XAxisSlider">XAxisField</a></li><li><a href="global.html#YAxisSlider">YAxisField</a></li></ul>
-</nav>
-
-<br class="clear">
-
-<footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Sun Dec 19 2021 18:43:24 GMT+0100 (Mitteleuropäische Normalzeit)
-</footer>
-
-<script> prettyPrint(); </script>
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.10</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
 <script src="scripts/linenumber.js"> </script>
+
+
 </body>
 </html>

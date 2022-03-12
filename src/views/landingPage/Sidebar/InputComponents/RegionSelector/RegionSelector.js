@@ -8,7 +8,8 @@ import {updateURL} from "../../../../../index";
 
 /**
  * enables the user to select / deselect regions as well as entering a private region {@link LatitudeBandSelector}
- * @todo add redux connection
+ * 
+ * @component
  * @param {Object} props
  * @param {function} props.reportError - used to report error functions
  * @returns {JSX.Element}
@@ -26,14 +27,14 @@ function RegionSelector(props) {
      * If the first region is selected the array would have the following form: [0]
      * If the second and fifth region are selected the array would have the following form: [1, 4]
      */
-    const yRange = useSelector(selectPlotXRange);
+    const xRangeRegions = useSelector(selectPlotXRange);
     /**
      * Handles the change if a region is clicked (selected/deselected).
      *
      * @param {number} regionIdx The index of the region that was clicked.
      */
     const handleRegionChecked = (regionIdx) => {
-        let regionCpy = [...yRange.regions];
+        let regionCpy = [...xRangeRegions.regions];
         if (regionCpy.includes(regionIdx)) {
             regionCpy = regionCpy.filter((m) => m !== regionIdx);
         } else {
@@ -70,7 +71,7 @@ function RegionSelector(props) {
                                 label={r}
                                 control={
                                     <Checkbox
-                                        checked={yRange.regions.includes(idx)}
+                                        checked={xRangeRegions.regions.includes(idx)}
                                         onClick={() => handleRegionChecked(idx)}
                                     />
                                 }

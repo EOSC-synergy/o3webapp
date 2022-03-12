@@ -7,26 +7,25 @@ import {
     Select,
     Typography,
     Card,
-    Grid,
     Button, IconButton, CardContent,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import PropTypes from "prop-types";
-import { fileFormats, O3AS_PLOTS } from "../../../../utils/constants";
-import { downloadGraphAsPDF} from "../../../../services/pdf/pdfCreator";
+import { fileFormats } from "../../../../utils/constants";
+import { downloadGraphAsPDF} from "../../../../services/downloading/pdf/pdfCreator";
+import { downloadGraphAsCSV, downloadGraphAsPNG, downloadGraphAsSVG} from "../../../../services/downloading/otherFormats";
 import { useSelector } from "react-redux";
 import { selectPlotId, selectPlotTitle} from "../../../../store/plotSlice/plotSlice";
 import { selectActivePlotData} from "../../../../services/API/apiSlice";
 import { selectAllModelGroups } from "../../../../store/modelsSlice/modelsSlice";
 import { REQUEST_STATE } from "../../../../services/API/apiSlice";
-import { generateCsv } from "../../../../services/csv/csvParser";
 import CloseIcon from "@mui/icons-material/Close";
 import CardHeader from "@mui/material/CardHeader";
 import CardActions from "@mui/material/CardActions";
 
 /**
  * Opens a modal where the user can select the file format and download the plot.
- *
+ * @component
  * @param {Object} props
  * @param {boolean} props.isOpen -> whether modal should be visible
  * @param {function} props.onClose -> handles closing the modal
@@ -36,17 +35,17 @@ import CardActions from "@mui/material/CardActions";
 function DownloadModal(props) {
 
   /**
-   * An array containing all Model Groups
+   * An array containing all model groups.
    */
   const modelGroups = useSelector(state => selectAllModelGroups(state));
 
   /**
-   * the plot id of the graph (tco3_zm, tco3_return etc.)
+   * The plot id of the graph (tco3_zm, tco3_return etc.).
    */
   const plotId = useSelector(selectPlotId);
 
   /**
-   * the active data of the current plot which contains usefull information about the models.
+   * The active data of the current plot which contains information about the models.
    */
   const activeData = useSelector(state => selectActivePlotData(state, plotId));
 
@@ -55,23 +54,13 @@ function DownloadModal(props) {
    */
   const plotTitle = useSelector(selectPlotTitle);
 
-
   /**
-   * The Selectedfile format which will be selected by the selection.
+   * The selected file format.
    */
-  const [selectedFileFormat, setSelectedFileFormat] = React.useState("PDF");
-
- 
-
-
+  const [selectedFileFormat, setSelectedFileFormat] = React.useState('');
 
   /**
    * The style of the DownloadModal.
-   *
-   * @type {{
-   *          p: number, boxShadow: number, transform: string, top: string,
-   *          bgColor: *, left: string, width: string, position: string
-   *       }} the props
    */
   const style = {
     position: "absolute",
@@ -85,165 +74,24 @@ function DownloadModal(props) {
   };
 
   /**
-   * Downloads the Graph image as a PNG file. 
-   *
-   * @param {the File name of the PNG} fileName
-   * @returns a Promise which provides the user to download the PNG file if it was successful.
-   */
-  function downloadGraphAsPNG(fileName) {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      const svgElement = document.querySelector(".apexcharts-svg");
-      const imageBlobURL =
-        "data:image/svg+xml;charset=utf-8," +
-        encodeURIComponent(svgElement.outerHTML);
-
-      img.onload = () => {
-        let canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0);
-        const dataURL = canvas.toDataURL("image/png");
-        downloadBase64File(dataURL, fileName);
-        resolve(dataURL);
-      };
-      img.onerror = (error) => {
-        reject(error);
-      };
-      img.src = imageBlobURL;
-    });
-  }
-
-  /**
-   * Downloads the Graph image as a SVG file. 
-   *
-   * @param {the File name of the SVG} fileName
-   * @returns a Promise which provides the user to download the SVG file if it was successful.
-   */
-  function downloadGraphAsSVG(fileName) {
-    return new Promise((resolve, reject) => {
-      const svgElement = document.querySelector(".apexcharts-svg");
-      const imageBlobURL =
-        "data:image/svg+xml;charset=utf-8," +
-        encodeURIComponent(svgElement.outerHTML);
-      downloadBase64File(imageBlobURL, fileName);
-      resolve(imageBlobURL);
-    });
-  }
-
-  /**
-   * Downloads the data present in the graph as a csv file.
-   * 
-   * @param {string} plotTitle the title of the plot
-   * @param {string} plotId the current id of the plot
-   */
-  function downloadGraphAsCsv(plotTitle, plotId) {
-      let series, seriesX, categoryLabels, seriesNames;
-      try {
-          const global = window.ApexCharts.getChartByID(plotId).w.globals;
-          series = global.series;
-          seriesX = global.seriesX;
-          categoryLabels = global.categoryLabels;
-          seriesNames = global.seriesNames;
-      } catch (TypeError) {
-        props.reportError("Can't download the chart if it hasn't been fully loaded.");
-        return;
-      }
-      
-      const csvData = [];
-      if (plotId === O3AS_PLOTS.tco3_zm) {
-        // ### tco3_zm ###
-        const LENGTH = Math.max(...seriesX.map(series => series.length));
-        for (let lineIndex = 0; lineIndex < LENGTH; ++lineIndex) {
-            const line = {
-                category: seriesX[0][lineIndex],
-            };
-            for (let index in seriesNames) {
-                const value = series[index][lineIndex];
-                line[seriesNames[index]] = value ? value.toFixed(2) : value;
-            }
-            csvData.push(line);
-        }
-      } else if (plotId === O3AS_PLOTS.tco3_return) {
-
-        for (let regionIndex in categoryLabels) {
-            
-            const line = {
-                category: categoryLabels[regionIndex],
-            };
-            for (let seriesIndex in seriesNames) {
-                if (!seriesNames[seriesIndex]) continue; // skip "box" which is empty
-                const value = series[seriesIndex][regionIndex];
-                line[seriesNames[seriesIndex]] = value ? value.toFixed(2) : value;
-            }
-            csvData.push(line);
-        }
-
-      } else {
-          throw new Error(`The given plotId: "${plotId} has not csv support (yet)!"`);
-      }
-      
-      downloadCsvFile({fileName: plotTitle + ".csv", csvString: generateCsv(csvData)}); // download data with title
-
-  }
-
-  /**
-   * Downloads a given string interpreted as csv
-   * 
-   * @param {string} fileName name of the downloadable file
-   * @param {string} csvString the content of this file
-   */
-  function downloadCsvFile({fileName, csvString}) {
-    const blob = new Blob([csvString]);
-    const a = window.document.createElement("a");
-
-    a.href = window.URL.createObjectURL(blob, {
-    type: "text/csv"
-    });
-    a.download = fileName;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  }
-
-
-  /**
-   * Downloads the Base64 file concerning to the given base64 data. 
-   * 
-   * @param {the given base64 data} base64Data 
-   * @param {the desired file name} fileName 
-   */
-  function downloadBase64File(base64Data, fileName) {
-    const downloadLink = document.createElement("a");
-    downloadLink.href = base64Data;
-    downloadLink.download = fileName;
-    downloadLink.click();
-  }
-
-  /**
-   * Gets active if the download plot button is clicked.
-   * and downloads concerning to the file format the desired file or image.
-   *
+   * Handles the download of the plot, if the download button is clicked.
    */
   const handleDownloadPlot = () => {
     if (selectedFileFormat === "PDF") {
-      downloadGraphAsPDF(plotId, plotTitle, modelGroups, activeData.data);
+      downloadGraphAsPDF(plotId, plotTitle, modelGroups, activeData.data, props.reportError);
     } else if (selectedFileFormat === "PNG") {
-      downloadGraphAsPNG(plotTitle);
+      downloadGraphAsPNG(plotTitle, props.reportError);
     } else if (selectedFileFormat === "SVG") {
-      downloadGraphAsSVG(plotTitle);
+      downloadGraphAsSVG(plotTitle, props.reportError);
     } else if (selectedFileFormat === "CSV") {
-      downloadGraphAsCsv(plotTitle, plotId);
+      downloadGraphAsCSV(plotTitle, plotId, props.reportError);
     }
-
   };
 
   /**
-   * Calls the redux store and changes the selected file format.
+   * Changes the selected file format in the Redux store.
    *
    * @param {event} event the event that called this function
-   *
    */
   const changeFileFormat = (event) => {
     setSelectedFileFormat(event.target.value);
@@ -255,7 +103,7 @@ function DownloadModal(props) {
               <CardHeader
                   title="Download Plot"
                   action={
-                      <IconButton onClick={props.onClose} aria-label="close">
+                      <IconButton onClick={props.onClose} aria-label="close" data-testid="DownloadModal-close">
                           <CloseIcon />
                       </IconButton>
                   }
@@ -269,6 +117,8 @@ function DownloadModal(props) {
                           label="format"
                           value={selectedFileFormat}
                           onChange={changeFileFormat}
+                          inputProps={{"data-testid":"DownloadModal-select-file-format"}}
+                          
                       >
                           {fileFormats.map((elem, idx) => (
                               <MenuItem key={idx} value={elem.description}>
@@ -280,9 +130,10 @@ function DownloadModal(props) {
               </CardContent>
               <CardActions sx={{justifyContent: "flex-end", marginTop: "2%"}}>
                   <Button
-                      disabled={activeData.status !== REQUEST_STATE.success}
+                      disabled={selectedFileFormat === '' || activeData.status !== REQUEST_STATE.success}
                       variant="contained"
                       onClick={handleDownloadPlot}
+                      data-testid="DownloadModal-download-plot"
                   >
                       <Typography>Download</Typography>
                   </Button>
