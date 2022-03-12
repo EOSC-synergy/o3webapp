@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {ALL_REGIONS_ORDERED, O3AS_PLOTS, DEFAULT_MONTHS} from "../../utils/constants";
+import {ALL_REGIONS_ORDERED, O3AS_PLOTS, DEFAULT_MONTHS, latitudeBands} from "../../utils/constants";
 
 /**
  * The initial state of the plotSlice defines the data structure in the
@@ -10,18 +10,16 @@ import {ALL_REGIONS_ORDERED, O3AS_PLOTS, DEFAULT_MONTHS} from "../../utils/const
  */
 export const initialState = {
 
-    plotId: "tco3_zm", // the currently active plot
+    plotId: O3AS_PLOTS.tco3_zm, // the initially active plot
     // maps plot ids to their settings
     generalSettings: {
-        location: {
-            minLat: -90,
-            maxLat: 90
-        },
+        location: latitudeBands[6].value, // Global Region
         months: DEFAULT_MONTHS,
     },
 
     plotSpecificSettings: {
-        "tco3_zm": {
+        // initall settings for tco3_zm
+        [O3AS_PLOTS.tco3_zm]: {
             title: "OCTS Plot", // the title shown in the apexcharts generated chart
             displayXRange: {
                 years: {
@@ -29,20 +27,15 @@ export const initialState = {
                     maxX: 2100,
                 }
             },
-            displayYRange: {
-                minY: 280,
-                maxY: 330,
-            },
+            displayYRange: { minY: 0, maxY: 0 }, // gets adjusted automatically on each request
         },
-        "tco3_return": {
+        // initall settings for tco3_return
+        [O3AS_PLOTS.tco3_return]: {
             title: "Return/Recovery Plot",
             displayXRange: {
-                regions: ALL_REGIONS_ORDERED.map((el, idx) => idx), // implicitly refers to ALL_REGIONS_ORDERED
+                regions: ALL_REGIONS_ORDERED.map((_, idx) => idx), // implicitly refers to ALL_REGIONS_ORDERED by storing only the indices
             },
-            displayYRange: {
-                minY: 2000,
-                maxY: 2100,
-            },
+            displayYRange: { minY: 0, maxY: 0 }, // gets adjusted automatically on each request
         }
     }
 };
