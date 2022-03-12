@@ -44,12 +44,6 @@ const LS_Symbol = Symbol("LocationSelector");
  */
 const MGC_Symbol = Symbol("ModelGroupConfigurator");
 
-/** Stores the name of the OffsetConfigurator component as a Symbol.
- * @constant {string}
- * @memberof Section
- */
-const OC_Symbol = Symbol("OffsetConfigurator");
-
 /** Stores the name of the PlotNameField component as a Symbol.
  * @constant {string}
  * @memberof Section
@@ -186,8 +180,6 @@ function Section(props) {
                     return <LocationSelector key={key} reportError={props.reportError}/>
                 case MGC_Symbol.description:
                     return <ModelGroupConfigurator key={key} reportError={props.reportError}/>;
-                case OC_Symbol.description:
-                    return <OffsetConfigurator key={key} reportError={props.reportError}/>;
                 case PNF_Symbol.description:
                     return <PlotNameField key={key} reportError={props.reportError}/>;
                 case RMS_Symbol.description:
