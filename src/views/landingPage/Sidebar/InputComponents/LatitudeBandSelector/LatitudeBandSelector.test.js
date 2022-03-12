@@ -62,9 +62,11 @@ describe("tests redux functionality", () => {
         userEvent.click(getByRole("button"));
         const options = getAllByRole("option");
 
-        expect(container).not.toHaveTextContent("SELECT LATITUDE RANGE");
+        expect(container).not.toHaveTextContent("Min. Lat");
+        expect(container).not.toHaveTextContent("Max. Lat");
         userEvent.click(options[options.length - 1]);
-        expect(container).toHaveTextContent("SELECT LATITUDE RANGE");
+        expect(container).toHaveTextContent("Min. Lat");
+        expect(container).toHaveTextContent("Max. Lat");
         
     });
     
