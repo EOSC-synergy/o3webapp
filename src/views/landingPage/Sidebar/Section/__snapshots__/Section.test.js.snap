@@ -233,15 +233,16 @@ exports[`Section renders correclty renders correctly from config file 1`] = `
                       class="MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
                     >
                       <div
-                        class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+                        class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary Mui-error MuiInputBase-formControl MuiInputBase-sizeSmall css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
                       >
                         <input
-                          aria-invalid="false"
+                          aria-describedby="outlined-basic-helper-text"
+                          aria-invalid="true"
                           class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
                           data-testid="YAxisField-left-input"
                           id="outlined-basic"
                           type="text"
-                          value="280"
+                          value="0"
                         />
                         <fieldset
                           aria-hidden="true"
@@ -258,7 +259,12 @@ exports[`Section renders correclty renders correctly from config file 1`] = `
                           </legend>
                         </fieldset>
                       </div>
-                      
+                      <p
+                        class="MuiFormHelperText-root Mui-error MuiFormHelperText-sizeSmall MuiFormHelperText-contained MuiFormHelperText-filled css-k4qjio-MuiFormHelperText-root"
+                        id="outlined-basic-helper-text"
+                      >
+                        min&gt;=max
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -281,15 +287,16 @@ exports[`Section renders correclty renders correctly from config file 1`] = `
                       class="MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
                     >
                       <div
-                        class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-sizeSmall css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+                        class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary Mui-error MuiInputBase-formControl MuiInputBase-sizeSmall css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
                       >
                         <input
-                          aria-invalid="false"
+                          aria-describedby="outlined-basic-helper-text"
+                          aria-invalid="true"
                           class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
                           data-testid="YAxisField-right-input"
                           id="outlined-basic"
                           type="text"
-                          value="330"
+                          value="0"
                         />
                         <fieldset
                           aria-hidden="true"
@@ -306,7 +313,12 @@ exports[`Section renders correclty renders correctly from config file 1`] = `
                           </legend>
                         </fieldset>
                       </div>
-                      
+                      <p
+                        class="MuiFormHelperText-root Mui-error MuiFormHelperText-sizeSmall MuiFormHelperText-contained MuiFormHelperText-filled css-k4qjio-MuiFormHelperText-root"
+                        id="outlined-basic-helper-text"
+                      >
+                        min&gt;=max
+                      </p>
                     </div>
                   </div>
                 </div>
