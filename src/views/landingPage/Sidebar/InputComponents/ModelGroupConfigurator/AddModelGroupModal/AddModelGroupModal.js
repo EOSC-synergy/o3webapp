@@ -24,7 +24,6 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPlotDataForCurrentModels, REQUEST_STATE } from "../../../../../../services/API/apiSlice";
 import { selectNameOfGroup, selectModelDataOfGroup } from "../../../../../../store/modelsSlice/modelsSlice";
-import DoneIcon from "@mui/icons-material/Done";
 
 
 /**
@@ -226,6 +225,7 @@ function AddModelGroupModal(props) {
                             disabled={modelsVisible.length === 0}
                             inputProps={{
                                 'aria-label': 'all items selected',
+                                'data-testid': 'AddModelGroupModal-select-all'
                             }}
                         />
                     }
@@ -350,12 +350,13 @@ function AddModelGroupModal(props) {
                             onBlur={updateGroupName}
                             sx={{marginBottom: '0.5em', marginLeft: '0.5em'}}
                             placeholder="Your group"
+                            inputProps={{"data-testid": "AddModelGroupModal-card-group-name"}}
                         />
                     </Grid>
                     <Box id="modal-modal-description" sx={{ mt: 2 }}>
                         <Searchbar inputArray={allModels} foundIndicesCallback={setCurrentlyVisibleModels} shouldReturnValues={true} />
                         <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ marginTop: '0.5em' }}>
-                            <Grid item sm={5} xs={12}>
+                            <Grid item sm={5} xs={12} data-testid="AddModelGroupModal-card-header-left">
                                 <Typography>All Available Models</Typography>
                                 {
                                     isLoading ? 
@@ -390,7 +391,7 @@ function AddModelGroupModal(props) {
                                     </Button>
                                 </Grid>
                             </Grid>
-                            <Grid item sm={5} xs={12}>
+                            <Grid item sm={5} xs={12} data-testid="AddModelGroupModal-card-header-right">
                                 <Typography>Models in {groupName ? groupName : "your group"}</Typography>
                                 {
                                     isLoading ? 
@@ -404,7 +405,13 @@ function AddModelGroupModal(props) {
                     {errorMessage && <Alert severity="error" sx={{marginTop: '2em'}}>{errorMessage}</Alert>}
                 </CardContent>
                 <CardActions sx={{justifyContent: "flex-end", marginTop: "2%"}}>
-                    <Button onClick={addOrEditGroup} variant="contained">{'modelGroupId' in props? "Save Changes" : "Add group"}</Button>
+                    <Button 
+                        onClick={addOrEditGroup} 
+                        variant="contained"
+                        data-testid="AddModelGroupModal-save-button"
+                    >
+                        {'modelGroupId' in props? "Save Changes" : "Add group"}
+                    </Button>
                 </CardActions>
             </Card>
         </Modal>
