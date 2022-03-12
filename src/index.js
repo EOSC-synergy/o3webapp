@@ -20,7 +20,23 @@ import {
 } from "./store/plotSlice/plotSlice";
 import {setModel, setVisibility, setYear} from "./store/referenceSlice/referenceSlice";
 
-
+/**
+ * This method uses the big-integer library
+ * to convert a number in string format
+ * from one base to another.
+ *
+ * (The primitive type BigInt is not being used, since it is not supported in React
+ * and common workarounds like
+ * @example
+ * if (typeof BigInt === 'undefined') global.BigInt = require('big-integer');
+ * @inheritDoc
+ * didn't work)
+ *
+ * @param str the input number as a string
+ * @param baseFrom the base of the input number
+ * @param baseTo the base of the output number
+ * @returns {string} the output number as a string
+ */
 function parseBigInt(str, baseFrom, baseTo) {
     const bigInt = require('big-integer');
 
@@ -38,6 +54,9 @@ function parseBigInt(str, baseFrom, baseTo) {
     return result;
 }
 
+/**
+ * This method updates the URL based on the data in the store.
+ */
 export function updateURL() {
     const plotSpecific = store.getState().plot.plotSpecificSettings;
     const otherSettings = [];
@@ -82,6 +101,9 @@ export function updateURL() {
     window.history.pushState('', '', `?plot=${store.getState().plot.plotId}&${otherSettings.join("&")}`);
 }
 
+/**
+ * This method updates the store based on the data in the URL.
+ */
 function updateStoreWithURL() {
     if (queryString !== '') {
         const urlParams = new URLSearchParams(queryString);
