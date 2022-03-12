@@ -3,25 +3,7 @@
 exports[`renders correctly 1`] = `
 <div>
   <div
-    style="width: 100%; margin-top: 5%;"
-  >
-    <div
-      class="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-1ws8119-MuiDivider-root"
-      role="separator"
-    >
-      <span
-        class="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
-      >
-        <p
-          class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
-        >
-          SELECT LATITUDE RANGE
-        </p>
-      </span>
-    </div>
-  </div>
-  <div
-    style="display: flex; align-items: center; justify-content: center; margin-top: 10%; margin-left: 5%;"
+    style="display: flex; align-items: center; justify-content: center; margin-top: 5%; margin-left: 5%;"
   >
     <div
       class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"

@@ -122,18 +122,13 @@ function CustomLatitudeSelector(props) {
     }
 
     return (<>
-        <div style={{width: "100%", marginTop: "5%"}}>
-            <Divider><Typography>SELECT LATITUDE RANGE</Typography></Divider>
-        </div>
         <div style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            marginTop: "10%",
+            marginTop: "5%",
             marginLeft: "5%"
         }}>
-
-
             <Grid container>
                 <Grid item xs={5.5} sx={{mt: "-8px"}}>
                     <FormControl sx={{width: '90%'}}>
