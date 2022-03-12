@@ -8,7 +8,6 @@ import {
     normalizeArray,
     preTransformApiData,
     default_TCO3_return,
-    defaultTCO3_zm,
     getDefaultYAxisTco3Return,
     getOptimalTickAmount,
     getTickAmountYAxis,
@@ -252,8 +251,6 @@ describe("testing optionsFormatter functionality", () => {
             const result = getOptions({plotId: O3AS_PLOTS.tco3_return, styling: {colors:[]}, plotTitle: "title", xAxisRange, yAxisRange, seriesNames: [], getState: store.getState});
             expect(result).toEqual(expected);
         });
-        
-        test.todo('returns the correct options formatted correctly for tco3_zm');
 
     });
 
