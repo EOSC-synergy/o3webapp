@@ -19,20 +19,38 @@ import {
     setTitle
 } from "./store/plotSlice/plotSlice";
 import {setModel, setVisibility, setYear} from "./store/referenceSlice/referenceSlice";
+import bigInt from "big-integer";
 
-if (typeof BigInt === 'undefined') global.BigInt = require('big-integer');
 
-function parseBigInt(str, base) {
-    if (typeof BigInt === 'undefined') global.BigInt = require('big-integer');
+function parseBigInt(str, baseFrom, baseTo) {
+    const bigInt = require('big-integer');
 
-    base = BigInt(base);
-    let bigint = BigInt(0);
+    baseFrom = bigInt(baseFrom);
+    baseTo = bigInt(baseTo);
+    console.log(str);
+    let bigint = bigInt(0);
+    for (let char of str) {
+        bigint = bigInt(baseFrom * bigint + bigInt(parseInt(char, baseFrom)));
+    }
+    console.log(bigint.toString());
+    let result = "";
+    while (bigInt(bigint).greater(bigInt(0))) {
+        console.log(bigint);
+        result = bigInt(bigInt(bigint).mod(bigInt(baseTo))).toString(baseTo).toUpperCase() + result;
+        bigint = bigInt(bigInt(bigint).divide(bigInt(baseTo)));
+        console.log(bigInt(bigint).divide(baseTo).multiply(baseTo));
+    }
+
+    /*
     for (let i = 0; i < str.length; i++) {
         let code = str[str.length-1-i].charCodeAt(0) - 48;
         if(code >= 10) code -= 39;
-        bigint += base**BigInt(i) * BigInt(code);
+        bigint += base**bigInt(i) * bigInt(code);
     }
-    return bigint;
+     */
+    console.log(result);
+    //return bigint.toString(base);
+    return result;
 }
 
 export function updateURL() {
@@ -72,7 +90,8 @@ export function updateURL() {
             modelSettings.push(+modelGroup.models[model].median);
             modelSettings.push(+modelGroup.models[model].percentile);
         }
-        modelSettings = parseBigInt(modelSettings.join(""), 2).toString(16).toUpperCase();
+        console.log(modelSettings);
+        modelSettings = parseBigInt(modelSettings.join(""), 2, 16);
         otherSettings.push(`group${i}="${name}",${visibilities.join("")},${models.join(",")},${modelSettings}`);
     }
 
@@ -146,7 +165,7 @@ function updateStoreWithURL() {
                 return store.getState().api.models.data[parseInt(e)];
             });
             let modelSettings = elem.split('"')[2].split(',').slice(-1)[0];
-            const binary = parseBigInt(modelSettings, 16).toString(2);
+            const binary = parseBigInt(modelSettings, 16, 2);
             let leadingZeros = "0" * (models.length * dataPerModel - binary.length);
             if (typeof leadingZeros === 'number') leadingZeros = "";
             modelSettings = leadingZeros + binary;
