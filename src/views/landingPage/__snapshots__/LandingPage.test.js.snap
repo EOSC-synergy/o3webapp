@@ -643,6 +643,7 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                 <button
                                   aria-label="delete model group"
                                   class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                                  data-testid="ModelGroupCard-delete-model-group"
                                   tabindex="0"
                                   type="button"
                                 >
