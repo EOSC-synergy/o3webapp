@@ -1348,8 +1348,8 @@ export function getIncludedModels(modelsSlice) {
     const hemisphereExtensionMax = (locationValue.maxLat <= 0 ? '°S' : '°N');
     return `${Math.abs(locationValue.minLat)}${hemisphereExtensionMin}-${Math.abs(locationValue.maxLat)}${hemisphereExtensionMax}`;
 }
-
-export const findLatitudeBandByLocation = (getState) => {
+ 
+const findLatitudeBandByLocation = (getState) => {
     const selectedLocation = getState().plot.generalSettings.location;
     if (typeof selectedLocation === 'undefined') return null;
 

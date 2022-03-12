@@ -976,6 +976,7 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                               <input
                                 aria-hidden="true"
                                 class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                                data-testid="LatitudeBandSelector-select-region"
                                 tabindex="-1"
                                 value="[object Object]"
                               />

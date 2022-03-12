@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux'
 import LatitudeBandSelector from './LatitudeBandSelector';
 import { createTestStore } from "../../../../../store/store"
@@ -9,21 +10,62 @@ beforeEach(() => {
     store = createTestStore();
 });
 
-it('renders without crashing', () => {
-    render(<>
-        <Provider store={store}>
-            <LatitudeBandSelector reportError={() => {}} />
-        </Provider>
-    </>)
+describe("tests basic rendering", () => {
+    it('renders without crashing', () => {
+        render(<>
+            <Provider store={store}>
+                <LatitudeBandSelector reportError={() => {}} />
+            </Provider>
+        </>)
+    });
+    
+    it('renders correctly', () => {
+    
+        const { container } = render(<>
+            <Provider store={store}>
+                <LatitudeBandSelector reportError={() => {}} />
+            </Provider>
+        </>);
+    
+        expect(container).toMatchSnapshot();
+    });
 });
 
-it('renders correctly', () => {
+describe("tests redux functionality", () => {
+    
+    it("updates the region accordingly in the store", () => {
+        const { getByRole, getAllByRole } = render(
+            <Provider store={store}>
+                <LatitudeBandSelector reportError={() => {}} />
+            </Provider>
+        );
 
-    const { container } = render(<>
-        <Provider store={store}>
-            <LatitudeBandSelector reportError={() => {}} />
-        </Provider>
-    </>);
+        userEvent.click(getByRole("button"));
+        const options = getAllByRole("option");
+        userEvent.click(options[2]);
 
-    expect(container).toMatchSnapshot();
+        expect(
+            store.getState().plot.generalSettings.location
+        ).toEqual(
+            { minLat: -20, maxLat: 20 }
+        ); // Tropics
+        userEvent.click(options[options.length - 1]);
+    });
+
+    it("displays a custom latitude band selector if custom region is selected", () => {
+        const { getByRole, getAllByRole, container } = render(
+            <Provider store={store}>
+                <LatitudeBandSelector reportError={() => {}} />
+            </Provider>
+        );
+
+        userEvent.click(getByRole("button"));
+        const options = getAllByRole("option");
+
+        expect(container).not.toHaveTextContent("SELECT LATITUDE RANGE");
+        userEvent.click(options[options.length - 1]);
+        expect(container).toHaveTextContent("SELECT LATITUDE RANGE");
+        
+    });
+    
 });
