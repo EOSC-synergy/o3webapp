@@ -95,6 +95,15 @@ function AddModelGroupModal(props) {
         }
     }, [allModels]);
 
+    useEffect(() => {
+        setGroupName(storeGroupName);
+        setVisible(allModels);
+        setChecked([]);
+        setRight(storeRight);
+
+    }, [props.isOpen]);
+
+
 
     /**
      * Returns how many models in the provided array are currently checked
@@ -185,10 +194,6 @@ function AddModelGroupModal(props) {
         }
         dispatch(setModelsOfModelGroup({groupId: props.modelGroupId, groupName: groupName, modelList: right}));
         dispatch(fetchPlotDataForCurrentModels());
-        setGroupName("");
-        setVisible(allModels);
-        setChecked([]);
-        setRight([]);
         updateURL();
         props.onClose();
     }
