@@ -18,6 +18,7 @@ exports[`tests basic rendering renders correctly 1`] = `
       >
         <span
           class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+          data-testid="RegionSelector-0"
         >
           <input
             checked=""
@@ -51,6 +52,7 @@ exports[`tests basic rendering renders correctly 1`] = `
       >
         <span
           class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+          data-testid="RegionSelector-1"
         >
           <input
             checked=""
@@ -84,6 +86,7 @@ exports[`tests basic rendering renders correctly 1`] = `
       >
         <span
           class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+          data-testid="RegionSelector-2"
         >
           <input
             checked=""
@@ -117,6 +120,7 @@ exports[`tests basic rendering renders correctly 1`] = `
       >
         <span
           class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+          data-testid="RegionSelector-3"
         >
           <input
             checked=""
@@ -150,6 +154,7 @@ exports[`tests basic rendering renders correctly 1`] = `
       >
         <span
           class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+          data-testid="RegionSelector-4"
         >
           <input
             checked=""
@@ -183,6 +188,7 @@ exports[`tests basic rendering renders correctly 1`] = `
       >
         <span
           class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+          data-testid="RegionSelector-5"
         >
           <input
             checked=""
@@ -216,6 +222,7 @@ exports[`tests basic rendering renders correctly 1`] = `
       >
         <span
           class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+          data-testid="RegionSelector-6"
         >
           <input
             checked=""
@@ -249,6 +256,7 @@ exports[`tests basic rendering renders correctly 1`] = `
       >
         <span
           class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
+          data-testid="RegionSelector-7"
         >
           <input
             checked=""

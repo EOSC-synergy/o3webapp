@@ -1576,6 +1576,7 @@ exports[`Section renders correclty renders correctly from config file 4`] = `
               <div
                 aria-expanded="false"
                 class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon css-dd2h8b-MuiAutocomplete-root"
+                data-testid="ReferenceModelSelector-reference-model"
                 role="combobox"
               >
                 <div
@@ -1696,6 +1697,7 @@ exports[`Section renders correclty renders correctly from config file 4`] = `
                         <input
                           aria-invalid="false"
                           class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
+                          data-testid="ReferenceYearField-year"
                           id="outlined-basic"
                           type="text"
                           value="1980"
@@ -1728,6 +1730,7 @@ exports[`Section renders correclty renders correctly from config file 4`] = `
                         checked=""
                         class="PrivateSwitchBase-input css-1m9pwf3"
                         data-indeterminate="false"
+                        data-testid="ReferenceYearField-toggleVisibility"
                         type="checkbox"
                       />
                       <svg
