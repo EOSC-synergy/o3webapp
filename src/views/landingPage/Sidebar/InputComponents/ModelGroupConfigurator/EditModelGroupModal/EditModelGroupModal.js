@@ -465,7 +465,7 @@ function EditModelGroupModal(props) {
     useEffect(() => {
         setIsVisible(modelList.map(model => modelData[model].isVisible));
         setMeanVisible(modelList.map(model => modelData[model].mean));
-        setStd(modelList.map(model => modelData[model][std]));
+        setStdVisible(modelList.map(model => modelData[model][std]));
         setMedianVisible(modelList.map(model => modelData[model].median));
         setPercentileVisible(modelList.map(model => modelData[model].percentile));
     }, [props.isOpen]);
