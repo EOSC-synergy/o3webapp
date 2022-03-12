@@ -2,17 +2,16 @@ import React from "react";
 import {styled} from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import MuiAccordion from '@mui/material/Accordion';
-import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
+import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CustomLatitudeSelector
     from "../InputComponents/LatitudeBandSelector/CustomLatitudeSelector/CustomLatitudeSelector";
 import LatitudeBandSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
 import LocationSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
 import ModelGroupConfigurator from "../InputComponents/ModelGroupConfigurator/ModelGroupConfigurator";
-import OffsetConfigurator from "../InputComponents/OffsetConfigurator/OffsetConfigurator";
 import PlotNameField from "../InputComponents/PlotNameField/PlotNameField";
 import ReferenceModelSelector from "../InputComponents/ReferenceModelSelector/ReferenceModelSelector";
 import ReferenceYearField from "../InputComponents/ReferenceYearField/ReferenceYearField";
@@ -252,6 +251,7 @@ function Section(props) {
                         return (
                             <React.Fragment key={idx}>
                                 {mapNameToComponent(element, idx)}
+                                {idx !== props.components.length - 1 && <div style={{height: '20px'}}/>}
                             </React.Fragment>
                         )
                     })}

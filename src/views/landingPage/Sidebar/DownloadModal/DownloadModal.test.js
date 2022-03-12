@@ -11,7 +11,8 @@ import {O3AS_PLOTS} from '../../../../utils/constants';
 jest.mock('axios');
 
 
-describe('testing DownloadModal rendering', () => {
+
+describe('testing basic rendering & selection', () => {
     let store;
     beforeEach(() => {
         store = createTestStore();
@@ -58,27 +59,28 @@ describe('testing DownloadModal rendering', () => {
         expect(console.error).toHaveBeenCalled();
     });
 
-    it('renders correctly when closed', async () => {
-
+    it('testing select file format functionality', async () => {
+        // SETUP
         const mock = jest.fn();
-        let {getByTestId} = render(
-            <Provider store={store}>
-                <DownloadModal isOpen={true} onClose={() => {
-                }} reportError={mock}/>
-            </Provider>
-        );
-
-        const wrap = getByTestId("DownloadModal-select-file-format")
-        fireEvent.mouseDown(wrap);
-
-        fireEvent.change(wrap, {target: {value: "CSV"}});
-        fireEvent.click(getByTestId("DownloadModal-download-plot"));
         // mock api => data
         // simpler, but less powerful: axios.post.mockResolvedValue({data: tco3zmResponse});
         axios.post.mockImplementation((requestUrl) => {
             return Promise.resolve({data: tco3zmResponse})
         });
         await store.dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, models: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"]}))
+
+        let { getByTestId } = render(
+            <Provider store ={store}> 
+                <DownloadModal isOpen={true} onClose={() => {}} reportError={mock} />
+            </Provider>
+        );
+
+        // ACTUAL TEST
+        const wrap = getByTestId("DownloadModal-select-file-format")
+        fireEvent.mouseDown(wrap);
+
+        fireEvent.change(wrap, {target: {value: "CSV"}});
+        fireEvent.click(getByTestId("DownloadModal-download-plot"));
         fireEvent.click(getByTestId("DownloadModal-download-plot"));
         expect(mock).toHaveBeenCalledWith("Can't download the chart if it hasn't been fully loaded.");
     });

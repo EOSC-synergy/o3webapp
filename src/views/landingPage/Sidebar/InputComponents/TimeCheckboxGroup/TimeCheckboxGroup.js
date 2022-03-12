@@ -225,7 +225,7 @@ function TimeCheckBoxGroup(props) {
 
     return (
         <>
-            <Divider style={{marginTop: "5%"}}><Typography>TIME</Typography></Divider>
+            <Divider><Typography>TIME</Typography></Divider>
             <Grid container justifyContent="center">
                 {
                     !correctSelection
