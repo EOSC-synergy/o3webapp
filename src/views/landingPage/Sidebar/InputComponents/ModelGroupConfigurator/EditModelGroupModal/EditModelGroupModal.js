@@ -498,7 +498,7 @@ function EditModelGroupModal(props) {
             }
         },
         {
-            field: 'percentile', headerName: "Percentile", width: 140, sortable: false, disableClickEventBubbling: true,
+            field: 'percentile', headerName: "Percentile", width: 150, sortable: false, disableClickEventBubbling: true,
             renderHeader: () => generateHeaderName("Percentile"),
             renderCell: (params) => {
                 return createCellCheckBox(params, "Percentile")

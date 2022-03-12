@@ -9,7 +9,15 @@ import {
     setStatisticalValueForGroup,
     setVisibilityForGroup, updatePropertiesOfModelGroup
 } from "./store/modelsSlice/modelsSlice";
-import {DEFAULT_MODEL_GROUP, O3AS_PLOTS, STATISTICAL_VALUES_LIST} from './utils/constants';
+import {
+    DEFAULT_MODEL_GROUP,
+    mean,
+    median,
+    O3AS_PLOTS,
+    percentile,
+    STATISTICAL_VALUES_LIST,
+    std
+} from './utils/constants';
 import {
     setActivePlotId,
     setDisplayXRange,
@@ -88,11 +96,11 @@ export function updateURL() {
         let modelSettings = [];
         for (let model of Object.keys(modelGroup.models)) {
             models.push(store.getState().api.models.data.indexOf(model));
-            modelSettings.push(+modelGroup.models[model].isVisible);
-            modelSettings.push(+modelGroup.models[model].mean);
-            modelSettings.push(+modelGroup.models[model]["standard deviation"]);
-            modelSettings.push(+modelGroup.models[model].median);
-            modelSettings.push(+modelGroup.models[model].percentile);
+            modelSettings.push(+modelGroup.models[model]["isVisible"]);
+            modelSettings.push(+modelGroup.models[model][mean]);
+            modelSettings.push(+modelGroup.models[model][std]);
+            modelSettings.push(+modelGroup.models[model][median]);
+            modelSettings.push(+modelGroup.models[model][percentile]);
         }
         modelSettings = parseBigInt(modelSettings.join(""), 2, 36);
         otherSettings.push(`group${i}="${name}",${visibilities.join("")},${models.join(",")},${modelSettings}`);
@@ -191,11 +199,11 @@ function updateStoreWithURL() {
             const dataCpy = JSON.parse(JSON.stringify(store.getState().models.modelGroups[i].models));
             for (let j = 0; j < groups[i].models.length; j++) {
                 const model = groups[i].models[j];
-                dataCpy[model].isVisible = groups[i].modelSettings[dataPerModel * j];
-                dataCpy[model].mean = groups[i].modelSettings[dataPerModel * j + 1];
-                dataCpy[model].std = groups[i].modelSettings[dataPerModel * j + 2];
-                dataCpy[model].median = groups[i].modelSettings[dataPerModel * j + 3];
-                dataCpy[model].percentile = groups[i].modelSettings[dataPerModel * j + 4];
+                dataCpy[model]["isVisible"] = groups[i].modelSettings[dataPerModel * j];
+                dataCpy[model][mean] = groups[i].modelSettings[dataPerModel * j + 1];
+                dataCpy[model][std] = groups[i].modelSettings[dataPerModel * j + 2];
+                dataCpy[model][median] = groups[i].modelSettings[dataPerModel * j + 3];
+                dataCpy[model][percentile] = groups[i].modelSettings[dataPerModel * j + 4];
             }
             store.dispatch(updatePropertiesOfModelGroup({groupId: i, data: dataCpy}));
         }
