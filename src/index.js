@@ -27,10 +27,10 @@ import {setModel, setVisibility, setYear} from "./store/referenceSlice/reference
  *
  * (The primitive type BigInt is not being used, since it is not supported in React
  * and common workarounds like
- * @example
+ *
  * if (typeof BigInt === 'undefined') global.BigInt = require('big-integer');
- * @inheritDoc
- * didn't work)
+ *
+ * didn't work.)
  *
  * @param str the input number as a string
  * @param baseFrom the base of the input number
