@@ -50,7 +50,7 @@ function ReferenceModelSelector(props) {
     /**
      * Handles the change of the reference model selection.
      */
-    const handleChangeForRefModel = (event, value) => {
+    const handleChangeForRefModel = (_, value) => {
         if (value !== null) {
             dispatch(setModel({model: value}));
             // fetch for tco3_zm and tco3_return
@@ -67,6 +67,7 @@ function ReferenceModelSelector(props) {
             options={allModels}
             renderInput={(params) => <TextField {...params} label="Reference Model" />}
             sx={{width: "100%"}}
+            data-testid="ReferenceModelSelector-reference-model"
         />
     );
 }

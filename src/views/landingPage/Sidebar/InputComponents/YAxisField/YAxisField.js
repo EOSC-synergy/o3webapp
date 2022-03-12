@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {setDisplayYRange, selectPlotYRange, selectPlotId} from "../../../../../store/plotSlice/plotSlice";
 import {Typography, Grid, FormControl, TextField} from "@mui/material";
 import store from '../../../../../store/store';
+import {O3AS_PLOTS} from "../../../../../utils/constants";
 import {updateURL} from "../../../../../index";
 
 /**
@@ -47,7 +48,7 @@ function YAxisField(props) {
      */
     const handleChangeMin = (event) => {
         if (!isNaN(event.target.value)) {
-            if (plotId === 'tco3_zm') setStateY_zm({minY: event.target.value, maxY: maxY});
+            if (plotId === O3AS_PLOTS.tco3_zm) setStateY_zm({minY: event.target.value, maxY: maxY});
             else setStateY_return({minY: event.target.value, maxY: maxY});
             if (event.target.value > 0 && event.target.value < maxY) {
                 dispatch(setDisplayYRange({minY: parseInt(event.target.value), maxY: maxY}));
@@ -63,7 +64,7 @@ function YAxisField(props) {
      */
     const handleChangeMax = (event) => {
         if (!isNaN(event.target.value)) {
-            if (plotId === 'tco3_zm') setStateY_zm({minY: minY, maxY: event.target.value});
+            if (plotId === O3AS_PLOTS.tco3_zm) setStateY_zm({minY: minY, maxY: event.target.value});
             else setStateY_return({minY: minY, maxY: event.target.value});
             if (event.target.value > 0 && minY < event.target.value) {
                 dispatch(setDisplayYRange({minY: minY, maxY: parseInt(event.target.value)}));
@@ -73,12 +74,12 @@ function YAxisField(props) {
     }
 
     useEffect(() => {
-        if (plotId === 'tco3_zm') setStateY_zm({minY, maxY});
+        if (plotId === O3AS_PLOTS.tco3_zm) setStateY_zm({minY, maxY});
         else setStateY_return({minY, maxY});
     }, [plotId, minY, maxY]);
 
     return (
-        <Grid container sx={{width: "90%", marginLeft: "auto", marginRight: "auto", marginTop: "5%"}}>
+        <Grid container sx={{width: "90%", marginLeft: "auto", marginRight: "auto"}}>
             <Grid item xs={3}>
                 <Typography>Y-Axis:</Typography>
             </Grid>
@@ -91,12 +92,12 @@ function YAxisField(props) {
                         value={plotId === 'tco3_zm' ? stateY_zm.minY : stateY_return.minY}
                         onChange={handleChangeMin}
                         error={
-                            plotId === 'tco3_zm' ?
+                            plotId === O3AS_PLOTS.tco3_zm ?
                                 stateY_zm.minY < 0 || stateY_zm.minY >= maxY :
                                 stateY_return.minY < 0 || stateY_return.minY >= maxY
                         }
                         helperText={
-                            plotId === 'tco3_zm' ?
+                            plotId === O3AS_PLOTS.tco3_zm ?
                                 (stateY_zm.minY < 0 ? `<0` : (stateY_zm.minY >= maxY ? `min>=max` : '')) :
                                 (stateY_return.minY < 0 ? `<0` : (stateY_return.minY >= maxY ? `min>=max` : ''))
                         }
@@ -113,15 +114,15 @@ function YAxisField(props) {
                         variant="outlined"
                         id="outlined-basic"
                         size="small"
-                        value={plotId === 'tco3_zm' ? stateY_zm.maxY : stateY_return.maxY}
+                        value={plotId === O3AS_PLOTS.tco3_zm ? stateY_zm.maxY : stateY_return.maxY}
                         onChange={handleChangeMax}
                         error={
-                            plotId === 'tco3_zm' ?
+                            plotId === O3AS_PLOTS.tco3_zm ?
                                 stateY_zm.maxY < 0 || minY >= stateY_zm.maxY :
                                 stateY_return.maxY < 0 || minY >= stateY_return.maxY
                         }
                         helperText={
-                            plotId === 'tco3_zm' ?
+                            plotId === O3AS_PLOTS.tco3_zm ?
                                 (stateY_zm.maxY < 0 ? `<0` : (minY >= stateY_zm.maxY ? `min>=max` : '')) :
                                 (stateY_return.maxY < 0 ? `<0` : (minY >= stateY_return.maxY ? `min>=max` : ''))
                         }

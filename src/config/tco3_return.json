@@ -2,11 +2,17 @@
   "sections": [
     {
       "name": "Appearance",
-      "components": ["PlotNameField", "RegionSelector", "YAxisField"]
+      "components": [
+        "PlotNameField",
+        "RegionSelector",
+        "YAxisField"
+      ]
     },
     {
       "name": "Filter Data",
-      "components": ["CustomLatitudeSelector", "TimeCheckBoxGroup"]
+      "components": [
+        "TimeCheckBoxGroup"
+      ]
     }
   ]
 }
