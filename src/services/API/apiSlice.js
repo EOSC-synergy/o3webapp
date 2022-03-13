@@ -130,6 +130,7 @@ export const updateDataAndDisplaySuggestions = ({plotId, cacheKey, data}) => {
         dispatch(fetchPlotDataSuccess({data, plotId, cacheKey}));
         const requestData = getState().api.plotSpecific[plotId].cachedRequests[cacheKey].data;
         
+        
         const {minX, maxX, minY, maxY} = getSuggestedValues(requestData, getState().models);
         
         dispatch(setDisplayYRangeForPlot({plotId, minY: Math.floor(minY / 10) * 10, maxY: Math.ceil(maxY / 10) * 10}));
@@ -206,11 +207,11 @@ export const fetchPlotData = ({plotId, models}) => {
                 dispatch(selectExistingPlotData({plotId, cacheKey}));
                 if (cachedRequest.status === REQUEST_STATE.success) {
                     
+                    
                     const {minX, maxX, minY, maxY} = getSuggestedValues(cachedRequest.data, getState().models);
                     
                     dispatch(setDisplayYRangeForPlot({plotId, minY: Math.floor(minY / 10) * 10, maxY: Math.ceil(maxY / 10) * 10}));
                     if (plotId === O3AS_PLOTS.tco3_zm) {
-                        console.log(cachedRequest)
                         dispatch(setDisplayXRangeForPlot({plotId, years: {minX, maxX}}));
                     }
                     

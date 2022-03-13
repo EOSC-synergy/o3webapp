@@ -215,9 +215,10 @@ describe('tests fetchPlotData api interaction (integration)', () => {
         ).toEqual("lat_min=-90&lat_max=90&months=1,2&ref_meas=modelRef&ref_year=420");
     })
 
+    
     it('should dispatch a loading status and add the models to loading', () => {
-        axios.post.mockResolvedValue({data: []});
-        store.dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, models: modelsInGroup}));
+        axios.post.mockResolvedValue({data: tco3zmResponse});
+        store.dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, models: modelsInGroup})).catch(e => console.log(e));
         
         const plotSpecificSection = store.getState().api.plotSpecific[O3AS_PLOTS.tco3_zm];
         expect(plotSpecificSection.active).toEqual(exampleCacheKey); // active request gets selected
@@ -226,15 +227,15 @@ describe('tests fetchPlotData api interaction (integration)', () => {
             data: {},
             error: null,
             status: REQUEST_STATE.loading,
-            suggested: null,
             loadedModels: [],
             loadingModels: modelsInGroup,
         });
         
     });
 
+    
     it('should handle the re-fetching correctly', async () => {
-        axios.post.mockResolvedValue({data: []});
+        axios.post.mockResolvedValue({data: tco3zmResponse});
         store.dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, models: [modelsInGroup[0]]}));
         
         const plotSpecificSection = store.getState().api.plotSpecific[O3AS_PLOTS.tco3_zm];
@@ -244,7 +245,6 @@ describe('tests fetchPlotData api interaction (integration)', () => {
             data: {},
             error: null,
             status: REQUEST_STATE.loading,
-            suggested: null,
             loadedModels: [],
             loadingModels: [modelsInGroup[0]],
         });
@@ -256,13 +256,14 @@ describe('tests fetchPlotData api interaction (integration)', () => {
             data: {},
             error: null,
             status: REQUEST_STATE.loading,
-            suggested: null,
             loadedModels: [],
             loadingModels: [modelsInGroup[0]], // expect the loading list to not contain a duplicate if a re-fetch is requested
         });
         
     });
 
+
+    
     it('should add loaded models to the list, update the status and save the transformed data for tco3_zm', async () => {
         axios.post.mockResolvedValue({data: tco3zmResponse});
         await store.dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, models: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"]}));
@@ -280,7 +281,6 @@ describe('tests fetchPlotData api interaction (integration)', () => {
             data: transformedData, // expect data to be transformed
             error: null,
             status: REQUEST_STATE.success,
-            suggested: {max, min},
             loadedModels: Object.values(tco3zmResponse).map(x => x.model),
             loadingModels: [],
         });
@@ -305,7 +305,6 @@ describe('tests fetchPlotData api interaction (integration)', () => {
             data: transformedData, // expect data to be transformed
             error: null,
             status: REQUEST_STATE.success,
-            suggested: {max, min},
             loadedModels: Object.values(tco3returnResponse).map(x => x.model),
             loadingModels: [],
         });
@@ -325,13 +324,11 @@ describe('tests fetchPlotData api interaction (integration)', () => {
             data: {}, // expect data to be transformed
             error: errorMessage,
             status: REQUEST_STATE.error,
-            suggested: null,
             loadedModels: [],
             loadingModels: [],
         });
         
     })
-
 });
 
 describe('testing selectors', () => {
