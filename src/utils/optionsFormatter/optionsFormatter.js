@@ -364,7 +364,7 @@ export const default_TCO3_return = {
  *
  * @returns an default_TCO3_plotId object formatted with the given data
  */
-export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, seriesNames, getState}) {
+export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, seriesNames, getState, isSidebarOpen}) {
     const minY = roundDownToMultipleOfTen(yAxisRange.minY);
     const maxY = roundUpToMultipleOfTen(yAxisRange.maxY);
 
@@ -379,7 +379,7 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
 
         newOptions.xaxis.min = xAxisRange.years.minX;
         newOptions.xaxis.max = xAxisRange.years.maxX;
-        newOptions.xaxis.tickAmount = getOptimalTickAmount(xAxisRange.years.minX, xAxisRange.years.maxX);
+        newOptions.xaxis.tickAmount = getOptimalTickAmount(xAxisRange.years.minX, xAxisRange.years.maxX, isSidebarOpen);
 
         newOptions.colors = styling.colors;
 
@@ -1169,9 +1169,10 @@ function isIncludedInSv(model, groupData, svType) {
  *
  * @param {number} min      The selected min. year of the plot
  * @param {number} max      The selected max. year of the plot
+ * @param {boolean} isSidebarOpen Whether the sidebar is open or not
  * @returns                 The optimal tick amount according to those values
  */
-export function getOptimalTickAmount(min, max) {
+export function getOptimalTickAmount(min, max, isSidebarOpen) {
     const diff = max - min;
     if (diff <= 40) {
         return diff;
