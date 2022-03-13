@@ -150,7 +150,7 @@ const plotSlice = createSlice({
          * data given in action.payload.
          *
          * In this case the current displayYRange is updated with the given min and max
-         * y values.
+         * y values. "Current" is determined by the current active plotId. 
          *
          * @param {object} state the current store state of: state/plot
          * @param {object} action accepts the action returned from setDisplayYRange()
@@ -170,13 +170,23 @@ const plotSlice = createSlice({
         },
 
         /**
-         * 
-         * @param {*} state 
-         * @param {*} action 
-         * @returns 
+         * This reducer accepts an action object returned from setDisplayYRange()
+         *     e.g. dispatch(setDisplayYRange({minY: 200, maxY: 400}))
+         * and calculates the new state based on the action and the action
+         * data given in action.payload.
+         *
+         * In this case the displayYRange for the given plotId is updated with the 
+         * given min and max y values. 
+         *
+         * @param {object} state the current store state of: state/plot
+         * @param {object} action accepts the action returned from setDisplayYRange()
+         * @param {object} action.payload the payload is an object containing the given data
+         * @param {string} action.payload.plotId tco3_zm | tco3_return
+         * @param {number} action.payload.minY a number specifying the start of the y range
+         * @param {number} action.payload.maxY a number specifying the end of the y range
          */
         setDisplayYRangeForPlot(state, action) {
-            const {minY, maxY, plotId} = action.payload;
+            const { plotId, minY, maxY } = action.payload;
             if (minY === null || maxY === null) return;
             if (!Number.isFinite(minY) || !Number.isFinite(maxY)) return;
             if (isNaN(minY) || isNaN(maxY)) return;
