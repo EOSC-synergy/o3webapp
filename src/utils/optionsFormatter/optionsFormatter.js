@@ -190,14 +190,14 @@ export function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show = false, oppo
         },
         tickAmount,
         title: {
-            text: "TCO(DU)",
+            text: opposite ? "" : "TCO(DU)", // don't show description on right side
             style: {
                 fontSize: "1rem",
                 fontFamily: FONT_FAMILY,
             },
         },
         labels: {
-            formatter: formatYLabelsNicely,
+            formatter: opposite ? () => "" : formatYLabelsNicely, // hide labels with function that always returns empty strings
         },
         /*
         tooltip: {
@@ -238,14 +238,14 @@ export function getDefaultYAxisTco3Return(seriesName, minY, maxY, show = false, 
         },
         tickAmount,
         title: {
-            text: "Year",
+            text: opposite ? "" : "Year", // don't show description on right side
             style: {
                 fontSize: "1rem",
                 fontFamily: FONT_FAMILY,
             },
         },
         labels: {
-            formatter: formatYLabelsNicely,
+            formatter: opposite ? () => "" : formatYLabelsNicely, // hide labels with function that always returns empty strings
         }
     }
 }
