@@ -8,7 +8,6 @@ import {
     normalizeArray,
     preTransformApiData,
     default_TCO3_return,
-    defaultTCO3_zm,
     getDefaultYAxisTco3Return,
     getOptimalTickAmount,
     getTickAmountYAxis,
@@ -282,8 +281,6 @@ describe("testing optionsFormatter functionality", () => {
             });
             expect(result).toEqual(expected);
         });
-
-        test.todo('returns the correct options formatted correctly for tco3_zm');
 
     });
 

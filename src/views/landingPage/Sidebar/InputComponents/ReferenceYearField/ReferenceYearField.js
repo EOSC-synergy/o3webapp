@@ -16,7 +16,7 @@ import { selectPlotId } from "../../../../../store/plotSlice/plotSlice";
  * @param {function} props.reportError - function to handle errors
  * @returns {JSX.Element} a jsx containing a text field to select the reference year
  */
-function ReferenceYearField(props) {
+function ReferenceYearField() {
     /**
      * A dispatch function to dispatch actions to the redux store.
      */
@@ -65,6 +65,7 @@ function ReferenceYearField(props) {
                             onChange={handleChangeForRefYear}
                             error={selectedYear < START_YEAR || selectedYear > END_YEAR}
                             helperText={selectedYear < START_YEAR ? `<${START_YEAR}` : (selectedYear > END_YEAR ? `>${END_YEAR}` : '')}
+                            inputProps={{ "data-testid": "ReferenceYearField-year" }}
                         />
                     </FormControl>
                     {
@@ -76,6 +77,7 @@ function ReferenceYearField(props) {
                                 icon={<VisibilityOffIcon data-testid="RefLineInvisibleCheckbox"/>}
                                 checkedIcon={<MuiVisibilityIcon/>}
                                 onClick={handleShowRefLineClicked}
+                                inputProps={{ "data-testid": "ReferenceYearField-toggleVisibility" }}
                             />
                         </FormControl>
                     }   

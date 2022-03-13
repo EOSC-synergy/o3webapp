@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`testing DownloadModal rendering renders correctly when closed 1`] = `
+exports[`testing basic rendering & selection renders correctly when closed 1`] = `
 <body
   style=""
 >
@@ -10,7 +10,7 @@ exports[`testing DownloadModal rendering renders correctly when closed 1`] = `
 </body>
 `;
 
-exports[`testing DownloadModal rendering renders correctly when open 1`] = `
+exports[`testing basic rendering & selection renders correctly when open 1`] = `
 <body
   style="padding-right: 1024px; overflow: hidden;"
 >

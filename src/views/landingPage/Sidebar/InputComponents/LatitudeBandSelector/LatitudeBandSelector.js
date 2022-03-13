@@ -7,6 +7,7 @@ import {latitudeBands} from "../../../../../utils/constants";
 import PropTypes from 'prop-types';
 import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice";
 import CustomLatitudeSelector from "./CustomLatitudeSelector/CustomLatitudeSelector";
+
 /**
  * An object containing the current minLat and maxLat Values.
  * @memberof LatitudeBandSelector
@@ -66,17 +67,20 @@ function LatitudeBandSelector(props) {
                 <Select
                     sx={{width: '100%'}}
                     id="latitudeBandSelector"
-                    value={isCustomizable ? latitudeBands[latitudeBands.length - 1].value : findLatitudeBandByLocation(false, false)}
+                    value={isCustomizable ? latitudeBands[latitudeBands.length - 1].value : findLatitudeBandByLocation(false)}
                     onChange={handleChangeLatitudeBand}
-                    defaultValue={findLatitudeBandByLocation(false, false)}
+                    defaultValue={findLatitudeBandByLocation(false)}
+                    inputProps={{"data-testid": "LatitudeBandSelector-select-region"}}
                 >
                     {
                         // maps all latitude bands from constants.js to ´MenuItem´s
                         latitudeBands.map(
-                            (s, idx) => <MenuItem key={idx} value={s.value}>{s.text.description}</MenuItem>
+                            (s, idx) =>
+                                <MenuItem key={idx} value={s.value}>{s.text.description}</MenuItem>
                         )
                     }
                 </Select>
+                {isCustomizable && <div style={{height: '10px'}}/>}
                 {isCustomizable && <CustomLatitudeSelector/>}
             </Box>
         </>
@@ -93,29 +97,20 @@ export default LatitudeBandSelector;
  * Finds selectedLocation in latitudeBands.
  *
  * @param {boolean} forceCustomizable if true, acts like isCustomizable is true - if false, does nothing
- * @param {boolean} returnText if true, return the text - if false, return the value
  * @returns the location
  */
-export const findLatitudeBandByLocation = (forceCustomizable, returnText) => {
+const findLatitudeBandByLocation = (forceCustomizable) => {
     if (typeof selectedLocation === 'undefined') return null;
     if (!forceCustomizable) {
         for (let i = 0; i < latitudeBands.length - 1; i++) {
             if (latitudeBands[i].value.minLat === selectedLocation.minLat && latitudeBands[i].value.maxLat === selectedLocation.maxLat) {
-                if (returnText) {
-                    return latitudeBands[i].text.description;
-                } else {
-                    return latitudeBands[i].value;
-                }
+                return latitudeBands[i].value;
             }
         }
     }
     if (isCustomizable || forceCustomizable) {
-        if (returnText) {
-            return latitudeBands[latitudeBands.length - 1].text.description;
-        } else {
-            return latitudeBands[latitudeBands.length - 1].value;
-        }
+        return latitudeBands[latitudeBands.length - 1].value;
     }
     setIsCustomizable(true);
-    findLatitudeBandByLocation(true, false);
+    findLatitudeBandByLocation(true);
 }
