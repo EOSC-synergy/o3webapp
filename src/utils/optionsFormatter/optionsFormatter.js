@@ -898,8 +898,10 @@ export function normalizeArray(xValues, yValues) {
  * @returns The pre transformed API data
  */
 export const preTransformApiData = ({plotId, data, modelsSlice}) => {
-    const maximums = [];
-    const minimums = [];
+    const maximumY = -Infinity;
+    const minimumY = Infinity;
+    const maximumX = -Infinity; // only for tco3_zm
+    const minimumX = Infinity;  // only for tco3_zm
     const lookUpTable = {};
 
     const visibleModels = getIncludedModels(modelsSlice);
@@ -909,13 +911,17 @@ export const preTransformApiData = ({plotId, data, modelsSlice}) => {
         for (let datum of data) {
             // top structure
             const normalizedArray = normalizeArray(datum.x, datum.y);
+            console.log(datum.x)
             lookUpTable[datum.model] = {
                 plotStyle: datum.plotstyle,
                 data: normalizedArray, // this should speed up the calculation of the statistical values later
             };
+
             if (visibleModels.includes(datum.model)) { // min and max values of visible values are relevant!
-                maximums.push(Math.max(...normalizedArray));
-                minimums.push(Math.min(...normalizedArray.filter(x => x !== null)));
+                maximumY = Math.max(maximumY, Math.max(...normalizedArray));
+                minimumY = Math.min(maximumY, Math.min(...normalizedArray.filter(x => x !== null)));
+                maximumX = Math.max(maximumX, Math.max(...datum.x));
+                minimumX = Math.min(maximumX, Math.min(...datum.x));
             }
         }
 
@@ -936,12 +942,13 @@ export const preTransformApiData = ({plotId, data, modelsSlice}) => {
             }
 
             if (visibleModels.includes(datum.model)) { // min and max values of visible values are relevant!
-                maximums.push(Math.max(...temp));
-                minimums.push(Math.min(...temp.filter(x => x !== null)));
+                maximumY = Math.max(maximumY, Math.max(...temp));
+                minimumY = Math.min(maximumY, Math.min(...temp.filter(x => x !== null)));
+                
             }
         }
     }
-    return {lookUpTable, min: Math.min(...minimums), max: Math.max(...maximums)};
+    return {lookUpTable, minY: minimumY, maxY: maximumY, minX: minimumX, maxX: maximumX};
 }
 
 
