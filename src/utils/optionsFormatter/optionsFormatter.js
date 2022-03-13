@@ -1192,21 +1192,37 @@ function isIncludedInSv(model, groupData, svType) {
 
 /**
  * Determines the optimal tick amount for a given max and min year for the x-axis.
+ * Takes into account the current screen width, uses a heuristic approach 
+ * (all values are determined through experimentation).
  *
  * @param {number} min      The selected min. year of the plot
  * @param {number} max      The selected max. year of the plot
  * @returns                 The optimal tick amount according to those values
  */
 export function getOptimalTickAmount(min, max) {
+    const width  = window.innerWidth || document.documentElement.clientWidth || 
+    document.body.clientWidth;
+    const height = window.innerHeight|| document.documentElement.clientHeight|| 
+    document.body.clientHeight;
+
+
+    if (width <= height) { // is mobile in portrait
+        return 4;
+    }
+
+    let divider = 1;
+    if (width <= 600) divider = 4; 
+    else if (width <= 1000) divider = 2;
+    
     const diff = max - min;
     if (diff <= 40) {
-        return diff;
+        return diff / divider;
     } else if (diff <= 80) {
-        return Math.floor(diff / 2);
+        return Math.floor(diff / 2) / divider;
     } else if (diff <= 150) {
-        return Math.floor(diff / 5);
+        return Math.floor(diff / 5) / divider;
     } else {
-        return Math.floor(diff / 10)
+        return Math.floor(diff / 10) / divider;
     }
 }
 
