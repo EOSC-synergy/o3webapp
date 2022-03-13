@@ -250,7 +250,7 @@ describe("testing optionsFormatter functionality", () => {
             const xAxisRange = {minX: 0, maxY: 10};
             const yAxisRange = {minY: 0, maxY: 10};
             const result = getOptions({plotId: O3AS_PLOTS.tco3_return, styling: {colors:[]}, plotTitle: "title", xAxisRange, yAxisRange, seriesNames: [], getState: store.getState});
-            expect(result).toEqual(expected);
+            expect(JSON.stringify(result)).toEqual(JSON.stringify(expected)); // stringify results to not mess with anonymous functions
         });
         
         test.todo('returns the correct options formatted correctly for tco3_zm');
@@ -310,7 +310,7 @@ describe("testing optionsFormatter functionality", () => {
 
         const expectedYAxisConfig = {
             show: true,
-            opposite: true,
+            opposite: false,
             seriesName: "seriesX",
             min: 42,
             max: 420,
@@ -335,7 +335,7 @@ describe("testing optionsFormatter functionality", () => {
             },
         }
 
-        expect(getDefaultYAxisTco3Zm("seriesX", 42, 420, true, true, -3, 10)).toEqual(expectedYAxisConfig);
+        expect(getDefaultYAxisTco3Zm("seriesX", 42, 420, true, false, -3, 10)).toEqual(expectedYAxisConfig);
     });
 
     it('should return a correct formatted tooltip for a normal series', () => {
