@@ -894,35 +894,27 @@ export function normalizeArray(xValues, yValues) {
  *
  * @param {string} plotId A string specifying the plot (to perform different transformations, according to the data format)
  * @param {object} data An object holding the data as it was returned from the API
- * @param {object} modelsSlice the slice of the store containing information about the model groups
  * @returns The pre transformed API data
  */
-export const preTransformApiData = ({plotId, data, modelsSlice}) => {
-    let maximumY = -Infinity;
-    let minimumY = Infinity;
-    let maximumX = -Infinity; // only for tco3_zm
-    let minimumX = Infinity;  // only for tco3_zm
+export const preTransformApiData = ({plotId, data}) => {
     const lookUpTable = {};
-
-    const visibleModels = getIncludedModels(modelsSlice);
 
     if (plotId === O3AS_PLOTS.tco3_zm) {
 
         for (let datum of data) {
             // top structure
             const normalizedArray = normalizeArray(datum.x, datum.y);
-            console.log(datum.x)
             lookUpTable[datum.model] = {
                 plotStyle: datum.plotstyle,
                 data: normalizedArray, // this should speed up the calculation of the statistical values later
+                suggested: {
+                    minX: Math.min(...datum.x),
+                    maxX: Math.max(...datum.x),
+                    minY: Math.min(...normalizedArray.filter(x => x !== null)),
+                    maxY: Math.max(...normalizedArray),
+                }
             };
 
-            if (visibleModels.includes(datum.model)) { // min and max values of visible values are relevant!
-                maximumY = Math.max(maximumY, Math.max(...normalizedArray));
-                minimumY = Math.min(maximumY, Math.min(...normalizedArray.filter(x => x !== null)));
-                maximumX = Math.max(maximumX, Math.max(...datum.x));
-                minimumX = Math.min(maximumX, Math.min(...datum.x));
-            }
         }
 
     } else if (plotId === O3AS_PLOTS.tco3_return) {
@@ -931,7 +923,8 @@ export const preTransformApiData = ({plotId, data, modelsSlice}) => {
             // top structure
             lookUpTable[datum.model] = {
                 plotStyle: datum.plotstyle,
-                data: {}
+                data: {},
+                suggested: null,
             };
 
             // fill data
@@ -941,10 +934,9 @@ export const preTransformApiData = ({plotId, data, modelsSlice}) => {
                 lookUpTable[datum.model].data[datum.x[index]] = datum.y[index];
             }
 
-            if (visibleModels.includes(datum.model)) { // min and max values of visible values are relevant!
-                maximumY = Math.max(maximumY, Math.max(...temp));
-                minimumY = Math.min(maximumY, Math.min(...temp.filter(x => x !== null)));
-                
+            lookUpTable[datum.model].suggested = {
+                minY: Math.min(...temp.filter(x => x !== null)),
+                maxY: Math.max(...temp),
             }
         }
     }

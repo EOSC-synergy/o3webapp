@@ -131,7 +131,7 @@ export const updateDataAndDisplaySuggestions = ({plotId, cacheKey, data}) => {
         const { minY, maxY, minX, maxX } = getState().api.plotSpecific[plotId].cachedRequests[cacheKey].suggested; // suggested min/max is availabe
         dispatch(setDisplayYRangeForPlot({plotId, minY: Math.floor(minY / 10) * 10, maxY: Math.ceil(maxY / 10) * 10}));
         if (plotId === O3AS_PLOTS.tco3_zm) {
-            dispatch(setDisplayXRangeForPlot({plotId, minX, maxX}));
+            dispatch(setDisplayXRangeForPlot({plotId, years: {minX, maxX}}));
         }
     }
 }
@@ -202,8 +202,12 @@ export const fetchPlotData = ({plotId, models}) => {
                 // old: status == success
                 dispatch(selectExistingPlotData({plotId, cacheKey}));
                 if (cachedRequest.status === REQUEST_STATE.success) {
-                    const {min, max} = cachedRequest.suggested; // suggested min/max is availabe
-                    dispatch(setDisplayYRangeForPlot({plotId, minY: Math.floor(min), maxY: Math.floor(max)}));
+                    const { minY, maxY, minX, maxX } = cachedRequest.suggested; // suggested min/max is availabe
+                    dispatch(setDisplayYRangeForPlot({plotId, minY: Math.floor(minY / 10) * 10, maxY: Math.ceil(maxY / 10) * 10}));
+                    if (plotId === O3AS_PLOTS.tco3_zm) {
+                        console.log(cachedRequest)
+                        dispatch(setDisplayXRangeForPlot({plotId, years: {minX, maxX}}));
+                    }   
                 }
                 return Promise.resolve(); // request is already satisfied
 
