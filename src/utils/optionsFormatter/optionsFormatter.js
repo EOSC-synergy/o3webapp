@@ -393,13 +393,30 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.subtitle = JSON.parse(JSON.stringify(newOptions.subtitle)); // this is necessary in order for apexcharts to update the subtitle
         newOptions.subtitle.text = createSubtitle(getState);
         newOptions.tooltip.custom = customTooltipFormatter;
-        newOptions.legend.customLegendItems = [
-            ...Array(3).fill("<span style='color:red;font-family:Consolas;font-size:16px';><b>──</b></span> CCMI-....."),
-            ...Array(3).fill("<span style='color:red;font-family:Consolas;font-size:16px'>-  -  -</span> CCMI-....."),
-            ...Array(3).fill("<span style='color:red;font-family:Consolas;font-size:12px'>••••</span> CCMI-.....")
-        ];
-        newOptions.legend.markers.width = 0;
 
+        const legendItems = [];
+        for (let idx in seriesNames) {
+            const name = seriesNames[idx];
+            const color = styling.colors[idx];
+            const dashing = styling.dashArray[idx];
+            let linePattern;
+            let fontSize = 14;
+            if (dashing <= 0) {
+                linePattern = "<b>───</b>";
+            } else if (dashing <= 2) {
+                linePattern = "••••";
+                fontSize = 10;
+            } else {
+                linePattern = "<b>---</b>";
+            }
+            legendItems.push(
+                `<span style='color:${color};font-family:Consolas, monaco, monospace;font-size:${fontSize}px';>${linePattern}</span> <span style="font-size: 14px">${name}</span>`
+            )
+        }
+
+        newOptions.legend.customLegendItems = legendItems;
+        newOptions.legend.markers.width = 0;
+        console.log(seriesNames)
         return newOptions;
 
     } else if (plotId === O3AS_PLOTS.tco3_return) {
