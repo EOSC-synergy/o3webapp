@@ -123,6 +123,9 @@ export const defaultTCO3_zm = {
         onItemClick: {
             toggleDataSeries: false
         },
+        markers: {
+
+        },
         height: 80,
     },
     dataLabels: {
@@ -390,6 +393,13 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.subtitle = JSON.parse(JSON.stringify(newOptions.subtitle)); // this is necessary in order for apexcharts to update the subtitle
         newOptions.subtitle.text = createSubtitle(getState);
         newOptions.tooltip.custom = customTooltipFormatter;
+        newOptions.legend.customLegendItems = [
+            ...Array(3).fill("<span style='color:red;font-family:Consolas;font-size:16px';><b>──</b></span> CCMI-....."),
+            ...Array(3).fill("<span style='color:red;font-family:Consolas;font-size:16px'>-  -  -</span> CCMI-....."),
+            ...Array(3).fill("<span style='color:red;font-family:Consolas;font-size:12px'>••••</span> CCMI-.....")
+        ];
+        newOptions.legend.markers.width = 0;
+
         return newOptions;
 
     } else if (plotId === O3AS_PLOTS.tco3_return) {
