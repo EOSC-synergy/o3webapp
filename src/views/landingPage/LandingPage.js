@@ -2,6 +2,28 @@ import * as React from 'react';
 import Graph from './Graph/Graph';
 import Sidebar from './Sidebar/Sidebar';
 import PropTypes from "prop-types";
+import { styled, useTheme } from '@mui/material/styles';
+
+const drawerWidth = 400;
+
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
+    ({ theme, open }) => ({
+      flexGrow: 1,
+      padding: theme.spacing(3),
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+      marginRight: 0,
+      ...(open && {
+        transition: theme.transitions.create('margin', {
+          easing: theme.transitions.easing.easeOut,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
+        marginRight: drawerWidth,
+      }),
+    }),
+  );
 
 /**
  * main view of web page
@@ -39,9 +61,9 @@ function LandingPage(props) {
                 data-testid="landingPage-not-sidebar"
                 onClick={props.closeSidebar}
             >
-                <div style={{width: "95%"}}>
-                    <Graph reportError={props.reportError}/>
-                </div>
+                <Main open={props.isSidebarOpen}>
+                    <Graph reportError={props.reportError} isSidebarOpen={props.isSidebarOpen}/>
+                </Main>
             </div>
         </div>
     );
