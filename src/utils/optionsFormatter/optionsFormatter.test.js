@@ -8,7 +8,6 @@ import {
     normalizeArray,
     preTransformApiData,
     default_TCO3_return,
-    defaultTCO3_zm,
     getDefaultYAxisTco3Return,
     getOptimalTickAmount,
     getTickAmountYAxis,
@@ -58,6 +57,12 @@ describe("testing optionsFormatter functionality", () => {
                 "modelA": {
                     data: expectedNormalize,
                     plotStyle: "plotstyleData",
+                    suggested: {
+                        minX: 1960,
+                        maxX: 1978,
+                        minY: 0,
+                        maxY: 9, // from Array [0..9]
+                    }
                 },
             });
     
@@ -81,7 +86,11 @@ describe("testing optionsFormatter functionality", () => {
                         "regionA": 2010,
                         "regionB": 2022,
 
-                    } // a direct lookup table might be faster (to consider if boxplot calculation becomes to slow!)
+                    },
+                    suggested: {
+                        minY: 2010,
+                        maxY: 2022,
+                    }
                 }
             });
         });
