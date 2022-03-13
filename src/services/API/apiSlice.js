@@ -2,7 +2,7 @@ import {createSlice, createAsyncThunk, createAction} from "@reduxjs/toolkit";
 import {getModels, getPlotTypes, getPlotData} from "./client";
 import {preTransformApiData} from "../../utils/optionsFormatter/optionsFormatter";
 import {START_YEAR, END_YEAR, O3AS_PLOTS} from "../../utils/constants";
-import {setDisplayYRangeForPlot} from "../../store/plotSlice/plotSlice";
+import {setDisplayXRange, setDisplayXRangeForPlot, setDisplayYRangeForPlot} from "../../store/plotSlice/plotSlice";
 
 /**
  * This object models an "enum" in JavaScript. Each of the values is used
@@ -128,8 +128,11 @@ export const updateDataAndDisplaySuggestions = ({plotId, cacheKey, data}) => {
     
     return (dispatch, getState) => {
         dispatch(fetchPlotDataSuccess({data, plotId, cacheKey, modelsSlice: getState().models}));
-        const {min, max} = getState().api.plotSpecific[plotId].cachedRequests[cacheKey].suggested; // suggested min/max is availabe
-        dispatch(setDisplayYRangeForPlot({plotId, minY: Math.floor(min / 10) * 10, maxY: Math.ceil(max / 10) * 10}));
+        const { minY, maxY, minX, maxX } = getState().api.plotSpecific[plotId].cachedRequests[cacheKey].suggested; // suggested min/max is availabe
+        dispatch(setDisplayYRangeForPlot({plotId, minY: Math.floor(minY / 10) * 10, maxY: Math.ceil(maxY / 10) * 10}));
+        if (plotId === O3AS_PLOTS.tco3_zm) {
+            dispatch(setDisplayXRangeForPlot({plotId, minX, maxX}));
+        }
     }
 }
 
@@ -361,7 +364,7 @@ const apiSlice = createSlice({
                 const { data, plotId, cacheKey, modelsSlice } = action.payload;
                 const storage = state.plotSpecific[plotId].cachedRequests[cacheKey];
 
-                const {lookUpTable, min, max} = preTransformApiData({plotId, data, modelsSlice});
+                const {lookUpTable, minY, maxY, minX, maxX} = preTransformApiData({plotId, data, modelsSlice});
                 Object.assign(storage.data, lookUpTable); // copy over new values
 
                 // update loaded / loading
@@ -375,15 +378,21 @@ const apiSlice = createSlice({
 
                 // update suggestions
                 if (storage.suggested) {
-                    const {min: oldMin, max: oldMax} = storage.suggested;
+                    const {
+                        minY: oldMinY, maxY: oldMaxY,
+                        minX: oldMinX, maxY: oldMaxX
+                    } = storage.suggested;
                     
                     storage.suggested = {
-                        min: Math.min(min, oldMin), 
-                        max: Math.max(max, oldMax)
+                        minY: Math.min(minY, oldMinY), 
+                        maxY: Math.max(maxY, oldMaxY),
+                        minX: Math.min(minX, oldMinX), 
+                        maxX: Math.max(maxX, oldMaxX),
                     };
                 } else {
-                    storage.suggested = {min, max};
+                    storage.suggested = {minY, maxY, minX, maxX};
                 }
+                console.log(storage.suggested);
 
             })
             .addCase(fetchPlotDataRejected, (state, action) => {

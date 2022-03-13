@@ -898,10 +898,10 @@ export function normalizeArray(xValues, yValues) {
  * @returns The pre transformed API data
  */
 export const preTransformApiData = ({plotId, data, modelsSlice}) => {
-    const maximumY = -Infinity;
-    const minimumY = Infinity;
-    const maximumX = -Infinity; // only for tco3_zm
-    const minimumX = Infinity;  // only for tco3_zm
+    let maximumY = -Infinity;
+    let minimumY = Infinity;
+    let maximumX = -Infinity; // only for tco3_zm
+    let minimumX = Infinity;  // only for tco3_zm
     const lookUpTable = {};
 
     const visibleModels = getIncludedModels(modelsSlice);

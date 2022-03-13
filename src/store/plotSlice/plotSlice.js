@@ -144,6 +144,42 @@ const plotSlice = createSlice({
         },
 
         /**
+         * This reducer accepts an action object returned from setDisplayXRange()
+         *     e.g. dispatch(setDisplayXRange({years: {minX: 1960, maxX: 2100}})) or
+         *          dispatch(setDisplayXRange({regions: [0, 1, 2]}))
+         * and calculates the new state based on the action and the action
+         * data given in action.payload.
+         *
+         * For the tco3_zm the current displayXRange is updated with the given min and max
+         * x values, i.e. you have to pass {years: {minX: 1960, maxX: 2100}} as payload.
+         *
+         * For the tco3_return the current displayXRange is updated with the given regions
+         * values, i.e. you have to pass {regions: [0, 1, 2]} as payload.
+         *
+         *
+         * @param {object} state the current store state of: state/plot
+         * @param {object} action accepts the action returned from setDisplayXRange()
+         * @param {object} action.payload the payload is an object containing the given data
+         * @param {number} action.payload.years.minX a number specifying the start of the x range for tco3_zm
+         * @param {number} action.payload.years.maxX a number specifying the end of the x range for tco3_zm
+         * @param {array} action.payload.regions an array specifying the selected regions (on the x-axis) for the tco3_return
+         */
+         setDisplayXRangeForPlot(state, action) {
+            const { plotId } = action.payload;
+            if (plotId === O3AS_PLOTS.tco3_zm) {
+                const { years: { minX, maxX } } = action.payload;
+                const xRange = state.plotSpecificSettings[plotId].displayXRange;
+                xRange.years.minX = minX;
+                xRange.years.maxX = maxX;
+            } else if (plotId === O3AS_PLOTS.tco3_return) {
+                const { regions } = action.payload;
+                state.plotSpecificSettings[plotId].displayXRange.regions = regions;
+            } else {
+                throw new Error(`Illegal internal state, a non valid plot is chosen plot: "${plotId}"`);
+            }
+        },
+
+        /**
          * This reducer accepts an action object returned from setDisplayYRange()
          *     e.g. dispatch(setDisplayYRange({minY: 200, maxY: 400}))
          * and calculates the new state based on the action and the action
@@ -225,6 +261,7 @@ export const {
     setTitle,
     setLocation,
     setDisplayXRange,
+    setDisplayXRangeForPlot,
     setDisplayYRange,
     setDisplayYRangeForPlot,
     setMonths,
