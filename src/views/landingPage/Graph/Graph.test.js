@@ -80,6 +80,10 @@ describe('tests graph component rendering', () => {
             false
         )
 
+        const windowSpy = jest.spyOn(document, "getElementById");
+
+        windowSpy.mockReturnValue({offsetHeight: 0}); 
+
         const { container } = render(<Provider store={store}>
             <Graph />
         </Provider>);
