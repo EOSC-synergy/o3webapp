@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {ALL_REGIONS_ORDERED, O3AS_PLOTS, DEFAULT_MONTHS, latitudeBands} from "../../utils/constants";
+import {ALL_REGIONS_ORDERED, O3AS_PLOTS, DEFAULT_MONTHS, latitudeBands, START_YEAR, END_YEAR} from "../../utils/constants";
 
 /**
  * The initial state of the plotSlice defines the data structure in the
@@ -23,8 +23,8 @@ export const initialState = {
             title: "OCTS Plot", // the title shown in the apexcharts generated chart
             displayXRange: {
                 years: {
-                    minX: 1960,
-                    maxX: 2100,
+                    minX: START_YEAR,
+                    maxX: END_YEAR,
                 }
             },
             displayYRange: { minY: 0, maxY: 0 }, // gets adjusted automatically on each request
