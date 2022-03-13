@@ -18,6 +18,8 @@ import store from '../../../store/store';
  * synced with redux and the UI (input components).
  * @component
  * @param {Object} props currently not used
+ * @returns a svg rendered element that represents a graph, this is done by 
+ *          the apexcharts library
  */
 function Graph(props) {
 
