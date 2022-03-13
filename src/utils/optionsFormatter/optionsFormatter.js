@@ -322,7 +322,7 @@ export const default_TCO3_return = {
     },
     legend: {
         show: true,
-        height: 80,
+        height: 80, // window.innerHeight - document.getElementById('Navbar').offsetHeight
     },
 
     markers: {

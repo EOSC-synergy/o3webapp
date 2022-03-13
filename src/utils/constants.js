@@ -264,13 +264,6 @@ export const APEXCHART_PLOT_TYPE = {
  * @subcategory Constants
  */
 export const HEIGHT_LOADING_SPINNER = "300px";
-/**
- * How tall the graph should appear
- * @constant {string}
- * @category Utils
- * @subcategory Constants
- */
-export const HEIGHT_GRAPH = `${window.innerHeight * 0.75}px`;
 
 /*
 // Options Formatter, XAxisField, YAxisField, apiSlice

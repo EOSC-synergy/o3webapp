@@ -80,7 +80,8 @@ function Graph(props) {
         const seriesNames = data.map(series => series.name);
         const options = getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, seriesNames, getState: store.getState});
         const uniqueNumber = Date.now(); // forces apexcharts to re-render correctly!
-        return <Chart key={uniqueNumber} options={options} series={data} type={APEXCHART_PLOT_TYPE[plotId]} height={HEIGHT_GRAPH} />
+        const HEIGHT = window.innerHeight - document.getElementById('Navbar').offsetHeight;
+        return <Chart key={uniqueNumber} options={options} series={data} type={APEXCHART_PLOT_TYPE[plotId]} height={HEIGHT} style={{marginTop: "2%"}} />
     }
 
     // this "case" should not happen
