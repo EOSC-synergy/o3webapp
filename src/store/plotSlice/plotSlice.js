@@ -109,32 +109,34 @@ const plotSlice = createSlice({
 
         /**
          * This reducer accepts an action object returned from setDisplayXRange()
-         *     e.g. dispatch(setDisplayXRange({minX: 1960, maxX: 2100}))
+         *     e.g. dispatch(setDisplayXRange({years: {minX: 1960, maxX: 2100}})) or
+         *          dispatch(setDisplayXRange({regions: [0, 1, 2]}))
          * and calculates the new state based on the action and the action
          * data given in action.payload.
          *
-         * In this case the current displayXRange is updated with the given min and max
-         * x values.
+         * For the tco3_zm the current displayXRange is updated with the given min and max
+         * x values, i.e. you have to pass {years: {minX: 1960, maxX: 2100}} as payload.
          *
-         * NOTE: this might not be useful for each plot (e.g. the Return/Recovery plot
-         *       because this plot uses a categorical x-axis)
-         *       however it is most convenient to provide a uniform action interface.
+         * For the tco3_return the current displayXRange is updated with the given regions
+         * values, i.e. you have to pass {regions: [0, 1, 2]} as payload.
+         *
          *
          * @param {object} state the current store state of: state/plot
          * @param {object} action accepts the action returned from setDisplayXRange()
          * @param {object} action.payload the payload is an object containing the given data
-         * @param {number} action.payload.minX a number specifying the start of the x range
-         * @param {number} action.payload.maxX a number specifying the end of the x range
+         * @param {number} action.payload.years.minX a number specifying the start of the x range for tco3_zm
+         * @param {number} action.payload.years.maxX a number specifying the end of the x range for tco3_zm
+         * @param {array} action.payload.regions an array specifying the selected regions (on the x-axis) for the tco3_return
          */
         setDisplayXRange(state, action) {
             const currentPlotId = state.plotId;
             if (currentPlotId === O3AS_PLOTS.tco3_zm) {
-                const {years: {minX, maxX}} = action.payload;
+                const { years: { minX, maxX } } = action.payload;
                 const xRange = state.plotSpecificSettings[currentPlotId].displayXRange;
                 xRange.years.minX = minX;
                 xRange.years.maxX = maxX;
             } else if (currentPlotId === O3AS_PLOTS.tco3_return) {
-                const {regions} = action.payload;
+                const { regions } = action.payload;
                 state.plotSpecificSettings[currentPlotId].displayXRange.regions = regions;
             } else {
                 throw new Error(`Illegal internal state, a non valid plot is current plot: "${currentPlotId}"`);
@@ -167,6 +169,12 @@ const plotSlice = createSlice({
             displayYRange.maxY = maxY;
         },
 
+        /**
+         * 
+         * @param {*} state 
+         * @param {*} action 
+         * @returns 
+         */
         setDisplayYRangeForPlot(state, action) {
             const {minY, maxY, plotId} = action.payload;
             if (minY === null || maxY === null) return;
