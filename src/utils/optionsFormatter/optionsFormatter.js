@@ -1169,10 +1169,9 @@ function isIncludedInSv(model, groupData, svType) {
  *
  * @param {number} min      The selected min. year of the plot
  * @param {number} max      The selected max. year of the plot
- * @param {boolean} isSidebarOpen Whether the sidebar is open or not
  * @returns                 The optimal tick amount according to those values
  */
-export function getOptimalTickAmount(min, max, isSidebarOpen) {
+export function getOptimalTickAmount(min, max) {
     const diff = max - min;
     if (diff <= 40) {
         return diff;
