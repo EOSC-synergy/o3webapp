@@ -940,7 +940,29 @@ export const preTransformApiData = ({plotId, data}) => {
             }
         }
     }
-    return {lookUpTable, minY: minimumY, maxY: maximumY, minX: minimumX, maxX: maximumX};
+    return {lookUpTable};
+}
+
+export function getSuggestedValues(data, modelsSlice) {
+    const visibleModels = getIncludedModels(modelsSlice);
+
+    const suggested = {
+        minX: Infinity,
+        maxX: -Infinity,
+        minY: Infinity,
+        maxY: -Infinity,
+
+    }
+
+    for (let model of visibleModels) {
+        const { minX, maxX, minY, maxY } = data[model].suggested;
+        suggested.minX = Math.min(suggested.minX, minX);
+        suggested.maxX = Math.max(suggested.maxX, maxX);
+        suggested.minY = Math.min(suggested.minY, minY);
+        suggested.maxY = Math.max(suggested.maxY, maxY);
+    }
+
+    return suggested;
 }
 
 
