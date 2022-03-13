@@ -326,6 +326,7 @@ export const default_TCO3_return = {
     legend: {
         show: true,
         height: 80,
+        fontSize: "14px",
     },
 
     markers: {
