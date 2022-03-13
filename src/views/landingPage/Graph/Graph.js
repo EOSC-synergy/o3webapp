@@ -17,10 +17,7 @@ import store from '../../../store/store';
  * just a preview to work with until the API is implemented and
  * synced with redux and the UI (input components).
  * @component
- * @param {Object} props
- * @param {boolean} props.isSidebarOpen true if the sidebar is open
- * @returns a svg rendered element that represents a graph, this is done by 
- *          the apexcharts library
+ * @param {Object} props currently not used
  */
 function Graph(props) {
 
@@ -79,7 +76,7 @@ function Graph(props) {
     } else if (activeData.status === REQUEST_STATE.success) {
         const {data, styling} = generateSeries({plotId, data: activeData.data, modelsSlice, xAxisRange, yAxisRange, refLineVisible, getState: store.getState});
         const seriesNames = data.map(series => series.name);
-        const options = getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, seriesNames, getState: store.getState, isSidebarOpen: props.isSidebarOpen});
+        const options = getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, seriesNames, getState: store.getState});
         const uniqueNumber = Date.now(); // forces apexcharts to re-render correctly!
         return <Chart key={uniqueNumber} options={options} series={data} type={APEXCHART_PLOT_TYPE[plotId]} height={HEIGHT_GRAPH} />
     }
