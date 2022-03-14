@@ -424,7 +424,7 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
                 linePattern = "<b>---</b>";
             }
             legendItems.push(
-                `<span style='color:${color};font-family:Consolas, monaco, monospace;font-size:${fontSize}px;';>${linePattern}</span> <span style="font-size: 16px">${name}</span> `
+                `<span style="color:${color};font-family:Consolas, monaco, monospace;font-size:${fontSize}px;">${linePattern}</span> <span style="font-size: 16px">${name}</span> `
             )
         }
 
