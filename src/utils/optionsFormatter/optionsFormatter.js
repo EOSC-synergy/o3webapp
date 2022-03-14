@@ -430,7 +430,6 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
 
         newOptions.legend.customLegendItems = legendItems;
         newOptions.legend.markers.width = 0;
-        console.log(seriesNames)
         return newOptions;
 
     } else if (plotId === O3AS_PLOTS.tco3_return) {
