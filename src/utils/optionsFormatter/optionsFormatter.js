@@ -401,17 +401,17 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
             const color = styling.colors[idx];
             const dashing = styling.dashArray[idx];
             let linePattern;
-            let fontSize = 14;
+            let fontSize = 18;
             if (dashing <= 0) {
                 linePattern = "<b>───</b>";
             } else if (dashing <= 2) {
                 linePattern = "••••";
-                fontSize = 10;
+                fontSize = 12;
             } else {
                 linePattern = "<b>---</b>";
             }
             legendItems.push(
-                `<span style='color:${color};font-family:Consolas, monaco, monospace;font-size:${fontSize}px';>${linePattern}</span> <span style="font-size: 14px">${name}</span>`
+                `<span style='color:${color};font-family:Consolas, monaco, monospace;font-size:${fontSize}px;';>${linePattern}</span> <span style="font-size: 14px">${name}</span> `
             )
         }
 
