@@ -1231,7 +1231,7 @@ export function getOptimalTickAmount(min, max) {
 
     let divider = 1;
     if (width <= 600) divider = 4; 
-    else if (width <= 1000) divider = 2;
+    else if (width <= 1100) divider = 2;
     
     const diff = max - min;
     if (diff <= 40) {
