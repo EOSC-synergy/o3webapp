@@ -133,6 +133,7 @@ describe("testing optionsFormatter functionality", () => {
                         8, 8
                     ],
                     width: Array(10).fill(MODEL_LINE_THICKNESS),
+                    points: [[1981, 0], [null, null], [null, null], [null, null], [1981, 0], [1981, 0]]
                 }
             }
             const data = {}
@@ -154,8 +155,9 @@ describe("testing optionsFormatter functionality", () => {
                 plotId: O3AS_PLOTS.tco3_zm,
                 data: data,
                 modelsSlice: modelsSlice,
-                refLineVisible: true
-            })
+                refLineVisible: true,
+                getState: store.getState
+            });
             expect(series).toEqual(dataExpected);
         });
 
@@ -280,8 +282,6 @@ describe("testing optionsFormatter functionality", () => {
             });
             expect(result).toEqual(expected);
         });
-
-        test.todo('returns the correct options formatted correctly for tco3_zm');
 
     });
 
