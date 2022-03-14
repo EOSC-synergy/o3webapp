@@ -5,7 +5,6 @@ import {selectPlotXRange, setDisplayXRange} from "../../../../../store/plotSlice
 import {ALL_REGIONS_ORDERED} from "../../../../../utils/constants";
 import {Grid} from "@mui/material";
 import CustomLatitudeSelector from "../LatitudeBandSelector/CustomLatitudeSelector/CustomLatitudeSelector";
-import {updateURL} from "../../../../../index";
 
 /**
  * enables the user to select / deselect regions as well as entering a private region {@link LatitudeBandSelector}
@@ -44,7 +43,6 @@ function RegionSelector() {
         // Dispatch region checked
         regionCpy.sort();
         dispatch(setDisplayXRange({regions: regionCpy})); // TODO
-        updateURL();
     }
 
     /**

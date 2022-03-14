@@ -11,7 +11,6 @@ import {
     LATITUDE_BAND_MAX_VALUE,
     LATITUDE_BAND_MIN_VALUE
 } from "../../../../../../utils/constants";
-import {updateURL} from "../../../../../../index";
 
 
 /**
@@ -90,7 +89,6 @@ function CustomLatitudeSelector(props) {
             selectedLocationCopy.maxLat = val;
             dispatch(setLocation({minLat: selectedLocationCopy.minLat, maxLat: selectedLocationCopy.maxLat}));
             dispatch(fetchPlotDataForCurrentModels());
-            updateURL();
             setMaxLatState(val);
         } else {
             setMaxLatState(event.target.value);

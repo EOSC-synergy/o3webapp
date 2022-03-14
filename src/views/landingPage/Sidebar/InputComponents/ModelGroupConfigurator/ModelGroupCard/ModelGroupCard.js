@@ -21,7 +21,6 @@ import {
     deleteModelGroup
 } from "../../../../../../store/modelsSlice/modelsSlice";
 import {STATISTICAL_VALUES} from "../../../../../../utils/constants";
-import {updateURL} from "../../../../../../index";
 
 /**
  * A card containing information about a modal group.
@@ -49,7 +48,6 @@ function ModelGroupCard(props) {
         dispatch(setStatisticalValueForGroup(
             {groupId: props.modelGroupId, svType: statisticalValue, isIncluded: event.target.checked}
         ));
-        updateURL();
     }
 
     /**
@@ -66,7 +64,6 @@ function ModelGroupCard(props) {
             ));
         }
          */
-        updateURL();
     }
 
     /**
@@ -140,7 +137,6 @@ function ModelGroupCard(props) {
     const deleteGroup = () => {
         toggleDeleteRequest();
         dispatch(deleteModelGroup({groupId: props.modelGroupId}));
-        updateURL();
     }
 
     if (!isDeleteRequest) {
@@ -162,7 +158,7 @@ function ModelGroupCard(props) {
                         <IconButton aria-label="delete model group"
                                     onClick={toggleDeleteRequest}
                                     data-testid="ModelGroupCard-delete-model-group"
-                                    ><DeleteIcon/></IconButton>
+                        ><DeleteIcon/></IconButton>
                     </Grid>
                 </Grid>
                 <Divider/>

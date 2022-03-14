@@ -24,7 +24,6 @@ import PropTypes from 'prop-types';
 import {useDispatch, useSelector} from "react-redux";
 import {fetchPlotDataForCurrentModels, REQUEST_STATE} from "../../../../../../services/API/apiSlice";
 import {selectNameOfGroup, selectModelDataOfGroup} from "../../../../../../store/modelsSlice/modelsSlice";
-import {updateURL} from "../../../../../../index";
 
 
 /**
@@ -46,7 +45,7 @@ function AddModelGroupModal(props) {
      * the label in the card heading
      */
     const addModelLabel = isEditMode ? "Edit Model Group Members" : "Add Model Group";
-    
+
     const dispatch = useDispatch();
 
     const modelListRequestedData = useSelector(state => state.api.models);
@@ -102,7 +101,6 @@ function AddModelGroupModal(props) {
         setRight(storeRight);
 
     }, [props.isOpen]);
-
 
 
     /**
@@ -194,7 +192,6 @@ function AddModelGroupModal(props) {
         }
         dispatch(setModelsOfModelGroup({groupId: props.modelGroupId, groupName: groupName, modelList: right}));
         dispatch(fetchPlotDataForCurrentModels());
-        updateURL();
         props.onClose();
     }
 
@@ -302,7 +299,7 @@ function AddModelGroupModal(props) {
         minHeight: "75%",
         maxHeight: "100vh",
         p: 4,
-      };
+    };
 
     /**
      * updates the current group name
@@ -316,7 +313,7 @@ function AddModelGroupModal(props) {
      * @todo open a "discard changes?" popup here
      */
     const closeWithChanges = () => {
-        if(isEditMode) {
+        if (isEditMode) {
             setGroupName(storeGroupName);
             setVisible(allModels);
             setChecked([]);
@@ -361,9 +358,11 @@ function AddModelGroupModal(props) {
                             inputProps={{"data-testid": "AddModelGroupModal-card-group-name"}}
                         />
                     </Grid>
-                    <Box id="modal-modal-description" sx={{ mt: 2 }}>
-                        <Searchbar inputArray={allModels} foundIndicesCallback={setCurrentlyVisibleModels} shouldReturnValues={true} />
-                        <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ marginTop: '0.5em' }}>
+                    <Box id="modal-modal-description" sx={{mt: 2}}>
+                        <Searchbar inputArray={allModels} foundIndicesCallback={setCurrentlyVisibleModels}
+                                   shouldReturnValues={true}/>
+                        <Grid container spacing={2} justifyContent="center" alignItems="center"
+                              sx={{marginTop: '0.5em'}}>
                             <Grid item sm={5} xs={12} data-testid="AddModelGroupModal-card-header-left">
                                 <Typography>All Available Models</Typography>
                                 {
@@ -418,7 +417,7 @@ function AddModelGroupModal(props) {
                         variant="contained"
                         data-testid="AddModelGroupModal-save-button"
                     >
-                        {'modelGroupId' in props? "Save Changes" : "Add group"}
+                        {'modelGroupId' in props ? "Save Changes" : "Add group"}
                     </Button>
                 </CardActions>
             </Card>

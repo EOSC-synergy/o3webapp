@@ -15,7 +15,6 @@ import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlic
 import {useSelector, useDispatch} from "react-redux";
 import {selectPlotMonths, setMonths} from "../../../../../store/plotSlice/plotSlice";
 import PropTypes from 'prop-types';
-import {updateURL} from "../../../../../index";
 
 
 /**
@@ -97,7 +96,6 @@ function TimeCheckBoxGroup(props) {
         dispatch(setMonths({months: monthCpy.sort((a, b) => a - b)}));
 
         dispatch(fetchPlotDataForCurrentModels());
-        updateURL();
     }
 
     /**
@@ -169,14 +167,13 @@ function TimeCheckBoxGroup(props) {
         } else {
             setCorrectSelection(true);
         }
-        ;
 
         updateDataProcedure(monthCpy);
     }
 
     /**
      * Constructs a SeasonCheckbox for a given season
-     * 
+     *
      * @param {Object} param The parameter object representing a season
      * @param {string} param.name The season name
      * @param {int[]} param.months An array of monthId's of the months included in this season

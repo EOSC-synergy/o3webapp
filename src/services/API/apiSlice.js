@@ -3,7 +3,6 @@ import {getModels, getPlotTypes, getPlotData} from "./client";
 import {preTransformApiData} from "../../utils/optionsFormatter/optionsFormatter";
 import {START_YEAR, END_YEAR, O3AS_PLOTS} from "../../utils/constants";
 import {setDisplayYRangeForPlot} from "../../store/plotSlice/plotSlice";
-import {updateURL} from "../../index";
 
 export let cacheKey = '';
 
@@ -118,8 +117,8 @@ const selectExistingPlotData = createAction("api/selectPlotData");
 /**
  * This action encapsulates the operation of fetching the data, unpacking the calculated min and max values of the
  * fetched data which are then used to update the plot with the "suggestions". They are named suggestions because
- * the y-axis of the plot axis is initially set to these values. The user can change them ofcourse. 
- * 
+ * the y-axis of the plot axis is initially set to these values. The user can change them ofcourse.
+ *
  * @category API
  * @constant {function}
  * @param {string} plotId the name for which the data is fetched
@@ -139,7 +138,6 @@ export const updateDataAndDisplaySuggestions = ({plotId, cacheKey, data, suggest
                 minY: Math.floor(min / 10) * 10,
                 maxY: Math.ceil(max / 10) * 10
             }));
-            updateURL();
         }
     }
 }

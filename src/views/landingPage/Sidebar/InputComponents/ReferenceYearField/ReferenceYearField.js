@@ -13,7 +13,6 @@ import {
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import MuiVisibilityIcon from '@mui/icons-material/Visibility';
 import {selectPlotId} from "../../../../../store/plotSlice/plotSlice";
-import {updateURL} from "../../../../../index";
 
 /**
  * Enables the user to select a reference year.
@@ -44,7 +43,6 @@ function ReferenceYearField() {
             if (event.target.value >= START_YEAR && event.target.value <= END_YEAR) {
                 // fetch for tco3_zm and tco3_return
                 dispatch(fetchPlotDataForCurrentModels());
-                updateURL();
             }
         }
     };
@@ -54,7 +52,6 @@ function ReferenceYearField() {
      */
     const handleShowRefLineClicked = (event) => {
         dispatch(setVisibility({visible: event.target.checked}));
-        updateURL();
     }
 
     return (
@@ -73,7 +70,7 @@ function ReferenceYearField() {
                             onChange={handleChangeForRefYear}
                             error={selectedYear < START_YEAR || selectedYear > END_YEAR}
                             helperText={selectedYear < START_YEAR ? `<${START_YEAR}` : (selectedYear > END_YEAR ? `>${END_YEAR}` : '')}
-                            inputProps={{ "data-testid": "ReferenceYearField-year" }}
+                            inputProps={{"data-testid": "ReferenceYearField-year"}}
                         />
                     </FormControl>
                     {
@@ -85,7 +82,7 @@ function ReferenceYearField() {
                                 icon={<VisibilityOffIcon data-testid="RefLineInvisibleCheckbox"/>}
                                 checkedIcon={<MuiVisibilityIcon/>}
                                 onClick={handleShowRefLineClicked}
-                                inputProps={{ "data-testid": "ReferenceYearField-toggleVisibility" }}
+                                inputProps={{"data-testid": "ReferenceYearField-toggleVisibility"}}
                             />
                         </FormControl>
                     }

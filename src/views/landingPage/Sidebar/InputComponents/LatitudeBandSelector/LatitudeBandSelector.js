@@ -7,7 +7,6 @@ import {latitudeBands} from "../../../../../utils/constants";
 import PropTypes from 'prop-types';
 import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice";
 import CustomLatitudeSelector from "./CustomLatitudeSelector/CustomLatitudeSelector";
-import {updateURL} from "../../../../../index";
 
 /**
  * An object containing the current minLat and maxLat Values.
@@ -56,7 +55,6 @@ function LatitudeBandSelector(props) {
 
             // fetch for tco3_zm and tco3_return
             dispatch(fetchPlotDataForCurrentModels());
-            updateURL();
         }
     };
 

@@ -4,7 +4,6 @@ import {setDisplayYRange, selectPlotYRange, selectPlotId} from "../../../../../s
 import {Typography, Grid, FormControl, TextField} from "@mui/material";
 import store from '../../../../../store/store';
 import {O3AS_PLOTS} from "../../../../../utils/constants";
-import {updateURL} from "../../../../../index";
 
 /**
  * Enables the user to choose the range that should be visible on the y-axis of the plot.
@@ -52,7 +51,6 @@ function YAxisField(props) {
             else setStateY_return({minY: event.target.value, maxY: maxY});
             if (event.target.value > 0 && event.target.value < maxY) {
                 dispatch(setDisplayYRange({minY: parseInt(event.target.value), maxY: maxY}));
-                updateURL();
             }
         }
     }
@@ -68,7 +66,6 @@ function YAxisField(props) {
             else setStateY_return({minY: minY, maxY: event.target.value});
             if (event.target.value > 0 && minY < event.target.value) {
                 dispatch(setDisplayYRange({minY: minY, maxY: parseInt(event.target.value)}));
-                updateURL();
             }
         }
     }
@@ -101,7 +98,7 @@ function YAxisField(props) {
                                 (stateY_zm.minY < 0 ? `<0` : (stateY_zm.minY >= maxY ? `min>=max` : '')) :
                                 (stateY_return.minY < 0 ? `<0` : (stateY_return.minY >= maxY ? `min>=max` : ''))
                         }
-                        inputProps={{ "data-testid": "YAxisField-left-input" }}
+                        inputProps={{"data-testid": "YAxisField-left-input"}}
                     />
                 </FormControl>
             </Grid>
@@ -126,7 +123,7 @@ function YAxisField(props) {
                                 (stateY_zm.maxY < 0 ? `<0` : (minY >= stateY_zm.maxY ? `min>=max` : '')) :
                                 (stateY_return.maxY < 0 ? `<0` : (minY >= stateY_return.maxY ? `min>=max` : ''))
                         }
-                        inputProps={{ "data-testid": "YAxisField-right-input" }}
+                        inputProps={{"data-testid": "YAxisField-right-input"}}
                     />
                 </FormControl>
             </Grid>

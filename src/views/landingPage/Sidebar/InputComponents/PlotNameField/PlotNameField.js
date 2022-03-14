@@ -5,8 +5,7 @@ import {Divider, Typography, Box, FormControl, TextField} from '@mui/material';
 import {useSelector} from 'react-redux';
 import {selectPlotTitle} from "../../../../../store/plotSlice/plotSlice";
 import PropTypes from 'prop-types';
-import {PLOT_NAME_MAX_LEN} from "../../../../../utils/constants"
-import {updateURL} from "../../../../../index";
+import {PLOT_NAME_MAX_LEN} from "../../../../../utils/constants";
 
 /**
  * Enables the user to rename and change the plot title.
@@ -43,7 +42,6 @@ function PlotNameField() {
             event.target.value = event.target.value.slice(0, PLOT_NAME_MAX_LEN);
         }
         dispatch(setTitle({title: event.target.value}));
-        updateURL();
     }
     return (
         <>

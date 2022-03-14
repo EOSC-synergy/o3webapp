@@ -7,15 +7,18 @@ import {styled} from '@mui/material/styles';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import IntermediateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
-import { selectModelsOfGroup, selectModelDataOfGroup, updatePropertiesOfModelGroup } from "../../../../../../store/modelsSlice/modelsSlice";
-import { STATISTICAL_VALUES, mean, std, median, percentile } from "../../../../../../utils/constants";
+import {
+    selectModelsOfGroup,
+    selectModelDataOfGroup,
+    updatePropertiesOfModelGroup
+} from "../../../../../../store/modelsSlice/modelsSlice";
+import {STATISTICAL_VALUES, mean, std, median, percentile} from "../../../../../../utils/constants";
 import PropTypes from "prop-types";
 import CardHeader from '@mui/material/CardHeader';
 import CloseIcon from '@mui/icons-material/Close';
-import { useTheme } from '@mui/material/styles';
-import { convertModelName } from "../../../../../../utils/ModelNameConverter";
-import { alpha } from '@mui/system';
-import {updateURL} from "../../../../../../index";
+import {useTheme} from '@mui/material/styles';
+import {convertModelName} from "../../../../../../utils/ModelNameConverter";
+import {alpha} from '@mui/system';
 
 /**
  * A DataGrid with applied CSS styling.
@@ -345,7 +348,6 @@ function EditModelGroupModal(props) {
             dataCpy[model]["isVisible"] = isVisible[i];
         }
         dispatch(updatePropertiesOfModelGroup({groupId: props.modelGroupId, data: dataCpy}));
-        updateURL();
         props.onClose();
     }
 
@@ -403,18 +405,18 @@ function EditModelGroupModal(props) {
                                 color="primary"
                                 data-testid={`ColumnCheckboxCheckedType${type}`}
                             />
-                        : (
-                            areNoCheckboxesSelected(type) ?
-                                <CheckBoxOutlineBlankIcon
-                                    fontSize="medium"
-                                    data-testid={`ColumnCheckboxUncheckedType${type}`}
-                                />
-                            :
-                                <IntermediateCheckBoxIcon
-                                    fontSize="medium"
-                                    color="primary"
-                                    data-testid={`ColumnCheckboxIntermediateType${type}`}
-                                />
+                            : (
+                                areNoCheckboxesSelected(type) ?
+                                    <CheckBoxOutlineBlankIcon
+                                        fontSize="medium"
+                                        data-testid={`ColumnCheckboxUncheckedType${type}`}
+                                    />
+                                    :
+                                    <IntermediateCheckBoxIcon
+                                        fontSize="medium"
+                                        color="primary"
+                                        data-testid={`ColumnCheckboxIntermediateType${type}`}
+                                    />
                             )
                     }
                 </Box>
@@ -475,9 +477,9 @@ function EditModelGroupModal(props) {
      * @constant {array}
      */
     const columns = [
-        { field: 'project', headerName: 'Project', width: 120, editable: false},
-        { field: 'institute', headerName: 'Institute', width: 150, editable: false },
-        { field: 'model', headerName: 'Model', width: 225, editable: false },
+        {field: 'project', headerName: 'Project', width: 120, editable: false},
+        {field: 'institute', headerName: 'Institute', width: 150, editable: false},
+        {field: 'model', headerName: 'Model', width: 225, editable: false},
         {
             field: mean, headerName: 'Mean', sortable: false, width: 140, disableClickEventBubbling: true,
             renderHeader: () => generateHeaderName("Mean"),
@@ -488,7 +490,9 @@ function EditModelGroupModal(props) {
         {
             field: std, headerName: 'Standard deviation', sortable: false, width: 200, disableClickEventBubbling: true,
             renderHeader: () => generateHeaderName("Standard deviation"),
-            renderCell: (params) => {return createCellCheckBox(params, "Standard deviation")}
+            renderCell: (params) => {
+                return createCellCheckBox(params, "Standard deviation")
+            }
         },
         {
             field: median, headerName: 'Median', sortable: false, width: 140, disableClickEventBubbling: true,
@@ -544,7 +548,8 @@ function EditModelGroupModal(props) {
                     sx={{height: '65%'}}
                 />
                 <CardActions sx={{justifyContent: "flex-end", marginTop: "2%"}}>
-                    <Button onClick={applyChanges} variant="contained" data-testid="ApplyButton">{applyButtonLabel}</Button>
+                    <Button onClick={applyChanges} variant="contained"
+                            data-testid="ApplyButton">{applyButtonLabel}</Button>
                 </CardActions>
             </Card>
         </Modal>
