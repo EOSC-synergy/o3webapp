@@ -91,7 +91,6 @@ function Graph(props) {
             </div>
 
         </div>);
-
     } else if (activeData.status === REQUEST_STATE.error) {
         return (
             <React.Fragment>
@@ -101,8 +100,7 @@ function Graph(props) {
                     width: "100%"
                 }}>Error: {activeData.error}</Typography>
             </React.Fragment>
-        )
-
+        );
     } else if (activeData.status === REQUEST_STATE.success) {
         const {data, styling} = generateSeries({
             plotId,
