@@ -10,7 +10,7 @@ import { Alert, Link } from '@mui/material';
 import { O3AS_PLOTS } from '../../../utils/constants';
 import { APEXCHART_PLOT_TYPE, HEIGHT_LOADING_SPINNER, HEIGHT_GRAPH, NO_MONTH_SELECTED } from '../../../utils/constants';
 import store from '../../../store/store';
-
+  
 /**
  * Currently there is no dynamic data linking. The graph will always
  * render the data from default-data.json in this folder. This is
@@ -23,14 +23,18 @@ import store from '../../../store/store';
  */
 function Graph(props) {
 
-
     const plotId = useSelector(selectPlotId);
     const plotTitle = useSelector(selectPlotTitle);
     const xAxisRange = useSelector(selectPlotXRange);
     const yAxisRange = useSelector(selectPlotYRange); 
     const activeData = useSelector(state => selectActivePlotData(state, plotId));
     const modelsSlice = useSelector(state => state.models);
-    const refLineVisible = useSelector(selectVisibility)
+    const refLineVisible = useSelector(selectVisibility);
+
+    const [_, setDimensions] = React.useState({ 
+        height: window.innerHeight,
+        width: window.innerWidth
+    })
     
     useEffect(() => { 
         // note: this is important, because we should only "propagate" the error to the top
@@ -41,6 +45,18 @@ function Graph(props) {
             props.reportError(activeData.error);
         }
     }, [activeData]);
+
+    useEffect(() => {
+        const handleResize = () => {
+          setDimensions({
+            height: window.innerHeight,
+            width: window.innerWidth
+          })
+        }
+    
+        window.addEventListener('resize', handleResize)
+        return _ => window.removeEventListener('resize', handleResize);
+    })
 
     if (!(plotId in O3AS_PLOTS)) {
         const style = {
