@@ -75,6 +75,7 @@ export function updateURL() {
     otherSettings.push(`title_return="${plotSpecific.tco3_return.title}"`);
 
     for (let i = 0; i < store.getState().models.idCounter; i++) {
+        if (typeof store.getState().models.modelGroups[i] === "undefined") continue;
         const modelGroup = store.getState().models.modelGroups[i];
         const name = modelGroup.name;
         const visibilities = [
