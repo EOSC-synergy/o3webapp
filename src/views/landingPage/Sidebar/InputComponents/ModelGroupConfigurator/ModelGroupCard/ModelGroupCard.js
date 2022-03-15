@@ -24,37 +24,17 @@ import {STATISTICAL_VALUES} from "../../../../../../utils/constants";
 
 /**
  * A card containing information about a modal group.
- * Used in {@link ModelGroupConfigurator}.
- * 
  * @component
- * @param {Object} props specified in propTypes
+ * @param {Object} props
+ * @param {String} props.reportError - error function
+ * @param {int} props.modelGroupId -> id of the model group
  * @returns {JSX.Element} a jsx containing a modal with a data grid with all models from the model group
  */
 function ModelGroupCard(props) {
 
-         
-    /**
-     * Dispatcher to dispatch the plot name change action.
-     * @constant {function}
-    */
     const dispatch = useDispatch();
-    /**
-     * the name of the model group. Retrieved from the Redux Store
-     * @see selectNameOfGroup
-     * @constant {array}
-     */
     const modelGroupName = useSelector(state => selectNameOfGroup(state, props.modelGroupId));
-    /**
-     * gets the statisticalVales of the model Group. Retrieved from the Redux Store.
-     * @see selectStatisticalValueSettingsOfGroup
-     * @constant {object}
-     */
     const modelGroupStatisticalValue = useSelector(state => selectStatisticalValueSettingsOfGroup(state, props.modelGroupId));
-    /**
-     * whether the modle group is currenly visible or not. Retrieved from the Redux Store.
-     * @see selectVisibilityOfGroup
-     * @constant {boolean}
-     */
     const isModelGroupVisible = useSelector(state => selectVisibilityOfGroup(state, props.modelGroupId));
 
     /**
@@ -63,8 +43,6 @@ function ModelGroupCard(props) {
      *
      * @param {event} event the event that called this function
      * @param {string} statisticalValue the name of the statistical value that should be toggled
-     * @see setStatisticalValueForGroup
-     * @constant {function}
      */
     const toggleModelGroupStatisticalValueVisibility = (event, statisticalValue) => {
         dispatch(setStatisticalValueForGroup(
@@ -75,31 +53,34 @@ function ModelGroupCard(props) {
     /**
      * Toggles the visibility of the whole group in the graph
      * by dispatching an action to the redux store.
-     * @constant {function}
-     * @see setVisibilityForGroup
      */
     const toggleModelGroupVisibility = () => {
         dispatch(setVisibilityForGroup({groupId: props.modelGroupId, isVisible: !isModelGroupVisible}));
+        /*
+        // This de-/activates all statistical values when toggling the group visibility.
+        for (const key in STATISTICAL_VALUES) {
+            dispatch(setStatisticalValueForGroup(
+                {groupId: props.modelGroupId, svType: key, isIncluded: !isModelGroupVisible}
+            ));
+        }
+         */
     }
 
     /**
      * State to keep track of whether the edit group modal is currently visible or not.
-     * @constant {array}
-     * @default false
+     * Default is false.
      */
     const [isEditModalVisible, setEditModalVisible] = React.useState(false);
 
     /**
      * State to keep track of whether the add group modal (used to edit group members) is currently visible or not.
-     * @constant {array}
-     * @default false
+     * Default is false.
      */
     const [isAddModalVisible, setAddModalVisible] = React.useState(false);
 
     /**
      * State to keep track of whether a delete request is open or not.
-     * @constant {array}
-     * @default false
+     * Default is false.
      */
     const [isDeleteRequest, setDeleteRequest] = React.useState(false);
 
@@ -108,7 +89,6 @@ function ModelGroupCard(props) {
 
     /**
      * Shows the edit group modal.
-     * @constant {function}
      */
     const showEditModal = (refresh) => {
         setAddModalVisible(false);  // avoid two modals being visible under all circumstances
@@ -118,7 +98,6 @@ function ModelGroupCard(props) {
 
     /**
      * Closes the edit modal.
-     * @constant {function}
      */
     const closeEditModal = () => {
         setEditModalVisible(false);
@@ -126,7 +105,6 @@ function ModelGroupCard(props) {
 
     /**
      * Shows the add model group modal (used to edit group members).
-     * @constant {function}
      */
     const showAddModal = (refresh) => {
         setEditModalVisible(false);  // avoid two modals being visible under all circumstances
@@ -136,7 +114,6 @@ function ModelGroupCard(props) {
 
     /**
      * Closes the add model group modal (used to edit group members).
-     * @constant {function}
      */
     const closeAddModal = () => {
         setAddModalVisible(false);
@@ -144,8 +121,6 @@ function ModelGroupCard(props) {
 
     /**
      * Returns the visibility icon, depending on whether the group is currently visible or not.
-     * @constant {function}
-     * @returns {JSX.Element} JSX containing a icon of an open or closed eye depending on isModelGroupVisible
      */
     const VisibilityIcon = () => {
         return isModelGroupVisible ? <MuiVisibilityIcon data-testid="ModelGroupCard-VisibilityIcon-visible"/> :
@@ -155,8 +130,6 @@ function ModelGroupCard(props) {
     /**
      * Toggles the visibility of the delete request card.
      * Always sets it to the opposite of what it is now.
-     * @constant {function}
-     * @see setDeleteRequest
      */
     const toggleDeleteRequest = () => {
         setDeleteRequest(!isDeleteRequest);
@@ -165,8 +138,6 @@ function ModelGroupCard(props) {
     /**
      * Deletes a model group.
      * Dispatches the deletion to Redux with the group id of the model group card.
-     * @constant {function}
-     * @see deleteModelGroup
      */
     const deleteGroup = () => {
         toggleDeleteRequest();
@@ -194,7 +165,7 @@ function ModelGroupCard(props) {
                         <IconButton aria-label="delete model group"
                                     onClick={toggleDeleteRequest}
                                     data-testid="ModelGroupCard-delete-model-group"
-                                    ><DeleteIcon/></IconButton>
+                        ><DeleteIcon/></IconButton>
                     </Grid>
                 </Grid>
                 <Divider/>
@@ -289,15 +260,8 @@ function ModelGroupCard(props) {
 
 }
 
-
 ModelGroupCard.propTypes = {
-    /**
-     * function for error handling
-     */
     modelGroupId: PropTypes.number.isRequired,
-    /**
-     * id of the model group
-     */
     reportError: PropTypes.func.isRequired
 }
 

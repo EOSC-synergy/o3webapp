@@ -10,7 +10,7 @@ import {Alert, Link} from '@mui/material';
 import {O3AS_PLOTS} from '../../../utils/constants';
 import {NO_MONTH_SELECTED} from '../../../utils/constants';
 import store from '../../../store/store';
-  
+
 /**
  * Currently there is no dynamic data linking. The graph will always
  * render the data from default-data.json in this folder. This is
@@ -39,13 +39,6 @@ function Graph(props) {
      */
     const HEIGHT_LOADING_SPINNER = "300px";
 
-    /**
-     * How tall the graph should appear
-     * @constant {string}
-     * @memberof Graph
-     */
-    const HEIGHT_GRAPH = `${window.innerHeight * 0.75}px`;
-
     const plotId = useSelector(selectPlotId);
     const plotTitle = useSelector(selectPlotTitle);
     const xAxisRange = useSelector(selectPlotXRange);
@@ -54,7 +47,7 @@ function Graph(props) {
     const modelsSlice = useSelector(state => state.models);
     const refLineVisible = useSelector(selectVisibility);
 
-    const [_, setDimensions] = React.useState({ 
+    const [_, setDimensions] = React.useState({
         height: window.innerHeight,
         width: window.innerWidth
     })
@@ -88,7 +81,7 @@ function Graph(props) {
             width: window.innerWidth
           })
         }
-    
+
         window.addEventListener('resize', handleResize)
         return _ => window.removeEventListener('resize', handleResize);
     })

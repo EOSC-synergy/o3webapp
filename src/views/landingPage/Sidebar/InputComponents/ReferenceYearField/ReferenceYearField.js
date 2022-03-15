@@ -4,16 +4,21 @@ import {useDispatch} from "react-redux"
 import {useSelector} from "react-redux";
 import {END_YEAR, START_YEAR, O3AS_PLOTS} from "../../../../../utils/constants";
 import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice";
-import {setYear, setVisibility, selectRefYear, selectVisibility} from "../../../../../store/referenceSlice/referenceSlice";
+import {
+    setYear,
+    setVisibility,
+    selectRefYear,
+    selectVisibility
+} from "../../../../../store/referenceSlice/referenceSlice";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import MuiVisibilityIcon from '@mui/icons-material/Visibility';
-import { selectPlotId } from "../../../../../store/plotSlice/plotSlice";
-import PropTypes from 'prop-types';
+import {selectPlotId} from "../../../../../store/plotSlice/plotSlice";
 
 /**
  * Enables the user to select a reference year.
  * @component
- * @param {Object} props specified by propTypes
+ * @param {Object} props
+ * @param {function} props.reportError - function to handle errors
  * @returns {JSX.Element} a jsx containing a text field to select the reference year
  */
 function ReferenceYearField() {
@@ -46,7 +51,7 @@ function ReferenceYearField() {
      * Handles the change of the reference line visibility field if it is modified.
      */
     const handleShowRefLineClicked = (event) => {
-        dispatch(setVisibility({visible: event.target.checked}))
+        dispatch(setVisibility({visible: event.target.checked}));
     }
 
     return (
@@ -65,33 +70,26 @@ function ReferenceYearField() {
                             onChange={handleChangeForRefYear}
                             error={selectedYear < START_YEAR || selectedYear > END_YEAR}
                             helperText={selectedYear < START_YEAR ? `<${START_YEAR}` : (selectedYear > END_YEAR ? `>${END_YEAR}` : '')}
-                            inputProps={{ "data-testid": "ReferenceYearField-year" }}
+                            inputProps={{"data-testid": "ReferenceYearField-year"}}
                         />
                     </FormControl>
                     {
                         plotId === O3AS_PLOTS.tco3_zm
-                        && 
+                        &&
                         <FormControl>
                             <Checkbox
                                 checked={refLineVisibility}
                                 icon={<VisibilityOffIcon data-testid="RefLineInvisibleCheckbox"/>}
                                 checkedIcon={<MuiVisibilityIcon/>}
                                 onClick={handleShowRefLineClicked}
-                                inputProps={{ "data-testid": "ReferenceYearField-toggleVisibility" }}
+                                inputProps={{"data-testid": "ReferenceYearField-toggleVisibility"}}
                             />
                         </FormControl>
-                    }   
+                    }
                 </Grid>
             </Grid>
         </>
     );
-}
-
-ReferenceYearField.propTypes = {
-    /**
-     * function for error handling
-     */
-    reportError: PropTypes.func
 }
 
 export default ReferenceYearField;

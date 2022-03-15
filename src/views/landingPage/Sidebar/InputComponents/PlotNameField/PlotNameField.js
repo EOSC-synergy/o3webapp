@@ -15,35 +15,24 @@ export const PLOT_NAME_MAX_LEN = 40;
 /**
  * Enables the user to rename and change the plot title.
  * @component
- * @param {Object} props specified in propTypes
+ * @param {Object} props
+ * @param {function} props.reportError - function for error handling
  * @returns {JSX.Element} a jsx containing a text-field to change the plot name
  */
 function PlotNameField() {
-    
-    /** The title that should be displayed above the TextField.
-     * @constant {string}
-    */
+
+    /** The title that should be displayed above the TextField. */
     const componentTitle = "PLOT NAME";
 
-    /** The label displayed inside the TextField while nothing is typed in.
-     * @constant {string}
-    */
+    /** The label displayed inside the TextField while nothing is typed in. */
     const textFieldLabel = "New Plot Name";
-     
-    /** Dispatcher to dispatch the plot name change action.
-     * @constant {function}
-    */
+
+    /** Dispatcher to dispatch the plot name change action. */
     const dispatch = useDispatch();
 
-    /**
-     * the currently selected plotType
-     * @constant {string}
-     */
     const plotId = useSelector(selectPlotId);
 
-    /** The current plot title from the store
-     * @constant {string}
-    */
+    /** The current plot title from the store */
     const plotTitle = useSelector(selectPlotTitle);
 
     useEffect(() => {
@@ -52,9 +41,7 @@ function PlotNameField() {
         textField.value = plotTitle;
     }, [plotId]);
 
-    /** Handles the change if the text in TextField is modified.
-     * @constant {function}
-     */
+    /** Handles the change if the text in TextField is modified. */
     const updatePlotName = (event) => {
         if (event.target.value.length > PLOT_NAME_MAX_LEN) {
             event.target.value = event.target.value.slice(0, PLOT_NAME_MAX_LEN);
@@ -86,9 +73,6 @@ function PlotNameField() {
 }
 
 PlotNameField.propTypes = {
-    /**
-     * function for error handling
-     */
     reportError: PropTypes.func.isRequired
 }
 
