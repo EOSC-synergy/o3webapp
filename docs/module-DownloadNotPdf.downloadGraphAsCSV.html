@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> components/DiscardChangesModal/DiscardChangesModal.js</title>
+  <title> downloadGraphAsCSV</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -79,123 +77,240 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p>Source</p>
-                    <h1>components/DiscardChangesModal/DiscardChangesModal.js</h1>
+                    <p>Components</p>
+                    <h1>downloadGraphAsCSV</h1>
                 </header>
                 
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>import * as React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import Alert from '@mui/material/Alert';
-import { AlertTitle } from '@mui/material';
-import PropTypes from "prop-types";
+        <h2>
+            &ltdownloadGraphAsCSV  /&gt
+        </h2>
+        
+    
+</header>
 
-/**
- * Opens a non-closable discard changes modal to ask whether the users want to discard their changes
- * @component
- * @param {Object} props specified in propTypes
- * @returns {JSX.Element} containing a Dialog that asks the user whether to save or discard changes
- * can only be closed via clicking save or discard changes button
- */
-function DiscardChangesModal(props) {
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <div class="members">
+                    <div class="member">
+                        <div class=name>
+                            <span class="tag">Constructor</span>
+                        </div>
+                        
 
-    /**
-     * function to discard changes and close the modal
-     * @constant {function}
-     */
-   const discardChangesAndCloseDialog = () => {
-       props.discardChanges();
-       props.onClose();
-   }
 
-    /**
-     * function to save changes and close the modal
-     * @constant {function}
-     */
-   const saveChangesAndCloseDialog = () => {
-       props.saveChanges();
-       props.onClose();
-   }
-
-   /**
-    * title of the dialog
-    * @constant {string}
-    */
-   const heading = "Discard Changes";
-
-   /**
-    * question that is asked to the user
-    * @constant {string}
-    */
-   const dialog = "Are you sure you want to discard all changes?";
-
-    /**
-    * Label for the discard changes button
-    * @constant {string}
-    */
-   const discardButtonLabel = "Discard Changes";
-
-    /**
-    * Label for the save changes button
-    * @constant {string}
-    */
-   const saveButtonLabel = "Save Changes";
-
-  return (
-    &lt;Dialog
-        open={props.isOpen}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        data-testid="discardChanges-dialog"
-    >
-    &lt;DialogContent>
-        &lt;Alert severity="warning" variant="standard" id="alert-dialog-description">
-            &lt;AlertTitle id="alert-dialog-title">{heading}&lt;/AlertTitle>
-            {dialog}
-        &lt;/Alert>
-    &lt;/DialogContent>
-    &lt;DialogActions>
-        &lt;Button onClick={discardChangesAndCloseDialog} data-testid="discardChanges-discardButton">
-            {discardButtonLabel}
-        &lt;/Button>
-        &lt;Button onClick={saveChangesAndCloseDialog} data-testid="discardChanges-saveButton" autoFocus>
+    
+    <h4 class="name" id="downloadGraphAsCSV">
+        <a class="href-link" href="#downloadGraphAsCSV">#</a>
+        
+        <span class="code-name">
             
-        &lt;/Button>
-    &lt;/DialogActions>
-    &lt;/Dialog>
-  );
-}
+                &ltdownloadGraphAsCSV  /&gt
+            
+        </span>
+    </h4>
+    
 
-DiscardChangesModal.propTypes = {
-    /**
-     * whether the dialog modal should be opened or not
-     */
-    isOpen: PropTypes.bool.isRequired,
-    /**
-     * function to save changes
-     */
-    saveChanges: PropTypes.func.isRequired,
-    /**
-     * function to discard changes
-     */
-    discardChanges: PropTypes.func.isRequired,
-    /**
-     * function to close the dialog, called after saveChanges or discardChanges
-     */
-    onClose: PropTypes.func.isRequired
-}
+    
+    
+    <div class="description">
+        <p>Downloads the graph as a CSV file.</p>
+    </div>
+    
 
-export default DiscardChangesModal;</code></pre>
-        </article>
-    </section>
+
+
+
+
+
+
+    
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>plotTitle</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>the title of the plot</p></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>plotId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>the current id of the plot</p></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="services_downloading_otherFormats.js.html" class="button">View Source</a>
+            <span>
+                <a href="services_downloading_otherFormats.js.html">services/downloading/otherFormats.js</a>, <a href="services_downloading_otherFormats.js.html#line68">line 68</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        
+    
+    </div>
+    
+        
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
