@@ -1,3 +1,28 @@
+# The O3as Webapp
+
+## Project Description
+
+The O3as Webapp has the purpose of visualizing data from the ozone layer
+and thus enhancing the scientific research of the ozone layer decomposition.
+The product provides an intuitive user interface for detailed visualizations,
+e.g. ozone recovery analysis, and calculation of statistical values. Furthermore,
+plotted data can be downloaded to share gathered information
+
+### Built With
+
+* [React.js](https://reactjs.org/)
+* [Redux.js](https://redux.js.org/)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## How to Install and Run the Project
+
+* Make sure that you have installed React.js https://reactjs.org/docs/getting-started.html
+
+
+
+
+
 Add components inside to auto-generate a live UML diagram from the existing strucure.
 
 The parser is alreay setup to generate the code from this **src/** directory and put the .txt file in the **generated-uml/** directory.
