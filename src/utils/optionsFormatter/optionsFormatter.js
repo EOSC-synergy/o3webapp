@@ -24,6 +24,8 @@ import {
 } from "../constants"
 import {convertModelName} from "../ModelNameConverter";
 
+/** @module OptionsFormatter */
+
 /**
  * Maps the plotId to a function that describes how the series are going
  * to be generated in order to make the generateSeries Function (interface) more
@@ -73,6 +75,7 @@ function createSubtitle(getState) {
  *
  * This gigantic object allows us to communicate with the apexcharts library.
  * More can be found here: https://apexcharts.com/docs/installation/
+ * @constant {object}
  */
 export const defaultTCO3_zm = {
     xaxis: {

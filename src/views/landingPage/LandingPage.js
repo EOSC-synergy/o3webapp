@@ -6,11 +6,7 @@ import PropTypes from "prop-types";
 /**
  * main view of web page
  * @component
- * @param {Object} props
- * @param {function} props.reportError - function to report an error
- * @param {function} props.openSidebar - function to open the sidebar
- * @param {function} props.closeSidebar - function to close the sidebar
- * @param {boolean} props.isSidebarOpen - boolean to indicate whether the sidebar is open or not
+ * @param {Object} props specified in propTypes
  * @returns {JSX.Element} a jsx containing all main components
  */
 function LandingPage(props) {
@@ -48,9 +44,21 @@ function LandingPage(props) {
 }
 
 LandingPage.propTypes = {
+    /**
+     * function for error handling
+     */
     reportError: PropTypes.func.isRequired,
+    /**
+     * function to open the sidebar
+     */
     isSidebarOpen: PropTypes.bool.isRequired,
+    /**
+     * function to close the sidebar
+     */
     closeSidebar: PropTypes.func.isRequired,
+    /**
+     * boolean to indicate whether the sidebar is open or not
+     */
     openSidebar: PropTypes.func.isRequired,
 }
 
