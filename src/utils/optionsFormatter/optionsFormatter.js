@@ -608,7 +608,7 @@ function generateTco3_ZmSeries({data, modelsSlice, refLineVisible, getState}) {
         width: [],
         dashArray: [],
     }
-    if (refLineVisible) {
+    if (refLineVisible && data.reference_value) {
         series.data.push({
             name: data.reference_value.plotStyle.label,
             data: data.reference_value.data.map((e, idx) => [START_YEAR + idx, e]),
@@ -645,7 +645,7 @@ function generateTco3_ZmSeries({data, modelsSlice, refLineVisible, getState}) {
 
     return Object.assign(
         combineSeries(series, svSeries),
-        {points: refLineVisible ? calcRecoveryPoints(getState, data.reference_value, svSeries) : []}
+        {points: refLineVisible && data.reference_value ? calcRecoveryPoints(getState, data.reference_value, svSeries) : []}
     );
 }
 
