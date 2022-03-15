@@ -61,6 +61,12 @@ describe("testing optionsFormatter functionality", () => {
                 "modelA": {
                     data: expectedNormalize,
                     plotStyle: "plotstyleData",
+                    suggested: {
+                        minX: 1960,
+                        maxX: 1978,
+                        minY: 0,
+                        maxY: 9, // from Array [0..9]
+                    }
                 },
             });
 
@@ -88,7 +94,11 @@ describe("testing optionsFormatter functionality", () => {
                         "regionA": 2010,
                         "regionB": 2022,
 
-                    } // a direct lookup table might be faster (to consider if boxplot calculation becomes to slow!)
+                    },
+                    suggested: {
+                        minY: 2010,
+                        maxY: 2022,
+                    }
                 }
             });
         });
@@ -301,7 +311,7 @@ describe("testing optionsFormatter functionality", () => {
 
     it('should calculate the optimal tick amount for the x-axis for the tco3_zm', () => {
         const max = 200;
-        const factor = 10;
+        const factor = 20;
         expect(getOptimalTickAmount(0, max)).toEqual(max / factor);
     });
 

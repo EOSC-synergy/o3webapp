@@ -10,7 +10,7 @@ import {Alert, Link} from '@mui/material';
 import {O3AS_PLOTS} from '../../../utils/constants';
 import {APEXCHART_PLOT_TYPE, HEIGHT_LOADING_SPINNER, HEIGHT_GRAPH, NO_MONTH_SELECTED} from '../../../utils/constants';
 import store from '../../../store/store';
-
+  
 /**
  * Currently there is no dynamic data linking. The graph will always
  * render the data from default-data.json in this folder. This is
@@ -27,7 +27,6 @@ import store from '../../../store/store';
  */
 function Graph(props) {
 
-
     const plotId = useSelector(selectPlotId);
     const plotTitle = useSelector(selectPlotTitle);
     const xAxisRange = useSelector(selectPlotXRange);
@@ -35,6 +34,11 @@ function Graph(props) {
     const activeData = useSelector(state => selectActivePlotData(state, plotId));
     const modelsSlice = useSelector(state => state.models);
     const refLineVisible = useSelector(selectVisibility);
+
+    const [_, setDimensions] = React.useState({ 
+        height: window.innerHeight,
+        width: window.innerWidth
+    })
 
     /**
      * Message to display if an error occured.
@@ -57,6 +61,18 @@ function Graph(props) {
             props.reportError(activeData.error);
         }
     }, [activeData]);
+
+    useEffect(() => {
+        const handleResize = () => {
+          setDimensions({
+            height: window.innerHeight,
+            width: window.innerWidth
+          })
+        }
+    
+        window.addEventListener('resize', handleResize)
+        return _ => window.removeEventListener('resize', handleResize);
+    })
 
     if (!(plotId in O3AS_PLOTS)) {
         const style = {
@@ -116,8 +132,8 @@ function Graph(props) {
             getState: store.getState
         });
         const uniqueNumber = Date.now(); // forces apexcharts to re-render correctly!
-        return <Chart key={uniqueNumber} options={options} series={data} type={APEXCHART_PLOT_TYPE[plotId]}
-                      height={HEIGHT_GRAPH}/>
+        const HEIGHT = (window.innerHeight - document.getElementById('Navbar').offsetHeight) * 0.975;
+        return <Chart key={uniqueNumber} options={options} series={data} type={APEXCHART_PLOT_TYPE[plotId]} height={HEIGHT} style={{marginTop: "2%"}} />
     }
 
     // this "case" should not happen
