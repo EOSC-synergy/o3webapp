@@ -10,15 +10,43 @@ plotted data can be downloaded to share gathered information
 
 ### Built With
 
+* [npm.js](https://www.npmjs.com/)
 * [React.js](https://reactjs.org/)
 * [Redux.js](https://redux.js.org/)
+* [Jest.js](https://jestjs.io/)
+* [MaterialUI](https://mui.com/) 
+* [axios](https://axios-http.com/docs/intro)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ## How to Install and Run the Project
 
-* Make sure that you have installed React.js https://reactjs.org/docs/getting-started.html
+* Make sure that you have installed React.js
+ https://reactjs.org/docs/getting-started.html
 
+* After cloning the project execute this command in order to install the necessary packages:
+```
+    npm install
+```
+* If you want to start the App localy, execute:
+```
+    npm start
+```
+* To run the tests and to see the test coverage, execute:
+```
+    npm run test -- --coverage .
+```
+* To generate docs, execute:
+```
+    npm run docs
+```
+
+
+## How to Use the Project
+
+## Credits
+
+## License
 
 
 
@@ -39,15 +67,9 @@ Configuration can be done in the config file
 The default config specifies where to put certain fields, if after calling the API it is necessary to place them somewhere.
 Special config files for endpoints can be specified.
 
-To run tests with showing test coverage run:
-```
-    npm run test -- --coverage .
-```
 
-To generate docs run:
-```
-    npm run docs
-```
+
+
 
 To connect to the VM where the WebApp is deployed:
 ```
