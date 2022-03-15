@@ -24,21 +24,22 @@
 - [npm.js](https://www.npmjs.com/)
 - [React.js](https://reactjs.org/)
 - [Redux.js](https://redux.js.org/)
+- [Apexcharts.js](https://apexcharts.com/)
+- [pdfmake](http://pdfmake.org/#/)
 - [Jest.js](https://jestjs.io/)
 - [MaterialUI](https://mui.com/)
 - [axios](https://axios-http.com/docs/intro)
 
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-## Prerequisites
+### Prerequisites
 
-Make sure that you have installed the following libaries, moduls, technologies etc.
+Make sure that you have installed
 
 - node.js (https://nodejs.dev/learn/how-to-install-nodejs)
 
-- react.js (https://reactjs.org/docs/getting-started.html)
-
-## How to Install and Run the Project
+### How to Install and Run the Project
 
 - After cloning the project execute this command in order to install the necessary packages:
 
@@ -80,25 +81,28 @@ There is a runnig instants on the VM. You can visit the WebApp via this link: ht
     sudo docker-compose -f app
 ```
 
-### How to Use the Project
-
-### Credits
-
-### License
-
-Add components inside to auto-generate a live UML diagram from the existing strucure.
-
-The parser is alreay setup to generate the code from this **src/** directory and put the .txt file in the **generated-uml/** directory.
-
-Notes on frameworks we want to use:
-
-- React
-- Redux (state handling)
-- Jest (testing, also mantained by Facebook)
-- React Testing Library (RTL) to test React components (recommended by React)
-- Material UI (components, a lot of input components, in our experience better documented than Bootstrap)
-- axios (API Calls)
+### How to Configurate the Webapp
 
 Configuration can be done in the config file
 The default config specifies where to put certain fields, if after calling the API it is necessary to place them somewhere.
 Special config files for endpoints can be specified.
+
+### Documentation
+You can found the documentation under this link:
+https://blank.org/
+
+
+### Credits
+
+Developers which worked on this project:
+
+- Jana Zeller
+- Thomas Marwitz
+- Simon von Rönn
+- Nikolai Prjanikov
+- Furkan Çevik
+
+
+## License
+You can see the license via this link:
+https://git.scc.kit.edu/synergy.o3as/o3webapp/-/blob/issue_readMe_%2365/LICENSE
