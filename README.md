@@ -81,6 +81,12 @@ There is a runnig instants on the VM. You can visit the WebApp via this link: ht
     sudo docker-compose -f app
 ```
 
+### Where the data come from
+
+The required data for this Webapp is provided via the Swagger REST API for O3as.
+In order to see the API and try some request, visit: 
+https://api.o3as.fedcloud.eu/api/v1/ui/
+
 ### How to Configurate the Webapp
 
 Configuration can be done in the config file.
@@ -88,7 +94,7 @@ The default config specifies where to put certain fields, if after calling the A
 Special config files for endpoints can be specified.
 
 ### Documentation
-You can found the documentation under this link:
+You can find the documentation under this link:
 https://blank.org/
 
 
@@ -104,5 +110,5 @@ Developers which worked on this project:
 
 
 ## License
-You can see the license via this link:
+You can find the license under this link:
 https://git.scc.kit.edu/synergy.o3as/o3webapp/-/blob/issue_readMe_%2365/LICENSE
