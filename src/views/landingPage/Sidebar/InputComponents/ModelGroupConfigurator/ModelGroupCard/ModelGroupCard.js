@@ -86,14 +86,16 @@ function ModelGroupCard(props) {
      */
     const [isDeleteRequest, setDeleteRequest] = React.useState(false);
 
-    const [refreshState, setRefreshState] = React.useState(true);
+    const [refreshAddModelGroupModalState, setRefreshAddModelGroupModalState] = React.useState(true);
+    const [refreshEditModalGroupModalState, setRefreshEditModalGroupModalState] = React.useState(true);
 
     /**
      * Shows the edit group modal.
      */
-    const showEditModal = () => {
+    const showEditModal = (refresh) => {
         setAddModalVisible(false);  // avoid two modals being visible under all circumstances
         setEditModalVisible(true);
+        setRefreshEditModalGroupModalState(refresh);
     }
 
     /**
@@ -109,7 +111,7 @@ function ModelGroupCard(props) {
     const showAddModal = (refresh) => {
         setEditModalVisible(false);  // avoid two modals being visible under all circumstances
         setAddModalVisible(true);
-        setRefreshState(refresh);
+        setRefreshAddModelGroupModalState(refresh);
     }
 
     /**
@@ -148,10 +150,11 @@ function ModelGroupCard(props) {
         return (
             <Card style={{margin: "3%", padding: '2%', width: '300px', height: '210px'}} elevation={2}>
                 <EditModelGroupModal modelGroupId={props.modelGroupId} isOpen={isEditModalVisible}
-                                     onClose={closeEditModal}/>
+                                     onClose={closeEditModal} setOpen={showEditModal}
+                                     refresh={refreshEditModalGroupModalState}/>
                 <AddModelGroupModal modelGroupId={props.modelGroupId} isOpen={isAddModalVisible} onClose={closeAddModal}
                                     reportError={props.reportError} setOpen={showAddModal}
-                                    refresh={refreshState}/>
+                                    refresh={refreshAddModelGroupModalState}/>
                 <Grid container>
                     <Grid item xs={2}>
                         <IconButton aria-label="change visibility"
@@ -193,7 +196,7 @@ function ModelGroupCard(props) {
                 </Grid>
                 <Divider/>
                 <CardActions>
-                    <Button size="small" variant="outlined" onClick={showEditModal}
+                    <Button size="small" variant="outlined" onClick={() => showEditModal(true)}
                             data-testid="ModelGroupCard-EditModelGroupModal-button-open">
                         Edit statistical values
                     </Button>

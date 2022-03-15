@@ -15,6 +15,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material/styles';
 import { convertModelName } from "../../../../../../utils/ModelNameConverter";
 import { alpha } from '@mui/system';
+import DiscardChangesModal from "../../../../../../components/DiscardChangesModal/DiscardChangesModal";
 
 /**
  * A DataGrid with applied CSS styling.
@@ -169,6 +170,9 @@ function EditModelGroupModal(props) {
      */
     const [isVisible, setIsVisible] = React.useState(modelList.map(model => modelData[model].isVisible));
 
+
+    const [discardChangesOpen, setDiscardChangesOpen] = React.useState(false);
+
     /**
      * List of all checkbox and selection types that should be editable in the data grid.
      * It includes all statistical values and the "visible" type.
@@ -205,12 +209,15 @@ function EditModelGroupModal(props) {
     }
 
     useEffect(() => {
-        setFilteredRows(rows);
-        setPercentileVisible(modelList.map(model => modelData[model][percentile]));
-        setIsVisible(modelList.map(model => modelData[model]["isVisible"]));
-        setStdVisible(modelList.map(model => modelData[model][std]));
-        setMedianVisible(modelList.map(model => modelData[model][median]));
-        setMeanVisible(modelList.map(model => modelData[model][mean]));
+        if (props.isOpen && props.refresh) {
+            setFilteredRows(rows);
+            setPercentileVisible(modelList.map(model => modelData[model][percentile]));
+            setIsVisible(modelList.map(model => modelData[model]["isVisible"]));
+            setStdVisible(modelList.map(model => modelData[model][std]));
+            setMedianVisible(modelList.map(model => modelData[model][median]));
+            setMeanVisible(modelList.map(model => modelData[model][mean]));  
+        }
+        
     }, [props.isOpen]);
 
     /**
@@ -328,6 +335,13 @@ function EditModelGroupModal(props) {
         setter(visibleCopy);
     }
 
+
+    const openDiscardChangesDialog = () => {}
+    const closeDiscardChangesDialog = () => {}
+    const saveChanges = () => {}
+    const discardChanges = () => {}
+    const hasChanges = () => {}
+
     /**
      * Applies the changes made in the current session of the EditModelGroup and closes the Modal.
      * The changes are dispatched into the redux store.
@@ -352,7 +366,16 @@ function EditModelGroupModal(props) {
      * All changes are lost in the process.
      * @constant {function}
      */
-    const discardChanges = () => {
+    const closeModal = () => {
+        if (hasChanges()) { // made changes, reset
+            props.onClose();
+            openDiscardChangesDialog();
+        } else { // no changes made
+            props.onClose();
+            resetState();
+        }
+
+        /*
         const meanData = [], stdData = [], medianData = [], percentileData = [], visibleData = [];
 
         for (const model of modelList) {
@@ -370,6 +393,7 @@ function EditModelGroupModal(props) {
         setIsVisible(visibleData);
 
         props.onClose();
+        */
     }
 
     /**
@@ -505,39 +529,48 @@ function EditModelGroupModal(props) {
     ];
 
     return (
-        <Modal
-            open={props.isOpen}
-            onClose={discardChanges}
-            aria-labelledby="EditModelGroupModal-modal"
-            data-testid="EditModelGroupModal-modal-wrapper"
-        >
-            <Card sx={cardStyle}>
-                <CardHeader
-                    title={editModalLabel}
-                    action={
-                        <IconButton onClick={discardChanges} aria-label="close" data-testid="DiscardButton">
-                            <CloseIcon/>
-                        </IconButton>
-                    }
-                />
-                <div style={{width: "95%"}}>
-                    <SearchBar inputArray={rows} foundIndicesCallback={foundIndices}/>
-                </div>
-                <StyledDataGrid
-                    rows={filteredRows}
-                    columns={columns}
-                    pageSize={10}
-                    rowsPerPageOptions={[10]}
-                    onColumnHeaderClick={columnHeaderClick}
-                    disableColumnMenu
-                    columnBuffer={8}
-                    sx={{height: '65%'}}
-                />
-                <CardActions sx={{justifyContent: "flex-end", marginTop: "2%"}}>
-                    <Button onClick={applyChanges} variant="contained" data-testid="ApplyButton">{applyButtonLabel}</Button>
-                </CardActions>
-            </Card>
-        </Modal>
+        <React.Fragment>
+            <Modal
+                open={props.isOpen}
+                onClose={closeModal}
+                aria-labelledby="EditModelGroupModal-modal"
+                data-testid="EditModelGroupModal-modal-wrapper"
+            >
+                <Card sx={cardStyle}>
+                    <CardHeader
+                        title={editModalLabel}
+                        action={
+                            <IconButton onClick={closeModal} aria-label="close" data-testid="DiscardButton">
+                                <CloseIcon/>
+                            </IconButton>
+                        }
+                    />
+                    <div style={{width: "95%"}}>
+                        <SearchBar inputArray={rows} foundIndicesCallback={foundIndices}/>
+                    </div>
+                    <StyledDataGrid
+                        rows={filteredRows}
+                        columns={columns}
+                        pageSize={10}
+                        rowsPerPageOptions={[10]}
+                        onColumnHeaderClick={columnHeaderClick}
+                        disableColumnMenu
+                        columnBuffer={8}
+                        sx={{height: '65%'}}
+                    />
+                    <CardActions sx={{justifyContent: "flex-end", marginTop: "2%"}}>
+                        <Button onClick={applyChanges} variant="contained" data-testid="ApplyButton">{applyButtonLabel}</Button>
+                    </CardActions>
+                </Card>
+            </Modal>
+            <DiscardChangesModal 
+                isOpen={discardChangesOpen} 
+                onClose={closeDiscardChangesDialog} 
+                saveChanges={saveChanges} 
+                discardChanges={resetState} 
+                closeDialog={() => setDiscardChangesOpen(false)}
+            />
+        </React.Fragment>
     );
 }
 
@@ -545,7 +578,8 @@ EditModelGroupModal.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
     modelGroupId: PropTypes.number.isRequired,
-    reportError: PropTypes.func
+    reportError: PropTypes.func,
+    refresh: PropTypes.bool.isRequired,
 }
 
 export default EditModelGroupModal;
