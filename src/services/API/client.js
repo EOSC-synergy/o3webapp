@@ -1,10 +1,16 @@
 import axios from 'axios';
 import { NO_MONTH_SELECTED } from '../../utils/constants';
 
-/** The base URL */
+/** @module API */
+
+/** The base URL
+ * @constant {string}
+ */
 const baseURL = "https://api.o3as.fedcloud.eu/api/v1";
 
-/** The timeout value at which an error is thrown and fetching data stops in milliseconds */
+/** The timeout value at which an error is thrown and fetching data stops in milliseconds
+ * @constant {number}
+*/
 const timeoutVal = 5 * 60 * 1000; // 5 min at least (fetching the models took 29s)
 
 /**

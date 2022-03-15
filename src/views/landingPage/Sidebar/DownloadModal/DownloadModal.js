@@ -26,10 +26,7 @@ import CardActions from "@mui/material/CardActions";
 /**
  * Opens a modal where the user can select the file format and download the plot.
  * @component
- * @param {Object} props
- * @param {boolean} props.isOpen -> whether modal should be visible
- * @param {function} props.onClose -> handles closing the modal
- * @param {function} props.reportError -> enabling to report an error
+ * @param {Object} props specified in propTypes
  * @returns {JSX.Element} a jsx containing a modal with a dropdown to choose the file type and a download button
  */
 function DownloadModal(props) {
@@ -61,6 +58,7 @@ function DownloadModal(props) {
 
   /**
    * The style of the DownloadModal.
+   * @constant {object}
    */
   const style = {
     position: "absolute",
@@ -144,8 +142,17 @@ function DownloadModal(props) {
 }
 
 DownloadModal.propTypes = {
+  /**
+   * whether modal should be visible
+   */
   isOpen: PropTypes.bool.isRequired,
+  /**
+   * handles closing the modal
+   */
   onClose: PropTypes.func.isRequired,
+  /**
+   * function for error handling
+   */
   reportError: PropTypes.func,
 };
 

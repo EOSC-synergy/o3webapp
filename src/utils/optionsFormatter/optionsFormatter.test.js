@@ -289,7 +289,7 @@ describe("testing optionsFormatter functionality", () => {
                 seriesNames: [],
                 getState: store.getState
             });
-            expect(result).toEqual(expected);
+            expect(JSON.stringify(result)).toEqual(JSON.stringify(expected)); // stringify results to not mess with anonymous functions
         });
 
     });
@@ -347,7 +347,7 @@ describe("testing optionsFormatter functionality", () => {
 
         const expectedYAxisConfig = {
             show: true,
-            opposite: true,
+            opposite: false,
             seriesName: "seriesX",
             min: 42,
             max: 420,
@@ -372,7 +372,7 @@ describe("testing optionsFormatter functionality", () => {
             },
         }
 
-        expect(getDefaultYAxisTco3Zm("seriesX", 42, 420, true, true, -3, 10)).toEqual(expectedYAxisConfig);
+        expect(getDefaultYAxisTco3Zm("seriesX", 42, 420, true, false, -3, 10)).toEqual(expectedYAxisConfig);
     });
 
     it('should return a correct formatted tooltip for a normal series', () => {

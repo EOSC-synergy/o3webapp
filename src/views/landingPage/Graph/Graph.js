@@ -17,8 +17,12 @@ import store from '../../../store/store';
  * just a preview to work with until the API is implemented and
  * synced with redux and the UI (input components).
  * @component
+<<<<<<< HEAD
+ * @returns a svg rendered element that represents a graph, this is done by 
+=======
  * @param {object} props currently not used
  * @returns a svg rendered element that represents a graph, this is done by
+>>>>>>> develop
  *          the apexcharts library
  */
 function Graph(props) {
@@ -35,6 +39,18 @@ function Graph(props) {
         height: window.innerHeight,
         width: window.innerWidth
     })
+
+    /**
+     * Message to display if an error occured.
+     * @constant {string}
+     */
+    const fatalErrorMessage = "CRITICAL: an internal error occurred that shouldn't happen!";
+
+    /**
+     * Message to display while data is being loaded
+     * @constant {string}
+     */
+    const loadingMessage = "Loading Data...";
     
     useEffect(() => { 
         // note: this is important, because we should only "propagate" the error to the top
@@ -81,7 +97,7 @@ function Graph(props) {
             style={{display: "flex", alignItems: "center", justifyContent: "center", height: HEIGHT_LOADING_SPINNER}}>
             <div>
                 <CircularProgress size={100}/> <br/>
-                <Typography component="p">Loading Data...</Typography>
+                <Typography component="p">{loadingMessage}</Typography>
             </div>
 
         </div>);
@@ -121,7 +137,7 @@ function Graph(props) {
     }
 
     // this "case" should not happen
-    return <Typography>CRITICAL: an internal error occurred that shouldn't happen!</Typography>;
+    return <Typography>{fatalErrorMessage}</Typography>;
 }
 
 export default React.memo(Graph, () => true); // prevent graph from re-rendering if sidebar is opened and closed
