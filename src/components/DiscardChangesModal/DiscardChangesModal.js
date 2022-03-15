@@ -18,8 +18,6 @@ import { useTheme } from '@emotion/react';
  */
 function DiscardChangesModal(props) {
 
-    const theme = useTheme();
-
     /**
      * function to discard changes and close the modal
      * @constant {function}
@@ -63,40 +61,36 @@ function DiscardChangesModal(props) {
     */
    const saveButtonLabel = "Save Changes";
 
-   const style = {
-    backgroundColor: theme.palette.background.default
-   }
-
-  return (
-    <Dialog
-        open={props.isOpen}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        data-testid="discardChanges-dialog"
-    >
-        <Card sx={style}>
-            <CardHeader
-                title={heading}
-                action={
-                    <IconButton onClick={props.onClose} aria-label="close" data-testid="DiscardChangedModal-close-modal">
-                        <CloseIcon />
-                    </IconButton>
-                }
-            />
-            <DialogContent>
-                <Alert severity="warning" variant="standard" id="alert-dialog-description">
-                    {dialog}
-                </Alert>
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={discardChangesAndCloseDialog} data-testid="discardChanges-discardButton">{discardButtonLabel}</Button>
-                <Button onClick={saveChangesAndCloseDialog} data-testid="discardChanges-saveButton" autoFocus>
-                    {saveButtonLabel}
-                </Button>
-            </DialogActions>
-        </Card>
-    </Dialog>
-  );
+    return (
+        <Dialog
+            open={props.isOpen}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            data-testid="discardChanges-dialog"
+        >
+            <Card sx={{backgroundColor: "theme.palette.background.default"}}>
+                <CardHeader
+                    title={heading}
+                    action={
+                        <IconButton onClick={props.onClose} aria-label="close" data-testid="DiscardChangedModal-close-modal">
+                            <CloseIcon />
+                        </IconButton>
+                    }
+                />
+                <DialogContent>
+                    <Alert severity="warning" variant="standard" id="alert-dialog-description">
+                        {dialog}
+                    </Alert>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={discardChangesAndCloseDialog} data-testid="discardChanges-discardButton">{discardButtonLabel}</Button>
+                    <Button onClick={saveChangesAndCloseDialog} data-testid="discardChanges-saveButton" autoFocus>
+                        {saveButtonLabel}
+                    </Button>
+                </DialogActions>
+            </Card>
+        </Dialog>
+    );
 }
 
 DiscardChangesModal.propTypes = {

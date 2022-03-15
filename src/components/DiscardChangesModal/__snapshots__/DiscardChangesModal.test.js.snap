@@ -42,108 +42,112 @@ exports[`test DiscardChangesModal rendering renders correctly when opened 1`] = 
         role="dialog"
       >
         <div
-          class="MuiCardHeader-root css-185gdzj-MuiCardHeader-root"
+          class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-2x2ch6-MuiPaper-root-MuiCard-root"
         >
           <div
-            class="MuiCardHeader-content css-1qbkelo-MuiCardHeader-content"
+            class="MuiCardHeader-root css-185gdzj-MuiCardHeader-root"
           >
-            <span
-              class="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-1qvr50w-MuiTypography-root"
+            <div
+              class="MuiCardHeader-content css-1qbkelo-MuiCardHeader-content"
             >
-              Discard Changes
-            </span>
+              <span
+                class="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-1qvr50w-MuiTypography-root"
+              >
+                Discard Changes
+              </span>
+            </div>
+            <div
+              class="MuiCardHeader-action css-sgoict-MuiCardHeader-action"
+            >
+              <button
+                aria-label="close"
+                class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+                data-testid="DiscardChangedModal-close-modal"
+                tabindex="0"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                  data-testid="CloseIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                  />
+                </svg>
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </div>
           </div>
           <div
-            class="MuiCardHeader-action css-sgoict-MuiCardHeader-action"
+            class="MuiDialogContent-root css-ypiqx9-MuiDialogContent-root"
+          >
+            <div
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-standardWarning MuiAlert-standard css-rob5aa-MuiPaper-root-MuiAlert-root"
+              id="alert-dialog-description"
+              role="alert"
+            >
+              <div
+                class="MuiAlert-icon css-1ytlwq5-MuiAlert-icon"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1vooibu-MuiSvgIcon-root"
+                  data-testid="ReportProblemOutlinedIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="MuiAlert-message css-acap47-MuiAlert-message"
+              >
+                Are you sure you want to discard all changes?
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiDialogActions-root MuiDialogActions-spacing css-hlj6pa-MuiDialogActions-root"
           >
             <button
-              aria-label="close"
-              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
-              data-testid="DiscardChangedModal-close-modal"
+              class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+              data-testid="discardChanges-discardButton"
               tabindex="0"
               type="button"
             >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                data-testid="CloseIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                />
-              </svg>
+              Discard Changes
               <span
                 class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
             </button>
-          </div>
-        </div>
-        <div
-          class="MuiDialogContent-root css-ypiqx9-MuiDialogContent-root"
-        >
-          <div
-            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiAlert-root MuiAlert-standardWarning MuiAlert-standard css-rob5aa-MuiPaper-root-MuiAlert-root"
-            id="alert-dialog-description"
-            role="alert"
-          >
-            <div
-              class="MuiAlert-icon css-1ytlwq5-MuiAlert-icon"
+            <button
+              class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root Mui-focusVisible  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+              data-testid="discardChanges-saveButton"
+              tabindex="0"
+              type="button"
             >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeInherit css-1vooibu-MuiSvgIcon-root"
-                data-testid="ReportProblemOutlinedIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z"
-                />
-              </svg>
-            </div>
-            <div
-              class="MuiAlert-message css-acap47-MuiAlert-message"
-            >
-              Are you sure you want to discard all changes?
-            </div>
-          </div>
-        </div>
-        <div
-          class="MuiDialogActions-root MuiDialogActions-spacing css-hlj6pa-MuiDialogActions-root"
-        >
-          <button
-            class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
-            data-testid="discardChanges-discardButton"
-            tabindex="0"
-            type="button"
-          >
-            Discard Changes
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            />
-          </button>
-          <button
-            class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root Mui-focusVisible  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
-            data-testid="discardChanges-saveButton"
-            tabindex="0"
-            type="button"
-          >
-            Save Changes
-            <span
-              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-            >
+              Save Changes
               <span
-                class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible MuiTouchRipple-ripplePulsate"
-                style="width: 1px; height: 1px; top: -0.5px; left: -0.5px;"
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               >
                 <span
-                  class="MuiTouchRipple-child MuiTouchRipple-childPulsate"
-                />
+                  class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible MuiTouchRipple-ripplePulsate"
+                  style="width: 1px; height: 1px; top: -0.5px; left: -0.5px;"
+                >
+                  <span
+                    class="MuiTouchRipple-child MuiTouchRipple-childPulsate"
+                  />
+                </span>
               </span>
-            </span>
-          </button>
+            </button>
+          </div>
         </div>
       </div>
     </div>
