@@ -68,6 +68,8 @@ function createRows(modelList) {
  * @param {Object} props
  * @param {function} props.onClose      Function to call if modal should be closed
  * @param {boolean} props.isOpen        Boolean whether the modal should be visible
+ * @param {boolean} props.refresh       Whether the state should be refreshed
+ * @param {function} props.setOpen      Function to open the modal from inside the component
  * @param {function} props.reportError  Error function
  * @param {int} props.modelGroupId      Id of the model group
  * @returns                             A JSX containing a modal with a data grid with all models from the model group
@@ -339,10 +341,12 @@ function EditModelGroupModal(props) {
         setter(visibleCopy);
     }
 
-
-    const openDiscardChangesDialog = () => setDiscardChangesOpen(true);
+    /**
+     * Closes the discard changes modal and re-opens the edit group modal without refreshing the state.
+     * @function
+     */
     const closeDiscardChangesDialog = () => {
-        setDiscardChangesOpen(true);
+        setDiscardChangesOpen(false);
         props.setOpen(false); // re-open without refreshing the state
     }
 
@@ -395,12 +399,12 @@ function EditModelGroupModal(props) {
 
     /**
      * Default close handler that is called when clicked outside of the modal or the close icon is pressed.
-     * @constant {function}
+     * @function
      */
     const closeModal = () => {
         if (hasChanges()) { // made changes, open discard changes modal
             props.onClose();
-            openDiscardChangesDialog();
+            setDiscardChangesOpen(true)
         } else { // no changes made
             props.onClose();
         }
@@ -590,6 +594,7 @@ EditModelGroupModal.propTypes = {
     modelGroupId: PropTypes.number.isRequired,
     reportError: PropTypes.func,
     refresh: PropTypes.bool.isRequired,
+    setOpen: PropTypes.func.isRequired,
 }
 
 export default EditModelGroupModal;
