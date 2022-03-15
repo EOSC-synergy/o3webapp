@@ -107,10 +107,7 @@ function EditModelGroupModal(props) {
      * A list of all models in the currently selected model group.
      * The data is fetched from the redux store via a selector.
      * @constant {array}
-<<<<<<< HEAD
      * @see selectModelsOfGroup
-=======
->>>>>>> develop
      */
     const modelList = useSelector(state => selectModelsOfGroup(state, props.modelGroupId));
 
@@ -118,21 +115,14 @@ function EditModelGroupModal(props) {
      * An object containing all data about the visibility and inclusion in the statistical values'
      * calculation for each model.
      * The data is fetched from the redux store via a selector.
-<<<<<<< HEAD
      * @constant {object}
      * @see selectModelDataOfGroup
-=======
-     * @constant {array}
->>>>>>> develop
      */
     const modelData = useSelector(state => selectModelDataOfGroup(state, props.modelGroupId));
 
     /**
      * All rows that are represented in the data grid.
-<<<<<<< HEAD
      * @see createRows
-=======
->>>>>>> develop
      * @constant {array}
      */
     const rows = createRows(modelList);
@@ -140,11 +130,8 @@ function EditModelGroupModal(props) {
     /**
      * The current filtered selection of rows.
      * This array contains all rows remaining as a search result of the Searchbar.
-<<<<<<< HEAD
      * @default rows
-=======
      * @constant {array}
->>>>>>> develop
      */
     const [filteredRows, setFilteredRows] = React.useState(rows);
 
@@ -258,11 +245,8 @@ function EditModelGroupModal(props) {
      * Applies the filtered rows by the Searchbar to the filteredRows component state.
      *
      * @param {int[]} indexArray    Array of the filtered indexes of the search result that identify the filtered rows.
-<<<<<<< HEAD
      * @see setFilteredRows
-=======
      * @constant {function}
->>>>>>> develop
      */
     const foundIndices = (indexArray) => {
         setFilteredRows(indexArray.map(idx => rows[idx])); // translates indices into selected rows
@@ -394,12 +378,8 @@ function EditModelGroupModal(props) {
      * Generates a column header for a given type.
      *
      * @param {String} type     The type of the column (e.g. visible)
-<<<<<<< HEAD
      * @returns {JSX.Element}   JSX with the generated header name.
-=======
-     * @returns                 JSX with the generated header name.
      * @constant {function}
->>>>>>> develop
      */
     const generateHeaderName = (type) => {
         return (
@@ -447,12 +427,8 @@ function EditModelGroupModal(props) {
      * A customized MUI Checkbox.
      *
      * @param {Object} props    Props for the MUI Checkbox
-<<<<<<< HEAD
      * @returns {JSX.Element}   JSX with the customized Checkbox
-=======
-     * @returns                 JSX with the customized Checkbox
      * @constant {function}
->>>>>>> develop
      */
     const CustomCheckbox = (props) => {
         return (
@@ -467,12 +443,8 @@ function EditModelGroupModal(props) {
      *
      * @param {Object} params   The params containing metadata about the row
      * @param {String} type     The type of the selection (e.g. visible)
-<<<<<<< HEAD
      * @returns {JSX.Element}   JSX element with the customized Cell-Checkbox
-=======
-     * @returns                 JSX element with the customized Cell-Checkbox
      * @constant {function}
->>>>>>> develop
      */
     const createCellCheckBox = (params, type) => {
         const checkedList = getCheckedListByType(type);
@@ -491,11 +463,7 @@ function EditModelGroupModal(props) {
     }
 
     /**
-<<<<<<< HEAD
      * An array containing the specification for the columns of the data grid.
-=======
-     * An Object containing the specification for the columns of the data grid.
->>>>>>> develop
      * @constant {array}
      */
     const columns = [
