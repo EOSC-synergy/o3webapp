@@ -108,7 +108,6 @@ function AddModelGroupModal(props) {
     }, [allModels]);
 
     useEffect(() => {
-        console.log(props.refresh)
         if (props.isOpen && props.refresh) {
             setGroupName(storeGroupName);
             setVisible(allModels);

@@ -50,6 +50,7 @@ function ModelGroupConfigurator(props) {
                 onClose={closeAddModal} 
                 reportError={props.reportError} 
                 setOpen={openAddModal}
+                refresh={refreshState}
             />
         </>
     );

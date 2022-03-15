@@ -30,7 +30,7 @@ describe('test DiscardChangesModal functionality', () => {
     it('call props.onClose after save or discard changes has been clicked', () => {
         const mockFunction = jest.fn();
         const mockOnClose = jest.fn();
-        const { getByTestId } = render(<DiscardChangesModal isOpen={true} onClose={mockOnClose} saveChanges={mockFunction} discardChanges={mockFunction} />);
+        const { getByTestId } = render(<DiscardChangesModal isOpen={true} closeDialog={mockOnClose} onClose={() => {}} saveChanges={mockFunction} discardChanges={mockFunction} />);
         const saveButton = getByTestId(/saveButton/);
         fireEvent.click(saveButton);
         expect(mockOnClose).toHaveBeenCalledTimes(1);
@@ -42,7 +42,7 @@ describe('test DiscardChangesModal functionality', () => {
     it('call props.discardChanges after discard changes has been clicked', () => {
         const mockFunction = jest.fn();
         const mockDiscardChanges = jest.fn();
-        const { getByTestId } = render(<DiscardChangesModal isOpen={true} onClose={mockFunction} saveChanges={mockFunction} discardChanges={mockDiscardChanges} />);
+        const { getByTestId } = render(<DiscardChangesModal isOpen={true} closeDialog={() => {}} onClose={mockFunction} saveChanges={mockFunction} discardChanges={mockDiscardChanges} />);
         const saveButton = getByTestId(/saveButton/);
         fireEvent.click(saveButton);
         expect(mockDiscardChanges).toHaveBeenCalledTimes(0);
@@ -54,7 +54,7 @@ describe('test DiscardChangesModal functionality', () => {
     it('call props.saveChanges after discard changes has been clicked', () => {
         const mockFunction = jest.fn();
         const mockSaveChanges = jest.fn();
-        const { getByTestId } = render(<DiscardChangesModal isOpen={true} onClose={mockFunction} saveChanges={mockSaveChanges} discardChanges={mockFunction} />);
+        const { getByTestId } = render(<DiscardChangesModal isOpen={true} closeDialog={() => {}} onClose={mockFunction} saveChanges={mockSaveChanges} discardChanges={mockFunction} />);
         const saveButton = getByTestId(/saveButton/);
         fireEvent.click(saveButton);
         expect(mockSaveChanges).toHaveBeenCalledTimes(1);
