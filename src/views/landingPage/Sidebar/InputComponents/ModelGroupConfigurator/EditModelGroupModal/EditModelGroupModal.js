@@ -340,11 +340,13 @@ function EditModelGroupModal(props) {
     }
 
 
-    const openDiscardChangesDialog = () => {}
-    const closeDiscardChangesDialog = () => {}
-    const saveChanges = () => {}
-    const discardChanges = () => {}
-    const resetState = () => {}
+    const openDiscardChangesDialog = () => setDiscardChangesOpen(true);
+    const closeDiscardChangesDialog = () => {
+        setDiscardChangesOpen(true);
+        props.setOpen(false); // re-open without refreshing the state
+    }
+
+    
     /**
      * Checks whether changes have been made to the statistical values or the visibility of the models
      * in the model group.
@@ -352,7 +354,6 @@ function EditModelGroupModal(props) {
      * @returns whether changes have been made in the editStatisticalValueModal for the currently shown group
      */
     const hasChanges = () => {
-        const modelData = selectModelDataOfGroup(store.getState(), props.modelGroupId);
         const meanData = [], stdData = [], medianData = [], percentileData = [], visibleData = [];
 
         for (const model of modelList) {
@@ -393,38 +394,16 @@ function EditModelGroupModal(props) {
     }
 
     /**
-     * Discards the changes made in the current session of the EditModelGroup and closes the Modal.
-     * All changes are lost in the process.
+     * Default close handler that is called when clicked outside of the modal or the close icon is pressed.
      * @constant {function}
      */
     const closeModal = () => {
-        if (hasChanges()) { // made changes, reset
+        if (hasChanges()) { // made changes, open discard changes modal
             props.onClose();
             openDiscardChangesDialog();
         } else { // no changes made
             props.onClose();
-            resetState();
         }
-
-        /*
-        const meanData = [], stdData = [], medianData = [], percentileData = [], visibleData = [];
-
-        for (const model of modelList) {
-            meanData.push(modelData[model][mean]);
-            stdData.push(modelData[model][std]);
-            medianData.push(modelData[model][median]);
-            percentileData.push(modelData[model][percentile]);
-            visibleData.push(modelData[model].isVisible);
-        }
-
-        setMeanVisible(meanData);
-        setStdVisible(stdData);
-        setMedianVisible(medianData);
-        setPercentileVisible(percentileData);
-        setIsVisible(visibleData);
-
-        props.onClose();
-        */
     }
 
     /**
@@ -597,8 +576,8 @@ function EditModelGroupModal(props) {
             <DiscardChangesModal 
                 isOpen={discardChangesOpen} 
                 onClose={closeDiscardChangesDialog} 
-                saveChanges={saveChanges} 
-                discardChanges={resetState} 
+                saveChanges={applyChanges} 
+                discardChanges={() => {}} 
                 closeDialog={() => setDiscardChangesOpen(false)}
             />
         </React.Fragment>
