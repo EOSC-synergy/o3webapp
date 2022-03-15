@@ -27,7 +27,6 @@ function PlotTypeSelector(props) {
     /**
      * mocks a call to the redux store to change the plot type
      * @param {event} event the event that called this function
-     * @todo connect with redux store
      */
     const changePlotType = (event) => {
         dispatch(setActivePlotId({plotId: event.target.value}))
