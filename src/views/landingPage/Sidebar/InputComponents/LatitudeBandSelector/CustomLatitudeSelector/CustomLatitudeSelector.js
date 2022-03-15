@@ -1,15 +1,11 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux"
-import {Grid, TextField, Typography, FormControl, Divider} from "@mui/material";
+import {Grid, TextField, FormControl} from "@mui/material";
 import {
     selectPlotLocation,
     setLocation,
 } from "../../../../../../store/plotSlice/plotSlice";
 import {fetchPlotDataForCurrentModels} from "../../../../../../services/API/apiSlice";
-import {
-    LATITUDE_BAND_MAX_VALUE,
-    LATITUDE_BAND_MIN_VALUE
-} from "../../../../../../utils/constants";
 import PropTypes from "prop-types";
 
 /**

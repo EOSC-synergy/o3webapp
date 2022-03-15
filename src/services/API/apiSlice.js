@@ -280,9 +280,9 @@ export function getAllSelectedModels(getState) {
     for (const groupId in modelGroups) {
         const models = Object.keys(modelGroups[groupId].models);
         const filteredModels = models.filter((item) => !allModels.includes(item));
-        allModels = [...allModels, ...filteredModels];
+        allModels.push(...allModels, ...filteredModels);
     }
-    return allModels;
+    return Array.from(new Set(allModels));
 }
 
 /**

@@ -92,7 +92,7 @@ function AddModelGroupModal(props) {
         if (modelListRequestedData.status === REQUEST_STATE.success) {
             setVisible(modelListRequestedData.data);
         }
-    }, [allModels]);
+    }, [allModels]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         setGroupName(storeGroupName);
@@ -100,7 +100,7 @@ function AddModelGroupModal(props) {
         setChecked([]);
         setRight(storeRight);
 
-    }, [props.isOpen]);
+    }, [props.isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
     /**
      * Returns how many models in the provided array are currently checked

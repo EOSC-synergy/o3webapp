@@ -47,10 +47,10 @@ function Graph(props) {
     const modelsSlice = useSelector(state => state.models);
     const refLineVisible = useSelector(selectVisibility);
 
-    const [_, setDimensions] = React.useState({
+    const setDimensions = React.useState({ 
         height: window.innerHeight,
         width: window.innerWidth
-    })
+    })[1];
 
     /**
      * Message to display if an error occured.
@@ -72,7 +72,7 @@ function Graph(props) {
             && activeData.error !== NO_MONTH_SELECTED) { // if no month selected the user already gets notified with a more decent warning
             props.reportError(activeData.error);
         }
-    }, [activeData]);
+    }, [activeData]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         const handleResize = () => {
