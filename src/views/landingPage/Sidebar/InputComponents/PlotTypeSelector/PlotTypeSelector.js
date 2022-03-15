@@ -34,6 +34,7 @@ function PlotTypeSelector(props) {
     }
 
     let dropdownData;
+    let plotTypeData = plotType;
     if (plotTypesRequestData.status === REQUEST_STATE.loading
         || plotTypesRequestData.status === REQUEST_STATE.idle) {
         dropdownData = (<Box
@@ -45,6 +46,7 @@ function PlotTypeSelector(props) {
         >
             <CircularProgress data-testid="plotTypeSelectorLoading"/>
         </Box>);
+        plotTypeData = "";
     } else if (plotTypesRequestData.status === REQUEST_STATE.success) {
         dropdownData = plotTypesRequestData.data.map((name, idx) => {
             return (
@@ -66,7 +68,7 @@ function PlotTypeSelector(props) {
             <Select
                 labelId="plotTypeLabel"
                 id="plotType"
-                value={plotType}
+                value={plotTypeData}
                 label="Plot Type"
                 onChange={changePlotType}
             >
