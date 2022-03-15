@@ -44,15 +44,22 @@ function Graph(props) {
      */
     const loadingMessage = "Loading Data...";
     
+    /**
+     * reportError function provided by props.
+     * Stored separetly in order to pass it to useEffect
+     * @constant {function}
+     */
+    const reportError = props.reportError;
+
     useEffect(() => { 
         // note: this is important, because we should only "propagate" the error to the top
         // if this component has finished rendering, causing no <em>side effects</em> in
         // its rendering process 
         if (activeData.status === REQUEST_STATE.error
             && activeData.error !== NO_MONTH_SELECTED) { // if no month selected the user already gets notified with a more decent warning
-            props.reportError(activeData.error);
+            reportError(activeData.error);
         }
-    }, [activeData]);
+    }, [activeData, reportError]);
 
     if (!(plotId in O3AS_PLOTS)) {
         const style = {

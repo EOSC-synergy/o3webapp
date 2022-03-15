@@ -82,15 +82,21 @@ function AddModelGroupModal(props) {
     const [groupName, setGroupName] = React.useState(storeGroupName);
     const [errorMessage, setErrorMessage] = React.useState('');
     const theme = useTheme();
+    /**
+     * reportError function provided by props.
+     * Stored separetly in order to pass it to useEffect
+     * @constant {function}
+     */
+    const reportError = props.reportError;
 
     useEffect(() => {
         if (modelListRequestedData.status === REQUEST_STATE.error) {
-            props.reportError("API not responding: " + modelListRequestedData.error);
+            reportError("API not responding: " + modelListRequestedData.error);
         }
         if (modelListRequestedData.status === REQUEST_STATE.success) {
             setVisible(modelListRequestedData.data);
         }
-    }, [allModels]);
+    }, [allModels, modelListRequestedData, reportError]);
 
     useEffect(() => {
         setGroupName(storeGroupName);
@@ -98,7 +104,7 @@ function AddModelGroupModal(props) {
         setChecked([]);
         setRight(storeRight);
 
-    }, [props.isOpen]);
+    }, [props.isOpen, allModels, storeRight, storeGroupName]);
 
     
 

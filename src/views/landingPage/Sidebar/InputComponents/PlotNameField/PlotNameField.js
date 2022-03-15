@@ -45,7 +45,7 @@ function PlotNameField() {
         // this might be done better but a controlled state throws a (yet) unsolvable redux error
         const textField = document.getElementById("standard-basic-plot-title-input");
         textField.value = plotTitle;
-    }, [plotId]);
+    }, [plotId, plotTitle]);
 
     /** Handles the change if the text in TextField is modified.
      * @constant {function}
