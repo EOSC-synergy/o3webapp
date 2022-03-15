@@ -63,7 +63,6 @@ const plotSlice = createSlice({
 
         /**
          * This reducer accepts an action object returned from setActivePlotId()
-         *     e.g. dispatch(setActivePlotId({id: "tco3_zm"}))
          * and calculates the new state based on the action and the action
          * data given in action.payload.
          *
@@ -73,6 +72,7 @@ const plotSlice = createSlice({
          * @param {object} action accepts the action returned from setActivePlotId()
          * @param {object} action.payload the payload is an object containing the given data
          * @param {string} action.payload.plotId a string that contains the new plot id
+         * @example dispatch(setActivePlotId({id: "tco3_zm"}));s
          */
         setActivePlotId(state, action) {
             const {plotId} = action.payload;
@@ -81,7 +81,6 @@ const plotSlice = createSlice({
 
         /**
          * This reducer accepts an action object returned from setTitle()
-         *     e.g. dispatch(setTitle({title: "OCTS Plot Title"}))
          * and calculates the new state based on the action and the action
          * data given in action.payload.
          *
@@ -91,6 +90,7 @@ const plotSlice = createSlice({
          * @param {object} action accepts the action returned from setTitle()
          * @param {object} action.payload the payload is an object containing the given data
          * @param {string} action.payload.id a string that contains the new plot title
+         * @example dispatch(setTitle({title: "OCTS Plot Title"}))
          */
         setTitle(state, action) {
             const {title} = action.payload;
@@ -99,7 +99,6 @@ const plotSlice = createSlice({
 
         /**
          * This reducer accepts an action object returned from setLocation()
-         *     e.g. dispatch(setLocation({minLat: -90, maxLat: 90}))
          * and calculates the new state based on the action and the action
          * data given in action.payload.
          *
@@ -111,6 +110,7 @@ const plotSlice = createSlice({
          * @param {object} action.payload the payload is an object containing the given data
          * @param {number} action.payload.minLat a number specifying the minimum latitude
          * @param {number} action.payload.maxLat a number specifying the maximum latitude
+         * @exmaple dispatch(setLocation({minLat: -90, maxLat: 90}));
          */
         setLocation(state, action) {
             const {minLat, maxLat} = action.payload;
@@ -121,8 +121,6 @@ const plotSlice = createSlice({
 
         /**
          * This reducer accepts an action object returned from setDisplayXRange()
-         *     e.g. dispatch(setDisplayXRange({years: {minX: 1960, maxX: 2100}})) or
-         *          dispatch(setDisplayXRange({regions: [0, 1, 2]}))
          * and calculates the new state based on the action and the action
          * data given in action.payload.
          *
@@ -139,6 +137,8 @@ const plotSlice = createSlice({
          * @param {number} action.payload.years.minX a number specifying the start of the x range for tco3_zm
          * @param {number} action.payload.years.maxX a number specifying the end of the x range for tco3_zm
          * @param {array} action.payload.regions an array specifying the selected regions (on the x-axis) for the tco3_return
+         * @example dispatch(setDisplayXRange({years: {minX: 1960, maxX: 2100}}));
+         * @example dispatch(setDisplayXRange({regions: [0, 1, 2]}));
          */
         setDisplayXRange(state, action) {
             const currentPlotId = state.plotId;
@@ -157,8 +157,6 @@ const plotSlice = createSlice({
 
         /**
          * This reducer accepts an action object returned from setDisplayXRange()
-         *     e.g. dispatch(setDisplayXRange({years: {minX: 1960, maxX: 2100}})) or
-         *          dispatch(setDisplayXRange({regions: [0, 1, 2]}))
          * and calculates the new state based on the action and the action
          * data given in action.payload.
          *
@@ -175,6 +173,8 @@ const plotSlice = createSlice({
          * @param {number} action.payload.years.minX a number specifying the start of the x range for tco3_zm
          * @param {number} action.payload.years.maxX a number specifying the end of the x range for tco3_zm
          * @param {array} action.payload.regions an array specifying the selected regions (on the x-axis) for the tco3_return
+         * @example dispatch(setDisplayXRange({years: {minX: 1960, maxX: 2100}}));
+         * @example dispatch(setDisplayXRange({regions: [0, 1, 2]}));
          */
          setDisplayXRangeForPlot(state, action) {
             const { plotId } = action.payload;
@@ -193,7 +193,6 @@ const plotSlice = createSlice({
 
         /**
          * This reducer accepts an action object returned from setDisplayYRange()
-         *     e.g. dispatch(setDisplayYRange({minY: 200, maxY: 400}))
          * and calculates the new state based on the action and the action
          * data given in action.payload.
          *
@@ -205,6 +204,7 @@ const plotSlice = createSlice({
          * @param {object} action.payload the payload is an object containing the given data
          * @param {number} action.payload.minY a number specifying the start of the y range
          * @param {number} action.payload.maxY a number specifying the end of the y range
+         * @example dispatch(setDisplayYRange({minY: 200, maxY: 400}));
          */
         setDisplayYRange(state, action) {
             const {minY, maxY} = action.payload;
@@ -219,7 +219,6 @@ const plotSlice = createSlice({
 
         /**
          * This reducer accepts an action object returned from setDisplayYRange()
-         *     e.g. dispatch(setDisplayYRange({minY: 200, maxY: 400}))
          * and calculates the new state based on the action and the action
          * data given in action.payload.
          *
@@ -232,6 +231,7 @@ const plotSlice = createSlice({
          * @param {string} action.payload.plotId tco3_zm | tco3_return
          * @param {number} action.payload.minY a number specifying the start of the y range
          * @param {number} action.payload.maxY a number specifying the end of the y range
+         * @example dispatch(setDisplayYRange({minY: 200, maxY: 400}));
          */
         setDisplayYRangeForPlot(state, action) {
             const { plotId, minY, maxY } = action.payload;
@@ -246,7 +246,6 @@ const plotSlice = createSlice({
 
         /**
          * This reducer accepts an action object returned from setMonths()
-         *     e.g. dispatch(setMonths({months: [3, 4, 5]}))
          * and calculates the new state based on the action and the action
          * data given in action.payload.
          *
@@ -256,6 +255,7 @@ const plotSlice = createSlice({
          * @param {object} action accepts the action returned from setMonths()
          * @param {object} action.payload the payload is an object containing the given data
          * @param {array} action.payload.months an array of integers describing the new months
+         * @example dispatch(setMonths({months: [3, 4, 5]}));
          */
         setMonths(state, action) {
             state.generalSettings.months = action.payload.months;

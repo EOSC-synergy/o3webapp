@@ -4,8 +4,20 @@ import Sidebar from './Sidebar/Sidebar';
 import PropTypes from "prop-types";
 import { styled } from '@mui/material/styles';
 
+/**
+ * The width of the Drawer.
+ * @see {@link Sidebar}
+ * @constant {int}
+ * @default 400
+ * @memberof LandingPage
+ */
 const drawerWidth = 400;
 
+/**
+ * Main component, that can be collapsed in order to see both the sidebar and the landing page next to each other.
+ * @memberof LandingPage
+ * @constant {JSX.Element}
+ */
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }) => ({
       flexGrow: 1,
@@ -26,13 +38,18 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   );
 
 /**
- * main view of web page
+ * Main view of web page. Wrapper for all other components on the landing PAge.
  * @component
  * @param {Object} props specified in propTypes
  * @returns {JSX.Element} a jsx containing all main components
  */
 function LandingPage(props) {
 
+    /**
+     * state to keep track of the current height of the landing Page.
+     * @const {Array}
+     * @default 0
+     */
     const [landingPageHeight, setLandingPageHeight] = React.useState(0);
 
     React.useEffect(() => {

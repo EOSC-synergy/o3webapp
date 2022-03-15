@@ -18,7 +18,7 @@ function SeasonCheckBoxGroup(props) {
     /**
      * Checks if every month in this season is checked.
      * 
-     * @returns True if every month in this season is checked
+     * @returns {boolean} True if every month in this season is checked
      */
     const isEveryMonthChecked = () => {
         let all = true;
@@ -32,9 +32,9 @@ function SeasonCheckBoxGroup(props) {
     }
 
     /**
-     * Checks if the SeasonCheckbox should be displayed as indeterminate.
+     * Checks if the SeasonCheckbox should be displayed as indeterminate, i.e. neither none nor all months are selected.
      * 
-     * @returns True if the SeasonCheckbox should be displayed as indeterminate
+     * @returns {boolean} True if the SeasonCheckbox should be displayed as indeterminate
      */
     const isIndeterminate = () => {
         let count = 0;
@@ -87,9 +87,6 @@ function SeasonCheckBoxGroup(props) {
     );
 }
 
-/**
- * Prop Types of the SeasonCheckBoxGroup
- */
 SeasonCheckBoxGroup.propTypes = {
     /**
      * label of this season

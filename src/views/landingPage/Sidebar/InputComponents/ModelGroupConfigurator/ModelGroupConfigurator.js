@@ -7,8 +7,8 @@ import PropTypes from 'prop-types';
 import { selectAllGroupIds } from "../../../../../store/modelsSlice/modelsSlice";
 
 /**
- * enables the user to configure models that should be visible in the plot clustered as model groups
- * compromised of {@link EditModelGroupModal} {@link ModelGroupCard} and {@link AddModelGroupModal}.
+ * Enables the user to configure models that should be visible in the plot clustered as model groups.
+ * Compromised of {@link EditModelGroupModal}, {@link ModelGroupCard} and {@link AddModelGroupModal}.
  * @component
  * @param {Object} props Specified in propTypes
  * @returns {JSX} a jsx containing a ModelGroupModal and a ModelGroupCard and EditModelGroupModal per model group
@@ -17,26 +17,28 @@ function ModelGroupConfigurator(props) {
 
     /**
      * Label that is displayed in the add model group button
-     * @constant {string}
+     * @constant {String}
+     * @default "Add Model Group"
      */
     const addModelGroupButtonLabel = "Add Model Group";
 
     /**
      * Ids of all existing modelGroups
-     * @constant {array}
+     * @constant {Array}
+     * @see {@link selectAllGroupIds}
      */
     const allGroupIds = useSelector(selectAllGroupIds);
 
 
     /**
      * State that tracks whether the addModelGroupModal is visible or not
-     * @constant {array}
+     * @constant {Array}
      */
     const [isAddModalVisible, setAddModalVisible] = React.useState(false);
 
     /**
      * Function to close addModelGroupModal
-     * @constant {function}
+     * @function
      */
     const closeAddModal = () => {
         setAddModalVisible(false);
@@ -44,7 +46,7 @@ function ModelGroupConfigurator(props) {
 
     /**
      * Function to open addModelGroupModal
-     * @constant {function}
+     * @function
      */
     const openAddModal = () => {
         setAddModalVisible(true);

@@ -8,9 +8,9 @@ import CustomLatitudeSelector from "../LatitudeBandSelector/CustomLatitudeSelect
 import PropTypes from 'prop-types';
 
 /**
- * enables the user to select / deselect regions as well as entering a private region
+ * Enables the user to select / deselect regions as well as entering a custom region.
  * 
- * {@link LatitudeBandSelector}
+ * @see {@link LatitudeBandSelector}
  * 
  * @component
  * @param {Object} props specified in PropTypes
@@ -29,14 +29,16 @@ function RegionSelector() {
      * Examples:
      * If the first region is selected the array would have the following form: [0]
      * If the second and fifth region are selected the array would have the following form: [1, 4]
-     * @constant {array}
+     * @see {@link selectPlotXRange}
+     * @constant {Array}
      */
     const xRangeRegions = useSelector(selectPlotXRange);
+
     /**
      * Handles the change if a region is clicked (selected/deselected).
-     *
+     *      *
      * @param {number} regionIdx The index of the region that was clicked.
-     * @constant {function}
+     * @function
      */
     const handleRegionChecked = (regionIdx) => {
         let regionCpy = [...xRangeRegions.regions];
@@ -52,8 +54,7 @@ function RegionSelector() {
 
     /**
      * Gets default regions that are available in the return recovery plot.
-     * @todo connect to api
-     * @constant {function}
+     * @function
      */
     const getDefaultRegions = () => {
         return ALL_REGIONS_ORDERED;

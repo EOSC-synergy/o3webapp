@@ -60,7 +60,6 @@ export const downloadGraphAsSVG = (fileName) => {
 
 /**
  * Downloads the graph as a CSV file.
- * @component
  * @param {string} plotTitle - the title of the plot
  * @param {string} plotId - the current id of the plot
  * @function

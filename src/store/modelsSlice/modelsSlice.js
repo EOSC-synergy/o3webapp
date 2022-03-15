@@ -87,6 +87,10 @@ const modelsSlice = createSlice({
          * @param {int} action.payload.groupId the name of the group to set
          * @param {string} action.payload.groupName the name of the group
          * @param {string} action.payload.modelList the list of models the group should have
+         * @example dispatch(setModelsOfModelGroup({
+         *              groupId: 0, 
+         *              modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2", "CCMI-1_CCCma_CMAM-refC2"]
+         *      }))
          */
         setModelsOfModelGroup(state, action) { 
             const { groupId, groupName, modelList } = action.payload;
@@ -138,8 +142,9 @@ const modelsSlice = createSlice({
          * the reducer takes care of creating a group.
          * 
          * @param {object} state the current store state of: state/models
-         * @param {object} action accepts the action returned from deleteModelGroup()
-         * containing         * @param {int} action.payload.groupId the name of the group that should be deleted
+         * @param {object} action accepts the action returned from deleteModelGroup()         
+         * @param {int} action.payload.groupId the name of the group that should be deleted
+         * @example dispatch(deleteModelGroup({0: "refC2"}))
          */
         deleteModelGroup(state, action) {
             const { groupId } = action.payload;
@@ -167,6 +172,9 @@ const modelsSlice = createSlice({
          * @param {object} action.payload the payload is an object containing the given data
          * @param {int} action.payload.groupId the name of the group whose model properties should be updated
          * @param {object} action.payload.data holds the information that should be updated 
+         * @example dispatch(setStatisticalValueForGroup(
+         *          { groupID: 42, data: bigObject }
+         *      ));
          */
         updatePropertiesOfModelGroup(state, action) {
             const { groupId, data } = action.payload;
@@ -197,6 +205,9 @@ const modelsSlice = createSlice({
          * @param {int} action.payload.groupId a string specifying the group
          * @param {string} action.payload.svType the SV as a string
          * @param {boolean} action.payload.isIncluded should the SV be displayed for the given group
+         * @example dispatch(setStatisticalValueForGroup(
+         *          {groupID: 0, svType: STATISTICAL_VALUES.median, isIncluded: true}
+         *      ));
          */
         setStatisticalValueForGroup(state, action) { // this is for an entire group
             const { groupId, svType, isIncluded } = action.payload;
@@ -228,6 +239,9 @@ const modelsSlice = createSlice({
          * @param {string} action.payload.svType the SV as a string
          * @param {boolean} action.payload.isIncluded should the SV be displayed for the given group
          * @throws an Error if the provided groupId is not valid
+         * @example dispatch(setVisibilityForGroup(
+         *          {groupID: 0, isVisible: true}
+         *      ));
          */
         setVisibilityForGroup(state, action) { // this is for an entire group
             const { groupId, isVisible } = action.payload;

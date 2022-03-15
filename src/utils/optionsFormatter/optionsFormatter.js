@@ -846,6 +846,7 @@ function buildSvMatrixTco3Return({modelList, data}) {
  * @param {Object} data contains the region data from the api
  * @param {Object} modelsSlice the slice of the store containing information about the model groups
  * @returns {Object} Object holding an array of 5 values (min, q1, median, q3, max) for each region
+ * @function
  */
 function calculateBoxPlotValues({data, modelsSlice}) {
     const boxPlotHolder = {}
@@ -887,11 +888,12 @@ function calculateBoxPlotValues({data, modelsSlice}) {
  * passed generateSingleSvSeries function to transform each generated series into
  * the correct format.
  *
- * @param {object} data the raw data from the api for the current options
- * @param {object} modelsSlice the slice of the store containing information about the model groups
+ * @param {Object} data the raw data from the api for the current options
+ * @param {Object} modelsSlice the slice of the store containing information about the model groups
  * @param {function} buildMatrix either buildSvMatrixTco3Zm | buildSvMatrixTco3Return, specifies how the data should be transformed
  * @param {function} generateSingleSvSeries either generateSingleTco3ZmSeries | generateSingleTco3ReturnSeries, specifies how the series should be generated
- * @returns an array holding all statistical series for the given modelSlice
+ * @returns {Array} An array holding all statistical series for the given modelSlice
+ * @function
  */
 function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleSvSeries, getState}) {
     const svSeries = {
@@ -936,6 +938,8 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
  * @param {object} data the raw data from the api for the current options
  * @param {object} groupData the modelsSlice data narrowed down for a specific model group
  * @param {function} buildMatrix either buildSvMatrixTco3Zm | buildSvMatrixTco3Return, specifies how the data should be transformed
+ * @returns {Object} An object containing the calculated values for the statistical values
+ * @function
  */
 function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass group data
     // only mean at beginning
@@ -985,8 +989,10 @@ function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass
  * Iterates through the x and y data returned from the api for the tco3_zm and fills the corresponding years with
  * either data points, if they are present or with `null`. The first index corresponds to START_YEAR
  *
- * @param {array} xValues an array holding the years
- * @param {array} yValues an array of the same length holding the data points for the corresponding years
+ * @param {Array} xValues an array holding the years
+ * @param {Array} yValues an array of the same length holding the data points for the corresponding years
+ * @returns {Array} The normalized array
+ * @function
  */
 export function normalizeArray(xValues, yValues) {
     const result = [];
@@ -1036,8 +1042,8 @@ export function normalizeArray(xValues, yValues) {
  *   ]
  *
  * @param {string} plotId A string specifying the plot (to perform different transformations, according to the data format)
- * @param {object} data An object holding the data as it was returned from the API
- * @returns The pre transformed API data
+ * @param {Object} data An object holding the data as it was returned from the API
+ * @returns {Object} The pre transformed API data
  * @function
  */
 export const preTransformApiData = ({plotId, data}) => {
@@ -1092,6 +1098,15 @@ export const preTransformApiData = ({plotId, data}) => {
     return {lookUpTable};
 }
 
+/**
+ * Gets the suggested values for the y-axis and x-axis so that the displayed models are all
+ * visible in the resulting range and the scaling of the x-axis is properly formatted.
+ * 
+ * @param {Object} data The data for all models displayed
+ * @param {Object} modelSlice   The modelSlice object
+ * @returns {Object} An object containg the suggested values for the x- and y-axis
+ * @function
+ */
 export function getSuggestedValues(data, modelsSlice) {
     const visibleModels = getIncludedModels(modelsSlice);
 
@@ -1121,7 +1136,8 @@ export function getSuggestedValues(data, modelsSlice) {
  * Converts the given color name to its corresponding hex code.
  *
  * @param {string} color    The name of the color as a string
- * @returns                 The hex code corresponding to the given color name
+ * @returns {Object}        The hex code corresponding to the given color name
+ * @function
  */
 export function colorNameToHex(color) {
     const colors = {
@@ -1278,7 +1294,8 @@ export function colorNameToHex(color) {
  * Converts the stroke style given by the API into the format supported by apexcharts.
  *
  * @param {number} apiStyle     The stroke style specified by the API
- * @returns                      The stroke style for the apexcharts library
+ * @returns {number}            The stroke style for the apexcharts library
+ * @function
  */
 export function convertToStrokeStyle(apiStyle) {
     const styles = {
@@ -1297,9 +1314,10 @@ export function convertToStrokeStyle(apiStyle) {
  * The copied elements of series2 get appended to a copy of series1.
  * A series object has the following structure: { data: Array, colors: Array, width: Array, dashArray: Array}
  *
- * @param {object} series1     The first data series object
- * @param {object} series2     The second data series object
- * @returns                 New series containing series1 and series2
+ * @param {Object} series1     The first data series object
+ * @param {Object} series2     The second data series object
+ * @returns {Object}            New series containing series1 and series2
+ * @function
  */
 function combineSeries(series1, series2) {
     const newSeries = {};
@@ -1314,7 +1332,8 @@ function combineSeries(series1, series2) {
  * Utility function to create an array of size i with empty arrays inside it.
  *
  * @param {number} i    The size of the array containing the empty arrays
- * @returns             The array of size 'i' containing empty arrays
+ * @returns {Array}     The array of size 'i' containing empty arrays
+ * @function
  */
 function create2dArray(i) {
     return Array.from(Array(i), () => []);
@@ -1324,9 +1343,10 @@ function create2dArray(i) {
  * Checks if a model is included in the statistical value calculation of a given SV-Type by using the groupData as the reference data.
  *
  * @param {string} model        The model that should be checked
- * @param {object} groupData    The data of the group which will be used as reference for the check
+ * @param {Object} groupData    The data of the group which will be used as reference for the check
  * @param {string} svType       The statistical value type that should be checked for
- * @returns                     True if the given model should be included in the SV calculation of the given SV-Type
+ * @returns {Object}            True if the given model should be included in the SV calculation of the given SV-Type
+ * @function
  */
 function isIncludedInSv(model, groupData, svType) {
     if (svType === "stdMean") return groupData.models[model][std]; // the std mean should only be calculated if the std is necessary
@@ -1341,7 +1361,8 @@ function isIncludedInSv(model, groupData, svType) {
  *
  * @param {number} min      The selected min. year of the plot
  * @param {number} max      The selected max. year of the plot
- * @returns                 The optimal tick amount according to those values
+ * @returns {number}        The optimal tick amount according to those values
+ * @function
  */
 export function getOptimalTickAmount(min, max) {
     const width  = window.innerWidth || document.documentElement.clientWidth || 
@@ -1375,7 +1396,8 @@ export function getOptimalTickAmount(min, max) {
  *
  * @param {number} min      The selected min. year of the plot
  * @param {number} max      The selected max. year of the plot
- * @returns                 The optimal tick amount according to those values
+ * @returns {number}        The optimal tick amount according to those values
+ * @function
  */
 export function getTickAmountYAxis(min, max) {
     const diff = max - min;
@@ -1396,8 +1418,9 @@ export function getTickAmountYAxis(min, max) {
  * Rounds a number up to a multiple of ten. If the number already is a multiple of
  * ten the number stays the same.
  *
- * @param {int} minY
- * @returns number rounded down to a multiple of ten
+ * @param {number} minY     The minY value that will be rounded to a multiple of 10
+ * @returns {number}        Number rounded down to a multiple of ten
+ * @function
  */
 export function roundDownToMultipleOfTen(minY) {
     return minY - minY % 10;
@@ -1407,8 +1430,9 @@ export function roundDownToMultipleOfTen(minY) {
  * Rounds a number up to a multiple of ten. If the number already is a multiple of
  * ten the number stays the same.
  *
- * @param {int} maxY
- * @returns number rounded up to a multiple of ten
+ * @param {number} maxY     The maxY value that will be rounded to a multiple of 10
+ * @returns {number}        Number rounded up to a multiple of ten
+ * @function
  */
 export function roundUpToMultipleOfTen(maxY) {
     return maxY % 10 ? maxY + (10 - maxY % 10) : maxY;
@@ -1418,10 +1442,11 @@ export function roundUpToMultipleOfTen(maxY) {
  * This function aims to filter out values that are outside the provided range.
  * If the value is outside of range it is replaced with null.
  *
- * @param {number} value the value that could be filtered out
- * @param {number} min the minimum allowed value
- * @param {number} max the maximum allowed value
- * @returns the value or null if the value is outside the allowed range
+ * @param {number} value The value that could be filtered out
+ * @param {number} min  The minimum allowed value
+ * @param {number} max  The maximum allowed value
+ * @returns {number}    The value or null if the value is outside the allowed range
+ * @function
  */
 export function filterOutOfRange(value, min, max) {
     return (min <= value && value <= max) ? value : null;
@@ -1431,8 +1456,8 @@ export function filterOutOfRange(value, min, max) {
  * Function to format the labels on the y-axis nicely.
  * It hides all labels that are not a multiple of ten (i.e. all multiples of five and NOT ten).
  *
- * @param {number} value the label value
- * @returns the value if it is a multiple of ten or an empty string to hide the label
+ * @param {number} value    The label value
+ * @returns {number}        The value if it is a multiple of ten or an empty string to hide the label
  * @function
  */
 export const formatYLabelsNicely = value => value % 10 ? "" : value
@@ -1441,8 +1466,9 @@ export const formatYLabelsNicely = value => value % 10 ? "" : value
  * This function parses the auto-generated sv names to separate
  * them into the sv type (e.g. mean, median) and the group.
  *
- * @param {string} name the name of the data series (e.g. mean+std(Example Group))
- * @returns an object holding the sv type and the group name
+ * @param {string} name The name of the data series (e.g. mean+std(Example Group))
+ * @returns {Object}    An object holding the sv type and the group name
+ * @function
  */
 export function parseSvName(name) {
     const regex = new RegExp("([^(]+)(([^)]+))");
@@ -1459,11 +1485,12 @@ export function parseSvName(name) {
  * In this case the tooltip is for the octs line chart. It provides
  * a richer tooltip and shows the data points correctly.
  *
- * @param {array} series an array of series
- * @param {number} seriesIndex the index of the hovered data series
- * @param {number} dataPointIndex the index of the data point in the hovered data series
- * @param {object} w global apexcharts object
- * @returns the desired html tooltip formatted with the correct information
+ * @param {Array} series An array of series
+ * @param {number} seriesIndex The index of the hovered data series
+ * @param {number} dataPointIndex The index of the data point in the hovered data series
+ * @param {Object} w    Global apexcharts object
+ * @returns {string}          The desired html tooltip formatted with the correct information
+ * @function
  */
 export function customTooltipFormatter({series, seriesIndex, dataPointIndex, w}) {
     const modelName = w.globals.seriesNames[seriesIndex];
@@ -1511,6 +1538,13 @@ export function customTooltipFormatter({series, seriesIndex, dataPointIndex, w})
     )
 }
 
+/**
+ * Gets all included models from the modelsSlice.
+ * 
+ * @param {Object} modelsSlice  The modelsSlice needed to get the models from the model groups
+ * @returns {Array} All included models from all model groups
+ * @function    
+ */
 export function getIncludedModels(modelsSlice) {
     const visible = [];
 
@@ -1529,8 +1563,8 @@ export function getIncludedModels(modelsSlice) {
  *
  * @example formatLatitude({minLat: -20, maxLat: 20});
  * 
- * @param {object} locationValue the minLat and maxLat values
- * @return {string} the formatted latitude band
+ * @param {Object} locationValue    The minLat and maxLat values
+ * @return {string}                 The formatted latitude band
  * @function
  */
 export const formatLatitude = (locationValue) => {
@@ -1539,6 +1573,13 @@ export const formatLatitude = (locationValue) => {
     return `${Math.abs(locationValue.minLat)}${hemisphereExtensionMin}-${Math.abs(locationValue.maxLat)}${hemisphereExtensionMax}`;
 }
  
+
+/**
+ * Finds the latitude band by the currently selected location
+ * @param {function} getState   A function to get the state
+ * @returns {String} The found Latitude Band
+ * @function 
+ */
 const findLatitudeBandByLocation = (getState) => {
     const selectedLocation = getState().plot.generalSettings.location;
     if (typeof selectedLocation === 'undefined') return null;

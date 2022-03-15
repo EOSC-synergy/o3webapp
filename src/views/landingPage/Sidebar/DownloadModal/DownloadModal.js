@@ -28,7 +28,7 @@ import CardActions from "@mui/material/CardActions";
 
 /**
  * The file formats which can be selected in the dropdown menu.
- * @constant {array}
+ * @constant {Array}
  * @memberof DownloadModal
  */
 const fileFormats = [
@@ -45,31 +45,38 @@ function DownloadModal(props) {
 
     /**
      * An array containing all model groups.
+     * @constant {Array}
      */
     const modelGroups = useSelector(state => selectAllModelGroups(state));
 
     /**
      * The plot id of the graph (tco3_zm, tco3_return etc.).
+     * @constant {string}
      */
     const plotId = useSelector(selectPlotId);
 
     /**
      * The active data of the current plot which contains information about the models.
+     * @constant {Object}
+     * 
      */
     const activeData = useSelector(state => selectActivePlotData(state, plotId));
 
     /**
      * The plot title which is shown above the graph.
+     * @constant {string}
      */
     const plotTitle = useSelector(selectPlotTitle);
 
     /**
      * The selected file format.
+     * @constant {string}
      */
     const [selectedFileFormat, setSelectedFileFormat] = React.useState('');
 
     /**
-     * The style of the DownloadModal.
+     * An object containing the information about the style of the DownloadModal.
+     * @constant {Object}
      */
     const style = {
         position: "absolute",
@@ -84,6 +91,7 @@ function DownloadModal(props) {
 
     /**
      * Handles the download of the plot, if the download button is clicked.
+     * @function
      */
     const handleDownloadPlot = () => {
         if (selectedFileFormat === "PDF") {
@@ -98,9 +106,10 @@ function DownloadModal(props) {
     };
 
     /**
-     * Changes the selected file format in the Redux store.
+     * Changes the selected file format.
      *
-     * @param {event} event the event that called this function
+     * @param {Object} event    The event object given by the dropdown menu.
+     * @function
      */
     const changeFileFormat = (event) => {
         setSelectedFileFormat(event.target.value);
@@ -154,15 +163,15 @@ function DownloadModal(props) {
 
 DownloadModal.propTypes = {
   /**
-   * whether modal should be visible
+   * Tracks whether modal should be visible
    */
   isOpen: PropTypes.bool.isRequired,
   /**
-   * handles closing the modal
+   * Handles closing the modal
    */
   onClose: PropTypes.func.isRequired,
   /**
-   * function for error handling
+   * A function for error handling
    */
   reportError: PropTypes.func,
 };

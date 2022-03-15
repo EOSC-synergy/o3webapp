@@ -20,14 +20,14 @@ import PropTypes from "prop-types";
  */
 function CustomLatitudeSelector() {
     /**
-     * The smallest possible latitude value.
+     * The biggest possible latitude value.
      * @constant {number}
      * @memberof CustomLatitudeSelector
      */
     const LATITUDE_BAND_MAX_VALUE = 90;
 
     /**
-     * The biggest possible latitude value.
+     * The smallest possible latitude value.
      * @constant {number}
      * @memberof CustomLatitudeSelector
      */
@@ -35,38 +35,45 @@ function CustomLatitudeSelector() {
 
     /**
      * A dispatch function to dispatch actions to the redux store.
+     * @function
      */
     const dispatch = useDispatch();
 
     /**
      * An object containing the current minLat and maxLat Values.
+     * @constant {Object}
      */
     const selectedLocation = useSelector(selectPlotLocation);
 
     /**
      * The currently selected minLat value.
+     * @constant {number}
      */
     const minLat = selectedLocation.minLat;
 
     /**
      * The currently selected maxLat value.
+     * @constant {number}
      */
     const maxLat = selectedLocation.maxLat;
 
     /**
      * A state variable to store the state of the min. latitude box.
+     * @constant {string}
      */
     const [minLatState, setMinLatState] = React.useState(minLat);
 
     /**
      * A state variable to store the state of the max. latitude box.
+     * @constant {string}
      */
     const [maxLatState, setMaxLatState] = React.useState(maxLat);
 
     /**
      * Handles the change if the min. latitude box is changed.
      *
-     * @param {*} event the event object
+     * @param {*} event The event object holding the new value of the text box
+     * @function
      */
     const handleChangeMin = (event) => {
         let selectedLocationCopy = {...selectedLocation};
@@ -88,7 +95,8 @@ function CustomLatitudeSelector() {
     /**
      * Handles the change if the max. latitude box is changed.
      *
-     * @param {*} event the event object
+     * @param {*} event The event object holding the new value of the text box
+     * @function
      */
     const handleChangeMax = (event) => {
         let selectedLocationCopy = {...selectedLocation};
@@ -111,6 +119,7 @@ function CustomLatitudeSelector() {
      * A function to generate the helper text for the min. latitude box.
      *
      * @returns {string}     Text that should be displayed in the helper text
+     * @function
      */
     const generateHelperTextMin = () => {
         if (typeof minLatState === "string") return "";
@@ -124,6 +133,7 @@ function CustomLatitudeSelector() {
      * A function to generate the helper text for the max. latitude box.
      *
      * @returns {string}     Text that should be displayed in the helper text
+     * @function
      */
     const generateHelperTextMax = () => {
         if (typeof maxLatState === "string") return "";
@@ -198,7 +208,7 @@ function CustomLatitudeSelector() {
 
 CustomLatitudeSelector.propTypes = {
     /**
-     * function for error handling
+     * Function for error handling
      */
     reportError: PropTypes.func
 }

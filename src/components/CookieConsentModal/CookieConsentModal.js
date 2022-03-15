@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 import CookieOutlinedIcon from '@mui/icons-material/CookieOutlined';
 
 /**
- * Forces the user to accept cookies.
+ * A modal that asks the user to accept the cookies provieded by the website.
+ * 
  * @component
  * @param {Object} props specifid in propTypes
  * @returns {JSX.Element} a jsx file containing the modal
@@ -14,7 +15,7 @@ import CookieOutlinedIcon from '@mui/icons-material/CookieOutlined';
 function CookieConsentModal(props) {
 
     /**
-     * The style of the modal
+     * An object holding the styling information about the modal.
      *
      * @type {{boxShadow: number, transform: string, top: string, bgColor: *, left: string, position: string}}
      */
@@ -28,11 +29,13 @@ function CookieConsentModal(props) {
     };
 
     /**
-     * function that is called when the user agrees to cookies
+     * Function that is called when the user agrees to cookies
+     * @function
      */
     const agreeToCookies = () => props.onClose();
     /**
-     * function that is called when the user disagrees to cookies
+     * Function that is called when the user disagrees to cookies
+     * @function
      */
     const disagreeToCookies = () => props.onClose();
 
@@ -91,11 +94,11 @@ function CookieConsentModal(props) {
 
 CookieConsentModal.propTypes = {
     /**
-     * whether the cookie consent modal should be displayed
+     * Tracks whether the cookie consent modal should be displayed
      */
     isOpen: PropTypes.bool.isRequired,
     /**
-     * handles closing of the modal
+     * Handles closing of the modal
      */
     onClose: PropTypes.func.isRequired,
 }

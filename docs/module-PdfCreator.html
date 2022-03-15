@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> LatitudeBandSelector</title>
+  <title> PdfCreator</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -77,8 +77,8 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p>Components</p>
-                    <h1>LatitudeBandSelector</h1>
+                    <p>Module</p>
+                    <h1>PdfCreator</h1>
                 </header>
                 
 
@@ -89,9 +89,8 @@
 
 <header>
     
-        <h2>
-            &ltLatitudeBandSelector <i>reportError</i> /&gt
-        </h2>
+        
+            
         
     
 </header>
@@ -100,22 +99,232 @@
     <div class="container-overview">
     
         
-            <div class='vertical-section'>
-                <div class="members">
-                    <div class="member">
-                        <div class=name>
-                            <span class="tag">Constructor</span>
-                        </div>
-                        
+            <div class="description"><p>This module handles all functions to create a pdf that can be downloaded from the site.
+Downloading Pdf is not as trivial as downloading other formats, since Apex Charts does not provide a native function to support pdf download.
+Moreover, extra legal information is appended to the pdf, which is not appended to the other supported downloadable datatypes.</p></div>
+        
+
+        
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="module-DownloadNotPdf.html">module:DownloadNotPdf</a> for all other format downloads</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="services_downloading_pdf_pdfCreator.js.html" class="button">View Source</a>
+            <span>
+                <a href="services_downloading_pdf_pdfCreator.js.html">services/downloading/pdf/pdfCreator.js</a>, <a href="services_downloading_pdf_pdfCreator.js.html#line5">line 5</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+    </div>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class='vertical-section'>
+            <h1>Members</h1>
+            <div class="members">
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<code class="param-type">Array</code>
+
+
+    </span>
+
+<h4 class="name" id="~legalNoticeLinks">
+    <a class="href-link" href="#~legalNoticeLinks">#</a>
+    
+        
+            <span class='tag'>inner</span>
+        
+            <span class='tag'>constant</span>
+        
+    
+    <span class="code-name">
+        legalNoticeLinks
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <p>the Legal Notice links which will be parsed into the PDF.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-default">Default Value:</dt>
+    <dd class="tag-default"><ul class="dummy">
+            <li>[ "Terms of Use Link: https://o3as.data.kit.edu/policies/terms-of-use.html",
+    "Privacy Policy Link: https://o3as.data.kit.edu/policies/privacy-policy.html",
+    "How to Acknowledge Link: https://o3as.data.kit.edu/policies/how-to-acknowledge.html"]</li>
+        </ul></dd>
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="services_downloading_pdf_pdfCreator.js.html" class="button">View Source</a>
+            <span>
+                <a href="services_downloading_pdf_pdfCreator.js.html">services/downloading/pdf/pdfCreator.js</a>, <a href="services_downloading_pdf_pdfCreator.js.html#line22">line 22</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+            </div>
+        </div>
+    
+
+    
+        <div class='vertical-section'>
+            <h1>Methods</h1>
+            <div class="members">
+            
+                <div class="member">
 
 
     
-    <h4 class="name" id="LatitudeBandSelector">
-        <a class="href-link" href="#LatitudeBandSelector">#</a>
+    <h4 class="name" id=".downloadGraphAsPDF">
+        <a class="href-link" href="#.downloadGraphAsPDF">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+                <span class='tag'>static</span>
+            
         
         <span class="code-name">
             
-                &ltLatitudeBandSelector <i>reportError</i> /&gt
+                downloadGraphAsPDF<span class="signature">(plotId, fileName, modelGroups, currentData)</span><span class="type-signature"></span>
             
         </span>
     </h4>
@@ -124,8 +333,7 @@
     
     
     <div class="description">
-        <p>Enables the user to choose minimum and maximum latitude.
-Compromised of <a href="CustomLatitudeSelector.html">CustomLatitudeSelector</a>.</p>
+        <p>Downloads the PDF which contains the Graph in SVG format and contains the List of models.</p>
     </div>
     
 
@@ -134,39 +342,6 @@ Compromised of <a href="CustomLatitudeSelector.html">CustomLatitudeSelector</a>.
 
 
 
-
-    
-        <h5>PropTypes:</h5>
-        
-<div class="table-container">
-  <table class="params table">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Required</th>
-        <th>Description</th>
-        <th class="last">Default</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-          <tr class="deep-level-0">
-            <td class="name"><code>reportError</code></td>
-            <td>
-              func
-            </td>
-            <td>No</td>
-            <td>function for error handling</td>
-            <td></td>
-          </tr>
-          
-    
-    </tbody>
-  </table>
-</div>
-    
 
 
 
@@ -196,13 +371,13 @@ Compromised of <a href="CustomLatitudeSelector.html">CustomLatitudeSelector</a>.
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>props</code></td>
+      <td class="name"><code>plotId</code></td>
   
 
   <td class="type">
   
       
-<code class="param-type">Object</code>
+<code class="param-type">string</code>
 
 
   
@@ -212,7 +387,82 @@ Compromised of <a href="CustomLatitudeSelector.html">CustomLatitudeSelector</a>.
 
   
 
-  <td class="description last"><p>specified in propTypes</p></td>
+  <td class="description last"><p>the plot id of the graph (tco3_zm, tco3_return etc.)</p></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>fileName</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>the File name of the PDF</p></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>modelGroups</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">array</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>the Model Groups which contains the names of the models</p></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>currentData</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">array</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>the current Model data contains the properties of the models (color, line style, etc.)</p></td>
 </tr>
 
 
@@ -258,9 +508,182 @@ Compromised of <a href="CustomLatitudeSelector.html">CustomLatitudeSelector</a>.
 
     
         <p class="tag-source">
-            <a href="views_landingPage_Sidebar_InputComponents_LatitudeBandSelector_LatitudeBandSelector.js.html" class="button">View Source</a>
+            <a href="services_downloading_pdf_pdfCreator.js.html" class="button">View Source</a>
             <span>
-                <a href="views_landingPage_Sidebar_InputComponents_LatitudeBandSelector_LatitudeBandSelector.js.html">views/landingPage/Sidebar/InputComponents/LatitudeBandSelector/LatitudeBandSelector.js</a>, <a href="views_landingPage_Sidebar_InputComponents_LatitudeBandSelector_LatitudeBandSelector.js.html#line30">line 30</a>
+                <a href="services_downloading_pdf_pdfCreator.js.html">services/downloading/pdf/pdfCreator.js</a>, <a href="services_downloading_pdf_pdfCreator.js.html#line105">line 105</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Throws:</label></div>
+        <div class="column is-10">
+            
+                    
+<div class="columns">
+    
+        
+            <div class='param-desc column is-12'><p>an Error if the given plotId is not supported. For available plot types check O3AS_PLOTS.</p></div>
+        
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="~getAdjustedSVG">
+        <a class="href-link" href="#~getAdjustedSVG">#</a>
+        
+            
+                <span class='tag'>inner</span>
+            
+        
+        <span class="code-name">
+            
+                getAdjustedSVG<span class="signature">(svgElement)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <p>This Method adjusts the svg element in order to scale it right in the pdf file.
+the viewBox parameter of the svg element will be set to the width and height
+values of the svg element.
+visit the following website for more details about the viewBox parameter:
+<a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/viewBox">https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/viewBox</a></p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>svgElement</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">svg</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>svgElement element.</p></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="services_downloading_pdf_pdfCreator.js.html" class="button">View Source</a>
+            <span>
+                <a href="services_downloading_pdf_pdfCreator.js.html">services/downloading/pdf/pdfCreator.js</a>, <a href="services_downloading_pdf_pdfCreator.js.html#line87">line 87</a>
             </span>
         </p>
     
@@ -291,16 +714,8 @@ Compromised of <a href="CustomLatitudeSelector.html">CustomLatitudeSelector</a>.
 
 <div class="columns">
     
-    <div class='param-desc column is-7'><p>a JSX containing a dropdown and if &quot;individual latitude band&quot; is selected a number input field</p></div>
+    <div class='param-desc column is-7'><p>returns the adjusted svg element.</p></div>
     
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<code class="param-type">JSX.Element</code>
-
-
-    </div>
     
 </div>
 
@@ -311,279 +726,14 @@ Compromised of <a href="CustomLatitudeSelector.html">CustomLatitudeSelector</a>.
 
 
 
-
-                    </div>
-                </div>
-            </div>
-        
-    
-    </div>
-    
-        
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <div class='vertical-section'>
-            <h1>Members</h1>
-            <div class="members">
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<code class="param-type">function</code>
-
-
-    </span>
-
-<h4 class="name" id=".findLatitudeBandByLocation">
-    <a class="href-link" href="#.findLatitudeBandByLocation">#</a>
-    
-        
-            <span class='tag'>static</span>
-        
-            <span class='tag'>constant</span>
-        
-    
-    <span class="code-name">
-        findLatitudeBandByLocation
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <p>Finds selectedLocation in latitudeBands.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="views_landingPage_Sidebar_InputComponents_LatitudeBandSelector_LatitudeBandSelector.js.html" class="button">View Source</a>
-            <span>
-                <a href="views_landingPage_Sidebar_InputComponents_LatitudeBandSelector_LatitudeBandSelector.js.html">views/landingPage/Sidebar/InputComponents/LatitudeBandSelector/LatitudeBandSelector.js</a>, <a href="views_landingPage_Sidebar_InputComponents_LatitudeBandSelector_LatitudeBandSelector.js.html#line107">line 107</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
 </div>
             
                 <div class="member">
 
-<h4 class="name" id=".selectedLocation">
-    <a class="href-link" href="#.selectedLocation">#</a>
-    
-        
-            <span class='tag'>static</span>
-        
-    
-    <span class="code-name">
-        selectedLocation
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <p>An object containing the current minLat and maxLat Values.</p>
-</div>
-
-
-
-
-
-<dl class="details">
 
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="views_landingPage_Sidebar_InputComponents_LatitudeBandSelector_LatitudeBandSelector.js.html" class="button">View Source</a>
-            <span>
-                <a href="views_landingPage_Sidebar_InputComponents_LatitudeBandSelector_LatitudeBandSelector.js.html">views/landingPage/Sidebar/InputComponents/LatitudeBandSelector/LatitudeBandSelector.js</a>, <a href="views_landingPage_Sidebar_InputComponents_LatitudeBandSelector_LatitudeBandSelector.js.html#line15">line 15</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-                <div class="member">
-
-<h4 class="name" id="~dispatch">
-    <a class="href-link" href="#~dispatch">#</a>
-    
-        
-            <span class='tag'>inner</span>
-        
-            <span class='tag'>constant</span>
-        
-    
-    <span class="code-name">
-        dispatch
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <p>A dispatch function to dispatch actions to the redux store.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="views_landingPage_Sidebar_InputComponents_LatitudeBandSelector_LatitudeBandSelector.js.html" class="button">View Source</a>
-            <span>
-                <a href="views_landingPage_Sidebar_InputComponents_LatitudeBandSelector_LatitudeBandSelector.js.html">views/landingPage/Sidebar/InputComponents/LatitudeBandSelector/LatitudeBandSelector.js</a>, <a href="views_landingPage_Sidebar_InputComponents_LatitudeBandSelector_LatitudeBandSelector.js.html#line39">line 39</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-            </div>
-        </div>
-    
-
-    
-        <div class='vertical-section'>
-            <h1>Methods</h1>
-            <div class="members">
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="~handleChangeLatitudeBand">
-        <a class="href-link" href="#~handleChangeLatitudeBand">#</a>
+    <h4 class="name" id="~getLinePresentation">
+        <a class="href-link" href="#~getLinePresentation">#</a>
         
             
                 <span class='tag'>inner</span>
@@ -591,7 +741,7 @@ Compromised of <a href="CustomLatitudeSelector.html">CustomLatitudeSelector</a>.
         
         <span class="code-name">
             
-                handleChangeLatitudeBand<span class="signature">(event)</span><span class="type-signature"></span>
+                getLinePresentation<span class="signature">(currentData, model)</span><span class="type-signature"> &rarr; {Object}</span>
             
         </span>
     </h4>
@@ -600,8 +750,7 @@ Compromised of <a href="CustomLatitudeSelector.html">CustomLatitudeSelector</a>.
     
     
     <div class="description">
-        <p>handles the change when the user clicked on a new latitude band option
-if the user selected custom sets isCustomizable to true</p>
+        <p>Returns a Line presentation for the PDF concerning to the current line data.</p>
     </div>
     
 
@@ -639,13 +788,13 @@ if the user selected custom sets isCustomizable to true</p>
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>event</code></td>
+      <td class="name"><code>currentData</code></td>
   
 
   <td class="type">
   
       
-<code class="param-type">event</code>
+<code class="param-type">Array</code>
 
 
   
@@ -655,7 +804,32 @@ if the user selected custom sets isCustomizable to true</p>
 
   
 
-  <td class="description last"><p>the event that triggered this function call</p></td>
+  <td class="description last"><p>the current Model data contains the properties of the models(color, line style, etc.)</p></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>model</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">String</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>the model name which the Line presentation belongs to</p></td>
 </tr>
 
 
@@ -701,9 +875,9 @@ if the user selected custom sets isCustomizable to true</p>
 
     
         <p class="tag-source">
-            <a href="views_landingPage_Sidebar_InputComponents_LatitudeBandSelector_LatitudeBandSelector.js.html" class="button">View Source</a>
+            <a href="services_downloading_pdf_pdfCreator.js.html" class="button">View Source</a>
             <span>
-                <a href="views_landingPage_Sidebar_InputComponents_LatitudeBandSelector_LatitudeBandSelector.js.html">views/landingPage/Sidebar/InputComponents/LatitudeBandSelector/LatitudeBandSelector.js</a>, <a href="views_landingPage_Sidebar_InputComponents_LatitudeBandSelector_LatitudeBandSelector.js.html#line46">line 46</a>
+                <a href="services_downloading_pdf_pdfCreator.js.html">services/downloading/pdf/pdfCreator.js</a>, <a href="services_downloading_pdf_pdfCreator.js.html#line54">line 54</a>
             </span>
         </p>
     
@@ -725,6 +899,258 @@ if the user selected custom sets isCustomizable to true</p>
 
 
 
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'><p>the Line Presentation which will be shown in the PDF.</p></div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Object</code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="~getListOfModelsForPdf">
+        <a class="href-link" href="#~getListOfModelsForPdf">#</a>
+        
+            
+                <span class='tag'>inner</span>
+            
+        
+        <span class="code-name">
+            
+                getListOfModelsForPdf<span class="signature">(plotId, modelGroups, currentData)</span><span class="type-signature"> &rarr; {object}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <p>Returns the List of models in the format which the pdfMake library accepts.</p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>plotId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>the plot id of the graph (tco3_zm, tco3_return etc.)</p></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>modelGroups</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">array</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>the Model Groups which contains the names of the models</p></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>currentData</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">array</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>the current Model data contains the properties of the models(color, line style, etc.)</p></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="services_downloading_pdf_pdfCreator.js.html" class="button">View Source</a>
+            <span>
+                <a href="services_downloading_pdf_pdfCreator.js.html">services/downloading/pdf/pdfCreator.js</a>, <a href="services_downloading_pdf_pdfCreator.js.html#line163">line 163</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'><p>the List of all Model Groups which will be shown at the PDF.</p></div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">object</code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
 
 
 

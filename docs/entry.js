@@ -37,38 +37,38 @@ reactComponents['CustomLatitudeSelector'] = Component3;
 import Component4 from '../src/components/DiscardChangesModal/DiscardChangesModal.js';
 reactComponents['DiscardChangesModal'] = Component4;
 
-import Component5 from '../src/services/downloading/otherFormats.js';
-reactComponents['downloadGraphAsCSV'] = Component5;
+import Component5 from '../src/views/landingPage/Sidebar/DownloadModal/DownloadModal.js';
+reactComponents['DownloadModal'] = Component5;
 
-import Component6 from '../src/views/landingPage/Sidebar/DownloadModal/DownloadModal.js';
-reactComponents['DownloadModal'] = Component6;
+import Component6 from '../src/views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator/EditModelGroupModal/EditModelGroupModal.js';
+reactComponents['EditModelGroupModal'] = Component6;
 
-import Component7 from '../src/views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator/EditModelGroupModal/EditModelGroupModal.js';
-reactComponents['EditModelGroupModal'] = Component7;
+import Component7 from '../src/components/ErrorMessageModal/ErrorMessageModal.js';
+reactComponents['ErrorMessageModal'] = Component7;
 
-import Component8 from '../src/components/ErrorMessageModal/ErrorMessageModal.js';
-reactComponents['ErrorMessageModal'] = Component8;
+import Component8 from '../src/components/Footer/Footer.js';
+reactComponents['Footer'] = Component8;
 
-import Component9 from '../src/components/Footer/Footer.js';
-reactComponents['Footer'] = Component9;
+import Component9 from '../src/views/landingPage/Graph/Graph.js';
+reactComponents['Graph'] = Component9;
 
-import Component10 from '../src/views/landingPage/Graph/Graph.js';
-reactComponents['Graph'] = Component10;
+import Component10 from '../src/views/landingPage/LandingPage.js';
+reactComponents['LandingPage'] = Component10;
 
-import Component11 from '../src/views/landingPage/LandingPage.js';
-reactComponents['LandingPage'] = Component11;
+import Component11 from '../src/views/landingPage/Sidebar/InputComponents/LatitudeBandSelector/LatitudeBandSelector.js';
+reactComponents['LatitudeBandSelector'] = Component11;
 
-import Component12 from '../src/views/landingPage/Sidebar/InputComponents/LatitudeBandSelector/LatitudeBandSelector.js';
-reactComponents['LatitudeBandSelector'] = Component12;
+import Component12 from '../src/components/Navbar/Logo/Logo.js';
+reactComponents['Logo'] = Component12;
 
-import Component13 from '../src/components/Navbar/Logo/Logo.js';
-reactComponents['Logo'] = Component13;
+import Component13 from '../src/views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator/ModelGroupCard/ModelGroupCard.js';
+reactComponents['ModelGroupCard'] = Component13;
 
-import Component14 from '../src/views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator/ModelGroupCard/ModelGroupCard.js';
-reactComponents['ModelGroupCard'] = Component14;
+import Component14 from '../src/views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator/ModelGroupConfigurator.js';
+reactComponents['ModelGroupConfigurator'] = Component14;
 
-import Component15 from '../src/views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator/ModelGroupConfigurator.js';
-reactComponents['ModelGroupConfigurator'] = Component15;
+import Component15 from '../src/services/downloading/otherFormats.js';
+reactComponents['downloadGraphAsCSV'] = Component15;
 
 import Component16 from '../src/components/Navbar/NavBar.js';
 reactComponents['Navbar'] = Component16;

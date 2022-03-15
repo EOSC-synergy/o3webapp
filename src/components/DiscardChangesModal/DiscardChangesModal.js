@@ -17,8 +17,8 @@ import PropTypes from "prop-types";
 function DiscardChangesModal(props) {
 
     /**
-     * function to discard changes and close the modal
-     * @constant {function}
+     * A function to discard changes and close the modal.
+     * @function
      */
    const discardChangesAndCloseDialog = () => {
        props.discardChanges();
@@ -26,8 +26,8 @@ function DiscardChangesModal(props) {
    }
 
     /**
-     * function to save changes and close the modal
-     * @constant {function}
+     * A function to save changes and close the modal.
+     * @function
      */
    const saveChangesAndCloseDialog = () => {
        props.saveChanges();
@@ -35,25 +35,25 @@ function DiscardChangesModal(props) {
    }
 
    /**
-    * title of the dialog
+    * Title of the dialog
     * @constant {string}
     */
    const heading = "Discard Changes";
 
    /**
-    * question that is asked to the user
+    * Question string that is displayed to the user, if the Modal is shown.
     * @constant {string}
     */
    const dialog = "Are you sure you want to discard all changes?";
 
     /**
-    * Label for the discard changes button
+    * Label for the discard changes button.
     * @constant {string}
     */
    const discardButtonLabel = "Discard Changes";
 
     /**
-    * Label for the save changes button
+    * Label for the save changes button.
     * @constant {string}
     */
    const saveButtonLabel = "Save Changes";
@@ -85,19 +85,19 @@ function DiscardChangesModal(props) {
 
 DiscardChangesModal.propTypes = {
     /**
-     * whether the dialog modal should be opened or not
+     * Tracks whether the dialog modal should be opened or not
      */
     isOpen: PropTypes.bool.isRequired,
     /**
-     * function to save changes
+     * A function to save changes
      */
     saveChanges: PropTypes.func.isRequired,
     /**
-     * function to discard changes
+     * A function to discard changes
      */
     discardChanges: PropTypes.func.isRequired,
     /**
-     * function to close the dialog, called after saveChanges or discardChanges
+     * A function to close the dialog, called after saveChanges or discardChanges
      */
     onClose: PropTypes.func.isRequired
 }

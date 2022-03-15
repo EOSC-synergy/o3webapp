@@ -5,6 +5,7 @@ import { BACKGROUND_BASE_COLOR } from '../../utils/constants';
 
 /**
  * The links on the right-hand side in the footer with label and href.
+ * Exported due to testing reasons.
  *
  * @type {Array.<{label: string, href: string}>}
  * @constant
