@@ -136,7 +136,7 @@ function Sidebar(props) {
                     '& .MuiDrawer-paper': {
                         height: '92%',
                         backgroundColor: BACKGROUND_BASE_COLOR
-                    }
+                    },
                 }}
             > 
                 <DrawerHeader>
