@@ -96,7 +96,7 @@ function AddModelGroupModal(props) {
         if (modelListRequestedData.status === REQUEST_STATE.success) {
             setVisible(modelListRequestedData.data);
         }
-    }, [allModels, modelListRequestedData, reportError]);
+    }, [allModels]);
 
     useEffect(() => {
         setGroupName(storeGroupName);
@@ -104,7 +104,7 @@ function AddModelGroupModal(props) {
         setChecked([]);
         setRight(storeRight);
 
-    }, [props.isOpen, allModels, storeRight, storeGroupName]);
+    }, [props.isOpen]);
 
     
 
