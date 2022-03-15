@@ -109,6 +109,7 @@ function AddModelGroupModal(props) {
             setVisible(allModels);
             setChecked([]);
             setRight(storeRight);   
+            setErrorMessage("");
         }
 
     }, [props.isOpen]);
