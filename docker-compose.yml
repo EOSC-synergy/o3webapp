@@ -1,8 +1,9 @@
 version: "3.7"
 services: 
-  app: 
+  app:
     build:
       context: .
+      target: production
     volumes:
       - .:/o3webapp
     ports:
