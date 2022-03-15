@@ -131,6 +131,7 @@ function AddModelGroupModal(props) {
 
     /**
      * the label in the card heading
+     * @constant {string}
      */
     const addModelLabel = isEditMode ? "Edit Model Group Members" : "Add Model Group";
     
@@ -158,6 +159,7 @@ function AddModelGroupModal(props) {
     /**
      * Array containing all models, that are currently plotted in the right transfer list
      * -> models that should eventually be added
+     * @constant {Array}
      */
     const storeRight = Object.keys(useSelector(state => selectModelDataOfGroup(state, modelGroupId)));
     const [right, setRight] = React.useState(storeRight);
@@ -203,27 +205,33 @@ function AddModelGroupModal(props) {
      * Returns how many models in the provided array are currently checked
      * @param {Array} models models to check
      * @returns the number of checked models in models
+     * @constant {function}
      */
     const numberOfChecked = (models) => intersection(checked, models).length;
     /**
      * All models that are currently on the left side
      * -> all models that are not currently on the right side are on the left side
+     * @constant {Array}
      */
     const left = not(allModels, right);
     /**
      * An array containing all models that are currently on the left side and are checked
+     * @constant {Array}
      */
     const leftChecked = intersection(checked, left);
     /**
      * An array containing all models that are currently on the right side and are checked
+     * @constant {Array}
      */
     const rightChecked = intersection(checked, right);
     /**
      * An array containing all models that are currently on the left side and are visible
+     * @constant {Array}
      */
     const leftVisible = intersection(visible, left);
     /**
      * An array containing all models that are currently on the right side and are visible
+     * @constant {Array}
      */
     const rightVisible = intersection(visible, right);
 
@@ -232,6 +240,7 @@ function AddModelGroupModal(props) {
      * i.e. checks the element if it had not been checked before
      * and unchecks it if it has been checked
      * @param {String} value the id of the model that has been clicked
+     * @constant {function}
      */
     const handleChangeElement = (value) => () => {
         const currentIndex = checked.indexOf(value);
@@ -250,6 +259,7 @@ function AddModelGroupModal(props) {
      * i.e. checks all if one element in items has not been checked before
      * and unchecks all if all elements in items have been checked
      * @param {Array} items array containing model ids to check / uncheck
+     * @constant {function}
      */
     const handleToggleAll = (items) => () => {
         if (numberOfChecked(items) === items.length) {
@@ -262,6 +272,7 @@ function AddModelGroupModal(props) {
     /**
      * moves all checked models from the right list to the left and unchecks them
      * -> appends all leftChecked models to the right array and removes them from the checked array
+     * @constant {function}
      */
     const handleCheckedRight = () => {
         setRight(right.concat(leftChecked));
@@ -271,6 +282,7 @@ function AddModelGroupModal(props) {
     /**
      * moves all checked models from the left to right and unchecks them
      * -> removes all rightChecked models from the right and checked array
+     * @constant {function}
      */
     const handleCheckedLeft = () => {
         setRight(not(right, rightChecked));
@@ -295,6 +307,7 @@ function AddModelGroupModal(props) {
      * sets the currently visible models by a provided array of indices
      * ! overwrites old visibilities
      * @param {Array} visibleModels array of models that should be currently visible
+     * @constant {function}
      */
     const setCurrentlyVisibleModels = (visibleModels) => {
         setVisible(visibleModels);
@@ -306,6 +319,7 @@ function AddModelGroupModal(props) {
      * @param {Array} modelsChecked array of modelIDs that are currently checked
      * @param {Array} modelsVisible array of modelIDS that are currently visible
      * @returns {JSX.Element} a Card containing a custom transfer list and a warning if checked models are currently not visible
+     * @constant {function}
      */
     const customList = (models, modelsChecked, modelsVisible) => {
         const modelsCheckedInvisible = intersection(not(models, modelsVisible), modelsChecked);
@@ -380,6 +394,10 @@ function AddModelGroupModal(props) {
         );
     }   
 
+    /**
+     * style of the modal
+     * @constant {Object}
+     */
     const style = {
         position: 'absolute',
         top: '50%',
@@ -398,6 +416,7 @@ function AddModelGroupModal(props) {
     /**
      * updates the current group name
      * @param {event} event the event that called this function
+     * @constant {function}
      */
     const updateGroupName = (event) => {
         setGroupName(event.target.value);
@@ -405,6 +424,7 @@ function AddModelGroupModal(props) {
 
     /**
      * @todo open a "discard changes?" popup here
+     * @constant {function}
      */
     const closeWithChanges = () => {
         if(isEditMode) {
