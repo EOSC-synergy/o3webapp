@@ -122,7 +122,7 @@ export async function downloadGraphAsPDF(
       ],
     };
   } else {
-    throw `the given plot id "${plotId}" is not defined`;
+    throw new Error(`the given plot id "${plotId}" is not defined`);
   }
   pdfMake.createPdf(docDefinition).download(fileName);
 }
