@@ -11,12 +11,8 @@ import {
     LATITUDE_BAND_MAX_VALUE,
     LATITUDE_BAND_MIN_VALUE
 } from "../../../../../../utils/constants";
-<<<<<<< HEAD
 import React from "react";
 import PropTypes from "prop-types";
-=======
-
->>>>>>> develop
 
 /**
  * A component to select the specific min and max latitude values for the custom region.

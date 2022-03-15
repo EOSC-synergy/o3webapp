@@ -34,7 +34,6 @@ function Graph(props) {
     const yAxisRange = useSelector(selectPlotYRange);
     const activeData = useSelector(state => selectActivePlotData(state, plotId));
     const modelsSlice = useSelector(state => state.models);
-<<<<<<< HEAD
     const refLineVisible = useSelector(selectVisibility);
 
     /**
@@ -50,11 +49,6 @@ function Graph(props) {
     const loadingMessage = "Loading Data...";
     
     useEffect(() => { 
-=======
-    const refLineVisible = useSelector(selectVisibility)
-
-    useEffect(() => {
->>>>>>> develop
         // note: this is important, because we should only "propagate" the error to the top
         // if this component has finished rendering, causing no <em>side effects</em> in
         // its rendering process 

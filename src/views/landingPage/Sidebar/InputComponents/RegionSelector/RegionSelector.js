@@ -4,7 +4,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectPlotXRange, setDisplayXRange} from "../../../../../store/plotSlice/plotSlice";
 import {ALL_REGIONS_ORDERED} from "../../../../../utils/constants";
 import {Grid} from "@mui/material";
-<<<<<<< HEAD
 import PropTypes from 'prop-types';
 
 /**
@@ -12,13 +11,6 @@ import PropTypes from 'prop-types';
  * 
  * {@link LatitudeBandSelector}
  * 
-=======
-import CustomLatitudeSelector from "../LatitudeBandSelector/CustomLatitudeSelector/CustomLatitudeSelector";
-
-/**
- * enables the user to select / deselect regions as well as entering a private region {@link LatitudeBandSelector}
- *
->>>>>>> develop
  * @component
  * @param {Object} props specified in PropTypes
  * @returns {JSX.Element}

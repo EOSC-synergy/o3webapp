@@ -274,13 +274,9 @@ export const selectPlotTitle = state => state.plot.plotSpecificSettings[state.pl
  * from the store. The location is an object containing a minLat and maxLat attribute.
  *
  * @param {object} state the global redux state
-<<<<<<< HEAD
  * @returns {object} holds the current location that includes a minLat and maxLat attribute.  
  * @constant {function}
  * @category plotSlice
-=======
- * @returns {object} holds the current location that includes a minLat and maxLat attribute.
->>>>>>> develop
  */
 export const selectPlotLocation = state => state.plot.generalSettings.location;
 
@@ -315,9 +311,6 @@ export const selectPlotYRange = state => state.plot.plotSpecificSettings[state.p
  * @constant {function}
  * @category plotSlice
  */
-<<<<<<< HEAD
-export const selectPlotMonths = state => state.plot.generalSettings.months;
-=======
 export const selectPlotMonths = state => state.plot.generalSettings.months;
 
 /**
@@ -327,4 +320,3 @@ export const selectPlotMonths = state => state.plot.generalSettings.months;
  * @returns {string} the user region name
  */
 export const selectUserRegionName = state => state.plot.plotSpecificSettings.tco3_return.userRegionName;
->>>>>>> develop
