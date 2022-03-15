@@ -24,12 +24,13 @@ import {
 } from "../constants"
 import {convertModelName} from "../ModelNameConverter";
 
-/** @module OptionsFormatter */
+/** @module OptionsFormatter */  // used for auto generation of JSDocs with better-docs
 
 /**
  * Maps the plotId to a function that describes how the series are going
  * to be generated in order to make the generateSeries Function (interface) more
  * generic.
+ * @constant {Object}
  */
 const SERIES_GENERATION = {}; // Map plotId to corresponding generation function
 SERIES_GENERATION[O3AS_PLOTS.tco3_zm] = generateTco3_ZmSeries;
@@ -74,7 +75,7 @@ function createSubtitle(getState) {
  * colors, width, dashArray have to be filled.
  *
  * This gigantic object allows us to communicate with the apexcharts library.
- * More can be found here: https://apexcharts.com/docs/installation/
+ * More can be found here: {@link https://apexcharts.com/docs/installation/}
  * @constant {object}
  */
 export const defaultTCO3_zm = {
@@ -265,7 +266,8 @@ export function getDefaultYAxisTco3Return(seriesName, minY, maxY, show = false, 
  * colors have to be filled.
  *
  * This gigantic object allows us to communicate with the apexcharts library.
- * More can be found here: https://apexcharts.com/docs/installation/
+ * More can be found here: {@link https://apexcharts.com/docs/installation/}
+ * @constant {object}
  */
 export const default_TCO3_return = {
     xaxis: {
@@ -945,6 +947,7 @@ export function normalizeArray(xValues, yValues) {
  * @param {object} data An object holding the data as it was returned from the API
  * @param {object} modelsSlice the slice of the store containing information about the model groups
  * @returns The pre transformed API data
+ * @function
  */
 export const preTransformApiData = ({plotId, data, modelsSlice}) => {
     const maximums = [];
@@ -1157,7 +1160,7 @@ export function colorNameToHex(color) {
  * Converts the stroke style given by the API into the format supported by apexcharts.
  *
  * @param {number} apiStyle     The stroke style specified by the API
- * returns                      The stroke style for the apexcharts library
+ * @returns                      The stroke style for the apexcharts library
  */
 export function convertToStrokeStyle(apiStyle) {
     const styles = {
@@ -1296,6 +1299,7 @@ export function filterOutOfRange(value, min, max) {
  *
  * @param {number} value the label value
  * @returns the value if it is a multiple of ten or an empty string to hide the label
+ * @function
  */
 export const formatYLabelsNicely = value => value % 10 ? "" : value
 
@@ -1429,8 +1433,11 @@ function calcRecoveryPoints(getState, referenceValue, svSeries) {
  * This method formats a latitude object into a good-looking string.
  * E.g. {minLat: -20, maxLat: 20} ==> '(20°S-20°N)'
  *
+ * @example formatLatitude({minLat: -20, maxLat: 20});
+ * 
  * @param {object} locationValue the minLat and maxLat values
  * @return {string} the formatted latitude band
+ * @function
  */
 export const formatLatitude = (locationValue) => {
     const hemisphereExtensionMin = (locationValue.minLat < 0 && locationValue.maxLat > 0 ? '°S' : '');

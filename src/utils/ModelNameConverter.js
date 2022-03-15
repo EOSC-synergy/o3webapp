@@ -8,7 +8,7 @@
  * 
  * @param {string} name of the model
  * @returns the regex match object
- * @constant {function}
+ * @function
  */
 export const convertModelName = (name) => {
     if (typeof name !== 'string') {
