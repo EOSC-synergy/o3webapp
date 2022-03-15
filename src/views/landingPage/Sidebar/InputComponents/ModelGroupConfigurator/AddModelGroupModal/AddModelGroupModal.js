@@ -37,6 +37,7 @@ let previousId = -2;
  * @param {boolean} props.isOpen -> boolean whether the modal should be visible
  * @param {function} props.reportError -> error handling
  * @param {function} props.setOpen -> re-open if discard changes modal is closed
+ * @param {boolean} props.refresh       Whether the state should be refreshed
  * @param {number} props.modelGroupId -> string identifying the model group,
  *          if this model should be used to edit an existing model group
  * @returns {JSX} a jsx containing a modal with a transfer list with all available models
@@ -483,8 +484,9 @@ AddModelGroupModal.propTypes = {
     reportError: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     isOpen: PropTypes.bool.isRequired,
-    modelGroupId: PropTypes.number
+    modelGroupId: PropTypes.number,
+    setOpen: PropTypes.func.isRequired,
+    refresh: PropTypes.bool.isRequired,
 }
-
 
 export default AddModelGroupModal;
