@@ -39,11 +39,11 @@ describe("testing optionsFormatter functionality", () => {
         // generate an array of years describing the valid data points.
         // the normalized array should contain the valid data points at
         // the index of where the implicit year list lists this year.
-        
+
         expect(normalizeArray(spacedYearArray, valueArray)).toEqual(expectedNormalize);
     });
 
-    
+
     describe("preTransform for all plot types", () => {
         it('should pre-tranform the api data for tco3_zm correctly', () => {
             const apiData = [{
@@ -52,7 +52,7 @@ describe("testing optionsFormatter functionality", () => {
                 x: spacedYearArray,
                 y: valueArray,
             }];
-            
+
             const {lookUpTable} = preTransformApiData({plotId: O3AS_PLOTS.tco3_zm, data: apiData, modelsSlice: {modelGroups: {}}})
             expect(lookUpTable).toEqual({
                 "modelA": {
@@ -60,7 +60,7 @@ describe("testing optionsFormatter functionality", () => {
                     plotStyle: "plotstyleData",
                 },
             });
-    
+
         });
 
         it('should pre-transform the api data for tco3_return correctly', () => {
@@ -115,13 +115,13 @@ describe("testing optionsFormatter functionality", () => {
                   colors: [
                     '#000000', '#000000',
                     '#000000', '#000000',
-                    '#696969', '#000',  
-                    "#1e8509", "#1e8509",  
+                    '#696969', '#000',
+                    "#1e8509", "#1e8509",
                     "#0e4e78", "#0e4e78",
                   ],
                   dashArray: [
                     0, 0, 0, 0,
-                    0, 2, 4, 4, 
+                    0, 2, 4, 4,
                     8, 8
                   ],
                   width: Array(10).fill(MODEL_LINE_THICKNESS),
@@ -146,7 +146,7 @@ describe("testing optionsFormatter functionality", () => {
             expect(series).toEqual(dataExpected);
         });
 
-        
+
         it("generates the tco3_return series correctly", () => {
             const data = {
                 "CCMI-1_ACCESS_ACCESS-CCM-refC2":{
@@ -224,13 +224,13 @@ describe("testing optionsFormatter functionality", () => {
                     "#0e4e78", "#0e4e78",
                   ],
                   dashArray: [
-                    0, 2, 4, 4, 
+                    0, 2, 4, 4,
                     8, 8
                   ],
                   width: Array(6).fill(MODEL_LINE_THICKNESS),
                 }
             }
-            
+
             const series = generateSeries({plotId: O3AS_PLOTS.tco3_return, data: data, modelsSlice: modelsSlice, getState: store.getState, xAxisRange: { regions: ["Global"] }, yAxisRange: {minY: 270, maxY: 330}});
             expect(series).toEqual(dataExpected);
         });
@@ -244,15 +244,23 @@ describe("testing optionsFormatter functionality", () => {
             const yaxis = [getDefaultYAxisTco3Return(undefined, 0, 10, true, false, 3, 2), getDefaultYAxisTco3Return(undefined, 0, 10, true, true, -3, 2),]
             expected.title.text = "title";
             expected.subtitle.text = "Global (90°S–90°N) | Jan, Feb, Dec";
-            
+
             expected.yaxis.push(...yaxis);
-    
+
             const xAxisRange = {minX: 0, maxY: 10};
             const yAxisRange = {minY: 0, maxY: 10};
-            const result = getOptions({plotId: O3AS_PLOTS.tco3_return, styling: {colors:[]}, plotTitle: "title", xAxisRange, yAxisRange, seriesNames: [], getState: store.getState});
-            expect(result).toEqual(expected);
+            const result = getOptions({
+                plotId: O3AS_PLOTS.tco3_return,
+                styling: {colors: []},
+                plotTitle: "title",
+                xAxisRange,
+                yAxisRange,
+                seriesNames: [],
+                getState: store.getState
+            });
+            expect(JSON.stringify(result)).toEqual(JSON.stringify(expected)); // stringify results to not mess with anonymous functions
         });
-        
+
         test.todo('returns the correct options formatted correctly for tco3_zm');
 
     });
@@ -264,7 +272,7 @@ describe("testing optionsFormatter functionality", () => {
 
         expect(colorNameToHex("no color")).toEqual(false);
     });
-    
+
     it('converts the stroke style to to apexcharts syntax', () => {
         const lineStyle = "solid";
         const apexChartsLineStyle = 0;
@@ -306,11 +314,11 @@ describe("testing optionsFormatter functionality", () => {
     });
 
     it('should return the default y-axis config for the tco3_zm', () => {
-        
+
 
         const expectedYAxisConfig = {
             show: true,
-            opposite: true,
+            opposite: false,
             seriesName: "seriesX",
             min: 42,
             max: 420,
@@ -335,11 +343,11 @@ describe("testing optionsFormatter functionality", () => {
             },
         }
 
-        expect(getDefaultYAxisTco3Zm("seriesX", 42, 420, true, true, -3, 10)).toEqual(expectedYAxisConfig);
+        expect(getDefaultYAxisTco3Zm("seriesX", 42, 420, true, false, -3, 10)).toEqual(expectedYAxisConfig);
     });
 
     it('should return a correct formatted tooltip for a normal series', () => {
-        
+
         const expected = `
         <div>
             <div style="margin:2px"><strong>2021</strong></div>
@@ -348,7 +356,7 @@ describe("testing optionsFormatter functionality", () => {
             <div>Institue: INSTITUTE-Y</div>
         </div>
         `
-        
+
         expect(customTooltipFormatter({series: [[42]], seriesIndex: 0, dataPointIndex: 0, w: {
             globals: {
                 seriesX: [[2021]],
