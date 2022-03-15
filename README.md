@@ -83,7 +83,7 @@ There is a runnig instants on the VM. You can visit the WebApp via this link: ht
 
 ### How to Configurate the Webapp
 
-Configuration can be done in the config file
+Configuration can be done in the config file.
 The default config specifies where to put certain fields, if after calling the API it is necessary to place them somewhere.
 Special config files for endpoints can be specified.
 
@@ -96,11 +96,11 @@ https://blank.org/
 
 Developers which worked on this project:
 
-- Jana Zeller
+- Furkan Çevik
 - Thomas Marwitz
 - Simon von Rönn
 - Nikolai Prjanikov
-- Furkan Çevik
+- Jana Zeller
 
 
 ## License
