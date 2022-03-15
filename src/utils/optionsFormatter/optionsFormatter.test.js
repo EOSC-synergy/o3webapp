@@ -8,6 +8,7 @@ import {
     normalizeArray,
     preTransformApiData,
     default_TCO3_return,
+    defaultTCO3_zm,
     getDefaultYAxisTco3Return,
     getOptimalTickAmount,
     getTickAmountYAxis,
@@ -53,11 +54,7 @@ describe("testing optionsFormatter functionality", () => {
                 y: valueArray,
             }];
 
-            const {lookUpTable} = preTransformApiData({
-                plotId: O3AS_PLOTS.tco3_zm,
-                data: apiData,
-                modelsSlice: {modelGroups: {}}
-            })
+            const {lookUpTable} = preTransformApiData({plotId: O3AS_PLOTS.tco3_zm, data: apiData, modelsSlice: {modelGroups: {}}})
             expect(lookUpTable).toEqual({
                 "modelA": {
                     data: expectedNormalize,
@@ -81,11 +78,7 @@ describe("testing optionsFormatter functionality", () => {
                 y: [2010, 2022],
             }];
 
-            const {lookUpTable} = preTransformApiData({
-                plotId: O3AS_PLOTS.tco3_return,
-                data: apiData,
-                modelsSlice: {modelGroups: {}}
-            });
+            const { lookUpTable } = preTransformApiData({plotId: O3AS_PLOTS.tco3_return, data: apiData, modelsSlice: {modelGroups: {}}});
             expect(
                 lookUpTable
             ).toEqual({
@@ -118,34 +111,33 @@ describe("testing optionsFormatter functionality", () => {
         it("generates the tco3_zm series correctly", () => {
             const dataExpected = {
                 data: [
-                    {name: undefined, data: testArray}, // for the reference line
-                    {name: 'CCMI-1_ACCESS_ACCESS-CCM-refC2', data: testArray},
-                    {name: 'CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG', data: testArray},
-                    {name: 'CCMI-1_CCCma_CMAM-refC2', data: testArray},
-                    {name: 'Mean (Example Group)', data: testArray},
-                    {name: 'Median (Example Group)', data: testArray},
-                    {name: 'Lower % (Example Group)', data: testArray},
-                    {name: 'Upper % (Example Group)', data: testArray},
-                    {name: 'μ + σ (Example Group)', data: testArray},
-                    {name: 'μ - σ (Example Group)', data: testArray},
+                  { name: undefined, data: testArray}, // for the reference line
+                  { name: 'CCMI-1_ACCESS_ACCESS-CCM-refC2', data: testArray},
+                  { name: 'CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG', data: testArray},
+                  { name: 'CCMI-1_CCCma_CMAM-refC2', data: testArray},
+                  { name: 'Mean (Example Group)', data: testArray},
+                  { name: 'Median (Example Group)', data: testArray},
+                  { name: 'Lower % (Example Group)', data: testArray},
+                  { name: 'Upper % (Example Group)', data: testArray},
+                  { name: 'μ + σ (Example Group)', data: testArray},
+                  { name: 'μ - σ (Example Group)', data: testArray},
                 ],
                 styling: {
-                    colors: [
-                        '#000000', '#000000',
-                        '#000000', '#000000',
-                        '#696969', '#000',
-                        "#1e8509", "#1e8509",
-                        "#0e4e78", "#0e4e78",
-                    ],
-                    dashArray: [
-                        0, 0, 0, 0,
-                        0, 2, 4, 4,
-                        8, 8
-                    ],
-                    width: Array(10).fill(MODEL_LINE_THICKNESS),
-                    points: [[1981, 0], [null, null], [null, null], [null, null], [1981, 0], [1981, 0]]
+                  colors: [
+                    '#000000', '#000000',
+                    '#000000', '#000000',
+                    '#696969', '#000',
+                    "#1e8509", "#1e8509",
+                    "#0e4e78", "#0e4e78",
+                  ],
+                  dashArray: [
+                    0, 0, 0, 0,
+                    0, 2, 4, 4,
+                    8, 8
+                  ],
+                  width: Array(10).fill(MODEL_LINE_THICKNESS),
                 }
-            }
+              }
             const data = {}
             Object.keys(modelsSlice.modelGroups[0].models).forEach(key => {
                 data[key] = {};
@@ -161,109 +153,96 @@ describe("testing optionsFormatter functionality", () => {
                 },
                 data: Array(141).fill(0),
             }
-            const series = generateSeries({
-                plotId: O3AS_PLOTS.tco3_zm,
-                data: data,
-                modelsSlice: modelsSlice,
-                refLineVisible: true,
-                getState: store.getState
-            });
+            const series = generateSeries({plotId: O3AS_PLOTS.tco3_zm, data: data, modelsSlice: modelsSlice, refLineVisible: true})
             expect(series).toEqual(dataExpected);
         });
 
 
         it("generates the tco3_return series correctly", () => {
             const data = {
-                "CCMI-1_ACCESS_ACCESS-CCM-refC2": {
-                    "plotStyle": {
-                        "color": "purple",
-                        "linestyle": "none",
-                        "marker": "o"
-                    },
-                    "data": {
-                        "Antarctic(Oct)": 2064,
-                        "SH mid-lat": 2051,
-                        "Tropics": 2060,
-                        "NH mid-lat": 2041,
-                        "Arctic(Mar)": 2040,
-                        "Near global": 2049,
-                        "Global": 2052,
-                        "User region": 2046
-                    }
+                "CCMI-1_ACCESS_ACCESS-CCM-refC2":{
+                   "plotStyle":{
+                      "color":"purple",
+                      "linestyle":"none",
+                      "marker":"o"
+                   },
+                   "data":{
+                      "Antarctic(Oct)":2064,
+                      "SH mid-lat":2051,
+                      "Tropics":2060,
+                      "NH mid-lat":2041,
+                      "Arctic(Mar)":2040,
+                      "Near global":2049,
+                      "Global":2052,
+                      "User region":2046
+                   }
                 },
-                "CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG": {
-                    "plotStyle": {
-                        "color": "purple",
-                        "linestyle": "none",
-                        "marker": "o"
-                    },
-                    "data": {
-                        "Antarctic(Oct)": 2071,
-                        "SH mid-lat": 2071,
-                        "Tropics": 2046,
-                        "NH mid-lat": 2066,
-                        "Arctic(Mar)": 2064,
-                        "Near global": 2065,
-                        "Global": 2066,
-                        "User region": 2064
-                    }
+                "CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG":{
+                   "plotStyle":{
+                      "color":"purple",
+                      "linestyle":"none",
+                      "marker":"o"
+                   },
+                   "data":{
+                      "Antarctic(Oct)":2071,
+                      "SH mid-lat":2071,
+                      "Tropics":2046,
+                      "NH mid-lat":2066,
+                      "Arctic(Mar)":2064,
+                      "Near global":2065,
+                      "Global":2066,
+                      "User region":2064
+                   }
                 },
-                "CCMI-1_CCCma_CMAM-refC2": {
-                    "plotStyle": {
-                        "color": "red",
-                        "linestyle": "none",
-                        "marker": "x"
-                    },
-                    "data": {
-                        "Antarctic(Oct)": 2087,
-                        "SH mid-lat": 2049,
-                        "NH mid-lat": 1986,
-                        "Arctic(Mar)": 1986,
-                        "Near global": 2045,
-                        "Global": 2048,
-                        "User region": 2046
-                    }
+                "CCMI-1_CCCma_CMAM-refC2":{
+                   "plotStyle":{
+                      "color":"red",
+                      "linestyle":"none",
+                      "marker":"x"
+                   },
+                   "data":{
+                      "Antarctic(Oct)":2087,
+                      "SH mid-lat":2049,
+                      "NH mid-lat":1986,
+                      "Arctic(Mar)":1986,
+                      "Near global":2045,
+                      "Global":2048,
+                      "User region":2046
+                   }
                 }
             }
             const dataExpected = {
                 data: [
-                    {name: '', data: [], type: "boxPlot"},
-                    {name: 'CCMI-1_ACCESS_ACCESS-CCM-refC2', data: [], type: "scatter"},
-                    {name: 'CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG', data: [], type: "scatter"},
-                    {name: 'CCMI-1_CCCma_CMAM-refC2', data: [], type: "scatter",},
-                    {name: 'Mean (Example Group)', data: [], type: "scatter",},
-                    {name: 'Median (Example Group)', data: [], type: "scatter",},
-                    {name: 'Lower % (Example Group)', data: [], type: "scatter",},
-                    {name: 'Upper % (Example Group)', data: [], type: "scatter",},
-                    {name: 'μ + σ (Example Group)', data: [], type: "scatter",},
-                    {name: 'μ - σ (Example Group)', data: [], type: "scatter",},
+                    { name: '', data: [], type: "boxPlot"},
+                    { name: 'CCMI-1_ACCESS_ACCESS-CCM-refC2', data: [], type: "scatter"},
+                    { name: 'CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG', data: [], type: "scatter"},
+                    { name: 'CCMI-1_CCCma_CMAM-refC2', data: [], type: "scatter",},
+                    { name: 'Mean (Example Group)', data: [], type: "scatter",},
+                    { name: 'Median (Example Group)', data: [], type: "scatter",},
+                    { name: 'Lower % (Example Group)', data: [], type: "scatter",},
+                    { name: 'Upper % (Example Group)', data: [], type: "scatter",},
+                    { name: 'μ + σ (Example Group)', data: [], type: "scatter",},
+                    { name: 'μ - σ (Example Group)', data: [], type: "scatter",},
                 ],
                 styling: {
-                    colors: [
-                        "#800080",
-                        "#800080",
-                        "#ff0000",
-                        "#696969",
-                        '#000',
-                        "#1e8509", "#1e8509",
-                        "#0e4e78", "#0e4e78",
-                    ],
-                    dashArray: [
-                        0, 2, 4, 4,
-                        8, 8
-                    ],
-                    width: Array(6).fill(MODEL_LINE_THICKNESS),
+                  colors: [
+                    "#800080",
+                    "#800080",
+                    "#ff0000",
+                    "#696969",
+                    '#000',
+                    "#1e8509", "#1e8509",
+                    "#0e4e78", "#0e4e78",
+                  ],
+                  dashArray: [
+                    0, 2, 4, 4,
+                    8, 8
+                  ],
+                  width: Array(6).fill(MODEL_LINE_THICKNESS),
                 }
             }
 
-            const series = generateSeries({
-                plotId: O3AS_PLOTS.tco3_return,
-                data: data,
-                modelsSlice: modelsSlice,
-                getState: store.getState,
-                xAxisRange: {regions: ["Global"]},
-                yAxisRange: {minY: 270, maxY: 330}
-            });
+            const series = generateSeries({plotId: O3AS_PLOTS.tco3_return, data: data, modelsSlice: modelsSlice, getState: store.getState, xAxisRange: { regions: ["Global"] }, yAxisRange: {minY: 270, maxY: 330}});
             expect(series).toEqual(dataExpected);
         });
 
@@ -292,6 +271,8 @@ describe("testing optionsFormatter functionality", () => {
             });
             expect(JSON.stringify(result)).toEqual(JSON.stringify(expected)); // stringify results to not mess with anonymous functions
         });
+
+        test.todo('returns the correct options formatted correctly for tco3_zm');
 
     });
 
@@ -387,13 +368,11 @@ describe("testing optionsFormatter functionality", () => {
         </div>
         `
 
-        expect(customTooltipFormatter({
-            series: [[42]], seriesIndex: 0, dataPointIndex: 0, w: {
-                globals: {
-                    seriesX: [[2021]],
-                    seriesNames: ["PROJECT-X_INSTITUTE-Y_MODELNAME"],
-                }
+        expect(customTooltipFormatter({series: [[42]], seriesIndex: 0, dataPointIndex: 0, w: {
+            globals: {
+                seriesX: [[2021]],
+                seriesNames: ["PROJECT-X_INSTITUTE-Y_MODELNAME"],
             }
-        })).toEqual(expected);
+        }})).toEqual(expected);
     });
 });

@@ -28,11 +28,14 @@ import {selectNameOfGroup, selectModelDataOfGroup} from "../../../../../../store
 
 /**
  * opens a modal where the user can add a new model group
- * Used in {@link ModelGroupConfigurator}.
- * 
  * @component
- * @param {Object} props specified in propTypes
- * @returns {JSX.Element} a jsx containing a modal with a transfer list with all available models
+ * @param {Object} props
+ * @param {function} props.onClose -> function to call if modal should be closed
+ * @param {boolean} props.isOpen -> boolean whether the modal should be visible
+ * @param {function} props.reportError -> error handling
+ * @param {number} props.modelGroupId -> string identifying the model group,
+ *          if this model should be used to edit an existing model group
+ * @returns {JSX} a jsx containing a modal with a transfer list with all available models
  */
 function AddModelGroupModal(props) {
 
@@ -354,9 +357,11 @@ function AddModelGroupModal(props) {
                             inputProps={{"data-testid": "AddModelGroupModal-card-group-name"}}
                         />
                     </Grid>
-                    <Box id="modal-modal-description" sx={{ mt: 2 }}>
-                        <Searchbar inputArray={allModels} foundIndicesCallback={setCurrentlyVisibleModels} shouldReturnValues={true} />
-                        <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ marginTop: '0.5em' }}>
+                    <Box id="modal-modal-description" sx={{mt: 2}}>
+                        <Searchbar inputArray={allModels} foundIndicesCallback={setCurrentlyVisibleModels}
+                                   shouldReturnValues={true}/>
+                        <Grid container spacing={2} justifyContent="center" alignItems="center"
+                              sx={{marginTop: '0.5em'}}>
                             <Grid item sm={5} xs={12} data-testid="AddModelGroupModal-card-header-left">
                                 <Typography>All Available Models</Typography>
                                 {
@@ -419,23 +424,11 @@ function AddModelGroupModal(props) {
     );
 }
 
+
 AddModelGroupModal.propTypes = {
-    /**
-     * function for error handling
-     */
     reportError: PropTypes.func.isRequired,
-    /**
-     * function to call if modal should be closed
-     */
     onClose: PropTypes.func.isRequired,
-    /**
-     * boolean whether the modal should be visible
-     */
     isOpen: PropTypes.bool.isRequired,
-    /**
-     * string identifying the model group,
-     * if this model should be used to edit an existing model group
-     */
     modelGroupId: PropTypes.number
 }
 

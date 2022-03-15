@@ -1,5 +1,3 @@
-/** @module ModelNameConverter */
-
 /**
  * This function parses a given string like the structure of the
  * models were described by Valentin and Tobias (aka der Betreuer-Gang):
@@ -9,6 +7,7 @@
  * @param {string} name of the model
  * @returns the regex match object
  * @constant {function}
+ * @category Utils
  */
 export const convertModelName = (name) => {
     if (typeof name !== 'string') {

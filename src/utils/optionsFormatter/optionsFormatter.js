@@ -180,7 +180,6 @@ function createSubtitle(getState) {
  *
  * This gigantic object allows us to communicate with the apexcharts library.
  * More can be found here: https://apexcharts.com/docs/installation/
- * @constant {object}
  */
 export const defaultTCO3_zm = {
     xaxis: {
@@ -200,9 +199,6 @@ export const defaultTCO3_zm = {
         }
     },
     yaxis: [],
-    annotations: {
-        points: [],
-    },
     grid: {
         show: false,
     },
@@ -472,12 +468,10 @@ export const default_TCO3_return = {
  * @param {array} styling.colors an array of strings with hex code. Has to match the length of the given series
  * @param {array} styling.width (tco3_zm only!): array of integer defining the line width
  * @param {array} styling.dashArray (tco3_zm only!): array of integer defining if the line is solid or dashed
- * @param {array} styling.points an array containing data for the recovery points
  * @param {string} plotTitle contains the plot title
  * @param {object} xAxisRange the range of the x-axis
  * @param {object} yAxisRange the range of the y-axis
  * @param {object} seriesNames the names of the series
- * @param {function} getState store.getState
  *
  * @returns an default_TCO3_plotId object formatted with the given data
  */
@@ -497,14 +491,6 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.xaxis.min = xAxisRange.years.minX;
         newOptions.xaxis.max = xAxisRange.years.maxX;
         newOptions.xaxis.tickAmount = getOptimalTickAmount(xAxisRange.years.minX, xAxisRange.years.maxX);
-
-        const xIdx = 0;
-        const yIdx = 1;
-        for (let point of styling.points) {
-            newOptions.annotations.points.push(
-                {x: point[xIdx], y: point[yIdx], marker: {size: 4}/*, label: {text: point[xIdx]}*/}
-            );
-        }
 
         newOptions.colors = styling.colors;
 
@@ -586,7 +572,6 @@ export function generateSeries({plotId, data, modelsSlice, xAxisRange, yAxisRang
             colors: series.colors,
             dashArray: series.dashArray,
             width: series.width,
-            points: series.points,
         }
     }; // return generated series with styling to pass to apexcharts chart
 }
@@ -598,10 +583,9 @@ export function generateSeries({plotId, data, modelsSlice, xAxisRange, yAxisRang
  * @param {object} data the raw data from the api for the current options
  * @param {object} modelsSlice the slice of the store containing information about the model groups
  * @param {boolean} refLineVisible visibility status of the reference line
- * @param {function} getState store.getState
  * @returns a combination of data and statistical values series
  */
-function generateTco3_ZmSeries({data, modelsSlice, refLineVisible, getState}) {
+function generateTco3_ZmSeries({data, modelsSlice, refLineVisible}) {
     const series = {
         data: [],
         colors: [],
@@ -612,7 +596,7 @@ function generateTco3_ZmSeries({data, modelsSlice, refLineVisible, getState}) {
         series.data.push({
             name: data.reference_value.plotStyle.label,
             data: data.reference_value.data.map((e, idx) => [START_YEAR + idx, e]),
-        });
+        })
         series.colors.push(colorNameToHex(data.reference_value.plotStyle.color));
         series.width.push(MODEL_LINE_THICKNESS);
         series.dashArray.push(convertToStrokeStyle(data.reference_value.plotStyle.linestyle));
@@ -643,10 +627,7 @@ function generateTco3_ZmSeries({data, modelsSlice, refLineVisible, getState}) {
         generateSingleSvSeries: generateSingleTco3ZmSeries
     });
 
-    return Object.assign(
-        combineSeries(series, svSeries),
-        {points: refLineVisible ? calcRecoveryPoints(getState, data.reference_value, svSeries) : []}
-    );
+    return combineSeries(series, svSeries);
 }
 
 /**
@@ -1057,7 +1038,7 @@ export const preTransformApiData = ({plotId, data}) => {
         for (let datum of data) {
             // top structure
             let normalizedArray;
-            if (datum.model === "reference_value") { // 
+            if (datum.model === "reference_value") { //
                 normalizedArray = Array(END_YEAR - START_YEAR).fill(datum.y[0]); // always stretch reference line from START_YEAR to END_YEAR
             } else {
                 normalizedArray = normalizeArray(datum.x, datum.y);
@@ -1345,7 +1326,7 @@ function isIncludedInSv(model, groupData, svType) {
 
 /**
  * Determines the optimal tick amount for a given max and min year for the x-axis.
- * Takes into account the current screen width, uses a heuristic approach 
+ * Takes into account the current screen width, uses a heuristic approach
  * (all values are determined through experimentation).
  *
  * @param {number} min      The selected min. year of the plot
@@ -1353,9 +1334,9 @@ function isIncludedInSv(model, groupData, svType) {
  * @returns                 The optimal tick amount according to those values
  */
 export function getOptimalTickAmount(min, max) {
-    const width  = window.innerWidth || document.documentElement.clientWidth || 
+    const width  = window.innerWidth || document.documentElement.clientWidth ||
     document.body.clientWidth;
-    const height = window.innerHeight|| document.documentElement.clientHeight|| 
+    const height = window.innerHeight|| document.documentElement.clientHeight||
     document.body.clientHeight;
 
 
@@ -1364,9 +1345,9 @@ export function getOptimalTickAmount(min, max) {
     }
 
     let divider = 1;
-    if (width <= 600) divider = 4; 
+    if (width <= 600) divider = 4;
     else if (width <= 1100) divider = 2;
-    
+
     const diff = max - min;
     if (diff <= 40) {
         return diff / divider;
@@ -1532,53 +1513,13 @@ export function getIncludedModels(modelsSlice) {
 }
 
 /**
- * Calculates the points when the mean, mean+std, mean-std reach the value of the reference year.
- *
- * @param {function} getState store.getState
- * @param {Object} referenceValue an object with an array with the values for the reference line among other things
- * @param {Object} svSeries an object with an array with the values for the statistical values linesy among other things
- */
-function calcRecoveryPoints(getState, referenceValue, svSeries) {
-    const points = [];
-
-    const refYear = getState().reference.settings.year;
-    const refValue = Math.max(...referenceValue.data);
-
-    const dataName = [SV_DISPLAY_NAME.mean, SV_DISPLAY_NAME["mean+std"], SV_DISPLAY_NAME["mean-std"]];
-
-    const yearIdx = 0;
-    const valIdx = 1;
-
-    for (let idx = 0; idx < svSeries.data.length; idx++) {
-        if (!dataName.includes(svSeries.data[idx].name.split("(")[0].slice(0, -1))) {
-            points.push([null, null]);
-            continue;
-        }
-        for (let i = 0; i < svSeries.data[idx].data.length; i++) {
-            if (svSeries.data[idx].data[i][yearIdx] <= refYear) continue;
-            if (svSeries.data[idx].data[i][valIdx] >= refValue) {
-                points.push(
-                    [
-                        svSeries.data[idx].data[i][yearIdx],
-                        svSeries.data[idx].data[i][valIdx]
-                    ]
-                );
-                break;
-            }
-        }
-        if (points.length < idx + 1) points.push([null, null]);
-    }
-    return points;
-}
-
-/**
  * This method formats a latitude object into a good-looking string.
  * E.g. {minLat: -20, maxLat: 20} ==> '(20°S-20°N)'
  *
  * @param {object} locationValue the minLat and maxLat values
  * @return {string} the formatted latitude band
  */
-export const formatLatitude = (locationValue) => {
+ export const formatLatitude = (locationValue) => {
     const hemisphereExtensionMin = (locationValue.minLat < 0 && locationValue.maxLat > 0 ? '°S' : '');
     const hemisphereExtensionMax = (locationValue.maxLat <= 0 ? '°S' : '°N');
     return `${Math.abs(locationValue.minLat)}${hemisphereExtensionMin}-${Math.abs(locationValue.maxLat)}${hemisphereExtensionMax}`;
