@@ -2009,8 +2009,8 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
       data-testid="landingPage-not-sidebar"
       style="display: flex; justify-content: center; align-items: center; height: 768px;"
     >
-      <div
-        style="width: 95%;"
+      <main
+        class="css-1dvhq4y"
       >
         <div
           style="display: flex; align-items: center; justify-content: center; height: 300px;"
@@ -2044,7 +2044,7 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
             </p>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   </div>
 </div>

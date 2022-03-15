@@ -129,6 +129,9 @@ export const defaultTCO3_zm = {
         onItemClick: {
             toggleDataSeries: false
         },
+        markers: {
+
+        },
         height: 80,
     },
     dataLabels: {
@@ -196,14 +199,14 @@ export function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show = false, oppo
         },
         tickAmount,
         title: {
-            text: "TCO(DU)",
+            text: opposite ? "" : "TCO(DU)", // don't show description on right side
             style: {
                 fontSize: "1rem",
                 fontFamily: FONT_FAMILY,
             },
         },
         labels: {
-            formatter: formatYLabelsNicely,
+            formatter: opposite ? () => "" : formatYLabelsNicely, // hide labels with function that always returns empty strings
         },
         /*
         tooltip: {
@@ -244,14 +247,14 @@ export function getDefaultYAxisTco3Return(seriesName, minY, maxY, show = false, 
         },
         tickAmount,
         title: {
-            text: "Year",
+            text: opposite ? "" : "Year", // don't show description on right side
             style: {
                 fontSize: "1rem",
                 fontFamily: FONT_FAMILY,
             },
         },
         labels: {
-            formatter: formatYLabelsNicely,
+            formatter: opposite ? () => "" : formatYLabelsNicely, // hide labels with function that always returns empty strings
         }
     }
 }
@@ -329,6 +332,7 @@ export const default_TCO3_return = {
     legend: {
         show: true,
         height: 80,
+        fontSize: "16px",
     },
 
     markers: {
@@ -406,6 +410,29 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.subtitle = JSON.parse(JSON.stringify(newOptions.subtitle)); // this is necessary in order for apexcharts to update the subtitle
         newOptions.subtitle.text = createSubtitle(getState);
         newOptions.tooltip.custom = customTooltipFormatter;
+
+        const legendItems = [];
+        for (let idx in seriesNames) {
+            const name = seriesNames[idx];
+            const color = styling.colors[idx];
+            const dashing = styling.dashArray[idx];
+            let linePattern;
+            let fontSize = 20;
+            if (dashing <= 0) {
+                linePattern = "<b>───</b>";
+            } else if (dashing <= 2) {
+                linePattern = "••••";
+                fontSize = 12;
+            } else {
+                linePattern = "<b>---</b>";
+            }
+            legendItems.push(
+                `<span style="color:${color};font-family:Consolas, monaco, monospace;font-size:${fontSize}px;">${linePattern}</span> <span style="font-size: 16px">${name}</span> `
+            )
+        }
+
+        newOptions.legend.customLegendItems = legendItems;
+        newOptions.legend.markers.width = 0;
         return newOptions;
 
     } else if (plotId === O3AS_PLOTS.tco3_return) {
