@@ -123,19 +123,20 @@ describe("testing optionsFormatter functionality", () => {
                   { name: 'μ - σ (Example Group)', data: testArray},
                 ],
                 styling: {
-                  colors: [
-                    '#000000', '#000000',
-                    '#000000', '#000000',
-                    '#696969', '#000',
-                    "#1e8509", "#1e8509",
-                    "#0e4e78", "#0e4e78",
-                  ],
-                  dashArray: [
-                    0, 0, 0, 0,
-                    0, 2, 4, 4,
-                    8, 8
-                  ],
-                  width: Array(10).fill(MODEL_LINE_THICKNESS),
+                    colors: [
+                        '#000000', '#000000',
+                        '#000000', '#000000',
+                        '#696969', '#000',
+                        "#1e8509", "#1e8509",
+                        "#0e4e78", "#0e4e78",
+                    ],
+                    dashArray: [
+                        0, 0, 0, 0,
+                        0, 2, 4, 4,
+                        8, 8
+                    ],
+                    width: Array(10).fill(MODEL_LINE_THICKNESS),
+                    points: [[1981, 0], [null, null], [null, null], [null, null], [1981, 0], [1981, 0]]
                 }
               }
             const data = {}
