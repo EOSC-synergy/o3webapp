@@ -4,8 +4,10 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import Alert from '@mui/material/Alert';
-import { AlertTitle } from '@mui/material';
+import { AlertTitle, IconButton } from '@mui/material';
 import PropTypes from "prop-types";
+import CardHeader from '@mui/material/CardHeader';
+import CloseIcon from '@mui/icons-material/Close';
 
 /**
  * Opens a non-closable discard changes modal to ask whether the users want to discard their changes
@@ -37,18 +39,25 @@ function DiscardChangesModal(props) {
         aria-describedby="alert-dialog-description"
         data-testid="discardChanges-dialog"
     >
-    <DialogContent>
-        <Alert severity="warning" variant="standard" id="alert-dialog-description">
-            <AlertTitle id="alert-dialog-title">Discard Changes</AlertTitle>
-            Are you sure you want to discard all changes?
-        </Alert>
-    </DialogContent>
-    <DialogActions>
-        <Button onClick={discardChangesAndCloseDialog} data-testid="discardChanges-discardButton">Discard Changes</Button>
-        <Button onClick={saveChangesAndCloseDialog} data-testid="discardChanges-saveButton" autoFocus>
-            Save Changes
-        </Button>
-    </DialogActions>
+        <CardHeader
+            title={"Discard Changes"}
+            action={
+                <IconButton onClick={props.onClose} aria-label="close" data-testid="DiscardChangedModal-close-modal">
+                    <CloseIcon />
+                </IconButton>
+            }
+        />
+        <DialogContent>
+            <Alert severity="warning" variant="standard" id="alert-dialog-description">
+                Are you sure you want to discard all changes?
+            </Alert>
+        </DialogContent>
+        <DialogActions>
+            <Button onClick={discardChangesAndCloseDialog} data-testid="discardChanges-discardButton">Discard Changes</Button>
+            <Button onClick={saveChangesAndCloseDialog} data-testid="discardChanges-saveButton" autoFocus>
+                Save Changes
+            </Button>
+        </DialogActions>
     </Dialog>
   );
 }
