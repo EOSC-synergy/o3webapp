@@ -15,7 +15,7 @@
     and thus enhancing the scientific research of the ozone layer decomposition.
     The product provides an intuitive user interface for detailed visualizations,
     e.g. ozone recovery analysis, and calculation of statistical values. Furthermore,
-    plotted data can be downloaded to share gathered information
+    plotted data can be downloaded to share gathered information.
     To get more information about the "O3as: Ozone Assessment" project, visit: https://o3as.data.kit.edu/
   </p>
 </div>
