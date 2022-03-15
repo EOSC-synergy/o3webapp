@@ -1,3 +1,5 @@
+/** @module CSV */
+
 /**
  * This function translates a javascript object or a json into a string formatted
  * as in csv file format. 

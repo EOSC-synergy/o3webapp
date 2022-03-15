@@ -20,11 +20,17 @@ export const O3ASLink = "#page-top";
 /**
  * Returns a logo from O3AS and the text "O3AS Webapp"
  * @component
- * @param {Object} props 
- * @param {Object|String} props.display when the logo should be displayed
+ * @param {Object} props specified in PropTypes
  * @returns {JSX.Element} containing one Image and one Text wrapped in a Link component
  */
 const Logo = (props) => {
+
+    /**
+     * Name of the webapp that should be displayed in the logo
+     * @constant {string}
+     */
+    const logoName = "O3as: Webapp";
+
     return (
         <Link
             href={O3ASLink}
@@ -46,7 +52,7 @@ const Logo = (props) => {
                         fontSize: '28px'
                     }}
                 >
-                    O3as: Webapp
+                    {logoName}
                 </Typography>
             </Grid>
         </Link>
@@ -54,6 +60,9 @@ const Logo = (props) => {
 };
 
 Logo.propTypes = {
+    /**
+     * props.display when the logo should be displayed
+     */
     display: PropTypes.oneOfType([
         PropTypes.object,
         PropTypes.string

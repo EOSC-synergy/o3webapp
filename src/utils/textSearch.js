@@ -1,12 +1,13 @@
+/** @module TextSearch */
+
 /**
  * Performs a simple full text search on the given element and looks
  * for the given search string.
  * 
  * @param {object|string} elem single nested object or a string
- * @param {*} searchStr what shall be searched for
+ * @param {string} searchStr what shall be searched for
  * @returns {boolean} whether the search string was found
  * @constant {function}
- * @category Utils
  */
 export const fullTextSearch = (elem, searchStr) => {
     if (typeof elem === "object") {

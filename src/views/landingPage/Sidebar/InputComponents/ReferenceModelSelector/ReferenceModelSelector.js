@@ -9,24 +9,26 @@ import { REQUEST_STATE } from "../../../../../services/API/apiSlice";
 /**
  * enables the user to select a reference model
  * @component
- * @param {Object} props
- * @param {function} props.reportError - function to handle errors
+ * @param {Object} props specified by PropTypes
  * @returns {JSX.Element} a jsx containing a dropdown to select the reference model from all currently visible models
  */
 function ReferenceModelSelector(props) {
 
     /**
      * A dispatch function to dispatch actions to the Redux store.
+     * @constant {function}
      */
     const dispatch = useDispatch();
 
     /**
      * Selects the model list from the Redux store.
+     * @constant {array}
      */
     const modelListRequestedData = useSelector(state => state.api.models);
 
     /**
      * Selects the current reference model.
+     * @constant {array}
      */
     const selectedModel = useSelector(selectRefModel);
 
@@ -47,6 +49,7 @@ function ReferenceModelSelector(props) {
 
     /**
      * Handles the change of the reference model selection.
+     * @constant {function}
      */
     const handleChangeForRefModel = (_, value) => {
         if (value !== null) {
@@ -70,6 +73,9 @@ function ReferenceModelSelector(props) {
 }
 
 ReferenceModelSelector.propTypes = {
+    /**
+     * function for error handling
+     */
     reportError: PropTypes.func
 }
 

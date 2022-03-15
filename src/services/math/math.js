@@ -1,3 +1,5 @@
+/** @module Math */
+
 /**
  * This functions accepts an array, sorts it in-place and returns a reference to the same array.
  * 
@@ -37,7 +39,7 @@ export const std = (arr) => {
 
 /**
  * Calculate quantiles so, that the calculation of 
- * quartiles are based on method 1: https://en.wikipedia.org/wiki/Quartile
+ * quartiles are based on method 1: @link {https://en.wikipedia.org/wiki/Quartile}
  * 
  * @param {array} arr the array to calculate the quantile of
  * @param {number} q the quantile 

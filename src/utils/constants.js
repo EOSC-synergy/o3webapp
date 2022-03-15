@@ -4,8 +4,6 @@
  * Modify this object to change the name or the models that appear when
  * the WebApp is initially loaded.
  * @constant {object}
- * @category Utils
- * @subcategory Constants
  */
 export const DEFAULT_MODEL_GROUP = {
     groupId: null, // no valid id => add new group 
@@ -38,21 +36,20 @@ export const months = [
 /** Stores the amount of months in a season
  * @constant {number}
  * @category Utils
- * @subcategory Constants
+ * @memberof TimeCheckBoxGroup
  */
 export const NUM_MONTHS_IN_SEASON = 3;
 
 /** Stores the amount of months in a year
  * @constant {number}
- * @category Utils
- * @subcategory Constants
+ * @memberof TimeCheckBoxGroup
  */
 export const NUM_MONTHS = 12;
 
 /** Stores the latitude bands and its min/max values
  * @constant {array}
  * @category Utils
- * @subcategory Constants
+ * @memberof LatitudeBandSelector
  */
 export const latitudeBands = [
     {
@@ -93,8 +90,7 @@ export const latitudeBands = [
 /**
  * An "enum" which stores the plot types as they come from the api.
  * @constant {object}
- * @category Utils
- * @subcategory Constants
+ * @memberof Graph
  */
 export const O3AS_PLOTS = { // used for internal testing or manual if-else
     tco3_zm: "tco3_zm",
@@ -105,7 +101,6 @@ export const O3AS_PLOTS = { // used for internal testing or manual if-else
  * The start year, no data is fetched for years before this point in time
  * @constant {number}
  * @category Utils
- * @subcategory Constants
  */
 export const START_YEAR = 1960;
 
@@ -113,7 +108,6 @@ export const START_YEAR = 1960;
  * The end year, no data is fetched for years after this point in time
  * @constant {number}
  * @category Utils
- * @subcategory Constants
  */
 export const END_YEAR = 2100;
 
@@ -121,57 +115,49 @@ export const END_YEAR = 2100;
 /** This string stores the description of the antarctic region
  * @constant {string}
  * @category Utils
- * @subcategory Constants
  */
 const ANTARCTIC = "Antarctic(Oct)";
 
 /** This string stores the description of the south hemisphere region
  * @constant {string}
  * @category Utils
- * @subcategory Constants
- */
+*/
 const SH_MID = "SH mid-lat";
 
 /** This string stores the description of the north hemisphere region
  * @constant {string}
  * @category Utils
- * @subcategory Constants
- */
+*/
 const NH_MID = "NH mid-lat";
 
 /** This string stores the description of the tropics region
  * @constant {string}
  * @category Utils
- * @subcategory Constants
- */
+*/
 const TROPICS = "Tropics";
 
 /** This string stores the description of the arctic region
  * @constant {string}
  * @category Utils
- * @subcategory Constants
- */
+*/
 const ARCTIC = "Arctic(Mar)";
 
 /** This string stores the description of the near global region
  * @constant {string}
  * @category Utils
- * @subcategory Constants
- */
+*/
 const NEAR_GLOBAL = "Near global";
 
 /** This string stores the description of the global region
  * @constant {string}
  * @category Utils
- * @subcategory Constants
- */
+*/
 const GLOBAL = "Global";
 
 /** This string stores the description of the user region
  * @constant {string}
  * @category Utils
- * @subcategory Constants
- */
+*/
 export const USER_REGION = "User region";
 
 // user region must be last element
@@ -181,20 +167,17 @@ export const ALL_REGIONS_ORDERED = [ANTARCTIC, SH_MID, NH_MID, TROPICS, ARCTIC, 
  * The mean: this appears in the model group card and is used to identify its statistical value settings.
  * @constant {string}
  * @category Utils
- * @subcategory Constants
- */
+*/
 export const mean = "mean";
 /**
  * The standard deviation: this appears in the model group card and is used to identify its statistical value settings.
  * @constant {string}
  * @category Utils
- * @subcategory Constants
  */
 export const std = "standard deviation";
 /**
  * The median: this appears in the model group card and is used to identify its statistical value settings.
  * @category Utils
- * @subcategory Constants
  * @constant {string}
  */
 export const median = "median";
@@ -202,7 +185,6 @@ export const median = "median";
  * The percentile: this appears in the model group card and is used to identify its statistical value settings.
  * @constant {string}
  * @category Utils
- * @subcategory Constants
  */
 export const percentile = "percentile";
 
@@ -211,7 +193,6 @@ export const percentile = "percentile";
  * an "enum"
  * @constant {object}
  * @category Utils
- * @subcategory Constants
  */
 export const STATISTICAL_VALUES = {}
 // populate object automatically with the values: 
@@ -223,21 +204,18 @@ asList.forEach(sv => STATISTICAL_VALUES[sv] = sv);
  * Name for the helper statistical value series: This line is used to calculate the mean+/-std
  * @constant {string}
  * @category Utils
- * @subcategory Constants
  */
 export const stdMean = "stdMean";
 /**
  * The lower percentile ~15.87th
  * @constant {string}
  * @category Utils
- * @subcategory Constants
  */
 export const lowerPercentile = "lowerPercentile";
 /**
  * The lower percentile ~84.13th
  * @constant {string}
  * @category Utils
- * @subcategory Constants
  */
 export const upperPercentile = "upperPercentile";
 
@@ -247,7 +225,6 @@ export const upperPercentile = "upperPercentile";
  * but TWO lines. Same goes for percentile which is lower- AND upper-percentile.
  * @constant {array}
  * @category Utils
- * @subcategory Constants
  */
 export const EXTENDED_SV_LIST = [stdMean, lowerPercentile, upperPercentile];
 
@@ -255,12 +232,12 @@ export const EXTENDED_SV_LIST = [stdMean, lowerPercentile, upperPercentile];
  * The same statistical values as a list to verify certain payload data.
  * @constant {array}
  * @category Utils
- * @subcategory Constants
  */
 export const STATISTICAL_VALUES_LIST = Object.values(STATISTICAL_VALUES);
 
 /**
  * The default color of the backgrounds (Navbar, Footer, Sidebar, ...)
  * @constant {string}
+ * @category Utils
  */
 export const BACKGROUND_BASE_COLOR = '#111';

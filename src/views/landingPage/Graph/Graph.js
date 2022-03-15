@@ -10,7 +10,7 @@ import {Alert, Link} from '@mui/material';
 import {O3AS_PLOTS} from '../../../utils/constants';
 import {NO_MONTH_SELECTED} from '../../../utils/constants';
 import store from '../../../store/store';
-
+  
 /**
  * Currently there is no dynamic data linking. The graph will always
  * render the data from default-data.json in this folder. This is
@@ -52,9 +52,26 @@ function Graph(props) {
     const yAxisRange = useSelector(selectPlotYRange);
     const activeData = useSelector(state => selectActivePlotData(state, plotId));
     const modelsSlice = useSelector(state => state.models);
-    const refLineVisible = useSelector(selectVisibility)
+    const refLineVisible = useSelector(selectVisibility);
 
-    useEffect(() => {
+    const [_, setDimensions] = React.useState({ 
+        height: window.innerHeight,
+        width: window.innerWidth
+    })
+
+    /**
+     * Message to display if an error occured.
+     * @constant {string}
+     */
+    const fatalErrorMessage = "CRITICAL: an internal error occurred that shouldn't happen!";
+
+    /**
+     * Message to display while data is being loaded
+     * @constant {string}
+     */
+    const loadingMessage = "Loading Data...";
+    
+    useEffect(() => { 
         // note: this is important, because we should only "propagate" the error to the top
         // if this component has finished rendering, causing no <em>side effects</em> in
         // its rendering process 
@@ -63,6 +80,18 @@ function Graph(props) {
             props.reportError(activeData.error);
         }
     }, [activeData]);
+
+    useEffect(() => {
+        const handleResize = () => {
+          setDimensions({
+            height: window.innerHeight,
+            width: window.innerWidth
+          })
+        }
+    
+        window.addEventListener('resize', handleResize)
+        return _ => window.removeEventListener('resize', handleResize);
+    })
 
     if (!(plotId in O3AS_PLOTS)) {
         const style = {
@@ -87,7 +116,7 @@ function Graph(props) {
             style={{display: "flex", alignItems: "center", justifyContent: "center", height: HEIGHT_LOADING_SPINNER}}>
             <div>
                 <CircularProgress size={100}/> <br/>
-                <Typography component="p">Loading Data...</Typography>
+                <Typography component="p">{loadingMessage}</Typography>
             </div>
 
         </div>);
@@ -122,12 +151,12 @@ function Graph(props) {
             getState: store.getState
         });
         const uniqueNumber = Date.now(); // forces apexcharts to re-render correctly!
-        return <Chart key={uniqueNumber} options={options} series={data} type={APEXCHARTS_PLOT_TYPE[plotId]}
-                      height={HEIGHT_GRAPH}/>
+        const HEIGHT = (window.innerHeight - document.getElementById('Navbar').offsetHeight) * 0.975;
+        return <Chart key={uniqueNumber} options={options} series={data} type={APEXCHARTS_PLOT_TYPE[plotId]} height={HEIGHT} style={{marginTop: "2%"}} />
     }
 
     // this "case" should not happen
-    return <Typography>CRITICAL: an internal error occurred that shouldn't happen!</Typography>;
+    return <Typography>{fatalErrorMessage}</Typography>;
 }
 
 export default React.memo(Graph, () => true); // prevent graph from re-rendering if sidebar is opened and closed

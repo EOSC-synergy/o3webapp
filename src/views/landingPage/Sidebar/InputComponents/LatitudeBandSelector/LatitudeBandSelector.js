@@ -21,10 +21,10 @@ let selectedLocation;
 let [isCustomizable, setIsCustomizable] = [null, null];
 
 /**
- * Enables the user to choose minimum and maximum latitude
+ * Enables the user to choose minimum and maximum latitude.
+ * Compromised of {@link CustomLatitudeSelector}.
  * @component
- * @param {Object} props
- * @param {function} props.reportError - error handling
+ * @param {Object} props specified in propTypes
  * @returns {JSX.Element} a JSX containing a dropdown and if "individual latitude band" is selected a number input field
  */
 function LatitudeBandSelector(props) {
@@ -88,6 +88,9 @@ function LatitudeBandSelector(props) {
 }
 
 LatitudeBandSelector.propTypes = {
+    /**
+     * function for error handling
+     */
     reportError: PropTypes.func,
 }
 
@@ -98,6 +101,8 @@ export default LatitudeBandSelector;
  *
  * @param {boolean} forceCustomizable if true, acts like isCustomizable is true - if false, does nothing
  * @returns the location
+ * @memberof LatitudeBandSelector
+ * @constant {function}
  */
 const findLatitudeBandByLocation = (forceCustomizable) => {
     if (typeof selectedLocation === 'undefined') return null;

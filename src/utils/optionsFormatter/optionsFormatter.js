@@ -26,6 +26,8 @@ import {
 } from "../constants"
 import {convertModelName} from "../ModelNameConverter";
 
+/** @module OptionsFormatter */
+
 /**
  * This array provides a list from start to end year with each year as a string
  * @constant {array}
@@ -178,6 +180,7 @@ function createSubtitle(getState) {
  *
  * This gigantic object allows us to communicate with the apexcharts library.
  * More can be found here: https://apexcharts.com/docs/installation/
+ * @constant {object}
  */
 export const defaultTCO3_zm = {
     xaxis: {
@@ -227,6 +230,9 @@ export const defaultTCO3_zm = {
         show: true,
         onItemClick: {
             toggleDataSeries: false
+        },
+        markers: {
+
         },
         height: 80,
     },
@@ -295,14 +301,14 @@ export function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show = false, oppo
         },
         tickAmount,
         title: {
-            text: "TCO(DU)",
+            text: opposite ? "" : "TCO(DU)", // don't show description on right side
             style: {
                 fontSize: "1rem",
                 fontFamily: FONT_FAMILY,
             },
         },
         labels: {
-            formatter: formatYLabelsNicely,
+            formatter: opposite ? () => "" : formatYLabelsNicely, // hide labels with function that always returns empty strings
         },
         /*
         tooltip: {
@@ -343,14 +349,14 @@ export function getDefaultYAxisTco3Return(seriesName, minY, maxY, show = false, 
         },
         tickAmount,
         title: {
-            text: "Year",
+            text: opposite ? "" : "Year", // don't show description on right side
             style: {
                 fontSize: "1rem",
                 fontFamily: FONT_FAMILY,
             },
         },
         labels: {
-            formatter: formatYLabelsNicely,
+            formatter: opposite ? () => "" : formatYLabelsNicely, // hide labels with function that always returns empty strings
         }
     }
 }
@@ -428,6 +434,7 @@ export const default_TCO3_return = {
     legend: {
         show: true,
         height: 80,
+        fontSize: "16px",
     },
 
     markers: {
@@ -495,6 +502,29 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.subtitle = JSON.parse(JSON.stringify(newOptions.subtitle)); // this is necessary in order for apexcharts to update the subtitle
         newOptions.subtitle.text = createSubtitle(getState);
         newOptions.tooltip.custom = customTooltipFormatter;
+
+        const legendItems = [];
+        for (let idx in seriesNames) {
+            const name = seriesNames[idx];
+            const color = styling.colors[idx];
+            const dashing = styling.dashArray[idx];
+            let linePattern;
+            let fontSize = 20;
+            if (dashing <= 0) {
+                linePattern = "<b>───</b>";
+            } else if (dashing <= 2) {
+                linePattern = "••••";
+                fontSize = 12;
+            } else {
+                linePattern = "<b>---</b>";
+            }
+            legendItems.push(
+                `<span style="color:${color};font-family:Consolas, monaco, monospace;font-size:${fontSize}px;">${linePattern}</span> <span style="font-size: 16px">${name}</span> `
+            )
+        }
+
+        newOptions.legend.customLegendItems = legendItems;
+        newOptions.legend.markers.width = 0;
         return newOptions;
 
     } else if (plotId === O3AS_PLOTS.tco3_return) {
@@ -999,29 +1029,32 @@ export function normalizeArray(xValues, yValues) {
  *
  * @param {string} plotId A string specifying the plot (to perform different transformations, according to the data format)
  * @param {object} data An object holding the data as it was returned from the API
- * @param {object} modelsSlice the slice of the store containing information about the model groups
  * @returns The pre transformed API data
  */
-export const preTransformApiData = ({plotId, data, modelsSlice}) => {
-    const maximums = [];
-    const minimums = [];
+export const preTransformApiData = ({plotId, data}) => {
     const lookUpTable = {};
-
-    const visibleModels = getIncludedModels(modelsSlice);
 
     if (plotId === O3AS_PLOTS.tco3_zm) {
 
         for (let datum of data) {
             // top structure
-            const normalizedArray = normalizeArray(datum.x, datum.y);
+            let normalizedArray;
+            if (datum.model === "reference_value") { // 
+                normalizedArray = Array(END_YEAR - START_YEAR).fill(datum.y[0]); // always stretch reference line from START_YEAR to END_YEAR
+            } else {
+                normalizedArray = normalizeArray(datum.x, datum.y);
+            };
             lookUpTable[datum.model] = {
                 plotStyle: datum.plotstyle,
                 data: normalizedArray, // this should speed up the calculation of the statistical values later
+                suggested: {
+                    minX: Math.min(...datum.x),
+                    maxX: Math.max(...datum.x),
+                    minY: Math.min(...normalizedArray.filter(x => x !== null)),
+                    maxY: Math.max(...normalizedArray),
+                }
             };
-            if (visibleModels.includes(datum.model)) { // min and max values of visible values are relevant!
-                maximums.push(Math.max(...normalizedArray));
-                minimums.push(Math.min(...normalizedArray.filter(x => x !== null)));
-            }
+
         }
 
     } else if (plotId === O3AS_PLOTS.tco3_return) {
@@ -1030,7 +1063,8 @@ export const preTransformApiData = ({plotId, data, modelsSlice}) => {
             // top structure
             lookUpTable[datum.model] = {
                 plotStyle: datum.plotstyle,
-                data: {}
+                data: {},
+                suggested: null,
             };
 
             // fill data
@@ -1040,13 +1074,35 @@ export const preTransformApiData = ({plotId, data, modelsSlice}) => {
                 lookUpTable[datum.model].data[datum.x[index]] = datum.y[index];
             }
 
-            if (visibleModels.includes(datum.model)) { // min and max values of visible values are relevant!
-                maximums.push(Math.max(...temp));
-                minimums.push(Math.min(...temp.filter(x => x !== null)));
+            lookUpTable[datum.model].suggested = {
+                minY: Math.min(...temp.filter(x => x !== null)),
+                maxY: Math.max(...temp),
             }
         }
     }
-    return {lookUpTable, min: Math.min(...minimums), max: Math.max(...maximums)};
+    return {lookUpTable};
+}
+
+export function getSuggestedValues(data, modelsSlice) {
+    const visibleModels = getIncludedModels(modelsSlice);
+
+    const suggested = {
+        minX: Infinity,
+        maxX: -Infinity,
+        minY: Infinity,
+        maxY: -Infinity,
+
+    }
+
+    for (let model of visibleModels) {
+        const { minX, maxX, minY, maxY } = data[model].suggested;
+        suggested.minX = Math.min(suggested.minX, minX);
+        suggested.maxX = Math.max(suggested.maxX, maxX);
+        suggested.minY = Math.min(suggested.minY, minY);
+        suggested.maxY = Math.max(suggested.maxY, maxY);
+    }
+
+    return suggested;
 }
 
 
@@ -1271,21 +1327,37 @@ function isIncludedInSv(model, groupData, svType) {
 
 /**
  * Determines the optimal tick amount for a given max and min year for the x-axis.
+ * Takes into account the current screen width, uses a heuristic approach 
+ * (all values are determined through experimentation).
  *
  * @param {number} min      The selected min. year of the plot
  * @param {number} max      The selected max. year of the plot
  * @returns                 The optimal tick amount according to those values
  */
 export function getOptimalTickAmount(min, max) {
+    const width  = window.innerWidth || document.documentElement.clientWidth || 
+    document.body.clientWidth;
+    const height = window.innerHeight|| document.documentElement.clientHeight|| 
+    document.body.clientHeight;
+
+
+    if (width <= height) { // is mobile in portrait
+        return 4;
+    }
+
+    let divider = 1;
+    if (width <= 600) divider = 4; 
+    else if (width <= 1100) divider = 2;
+    
     const diff = max - min;
     if (diff <= 40) {
-        return diff;
+        return diff / divider;
     } else if (diff <= 80) {
-        return Math.floor(diff / 2);
+        return Math.floor(diff / 2) / divider;
     } else if (diff <= 150) {
-        return Math.floor(diff / 5);
+        return Math.floor(diff / 5) / divider;
     } else {
-        return Math.floor(diff / 10)
+        return Math.floor(diff / 10) / divider;
     }
 }
 
