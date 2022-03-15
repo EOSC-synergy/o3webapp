@@ -8,7 +8,6 @@ import { Card, IconButton } from '@mui/material';
 import PropTypes from "prop-types";
 import CardHeader from '@mui/material/CardHeader';
 import CloseIcon from '@mui/icons-material/Close';
-import { useTheme } from '@emotion/react';
 /**
  * Opens a non-closable discard changes modal to ask whether the users want to discard their changes
  * @component

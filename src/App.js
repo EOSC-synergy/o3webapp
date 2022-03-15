@@ -2,7 +2,6 @@ import * as React from 'react';
 import Navbar from "./components/Navbar/NavBar";
 import Footer from "./components/Footer/Footer";
 import ErrorMessageModal from './components/ErrorMessageModal/ErrorMessageModal';
-import DiscardChangesModal from './components/DiscardChangesModal/DiscardChangesModal';
 import LandingPage from './views/landingPage/LandingPage';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
