@@ -132,7 +132,7 @@ function Graph(props) {
             getState: store.getState
         });
         const uniqueNumber = Date.now(); // forces apexcharts to re-render correctly!
-        const HEIGHT = window.innerHeight - document.getElementById('Navbar').offsetHeight;
+        const HEIGHT = (window.innerHeight - document.getElementById('Navbar').offsetHeight) * 0.975;
         return <Chart key={uniqueNumber} options={options} series={data} type={APEXCHART_PLOT_TYPE[plotId]} height={HEIGHT} style={{marginTop: "2%"}} />
     }
 
