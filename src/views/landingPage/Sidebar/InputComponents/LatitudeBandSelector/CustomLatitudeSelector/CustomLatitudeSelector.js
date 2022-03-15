@@ -184,7 +184,7 @@ function CustomLatitudeSelector(props) {
 
 }
 
-CustomLatitudeSelector.proptypes = {
+CustomLatitudeSelector.propTypes = {
     /**
      * function for error handling
      */
