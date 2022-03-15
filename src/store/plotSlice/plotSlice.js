@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {ALL_REGIONS_ORDERED, O3AS_PLOTS} from "../../utils/constants";
+import {ALL_REGIONS_ORDERED, O3AS_PLOTS, START_YEAR, END_YEAR, latitudeBands} from "../../utils/constants";
 
 /** These months are selected when the webapp starts
  * @constant {array}
