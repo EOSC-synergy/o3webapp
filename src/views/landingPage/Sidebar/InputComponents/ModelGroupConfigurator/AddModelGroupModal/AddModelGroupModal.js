@@ -22,7 +22,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Alert from "@mui/material/Alert";
 import PropTypes from 'prop-types';
 import {useDispatch, useSelector} from "react-redux";
-import {fetchPlotDataForCurrentModels, REQUEST_STATE} from "../../../../../../services/API/apiSlice";
+import {fetchPlotDataForCurrentModels, REQUEST_STATE} from "../../../../../../services/API/apiSlice/apiSlice";
 import {selectNameOfGroup, selectModelDataOfGroup} from "../../../../../../store/modelsSlice/modelsSlice";
 
 

@@ -3,7 +3,7 @@ import {Grid, Typography, FormControl, TextField, Checkbox} from "@mui/material"
 import {useDispatch} from "react-redux"
 import {useSelector} from "react-redux";
 import {END_YEAR, START_YEAR, O3AS_PLOTS} from "../../../../../utils/constants";
-import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice";
+import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice/apiSlice";
 import {
     setYear,
     setVisibility,

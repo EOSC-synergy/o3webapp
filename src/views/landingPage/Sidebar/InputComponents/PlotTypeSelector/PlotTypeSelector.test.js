@@ -1,4 +1,4 @@
-import { fetchPlotTypes, REQUEST_STATE } from "../../../../../services/API/apiSlice";
+import { fetchPlotTypes, REQUEST_STATE } from "../../../../../services/API/apiSlice/apiSlice";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PlotTypeSelector from './PlotTypeSelector';

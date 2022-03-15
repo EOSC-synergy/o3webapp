@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { NO_MONTH_SELECTED } from '../../utils/constants';
+import { NO_MONTH_SELECTED } from '../../../utils/constants';
 
 /** The base URL */
 const baseURL = "https://api.o3as.fedcloud.eu/api/v1";
@@ -88,6 +88,10 @@ export const getPlotData = ({plotId, latMin, latMax, months, modelList, startYea
     if (months.length === 0) {
         return Promise.reject(new Error(NO_MONTH_SELECTED));
     }
+    if (modelList.length === 0) {
+        return Promise.resolve({data: []});
+    }
+
     if (plotId === 'tco3_zm') {
         return postAtAPI(
             `/plots/${plotId}?begin=${startYear}&end=${endYear}&month=${months.join(",")}&lat_min=${latMin}&lat_max=${latMax}&ref_meas=${refModel}&ref_year=${refYear}`,

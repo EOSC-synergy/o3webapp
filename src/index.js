@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import store from './store/store';
 import {Provider} from 'react-redux';
-import {fetchModels, fetchPlotDataForCurrentModels, fetchPlotTypes} from './services/API/apiSlice';
+import {fetchModels, fetchPlotDataForCurrentModels, fetchPlotTypes} from './services/API/apiSlice/apiSlice';
 import {setModelsOfModelGroup} from "./store/modelsSlice/modelsSlice";
 import {DEFAULT_MODEL_GROUP} from './utils/constants';
 import {updateStoreWithURL, updateURL} from "./services/url/url";
