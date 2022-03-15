@@ -558,7 +558,7 @@ EditModelGroupModal.propTypes = {
      */
     modelGroupId: PropTypes.number.isRequired,
     /**
-     * function for error handlinf
+     * function for error handling
      */
     reportError: PropTypes.func
 }
