@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectPlotXRange, setDisplayXRange} from "../../../../../store/plotSlice/plotSlice";
 import {ALL_REGIONS_ORDERED} from "../../../../../utils/constants";
 import {Grid} from "@mui/material";
+import CustomLatitudeSelector from "../LatitudeBandSelector/CustomLatitudeSelector/CustomLatitudeSelector";
 import PropTypes from 'prop-types';
 
 /**
