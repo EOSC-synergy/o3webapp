@@ -1,46 +1,95 @@
 import React from "react";
 import {styled} from '@mui/material/styles';
+import PropTypes from 'prop-types';
+import MuiAccordion from '@mui/material/Accordion';
+import MuiAccordionDetails from '@mui/material/AccordionDetails';
+import MuiAccordionSummary from '@mui/material/AccordionSummary';
+import Typography from '@mui/material/Typography';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import CustomLatitudeSelector
+    from "../InputComponents/LatitudeBandSelector/CustomLatitudeSelector/CustomLatitudeSelector";
+import LatitudeBandSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
 import LocationSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
 import ModelGroupConfigurator from "../InputComponents/ModelGroupConfigurator/ModelGroupConfigurator";
 import PlotNameField from "../InputComponents/PlotNameField/PlotNameField";
+import ReferenceModelSelector from "../InputComponents/ReferenceModelSelector/ReferenceModelSelector";
 import ReferenceYearField from "../InputComponents/ReferenceYearField/ReferenceYearField";
 import RegionSelector from "../InputComponents/RegionSelector/RegionSelector";
 import TimeCheckBoxGroup from "../InputComponents/TimeCheckboxGroup/TimeCheckboxGroup";
 import XAxisField from "../InputComponents/XAxisField/XAxisField";
 import YAxisField from "../InputComponents/YAxisField/YAxisField";
-import PropTypes from 'prop-types';
-import LatitudeBandSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
-import ReferenceModelSelector from "../InputComponents/ReferenceModelSelector/ReferenceModelSelector";
-import MuiAccordion from '@mui/material/Accordion';
-import MuiAccordionSummary from '@mui/material/AccordionSummary';
-import MuiAccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import {
-    LBS_Symbol,
-    LS_Symbol,
-    MGC_Symbol,
-    OC_Symbol,
-    PNF_Symbol,
-    RMS_Symbol,
-    RS_Symbol,
-    RYF_Symbol,
-    TCG_Symbol,
-    XAF_Symbol,
-    YAF_Symbol,
-    CLS_Symbol,
-    BACKGROUND_BASE_COLOR
-} from "../../../../utils/constants";
-import CustomLatitudeSelector
-    from "../InputComponents/LatitudeBandSelector/CustomLatitudeSelector/CustomLatitudeSelector";
 
+/** Stores the name of the CustomLatitudeSelector component as a Symbol.
+ * @constant {string}
+ * @memberof Section
+ */
+const CLS_Symbol = Symbol("CustomLatitudeSelector");
 
-// custom Accordion components are
-// inspired by: https://mui.com/components/accordion/#customization 
+/** Stores the name of the LatitudeBandSelector component as a Symbol.
+ * @constant {string}
+ * @memberof Section
+ */
+const LBS_Symbol = Symbol("LatitudeBandSelector");
 
+/** Stores the name of the LocationSelector component as a Symbol.
+ * @constant {string}
+ * @memberof Section
+ */
+const LS_Symbol = Symbol("LocationSelector");
+
+/** Stores the name of the ModelGroupConfigurator component as a Symbol.
+ * @constant {string}
+ * @memberof Section
+ */
+const MGC_Symbol = Symbol("ModelGroupConfigurator");
+
+/** Stores the name of the PlotNameField component as a Symbol.
+ * @constant {string}
+ * @memberof Section
+ */
+const PNF_Symbol = Symbol("PlotNameField");
+
+/** Stores the name of the ReferenceModelSelector component as a Symbol.
+ * @constant {string}
+ * @memberof Section
+ */
+const RMS_Symbol = Symbol("ReferenceModelSelector");
+
+/** Stores the name of the ReferenceYearField component as a Symbol.
+ * @constant {string}
+ * @memberof Section
+ */
+const RYF_Symbol = Symbol("ReferenceYearField");
+
+/** Stores the name of the RegionSelector component as a Symbol.
+ * @constant {string}
+ * @memberof Section
+ */
+const RS_Symbol = Symbol("RegionSelector");
+
+/** Stores the name of the TimeCheckBoxGroup component as a Symbol.
+ * @constant {string}
+ * @memberof Section
+ */
+const TCG_Symbol = Symbol("TimeCheckBoxGroup");
+
+/** Stores the name of the XAxisField component as a Symbol.
+ * @constant {string}
+ * @memberof Section
+ */
+const XAF_Symbol = Symbol("XAxisField");
+
+/** Stores the name of the YAxisField component as a Symbol.
+ * @constant {string}
+ * @memberof Section
+ */
+const YAF_Symbol = Symbol("YAxisField");
+
+// custom Accordion components are 
+// inspired by: https://mui.com/components/accordion/#customization
 /**
- * custom Accordion component
+ * Custom Accordion component
  * @const {function}
  * @returns {JSX.Element}
  * @memberof Section
@@ -99,13 +148,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({theme}) => ({
 /**
  * an expandable section containing a list of inputComponents as well as a name
  * @component
- * @param {Object} props
- * @param {string[]} props.components -> an array containing a string representation of all components that should be plotted
- * @param {string} props.name -> the name of the section
- * @param {function} props.reportError -> used for error handling
- * @param {boolean} props.isExpanded -> whether this section should be expanded
- * @param {function} props.onCollapse -> function to collapse this section
- * @param {function} props.onExpand -> function to expand this section
+ * @param {Object} props specified further by PropTypes
  * @returns {JSX.Element} an accordion that once expanded displays the components specified by the config files and the API doc
  */
 function Section(props) {
@@ -116,12 +159,14 @@ function Section(props) {
      * @public
      * @param {String} name the name of the component
      * @param {int} key a unique key for the given input component
-     * @returns a component from the './InputComponents
+     * @returns {JSX.Element} a component from the './InputComponents
      */
     function mapNameToComponent(name, key) {
 
         if ('reportError' in props && typeof props.reportError === 'function') {
             switch (name) {
+                case CLS_Symbol.description:
+                    return <CustomLatitudeSelector key={key} reportError={props.reportError}/>
                 case LBS_Symbol.description:
                     return <LatitudeBandSelector key={key} reportError={props.reportError}/>;
                 case LS_Symbol.description:
@@ -142,8 +187,6 @@ function Section(props) {
                     return <XAxisField key={key} reportError={props.reportError}/>;
                 case YAF_Symbol.description:
                     return <YAxisField key={key} reportError={props.reportError}/>;
-                case CLS_Symbol.description:
-                    return <CustomLatitudeSelector key={key} reportError={props.reportError}/>
                 default:
                     props.reportError(`Section ${props.name} found no match for an input component ${name}`);
             }
@@ -203,11 +246,29 @@ function Section(props) {
 }
 
 Section.propTypes = {
+    /**
+     * the name of the section
+     */
     name: PropTypes.string.isRequired,
+    /**
+     * used for error handling
+     */
     reportError: PropTypes.func.isRequired,
+    /**
+     * an array containing a string representation of all components that should be plotted
+     */
     components: PropTypes.arrayOf(PropTypes.string).isRequired,
+    /**
+     * whether this section should be expanded
+     */
     isExpanded: PropTypes.bool.isRequired,
+    /**
+     * function to collapse this section
+     */
     onCollapse: PropTypes.func,
+    /**
+     * function to expand this section
+     */
     onExpand: PropTypes.func
 }
 

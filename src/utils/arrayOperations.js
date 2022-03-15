@@ -1,10 +1,12 @@
+/** @module ArrayOperations */
+
+
 /**
  * Calculates and returns A\B
  * @param {Array} a the array from which to remove elements
  * @param {Array} b the array of elements that should be removed
  * @returns an array containing all elements that are in A and not in B
  * @constant {function}
- * @category Utils
  */
 export function not(a, b) {
     return a.filter((value) => b.indexOf(value) === -1);
@@ -16,7 +18,6 @@ export function not(a, b) {
  * @param {Array} b an array to take the intersection from
  * @returns An array containing all elements that are both in A and B
  * @constant {function}
- * @category Utils
  */
 export function intersection(a, b) {
     return a.filter((value) => b.indexOf(value) !== -1);
@@ -28,7 +29,6 @@ export function intersection(a, b) {
  * @param {Array} b an array to create the union from
  * @returns An array containing all elements that are in A or in B
  * @constant {function}
- * @category Utils
  */
 export function union(a, b) {
     return [...a, ...not(b, a)];

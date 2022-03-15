@@ -14,19 +14,31 @@ import {REQUEST_STATE} from "../../../../../services/API/apiSlice";
 /**
  * enables the user to select a different plot type
  * @component
- * @param {Object} props
- * @param {function} props.reportError - function for error handling
+ * @param {Object} props specified by propTypes
  * @returns {JSX.Element} a jsx containing a dropdown to select the plot type
  */
 function PlotTypeSelector(props) {
 
+    /**
+     * A dispatch function to dispatch actions to the Redux store.
+     * @constant {function}
+     */
     const dispatch = useDispatch();
+    /**
+     * Get the requested data from the redux store
+     * @constant {function}
+     */
     const plotTypesRequestData = useSelector(state => state.api.plotTypes);
+    /**
+     * Currently selected plot type
+     * @constant {function}
+     */
     const plotType = useSelector(selectPlotId);
 
     /**
      * mocks a call to the redux store to change the plot type
      * @param {event} event the event that called this function
+     * @constant {function}
      */
     const changePlotType = (event) => {
         dispatch(setActivePlotId({plotId: event.target.value}))
@@ -76,6 +88,9 @@ function PlotTypeSelector(props) {
 }
 
 PlotTypeSelector.propTypes = {
+    /**
+     * function for error handling
+     */
     reportError: PropTypes.func.isRequired,
 }
 

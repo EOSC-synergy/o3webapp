@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { setModelsOfModelGroup } from "../../../../../../store/modelsSlice/modelsSlice";
-import { useTheme } from '@mui/material/styles';
-import { CardContent, Divider, IconButton, Modal, TextField } from '@mui/material';
-import { Box } from '@mui/system';
-import { Typography } from '@mui/material';
+import React, {useEffect} from "react";
+import {setModelsOfModelGroup} from "../../../../../../store/modelsSlice/modelsSlice";
+import {useTheme} from '@mui/material/styles';
+import {CardContent, Divider, IconButton, Modal, TextField} from '@mui/material';
+import {Box} from '@mui/system';
+import {Typography} from '@mui/material';
 import Grid from '@mui/material/Grid';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -11,13 +11,13 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
-import { Card } from '@mui/material';
+import {Card} from '@mui/material';
 import CardActions from '@mui/material/CardActions';
 import CircularProgress from '@mui/material/CircularProgress';
 import CardHeader from '@mui/material/CardHeader';
 import Searchbar from "../../../../../../components/Searchbar/Searchbar";
-import { convertModelName } from "../../../../../../utils/ModelNameConverter";
-import { union, not, intersection } from "../../../../../../utils/arrayOperations";
+import {convertModelName} from "../../../../../../utils/ModelNameConverter";
+import {union, not, intersection} from "../../../../../../utils/arrayOperations";
 import CloseIcon from '@mui/icons-material/Close';
 import Alert from "@mui/material/Alert";
 import PropTypes from 'prop-types'; 
@@ -29,26 +29,21 @@ import store from "../../../../../../store/store";
 
 /**
  * opens a modal where the user can add a new model group
+ * Used in {@link ModelGroupConfigurator}.
+ * 
  * @component
- * @param {Object} props 
- * @param {function} props.onClose -> function to call if modal should be closed
- * @param {boolean} props.isOpen -> boolean whether the modal should be visible
- * @param {function} props.reportError -> error handling
- * @param {function} props.setOpen -> re-open if discard changes modal is closed
- * @param {boolean} props.refresh       Whether the state should be refreshed
- * @param {number} props.modelGroupId -> string identifying the model group,
- *          if this model should be used to edit an existing model group
- * @returns {JSX} a jsx containing a modal with a transfer list with all available models
+ * @param {Object} props specified in propTypes
+ * @returns {JSX.Element} a jsx containing a modal with a transfer list with all available models
  */
 function AddModelGroupModal(props) {
-    
+
     const isEditMode = 'modelGroupId' in props;
 
     /**
      * the label in the card heading
      */
     const addModelLabel = isEditMode ? "Edit Model Group Members" : "Add Model Group";
-    
+
     const dispatch = useDispatch();
 
     const modelListRequestedData = useSelector(state => state.api.models);
@@ -57,9 +52,8 @@ function AddModelGroupModal(props) {
     let allModels = [];
     if (modelListRequestedData.status === REQUEST_STATE.idle
         || modelListRequestedData.status === REQUEST_STATE.loading) {
-            isLoading = true;
-    }
-    else if (modelListRequestedData.status === REQUEST_STATE.success) {
+        isLoading = true;
+    } else if (modelListRequestedData.status === REQUEST_STATE.success) {
         allModels = modelListRequestedData.data;
         isLoading = false;
     }
@@ -116,8 +110,6 @@ function AddModelGroupModal(props) {
 
     }, [props.isOpen]);
 
-    
-
     /**
      * Returns how many models in the provided array are currently checked
      * @param {Array} models models to check
@@ -155,11 +147,11 @@ function AddModelGroupModal(props) {
     const handleChangeElement = (value) => () => {
         const currentIndex = checked.indexOf(value);
         const newChecked = [...checked];
-    
+
         if (currentIndex === -1) {
-          newChecked.push(value);
+            newChecked.push(value);
         } else {
-          newChecked.splice(currentIndex, 1);
+            newChecked.splice(currentIndex, 1);
         }
         setChecked(newChecked);
     };
@@ -244,7 +236,7 @@ function AddModelGroupModal(props) {
         return (
             <Card sx={{backgroundColor: theme.palette.background.paper}}>
                 <CardHeader
-                    sx={{ px: 2, py: 1 }}
+                    sx={{px: 2, py: 1}}
                     avatar={
                         <Checkbox
                             onClick={handleToggleAll(modelsVisible)}
@@ -261,7 +253,7 @@ function AddModelGroupModal(props) {
                     }
                     title={`${numberOfChecked(modelsVisible)}/${modelsVisible.length} selected`}
                 />
-                <Divider />
+                <Divider/>
                 <List
                     sx={{
                         width: "100%",
@@ -276,13 +268,13 @@ function AddModelGroupModal(props) {
                     {modelsVisible.map((modelId, idx) => {
                         const labelId = `transfer-list-all-item-${modelId}-label`;
                         let model = convertModelName(modelId);
-                            return (
-                                <ListItem
-                                    key={idx}
-                                    role="listitem"
-                                    button
-                                    onClick={handleChangeElement(modelId)}
-                                >
+                        return (
+                            <ListItem
+                                key={idx}
+                                role="listitem"
+                                button
+                                onClick={handleChangeElement(modelId)}
+                            >
                                 <ListItemIcon>
                                     <Checkbox
                                         checked={checked.indexOf(modelId) !== -1}
@@ -294,23 +286,25 @@ function AddModelGroupModal(props) {
                                         data-testid={`AddModelGroupModal-transfer-list-item-${labelId}-checkbox`}
                                     />
                                 </ListItemIcon>
-                                <ListItemText id={labelId} primary={model.name} secondary={`Institute: ${model.institute}\nProject: ${model.project}`} />
-                                </ListItem>
-                            );
+                                <ListItemText id={labelId} primary={model.name}
+                                              secondary={`Institute: ${model.institute}\nProject: ${model.project}`}/>
+                            </ListItem>
+                        );
                     })}
                 </List>
-                    {
-                        modelsCheckedInvisible
-                        &&
-                        modelsCheckedInvisible.length > 0 
-                        &&
-                        <Alert severity="warning">
-                            Currently {modelsCheckedInvisible.length} hidden model{modelsCheckedInvisible.length > 1 ? 's are' : ' is'} checked.
-                        </Alert>
-                    }
+                {
+                    modelsCheckedInvisible
+                    &&
+                    modelsCheckedInvisible.length > 0
+                    &&
+                    <Alert severity="warning">
+                        Currently {modelsCheckedInvisible.length} hidden
+                        model{modelsCheckedInvisible.length > 1 ? 's are' : ' is'} checked.
+                    </Alert>
+                }
             </Card>
         );
-    }   
+    }
 
     const style = {
         position: 'absolute',
@@ -325,7 +319,7 @@ function AddModelGroupModal(props) {
         minHeight: "75%",
         maxHeight: "100vh",
         p: 4,
-      };
+    };
 
     /**
      * updates the current group name
@@ -477,14 +471,35 @@ function AddModelGroupModal(props) {
     );
 }
 
-
 AddModelGroupModal.propTypes = {
+    /**
+     * function for error handling
+     */
     reportError: PropTypes.func.isRequired,
+    /**
+     * function to call if modal should be closed
+     */
     onClose: PropTypes.func.isRequired,
+    /**
+     * boolean whether the modal should be visible
+     */
     isOpen: PropTypes.bool.isRequired,
-    modelGroupId: PropTypes.number,
+    /**
+     * function to re-open the modal from inside the component.
+     */
     setOpen: PropTypes.func.isRequired,
+    /**
+     * boolean indicating whether the state should be refreshed. This is usually
+     * set to false, true is only required when the discard changes modal is closed
+     * without saving or ultimately discarding the changes.
+     */
     refresh: PropTypes.bool.isRequired,
+    /**
+     * string identifying the model group,
+     * if this model should be used to edit an existing model group
+     */
+    modelGroupId: PropTypes.number
+
 }
 
 export default AddModelGroupModal;

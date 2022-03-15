@@ -130,7 +130,6 @@ exports[`test DiscardChangesModal rendering renders correctly when opened 1`] = 
             tabindex="0"
             type="button"
           >
-            Save Changes
             <span
               class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
             >

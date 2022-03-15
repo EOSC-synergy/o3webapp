@@ -4,7 +4,7 @@ import '@testing-library/jest-dom';
 import { Provider } from 'react-redux'
 import YAxisField from './YAxisField';
 import { createTestStore } from "../../../../../store/store"
-import { setActivePlotId } from '../../../../../store/plotSlice/plotSlice';
+import { setActivePlotId, setDisplayYRange, setDisplayYRangeForPlot } from '../../../../../store/plotSlice/plotSlice';
 import { O3AS_PLOTS } from '../../../../../utils/constants';
 
 describe("tests basic rendering", () => {
@@ -37,6 +37,8 @@ describe('test functionality redux for tco3_zm', () => {
     let store;
     beforeEach(() => {
         store = createTestStore();
+        store.dispatch(setDisplayYRangeForPlot({plotId: O3AS_PLOTS.tco3_zm, minY: 270, maxY: 330}));
+        store.dispatch(setDisplayYRangeForPlot({plotId: O3AS_PLOTS.tco3_return, minY: 2000, maxY: 2100}));
     });
 
     it('should update the store on user input (left field)', () => {
@@ -73,6 +75,8 @@ describe('test functionality redux for tco3_return', () => {
     beforeEach(() => {
         store = createTestStore();
         store.dispatch(setActivePlotId({plotId: O3AS_PLOTS.tco3_return}))
+        store.dispatch(setDisplayYRangeForPlot({plotId: O3AS_PLOTS.tco3_zm, minY: 270, maxY: 330}));
+        store.dispatch(setDisplayYRangeForPlot({plotId: O3AS_PLOTS.tco3_return, minY: 2000, maxY: 2100}));
     });
 
     it('should update the store on user input (left field)', () => {
@@ -109,6 +113,8 @@ describe('test error handling functionality', () => {
     let store;
     beforeEach(() => {
         store = createTestStore();
+        store.dispatch(setDisplayYRangeForPlot({plotId: O3AS_PLOTS.tco3_zm, minY: 270, maxY: 330}));
+        store.dispatch(setDisplayYRangeForPlot({plotId: O3AS_PLOTS.tco3_return, minY: 2000, maxY: 2100}));
     });
 
     it("doesn't update if LEFT >= RIGHT", () => {
