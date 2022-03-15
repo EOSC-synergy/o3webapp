@@ -1,7 +1,6 @@
 import store from "../../store/store";
 import {mean, median, O3AS_PLOTS, percentile, STATISTICAL_VALUES_LIST, std} from "../../utils/constants";
 import {
-    selectPlotId,
     setActivePlotId,
     setDisplayXRange,
     setDisplayYRange,
@@ -16,6 +15,8 @@ import {
     setVisibilityForGroup,
     updatePropertiesOfModelGroup
 } from "../../store/modelsSlice/modelsSlice";
+
+store.subscribe(updateURL);
 
 const queryString = window.location.search;
 
