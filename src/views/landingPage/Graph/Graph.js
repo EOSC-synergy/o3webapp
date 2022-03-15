@@ -39,13 +39,6 @@ function Graph(props) {
      */
     const HEIGHT_LOADING_SPINNER = "300px";
 
-    /**
-     * How tall the graph should appear
-     * @constant {string}
-     * @memberof Graph
-     */
-    const HEIGHT_GRAPH = `${window.innerHeight * 0.75}px`;
-
     const plotId = useSelector(selectPlotId);
     const plotTitle = useSelector(selectPlotTitle);
     const xAxisRange = useSelector(selectPlotXRange);
@@ -54,10 +47,10 @@ function Graph(props) {
     const modelsSlice = useSelector(state => state.models);
     const refLineVisible = useSelector(selectVisibility);
 
-    const [_, setDimensions] = React.useState({ 
+    const setDimensions = React.useState({ 
         height: window.innerHeight,
         width: window.innerWidth
-    })
+    })[1];
 
     /**
      * Message to display if an error occured.
