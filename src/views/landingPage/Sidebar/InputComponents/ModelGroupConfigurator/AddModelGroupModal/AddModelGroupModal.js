@@ -197,6 +197,11 @@ function AddModelGroupModal(props) {
         setChecked(not(checked, rightChecked));
     };
 
+    /**
+     * Tries to safe the current made changes, if this fails it re-opens the modal once again
+     * to enable the user to correct the mistake
+     * @function
+     */
     const saveChanges = () => {
         const success = addOrEditGroup();
         if (!success) {
@@ -204,13 +209,6 @@ function AddModelGroupModal(props) {
         }
     }
 
-    const resetState = () => {
-        setGroupName("");
-        setVisible(allModels);
-        setChecked([]);
-        setRight([]);
-    }
-    
     const addOrEditGroup = () => {
         if (groupName === '') {
             setErrorMessage("Please provide a model group name");
@@ -223,7 +221,6 @@ function AddModelGroupModal(props) {
         dispatch(setModelsOfModelGroup({groupId: props.modelGroupId, groupName: groupName, modelList: right}));
         dispatch(fetchPlotDataForCurrentModels());
         props.onClose();
-        resetState();
         return true;
     }
 
@@ -339,7 +336,11 @@ function AddModelGroupModal(props) {
         setGroupName(event.target.value);
     }
 
-    
+    /**
+     * Determines whether the user made changes to the current model group
+     * @returns whether the user made changes to the current model group
+     * @function
+     */
     const hasChanges = () => {
         if (!isEditMode) {
             return groupName !== "" || right.length !== 0;
@@ -360,7 +361,9 @@ function AddModelGroupModal(props) {
     }
 
     /**
-     * @todo open a "discard changes?" popup here
+     * Default handler that is called when the modal is closed when clicking outside of the modal
+     * or by clicking the close icon.
+     * @function
      */
     const closeModal = () => {
         
@@ -369,7 +372,6 @@ function AddModelGroupModal(props) {
             openDiscardChangesDialog();
         } else { // no changes made
             props.onClose();
-            resetState();
         }
     }
 
@@ -469,7 +471,7 @@ function AddModelGroupModal(props) {
             isOpen={discardChangesOpen} 
             onClose={closeDiscardChangesDialog} 
             saveChanges={saveChanges} 
-            discardChanges={resetState} 
+            discardChanges={() => {}} 
             closeDialog={() => setDiscardChangesOpen(false)}
         />
         </React.Fragment>    
