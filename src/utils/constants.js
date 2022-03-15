@@ -2,7 +2,7 @@ import {
     mean as calculateMean,
     std as calculateStd,
     median as calculateMedian,
-    quantile as calculatePercentile, // TODO import actual percentile
+    quantile as calculatePercentile,
 } from "../services/math/math";
 
 // index.js

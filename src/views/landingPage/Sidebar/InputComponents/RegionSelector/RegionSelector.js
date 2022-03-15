@@ -47,7 +47,6 @@ function RegionSelector() {
 
     /**
      * Gets default regions that are available in the return recovery plot.
-     * @todo connect to api
      */
     const getDefaultRegions = () => {
         return ALL_REGIONS_ORDERED;
