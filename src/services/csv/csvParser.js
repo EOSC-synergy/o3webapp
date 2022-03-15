@@ -1,4 +1,4 @@
-/** @module CSV */
+/** @module CSV */ // used for auto generation of JSDocs with better-docs
 
 /**
  * This function translates a javascript object or a json into a string formatted

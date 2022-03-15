@@ -4,7 +4,7 @@ import {preTransformApiData} from "../../utils/optionsFormatter/optionsFormatter
 import {START_YEAR, END_YEAR, O3AS_PLOTS} from "../../utils/constants";
 import {setDisplayYRangeForPlot} from "../../store/plotSlice/plotSlice";
 
-/** @module API */
+/** @module API */      // used for auto generation of JSDocs with better-docs
 
 /**
  * This object models an "enum" in JavaScript. Each of the values is used

@@ -5,7 +5,7 @@ import {
     quantile as calculatePercentile, // TODO import actual percentile
 } from "../services/math/math";
 
-/** @module Constants */
+/** @module Constants */ // used for auto generation of JSDocs with better-docs
 
 /**
  * Stores the default model group.

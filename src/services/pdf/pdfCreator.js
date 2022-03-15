@@ -4,7 +4,7 @@ import { O3AS_PLOTS, legalNoticeLinks } from "../../utils/constants";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-/** @module PDF */
+/** @module PDF */ // used for auto generation of JSDocs with better-docs
 
 /**
  * This Method adjusts the svg element in order to scale it right in the pdf file.

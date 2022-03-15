@@ -1,4 +1,4 @@
-/** @module TextSearch */
+/** @module TextSearch */  // used for auto generation of JSDocs with better-docs
 
 /**
  * Performs a simple full text search on the given element and looks

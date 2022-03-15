@@ -1,4 +1,4 @@
-/** @module ArrayOperations */
+/** @module ArrayOperations */  // used for auto generation of JSDocs with better-docs
 
 
 /**

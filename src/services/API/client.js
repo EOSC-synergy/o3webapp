@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { NO_MONTH_SELECTED } from '../../utils/constants';
 
-/** @module API */
+/** @module API */ // used for auto generation of JSDocs with better-docs
 
 /** The base URL
  * @constant {string}

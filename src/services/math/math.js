@@ -1,4 +1,4 @@
-/** @module Math */
+/** @module Math */ // used for auto generation of JSDocs with better-docs
 
 /**
  * This functions accepts an array, sorts it in-place and returns a reference to the same array.

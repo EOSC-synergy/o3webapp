@@ -1,4 +1,4 @@
-/** @module ModelNameConverter */
+/** @module ModelNameConverter */  // used for auto generation of JSDocs with better-docs
 
 /**
  * This function parses a given string like the structure of the
