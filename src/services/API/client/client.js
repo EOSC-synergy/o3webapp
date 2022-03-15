@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { NO_MONTH_SELECTED } from '../../utils/constants';
+import { NO_MONTH_SELECTED } from '../../../utils/constants';
 
 /** The base URL */
 const baseURL = "https://api.o3as.fedcloud.eu/api/v1";

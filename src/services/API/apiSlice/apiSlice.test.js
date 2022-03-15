@@ -1,11 +1,11 @@
 import reducer, { fetchModels, fetchPlotData, fetchPlotTypes, generateCacheKey, REQUEST_STATE, selectActivePlotData, getAllSelectedModels } from "./apiSlice";
 import axios from 'axios';
 import { configureStore } from "@reduxjs/toolkit";
-import { createTestStore } from "../../store/store";
-import tco3zmResponse from "./testing/tco3zm-response.json";
-import tco3returnResponse from "./testing/tco3return-response.json";
-import { O3AS_PLOTS } from "../../utils/constants";
-import { preTransformApiData } from "../../utils/optionsFormatter/optionsFormatter";
+import { createTestStore } from "../../../store/store";
+import tco3zmResponse from "../testing/tco3zm-response.json";
+import tco3returnResponse from "../testing/tco3return-response.json";
+import { O3AS_PLOTS } from "../../../utils/constants";
+import { preTransformApiData } from "../../../utils/optionsFormatter/optionsFormatter";
 
 jest.mock('axios');
 

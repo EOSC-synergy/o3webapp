@@ -3,7 +3,7 @@ import SeasonCheckBoxGroup from "./SeasonCheckboxGroup/SeasonCheckBoxGroup";
 import {Alert, Checkbox, Divider, FormControlLabel, Grid} from "@mui/material";
 import {NUM_MONTHS_IN_SEASON, NUM_MONTHS} from "../../../../../utils/constants";
 import Typography from "@mui/material/Typography";
-import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice";
+import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice/apiSlice";
 import {useSelector, useDispatch} from "react-redux";
 import {selectPlotMonths, setMonths} from "../../../../../store/plotSlice/plotSlice";
 import PropTypes from 'prop-types';

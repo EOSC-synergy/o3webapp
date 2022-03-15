@@ -5,7 +5,7 @@ import {
     selectPlotLocation,
     setLocation,
 } from "../../../../../../store/plotSlice/plotSlice";
-import {fetchPlotDataForCurrentModels} from "../../../../../../services/API/apiSlice";
+import {fetchPlotDataForCurrentModels} from "../../../../../../services/API/apiSlice/apiSlice";
 import PropTypes from "prop-types";
 
 /**

@@ -4,7 +4,7 @@ import {getOptions, generateSeries} from "../../../utils/optionsFormatter/option
 import {useSelector} from 'react-redux'
 import {selectPlotId, selectPlotTitle, selectPlotXRange, selectPlotYRange} from '../../../store/plotSlice/plotSlice';
 import {selectVisibility} from '../../../store/referenceSlice/referenceSlice';
-import {REQUEST_STATE, selectActivePlotData} from '../../../services/API/apiSlice';
+import {REQUEST_STATE, selectActivePlotData} from '../../../services/API/apiSlice/apiSlice';
 import {Typography, CircularProgress} from '@mui/material';
 import {Alert, Link} from '@mui/material';
 import {O3AS_PLOTS} from '../../../utils/constants';
