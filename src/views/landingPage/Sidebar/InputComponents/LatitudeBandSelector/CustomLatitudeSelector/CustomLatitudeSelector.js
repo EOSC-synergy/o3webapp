@@ -18,7 +18,20 @@ import PropTypes from "prop-types";
  * @component
  * @returns {JSX.Element}    JSX with the component
  */
-function CustomLatitudeSelector(props) {
+function CustomLatitudeSelector() {
+    /**
+     * The smallest possible latitude value.
+     * @constant {number}
+     * @memberof CustomLatitudeSelector
+     */
+    const LATITUDE_BAND_MAX_VALUE = 90;
+
+    /**
+     * The biggest possible latitude value.
+     * @constant {number}
+     * @memberof CustomLatitudeSelector
+     */
+    const LATITUDE_BAND_MIN_VALUE = -90;
 
     /**
      * A dispatch function to dispatch actions to the redux store.
