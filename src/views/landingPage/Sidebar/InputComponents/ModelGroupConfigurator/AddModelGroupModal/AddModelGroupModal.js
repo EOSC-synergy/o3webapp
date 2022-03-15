@@ -25,6 +25,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchPlotDataForCurrentModels, REQUEST_STATE } from "../../../../../../services/API/apiSlice";
 import { selectNameOfGroup, selectModelDataOfGroup } from "../../../../../../store/modelsSlice/modelsSlice";
 import DiscardChangesModal from "../../../../../../components/DiscardChangesModal/DiscardChangesModal";
+import store from "../../../../../../store/store";
 
 /**
  * opens a modal where the user can add a new model group
@@ -330,10 +331,32 @@ function AddModelGroupModal(props) {
         setGroupName(event.target.value);
     }
 
+    
+    const hasChanges = () => {
+        if (!isEditMode) return true;
+        
+        // compare group name 
+        const modelGroupName = selectNameOfGroup(store.getState(), modelGroupId);
+        if (modelGroupName !== groupName) return true;
+        
+        // compare model list (equality not identity)
+        const modelGroupNames = Object.keys(selectModelDataOfGroup(store.getState(), modelGroupId));
+        if (modelGroupNames.length !== right.length) return true;
+        for (let idx in right) {
+            if (modelGroupNames[idx] !== right[idx]) return true;
+        }
+
+        return false;
+    }
+    hasChanges();
     /**
      * @todo open a "discard changes?" popup here
      */
     const closeWithChanges = () => {
+        // determine if something has changed
+
+
+
         props.onClose();
         openDiscardChangesDialog();
         /*
@@ -440,7 +463,7 @@ function AddModelGroupModal(props) {
                             variant="contained"
                             data-testid="AddModelGroupModal-save-button"
                         >
-                            {'modelGroupId' in props? "Save Changes" : "Add group"}
+                            {isEditMode ? "Save Changes" : "Add group"}
                         </Button>
                     </CardActions>
                 </Card>
