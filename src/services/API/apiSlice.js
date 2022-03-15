@@ -401,7 +401,7 @@ const apiSlice = createSlice({
 export default apiSlice.reducer;
 
 /**
- * This selector allows components (=> the graph) to "listen" for the active plot data
+ * This selector allows components (=> {@link Graph}) to "listen" for the active plot data
  * of the current selected plot. That means whenever this data is about to change, e.g. because
  * a new fetch request is dispatched, the component re-renders.
  * 
