@@ -20,6 +20,8 @@ import {convertModelName} from "../../../../../../utils/ModelNameConverter";
 import {union, not, intersection} from "../../../../../../utils/arrayOperations";
 import CloseIcon from '@mui/icons-material/Close';
 import Alert from "@mui/material/Alert";
+import DiscardChangesModal from "../../../../../../components/DiscardChangesModal/DiscardChangesModal";
+import store from "../../../../../../store/store";
 import PropTypes from 'prop-types';
 import {useDispatch, useSelector} from "react-redux";
 import {fetchPlotDataForCurrentModels, REQUEST_STATE} from "../../../../../../services/API/apiSlice/apiSlice";
@@ -83,7 +85,15 @@ function AddModelGroupModal(props) {
     const storeGroupName = useSelector(state => selectNameOfGroup(state, modelGroupId));
     const [groupName, setGroupName] = React.useState(storeGroupName);
     const [errorMessage, setErrorMessage] = React.useState('');
+    const [discardChangesOpen, setDiscardChangesOpen] = React.useState(false);
     const theme = useTheme();
+
+    const openDiscardChangesDialog = () => setDiscardChangesOpen(true);
+
+    const closeDiscardChangesDialog = () => {
+        setDiscardChangesOpen(false);
+        props.setOpen(false);
+    }
 
     useEffect(() => {
         if (modelListRequestedData.status === REQUEST_STATE.error) {
@@ -95,10 +105,13 @@ function AddModelGroupModal(props) {
     }, [allModels]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
-        setGroupName(storeGroupName);
-        setVisible(allModels);
-        setChecked([]);
-        setRight(storeRight);
+        if (props.isOpen && props.refresh) {
+            setGroupName(storeGroupName);
+            setVisible(allModels);
+            setChecked([]);
+            setRight(storeRight);   
+            setErrorMessage("");
+        }
 
     }, [props.isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -180,18 +193,31 @@ function AddModelGroupModal(props) {
         setChecked(not(checked, rightChecked));
     };
 
+    /**
+     * Tries to safe the current made changes, if this fails it re-opens the modal once again
+     * to enable the user to correct the mistake
+     * @function
+     */
+    const saveChanges = () => {
+        const success = addOrEditGroup();
+        if (!success) {
+            props.setOpen(false); // re-open because saving failed
+        }
+    }
+
     const addOrEditGroup = () => {
         if (groupName === '') {
             setErrorMessage("Please provide a model group name");
-            return;
+            return false;
         }
         if (right.length === 0) {
             setErrorMessage("Please provide a list of models for this group");
-            return;
+            return false;
         }
         dispatch(setModelsOfModelGroup({groupId: props.modelGroupId, groupName: groupName, modelList: right}));
         dispatch(fetchPlotDataForCurrentModels());
         props.onClose();
+        return true;
     }
 
     /**
@@ -309,118 +335,144 @@ function AddModelGroupModal(props) {
     }
 
     /**
-     * @todo open a "discard changes?" popup here
+     * Determines whether the user made changes to the current model group
+     * @returns whether the user made changes to the current model group
+     * @function
      */
-    const closeWithChanges = () => {
-        if (isEditMode) {
-            setGroupName(storeGroupName);
-            setVisible(allModels);
-            setChecked([]);
-            setRight(storeRight);
-        } else {
-            setGroupName("");
-            setVisible(allModels);
-            setChecked([]);
-            setRight([]);
+    const hasChanges = () => {
+        if (!isEditMode) {
+            return groupName !== "" || right.length !== 0;
+        };
+        
+        // compare group name 
+        const modelGroupName = selectNameOfGroup(store.getState(), modelGroupId);
+        if (modelGroupName !== groupName) return true;
+        
+        // compare model list (equality not identity)
+        const modelGroupNames = Object.keys(selectModelDataOfGroup(store.getState(), modelGroupId));
+        if (modelGroupNames.length !== right.length) return true;
+        for (let idx in right) {
+            if (modelGroupNames[idx] !== right[idx]) return true;
         }
 
-        props.onClose();
+        return false;
+    }
+
+    /**
+     * Default handler that is called when the modal is closed when clicking outside of the modal
+     * or by clicking the close icon.
+     * @function
+     */
+    const closeModal = () => {
+        
+        if (hasChanges()) { // made changes, reset
+            props.onClose();
+            openDiscardChangesDialog();
+        } else { // no changes made
+            props.onClose();
+        }
     }
 
     return (
-        <Modal
-            open={props.isOpen}
-            onClose={closeWithChanges}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-            data-testid="AddModelGroupModal-modal-wrapper"
-        >
-            <Card sx={style}>
-                <CardHeader
-                    title={addModelLabel}
-                    action={
-                        <IconButton onClick={closeWithChanges} aria-label="close"
-                                    data-testid="addModelGroupModal-close-button">
-                            <CloseIcon/>
-                        </IconButton>
-                    }
-                />
-                <CardContent>
-                    <Grid container alignItems="center" justifyContent="center" style={{marginBottom: '2em'}}>
-                        <TextField
-                            defaultValue={groupName}
-                            helperText="The name will only appear in the legend of the exported plot."
-                            variant="standard"
-                            onBlur={updateGroupName}
-                            sx={{marginBottom: '0.5em', marginLeft: '0.5em'}}
-                            placeholder="Your group"
-                            inputProps={{"data-testid": "AddModelGroupModal-card-group-name"}}
-                        />
-                    </Grid>
-                    <Box id="modal-modal-description" sx={{mt: 2}}>
-                        <Searchbar inputArray={allModels} foundIndicesCallback={setCurrentlyVisibleModels}
-                                   shouldReturnValues={true}/>
-                        <Grid container spacing={2} justifyContent="center" alignItems="center"
-                              sx={{marginTop: '0.5em'}}>
-                            <Grid item sm={5} xs={12} data-testid="AddModelGroupModal-card-header-left">
-                                <Typography>All Available Models</Typography>
-                                {
-                                    isLoading ?
-                                        <CircularProgress data-testid="AddModelGroupModal-spinner-left"/>
+        <React.Fragment>
+            <Modal
+                open={props.isOpen}
+                onClose={closeModal}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                data-testid="AddModelGroupModal-modal-wrapper"
+            >   
+                <Card sx={style}>
+                    <CardHeader
+                        title={addModelLabel}
+                        action={
+                            <IconButton onClick={closeModal} aria-label="close" data-testid="addModelGroupModal-close-button">
+                                <CloseIcon />
+                            </IconButton>
+                        }
+                    />
+                    <CardContent>
+                        <Grid container alignItems="center" justifyContent="center" style={{marginBottom: '2em'}}>
+                            <TextField
+                                defaultValue={groupName}
+                                helperText="The name will only appear in the legend of the exported plot."
+                                variant="standard"
+                                onBlur={updateGroupName}
+                                sx={{marginBottom: '0.5em', marginLeft: '0.5em'}}
+                                placeholder="Your group"
+                                inputProps={{"data-testid": "AddModelGroupModal-card-group-name"}}
+                            />
+                        </Grid>
+                        <Box id="modal-modal-description" sx={{ mt: 2 }}>
+                            <Searchbar inputArray={allModels} foundIndicesCallback={setCurrentlyVisibleModels} shouldReturnValues={true} />
+                            <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ marginTop: '0.5em' }}>
+                                <Grid item sm={5} xs={12} data-testid="AddModelGroupModal-card-header-left">
+                                    <Typography>All Available Models</Typography>
+                                    {
+                                        isLoading ? 
+                                            <CircularProgress data-testid="AddModelGroupModal-spinner-left" />
                                         :
-                                        customList(left, leftChecked, leftVisible)
-                                }
-                            </Grid>
-                            <Grid item sm={2} xs={12}>
-                                <Grid container direction="column" alignItems="center">
-                                    <Button
-                                        sx={{my: 0.5}}
-                                        variant="outlined"
-                                        size="small"
-                                        onClick={handleCheckedRight}
-                                        disabled={leftChecked.length === 0}
-                                        aria-label="move selected right"
-                                        data-testid="AddModelGroupModal-button-move-allChecked-right"
-                                    >
-                                        &gt;
-                                    </Button>
-                                    <Button
-                                        sx={{my: 0.5}}
-                                        variant="outlined"
-                                        size="small"
-                                        onClick={handleCheckedLeft}
-                                        disabled={rightChecked.length === 0}
-                                        aria-label="move selected left"
-                                        data-testid="AddModelGroupModal-button-move-allChecked-left"
-                                    >
-                                        &lt;
-                                    </Button>
+                                            customList(left, leftChecked, leftVisible)
+                                    }
+                                </Grid>
+                                <Grid item sm={2} xs={12}>
+                                    <Grid container direction="column" alignItems="center">
+                                        <Button
+                                            sx={{ my: 0.5 }}
+                                            variant="outlined"
+                                            size="small"
+                                            onClick={handleCheckedRight}
+                                            disabled={leftChecked.length === 0}
+                                            aria-label="move selected right"
+                                            data-testid="AddModelGroupModal-button-move-allChecked-right"
+                                        >
+                                            &gt;
+                                        </Button>
+                                        <Button
+                                            sx={{ my: 0.5 }}
+                                            variant="outlined"
+                                            size="small"
+                                            onClick={handleCheckedLeft}
+                                            disabled={rightChecked.length === 0}
+                                            aria-label="move selected left"
+                                            data-testid="AddModelGroupModal-button-move-allChecked-left"
+                                        >
+                                            &lt;
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                                <Grid item sm={5} xs={12} data-testid="AddModelGroupModal-card-header-right">
+                                    <Typography>Models in {groupName ? groupName : "your group"}</Typography>
+                                    {
+                                        isLoading ? 
+                                            <CircularProgress data-testid="AddModelGroupModal-spinner-right" />
+                                        :
+                                            customList(right, rightChecked, rightVisible)
+                                    }
                                 </Grid>
                             </Grid>
-                            <Grid item sm={5} xs={12} data-testid="AddModelGroupModal-card-header-right">
-                                <Typography>Models in {groupName ? groupName : "your group"}</Typography>
-                                {
-                                    isLoading ?
-                                        <CircularProgress data-testid="AddModelGroupModal-spinner-right"/>
-                                        :
-                                        customList(right, rightChecked, rightVisible)
-                                }
-                            </Grid>
-                        </Grid>
-                    </Box>
-                    {errorMessage && <Alert severity="error" sx={{marginTop: '2em'}}>{errorMessage}</Alert>}
-                </CardContent>
-                <CardActions sx={{justifyContent: "flex-end", marginTop: "2%"}}>
-                    <Button
-                        onClick={addOrEditGroup}
-                        variant="contained"
-                        data-testid="AddModelGroupModal-save-button"
-                    >
-                        {'modelGroupId' in props ? "Save Changes" : "Add group"}
-                    </Button>
-                </CardActions>
-            </Card>
-        </Modal>
+                        </Box>
+                        {errorMessage && <Alert severity="error" sx={{marginTop: '2em'}}>{errorMessage}</Alert>}
+                    </CardContent>
+                    <CardActions sx={{justifyContent: "flex-end", marginTop: "2%"}}>
+                        <Button 
+                            onClick={addOrEditGroup} 
+                            variant="contained"
+                            data-testid="AddModelGroupModal-save-button"
+                        >
+                            {isEditMode ? "Save Changes" : "Add group"}
+                        </Button>
+                    </CardActions>
+                </Card>
+            </Modal>
+        <DiscardChangesModal 
+            isOpen={discardChangesOpen} 
+            onClose={closeDiscardChangesDialog} 
+            saveChanges={saveChanges} 
+            discardChanges={() => {}} 
+            closeDialog={() => setDiscardChangesOpen(false)}
+        />
+        </React.Fragment>    
     );
 }
 
@@ -429,8 +481,22 @@ AddModelGroupModal.propTypes = {
     reportError: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     isOpen: PropTypes.bool.isRequired,
+    /**
+     * function to re-open the modal from inside the component.
+     */
+    setOpen: PropTypes.func.isRequired,
+    /**
+     * boolean indicating whether the state should be refreshed. This is usually
+     * set to false, true is only required when the discard changes modal is closed
+     * without saving or ultimately discarding the changes.
+     */
+    refresh: PropTypes.bool.isRequired,
+    /**
+     * string identifying the model group,
+     * if this model should be used to edit an existing model group
+     */
     modelGroupId: PropTypes.number
-}
 
+}
 
 export default AddModelGroupModal;
