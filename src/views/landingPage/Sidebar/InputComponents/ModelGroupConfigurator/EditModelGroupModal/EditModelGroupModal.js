@@ -225,7 +225,7 @@ function EditModelGroupModal(props) {
         setStdVisible(modelList.map(model => modelData[model][std]));
         setMedianVisible(modelList.map(model => modelData[model][median]));
         setMeanVisible(modelList.map(model => modelData[model][mean]));
-    }, [props.isOpen]);
+    }, [props.isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
     /**
      * Gets the setter for the boolean list of checked and unchecked models of the selected type.
