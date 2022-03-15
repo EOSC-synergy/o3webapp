@@ -19,13 +19,15 @@ function ModelGroupConfigurator(props) {
 
 
     const [isAddModalVisible, setAddModalVisible] = React.useState(false);
+    const [refreshState, setRefreshState] = React.useState(true);
 
     const closeAddModal = () => {
         setAddModalVisible(false);
     }
 
-    const openAddModal = () => {
+    const openAddModal = (refresh) => {
         setAddModalVisible(true);
+        setRefreshState(refresh);
     }
 
     return (
@@ -38,7 +40,7 @@ function ModelGroupConfigurator(props) {
             <Button
                 sx={{width: "100%"}}
                 variant="contained"
-                onClick={openAddModal}
+                onClick={() => openAddModal(true)}
                 data-testid="ModelGroupConfigurator-addModelGroup-button"
             >
                 Add Model Group
@@ -47,7 +49,7 @@ function ModelGroupConfigurator(props) {
                 isOpen={isAddModalVisible} 
                 onClose={closeAddModal} 
                 reportError={props.reportError} 
-                setOpen={(openAddModal)}
+                setOpen={openAddModal}
             />
         </>
     );

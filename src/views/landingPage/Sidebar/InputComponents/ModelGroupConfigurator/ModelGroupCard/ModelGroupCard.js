@@ -86,6 +86,8 @@ function ModelGroupCard(props) {
      */
     const [isDeleteRequest, setDeleteRequest] = React.useState(false);
 
+    const [refreshState, setRefreshState] = React.useState(true);
+
     /**
      * Shows the edit group modal.
      */
@@ -104,9 +106,10 @@ function ModelGroupCard(props) {
     /**
      * Shows the add model group modal (used to edit group members).
      */
-    const showAddModal = () => {
+    const showAddModal = (refresh) => {
         setEditModalVisible(false);  // avoid two modals being visible under all circumstances
         setAddModalVisible(true);
+        setRefreshState(refresh);
     }
 
     /**
@@ -147,7 +150,8 @@ function ModelGroupCard(props) {
                 <EditModelGroupModal modelGroupId={props.modelGroupId} isOpen={isEditModalVisible}
                                      onClose={closeEditModal}/>
                 <AddModelGroupModal modelGroupId={props.modelGroupId} isOpen={isAddModalVisible} onClose={closeAddModal}
-                                    reportError={props.reportError} setOpen={showAddModal}/>
+                                    reportError={props.reportError} setOpen={showAddModal}
+                                    refresh={refreshState}/>
                 <Grid container>
                     <Grid item xs={2}>
                         <IconButton aria-label="change visibility"
@@ -193,7 +197,7 @@ function ModelGroupCard(props) {
                             data-testid="ModelGroupCard-EditModelGroupModal-button-open">
                         Edit statistical values
                     </Button>
-                    <Button size="small" variant="outlined" onClick={showAddModal}
+                    <Button size="small" variant="outlined" onClick={() => showAddModal(true)}
                             data-testid="ModelGroupCard-AddModelGroupModal-button-open">
                         Edit group members
                     </Button>
