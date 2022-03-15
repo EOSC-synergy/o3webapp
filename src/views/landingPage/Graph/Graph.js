@@ -10,7 +10,7 @@ import {Alert, Link} from '@mui/material';
 import {O3AS_PLOTS} from '../../../utils/constants';
 import {NO_MONTH_SELECTED} from '../../../utils/constants';
 import store from '../../../store/store';
-  
+
 /**
  * Currently there is no dynamic data linking. The graph will always
  * render the data from default-data.json in this folder. This is
@@ -81,7 +81,7 @@ function Graph(props) {
             width: window.innerWidth
           })
         }
-    
+
         window.addEventListener('resize', handleResize)
         return _ => window.removeEventListener('resize', handleResize);
     })

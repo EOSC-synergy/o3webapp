@@ -8,18 +8,16 @@ import CustomLatitudeSelector from "../LatitudeBandSelector/CustomLatitudeSelect
 import PropTypes from 'prop-types';
 
 /**
- * enables the user to select / deselect regions as well as entering a private region
- * 
- * {@link LatitudeBandSelector}
- * 
+ * enables the user to select / deselect regions as well as entering a private region {@link LatitudeBandSelector}
+ *
  * @component
- * @param {Object} props specified in PropTypes
+ * @param {Object} props
+ * @param {function} props.reportError - used to report error functions
  * @returns {JSX.Element}
  */
 function RegionSelector() {
     /**
      * A dispatch function to dispatch actions to the redux store.
-     * @constant {function}
      */
     const dispatch = useDispatch()
 
@@ -29,14 +27,12 @@ function RegionSelector() {
      * Examples:
      * If the first region is selected the array would have the following form: [0]
      * If the second and fifth region are selected the array would have the following form: [1, 4]
-     * @constant {array}
      */
     const xRangeRegions = useSelector(selectPlotXRange);
     /**
      * Handles the change if a region is clicked (selected/deselected).
      *
      * @param {number} regionIdx The index of the region that was clicked.
-     * @constant {function}
      */
     const handleRegionChecked = (regionIdx) => {
         let regionCpy = [...xRangeRegions.regions];
@@ -53,7 +49,6 @@ function RegionSelector() {
     /**
      * Gets default regions that are available in the return recovery plot.
      * @todo connect to api
-     * @constant {function}
      */
     const getDefaultRegions = () => {
         return ALL_REGIONS_ORDERED;
@@ -92,13 +87,6 @@ function RegionSelector() {
             </Box>
         </Grid>
     );
-}
-
-RegionSelector.propTypes = {
-    /**
-     * function for error handling
-     */
-    reportError: PropTypes.func
 }
 
 export default RegionSelector;

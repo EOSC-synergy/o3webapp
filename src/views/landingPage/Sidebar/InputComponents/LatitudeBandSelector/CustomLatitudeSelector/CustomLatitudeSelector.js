@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 
 /**
  * A component to select the specific min and max latitude values for the custom region.
- * Used in {@link LatitudeBandSelector}.
+ * @memberof LatitudeBandSelector
  * @component
  * @returns {JSX.Element}    JSX with the component
  */
@@ -106,7 +106,7 @@ function CustomLatitudeSelector() {
     /**
      * A function to generate the helper text for the min. latitude box.
      *
-     * @returns {string}     Text that should be displayed in the helper text
+     * @returns     Text that should be displayed in the helper text
      */
     const generateHelperTextMin = () => {
         if (typeof minLatState === "string") return "";
@@ -119,7 +119,7 @@ function CustomLatitudeSelector() {
     /**
      * A function to generate the helper text for the max. latitude box.
      *
-     * @returns {string}     Text that should be displayed in the helper text
+     * @returns     Text that should be displayed in the helper text
      */
     const generateHelperTextMax = () => {
         if (typeof maxLatState === "string") return "";
