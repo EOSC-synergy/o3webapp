@@ -27,8 +27,6 @@ import { selectNameOfGroup, selectModelDataOfGroup } from "../../../../../../sto
 import DiscardChangesModal from "../../../../../../components/DiscardChangesModal/DiscardChangesModal";
 import store from "../../../../../../store/store";
 
-let previousId = -2;
-
 /**
  * opens a modal where the user can add a new model group
  * @component
