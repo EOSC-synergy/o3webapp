@@ -1280,7 +1280,7 @@ export const formatYLabelsNicely = value => value % 10 ? "" : value
  * @returns an object holding the sv type and the group name
  */
 export function parseSvName(name) {
-    const regex = new RegExp("([^\(]+)\(([^\)]+)\)");
+    const regex = new RegExp("([^(]+)(([^)]+))");
     const info = name.match(regex);
     return {
         sv: info[1],
