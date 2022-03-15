@@ -1,5 +1,5 @@
 import store, {createTestStore} from "../../store/store";
-import {IMPLICIT_YEAR_LIST, O3AS_PLOTS, START_YEAR, MODEL_LINE_THICKNESS} from "../constants";
+import {O3AS_PLOTS, START_YEAR} from "../constants";
 import {
     colorNameToHex,
     convertToStrokeStyle,
@@ -18,7 +18,8 @@ import {
     getDefaultYAxisTco3Zm,
     FONT_FAMILY,
     customTooltipFormatter,
-
+    IMPLICIT_YEAR_LIST,
+    MODEL_LINE_THICKNESS,
 } from "./optionsFormatter";
 
 describe("testing optionsFormatter functionality", () => {
@@ -142,7 +143,6 @@ describe("testing optionsFormatter functionality", () => {
                         8, 8
                     ],
                     width: Array(10).fill(MODEL_LINE_THICKNESS),
-                    points: [[1981, 0], [null, null], [null, null], [null, null], [1981, 0], [1981, 0]]
                 }
             }
             const data = {}

@@ -1,11 +1,16 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux"
-import { selectPlotId, setTitle } from "../../../../../store/plotSlice/plotSlice";
-import { Divider, Typography, Box, FormControl, TextField} from '@mui/material';
-import { useSelector } from 'react-redux';
-import { selectPlotTitle } from "../../../../../store/plotSlice/plotSlice";
+import React, {useEffect} from "react";
+import {useDispatch} from "react-redux"
+import {selectPlotId, setTitle} from "../../../../../store/plotSlice/plotSlice";
+import {Divider, Typography, Box, FormControl, TextField} from '@mui/material';
+import {useSelector} from 'react-redux';
+import {selectPlotTitle} from "../../../../../store/plotSlice/plotSlice";
 import PropTypes from 'prop-types';
-import { PLOT_NAME_MAX_LEN } from "../../../../../utils/constants"
+
+/** The max. length of the plot name
+ * @constant {number}
+ * @memberof PlotNameField
+ */
+export const PLOT_NAME_MAX_LEN = 40;
 
 /**
  * Enables the user to rename and change the plot title.
@@ -60,7 +65,7 @@ function PlotNameField() {
         <>
             <Divider><Typography>{componentTitle}</Typography></Divider>
             <Box sx={{paddingLeft: '8%', paddingRight: '8%', paddingTop: '3%', paddingBottom: '3%'}}>
-                <FormControl sx={{width: '100%' }}>
+                <FormControl sx={{width: '100%'}}>
                     <TextField
                         data-testid="plot-field"
                         id="standard-basic-plot-title-input"

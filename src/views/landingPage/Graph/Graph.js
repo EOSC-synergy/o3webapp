@@ -8,7 +8,7 @@ import {REQUEST_STATE, selectActivePlotData} from '../../../services/API/apiSlic
 import {Typography, CircularProgress} from '@mui/material';
 import {Alert, Link} from '@mui/material';
 import {O3AS_PLOTS} from '../../../utils/constants';
-import {APEXCHART_PLOT_TYPE, HEIGHT_LOADING_SPINNER, HEIGHT_GRAPH, NO_MONTH_SELECTED} from '../../../utils/constants';
+import {NO_MONTH_SELECTED} from '../../../utils/constants';
 import store from '../../../store/store';
   
 /**
@@ -17,15 +17,34 @@ import store from '../../../store/store';
  * just a preview to work with until the API is implemented and
  * synced with redux and the UI (input components).
  * @component
-<<<<<<< HEAD
- * @returns a svg rendered element that represents a graph, this is done by 
-=======
  * @param {object} props currently not used
  * @returns a svg rendered element that represents a graph, this is done by
->>>>>>> develop
  *          the apexcharts library
  */
 function Graph(props) {
+    /**
+     * Maps the plots provided by the api to their apexcharts plot type
+     * @constant {object}
+     * @memberof Graph
+     */
+    const APEXCHARTS_PLOT_TYPE = {
+        tco3_zm: "line",
+        tco3_return: "boxPlot"
+    };
+
+    /**
+     * How large the loading spinner should appear.
+     * @constant {string}
+     * @memberof Graph
+     */
+    const HEIGHT_LOADING_SPINNER = "300px";
+
+    /**
+     * How tall the graph should appear
+     * @constant {string}
+     * @memberof Graph
+     */
+    const HEIGHT_GRAPH = `${window.innerHeight * 0.75}px`;
 
     const plotId = useSelector(selectPlotId);
     const plotTitle = useSelector(selectPlotTitle);
@@ -133,7 +152,7 @@ function Graph(props) {
         });
         const uniqueNumber = Date.now(); // forces apexcharts to re-render correctly!
         const HEIGHT = (window.innerHeight - document.getElementById('Navbar').offsetHeight) * 0.975;
-        return <Chart key={uniqueNumber} options={options} series={data} type={APEXCHART_PLOT_TYPE[plotId]} height={HEIGHT} style={{marginTop: "2%"}} />
+        return <Chart key={uniqueNumber} options={options} series={data} type={APEXCHARTS_PLOT_TYPE[plotId]} height={HEIGHT} style={{marginTop: "2%"}} />
     }
 
     // this "case" should not happen
