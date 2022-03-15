@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {setDisplayXRange, selectPlotXRange} from "../../../../../store/plotSlice/plotSlice";
 import {Typography, Grid, TextField, FormControl} from "@mui/material";
@@ -41,6 +41,10 @@ function XAxisField() {
             }
         }
     }
+
+    useEffect(() => {
+        setStateX({minX, maxX});
+    }, [minX, maxX]);
 
     /**
      * Handles the change of the maximum value.

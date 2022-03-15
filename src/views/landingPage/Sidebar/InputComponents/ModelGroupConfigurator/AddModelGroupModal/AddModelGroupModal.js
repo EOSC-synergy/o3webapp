@@ -102,7 +102,6 @@ function AddModelGroupModal(props) {
 
     }, [props.isOpen]);
 
-
     /**
      * Returns how many models in the provided array are currently checked
      * @param {Array} models models to check

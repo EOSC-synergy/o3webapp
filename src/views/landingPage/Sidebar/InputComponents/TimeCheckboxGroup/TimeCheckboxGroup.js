@@ -1,21 +1,42 @@
 import React, {useState} from "react";
 import SeasonCheckBoxGroup from "./SeasonCheckboxGroup/SeasonCheckBoxGroup";
-import {Alert, Box, Checkbox, Divider, FormControlLabel, Grid} from "@mui/material";
-import {
-    Winter,
-    Spring,
-    Summer,
-    Autumn,
-    NUM_MONTHS_IN_SEASON,
-    NUM_MONTHS,
-    SEASONS_ARRAY
-} from "../../../../../utils/constants";
+import {Alert, Checkbox, Divider, FormControlLabel, Grid} from "@mui/material";
+import {NUM_MONTHS_IN_SEASON, NUM_MONTHS} from "../../../../../utils/constants";
 import Typography from "@mui/material/Typography";
 import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice";
 import {useSelector, useDispatch} from "react-redux";
 import {selectPlotMonths, setMonths} from "../../../../../store/plotSlice/plotSlice";
 import PropTypes from 'prop-types';
 
+/** Stores the season Winter and its corresponding months.
+ * @constant {object}
+ * @memberof TimeCheckBoxGroup
+ */
+const Winter = {name: Symbol("Winter"), months: [12, 1, 2], seasonId: 0}
+
+/** Stores the season Spring and its corresponding months.
+ * @constant {object}
+ * @memberof TimeCheckBoxGroups
+ */
+const Spring = {name: Symbol("Spring"), months: [3, 4, 5], seasonId: 1}
+
+/** Stores the season Summer and its corresponding months.
+ * @constant {object}
+ * @memberof TimeCheckBoxGroup
+ */
+const Summer = {name: Symbol("Summer"), months: [6, 7, 8], seasonId: 2}
+
+/** Stores the season Autumn and its corresponding months.
+ * @constant {object}
+ * @memberof TimeCheckBoxGroup
+ */
+const Autumn = {name: Symbol("Autumn"), months: [9, 10, 11], seasonId: 3}
+
+/** Array containing all season indext with the corresponding seasonId
+ * @constant {array}
+ * @memberof TimeCheckBoxGroup
+ */
+const SEASONS_ARRAY = [Winter, Spring, Summer, Autumn];
 
 /**
  * enables the user to select a month, season or the whole year

@@ -5,7 +5,12 @@ import {Divider, Typography, Box, FormControl, TextField} from '@mui/material';
 import {useSelector} from 'react-redux';
 import {selectPlotTitle} from "../../../../../store/plotSlice/plotSlice";
 import PropTypes from 'prop-types';
-import {PLOT_NAME_MAX_LEN} from "../../../../../utils/constants";
+
+/** The max. length of the plot name
+ * @constant {number}
+ * @memberof PlotNameField
+ */
+export const PLOT_NAME_MAX_LEN = 40;
 
 /**
  * Enables the user to rename and change the plot title.

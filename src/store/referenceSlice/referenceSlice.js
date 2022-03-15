@@ -1,6 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {DEFAULT_REF_MODEL, DEFAULT_REF_YEAR} from "../../utils/constants";
 
+export const DEFAULT_REF_MODEL = "SBUV_GSFC_merged-SAT-ozone";
+export const DEFAULT_REF_YEAR = 1980;
 
 /**
  * The initial state of the referenceSlice defines the data structure in the

@@ -1,8 +1,8 @@
 import {createSlice, createAsyncThunk, createAction} from "@reduxjs/toolkit";
 import {getModels, getPlotTypes, getPlotData} from "./client";
-import {preTransformApiData} from "../../utils/optionsFormatter/optionsFormatter";
+import {getSuggestedValues, preTransformApiData} from "../../utils/optionsFormatter/optionsFormatter";
 import {START_YEAR, END_YEAR, O3AS_PLOTS} from "../../utils/constants";
-import {setDisplayYRangeForPlot} from "../../store/plotSlice/plotSlice";
+import {setDisplayXRangeForPlot, setDisplayYRangeForPlot} from "../../store/plotSlice/plotSlice";
 
 export let cacheKey = '';
 
@@ -130,14 +130,21 @@ const selectExistingPlotData = createAction("api/selectPlotData");
 export const updateDataAndDisplaySuggestions = ({plotId, cacheKey, data, suggest}) => {
 
     return (dispatch, getState) => {
-        dispatch(fetchPlotDataSuccess({data, plotId, cacheKey, modelsSlice: getState().models}));
+        dispatch(fetchPlotDataSuccess({data, plotId, cacheKey}));
         if (suggest) {
-            const {min, max} = getState().api.plotSpecific[plotId].cachedRequests[cacheKey].suggested; // suggested min/max is availabe
+            const requestData = getState().api.plotSpecific[plotId].cachedRequests[cacheKey].data;
+
+
+            const {minX, maxX, minY, maxY} = getSuggestedValues(requestData, getState().models);
+
             dispatch(setDisplayYRangeForPlot({
                 plotId,
-                minY: Math.floor(min / 10) * 10,
-                maxY: Math.ceil(max / 10) * 10
+                minY: Math.floor(minY / 10) * 10,
+                maxY: Math.ceil(maxY / 10) * 10
             }));
+            if (plotId === O3AS_PLOTS.tco3_zm) {
+                dispatch(setDisplayXRangeForPlot({plotId, years: {minX, maxX}}));
+            }
         }
     }
 }
@@ -211,8 +218,15 @@ export const fetchPlotData = ({plotId, models, suggest}) => {
                 // old: status == success
                 dispatch(selectExistingPlotData({plotId, cacheKey}));
                 if (cachedRequest.status === REQUEST_STATE.success) {
-                    const {min, max} = cachedRequest.suggested; // suggested min/max is availabe
-                    dispatch(setDisplayYRangeForPlot({plotId, minY: Math.floor(min), maxY: Math.floor(max)}));
+
+
+                    const {minX, maxX, minY, maxY} = getSuggestedValues(cachedRequest.data, getState().models);
+
+                    dispatch(setDisplayYRangeForPlot({plotId, minY: Math.floor(minY / 10) * 10, maxY: Math.ceil(maxY / 10) * 10}));
+                    if (plotId === O3AS_PLOTS.tco3_zm) {
+                        dispatch(setDisplayXRangeForPlot({plotId, years: {minX, maxX}}));
+                    }
+
                 }
                 return Promise.resolve(); // request is already satisfied
 
@@ -363,7 +377,6 @@ const apiSlice = createSlice({
                     loadedModels: [],
                     error: null,
                     data: {},
-                    suggested: null, // this holds the suggested min / max values
                 };
                 plotSpecificSection.active = cacheKey; // select this request after dispatching it
             })
@@ -377,10 +390,10 @@ const apiSlice = createSlice({
                 plotSpecificSection.active = cacheKey; // select this request after dispatching it
             })
             .addCase(fetchPlotDataSuccess, (state, action) => {
-                const {data, plotId, cacheKey, modelsSlice} = action.payload;
+                const { data, plotId, cacheKey } = action.payload;
                 const storage = state.plotSpecific[plotId].cachedRequests[cacheKey];
 
-                const {lookUpTable, min, max} = preTransformApiData({plotId, data, modelsSlice});
+                const { lookUpTable } = preTransformApiData({plotId, data});
                 Object.assign(storage.data, lookUpTable); // copy over new values
 
                 // update loaded / loading
@@ -390,18 +403,6 @@ const apiSlice = createSlice({
 
                 if (storage.loadingModels.length === 0) {
                     storage.status = REQUEST_STATE.success; // display models
-                }
-
-                // update suggestions
-                if (storage.suggested) {
-                    const {min: oldMin, max: oldMax} = storage.suggested;
-
-                    storage.suggested = {
-                        min: Math.min(min, oldMin),
-                        max: Math.max(max, oldMax)
-                    };
-                } else {
-                    storage.suggested = {min, max};
                 }
 
             })
