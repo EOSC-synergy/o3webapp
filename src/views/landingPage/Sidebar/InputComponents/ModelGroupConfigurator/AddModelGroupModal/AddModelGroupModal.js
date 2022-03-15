@@ -333,7 +333,9 @@ function AddModelGroupModal(props) {
 
     
     const hasChanges = () => {
-        if (!isEditMode) return true;
+        if (!isEditMode) {
+            return groupName !== "" || right.length !== 0;
+        };
         
         // compare group name 
         const modelGroupName = selectNameOfGroup(store.getState(), modelGroupId);
@@ -348,39 +350,36 @@ function AddModelGroupModal(props) {
 
         return false;
     }
-    hasChanges();
+
     /**
      * @todo open a "discard changes?" popup here
      */
-    const closeWithChanges = () => {
-        // determine if something has changed
-
-
-
-        props.onClose();
-        openDiscardChangesDialog();
-        /*
-        if(isEditMode) {
-            setGroupName(storeGroupName);
-            setVisible(allModels);
-            setChecked([]);
-            setRight(storeRight);
-        } else {
-            setGroupName("");
-            setVisible(allModels);
-            setChecked([]);
-            setRight([]);
-        }
-        */
+    const closeModal = () => {
         
-        props.onClose();
+        if (hasChanges()) { // no changes made
+            props.onClose();
+            openDiscardChangesDialog();
+        } else {
+            if(isEditMode) {
+                setGroupName(storeGroupName);
+                setVisible(allModels);
+                setChecked([]);
+                setRight(storeRight);
+            } else {
+                setGroupName("");
+                setVisible(allModels);
+                setChecked([]);
+                setRight([]);
+            }
+            props.onClose();
+        }
     }
 
     return (
         <React.Fragment>
             <Modal
                 open={props.isOpen}
-                onClose={closeWithChanges}
+                onClose={closeModal}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
                 data-testid="AddModelGroupModal-modal-wrapper"
@@ -389,7 +388,7 @@ function AddModelGroupModal(props) {
                     <CardHeader
                         title={addModelLabel}
                         action={
-                            <IconButton onClick={closeWithChanges} aria-label="close" data-testid="addModelGroupModal-close-button">
+                            <IconButton onClick={closeModal} aria-label="close" data-testid="addModelGroupModal-close-button">
                                 <CloseIcon />
                             </IconButton>
                         }
