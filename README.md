@@ -15,6 +15,7 @@
     and thus enhancing the scientific research of the ozone layer decomposition.
     The product provides an intuitive user interface for detailed visualizations,
     e.g. ozone recovery analysis, and calculation of statistical values. Furthermore, plotted data can be downloaded to share gathered information
+    To get more information about the "O3as: Ozone Assessment" project, visit: https://o3as.data.kit.edu/
   </p>
 </div>
 
@@ -33,13 +34,13 @@
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-### Prerequisites
+## Prerequisites
 
 Make sure that you have installed
 
 - node.js (https://nodejs.dev/learn/how-to-install-nodejs)
 
-### How to Install and Run the Project
+## How to Install and Run the Project
 
 - After cloning the project execute this command in order to install the necessary packages:
 
@@ -93,12 +94,12 @@ Configuration can be done in the config file.
 The default config specifies where to put certain fields, if after calling the API it is necessary to place them somewhere.
 Special config files for endpoints can be specified.
 
-### Documentation
+## Documentation
 You can find the documentation under this link:
 https://blank.org/
 
 
-### Credits
+## Credits
 
 Developers which worked on this project:
 
