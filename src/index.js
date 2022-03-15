@@ -24,6 +24,7 @@ if (queryString === '') {
     store.dispatch(setModelsOfModelGroup(DEFAULT_MODEL_GROUP));
 }
 
+
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
