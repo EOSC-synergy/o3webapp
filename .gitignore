@@ -24,10 +24,6 @@ yarn-error.log*
 
 /.idea/modules.xml
 /.idea/o3webapp.iml
-<<<<<<< HEAD
-/.idea/vcs.xml
-=======
 /.idea/vcs.xml
 
 .chache/
->>>>>>> develop
