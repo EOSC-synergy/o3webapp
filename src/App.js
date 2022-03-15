@@ -2,6 +2,7 @@ import * as React from 'react';
 import Navbar from "./components/Navbar/NavBar";
 import Footer from "./components/Footer/Footer";
 import ErrorMessageModal from './components/ErrorMessageModal/ErrorMessageModal';
+import DiscardChangesModal from './components/DiscardChangesModal/DiscardChangesModal';
 import LandingPage from './views/landingPage/LandingPage';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
@@ -104,6 +105,7 @@ function App() {
                 <LandingPage reportError={reportError} openSidebar={openSidebar} closeSidebar={closeSidebar} isSidebarOpen={isSidebarOpen} />
                 <Footer reportError={reportError} />
                 <ErrorMessageModal isOpen={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />
+                <DiscardChangesModal isOpen={true} />
                 {/* <CookieConsentModal isOpen={isCookieConsentModalVisible} onClose={onCloseCookieConsentModal} /> */}
             </div>
         </ThemeProvider>
