@@ -1,8 +1,9 @@
-/** @module ModelNameConverter */  // used for auto generation of JSDocs with better-docs
+/** 
+ * A module for converting the name of a given model to an object containing the model description (project, insitute, name)
+ * @module ModelNameConverter */  // used for auto generation of JSDocs with better-docs
 
 /**
- * This function parses a given string like the structure of the
- * models were described by Valentin and Tobias (aka der Betreuer-Gang):
+ * This function parses a given string representing a model name into a structure of the following form: {project, institute, name}
  * 
  * Project_Institute_Modelname (whereas modelname can contain underscores)
  * 

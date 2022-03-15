@@ -1,4 +1,8 @@
-/** @module Constants */ // used for auto generation of JSDocs with better-docs
+/** 
+ * A module defining all constants that are shared between different components.
+ * It contains default values and settings for those components.
+ * 
+ * @module Constants */ // used for auto generation of JSDocs with better-docs
 
 /**
  * Stores the default model group.
@@ -25,7 +29,7 @@ export const DEFAULT_MODEL_GROUP = {
 export const NO_MONTH_SELECTED = "Invalid Selection: Selecting at least one month should make this error go away.";
 
 /** Stores all the months in short form. (first three letters)
- * @constant {array}
+ * @constant {Array}
  * @category Utils
  * @subcategory Constants
  */
@@ -38,20 +42,18 @@ export const months = [
 /** Stores the amount of months in a season
  * @constant {number}
  * @category Utils
- * @memberof TimeCheckBoxGroup
  */
 export const NUM_MONTHS_IN_SEASON = 3;
 
 /** Stores the amount of months in a year
  * @constant {number}
- * @memberof TimeCheckBoxGroup
+ * @category Utils
  */
 export const NUM_MONTHS = 12;
 
 /** Stores the latitude bands and its min/max values
  * @constant {array}
  * @category Utils
- * @memberof LatitudeBandSelector
  */
 export const latitudeBands = [
     {
@@ -92,7 +94,6 @@ export const latitudeBands = [
 /**
  * An "enum" which stores the plot types as they come from the api.
  * @constant {object}
- * @memberof Graph
  */
 export const O3AS_PLOTS = { // used for internal testing or manual if-else
     tco3_zm: "tco3_zm",

@@ -21,35 +21,39 @@ function YAxisField(props) {
 
     /**
      * An object containing the minY and maxY values for the y-axis.
-     * @constant {object}
+     * @see {@link selectPlotYRange}
+     * @constant {Object}
      */
     const {minY, maxY} = useSelector(selectPlotYRange);
 
     /**
      * A string containing the active plot type.
-     * @constant {string}
+     * @see {@link selectPlotId}
+     * @constant {String}
      */
     const plotId = useSelector(selectPlotId);
 
     /**
      * Stores the minY and maxY values for tco3_zm
      * and checks their validation before sending it to the Redux store.
-     * @constant {array}
+     * @constant {Array}
      */
     const [stateY_zm, setStateY_zm] = React.useState(store.getState().plot.plotSpecificSettings.tco3_zm.displayYRange);
 
     /**
      * Stores the minY and maxY values for tco3_return
      * and checks their validation before sending it to the Redux store.
-     * @constant {array}
+     * @constant {Array}
      */
     const [stateY_return, setStateY_return] = React.useState(store.getState().plot.plotSpecificSettings.tco3_return.displayYRange);
 
     /**
      * Handles the change of the minimum value.
      *
-     * @param event the input value
-     * @constant {function}
+     * @param event {Event} event that triggered the call of this function
+     * @function
+     * @see {@link setStateY_zm}
+     * @see {@link setStateY_return}
      */
     const handleChangeMin = (event) => {
         if (!isNaN(event.target.value)) {
@@ -64,8 +68,10 @@ function YAxisField(props) {
     /**
      * Handles the change of the maximum value.
      *
-     * @param event the input value
-     * @constant {function}
+     * @param event {Event} event that triggered the call of this function
+     * @function
+     * @see {@link setStateY_zm}
+     * @see {@link setStateY_return}
      */
     const handleChangeMax = (event) => {
         if (!isNaN(event.target.value)) {
@@ -138,7 +144,7 @@ function YAxisField(props) {
     );
 }
 
-YAxisField.protoTypes = {
+YAxisField.propTypes = {
     /**
      * function for error handling
      */

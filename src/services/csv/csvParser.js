@@ -1,4 +1,6 @@
-/** @module CSV */ // used for auto generation of JSDocs with better-docs
+/** 
+ * A module for the generation of CSV files containing the plot data in the CSV format.
+ * @module CSV */ // used for auto generation of JSDocs with better-docs
 
 /**
  * This function translates a javascript object or a json into a string formatted

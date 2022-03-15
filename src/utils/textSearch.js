@@ -1,13 +1,16 @@
-/** @module TextSearch */  // used for auto generation of JSDocs with better-docs
+/** 
+ * A module implementing different search algorithms for text search in an object.
+ * 
+ * @module TextSearch */  // used for auto generation of JSDocs with better-docs
 
 /**
  * Performs a simple full text search on the given element and looks
  * for the given search string.
  * 
- * @param {object|string} elem single nested object or a string
+ * @param {Object.<string>} elem single nested object or a string
  * @param {string} searchStr what shall be searched for
  * @returns {boolean} whether the search string was found
- * @constant {function}
+ * @function
  */
 export const fullTextSearch = (elem, searchStr) => {
     if (typeof elem === "object") {
@@ -33,11 +36,11 @@ export const fullTextSearch = (elem, searchStr) => {
  * Each item in the array that has the searchString as a substring is a valid search result.
  * 
  * @param {Array.<String, Object>} array holds the items that are searched
- * @param {String} searchString specifies what should be searched for
+ * @param {string} searchString specifies what should be searched for
  * @param {boolean} shouldReturnValues specifies whether performSearch returns values or indices of
  *          found matches
- * @returns {array} containing the indices of all elements in the array where the searchString matched
- * @constant {function}
+ * @returns {Array} containing the indices of all elements in the array where the searchString matched
+ * @function
  * @category Utils
  */
  export const performSearch = (array, searchString, shouldReturnValues) => {

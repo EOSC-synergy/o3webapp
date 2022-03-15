@@ -15,6 +15,12 @@ import PropTypes from 'prop-types';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import { BACKGROUND_BASE_COLOR, O3AS_PLOTS } from '../../../utils/constants.js';
 
+/**
+ * The default width of the sidebar / drawer in pixels.
+ * @constant {int}
+ * @memberof Sidebar
+ * @default 400
+ */
 const DRAWER_WIDTH = 400;
 
 /**
@@ -39,13 +45,26 @@ const DrawerHeader = styled('div')(({ theme }) => ({
  */
 function Sidebar(props) {
 
+    /**
+     * The theme used in this sideBar provided by Material UI's [createTheme]{@link https://mui.com/customization/theming/}.
+     * @constant {Object}
+     */
     const theme = useTheme();
 
+    /**
+     * State to track whether the download modal is visible
+     * @constant {Array}
+     */
     const [isDownloadModalVisible, setDownloadModalVisible] = React.useState(false);
+    /**
+     * State to track which section is currently expanded
+     * @constant {Array}
+     */
     const [expandedSection, setExpandedSection] = React.useState(null); // -> idx of sections array
 
     /**
      * closes the download modal
+     * @function
      */
     const closeDownloadModal = () => {
         setDownloadModalVisible(false);
@@ -53,6 +72,7 @@ function Sidebar(props) {
 
     /**
      * shows the download modal
+     * @function
      */
     const openDownloadModal = () => {
         setDownloadModalVisible(true);
@@ -60,6 +80,7 @@ function Sidebar(props) {
 
     /**
      * collapses all sections
+     * @function
      */
     const collapseSection = () => {
         setExpandedSection(null);
@@ -69,6 +90,7 @@ function Sidebar(props) {
      * expands section with id (index in section array) 'i'
      * collapses all other currently expanded sections
      * @param {int} i the section that should be expanded
+     * @function
      */
     const expandSection = (i) => {
         setExpandedSection(i);
@@ -76,11 +98,14 @@ function Sidebar(props) {
 
     /**
      * The id of the selected plot.
+     * @function
+     * @see {@link selectPlotId}
      */
     const selectedPlot = useSelector(selectPlotId);
 
     /**
-     * Creates the structure of the sections depending on the type of plot.
+     * Creates the structure of the sections depending on the type of plot and the config file.
+     * @function
      */
     const createSectionStructure = () => {
         let sections = [...defaultStructure['sections']];
