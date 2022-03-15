@@ -4,14 +4,14 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://git.scc.kit.edu/synergy.o3as/o3webapp/-/blob/issue_readMe_%2365/public">
-    <img src="public/O3asWepAppIcon.ico" alt="Logo" width="80" height="80">
+  <a href="https://git.scc.kit.edu/synergy.o3as/o3webapp/-/blob/issue_readMe_%2365">
+    <img src="public/O3asWepAppIcon.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">The O3as Webapp</h3>
 
   <p align="center">
-    he O3as Webapp has the purpose of visualizing data from the ozone layer
+    The O3as Webapp has the purpose of visualizing data from the ozone layer
     and thus enhancing the scientific research of the ozone layer decomposition.
     The product provides an intuitive user interface for detailed visualizations,
     e.g. ozone recovery analysis, and calculation of statistical values. Furthermore, plotted data can be downloaded to share gathered information
