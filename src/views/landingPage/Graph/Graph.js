@@ -74,17 +74,29 @@ function Graph(props) {
         }
     }, [activeData]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    useEffect(() => {
-        const handleResize = () => {
-          setDimensions({
-            height: window.innerHeight,
-            width: window.innerWidth
-          })
-        }
+    function debounce(fn, ms) {
+        let timer
+        return _ => {
+          clearTimeout(timer)
+          timer = setTimeout(_ => {
+            timer = null
+            fn.apply(this, arguments)
+          }, ms)
+        };
+      }
 
-        window.addEventListener('resize', handleResize)
-        return _ => window.removeEventListener('resize', handleResize);
-    })
+    useEffect(() => {
+        const debouncedHandleResize = debounce(function handleResize() {
+            setDimensions({
+              height: window.innerHeight,
+              width: window.innerWidth
+            })
+          }, 1000);
+      
+          window.addEventListener('resize', debouncedHandleResize)
+      
+          return _ => window.removeEventListener('resize', debouncedHandleResize)      
+    });
 
     if (!(plotId in O3AS_PLOTS)) {
         const style = {
