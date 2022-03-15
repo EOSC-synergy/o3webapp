@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectPlotXRange, setDisplayXRange} from "../../../../../store/plotSlice/plotSlice";
 import {ALL_REGIONS_ORDERED} from "../../../../../utils/constants";
 import {Grid} from "@mui/material";
+<<<<<<< HEAD
 import PropTypes from 'prop-types';
 
 /**
@@ -11,11 +12,18 @@ import PropTypes from 'prop-types';
  * 
  * {@link LatitudeBandSelector}
  * 
+=======
+import CustomLatitudeSelector from "../LatitudeBandSelector/CustomLatitudeSelector/CustomLatitudeSelector";
+
+/**
+ * enables the user to select / deselect regions as well as entering a private region {@link LatitudeBandSelector}
+ *
+>>>>>>> develop
  * @component
  * @param {Object} props specified in PropTypes
  * @returns {JSX.Element}
  */
-function RegionSelector(props) {
+function RegionSelector() {
     /**
      * A dispatch function to dispatch actions to the redux store.
      * @constant {function}
@@ -30,7 +38,7 @@ function RegionSelector(props) {
      * If the second and fifth region are selected the array would have the following form: [1, 4]
      * @constant {array}
      */
-    const yRange = useSelector(selectPlotXRange);
+    const xRangeRegions = useSelector(selectPlotXRange);
     /**
      * Handles the change if a region is clicked (selected/deselected).
      *
@@ -38,7 +46,7 @@ function RegionSelector(props) {
      * @constant {function}
      */
     const handleRegionChecked = (regionIdx) => {
-        let regionCpy = [...yRange.regions];
+        let regionCpy = [...xRangeRegions.regions];
         if (regionCpy.includes(regionIdx)) {
             regionCpy = regionCpy.filter((m) => m !== regionIdx);
         } else {
@@ -59,8 +67,8 @@ function RegionSelector(props) {
     }
 
     return (
-        <Grid container sx={{width: "90%", marginLeft: "auto", marginRight: "auto", marginTop: "3%"}}>
-            <Typography style={{marginTop: '2.5%'}}>X-Axis:</Typography>
+        <Grid container sx={{width: "90%", marginLeft: "auto", marginRight: "auto"}}>
+            <Typography>X-Axis:</Typography>
             <Box sx={{
                 paddingLeft: '8%',
                 paddingRight: '8%',
@@ -69,14 +77,19 @@ function RegionSelector(props) {
                 flexDirection: "column"
             }}>
                 {
-                    getDefaultRegions().map((r, idx) => (
+                    getDefaultRegions().map((region, idx) => (
                         <React.Fragment key={idx}>
                             <FormControlLabel
-                                label={r}
+                                label={
+                                    idx !== getDefaultRegions().length - 1 ?
+                                        region :
+                                        <CustomLatitudeSelector/>
+                                }
                                 control={
                                     <Checkbox
-                                        checked={yRange.regions.includes(idx)}
+                                        checked={xRangeRegions.regions.includes(idx)}
                                         onClick={() => handleRegionChecked(idx)}
+                                        data-testid={`RegionSelector-${idx}`}
                                     />
                                 }
                             />

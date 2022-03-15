@@ -1,15 +1,21 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent , within} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import DownloadModal from './DownloadModal';
 import { Provider } from "react-redux";
 import { createTestStore } from '../../../../store/store';
+import tco3zmResponse from "../../../../services/API/testing/tco3zm-response.json";
+import axios from 'axios';
+import { fetchPlotData } from '../../../../services/API/apiSlice';
+import { O3AS_PLOTS } from '../../../../utils/constants';
+jest.mock('axios');
 
-let store;
-beforeEach(() => {
-  store = createTestStore();
-});
 
-describe('testing DownloadModal rendering', () => {
+
+describe('testing basic rendering & selection', () => {
+    let store;
+    beforeEach(() => {
+      store = createTestStore();
+    });
 
     it('renders without crashing', () => {
         render(<Provider store ={store}> <DownloadModal reportError={() => {}} onClose={()=>{}} isOpen={true} /></Provider>);
@@ -19,7 +25,7 @@ describe('testing DownloadModal rendering', () => {
         let { baseElement, container } = render(
             <Provider store ={store} > <DownloadModal isOpen={true} onClose={() => {}} reportError={() => {}} /> </Provider>
         );
-        expect(baseElement).toMatchSnapshot();
+        expect(baseElement).toMatchSnapshot(); 
         expect(container).toBeVisible();
     });
 
@@ -42,4 +48,31 @@ describe('testing DownloadModal rendering', () => {
         );
         expect(console.error).toHaveBeenCalled();
     });
+
+    it('testing select file format functionality', async () => {
+        // SETUP
+        const mock = jest.fn();
+        // mock api => data
+        // simpler, but less powerful: axios.post.mockResolvedValue({data: tco3zmResponse});
+        axios.post.mockImplementation((requestUrl) => {
+            return Promise.resolve({data: tco3zmResponse})
+        });
+        await store.dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, models: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"]}))
+
+        let { getByTestId } = render(
+            <Provider store ={store}> 
+                <DownloadModal isOpen={true} onClose={() => {}} reportError={mock} />
+            </Provider>
+        );
+        
+        // ACTUAL TEST
+        const wrap = getByTestId("DownloadModal-select-file-format")
+        fireEvent.mouseDown(wrap);
+
+        fireEvent.change(wrap, { target: { value: "CSV" } });
+        fireEvent.click(getByTestId("DownloadModal-download-plot"));
+        fireEvent.click(getByTestId("DownloadModal-download-plot"));
+        expect(mock).toHaveBeenCalledWith("Can't download the chart if it hasn't been fully loaded.");
+    });
+
 });

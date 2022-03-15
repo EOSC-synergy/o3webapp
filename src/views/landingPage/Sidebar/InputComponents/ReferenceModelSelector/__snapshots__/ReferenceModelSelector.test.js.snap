@@ -1,10 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders correctly 1`] = `
+exports[`tests basic rendering renders correctly 1`] = `
 <div>
   <div
     aria-expanded="false"
     class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon css-dd2h8b-MuiAutocomplete-root"
+    data-testid="ReferenceModelSelector-reference-model"
     role="combobox"
   >
     <div

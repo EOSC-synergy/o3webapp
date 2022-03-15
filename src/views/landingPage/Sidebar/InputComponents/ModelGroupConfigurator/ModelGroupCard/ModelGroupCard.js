@@ -185,7 +185,9 @@ function ModelGroupCard(props) {
                     </Grid>
                     <Grid item xs={2}>
                         <IconButton aria-label="delete model group"
-                                    onClick={toggleDeleteRequest}><DeleteIcon/></IconButton>
+                                    onClick={toggleDeleteRequest}
+                                    data-testid="ModelGroupCard-delete-model-group"
+                                    ><DeleteIcon/></IconButton>
                     </Grid>
                 </Grid>
                 <Divider/>
@@ -252,6 +254,7 @@ function ModelGroupCard(props) {
                             sx={{
                                 mr: '10px'
                             }}
+                            data-testid="ModelGroupCard-delete-model-keep"
                         >
                             Keep
                         </Button>
@@ -267,6 +270,7 @@ function ModelGroupCard(props) {
                                     backgroundColor: '#b19225'
                                 }
                             }}
+                            data-testid="ModelGroupCard-delete-model-delete"
                         >
                             Delete
                         </Button>

@@ -13,7 +13,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import PropTypes from 'prop-types';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import { BACKGROUND_BASE_COLOR } from '../../../utils/constants.js';
+import { BACKGROUND_BASE_COLOR, O3AS_PLOTS } from '../../../utils/constants.js';
 
 const DRAWER_WIDTH = 400;
 
@@ -86,15 +86,15 @@ function Sidebar(props) {
         let sections = [...defaultStructure['sections']];
         let specificSections;
         switch(selectedPlot) {
-            case "tco3_zm":
+            case O3AS_PLOTS.tco3_zm:
                 specificSections = tco3_zm['sections'];
                 break;
-            case "tco3_return":
+            case O3AS_PLOTS.tco3_return:
                 specificSections = tco3_return['sections'];
                 break;
             default:
                 props.reportError("Invalid plot type.");
-                return;
+                return [];
         }
         for (let i = 0; i < specificSections.length; i++) {
             let foundMatch = false;
@@ -161,15 +161,15 @@ function Sidebar(props) {
 
                     {createSectionStructure().map((s, idx) =>
                         <div key={idx} style={{width: "95%", marginBottom: "2%", marginLeft: "auto", marginRight: "auto"}}>
-                        <Section
-                            name={s.name}
-                            key={idx}    
-                            isExpanded={idx === expandedSection}                     
-                            components={s.components}
-                            onCollapse={() => collapseSection(idx)}
-                            onExpand={() => expandSection(idx)}
-                            reportError={props.reportError}
-                        />
+                            <Section
+                                name={s.name}
+                                key={idx}    
+                                isExpanded={idx === expandedSection}                     
+                                components={s.components}
+                                onCollapse={() => collapseSection(idx)}
+                                onExpand={() => expandSection(idx)}
+                                reportError={props.reportError}
+                            />
                         </div>
                     )}
             </Drawer>

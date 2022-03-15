@@ -1,13 +1,22 @@
+import React from "react";
 import {useDispatch, useSelector} from "react-redux"
 import {Grid, TextField, Typography, FormControl, Divider} from "@mui/material";
-import {selectPlotLocation, setLocation} from "../../../../../../store/plotSlice/plotSlice";
+import {
+    selectPlotLocation,
+    setLocation,
+    setUserRegionName
+} from "../../../../../../store/plotSlice/plotSlice";
 import {fetchPlotDataForCurrentModels} from "../../../../../../services/API/apiSlice";
 import {
     LATITUDE_BAND_MAX_VALUE,
     LATITUDE_BAND_MIN_VALUE
 } from "../../../../../../utils/constants";
+<<<<<<< HEAD
 import React from "react";
 import PropTypes from "prop-types";
+=======
+
+>>>>>>> develop
 
 /**
  * A component to select the specific min and max latitude values for the custom region.
@@ -67,7 +76,6 @@ function CustomLatitudeSelector(props) {
         } else {
             setMinLatState(event.target.value);
         }
-
     }
 
     /**
@@ -90,8 +98,6 @@ function CustomLatitudeSelector(props) {
         } else {
             setMaxLatState(event.target.value);
         }
-
-
     }
 
     /**
@@ -118,23 +124,16 @@ function CustomLatitudeSelector(props) {
         if (maxLatState < LATITUDE_BAND_MIN_VALUE) return `> ${LATITUDE_BAND_MIN_VALUE}`;
         if (maxLatState > LATITUDE_BAND_MAX_VALUE) return `< ${LATITUDE_BAND_MAX_VALUE}`;
         if (minLatState > maxLatState) return minLatState >= LATITUDE_BAND_MAX_VALUE ? "" : `> ${minLatState}`
-
-
     }
 
     return (<>
-        <div style={{width: "100%", marginTop: "5%"}}>
-            <Divider><Typography>SELECT LATITUDE RANGE</Typography></Divider>
-        </div>
         <div style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            marginTop: "10%",
+            marginTop: "5%",
             marginLeft: "5%"
         }}>
-
-
             <Grid container>
                 <Grid item xs={5.5} sx={{mt: "-8px"}}>
                     <FormControl sx={{width: '90%'}}>

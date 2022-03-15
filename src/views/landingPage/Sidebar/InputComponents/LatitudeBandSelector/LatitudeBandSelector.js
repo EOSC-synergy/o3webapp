@@ -1,6 +1,6 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux"
-import {selectPlotLocation, setLocation} from "../../../../../store/plotSlice/plotSlice";
+import {selectPlotLocation, setLocation, setUserRegionName} from "../../../../../store/plotSlice/plotSlice";
 import {Box, Divider, MenuItem, Select} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {latitudeBands} from "../../../../../utils/constants";
@@ -39,7 +39,7 @@ function LatitudeBandSelector(props) {
     const dispatch = useDispatch();
 
     /**
-     * handles the change when the user clicked on a new latitude band option 
+     * handles the change when the user clicked on a new latitude band option
      * if the user selected custom sets isCustomizable to true
      * @param {event} event the event that triggered this function call
      */
@@ -48,7 +48,11 @@ function LatitudeBandSelector(props) {
             setIsCustomizable(true);
         } else {
             setIsCustomizable(false);
-            dispatch(setLocation({minLat: event.target.value.minLat, maxLat: event.target.value.maxLat}));
+            dispatch(setLocation({
+                minLat: event.target.value.minLat,
+                maxLat: event.target.value.maxLat
+            }));
+
             // fetch for tco3_zm and tco3_return
             dispatch(fetchPlotDataForCurrentModels());
         }
@@ -61,20 +65,23 @@ function LatitudeBandSelector(props) {
             </Divider>
             <Box sx={{paddingLeft: '8%', paddingRight: '8%', paddingTop: '3%'}}>
                 <Select
-                    sx={{width: '100%' }}
+                    sx={{width: '100%'}}
                     id="latitudeBandSelector"
-                    value={findLatitudeBandByLocation(false, false)}
+                    value={isCustomizable ? latitudeBands[latitudeBands.length - 1].value : findLatitudeBandByLocation(false)}
                     onChange={handleChangeLatitudeBand}
-                    defaultValue={findLatitudeBandByLocation(false, false)}
+                    defaultValue={findLatitudeBandByLocation(false)}
+                    inputProps={{"data-testid": "LatitudeBandSelector-select-region"}}
                 >
                     {
                         // maps all latitude bands from constants.js to ´MenuItem´s
                         latitudeBands.map(
-                            (s, idx) => <MenuItem key={idx} value={s.value}>{s.text.description}</MenuItem>
+                            (s, idx) =>
+                                <MenuItem key={idx} value={s.value}>{s.text.description}</MenuItem>
                         )
                     }
                 </Select>
-                {isCustomizable && <CustomLatitudeSelector />}
+                {isCustomizable && <div style={{height: '10px'}}/>}
+                {isCustomizable && <CustomLatitudeSelector/>}
             </Box>
         </>
     );
@@ -89,35 +96,26 @@ LatitudeBandSelector.propTypes = {
 
 export default LatitudeBandSelector;
 
-
-
 /**
  * Finds selectedLocation in latitudeBands.
  *
  * @param {boolean} forceCustomizable if true, acts like isCustomizable is true - if false, does nothing
- * @param {boolean} returnText if true, return the text - if false, return the value
  * @returns the location
  * @memberof LatitudeBandSelector
  * @constant {function}
  */
-export const findLatitudeBandByLocation = (forceCustomizable, returnText) => {
+const findLatitudeBandByLocation = (forceCustomizable) => {
     if (typeof selectedLocation === 'undefined') return null;
-    if (isCustomizable  || forceCustomizable) {
-        if (returnText) {
-            return latitudeBands[latitudeBands.length - 1].text.description;
-        } else {
-            return latitudeBands[latitudeBands.length - 1].value;
-        }
-    }
-    for (let i = 0; i < latitudeBands.length; i++) {
-        if (latitudeBands[i].value.minLat === selectedLocation.minLat && latitudeBands[i].value.maxLat === selectedLocation.maxLat) {
-            if (returnText) {
-                return latitudeBands[i].text.description;
-            } else {
+    if (!forceCustomizable) {
+        for (let i = 0; i < latitudeBands.length - 1; i++) {
+            if (latitudeBands[i].value.minLat === selectedLocation.minLat && latitudeBands[i].value.maxLat === selectedLocation.maxLat) {
                 return latitudeBands[i].value;
             }
         }
     }
+    if (isCustomizable || forceCustomizable) {
+        return latitudeBands[latitudeBands.length - 1].value;
+    }
     setIsCustomizable(true);
-    findLatitudeBandByLocation(true, false);
+    findLatitudeBandByLocation(true);
 }

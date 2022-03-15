@@ -164,15 +164,7 @@ const modelsSlice = createSlice({
             }
 
             for (let model of Object.keys(state.modelGroups[groupId].models)) {
-                const { color, mean, median, std, percentile, isVisible } = data[model]; // expect data to meet certain scheme
-                state.modelGroups[groupId].models[model] = {
-                    color,
-                    mean,
-                    std,
-                    median,
-                    percentile,
-                    isVisible,
-                };
+                state.modelGroups[groupId].models[model] = data[model];
             }
         },
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { styled } from '@mui/material/styles';
+import {styled} from '@mui/material/styles';
 import LocationSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
 import ModelGroupConfigurator from "../InputComponents/ModelGroupConfigurator/ModelGroupConfigurator";
 import PlotNameField from "../InputComponents/PlotNameField/PlotNameField";
@@ -8,7 +8,7 @@ import RegionSelector from "../InputComponents/RegionSelector/RegionSelector";
 import TimeCheckBoxGroup from "../InputComponents/TimeCheckboxGroup/TimeCheckboxGroup";
 import XAxisField from "../InputComponents/XAxisField/XAxisField";
 import YAxisField from "../InputComponents/YAxisField/YAxisField";
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 import LatitudeBandSelector from "../InputComponents/LatitudeBandSelector/LatitudeBandSelector";
 import ReferenceModelSelector from "../InputComponents/ReferenceModelSelector/ReferenceModelSelector";
 import MuiAccordion from '@mui/material/Accordion';
@@ -30,13 +30,13 @@ import {
     YAF_Symbol,
     CLS_Symbol
 } from "../../../../utils/constants";
-import CustomLatitudeSelector from "../InputComponents/LatitudeBandSelector/CustomLatitudeSelector/CustomLatitudeSelector";
+import CustomLatitudeSelector
+    from "../InputComponents/LatitudeBandSelector/CustomLatitudeSelector/CustomLatitudeSelector";
 
 
-
-// custom Accordion components are 
+// custom Accordion components are
 // inspired by: https://mui.com/components/accordion/#customization 
- 
+
 /**
  * custom Accordion component
  * @const {function}
@@ -45,16 +45,16 @@ import CustomLatitudeSelector from "../InputComponents/LatitudeBandSelector/Cust
  */
 const Accordion = styled((props) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
-  ))(({ theme }) => ({
+))(({theme}) => ({
     border: `1px solid ${theme.palette.divider}`,
     '&:not(:last-child)': {
-      borderBottom: 0,
+        borderBottom: 0,
     },
     '&:before': {
-      display: 'none',
+        display: 'none',
     },
-  }));
-  
+}));
+
 /**
  * custom Accordion summary component
  * @const {function}
@@ -63,36 +63,36 @@ const Accordion = styled((props) => (
  */
 const AccordionSummary = styled((props) => (
     <MuiAccordionSummary
-      expandIcon={<ArrowForwardIosIcon sx={{ fontSize: '0.9rem' }} />}
-      {...props}
+        expandIcon={<ArrowForwardIosIcon sx={{fontSize: '0.9rem'}}/>}
+        {...props}
     />
-  ))(({ theme }) => ({
+))(({theme}) => ({
     backgroundColor:
-      theme.palette.mode === 'dark'
-        ? 'rgba(255, 255, 255, .05)'
-        : 'rgba(0, 0, 0, .03)',
+        theme.palette.mode === 'dark'
+            ? 'rgba(255, 255, 255, .05)'
+            : 'rgba(0, 0, 0, .03)',
     flexDirection: 'row-reverse',
     '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
-      transform: 'rotate(0deg)',
+        transform: 'rotate(0deg)',
     },
     '& .MuiAccordionSummary-expandIconWrapper': {
         transform: 'rotate(-90deg)',
-      },
-    '& .MuiAccordionSummary-content': {
-      marginLeft: theme.spacing(1),
     },
-  }));
-  
+    '& .MuiAccordionSummary-content': {
+        marginLeft: theme.spacing(1),
+    },
+}));
+
 /**
  * custom AccordionDetails component
  * @const {function}
  * @returns {JSX.Element}
  * @memberof Section
  */
-const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+const AccordionDetails = styled(MuiAccordionDetails)(({theme}) => ({
     padding: theme.spacing(2),
     borderTop: '1px solid rgba(0, 0, 0, .125)',
-  }));
+}));
 
 /**
  * an expandable section containing a list of inputComponents as well as a name
@@ -114,53 +114,53 @@ function Section(props) {
     function mapNameToComponent(name, key) {
 
         if ('reportError' in props && typeof props.reportError === 'function') {
-            switch (name){
+            switch (name) {
                 case LBS_Symbol.description:
-                    return <LatitudeBandSelector key={key } reportError={props.reportError}/>;
+                    return <LatitudeBandSelector key={key} reportError={props.reportError}/>;
                 case LS_Symbol.description:
                     return <LocationSelector key={key} reportError={props.reportError}/>
                 case MGC_Symbol.description:
                     return <ModelGroupConfigurator key={key} reportError={props.reportError}/>;
                 case PNF_Symbol.description:
-                    return <PlotNameField key={key} reportError={props.reportError} />;
+                    return <PlotNameField key={key} reportError={props.reportError}/>;
                 case RMS_Symbol.description:
                     return <ReferenceModelSelector key={key} reportError={props.reportError}/>;
                 case RYF_Symbol.description:
-                    return <ReferenceYearField key={key} reportError={props.reportError} />;
+                    return <ReferenceYearField key={key} reportError={props.reportError}/>;
                 case RS_Symbol.description:
-                    return <RegionSelector key={key} reportError={props.reportError} />;
+                    return <RegionSelector key={key} reportError={props.reportError}/>;
                 case TCG_Symbol.description:
-                    return <TimeCheckBoxGroup key={key} reportError={props.reportError} />;
+                    return <TimeCheckBoxGroup key={key} reportError={props.reportError}/>;
                 case XAF_Symbol.description:
-                    return <XAxisField key={key} reportError={props.reportError} />;
+                    return <XAxisField key={key} reportError={props.reportError}/>;
                 case YAF_Symbol.description:
-                    return <YAxisField key={key} reportError={props.reportError} />;
+                    return <YAxisField key={key} reportError={props.reportError}/>;
                 case CLS_Symbol.description:
-                    return <CustomLatitudeSelector key={key} reportError={props.reportError} />
+                    return <CustomLatitudeSelector key={key} reportError={props.reportError}/>
                 default:
                     props.reportError(`Section ${props.name} found no match for an input component ${name}`);
             }
         } else {
-            return(
+            return (
                 <> `props.ReportError` not defined </>
             );
         }
     }
 
     if (!props.components || props.components.length === 0) {
-       if('reportError' in props && typeof props.reportError === 'function') {
-           props.reportError(`Section ${props.name} was provided with no components`);
-           return <></>;
+        if ('reportError' in props && typeof props.reportError === 'function') {
+            props.reportError(`Section ${props.name} was provided with no components`);
+            return <></>;
         } else {
-           return(
-               <> `props.ReportError` not defined </>
-           );
-       }
+            return (
+                <> `props.ReportError` not defined </>
+            );
+        }
     }
 
     return (
         <Accordion
-            data-testid="section"
+            data-testid={`Section-${props.name}`}
             sx={{
                 maxWidth: "100vw"       // make sure accordion is not wider than the full screen
             }}
@@ -168,13 +168,14 @@ function Section(props) {
             onChange={props.isExpanded ? props.onCollapse : props.onExpand}
         >
             <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
+                expandIcon={<ExpandMoreIcon/>}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
+                data-testid={`Section-Summary-${props.name}`}
             >
                 <Typography>{
-                (props.name     // check if props.name exists
-                    && (typeof props.name === 'string' || props.name instanceof String))  // and whether its a string (https://stackoverflow.com/questions/4059147/check-if-a-variable-is-a-string-in-javascript)
+                    (props.name     // check if props.name exists
+                        && (typeof props.name === 'string' || props.name instanceof String))  // and whether its a string (https://stackoverflow.com/questions/4059147/check-if-a-variable-is-a-string-in-javascript)
                     && props.name.toUpperCase()}
                 </Typography>
             </AccordionSummary>
@@ -185,6 +186,7 @@ function Section(props) {
                         return (
                             <React.Fragment key={idx}>
                                 {mapNameToComponent(element, idx)}
+                                {idx !== props.components.length - 1 && <div style={{height: '20px'}}/>}
                             </React.Fragment>
                         )
                     })}

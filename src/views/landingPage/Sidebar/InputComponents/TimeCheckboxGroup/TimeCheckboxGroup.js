@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import SeasonCheckBoxGroup from "./SeasonCheckboxGroup/SeasonCheckBoxGroup";
 import {Alert, Box, Checkbox, Divider, FormControlLabel, Grid} from "@mui/material";
 import {
@@ -12,8 +12,8 @@ import {
 } from "../../../../../utils/constants";
 import Typography from "@mui/material/Typography";
 import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice";
-import { useSelector, useDispatch } from "react-redux";
-import { selectPlotMonths, setMonths } from "../../../../../store/plotSlice/plotSlice";
+import {useSelector, useDispatch} from "react-redux";
+import {selectPlotMonths, setMonths} from "../../../../../store/plotSlice/plotSlice";
 import PropTypes from 'prop-types';
 
 
@@ -27,7 +27,7 @@ import PropTypes from 'prop-types';
  * @returns {JSX.Element} a jsx containing a checkboxgroup per season and a "all year" checkbox
  */
 function TimeCheckBoxGroup(props) {
-    
+
     /**
      * keeps track of the selection a user did. Notifies the user if he did perform
      * an incorrect selection i.e. selecting no month at all.
@@ -41,9 +41,9 @@ function TimeCheckBoxGroup(props) {
      */
     const dispatch = useDispatch()
 
-    /** 
+    /**
      * An array containing the selected months.
-     * 
+     *
      * Examples:
      * If e.g. January is selected the array would have the following form: [1]
      * If e.g. February and December are selected the array would look as follows: [2, 12]
@@ -53,14 +53,14 @@ function TimeCheckBoxGroup(props) {
 
     /**
      * Checks if every month is selected.
-     * 
+     *
      * @returns True if all months are selected
      * @constant {function}
      */
     const isEveryMonthChecked = () => {
         let isChecked = true;
         for (let i = 0; i < NUM_MONTHS; i++) {
-            if(!selectedMonths.includes(i + 1)) {
+            if (!selectedMonths.includes(i + 1)) {
                 isChecked = false;
             }
         }
@@ -69,14 +69,14 @@ function TimeCheckBoxGroup(props) {
 
     /**
      * Checks if the "All Year"-Checkbox should be displayed as indeterminate.
-     * 
+     *
      * @returns True if the checkbox should be displayed as indeterminate
      * @constant {function}
      */
     const isIndeterminate = () => {
         let indetCount = 0;
         for (let i = 0; i < NUM_MONTHS; i++) {
-            if(!selectedMonths.includes(i + 1)) {
+            if (!selectedMonths.includes(i + 1)) {
                 indetCount++;
             }
         }
@@ -89,7 +89,7 @@ function TimeCheckBoxGroup(props) {
      * and checking whether the selection of the months was correct or not
      * to adjust the stateful variable that decides whether a warning message
      * gets displayed or not.
-     * 
+     *
      * @param {array} monthCpy an array of months that should be dispatched against the store
      * @constant {function}
      */
@@ -99,9 +99,10 @@ function TimeCheckBoxGroup(props) {
             setCorrectSelection(false);
         } else {
             setCorrectSelection(true);
-        };
+        }
+        ;
 
-        dispatch(setMonths({ months: monthCpy.sort((a, b) => a - b)}));
+        dispatch(setMonths({months: monthCpy.sort((a, b) => a - b)}));
 
         dispatch(fetchPlotDataForCurrentModels());
     }
@@ -128,25 +129,25 @@ function TimeCheckBoxGroup(props) {
 
     /**
      * Handles the change if a season is clicked (selected/deselected).
-     * 
+     *
      * @param {int} seasonId The id of the season that was clicked
      * @constant {function}
      */
     const handleSeasonChecked = (seasonId) => {
-        
+
         let monthCpy = [...selectedMonths];
         const monthsInSeason = [];
         let shouldBeSelected = false;
 
-        for(let i = 0; i < NUM_MONTHS_IN_SEASON; i++) {
+        for (let i = 0; i < NUM_MONTHS_IN_SEASON; i++) {
             const currMonthInSeason = SEASONS_ARRAY[seasonId].months[i];
             monthsInSeason.push(currMonthInSeason);
 
-            if(shouldBeSelected) continue;
+            if (shouldBeSelected) continue;
             shouldBeSelected = !monthCpy.includes(currMonthInSeason)
         }
 
-        if(shouldBeSelected) {
+        if (shouldBeSelected) {
             for (let i = 0; i < NUM_MONTHS_IN_SEASON; i++) {
                 if (!monthCpy.includes(monthsInSeason[i])) {
                     monthCpy.push(monthsInSeason[i]);
@@ -161,7 +162,7 @@ function TimeCheckBoxGroup(props) {
 
     /**
      * Handles the change if a month is clicked (selected/deselected).
-     * 
+     *
      * @param {int} monthId - The id of the month that was clicked
      * @constant {function}
      */
@@ -177,14 +178,15 @@ function TimeCheckBoxGroup(props) {
             setCorrectSelection(false);
         } else {
             setCorrectSelection(true);
-        };
+        }
+        ;
 
         updateDataProcedure(monthCpy);
     }
 
     /**
      * Constructs a SeasonCheckbox for a given season
-     * 
+     *
      * @param {Object} param - The parameter object representing a season
      * @param {string} param.name - The season name
      * @param {int[]} param.months - An array of monthId's of the months included in this season
@@ -201,11 +203,11 @@ function TimeCheckBoxGroup(props) {
         return (
             <Grid item xs={6}>
                 <SeasonCheckBoxGroup
-                    label = {name.description}
-                    months = {monthsInSeason}
-                    seasonId= {seasonId}
-                    handleSeasonClicked = {handleSeasonChecked}
-                    handleMonthClicked = {handleMonthChecked}
+                    label={name.description}
+                    months={monthsInSeason}
+                    seasonId={seasonId}
+                    handleSeasonClicked={handleSeasonChecked}
+                    handleMonthClicked={handleMonthChecked}
                     reportError={props.reportError}
                 />
             </Grid>
@@ -214,7 +216,7 @@ function TimeCheckBoxGroup(props) {
 
     return (
         <>
-            <Divider style={{marginTop: "5%"}}><Typography>TIME</Typography></Divider>
+            <Divider><Typography>TIME</Typography></Divider>
             <Grid container justifyContent="center">
                 {
                     !correctSelection
@@ -231,7 +233,7 @@ function TimeCheckBoxGroup(props) {
                             label="All year"
                             control={
                                 <Checkbox
-                                    inputProps={{'data-testid':"CheckboxAllYear"}}
+                                    inputProps={{'data-testid': "CheckboxAllYear"}}
                                     onClick={handleYearChecked}
                                     checked={isEveryMonthChecked()}
                                     indeterminate={isIndeterminate()}

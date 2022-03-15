@@ -15,7 +15,7 @@ import {
  * @constant {object}
  */
 export const DEFAULT_MODEL_GROUP = {
-    groupId: null, // no valid id => add new group
+    groupId: null, // no valid id => add new group 
     groupName: "Example Group",
     modelList: [
         "CCMI-1_ACCESS_ACCESS-CCM-refC2",
@@ -303,7 +303,8 @@ const GLOBAL = "Global";
  * @constant {string}
  * @category Utils
 */
-const USER_REGION = "User region";
+export const USER_REGION = "User region";
+
 export const O3AS_REGIONS = {
     ANTARCTIC,
     SH_MID,
@@ -312,8 +313,11 @@ export const O3AS_REGIONS = {
     ARCTIC,
     NEAR_GLOBAL,
     GLOBAL,
+    // user region must be last element
     USER_REGION
 }
+
+// user region must be last element
 export const ALL_REGIONS_ORDERED = [ANTARCTIC, SH_MID, NH_MID, TROPICS, ARCTIC, NEAR_GLOBAL, GLOBAL, USER_REGION];
 
 /**
@@ -414,14 +418,14 @@ SV_CALCULATION[stdMean] = calculateMean;
  * @category Utils
  */
 export const SV_COLORING = {
-    mean: "#000",
-    "standard deviation": "#000",
+    mean: "#696969",
+    "standard deviation": "#0e4e78",//"#000",
     median: "#000",
     percentile: "#000",
     "lowerPercentile": "#1e8509",
     "upperPercentile": "#1e8509",
-    "mean+std": "#000",
-    "mean-std": "#000",
+    "mean+std": "#0e4e78",
+    "mean-std": "#0e4e78",
 }
 
 /**
@@ -442,6 +446,22 @@ export const SV_DASHING = {
     "mean-std": 8,
     "lowerPercentile": 4,
     "upperPercentile": 4,
+}
+
+/**
+ * This object maps each statistical value to its corresponding name that 
+ * should be displayed in the legend of the plot and inside the tooltip when
+ * hovering over a datapoint.
+ */
+export const SV_DISPLAY_NAME = {
+    mean: "Mean",
+    median: "Median",
+    percentile: "Percentile",
+    "mean+std": "μ + σ",
+    "mean-std": "μ - σ",
+    "lowerPercentile": "Lower %",
+    "upperPercentile": "Upper %",
+
 }
 
 /**

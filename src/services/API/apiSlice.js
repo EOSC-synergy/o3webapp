@@ -60,7 +60,7 @@ export const fetchPlotTypes = createAsyncThunk('api/fetchPlotTypes', async () =>
  * @constant {function}
  */
 export const generateCacheKey = ({ latMin, latMax, months, refModel, refYear }) => {
-    return `lat_min=${latMin}&lat_min=${latMax}&months=${months.join(',')}&ref_meas=${refModel}&ref_year=${refYear}`;
+    return `lat_min=${latMin}&lat_max=${latMax}&months=${months.join(',')}&ref_meas=${refModel}&ref_year=${refYear}`;
 }
 
 /**
@@ -208,7 +208,11 @@ export const fetchPlotData = ({plotId, models}) => {
                     cacheKey,
                     data: response.data,
                 })),
-                error => dispatch(fetchPlotDataRejected({error: error.message, plotId, cacheKey})),
+                error => {
+                    let errorMessage = error.message;
+                    if (error?.response?.data) errorMessage += ": " + error.response.data[0]?.message;
+                    dispatch(fetchPlotDataRejected({error: errorMessage, plotId, cacheKey}));
+                } 
             );
         
 
