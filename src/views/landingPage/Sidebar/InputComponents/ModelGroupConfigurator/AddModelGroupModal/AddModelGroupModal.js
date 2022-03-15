@@ -105,10 +105,12 @@ function AddModelGroupModal(props) {
     }, [allModels]);
 
     useEffect(() => {
-        setGroupName(storeGroupName);
-        setVisible(allModels);
-        setChecked([]);
-        setRight(storeRight);
+        if (props.isOpen) { // only restore if opened again (still needs work)
+            setGroupName(storeGroupName);
+            setVisible(allModels);
+            setChecked([]);
+            setRight(storeRight);
+        }
 
     }, [props.isOpen]);
 
@@ -191,19 +193,29 @@ function AddModelGroupModal(props) {
         setRight(not(right, rightChecked));
         setChecked(not(checked, rightChecked));
     };
+
+    const saveChanges = () => {
+        const success = addOrEditGroup();
+        console.log(success);
+        if (!success) {
+            props.setOpen(); // re-open because saving failed
+        }
+    }
     
     const addOrEditGroup = () => {
+        console.log(`groupName: ${groupName}`);
         if (groupName === '') {
             setErrorMessage("Please provide a model group name");
-            return;
+            return false;
         }
         if (right.length === 0) {
             setErrorMessage("Please provide a list of models for this group");
-            return;
+            return false;
         }
         dispatch(setModelsOfModelGroup({groupId: props.modelGroupId, groupName: groupName, modelList: right}));
         dispatch(fetchPlotDataForCurrentModels());
         props.onClose();
+        return true;
     }
 
     /**
@@ -322,6 +334,7 @@ function AddModelGroupModal(props) {
      * @todo open a "discard changes?" popup here
      */
     const closeWithChanges = () => {
+        props.onClose();
         openDiscardChangesDialog();
         /*
         if(isEditMode) {
@@ -432,7 +445,7 @@ function AddModelGroupModal(props) {
                     </CardActions>
                 </Card>
             </Modal>
-        <DiscardChangesModal isOpen={discardChangesOpen} onClose={closeDiscardChangesDialog}/>
+        <DiscardChangesModal isOpen={discardChangesOpen} onClose={closeDiscardChangesDialog} saveChanges={saveChanges} discardChanges={() => {}} />
         </React.Fragment>    
     );
 }

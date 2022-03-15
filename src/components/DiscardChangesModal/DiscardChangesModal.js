@@ -28,8 +28,8 @@ function DiscardChangesModal(props) {
    }
 
    const saveChangesAndCloseDialog = () => {
-       props.saveChanges();
        props.onClose();
+       props.saveChanges();
    }
 
   return (
