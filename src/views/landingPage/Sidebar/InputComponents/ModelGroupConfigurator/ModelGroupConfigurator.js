@@ -43,7 +43,12 @@ function ModelGroupConfigurator(props) {
             >
                 Add Model Group
             </Button>
-            <AddModelGroupModal isOpen={isAddModalVisible} onClose={closeAddModal} reportError={props.reportError} />
+            <AddModelGroupModal 
+                isOpen={isAddModalVisible} 
+                onClose={closeAddModal} 
+                reportError={props.reportError} 
+                setOpen={(openAddModal)}
+            />
         </>
     );
 }

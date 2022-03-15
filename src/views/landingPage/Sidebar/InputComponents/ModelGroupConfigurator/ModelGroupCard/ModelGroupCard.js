@@ -147,7 +147,7 @@ function ModelGroupCard(props) {
                 <EditModelGroupModal modelGroupId={props.modelGroupId} isOpen={isEditModalVisible}
                                      onClose={closeEditModal}/>
                 <AddModelGroupModal modelGroupId={props.modelGroupId} isOpen={isAddModalVisible} onClose={closeAddModal}
-                                    reportError={props.reportError}/>
+                                    reportError={props.reportError} setOpen={showAddModal}/>
                 <Grid container>
                     <Grid item xs={2}>
                         <IconButton aria-label="change visibility"

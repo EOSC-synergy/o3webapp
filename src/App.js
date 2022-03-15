@@ -105,7 +105,6 @@ function App() {
                 <LandingPage reportError={reportError} openSidebar={openSidebar} closeSidebar={closeSidebar} isSidebarOpen={isSidebarOpen} />
                 <Footer reportError={reportError} />
                 <ErrorMessageModal isOpen={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />
-                <DiscardChangesModal isOpen={true} />
                 {/* <CookieConsentModal isOpen={isCookieConsentModalVisible} onClose={onCloseCookieConsentModal} /> */}
             </div>
         </ThemeProvider>
