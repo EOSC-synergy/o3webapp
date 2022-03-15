@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import * as redux from 'react-redux';
 import { createTestStore } from "../../../store/store";
-import { REQUEST_STATE } from "../../../services/API/apiSlice";
+import { REQUEST_STATE } from "../../../services/API/apiSlice/apiSlice";
 
 
 jest.mock('react-apexcharts', () => {

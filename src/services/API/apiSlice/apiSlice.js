@@ -1,8 +1,8 @@
 import {createSlice, createAsyncThunk, createAction} from "@reduxjs/toolkit";
-import {getModels, getPlotTypes, getPlotData} from "./client";
-import {getSuggestedValues, preTransformApiData} from "../../utils/optionsFormatter/optionsFormatter";
-import {START_YEAR, END_YEAR, O3AS_PLOTS} from "../../utils/constants";
-import {setDisplayXRangeForPlot, setDisplayYRangeForPlot} from "../../store/plotSlice/plotSlice";
+import {getModels, getPlotTypes, getPlotData} from "../client/client";
+import {getSuggestedValues, preTransformApiData} from "../../../utils/optionsFormatter/optionsFormatter";
+import {START_YEAR, END_YEAR, O3AS_PLOTS} from "../../../utils/constants";
+import {setDisplayXRangeForPlot, setDisplayYRangeForPlot} from "../../../store/plotSlice/plotSlice";
 
 export let cacheKey = '';
 
@@ -280,9 +280,9 @@ export function getAllSelectedModels(getState) {
     for (const groupId in modelGroups) {
         const models = Object.keys(modelGroups[groupId].models);
         const filteredModels = models.filter((item) => !allModels.includes(item));
-        allModels = [...allModels, ...filteredModels];
+        allModels.push(...allModels, ...filteredModels);
     }
-    return allModels;
+    return Array.from(new Set(allModels));
 }
 
 /**

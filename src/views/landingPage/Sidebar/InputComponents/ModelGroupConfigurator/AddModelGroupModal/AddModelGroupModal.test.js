@@ -8,7 +8,7 @@ import { createTestStore } from '../../../../../../store/store';
 import modelsResponse from "../../../../../../services/API/testing/models-response.json";
 import tco3zmResponse from "../../../../../../services/API/testing/tco3zm-response.json";
 import axios from 'axios';
-import { fetchModels } from '../../../../../../services/API/apiSlice';
+import { fetchModels } from '../../../../../../services/API/apiSlice/apiSlice';
 jest.mock('axios');
 
 let store;

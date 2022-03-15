@@ -2,7 +2,7 @@ import * as React from 'react';
 import Graph from './Graph/Graph';
 import Sidebar from './Sidebar/Sidebar';
 import PropTypes from "prop-types";
-import { styled, useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 
 const drawerWidth = 400;
 

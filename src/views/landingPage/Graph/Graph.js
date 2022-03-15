@@ -4,7 +4,7 @@ import {getOptions, generateSeries} from "../../../utils/optionsFormatter/option
 import {useSelector} from 'react-redux'
 import {selectPlotId, selectPlotTitle, selectPlotXRange, selectPlotYRange} from '../../../store/plotSlice/plotSlice';
 import {selectVisibility} from '../../../store/referenceSlice/referenceSlice';
-import {REQUEST_STATE, selectActivePlotData} from '../../../services/API/apiSlice';
+import {REQUEST_STATE, selectActivePlotData} from '../../../services/API/apiSlice/apiSlice';
 import {Typography, CircularProgress} from '@mui/material';
 import {Alert, Link} from '@mui/material';
 import {O3AS_PLOTS} from '../../../utils/constants';
@@ -47,10 +47,10 @@ function Graph(props) {
     const modelsSlice = useSelector(state => state.models);
     const refLineVisible = useSelector(selectVisibility);
 
-    const [_, setDimensions] = React.useState({
+    const setDimensions = React.useState({ 
         height: window.innerHeight,
         width: window.innerWidth
-    })
+    })[1];
 
     /**
      * Message to display if an error occured.
@@ -72,7 +72,7 @@ function Graph(props) {
             && activeData.error !== NO_MONTH_SELECTED) { // if no month selected the user already gets notified with a more decent warning
             props.reportError(activeData.error);
         }
-    }, [activeData]);
+    }, [activeData]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         const handleResize = () => {

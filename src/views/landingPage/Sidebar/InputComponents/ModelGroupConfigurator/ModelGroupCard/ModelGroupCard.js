@@ -215,8 +215,6 @@ function ModelGroupCard(props) {
                     height: '210px',
                 }}
                 elevation={2}
-                justifyContent="center"
-                alignItems="center"
             >
                 <Grid container sx={{mt: '60px'}}>
                     <Grid item xs={12} sx={{mb: '5px', textAlign: "center"}}>

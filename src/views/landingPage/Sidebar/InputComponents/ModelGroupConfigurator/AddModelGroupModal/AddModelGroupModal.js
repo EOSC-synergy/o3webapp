@@ -20,12 +20,13 @@ import {convertModelName} from "../../../../../../utils/ModelNameConverter";
 import {union, not, intersection} from "../../../../../../utils/arrayOperations";
 import CloseIcon from '@mui/icons-material/Close';
 import Alert from "@mui/material/Alert";
-import PropTypes from 'prop-types'; 
-import { useDispatch, useSelector } from "react-redux";
-import { fetchPlotDataForCurrentModels, REQUEST_STATE } from "../../../../../../services/API/apiSlice";
-import { selectNameOfGroup, selectModelDataOfGroup } from "../../../../../../store/modelsSlice/modelsSlice";
 import DiscardChangesModal from "../../../../../../components/DiscardChangesModal/DiscardChangesModal";
 import store from "../../../../../../store/store";
+import PropTypes from 'prop-types';
+import {useDispatch, useSelector} from "react-redux";
+import {fetchPlotDataForCurrentModels, REQUEST_STATE} from "../../../../../../services/API/apiSlice/apiSlice";
+import {selectNameOfGroup, selectModelDataOfGroup} from "../../../../../../store/modelsSlice/modelsSlice";
+
 
 /**
  * opens a modal where the user can add a new model group
@@ -101,7 +102,7 @@ function AddModelGroupModal(props) {
         if (modelListRequestedData.status === REQUEST_STATE.success) {
             setVisible(modelListRequestedData.data);
         }
-    }, [allModels]);
+    }, [allModels]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         if (props.isOpen && props.refresh) {
@@ -112,7 +113,7 @@ function AddModelGroupModal(props) {
             setErrorMessage("");
         }
 
-    }, [props.isOpen]);
+    }, [props.isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
     /**
      * Returns how many models in the provided array are currently checked

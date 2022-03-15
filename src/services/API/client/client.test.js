@@ -1,6 +1,6 @@
 import {getModels, getPlotData, getPlotTypes, postData} from './client';
 import * as axios from 'axios';
-import { NO_MONTH_SELECTED } from '../../utils/constants';
+import { NO_MONTH_SELECTED } from '../../../utils/constants';
 
 jest.mock('axios');
 
