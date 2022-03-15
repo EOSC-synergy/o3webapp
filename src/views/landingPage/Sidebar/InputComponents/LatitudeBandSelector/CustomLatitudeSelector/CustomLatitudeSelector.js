@@ -11,7 +11,6 @@ import {
     LATITUDE_BAND_MAX_VALUE,
     LATITUDE_BAND_MIN_VALUE
 } from "../../../../../../utils/constants";
-import React from "react";
 import PropTypes from "prop-types";
 
 /**
