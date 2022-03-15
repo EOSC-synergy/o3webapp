@@ -202,6 +202,13 @@ function AddModelGroupModal(props) {
             props.setOpen(); // re-open because saving failed
         }
     }
+
+    const discardChanges = () => {
+        setGroupName("");
+        setVisible(allModels);
+        setChecked([]);
+        setRight([]);
+    }
     
     const addOrEditGroup = () => {
         console.log(`groupName: ${groupName}`);
@@ -356,21 +363,10 @@ function AddModelGroupModal(props) {
      */
     const closeModal = () => {
         
-        if (hasChanges()) { // no changes made
+        if (hasChanges()) { // made changes, reset
             props.onClose();
             openDiscardChangesDialog();
-        } else {
-            if(isEditMode) {
-                setGroupName(storeGroupName);
-                setVisible(allModels);
-                setChecked([]);
-                setRight(storeRight);
-            } else {
-                setGroupName("");
-                setVisible(allModels);
-                setChecked([]);
-                setRight([]);
-            }
+        } else { // no changes made
             props.onClose();
         }
     }
@@ -467,7 +463,13 @@ function AddModelGroupModal(props) {
                     </CardActions>
                 </Card>
             </Modal>
-        <DiscardChangesModal isOpen={discardChangesOpen} onClose={closeDiscardChangesDialog} saveChanges={saveChanges} discardChanges={() => {}} />
+        <DiscardChangesModal 
+            isOpen={discardChangesOpen} 
+            onClose={closeDiscardChangesDialog} 
+            saveChanges={saveChanges} 
+            discardChanges={discardChanges} 
+            closeDialog={() => setDiscardChangesOpen(false)}
+        />
         </React.Fragment>    
     );
 }

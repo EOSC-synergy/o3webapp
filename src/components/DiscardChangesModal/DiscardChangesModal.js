@@ -16,7 +16,8 @@ import CloseIcon from '@mui/icons-material/Close';
  * @param {Boolean} props.isOpen whether the dialog modal should be opened or not
  * @param {Function} props.saveChanges function to save changes
  * @param {Function} props.discardChanges function to discard changes
- * @param {Function} props.onClose function to close the dialog, called after saveChanges or discardChanges
+ * @param {Function} props.onClose function that handles what happens if the close icon of the dialog is pressed
+ * @param {Function} props.closeDialog function to actually close (hide) the dialog
  * @returns {JSX.Element} containing a Dialog that asks the user whether to save or discard changes
  * can only be closed via clicking save or discard changes button
  */
@@ -24,11 +25,12 @@ function DiscardChangesModal(props) {
 
    const discardChangesAndCloseDialog = () => {
        props.discardChanges();
-       props.onClose();
+       props.closeDialog();
+       
    }
 
    const saveChangesAndCloseDialog = () => {
-       props.onClose();
+       props.closeDialog();
        props.saveChanges();
    }
 
