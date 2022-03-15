@@ -395,7 +395,7 @@ const apiSlice = createSlice({
  * This has to be included in the redux store, otherwise dispatching 
  * the above defined actions wouldn't trigger state updates.
  * @categroy Services
-* @subcategory API
+ * @subcategory API
  * @constant {function}
  */
 export default apiSlice.reducer;
