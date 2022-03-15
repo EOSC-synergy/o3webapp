@@ -200,6 +200,9 @@ export const defaultTCO3_zm = {
         }
     },
     yaxis: [],
+    annotations: {
+        points: [],
+    },
     grid: {
         show: false,
     },
@@ -469,10 +472,12 @@ export const default_TCO3_return = {
  * @param {array} styling.colors an array of strings with hex code. Has to match the length of the given series
  * @param {array} styling.width (tco3_zm only!): array of integer defining the line width
  * @param {array} styling.dashArray (tco3_zm only!): array of integer defining if the line is solid or dashed
+ * @param {array} styling.points an array containing data for the recovery points
  * @param {string} plotTitle contains the plot title
  * @param {object} xAxisRange the range of the x-axis
  * @param {object} yAxisRange the range of the y-axis
  * @param {object} seriesNames the names of the series
+ * @param {function} getState store.getState
  *
  * @returns an default_TCO3_plotId object formatted with the given data
  */
@@ -492,6 +497,14 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.xaxis.min = xAxisRange.years.minX;
         newOptions.xaxis.max = xAxisRange.years.maxX;
         newOptions.xaxis.tickAmount = getOptimalTickAmount(xAxisRange.years.minX, xAxisRange.years.maxX);
+
+        const xIdx = 0;
+        const yIdx = 1;
+        for (let point of styling.points) {
+            newOptions.annotations.points.push(
+                {x: point[xIdx], y: point[yIdx], marker: {size: 4}/*, label: {text: point[xIdx]}*/}
+            );
+        }
 
         newOptions.colors = styling.colors;
 
@@ -573,6 +586,7 @@ export function generateSeries({plotId, data, modelsSlice, xAxisRange, yAxisRang
             colors: series.colors,
             dashArray: series.dashArray,
             width: series.width,
+            points: series.points,
         }
     }; // return generated series with styling to pass to apexcharts chart
 }
@@ -584,9 +598,10 @@ export function generateSeries({plotId, data, modelsSlice, xAxisRange, yAxisRang
  * @param {object} data the raw data from the api for the current options
  * @param {object} modelsSlice the slice of the store containing information about the model groups
  * @param {boolean} refLineVisible visibility status of the reference line
+ * @param {function} getState store.getState
  * @returns a combination of data and statistical values series
  */
-function generateTco3_ZmSeries({data, modelsSlice, refLineVisible}) {
+function generateTco3_ZmSeries({data, modelsSlice, refLineVisible, getState}) {
     const series = {
         data: [],
         colors: [],
@@ -597,7 +612,7 @@ function generateTco3_ZmSeries({data, modelsSlice, refLineVisible}) {
         series.data.push({
             name: data.reference_value.plotStyle.label,
             data: data.reference_value.data.map((e, idx) => [START_YEAR + idx, e]),
-        })
+        });
         series.colors.push(colorNameToHex(data.reference_value.plotStyle.color));
         series.width.push(MODEL_LINE_THICKNESS);
         series.dashArray.push(convertToStrokeStyle(data.reference_value.plotStyle.linestyle));
@@ -628,7 +643,10 @@ function generateTco3_ZmSeries({data, modelsSlice, refLineVisible}) {
         generateSingleSvSeries: generateSingleTco3ZmSeries
     });
 
-    return combineSeries(series, svSeries);
+    return Object.assign(
+        combineSeries(series, svSeries),
+        {points: refLineVisible ? calcRecoveryPoints(getState, data.reference_value, svSeries) : []}
+    );
 }
 
 /**
@@ -1511,6 +1529,46 @@ export function getIncludedModels(modelsSlice) {
     }
 
     return visible;
+}
+
+/**
+ * Calculates the points when the mean, mean+std, mean-std reach the value of the reference year.
+ *
+ * @param {function} getState store.getState
+ * @param {Object} referenceValue an object with an array with the values for the reference line among other things
+ * @param {Object} svSeries an object with an array with the values for the statistical values linesy among other things
+ */
+function calcRecoveryPoints(getState, referenceValue, svSeries) {
+    const points = [];
+
+    const refYear = getState().reference.settings.year;
+    const refValue = Math.max(...referenceValue.data);
+
+    const dataName = [SV_DISPLAY_NAME.mean, SV_DISPLAY_NAME["mean+std"], SV_DISPLAY_NAME["mean-std"]];
+
+    const yearIdx = 0;
+    const valIdx = 1;
+
+    for (let idx = 0; idx < svSeries.data.length; idx++) {
+        if (!dataName.includes(svSeries.data[idx].name.split("(")[0].slice(0, -1))) {
+            points.push([null, null]);
+            continue;
+        }
+        for (let i = 0; i < svSeries.data[idx].data.length; i++) {
+            if (svSeries.data[idx].data[i][yearIdx] <= refYear) continue;
+            if (svSeries.data[idx].data[i][valIdx] >= refValue) {
+                points.push(
+                    [
+                        svSeries.data[idx].data[i][yearIdx],
+                        svSeries.data[idx].data[i][valIdx]
+                    ]
+                );
+                break;
+            }
+        }
+        if (points.length < idx + 1) points.push([null, null]);
+    }
+    return points;
 }
 
 /**
