@@ -72,7 +72,7 @@ function Graph(props) {
             && activeData.error !== NO_MONTH_SELECTED) { // if no month selected the user already gets notified with a more decent warning
             props.reportError(activeData.error);
         }
-    }, [activeData]);
+    }, [activeData]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         const handleResize = () => {
