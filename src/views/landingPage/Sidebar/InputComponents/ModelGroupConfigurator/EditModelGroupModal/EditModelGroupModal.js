@@ -16,6 +16,10 @@ import { useTheme } from '@mui/material/styles';
 import { convertModelName } from "../../../../../../utils/ModelNameConverter";
 import { alpha } from '@mui/system';
 import DiscardChangesModal from "../../../../../../components/DiscardChangesModal/DiscardChangesModal";
+import store from "../../../../../../store/store";
+import { arraysEqual } from "../../../../../../utils/arrayOperations";
+
+
 
 /**
  * A DataGrid with applied CSS styling.
@@ -340,7 +344,34 @@ function EditModelGroupModal(props) {
     const closeDiscardChangesDialog = () => {}
     const saveChanges = () => {}
     const discardChanges = () => {}
-    const hasChanges = () => {}
+    const resetState = () => {}
+    /**
+     * Checks whether changes have been made to the statistical values or the visibility of the models
+     * in the model group.
+     * 
+     * @returns whether changes have been made in the editStatisticalValueModal for the currently shown group
+     */
+    const hasChanges = () => {
+        const modelData = selectModelDataOfGroup(store.getState(), props.modelGroupId);
+        const meanData = [], stdData = [], medianData = [], percentileData = [], visibleData = [];
+
+        for (const model of modelList) {
+            meanData.push(modelData[model][mean]);
+            stdData.push(modelData[model][std]);
+            medianData.push(modelData[model][median]);
+            percentileData.push(modelData[model][percentile]);
+            visibleData.push(modelData[model].isVisible);
+        }
+
+        return !( // no changes if all arrays equal each other
+            arraysEqual(meanVisible, meanData)
+            && arraysEqual(stdVisible, stdData)
+            && arraysEqual(medianVisible, medianData)
+            && arraysEqual(percentileVisible, percentileData)
+            && arraysEqual(isVisible, visibleData)
+        );
+    }
+
 
     /**
      * Applies the changes made in the current session of the EditModelGroup and closes the Modal.
