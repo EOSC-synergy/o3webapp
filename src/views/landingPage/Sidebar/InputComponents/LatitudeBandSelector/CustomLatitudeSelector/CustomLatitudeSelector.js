@@ -1,10 +1,9 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux"
-import {Grid, TextField, Typography, FormControl, Divider} from "@mui/material";
+import {Grid, TextField, FormControl} from "@mui/material";
 import {
     selectPlotLocation,
     setLocation,
-    setUserRegionName
 } from "../../../../../../store/plotSlice/plotSlice";
 import {fetchPlotDataForCurrentModels} from "../../../../../../services/API/apiSlice";
 import {

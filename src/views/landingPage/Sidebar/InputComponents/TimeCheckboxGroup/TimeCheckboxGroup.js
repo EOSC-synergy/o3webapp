@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import SeasonCheckBoxGroup from "./SeasonCheckboxGroup/SeasonCheckBoxGroup";
-import {Alert, Box, Checkbox, Divider, FormControlLabel, Grid} from "@mui/material";
+import {Alert, Checkbox, Divider, FormControlLabel, Grid} from "@mui/material";
 import {
     Winter,
     Spring,
