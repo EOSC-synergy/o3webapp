@@ -20,78 +20,80 @@ import TimeCheckBoxGroup from "../InputComponents/TimeCheckboxGroup/TimeCheckbox
 import XAxisField from "../InputComponents/XAxisField/XAxisField";
 import YAxisField from "../InputComponents/YAxisField/YAxisField";
 
-/** Stores the name of the CustomLatitudeSelector component as a Symbol.
- * @constant {string}
+/** 
+ * Stores the name of the CustomLatitudeSelector component as a Symbol.
+ * @constant {String}
  * @memberof Section
  */
 const CLS_Symbol = Symbol("CustomLatitudeSelector");
 
-/** Stores the name of the LatitudeBandSelector component as a Symbol.
- * @constant {string}
+/** 
+ * Stores the name of the LatitudeBandSelector component as a Symbol.
+ * @constant {String}
  * @memberof Section
  */
 const LBS_Symbol = Symbol("LatitudeBandSelector");
 
-/** Stores the name of the LocationSelector component as a Symbol.
- * @constant {string}
+/** 
+ * Stores the name of the LocationSelector component as a Symbol.
+ * @constant {String}
  * @memberof Section
  */
 const LS_Symbol = Symbol("LocationSelector");
 
-/** Stores the name of the ModelGroupConfigurator component as a Symbol.
- * @constant {string}
+/** 
+ * Stores the name of the ModelGroupConfigurator component as a Symbol.
+ * @constant {String}
  * @memberof Section
  */
 const MGC_Symbol = Symbol("ModelGroupConfigurator");
 
 /** Stores the name of the PlotNameField component as a Symbol.
- * @constant {string}
+ * @constant {String}
  * @memberof Section
  */
 const PNF_Symbol = Symbol("PlotNameField");
 
 /** Stores the name of the ReferenceModelSelector component as a Symbol.
- * @constant {string}
+ * @constant {String}
  * @memberof Section
  */
 const RMS_Symbol = Symbol("ReferenceModelSelector");
 
 /** Stores the name of the ReferenceYearField component as a Symbol.
- * @constant {string}
+ * @constant {String}
  * @memberof Section
  */
 const RYF_Symbol = Symbol("ReferenceYearField");
 
 /** Stores the name of the RegionSelector component as a Symbol.
- * @constant {string}
+ * @constant {String}
  * @memberof Section
  */
 const RS_Symbol = Symbol("RegionSelector");
 
 /** Stores the name of the TimeCheckBoxGroup component as a Symbol.
- * @constant {string}
+ * @constant {String}
  * @memberof Section
  */
 const TCG_Symbol = Symbol("TimeCheckBoxGroup");
 
 /** Stores the name of the XAxisField component as a Symbol.
- * @constant {string}
+ * @constant {String}
  * @memberof Section
  */
 const XAF_Symbol = Symbol("XAxisField");
 
 /** Stores the name of the YAxisField component as a Symbol.
- * @constant {string}
+ * @constant {String}
  * @memberof Section
  */
 const YAF_Symbol = Symbol("YAxisField");
 
-// custom Accordion components are
-// inspired by: https://mui.com/components/accordion/#customization
 /**
  * Custom Accordion component
- * @const {function}
- * @returns {JSX.Element}
+ * inspired by: {@link https://mui.com/components/accordion/#customization}
+ * @constant {JSX.Element}
  * @memberof Section
  */
 const Accordion = styled((props) => (
@@ -108,8 +110,7 @@ const Accordion = styled((props) => (
 
 /**
  * custom Accordion summary component
- * @const {function}
- * @returns {JSX.Element}
+ * @const {JSX.Element}
  * @memberof Section
  */
 const AccordionSummary = styled((props) => (
@@ -136,8 +137,7 @@ const AccordionSummary = styled((props) => (
 
 /**
  * custom AccordionDetails component
- * @const {function}
- * @returns {JSX.Element}
+ * @const {JSX.Element}
  * @memberof Section
  */
 const AccordionDetails = styled(MuiAccordionDetails)(({theme}) => ({
@@ -165,7 +165,7 @@ function Section(props) {
      * @public
      * @param {String} name the name of the component
      * @param {int} key a unique key for the given input component
-     * @returns a component from the './InputComponents
+     * @returns {JSX.Element} a component from './InputComponents
      */
     function mapNameToComponent(name, key) {
 

@@ -1,28 +1,50 @@
 import axios from 'axios';
 import { NO_MONTH_SELECTED } from '../../../utils/constants';
 
-/** The base URL */
+/** 
+ * This module is responsible for the communication with the [API]{@link https://api.o3as.fedcloud.eu/api/v1/ui/} and 
+ * it handles the fetching of the relevant data. 
+ * The fetched data is then applied to the corresponding element in the redux store.
+ * It sets up and implements all relevant reducers for the interchange with the API and
+ * manages the request state of the webapp.
+ * 
+ * @module API
+ * */   // used for auto generation of JSDocs with better-docs
+
+
+/** 
+ * The base URL of the API.
+ * It is used as the destination address for all API requests.
+ * @constant {string}
+ */
 const baseURL = "https://api.o3as.fedcloud.eu/api/v1";
 
-/** The timeout value at which an error is thrown and fetching data stops in milliseconds */
+/** 
+ * The timeout value at which an error is thrown and fetching data stops in milliseconds
+ * @constant {number}
+*/
 const timeoutVal = 5 * 60 * 1000; // 5 min at least (fetching the models took 29s)
 
 /**
- * Makes a GET request.
+ * Makes a GET request to a specified endpoint of the API.
  *
  * @param {string} endpoint the endpoint of the URL
  * @returns the request promise from axios
+ * @function
+ * @example getFromAPI("/plots")
  */
 const getFromAPI = (endpoint) => {
     return axios.get(baseURL + endpoint, { timeout: timeoutVal });
 }
 
 /**
- * Makes a POST request.
+ * Makes a POST request to a specified endpoint of the API with the given data.
  *
  * @param {string} endpoint the endpoint of the URL
  * @param {Array.<Object>} data the data for the params of the post request
  * @returns the request promise from axios
+ * @function
+ * @example postAtAPI("/models/plotstyle", {ptype: "tco3_zm"})
  */
 const postAtAPI = (endpoint, data) => {
     // don't pack "data" in an object, the api accepts only an array of values (e.g. model list)
@@ -30,20 +52,23 @@ const postAtAPI = (endpoint, data) => {
 }
 
 /**
- * Gets the plot types.
+ * Gets the plot types from the API.
  *
  * @returns the request promise from axios
+ * @function
  */
 export const getPlotTypes = () => {
   return getFromAPI("/plots");
 };
 
 /**
- * Gets the models.
+ * Gets the models from the API.
  *
  * @param {string} plotType the plot type for which the models should be fetched
  * @param {string} select a selection of specific models
  * @returns the request promise from axios
+ * @function
+ * @example getModels("tco3_zm", "refC2")
  */
 export const getModels = (plotType, select) => {
     const hasPlotType = typeof plotType !== "undefined";
@@ -60,6 +85,8 @@ export const getModels = (plotType, select) => {
  *
  * @param {string} plotType the plot type for which the plot style should be fetched
  * @returns the request promise from axios
+ * @function
+ * @example postModelsPlotStyle("tco3_zm")
  */
 export const postModelsPlotStyle = (plotType) => {
     return postAtAPI(
@@ -71,7 +98,7 @@ export const postModelsPlotStyle = (plotType) => {
 }
 
 /**
- * Performs a request to /plots/plotId to fetch the plot data from the api formatted with the given parameters.
+ * Performs a request to /plots/plotId to fetch the plot data from the API formatted with the given parameters.
  * 
  * @param {string} plotId a string describing the plot - has to be the official plot name (e.g. tco3_zm)
  * @param {int} latMin specifies the minimum latitude
@@ -83,6 +110,18 @@ export const postModelsPlotStyle = (plotType) => {
  * @param {string} refModel the reference model to "normalize the data"
  * @param {int} refYear the reference year to "normalize the data"
  * @returns the request promise from axios
+ * @function
+ * @example getPlotData({
+ *              plotId: "tco3_zm",
+ *              latMin: -90,
+ *              latMax: 90,
+ *              months: [1],
+ *              modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"],
+ *              startYear: 1960,
+ *              endYear: 2100, 
+ *              refModel: "CCMI-1_ACCESS_ACCESS-CCM-refC2",
+ *              refYear: 1980
+ *          })
  */
 export const getPlotData = ({plotId, latMin, latMax, months, modelList, startYear, endYear, refModel, refYear}) => {
     if (months.length === 0) {

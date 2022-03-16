@@ -14,24 +14,30 @@ import {START_YEAR, END_YEAR} from '../../../../../utils/constants';
 function XAxisField() {
     /**
      * A dispatch function to dispatch actions to the redux store.
+     * @constant {function}
      */
     const dispatch = useDispatch();
 
     /**
      * An object containing the minX and maxX values for the x-axis.
+     * @see {@link selectPlotXRange}
+     * @constant {Object}
      */
     const {years: {minX, maxX}} = useSelector(selectPlotXRange);
 
     /**
      * Stores the minX and maxX values
      * and checks their validation before sending it to the Redux store.
+     * @constant {Array}
      */
     const [stateX, setStateX] = React.useState({minX, maxX});
 
     /**
      * Handles the change of the minimum value.
      *
-     * @param event the input value
+     * @see {@link setStateX}
+     * @see {@link setDisplayXRange}
+     * @param event {Event} event that triggered the call of this function
      */
     const handleChangeMin = (event) => {
         if (!isNaN(event.target.value)) {
@@ -49,7 +55,9 @@ function XAxisField() {
     /**
      * Handles the change of the maximum value.
      *
-     * @param event the input value
+     * @param event {Event} event that triggered the call of this function
+     * @see {@link setStateX}
+     * @see {@link setDisplayXRange}
      */
     const handleChangeMax = (event) => {
         if (!isNaN(event.target.value)) {

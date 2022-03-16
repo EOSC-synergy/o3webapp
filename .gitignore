@@ -26,4 +26,6 @@ yarn-error.log*
 /.idea/o3webapp.iml
 /.idea/vcs.xml
 
-.chache/
+.cache/
+docs/
+dist/

@@ -5,7 +5,7 @@ import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import PropTypes from 'prop-types';
 
 /**
- * Displays an error message.
+ * Displays an given error message.
  * @component
  * 
  * @param {Object} props
@@ -19,7 +19,7 @@ function ErrorMessageModal(props) {
     /**
      * The style of the modal.
      *
-     * @type {{boxShadow: number, transform: string, top: string, bgColor: *, left: string, minWidth: string, position: string}}
+     * @constant {{boxShadow: number, transform: string, top: string, bgColor: *, left: string, minWidth: string, position: string}}
      */
     const style = {
         position: 'absolute',

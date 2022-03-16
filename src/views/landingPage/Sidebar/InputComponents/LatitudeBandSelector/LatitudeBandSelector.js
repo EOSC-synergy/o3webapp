@@ -11,12 +11,16 @@ import CustomLatitudeSelector from "./CustomLatitudeSelector/CustomLatitudeSelec
 /**
  * An object containing the current minLat and maxLat Values.
  * @memberof LatitudeBandSelector
+ * @type {Object}
+ * @see {@link selectPlotLocation}
  */
 let selectedLocation;
 
 /**
  * whether the user selected to enter a custom latitude band
  * @memberof LatitudeBandSelector
+ * @type {Array}
+ * @default [null, null]
  */
 let [isCustomizable, setIsCustomizable] = [null, null];
 
@@ -28,6 +32,7 @@ let [isCustomizable, setIsCustomizable] = [null, null];
  * @returns {JSX.Element} a JSX containing a dropdown and if "individual latitude band" is selected a number input field
  */
 function LatitudeBandSelector(props) {
+
 
     selectedLocation = useSelector(selectPlotLocation);
 
@@ -98,6 +103,8 @@ export default LatitudeBandSelector;
  *
  * @param {boolean} forceCustomizable if true, acts like isCustomizable is true - if false, does nothing
  * @returns the location
+ * @memberof LatitudeBandSelector
+ * @function
  */
 const findLatitudeBandByLocation = (forceCustomizable) => {
     if (typeof selectedLocation === 'undefined') return null;

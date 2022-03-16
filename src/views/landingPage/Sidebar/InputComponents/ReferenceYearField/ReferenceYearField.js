@@ -24,18 +24,35 @@ import {selectPlotId} from "../../../../../store/plotSlice/plotSlice";
 function ReferenceYearField() {
     /**
      * A dispatch function to dispatch actions to the redux store.
+     * @constant {function}
      */
     const dispatch = useDispatch();
 
     /**
      * The selected reference year from the redux store.
+     * @see {@link selectRefYear}
+     * @constant {int}
      */
     const selectedYear = useSelector(selectRefYear);
+
+    /**
+     * Whether the reference line is visble. Taken from the redux store.
+     * @constant {int}
+     * @see {@link selectVisibility}
+     */
     const refLineVisibility = useSelector(selectVisibility);
+    /**
+     * The id of the current plot. Taken from the redux store.
+     * @constant {String}
+     * @see {@link selectPlotId}
+     */
     const plotId = useSelector(selectPlotId);
 
     /**
      * Handles the change of the reference year field if it is modified.
+     * @function
+     * @see {@link fetchPlotDataForCurrentModels}
+     * @param {Event} event the event that triggered the call of this function.
      */
     const handleChangeForRefYear = (event) => {
         if (!isNaN(event.target.value)) {
@@ -49,6 +66,8 @@ function ReferenceYearField() {
 
     /**
      * Handles the change of the reference line visibility field if it is modified.
+     * @function
+     * @param {Event} event the event that triggered the call of this function
      */
     const handleShowRefLineClicked = (event) => {
         dispatch(setVisibility({visible: event.target.checked}));

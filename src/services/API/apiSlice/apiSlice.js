@@ -12,7 +12,7 @@ export let cacheKey = '';
  * the stored status components can render differently e.g. displaying a spinner,
  * displaying the fetched data on success or report an error.
  * @constant {object}
- * @category API
+ * @category apiSlice
  */
 export const REQUEST_STATE = {
     idle: "idle",
@@ -28,9 +28,9 @@ export const REQUEST_STATE = {
  * after the async request has been resolved it either returns the data or the error message
  *
  * This action creator is dispatched against the store at the beginning of the app
- * to fetch the models from the api.
- * @category API
- * @constant {function}
+ * to fetch the models from the api. 
+ * @function
+ * @category apiSlice
  */
 export const fetchModels = createAsyncThunk('api/fetchModels', async () => {
     const response = await getModels();
@@ -42,8 +42,8 @@ export const fetchModels = createAsyncThunk('api/fetchModels', async () => {
  *
  * This action creator is dispatched against the store at the beginning of the app
  * to fetch the plot types from the api.
- * @category API
- * @constant {function}
+ * @function
+ * @category apiSlice
  */
 export const fetchPlotTypes = createAsyncThunk('api/fetchPlotTypes', async () => {
     const response = await getPlotTypes();
@@ -59,9 +59,9 @@ export const fetchPlotTypes = createAsyncThunk('api/fetchPlotTypes', async () =>
  * @param {array} months represents the selected months
  * @param {string} refModel the reference model to "normalize the data"
  * @param {int} refYear the reference year to "normalize the data"
- * @category API
- * @constant {function}
  * @returns the generated string
+ * @function
+ * @category apiSlice
  */
 export const generateCacheKey = ({latMin, latMax, months, refModel, refYear}) => {
     return `lat_min=${latMin}&lat_max=${latMax}&months=${months.join(',')}&ref_meas=${refModel}&ref_year=${refYear}`;
@@ -73,8 +73,8 @@ export const generateCacheKey = ({latMin, latMax, months, refModel, refYear}) =>
  *
  * This differs from the refetching action because the reducer has to handle the initialization of the
  * object that caches this specific request.
- * @category API
- * @constant {function}
+ * @function
+ * @category apiSlice
  */
 const fetchPlotDataInitiallyPending = createAction("api/fetchPlotData/initiallyPending");
 
@@ -84,8 +84,8 @@ const fetchPlotDataInitiallyPending = createAction("api/fetchPlotData/initiallyP
  *
  * This differs from the initially fetching action because the existing data structure which stores
  * the cached values only needs to be updated.
- * @category API
- * @constant {function}
+ * @function
+ * @category apiSlice
  */
 const fetchPlotDataRefetching = createAction("api/fetchPlotData/refetching");
 
@@ -93,38 +93,37 @@ const fetchPlotDataRefetching = createAction("api/fetchPlotData/refetching");
  * This action creator generates an action that is dispatched against the store
  * when the request of the data succeeded. The payload object contains the data, the cacheKey and
  * the plotId.
- * @category API
- * @constant {function}
+ * @function
+ * @category apiSlice
  */
 const fetchPlotDataSuccess = createAction("api/fetchPlotData/success");
 /**
  * This action creator generates an action that is dispatched against the store
  * when the request of the data failed. The payload object contains the
  * error message, the cacheKey and the plotId.
- * @category API
- * @constant {function}
+ * @function
+ * @category apiSlice
  */
 const fetchPlotDataRejected = createAction("api/fetchPlotData/rejected");
 /**
  * This action creator generates an action that is dispatched against the store
  * when the requested data is already in the cache and only needs to be selected.
  * The payload contains the plotId and the cacheKey.
- * @category API
- * @constant {function}
+ * @function
+ * @category apiSlice
  */
 const selectExistingPlotData = createAction("api/selectPlotData");
 
 /**
  * This action encapsulates the operation of fetching the data, unpacking the calculated min and max values of the
  * fetched data which are then used to update the plot with the "suggestions". They are named suggestions because
- * the y-axis of the plot axis is initially set to these values. The user can change them ofcourse.
- *
- * @category API
- * @constant {function}
- * @param {string} plotId the name for which the data is fetched
- * @param {string} cacheKey the cache key specifying the settings for the fetched data and where the data is fetched
- * @param {object} data the fetched data from the api
- * @param {boolean} suggest whether the suggestions should be calculated or not
+ * the y-axis of the plot axis is initially set to these values. The user can change them ofcourse. 
+ * 
+ * @function
+ * @category apiSlice
+ * @param {string} obj.plotId the name for which the data is fetched
+ * @param {string} obj.cacheKey the cache key specifying the settings for the fetched data and where the data is fetched
+ * @param {object} obj.data the fetched data from the api
  * @returns the async thunk action that is dispatched against the store.
  */
 export const updateDataAndDisplaySuggestions = ({plotId, cacheKey, data, suggest}) => {
@@ -154,9 +153,9 @@ export const updateDataAndDisplaySuggestions = ({plotId, cacheKey, data, suggest
  * This action serves as the interface the components use to dispatch a fetching request for all current models.
  * It simplifies the interface for the components as they don't need to access the store before and calculate
  * which models should be fetched.
- *
- * @category API
- * @constant {function}
+ * 
+ * @function
+ * @category apiSlice
  * @param {boolean} suggest whether the suggestions should be calculated or not
  * @returns the async thunk function that is dispatched against the store.
  */
@@ -182,8 +181,8 @@ export const fetchPlotDataForCurrentModels = (suggest) => {
  * @param {boolean} suggest whether the suggestions should be calculated or not
  *
  * @returns the async thunk action
- * @category API
- * @constant {function}
+ * @function
+ * @category apiSlice
  */
 export const fetchPlotData = ({plotId, models, suggest}) => {
     return (dispatch, getState) => {
@@ -267,10 +266,10 @@ export const fetchPlotData = ({plotId, models, suggest}) => {
 };
 
 /**
- * Get's all selected models from the models slice.
- *
- * @category API
- * @constant {function}
+ * Gets all selected models from the models slice.
+ * 
+ * @function
+ * @category apiSlice
  * @param {function} getState a function to get the state of the store
  * @returns {Array.<string>} all selected models from the store
  */
@@ -294,6 +293,7 @@ export function getAllSelectedModels(getState) {
  * potential errors or the returned data.
  * @category API
  * @constant {object}
+ * @category apiSlice
  */
 const initialState = {
     models: {
@@ -323,8 +323,8 @@ const initialState = {
 /**
  * The apiSlice is generated by the redux toolkit. This piece of the
  * store is responsible for storing all data fetched from the api.
- * @category API
- * @constant {function}
+ * @function
+ * @category apiSlice
  */
 const apiSlice = createSlice({
     name: "api",
@@ -334,7 +334,8 @@ const apiSlice = createSlice({
      * This interface is used to connect the redux thunk action which are returned
      * from the defined thunk action creators (fetchModels, fetchPlotTypes) to
      * this slice of the store.
-     *
+     * 
+     * @category apiSlice
      * @param {object} builder an object handed by the redux toolkit to add these
      *                         "external" reducers to this slice
      */
@@ -427,21 +428,23 @@ const apiSlice = createSlice({
  * The reducer combining all reducers defined in the plot slice.
  * This has to be included in the redux store, otherwise dispatching
  * the above defined actions wouldn't trigger state updates.
- * @category API
- * @constant {function}
+ * @categroy Services
+ * @subcategory API
+ * @constant {object}
+ * @category apiSlice
  */
 export default apiSlice.reducer;
 
 /**
- * This selector allows components (=> the graph) to "listen" for the active plot data
+ * This selector allows components (=> {@link Graph}) to "listen" for the active plot data
  * of the current selected plot. That means whenever this data is about to change, e.g. because
  * a new fetch request is dispatched, the component re-renders.
  *
  * @param {object} state the state, handed by redux
  * @param {string} plotId identifies the plot
  * @returns the current active data for the active plot
- * @category API
- * @constant {function}
+ * @function
+ * @category apiSlice
  */
 export const selectActivePlotData = (state, plotId) => {
     const plotSpecificSection = state.api.plotSpecific[plotId];

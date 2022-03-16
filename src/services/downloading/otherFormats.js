@@ -2,10 +2,18 @@ import { O3AS_PLOTS } from "../../utils/constants";
 import { generateCsv } from "../csv/csvParser";
 
 /**
+ * This module is responsible for providing functions to download the plot as png, svg or csv.
+ * 
+ * @see [PdfCreator]{@link module:PdfCreator} for pdf download
+ * @module DownloadNotPdf
+ * */ // used for auto generation of JSDocs with better-docs
+
+/**
  * Downloads the graph as a PNG file.
  *
  * @param {string} fileName the file name of the PNG
  * @returns a promise which provides the user to download the PNG file, if it was successful.
+ * @function
  */
 export const downloadGraphAsPNG = (fileName) => {
     return new Promise((resolve, reject) => {
@@ -37,6 +45,7 @@ export const downloadGraphAsPNG = (fileName) => {
  *
  * @param {string} fileName the File name of the SVG
  * @returns a promise which provides the user to download the SVG file, if it was successful.
+ * @function
  */
 export const downloadGraphAsSVG = (fileName) => {
     return new Promise(resolve => {
@@ -51,9 +60,9 @@ export const downloadGraphAsSVG = (fileName) => {
 
 /**
  * Downloads the graph as a CSV file.
- * @component
  * @param {string} plotTitle - the title of the plot
  * @param {string} plotId - the current id of the plot
+ * @function
  */
 export const downloadGraphAsCSV = (plotTitle, plotId, reportError) => {
       let series, seriesX, categoryLabels, seriesNames;
@@ -110,6 +119,7 @@ export const downloadGraphAsCSV = (plotTitle, plotId, reportError) => {
  * 
  * @param {string} fileName name of the downloadable file
  * @param {string} csvString the content of this file
+ * @function
  */
 const downloadCsvFile = ({fileName, csvString}) => {
     const blob = new Blob([csvString]);
@@ -130,6 +140,7 @@ const downloadCsvFile = ({fileName, csvString}) => {
  * 
  * @param {string} base64Data the given Base64 data
  * @param {string} fileName the file name
+ * @function
  */
 const downloadBase64File = (base64Data, fileName) => {
     const downloadLink = document.createElement("a");

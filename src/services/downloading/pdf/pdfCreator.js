@@ -2,11 +2,22 @@ import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import {O3AS_PLOTS} from "../../../utils/constants";
 
+/** 
+ * This module handles all functions to create a pdf that can be downloaded from the site.
+ * Downloading Pdf is not as trivial as downloading other formats, since Apex Charts does not provide a native function to support pdf download.
+ * Moreover, extra legal information is appended to the pdf, which is not appended to the other supported downloadable datatypes.
+ * 
+ * @see {@link module:DownloadNotPdf} for all other format downloads
+ * @module PdfCreator 
+ * */ // used for auto generation of JSDocs with better-docs
+
 /**
  * the Legal Notice links which will be parsed into the PDF.
- * @constant {array}
- * @category Services
- * @subcategory downloading
+ * @constant {Array}
+ * @default 
+    [ "Terms of Use Link: https://o3as.data.kit.edu/policies/terms-of-use.html",
+    "Privacy Policy Link: https://o3as.data.kit.edu/policies/privacy-policy.html",
+    "How to Acknowledge Link: https://o3as.data.kit.edu/policies/how-to-acknowledge.html"]
  */
 const legalNoticeLinks = [
     "Terms of Use Link: https://o3as.data.kit.edu/policies/terms-of-use.html",
@@ -36,9 +47,10 @@ pdfMake.fonts = {
 
 /**
  * Returns a Line presentation for the PDF concerning to the current line data.
- * @param {array} currentData the current Model data contains the properties of the models(color, line style, etc.)
- * @param {string} model the model name which the Line presentation belongs to
- * @returns {object} the Line Presentation which will be shown in the PDF.*/
+ * @param {Array} currentData the current Model data contains the properties of the models(color, line style, etc.)
+ * @param {String} model the model name which the Line presentation belongs to
+ * @returns {Object} the Line Presentation which will be shown in the PDF.
+ */
 function getLinePresentation(currentData, model) {
 
     let linePattern = "";
@@ -67,7 +79,7 @@ function getLinePresentation(currentData, model) {
  * the viewBox parameter of the svg element will be set to the width and height
  * values of the svg element.
  * visit the following website for more details about the viewBox parameter:
- * https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/viewBox
+ * {@link https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/viewBox}
  *
  * @param {svg} svgElement svgElement element.
  * @returns returns the adjusted svg element.
@@ -87,6 +99,8 @@ function getAdjustedSVG(svgElement) {
  * @param {string} fileName the File name of the PDF
  * @param {array} modelGroups the Model Groups which contains the names of the models
  * @param {array} currentData the current Model data contains the properties of the models (color, line style, etc.)
+ * @async
+ * @throws an Error if the given plotId is not supported. For available plot types check {@link O3AS_PLOTS}.
  */
 export async function downloadGraphAsPDF(
     plotId,

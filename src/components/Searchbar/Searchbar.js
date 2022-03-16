@@ -5,6 +5,13 @@ import React from 'react';
 import { performSearch } from '../../utils/textSearch';
 import PropTypes from 'prop-types';
 
+/**
+ * A JSX Element containing a wrapper for a SearchIcon.
+ * Wrapped by {@link SearchBar.Search}.
+ * 
+ * @constant {JSX.Element}
+ * @memberof SearchBar
+ */
 const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2),
     height: '100%',
@@ -15,6 +22,12 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
     justifyContent: 'center',
 }));
 
+/**
+ * A JSX Element that wraps the [SearchIconWrapper]{@link SearchBar.SearchIconWrapper} and the [StyledInputBase]{@link SearchBar.StyledInputBase}.
+ * 
+ * @constant {JSX.Element}
+ * @memberof SearchBar
+ */
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -35,6 +48,13 @@ const Search = styled('div')(({ theme }) => ({
     margin: "3px",
 }));
 
+/**
+ * A JSX Element that contains a styled Input Base.
+ * Wrapped by {@link SearchBar.Search}.
+ * 
+ * @constant {JSX.Element}
+ * @memberof SearchBar
+ */
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
@@ -57,17 +77,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
  * that either contains strings or objects. If the array contains objects the
  * values of these objects are searched.
  * @component
- * @param {Object} props holds all props passed to the component
- * @param {array} props.inputArray an array of either only strings or only objects.
- *                                 The input typed in the searchbar is used as a search
- *                                 string. If an array of objects is passed the values of
- *                                 each object are searched.
- * @param {function} props.foundIndicesCallback this function is called with an array 
- *                                              containing the indices that matched the 
- *                                              search string. The function is called after the
- *                                              search is performed.
- * @param {boolean} props.shouldReturnValues specifies whether the searchbar should pass indices or values
- *          to props.foundIndicesCallback
+ * @param {Object} props further specified in propTypes
  * @returns {JSX} a pretty searchbar component
  */
 export default function SearchBar(props) {
@@ -78,6 +88,11 @@ export default function SearchBar(props) {
       shouldReturnValues = props.shouldReturnValues;
     }
 
+    /**
+     * handles the change of the input -> performs the search
+     * @see {@link module:TextSearch.performSearch}
+     * @param {Event} event the event that triggered this function call
+     */
     const handleInputChange = (event) => {
         const newInput = event.target.value
         foundIndicesCallback(performSearch(inputArray, newInput, shouldReturnValues));

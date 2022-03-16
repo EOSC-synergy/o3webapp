@@ -29,27 +29,38 @@ import {selectNameOfGroup, selectModelDataOfGroup} from "../../../../../../store
 
 
 /**
- * opens a modal where the user can add a new model group
+ * Opens a modal where the user can add a new model group.
+ * Used in {@link ModelGroupConfigurator}.
+ * 
  * @component
- * @param {Object} props
- * @param {function} props.onClose -> function to call if modal should be closed
- * @param {boolean} props.isOpen -> boolean whether the modal should be visible
- * @param {function} props.reportError -> error handling
- * @param {number} props.modelGroupId -> string identifying the model group,
- *          if this model should be used to edit an existing model group
- * @returns {JSX} a jsx containing a modal with a transfer list with all available models
+ * @param {Object} props specified in propTypes
+ * @returns {JSX.Element} a jsx containing a modal with a transfer list with all available models
+ * @component AddModelGroupModal
  */
 function AddModelGroupModal(props) {
 
+    /**
+     * True if the Modal is open in the "Edit Mode".
+     * @constant {boolean}
+     */
     const isEditMode = 'modelGroupId' in props;
 
     /**
-     * the label in the card heading
+     * The label in the card heading.
+     * @constant {string}
      */
     const addModelLabel = isEditMode ? "Edit Model Group Members" : "Add Model Group";
 
+    /**
+     * A function to dispatch actions to the redux store.
+     * @function
+     */
     const dispatch = useDispatch();
 
+    /**
+     * Selected modelList data.
+     * @constant {Object}
+     */
     const modelListRequestedData = useSelector(state => state.api.models);
 
     let isLoading = true;
@@ -62,31 +73,56 @@ function AddModelGroupModal(props) {
         isLoading = false;
     }
 
+    /**
+     * The Id of the currently open model group.
+     * If the modal is opened in the "Edit Mode" the value is set to -1.
+     * @constant {number}
+     */
     const modelGroupId = isEditMode ? props.modelGroupId : -1;
 
     /**
-     * Array containing all currently checked models
+     * Array containing all currently checked models.
+     * @constant {Array}
      */
     const [checked, setChecked] = React.useState([]);
     /**
      * Array containing all models, that are currently plotted in the right transfer list
      * -> models that should eventually be added
+     * @constant {Array}
      */
     const storeRight = Object.keys(useSelector(state => selectModelDataOfGroup(state, modelGroupId)));
     const [right, setRight] = React.useState(storeRight);
+
     /**
      * Array containing all models that should currently be visibile
-     * because of the search function those might differ from all models
+     * because of the search function those might differ from all models.
+     * @constant {Array}
      */
     const [visible, setVisible] = React.useState([]);
     /**
-     * The currently enetered group name
+     * The currently enetered group name.
+     * @constant {string}
      */
     const storeGroupName = useSelector(state => selectNameOfGroup(state, modelGroupId));
     const [groupName, setGroupName] = React.useState(storeGroupName);
+
+    /**
+     * Stores the error message if an error occured.
+     * @constant {string}
+     */
     const [errorMessage, setErrorMessage] = React.useState('');
-    const [discardChangesOpen, setDiscardChangesOpen] = React.useState(false);
+
+    /**
+     * The object containing the information about the theming of the webapp
+     * @constant {Object}
+     */
     const theme = useTheme();
+    /**
+     * reportError function provided by props.
+     * Stored separetly in order to pass it to useEffect
+     * @function
+     */
+    const reportError = props.reportError;
 
     const openDiscardChangesDialog = () => setDiscardChangesOpen(true);
 
@@ -97,7 +133,7 @@ function AddModelGroupModal(props) {
 
     useEffect(() => {
         if (modelListRequestedData.status === REQUEST_STATE.error) {
-            props.reportError("API not responding: " + modelListRequestedData.error);
+            reportError("API not responding: " + modelListRequestedData.error);
         }
         if (modelListRequestedData.status === REQUEST_STATE.success) {
             setVisible(modelListRequestedData.data);
@@ -119,35 +155,49 @@ function AddModelGroupModal(props) {
      * Returns how many models in the provided array are currently checked
      * @param {Array} models models to check
      * @returns the number of checked models in models
+     * @function
      */
     const numberOfChecked = (models) => intersection(checked, models).length;
     /**
      * All models that are currently on the left side
      * -> all models that are not currently on the right side are on the left side
+     * @constant {Array}
      */
     const left = not(allModels, right);
     /**
      * An array containing all models that are currently on the left side and are checked
+     * @constant {Array}
      */
     const leftChecked = intersection(checked, left);
     /**
      * An array containing all models that are currently on the right side and are checked
+     * @constant {Array}
      */
     const rightChecked = intersection(checked, right);
     /**
      * An array containing all models that are currently on the left side and are visible
+     * @constant {Array}
      */
     const leftVisible = intersection(visible, left);
     /**
      * An array containing all models that are currently on the right side and are visible
+     * @constant {Array}
      */
     const rightVisible = intersection(visible, right);
+
+    /**
+     * This state tracks whether the discard changes modal is currently visible.
+     * @default false
+     */
+    const [discardChangesOpen, setDiscardChangesOpen] = React.useState(false);
+
 
     /**
      * Toggles one element
      * i.e. checks the element if it had not been checked before
      * and unchecks it if it has been checked
      * @param {String} value the id of the model that has been clicked
+     * @function 
      */
     const handleChangeElement = (value) => () => {
         const currentIndex = checked.indexOf(value);
@@ -166,6 +216,7 @@ function AddModelGroupModal(props) {
      * i.e. checks all if one element in items has not been checked before
      * and unchecks all if all elements in items have been checked
      * @param {Array} items array containing model ids to check / uncheck
+     * @function
      */
     const handleToggleAll = (items) => () => {
         if (numberOfChecked(items) === items.length) {
@@ -176,8 +227,9 @@ function AddModelGroupModal(props) {
     };
 
     /**
-     * moves all checked models from the right list to the left and unchecks them
-     * -> appends all leftChecked models to the right array and removes them from the checked array
+     * Moves all checked models from the right list to the left and unchecks them
+     * -> Appends all leftChecked models to the right array and removes them from the checked array
+     * @function
      */
     const handleCheckedRight = () => {
         setRight(right.concat(leftChecked));
@@ -185,8 +237,9 @@ function AddModelGroupModal(props) {
     };
 
     /**
-     * moves all checked models from the left to right and unchecks them
-     * -> removes all rightChecked models from the right and checked array
+     * Moves all checked models from the left to right and unchecks them
+     * -> Removes all rightChecked models from the right and checked array
+     * @function
      */
     const handleCheckedLeft = () => {
         setRight(not(right, rightChecked));
@@ -194,17 +247,10 @@ function AddModelGroupModal(props) {
     };
 
     /**
-     * Tries to safe the current made changes, if this fails it re-opens the modal once again
-     * to enable the user to correct the mistake
+     * Function that is called if the the changes of a existing model group need to be applied
+     * or a new model group has to be added.#d3d3d3
      * @function
      */
-    const saveChanges = () => {
-        const success = addOrEditGroup();
-        if (!success) {
-            props.setOpen(false); // re-open because saving failed
-        }
-    }
-
     const addOrEditGroup = () => {
         if (groupName === '') {
             setErrorMessage("Please provide a model group name");
@@ -221,20 +267,35 @@ function AddModelGroupModal(props) {
     }
 
     /**
-     * sets the currently visible models by a provided array of indices
-     * ! overwrites old visibilities
+     * Sets the currently visible models by a provided array of indices.
+     * It also overwrites old visibilities.
      * @param {Array} visibleModels array of models that should be currently visible
+     * @function
      */
     const setCurrentlyVisibleModels = (visibleModels) => {
         setVisible(visibleModels);
     }
 
+        /**
+     * Tries to safe the current made changes, if this fails it re-opens the modal once again
+     * to enable the user to correct the mistake
+     * @function
+     */
+         const saveChanges = () => {
+            const success = addOrEditGroup();
+            if (!success) {
+                props.setOpen(false); // re-open because saving failed
+            }
+        }
+    
+
     /**
-     * renders a custom transfer list component with provided lists
+     * Renders a custom transfer list component with provided lists
      * @param {Array} models array of modelIDs that belong to the list
      * @param {Array} modelsChecked array of modelIDs that are currently checked
      * @param {Array} modelsVisible array of modelIDS that are currently visible
      * @returns {JSX.Element} a Card containing a custom transfer list and a warning if checked models are currently not visible
+     * @function
      */
     const customList = (models, modelsChecked, modelsVisible) => {
         const modelsCheckedInvisible = intersection(not(models, modelsVisible), modelsChecked);
@@ -311,6 +372,10 @@ function AddModelGroupModal(props) {
         );
     }
 
+    /**
+     * Style of the modal.
+     * @constant {Object}
+     */
     const style = {
         position: 'absolute',
         top: '50%',
@@ -327,16 +392,18 @@ function AddModelGroupModal(props) {
     };
 
     /**
-     * updates the current group name
-     * @param {event} event the event that called this function
+     * Updates the current group name.
+     * @param {Object} event    The event that called this function
+     * @function
      */
     const updateGroupName = (event) => {
         setGroupName(event.target.value);
     }
 
     /**
-     * Determines whether the user made changes to the current model group
-     * @returns whether the user made changes to the current model group
+     * This function is called if the modal is closed and the changes have to be discarded.
+     * Discards all changes made since the modal was last opened.
+     * @returns {boolean} whether the user made changes to the current model group
      * @function
      */
     const hasChanges = () => {
@@ -478,21 +545,22 @@ function AddModelGroupModal(props) {
 
 
 AddModelGroupModal.propTypes = {
+    /**
+     * Function for error handling
+     */
     reportError: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
     isOpen: PropTypes.bool.isRequired,
     /**
-     * function to re-open the modal from inside the component.
+     * Function to call if modal should be closed
      */
     setOpen: PropTypes.func.isRequired,
     /**
-     * boolean indicating whether the state should be refreshed. This is usually
-     * set to false, true is only required when the discard changes modal is closed
-     * without saving or ultimately discarding the changes.
+     * Boolean whether the modal should be visible
      */
     refresh: PropTypes.bool.isRequired,
     /**
-     * string identifying the model group,
+     * Number identifying the model group,
      * if this model should be used to edit an existing model group
      */
     modelGroupId: PropTypes.number
