@@ -42,7 +42,6 @@ pdfMake.fonts = {
 function getLinePresentation(currentData, model) {
 
     let linePattern = "";
-    console.log(currentData[model].plotStyle.linestyle);
     if (currentData[model].plotStyle.linestyle === 'solid') {
         linePattern = `────`
     } else if (currentData[model].plotStyle.linestyle === 'dashed') {

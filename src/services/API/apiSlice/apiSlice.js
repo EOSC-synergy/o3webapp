@@ -34,6 +34,7 @@ export const REQUEST_STATE = {
  */
 export const fetchModels = createAsyncThunk('api/fetchModels', async () => {
     const response = await getModels();
+    if (!response) throw new Error("hi there");
     return response.data;
 });
 
@@ -47,6 +48,7 @@ export const fetchModels = createAsyncThunk('api/fetchModels', async () => {
  */
 export const fetchPlotTypes = createAsyncThunk('api/fetchPlotTypes', async () => {
     const response = await getPlotTypes();
+    if (!response) throw new Error("and here");
     return response.data;
 });
 
@@ -160,10 +162,9 @@ export const updateDataAndDisplaySuggestions = ({plotId, cacheKey, data, suggest
  * @param {boolean} suggest whether the suggestions should be calculated or not
  * @returns the async thunk function that is dispatched against the store.
  */
-export const fetchPlotDataForCurrentModels = (suggest) => {
-    if (typeof suggest === "undefined") suggest = true;
-
+export const fetchPlotDataForCurrentModels = (suggest) => {    
     return (dispatch, getState) => {
+        if (typeof suggest === "undefined") suggest = true;
         dispatch(
             fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, models: getAllSelectedModels(getState), suggest})
         );
@@ -252,7 +253,7 @@ export const fetchPlotData = ({plotId, models, suggest}) => {
                 response => dispatch(updateDataAndDisplaySuggestions({
                     plotId,
                     cacheKey,
-                    data: response.data,
+                    data: response?.data,
                     suggest,
                 })),
                 error => {
