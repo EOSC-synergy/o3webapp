@@ -186,6 +186,13 @@ function AddModelGroupModal(props) {
     const rightVisible = intersection(visible, right);
 
     /**
+     * This state tracks whether the discard changes modal is currently visible.
+     * @default false
+     */
+    const [discardChangesOpen, setDiscardChangesOpen] = React.useState(false);
+
+
+    /**
      * Toggles one element
      * i.e. checks the element if it had not been checked before
      * and unchecks it if it has been checked
@@ -268,6 +275,19 @@ function AddModelGroupModal(props) {
     const setCurrentlyVisibleModels = (visibleModels) => {
         setVisible(visibleModels);
     }
+
+        /**
+     * Tries to safe the current made changes, if this fails it re-opens the modal once again
+     * to enable the user to correct the mistake
+     * @function
+     */
+         const saveChanges = () => {
+            const success = addOrEditGroup();
+            if (!success) {
+                props.setOpen(false); // re-open because saving failed
+            }
+        }
+    
 
     /**
      * Renders a custom transfer list component with provided lists

@@ -4,6 +4,7 @@ import {setDisplayYRange, selectPlotYRange, selectPlotId} from "../../../../../s
 import {Typography, Grid, FormControl, TextField} from "@mui/material";
 import store from '../../../../../store/store';
 import {O3AS_PLOTS} from "../../../../../utils/constants";
+import PropTypes from 'prop-types';
 
 /**
  * Enables the user to choose the range that should be visible on the y-axis of the plot.
