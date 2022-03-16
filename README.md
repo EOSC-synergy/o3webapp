@@ -53,10 +53,10 @@ Make sure that you have installed
     npm start
 ```
 
-- To run the tests and to see the test coverage, execute:
+- To run the tests and to see the test coverage, execute: (leave the coverage option if you just want to test the code)
 
 ```
-    npm run test -- --coverage .
+    npm run test -- --watchAll --coverage 
 ```
 
 - To generate docs, execute:
@@ -81,7 +81,7 @@ There is a runnig instants on the VM. You can visit the WebApp via this link: ht
     sudo docker-compose -f app
 ```
 
-### Where the data come from
+### Where the data comes from
 
 The required data for this Webapp is provided via the Swagger REST API for O3as.
 In order to see the API and try some request, visit: 

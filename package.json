@@ -52,7 +52,14 @@
       "src/services/downloading",
       "src/App.js", 
       "src/index.js"
-    ]
+    ],
+    "coverageThreshold": {
+      "global": {
+        "functions": 70,
+        "lines": 70
+      }
+    },
+    "clearMocks": true
   },
   "browserslist": {
     "production": [
