@@ -3,7 +3,7 @@ config:
   project_repos: {}
 environment:
   JPL_DOCKERFORCEBUILD: enabled
-  JPL_KEEPGOING: enabled
+#  JPL_KEEPGOING: disabled
 sqa_criteria:
   QC.Sty:
     repos:
