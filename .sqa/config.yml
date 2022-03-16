@@ -9,7 +9,7 @@ sqa_criteria:
     repos:
       this_repo:
         commands:
-        - sh -c "npm ci --audit=false && ./node_modules/.bin/eslint ./ -f checkstyle -o eslint-codestyle.xml"
+        - sh -c "npm ci --audit=false && node --max_old_space_size=3064 ./node_modules/.bin/eslint ./ -f checkstyle -o eslint-codestyle.xml"
         container: processing
   QC.Uni:
     repos:

@@ -18,6 +18,14 @@ pipeline {
                 }
             }
             post {
+                always {
+                    recordIssues(
+                        enabledForFailure: true, aggregatingResults: true,
+                        tool: checkStyle(pattern: 'eslint-codestyle.xml',
+                                         reportEncoding:'UTF-8',
+                                         name: 'CheckStyle')
+                    )
+                }
                 cleanup {
                     cleanWs()
                 }
