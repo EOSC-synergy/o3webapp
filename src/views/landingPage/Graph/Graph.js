@@ -4,13 +4,13 @@ import {getOptions, generateSeries} from "../../../utils/optionsFormatter/option
 import {useSelector} from 'react-redux'
 import {selectPlotId, selectPlotTitle, selectPlotXRange, selectPlotYRange} from '../../../store/plotSlice/plotSlice';
 import {selectVisibility} from '../../../store/referenceSlice/referenceSlice';
-import {REQUEST_STATE, selectActivePlotData} from '../../../services/API/apiSlice';
+import {REQUEST_STATE, selectActivePlotData} from '../../../services/API/apiSlice/apiSlice';
 import {Typography, CircularProgress} from '@mui/material';
 import {Alert, Link} from '@mui/material';
 import {O3AS_PLOTS} from '../../../utils/constants';
 import {NO_MONTH_SELECTED} from '../../../utils/constants';
 import store from '../../../store/store';
-  
+
 /**
  * Currently there is no dynamic data linking. The graph will always
  * render the data from default-data.json in this folder. This is
@@ -39,13 +39,6 @@ function Graph(props) {
      */
     const HEIGHT_LOADING_SPINNER = "300px";
 
-    /**
-     * How tall the graph should appear
-     * @constant {string}
-     * @memberof Graph
-     */
-    const HEIGHT_GRAPH = `${window.innerHeight * 0.75}px`;
-
     const plotId = useSelector(selectPlotId);
     const plotTitle = useSelector(selectPlotTitle);
     const xAxisRange = useSelector(selectPlotXRange);
@@ -54,10 +47,10 @@ function Graph(props) {
     const modelsSlice = useSelector(state => state.models);
     const refLineVisible = useSelector(selectVisibility);
 
-    const [_, setDimensions] = React.useState({ 
+    const setDimensions = React.useState({ 
         height: window.innerHeight,
         width: window.innerWidth
-    })
+    })[1];
 
     /**
      * Message to display if an error occured.
@@ -79,19 +72,31 @@ function Graph(props) {
             && activeData.error !== NO_MONTH_SELECTED) { // if no month selected the user already gets notified with a more decent warning
             props.reportError(activeData.error);
         }
-    }, [activeData]);
+    }, [activeData]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    function debounce(fn, ms) {
+        let timer
+        return _ => {
+          clearTimeout(timer)
+          timer = setTimeout(_ => {
+            timer = null
+            fn.apply(this, arguments)
+          }, ms)
+        };
+      }
 
     useEffect(() => {
-        const handleResize = () => {
-          setDimensions({
-            height: window.innerHeight,
-            width: window.innerWidth
-          })
-        }
-    
-        window.addEventListener('resize', handleResize)
-        return _ => window.removeEventListener('resize', handleResize);
-    })
+        const debouncedHandleResize = debounce(function handleResize() {
+            setDimensions({
+              height: window.innerHeight,
+              width: window.innerWidth
+            })
+          }, 1000);
+      
+          window.addEventListener('resize', debouncedHandleResize)
+      
+          return _ => window.removeEventListener('resize', debouncedHandleResize)      
+    });
 
     if (!(plotId in O3AS_PLOTS)) {
         const style = {

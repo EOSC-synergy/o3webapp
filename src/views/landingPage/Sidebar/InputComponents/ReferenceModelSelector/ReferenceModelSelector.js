@@ -4,31 +4,30 @@ import {useDispatch} from "react-redux";
 import {useSelector} from "react-redux";
 import {setModel, selectRefModel} from "../../../../../store/referenceSlice/referenceSlice";
 import PropTypes from 'prop-types';
-import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice";
-import { REQUEST_STATE } from "../../../../../services/API/apiSlice";
+import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice/apiSlice";
+import {REQUEST_STATE} from "../../../../../services/API/apiSlice/apiSlice";
+
 /**
  * enables the user to select a reference model
  * @component
- * @param {Object} props specified by PropTypes
+ * @param {Object} props
+ * @param {function} props.reportError - function to handle errors
  * @returns {JSX.Element} a jsx containing a dropdown to select the reference model from all currently visible models
  */
 function ReferenceModelSelector(props) {
 
     /**
      * A dispatch function to dispatch actions to the Redux store.
-     * @constant {function}
      */
     const dispatch = useDispatch();
 
     /**
      * Selects the model list from the Redux store.
-     * @constant {array}
      */
     const modelListRequestedData = useSelector(state => state.api.models);
 
     /**
      * Selects the current reference model.
-     * @constant {array}
      */
     const selectedModel = useSelector(selectRefModel);
 
@@ -49,7 +48,6 @@ function ReferenceModelSelector(props) {
 
     /**
      * Handles the change of the reference model selection.
-     * @constant {function}
      */
     const handleChangeForRefModel = (_, value) => {
         if (value !== null) {
@@ -65,7 +63,7 @@ function ReferenceModelSelector(props) {
             value={selectedModel}
             onChange={handleChangeForRefModel}
             options={allModels}
-            renderInput={(params) => <TextField {...params} label="Reference Model" />}
+            renderInput={(params) => <TextField {...params} label="Reference Model"/>}
             sx={{width: "100%"}}
             data-testid="ReferenceModelSelector-reference-model"
         />
@@ -73,9 +71,6 @@ function ReferenceModelSelector(props) {
 }
 
 ReferenceModelSelector.propTypes = {
-    /**
-     * function for error handling
-     */
     reportError: PropTypes.func
 }
 

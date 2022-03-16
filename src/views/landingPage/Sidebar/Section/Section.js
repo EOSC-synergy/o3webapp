@@ -86,7 +86,7 @@ const XAF_Symbol = Symbol("XAxisField");
  */
 const YAF_Symbol = Symbol("YAxisField");
 
-// custom Accordion components are 
+// custom Accordion components are
 // inspired by: https://mui.com/components/accordion/#customization
 /**
  * Custom Accordion component
@@ -148,7 +148,13 @@ const AccordionDetails = styled(MuiAccordionDetails)(({theme}) => ({
 /**
  * an expandable section containing a list of inputComponents as well as a name
  * @component
- * @param {Object} props specified further by PropTypes
+ * @param {Object} props
+ * @param {string[]} props.components -> an array containing a string representation of all components that should be plotted
+ * @param {string} props.name -> the name of the section
+ * @param {function} props.reportError -> used for error handling
+ * @param {boolean} props.isExpanded -> whether this section should be expanded
+ * @param {function} props.onCollapse -> function to collapse this section
+ * @param {function} props.onExpand -> function to expand this section
  * @returns {JSX.Element} an accordion that once expanded displays the components specified by the config files and the API doc
  */
 function Section(props) {
@@ -157,10 +163,9 @@ function Section(props) {
      * maps a given name to a corresponding component from the ./InputComponents folder
      * if there is no component with the given name, calls the props.reportError function
      * @public
-     * @todo move to utils
      * @param {String} name the name of the component
      * @param {int} key a unique key for the given input component
-     * @returns {JSX.Element} a component from the './InputComponents
+     * @returns a component from the './InputComponents
      */
     function mapNameToComponent(name, key) {
 
@@ -247,29 +252,11 @@ function Section(props) {
 }
 
 Section.propTypes = {
-    /**
-     * the name of the section
-     */
     name: PropTypes.string.isRequired,
-    /**
-     * used for error handling
-     */
     reportError: PropTypes.func.isRequired,
-    /**
-     * an array containing a string representation of all components that should be plotted
-     */
     components: PropTypes.arrayOf(PropTypes.string).isRequired,
-    /**
-     * whether this section should be expanded
-     */
     isExpanded: PropTypes.bool.isRequired,
-    /**
-     * function to collapse this section
-     */
     onCollapse: PropTypes.func,
-    /**
-     * function to expand this section
-     */
     onExpand: PropTypes.func
 }
 

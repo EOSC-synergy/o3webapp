@@ -19,9 +19,9 @@ import {
 } from "../../../../services/downloading/otherFormats";
 import {useSelector} from "react-redux";
 import {selectPlotId, selectPlotTitle} from "../../../../store/plotSlice/plotSlice";
-import {selectActivePlotData} from "../../../../services/API/apiSlice";
+import {selectActivePlotData} from "../../../../services/API/apiSlice/apiSlice";
 import {selectAllModelGroups} from "../../../../store/modelsSlice/modelsSlice";
-import {REQUEST_STATE} from "../../../../services/API/apiSlice";
+import {REQUEST_STATE} from "../../../../services/API/apiSlice/apiSlice";
 import CloseIcon from "@mui/icons-material/Close";
 import CardHeader from "@mui/material/CardHeader";
 import CardActions from "@mui/material/CardActions";
@@ -38,7 +38,10 @@ const fileFormats = [
 /**
  * Opens a modal where the user can select the file format and download the plot.
  * @component
- * @param {Object} props specified in propTypes
+ * @param {Object} props
+ * @param {boolean} props.isOpen -> whether modal should be visible
+ * @param {function} props.onClose -> handles closing the modal
+ * @param {function} props.reportError -> enabling to report an error
  * @returns {JSX.Element} a jsx containing a modal with a dropdown to choose the file type and a download button
  */
 function DownloadModal(props) {
@@ -68,19 +71,20 @@ function DownloadModal(props) {
      */
     const [selectedFileFormat, setSelectedFileFormat] = React.useState('');
 
-    /**
-     * The style of the DownloadModal.
-     */
-    const style = {
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        width: "30%",
-        bgColor: useTheme().palette.grey[200],
-        boxShadow: 24,
-        p: 5,
-    };
+  /**
+   * The style of the DownloadModal.
+   * @constant {object}
+   */
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "30%",
+    bgColor: useTheme().palette.grey[200],
+    boxShadow: 24,
+    p: 5,
+  };
 
     /**
      * Handles the download of the plot, if the download button is clicked.
@@ -153,17 +157,8 @@ function DownloadModal(props) {
 }
 
 DownloadModal.propTypes = {
-  /**
-   * whether modal should be visible
-   */
   isOpen: PropTypes.bool.isRequired,
-  /**
-   * handles closing the modal
-   */
   onClose: PropTypes.func.isRequired,
-  /**
-   * function for error handling
-   */
   reportError: PropTypes.func,
 };
 

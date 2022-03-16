@@ -180,7 +180,6 @@ function createSubtitle(getState) {
  *
  * This gigantic object allows us to communicate with the apexcharts library.
  * More can be found here: https://apexcharts.com/docs/installation/
- * @constant {object}
  */
 export const defaultTCO3_zm = {
     xaxis: {
@@ -576,6 +575,7 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
  * @param {object} xAxisRange the range of the x-axis
  * @param {object} yAxisRange the range of the y-axis
  * @param {object} refLineVisible visibility status of the reference line
+ * @param {function} getState store.getState
  * @returns series object which includes a subdivision into a data and a styling object.
  */
 export function generateSeries({plotId, data, modelsSlice, xAxisRange, yAxisRange, refLineVisible, getState}) {
@@ -608,7 +608,7 @@ function generateTco3_ZmSeries({data, modelsSlice, refLineVisible, getState}) {
         width: [],
         dashArray: [],
     }
-    if (refLineVisible) {
+    if (refLineVisible && data.reference_value) {
         series.data.push({
             name: data.reference_value.plotStyle.label,
             data: data.reference_value.data.map((e, idx) => [START_YEAR + idx, e]),
@@ -618,7 +618,7 @@ function generateTco3_ZmSeries({data, modelsSlice, refLineVisible, getState}) {
         series.dashArray.push(convertToStrokeStyle(data.reference_value.plotStyle.linestyle));
     }
 
-    for (const [id, groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups  // don't remove 'id'
+    for (const groupData of Object.values(modelsSlice.modelGroups)) { // iterate over model groups
         if (!groupData.isVisible) continue; // skip hidden groups
         for (const [model, modelInfo] of Object.entries(groupData.models)) {
             if (!modelInfo.isVisible) continue; // skip hidden models
@@ -645,7 +645,7 @@ function generateTco3_ZmSeries({data, modelsSlice, refLineVisible, getState}) {
 
     return Object.assign(
         combineSeries(series, svSeries),
-        {points: refLineVisible ? calcRecoveryPoints(getState, data.reference_value, svSeries) : []}
+        {points: refLineVisible && data.reference_value ? calcRecoveryPoints(getState, data.reference_value, svSeries) : []}
     );
 }
 
@@ -863,7 +863,7 @@ function calculateBoxPlotValues({data, modelsSlice}) {
         boxPlotHolder[region] = []
     }
 
-    for (const [id, groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups  // don't remove 'id'
+    for (const groupData of Object.values(modelsSlice.modelGroups)) { // iterate over model groups 
         if (!groupData.isVisible) continue; // skip hidden groups
         for (const [model, modelInfo] of Object.entries(groupData.models)) {
             if (!modelInfo.isVisible) continue; // skip hidden models
@@ -912,7 +912,7 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
     };
 
     const modelGroups = modelsSlice.modelGroups;
-    for (const [_, groupData] of Object.entries(modelGroups)) {
+    for (const groupData of Object.values(modelGroups)) {
 
         const svHolder = calculateSvForModels(Object.keys(groupData.models), data, groupData, buildMatrix);
 
@@ -1057,7 +1057,7 @@ export const preTransformApiData = ({plotId, data}) => {
         for (let datum of data) {
             // top structure
             let normalizedArray;
-            if (datum.model === "reference_value") { // 
+            if (datum.model === "reference_value") { //
                 normalizedArray = Array(END_YEAR - START_YEAR).fill(datum.y[0]); // always stretch reference line from START_YEAR to END_YEAR
             } else {
                 normalizedArray = normalizeArray(datum.x, datum.y);
@@ -1345,7 +1345,7 @@ function isIncludedInSv(model, groupData, svType) {
 
 /**
  * Determines the optimal tick amount for a given max and min year for the x-axis.
- * Takes into account the current screen width, uses a heuristic approach 
+ * Takes into account the current screen width, uses a heuristic approach
  * (all values are determined through experimentation).
  *
  * @param {number} min      The selected min. year of the plot
@@ -1353,9 +1353,9 @@ function isIncludedInSv(model, groupData, svType) {
  * @returns                 The optimal tick amount according to those values
  */
 export function getOptimalTickAmount(min, max) {
-    const width  = window.innerWidth || document.documentElement.clientWidth || 
+    const width  = window.innerWidth || document.documentElement.clientWidth ||
     document.body.clientWidth;
-    const height = window.innerHeight|| document.documentElement.clientHeight|| 
+    const height = window.innerHeight|| document.documentElement.clientHeight||
     document.body.clientHeight;
 
 
@@ -1364,9 +1364,9 @@ export function getOptimalTickAmount(min, max) {
     }
 
     let divider = 1;
-    if (width <= 600) divider = 4; 
+    if (width <= 600) divider = 4;
     else if (width <= 1100) divider = 2;
-    
+
     const diff = max - min;
     if (diff <= 40) {
         return diff / divider;
@@ -1475,7 +1475,6 @@ export function parseSvName(name) {
  */
 export function customTooltipFormatter({series, seriesIndex, dataPointIndex, w}) {
     const modelName = w.globals.seriesNames[seriesIndex];
-    const listOfSv = Object.keys(SV_COLORING); // included mean+/-std
     const numDecimalsInDatapoint = 2;
     if (modelName.startsWith("Reference")) {
         let displayName = modelName.split("value")
@@ -1583,8 +1582,8 @@ export const formatLatitude = (locationValue) => {
     const hemisphereExtensionMax = (locationValue.maxLat <= 0 ? '°S' : '°N');
     return `${Math.abs(locationValue.minLat)}${hemisphereExtensionMin}-${Math.abs(locationValue.maxLat)}${hemisphereExtensionMax}`;
 }
- 
-const findLatitudeBandByLocation = (getState) => {
+
+export const findLatitudeBandByLocation = (getState) => {
     const selectedLocation = getState().plot.generalSettings.location;
     if (typeof selectedLocation === 'undefined') return null;
 

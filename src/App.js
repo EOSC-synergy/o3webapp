@@ -3,8 +3,8 @@ import Navbar from "./components/Navbar/NavBar";
 import Footer from "./components/Footer/Footer";
 import ErrorMessageModal from './components/ErrorMessageModal/ErrorMessageModal';
 import LandingPage from './views/landingPage/LandingPage';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
+import {disableBodyScroll, enableBodyScroll} from 'body-scroll-lock';
 
 
 /**
@@ -17,6 +17,7 @@ function App() {
 
     const [isErrorModalVisible, setErrorModalVisible] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState(null);  // if errorMessage null no error
+    // const [isCookieConsentModalVisible, setCookieConsentModalVisibility] = React.useState(true);
     const [errorMessages, setErrorMessages] = React.useState([]);
     const [isSidebarOpen, setSidebarOpen] = React.useState(false);
 
@@ -24,7 +25,6 @@ function App() {
 
     /**
      * Function to open sidebar
-     * @constant {function}
      */
     const openSidebar = () => {
         setSidebarOpen(true);
@@ -34,7 +34,6 @@ function App() {
      * Function to close sidebar,
      * if the user does not currently try to navigate the sidebar
      * @param {event} event the event that triggered the call of this function
-     * @constant {function}
      */
     const closeSidebar = (event) => {
         // for accessibility do not close sidebar if users
@@ -53,7 +52,6 @@ function App() {
      * function to report an error from other components
      * automatically opens errorModal
      * @param {string} msg the message of the reported error
-     * @constant {function}
      */
     const reportError = (msg) => {
         for (let i = 0; i < errorMessages.length; i++) {
@@ -71,11 +69,20 @@ function App() {
 
     /**
      * closes the error modal
-     * @constant {function}
      */
     const closeErrorModal = () => {
         setErrorModalVisible(false);
     }
+
+    // /**
+    //  * closes the cookie consent modal
+    //  */
+    // const onCloseCookieConsentModal = (event, reason) => {
+    //     if (reason !== 'backdropClick') {
+    //         setCookieConsentModalVisibility(false);
+    //         // store accepting cookies
+    //     }
+    // }
 
     const theme = createTheme({
         palette: {
@@ -87,16 +94,17 @@ function App() {
                 paper: "#262626"
             }
         }
-      });
+    });
 
 
     return (
         <ThemeProvider theme={theme}>
             <div style={{minHeight: "100vh", display: 'flex', flexDirection: 'column'}}>
-                <Navbar reportError={reportError} openSidebar={openSidebar} />
-                <LandingPage reportError={reportError} openSidebar={openSidebar} closeSidebar={closeSidebar} isSidebarOpen={isSidebarOpen} />
-                <Footer reportError={reportError} />
-                <ErrorMessageModal isOpen={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal} />
+                <Navbar reportError={reportError} openSidebar={openSidebar}/>
+                <LandingPage reportError={reportError} openSidebar={openSidebar} closeSidebar={closeSidebar}
+                             isSidebarOpen={isSidebarOpen}/>
+                <Footer reportError={reportError}/>
+                <ErrorMessageModal isOpen={isErrorModalVisible} message={errorMessage} onClose={closeErrorModal}/>
                 {/* <CookieConsentModal isOpen={isCookieConsentModalVisible} onClose={onCloseCookieConsentModal} /> */}
             </div>
         </ThemeProvider>

@@ -5,7 +5,7 @@ import {Box, Divider, MenuItem, Select} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {latitudeBands} from "../../../../../utils/constants";
 import PropTypes from 'prop-types';
-import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice";
+import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice/apiSlice";
 import CustomLatitudeSelector from "./CustomLatitudeSelector/CustomLatitudeSelector";
 
 /**
@@ -21,10 +21,10 @@ let selectedLocation;
 let [isCustomizable, setIsCustomizable] = [null, null];
 
 /**
- * Enables the user to choose minimum and maximum latitude.
- * Compromised of {@link CustomLatitudeSelector}.
+ * Enables the user to choose minimum and maximum latitude
  * @component
- * @param {Object} props specified in propTypes
+ * @param {Object} props
+ * @param {function} props.reportError - error handling
  * @returns {JSX.Element} a JSX containing a dropdown and if "individual latitude band" is selected a number input field
  */
 function LatitudeBandSelector(props) {
@@ -88,9 +88,6 @@ function LatitudeBandSelector(props) {
 }
 
 LatitudeBandSelector.propTypes = {
-    /**
-     * function for error handling
-     */
     reportError: PropTypes.func,
 }
 
@@ -101,8 +98,6 @@ export default LatitudeBandSelector;
  *
  * @param {boolean} forceCustomizable if true, acts like isCustomizable is true - if false, does nothing
  * @returns the location
- * @memberof LatitudeBandSelector
- * @constant {function}
  */
 const findLatitudeBandByLocation = (forceCustomizable) => {
     if (typeof selectedLocation === 'undefined') return null;

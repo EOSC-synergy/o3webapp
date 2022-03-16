@@ -2,7 +2,7 @@ import * as React from 'react';
 import Graph from './Graph/Graph';
 import Sidebar from './Sidebar/Sidebar';
 import PropTypes from "prop-types";
-import { styled, useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 
 const drawerWidth = 400;
 
@@ -28,7 +28,11 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 /**
  * main view of web page
  * @component
- * @param {Object} props specified in propTypes
+ * @param {Object} props
+ * @param {function} props.reportError - function to report an error
+ * @param {function} props.openSidebar - function to open the sidebar
+ * @param {function} props.closeSidebar - function to close the sidebar
+ * @param {boolean} props.isSidebarOpen - boolean to indicate whether the sidebar is open or not
  * @returns {JSX.Element} a jsx containing all main components
  */
 function LandingPage(props) {
@@ -66,21 +70,9 @@ function LandingPage(props) {
 }
 
 LandingPage.propTypes = {
-    /**
-     * function for error handling
-     */
     reportError: PropTypes.func.isRequired,
-    /**
-     * function to open the sidebar
-     */
     isSidebarOpen: PropTypes.bool.isRequired,
-    /**
-     * function to close the sidebar
-     */
     closeSidebar: PropTypes.func.isRequired,
-    /**
-     * boolean to indicate whether the sidebar is open or not
-     */
     openSidebar: PropTypes.func.isRequired,
 }
 

@@ -8,36 +8,19 @@ import { selectAllGroupIds } from "../../../../../store/modelsSlice/modelsSlice"
 
 /**
  * enables the user to configure models that should be visible in the plot clustered as model groups
- * compromised of {@link EditModelGroupModal} {@link ModelGroupCard} and {@link AddModelGroupModal}.
  * @component
- * @param {Object} props Specified in propTypes
+ * @param {Object} props 
+ * @param {function} props.reportError - function to report errors
  * @returns {JSX} a jsx containing a ModelGroupModal and a ModelGroupCard and EditModelGroupModal per model group
  */
 function ModelGroupConfigurator(props) {
 
-    /**
-     * Label that is displayed in the add model group button
-     * @constant {string}
-     */
-    const addModelGroupButtonLabel = "Add Model Group";
-
-    /**
-     * Ids of all existing modelGroups
-     * @constant {array}
-     */
     const allGroupIds = useSelector(selectAllGroupIds);
 
 
-    /**
-     * State that tracks whether the addModelGroupModal is visible or not
-     * @constant {array}
-     */
     const [isAddModalVisible, setAddModalVisible] = React.useState(false);
+    const [refreshState, setRefreshState] = React.useState(true);
 
-    /**
-     * Function to close addModelGroupModal
-     * @constant {function}
-     */
     const closeAddModal = () => {
         setAddModalVisible(false);
     }
@@ -46,8 +29,9 @@ function ModelGroupConfigurator(props) {
      * Function to open addModelGroupModal
      * @constant {function}
      */
-    const openAddModal = () => {
+    const openAddModal = (refresh) => {
         setAddModalVisible(true);
+        setRefreshState(refresh);
     }
 
     return (
@@ -60,20 +44,23 @@ function ModelGroupConfigurator(props) {
             <Button
                 sx={{width: "100%"}}
                 variant="contained"
-                onClick={openAddModal}
+                onClick={() => openAddModal(true)}
                 data-testid="ModelGroupConfigurator-addModelGroup-button"
             >
-                {addModelGroupButtonLabel}
+                Add Model Group
             </Button>
-            <AddModelGroupModal isOpen={isAddModalVisible} onClose={closeAddModal} reportError={props.reportError} />
+            <AddModelGroupModal 
+                isOpen={isAddModalVisible} 
+                onClose={closeAddModal} 
+                reportError={props.reportError} 
+                setOpen={openAddModal}
+                refresh={refreshState}
+            />
         </>
     );
 }
 
 ModelGroupConfigurator.propTypes = {
-    /**
-     * function to report errors
-     */
     reportError: PropTypes.func
 }
 
