@@ -95,10 +95,11 @@ function Graph(props) {
      * @constant {Array}
      * @default [window.innerHeight, window.innerWidth]
      */
-    const [_, setDimensions] = React.useState({ 
+     const setDimensions = React.useState({ 
         height: window.innerHeight,
         width: window.innerWidth
     })[1];
+
 
     /**
      * Message to display if an error occured.
