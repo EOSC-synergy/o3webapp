@@ -1,0 +1,27 @@
+config:
+  credentials: []
+  project_repos: {}
+environment:
+  JPL_DOCKERFORCEBUILD: enabled
+  JPL_KEEPGOING: enabled
+sqa_criteria:
+  QC.Sty:
+    repos:
+      this_repo:
+        commands:
+        - bash -c "npm ci --audit=false && ./node_modules/.bin/eslint ./ -f checkstyle -o eslint-codestyle.xml"
+        container: processing
+  QC.Uni:
+    repos:
+      this_repo:
+        commands:
+        - bash -c "npm run test -- --coverage --watchAll=false ."
+        container: processing
+  QC.Doc:
+    repos:
+      this_repo:
+        commands:
+        - bash -c "npm run docs"
+        container: processing
+
+timeout: 600
