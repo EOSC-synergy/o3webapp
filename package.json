@@ -37,7 +37,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --silent --setupFiles '<rootDir>src/config/setupJest.js'",
     "eject": "react-scripts eject",
     "docs": "jsdoc -c jsdoc.conf.json"
   },
