@@ -7,8 +7,10 @@ import {Grid} from "@mui/material";
 import CustomLatitudeSelector from "../LatitudeBandSelector/CustomLatitudeSelector/CustomLatitudeSelector";
 
 /**
- * enables the user to select / deselect regions as well as entering a private region {@link LatitudeBandSelector}
- *
+ * Enables the user to select / deselect regions as well as entering a custom region.
+ * 
+ * @see {@link LatitudeBandSelector}
+ * 
  * @component
  * @param {Object} props
  * @param {function} props.reportError - used to report error functions
@@ -26,12 +28,16 @@ function RegionSelector() {
      * Examples:
      * If the first region is selected the array would have the following form: [0]
      * If the second and fifth region are selected the array would have the following form: [1, 4]
+     * @see {@link selectPlotXRange}
+     * @constant {Array}
      */
     const xRangeRegions = useSelector(selectPlotXRange);
+
     /**
      * Handles the change if a region is clicked (selected/deselected).
-     *
+     *      *
      * @param {number} regionIdx The index of the region that was clicked.
+     * @function
      */
     const handleRegionChecked = (regionIdx) => {
         let regionCpy = [...xRangeRegions.regions];
@@ -47,7 +53,7 @@ function RegionSelector() {
 
     /**
      * Gets default regions that are available in the return recovery plot.
-     * @todo connect to api
+     * @function
      */
     const getDefaultRegions = () => {
         return ALL_REGIONS_ORDERED;

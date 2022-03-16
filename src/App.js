@@ -8,23 +8,42 @@ import {disableBodyScroll, enableBodyScroll} from 'body-scroll-lock';
 
 
 /**
- * Main container of the Webapp
- * Contains all GUI elements
+ * Main container of the Webapp.
+ * Contains all GUI elements.
  * @component
- * @returns {JSX.Element} a jsx containing all main components
+ * @returns {JSX.Element} A jsx containing all main components
  */
 function App() {
 
+    /**
+     * State that holds the boolean whether the ErrorMessageModal is currently visible or not.
+     * @constant {boolean}
+     */
     const [isErrorModalVisible, setErrorModalVisible] = React.useState(false);
+    /**
+     * The error message if an error has occured.
+     * If no error occured the state is set to null.
+     * @constant {string}
+     */
     const [errorMessage, setErrorMessage] = React.useState(null);  // if errorMessage null no error
-    // const [isCookieConsentModalVisible, setCookieConsentModalVisibility] = React.useState(true);
+
+    /**
+     * A queue holding all incoming and unprocessed error messages.
+     * @constant {Array}
+     */
     const [errorMessages, setErrorMessages] = React.useState([]);
+
+    /**
+     * State that holds the boolean whether the Sidebar is currently open or not.
+     * @constant {boolean}
+     */
     const [isSidebarOpen, setSidebarOpen] = React.useState(false);
 
     isSidebarOpen ? disableBodyScroll(document) : enableBodyScroll(document);
 
     /**
      * Function to open sidebar
+     * @function
      */
     const openSidebar = () => {
         setSidebarOpen(true);
@@ -34,6 +53,7 @@ function App() {
      * Function to close sidebar,
      * if the user does not currently try to navigate the sidebar
      * @param {event} event the event that triggered the call of this function
+     * @function
      */
     const closeSidebar = (event) => {
         // for accessibility do not close sidebar if users
@@ -49,9 +69,10 @@ function App() {
     }
 
     /**
-     * function to report an error from other components
-     * automatically opens errorModal
+     * Function to report an error from other components.
+     * Automatically opens errorModal
      * @param {string} msg the message of the reported error
+     * @function
      */
     const reportError = (msg) => {
         for (let i = 0; i < errorMessages.length; i++) {
@@ -68,22 +89,17 @@ function App() {
     }
 
     /**
-     * closes the error modal
+     * Closes the error modal
+     * @function
      */
     const closeErrorModal = () => {
         setErrorModalVisible(false);
     }
 
-    // /**
-    //  * closes the cookie consent modal
-    //  */
-    // const onCloseCookieConsentModal = (event, reason) => {
-    //     if (reason !== 'backdropClick') {
-    //         setCookieConsentModalVisibility(false);
-    //         // store accepting cookies
-    //     }
-    // }
-
+    /**
+     * Object containing the theming information about the webapp.
+     * @constant {Object}
+     */
     const theme = createTheme({
         palette: {
             mode: 'dark',

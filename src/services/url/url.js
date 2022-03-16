@@ -18,7 +18,7 @@ import {
 
 store.subscribe(updateURL);
 
-const queryString = window.location.search;
+let queryString = window.location.search;
 
 /**
  * This method uses the big-integer library
@@ -56,8 +56,11 @@ function parseBigInt(str, baseFrom, baseTo) {
 
 /**
  * This method updates the URL based on the data in the store.
+ *
+ * @param testStore a test store for testing the function
  */
-export function updateURL() {
+export function updateURL(testStore = store) {
+    const store = testStore;
     const plotSpecific = store.getState().plot.plotSpecificSettings;
     const otherSettings = [];
 
@@ -104,8 +107,13 @@ export function updateURL() {
 
 /**
  * This method updates the store based on the data in the URL.
+ *
+ * @param testStore a test store for testing the function
+ * @param testString a test query string for testing the function
  */
-export function updateStoreWithURL() {
+export function updateStoreWithURL(testStore = store, testString = queryString) {
+    queryString = testString;
+    const store = testStore;
     if (queryString !== '') {
         const urlParams = new URLSearchParams(queryString);
 

@@ -6,9 +6,11 @@ import {useSelector} from 'react-redux';
 import {selectPlotTitle} from "../../../../../store/plotSlice/plotSlice";
 import PropTypes from 'prop-types';
 
-/** The max. length of the plot name
- * @constant {number}
+/** 
+ * The max. length of the plot name. Exported due to testing reasons.
+ * @constant {int}
  * @memberof PlotNameField
+ * @default 40
  */
 export const PLOT_NAME_MAX_LEN = 40;
 
@@ -20,19 +22,39 @@ export const PLOT_NAME_MAX_LEN = 40;
  * @returns {JSX.Element} a jsx containing a text-field to change the plot name
  */
 function PlotNameField() {
-
-    /** The title that should be displayed above the TextField. */
+    
+    /** 
+     * The title that should be displayed above the TextField.
+     * @constant {String}
+     * @default "PLOT NAME"
+    */
     const componentTitle = "PLOT NAME";
 
-    /** The label displayed inside the TextField while nothing is typed in. */
+    /** 
+     * The label displayed inside the TextField while nothing is typed in.
+     * @constant {String}
+     * @default "New Plot Name"
+    */
     const textFieldLabel = "New Plot Name";
-
-    /** Dispatcher to dispatch the plot name change action. */
+     
+    /** 
+     * Dispatcher to dispatch the plot name change action.
+     * @constant {function}
+    */
     const dispatch = useDispatch();
 
+    /**
+     * the currently selected plotType. Taken from the redux store.
+     * @see {@link selectPlotId}
+     * @constant {String}
+     */
     const plotId = useSelector(selectPlotId);
 
-    /** The current plot title from the store */
+    /** 
+     * The current plot title from the store
+     * @see {@link selectPlotTitle}
+     * @constant {String}
+    */
     const plotTitle = useSelector(selectPlotTitle);
 
     useEffect(() => {
@@ -41,7 +63,11 @@ function PlotNameField() {
         textField.value = plotTitle;
     }, [plotId, plotTitle]);
 
-    /** Handles the change if the text in TextField is modified. */
+    /** 
+     * Handles the change if the text in TextField is modified.
+     * @function
+     * @param {Event} event the event that triggered the call of this event
+     */
     const updatePlotName = (event) => {
         if (event.target.value.length > PLOT_NAME_MAX_LEN) {
             event.target.value = event.target.value.slice(0, PLOT_NAME_MAX_LEN);

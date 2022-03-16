@@ -8,33 +8,51 @@ import {useSelector, useDispatch} from "react-redux";
 import {selectPlotMonths, setMonths} from "../../../../../store/plotSlice/plotSlice";
 import PropTypes from 'prop-types';
 
-/** Stores the season Winter and its corresponding months.
- * @constant {object}
+/** 
+ * Stores the season Winter and its corresponding months.
+ * Used in {@link TimeCheckBoxGroup.SEASONS_ARRAY}.
+ * @constant {Object}
  * @memberof TimeCheckBoxGroup
+ * @default {name: Symbol("Winter"), months: [12, 1, 2], seasonId: 0}
  */
-const Winter = {name: Symbol("Winter"), months: [12, 1, 2], seasonId: 0}
+const Winter = {name: Symbol("Winter"), months: [12, 1, 2], seasonId: 0};
 
-/** Stores the season Spring and its corresponding months.
- * @constant {object}
- * @memberof TimeCheckBoxGroups
- */
-const Spring = {name: Symbol("Spring"), months: [3, 4, 5], seasonId: 1}
-
-/** Stores the season Summer and its corresponding months.
- * @constant {object}
+/** 
+ * Stores the season Spring and its corresponding months.
+ * Used in {@link TimeCheckBoxGroup.SEASONS_ARRAY}.
+ * @constant {Object}
  * @memberof TimeCheckBoxGroup
+ * @default {name: Symbol("Spring"), months: [3, 4, 5], seasonId: 1}
  */
-const Summer = {name: Symbol("Summer"), months: [6, 7, 8], seasonId: 2}
+const Spring = {name: Symbol("Spring"), months: [3, 4, 5], seasonId: 1};
 
-/** Stores the season Autumn and its corresponding months.
- * @constant {object}
+/** 
+ * Stores the season Summer and its corresponding months.
+ * Used in {@link TimeCheckBoxGroup.SEASONS_ARRAY}.
+ * @constant {Object}
  * @memberof TimeCheckBoxGroup
+ * @default {name: Symbol("Summer"), months: [6, 7, 8], seasonId: 2}
  */
-const Autumn = {name: Symbol("Autumn"), months: [9, 10, 11], seasonId: 3}
+const Summer = {name: Symbol("Summer"), months: [6, 7, 8], seasonId: 2};
 
-/** Array containing all season indext with the corresponding seasonId
- * @constant {array}
+/** 
+ * Stores the season Autumn and its corresponding months.
+ * Used in {@link TimeCheckBoxGroup.SEASONS_ARRAY}.
+ * @constant {Object}
  * @memberof TimeCheckBoxGroup
+ * @default {name: Symbol("Autumn"), months: [9, 10, 11], seasonId: 3}
+ */
+const Autumn = {name: Symbol("Autumn"), months: [9, 10, 11], seasonId: 3};
+
+/** 
+ * Array containing all season indext with the corresponding seasonId
+ * @constant {Array}
+ * @memberof TimeCheckBoxGroup
+ * @default [Winter, Spring, Summer, Autumn]
+ * @see {@link TimeCheckBoxGroup.Winter}
+ * @see {@link TimeCheckBoxGroup.Spring}
+ * @see {@link TimeCheckBoxGroup.Summer}
+ * @see {@link TimeCheckBoxGroup.Autumn}
  */
 const SEASONS_ARRAY = [Winter, Spring, Summer, Autumn];
 
@@ -50,6 +68,7 @@ function TimeCheckBoxGroup(props) {
     /**
      * keeps track of the selection a user did. Notifies the user if he did perform
      * an incorrect selection i.e. selecting no month at all.
+     * @constant {Array}
      */
     const [correctSelection, setCorrectSelection] = useState(true);
 
@@ -64,13 +83,15 @@ function TimeCheckBoxGroup(props) {
      * Examples:
      * If e.g. January is selected the array would have the following form: [1]
      * If e.g. February and December are selected the array would look as follows: [2, 12]
+     * @constant {Array}
      */
     const selectedMonths = useSelector(selectPlotMonths);
 
     /**
      * Checks if every month is selected.
      *
-     * @returns True if all months are selected
+     * @returns {boolean} True if all months are selected
+     * @function
      */
     const isEveryMonthChecked = () => {
         let isChecked = true;
@@ -85,7 +106,8 @@ function TimeCheckBoxGroup(props) {
     /**
      * Checks if the "All Year"-Checkbox should be displayed as indeterminate.
      *
-     * @returns True if the checkbox should be displayed as indeterminate
+     * @returns {boolean} True if the checkbox should be displayed as indeterminate
+     * @function
      */
     const isIndeterminate = () => {
         let indetCount = 0;
@@ -105,6 +127,7 @@ function TimeCheckBoxGroup(props) {
      * gets displayed or not.
      *
      * @param {array} monthCpy an array of months that should be dispatched against the store
+     * @function
      */
     const updateDataProcedure = (monthCpy) => {
 
@@ -121,6 +144,7 @@ function TimeCheckBoxGroup(props) {
 
     /**
      * Handles the change if the "All Year"-Checkbox is clicked (selected/deselected).
+     * @function
      */
     const handleYearChecked = () => {
         let shouldBeSelected = false;
@@ -142,6 +166,7 @@ function TimeCheckBoxGroup(props) {
      * Handles the change if a season is clicked (selected/deselected).
      *
      * @param {int} seasonId The id of the season that was clicked
+     * @function
      */
     const handleSeasonChecked = (seasonId) => {
 
@@ -173,7 +198,8 @@ function TimeCheckBoxGroup(props) {
     /**
      * Handles the change if a month is clicked (selected/deselected).
      *
-     * @param {int} monthId The id of the month that was clicked
+     * @param {int} monthId - The id of the month that was clicked
+     * @function
      */
     const handleMonthChecked = (monthId) => {
         let monthCpy = [...selectedMonths]
@@ -195,11 +221,12 @@ function TimeCheckBoxGroup(props) {
     /**
      * Constructs a SeasonCheckbox for a given season
      *
-     * @param {Object} param The parameter object representing a season
-     * @param {string} param.name The season name
-     * @param {int[]} param.months An array of monthId's of the months included in this season
-     * @param {int} param.seasonId The id of this season
+     * @param {Object} param - The parameter object representing a season
+     * @param {String} param.name - The season name
+     * @param {Array.<int>} param.months - An array of monthId's of the months included in this season
+     * @param {int} param.seasonId - The id of this season
      * @returns {JSX.Element}                   A preconfigured SeasonCheckbox
+     * @function
      */
     const toSeasonCheckbox = ({name, months, seasonId}) => {
         const monthsInSeason = []
@@ -264,10 +291,10 @@ function TimeCheckBoxGroup(props) {
     );
 }
 
-/**
- * Prop Types of the TimeCheckBoxGroup
- */
 TimeCheckBoxGroup.propTypes = {
+    /**
+     * function for error handling
+     */
     reportError: PropTypes.func.isRequired
 }
 

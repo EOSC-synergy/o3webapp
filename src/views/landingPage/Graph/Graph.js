@@ -12,20 +12,22 @@ import {NO_MONTH_SELECTED} from '../../../utils/constants';
 import store from '../../../store/store';
 
 /**
- * Currently there is no dynamic data linking. The graph will always
- * render the data from default-data.json in this folder. This is
- * just a preview to work with until the API is implemented and
- * synced with redux and the UI (input components).
+ * The Graph component. The input parameters are taken from the Redux Store.
  * @component
- * @param {object} props currently not used
+ * @param {object} props specified in propTypes
  * @returns a svg rendered element that represents a graph, this is done by
  *          the apexcharts library
  */
 function Graph(props) {
+
     /**
-     * Maps the plots provided by the api to their apexcharts plot type
-     * @constant {object}
-     * @memberof Graph
+     * Maps the plots provided by the API to their apexcharts plot type.
+     * @constant {Object}
+     * @default 
+     * {
+        tco3_zm: "line",
+        tco3_return: "boxPlot"
+    
      */
     const APEXCHARTS_PLOT_TYPE = {
         tco3_zm: "line",
@@ -35,44 +37,83 @@ function Graph(props) {
     /**
      * How large the loading spinner should appear.
      * @constant {string}
-     * @memberof Graph
+     * @default "300px"
      */
     const HEIGHT_LOADING_SPINNER = "300px";
 
+    /**
+     * Which type of plot should currently be plotted.
+     * @see {@link selectPlotId}
+     * @constant {String}
+     */
     const plotId = useSelector(selectPlotId);
+
+    /**
+     * The current plot title. Taken from the redux store.
+     * @constant {String}
+     * @see {@link selectPlotTitle}
+     */
     const plotTitle = useSelector(selectPlotTitle);
+
+    /**
+     * The current xAxisRange. Taken from the redux store.
+     * @see {@link selectPlotXRange}
+     * @constant {Array}
+     */
     const xAxisRange = useSelector(selectPlotXRange);
+    
+    /**
+     * The current yAxisRange. Taken from the redux store.
+     * @see {@link selectPlotYRange}
+     * @constant {Array}
+     */
     const yAxisRange = useSelector(selectPlotYRange);
+
+    /**
+     * The current active data. Taken from the redux store.
+     * @see {@link selectActivePlotData}
+     * @constant {Object}
+     */
     const activeData = useSelector(state => selectActivePlotData(state, plotId));
+
+    /**
+     * The current models. Taken from the redux store.
+     * @constant {Array}
+     */
     const modelsSlice = useSelector(state => state.models);
+
+
+    /**
+     * Whether the reference line should be shown. Taken from the redux store.
+     * @see {@link selectVisibility}
+     * @constant {boolean}
+     */
     const refLineVisible = useSelector(selectVisibility);
 
-    const setDimensions = React.useState({ 
+    /**
+     * State to keep track of the current dimensions of the Graph
+     * @constant {Array}
+     * @default [window.innerHeight, window.innerWidth]
+     */
+     const setDimensions = React.useState({ 
         height: window.innerHeight,
         width: window.innerWidth
     })[1];
 
+
     /**
      * Message to display if an error occured.
-     * @constant {string}
+     * @constant {String}
+     * @default "CRITICAL: an internal error occurred that shouldn't happen!"
      */
     const fatalErrorMessage = "CRITICAL: an internal error occurred that shouldn't happen!";
 
     /**
      * Message to display while data is being loaded
-     * @constant {string}
+     * @constant {String}
+     * @default "Loading Data..."
      */
     const loadingMessage = "Loading Data...";
-    
-    useEffect(() => { 
-        // note: this is important, because we should only "propagate" the error to the top
-        // if this component has finished rendering, causing no <em>side effects</em> in
-        // its rendering process 
-        if (activeData.status === REQUEST_STATE.error
-            && activeData.error !== NO_MONTH_SELECTED) { // if no month selected the user already gets notified with a more decent warning
-            props.reportError(activeData.error);
-        }
-    }, [activeData]); // eslint-disable-line react-hooks/exhaustive-deps
 
     function debounce(fn, ms) {
         let timer
@@ -84,6 +125,24 @@ function Graph(props) {
           }, ms)
         };
       }
+
+    
+    /**
+     * reportError function provided by props.
+     * Stored separetly in order to pass it to useEffect
+     * @constant {function}
+     */
+    const reportError = props.reportError;
+
+    useEffect(() => { 
+        // note: this is important, because we should only "propagate" the error to the top
+        // if this component has finished rendering, causing no <em>side effects</em> in
+        // its rendering process 
+        if (activeData.status === REQUEST_STATE.error
+            && activeData.error !== NO_MONTH_SELECTED) { // if no month selected the user already gets notified with a more decent warning
+            reportError(activeData.error);
+        }
+    }, [activeData, reportError]);
 
     useEffect(() => {
         const debouncedHandleResize = debounce(function handleResize() {
@@ -107,7 +166,7 @@ function Graph(props) {
             alignItems: "center",
             justifyContent: "center",
             fontSize: "1.5em"
-        }
+        };
         return (
             <Alert severity="info" sx={style}>
                 This plot type is not supported yet by the Webapp! But you can check it out at the <Link

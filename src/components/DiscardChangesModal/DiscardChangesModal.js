@@ -21,37 +21,45 @@ import CloseIcon from '@mui/icons-material/Close';
  */
 function DiscardChangesModal(props) {
 
+    /**
+     * A function to discard changes and close the modal.
+     * @function
+     */
    const discardChangesAndCloseDialog = () => {
        props.discardChanges();
        props.closeDialog();
        
    }
 
+    /**
+     * A function to save changes and close the modal.
+     * @function
+     */
    const saveChangesAndCloseDialog = () => {
        props.closeDialog();
        props.saveChanges();
    }
 
    /**
-    * title of the dialog
+    * Title of the dialog
     * @constant {string}
     */
    const heading = "Discard Changes";
 
    /**
-    * question that is asked to the user
+    * Question string that is displayed to the user, if the Modal is shown.
     * @constant {string}
     */
    const dialog = "Are you sure you want to discard all changes?";
 
     /**
-    * Label for the discard changes button
+    * Label for the discard changes button.
     * @constant {string}
     */
    const discardButtonLabel = "Discard Changes";
 
     /**
-    * Label for the save changes button
+    * Label for the save changes button.
     * @constant {string}
     */
    const saveButtonLabel = "Save Changes";
@@ -89,15 +97,21 @@ function DiscardChangesModal(props) {
 }
 
 DiscardChangesModal.propTypes = {
+    /**
+     * Tracks whether the dialog modal should be opened or not
+     */
     isOpen: PropTypes.bool.isRequired,
+    /**
+     * A function to save changes
+     */
     saveChanges: PropTypes.func.isRequired,
     discardChanges: PropTypes.func.isRequired,
     /**
-     * function that handles what happens if the close icon of the dialog is pressed
+     * A function to discard changes
      */
     onClose: PropTypes.func.isRequired,
     /**
-     * function to actually close (hide) the dialog
+     * A function to close the dialog, called after saveChanges or discardChanges
      */
     closeDialog: PropTypes.func.isRequired,
 }

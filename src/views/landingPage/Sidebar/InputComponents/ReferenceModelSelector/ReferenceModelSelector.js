@@ -8,7 +8,7 @@ import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlic
 import {REQUEST_STATE} from "../../../../../services/API/apiSlice/apiSlice";
 
 /**
- * enables the user to select a reference model
+ * Enables the user to select a reference model.
  * @component
  * @param {Object} props
  * @param {function} props.reportError - function to handle errors
@@ -23,16 +23,19 @@ function ReferenceModelSelector(props) {
 
     /**
      * Selects the model list from the Redux store.
+     * @constant {Array}
      */
     const modelListRequestedData = useSelector(state => state.api.models);
 
     /**
      * Selects the current reference model.
+     * @see {@link selectRefModel}
+     * @constant {Array}
      */
     const selectedModel = useSelector(selectRefModel);
 
     /**
-     * The Array with all the models.
+     * Array with all the models.
      * @type {Array.<String>}
      */
     let allModels = [];
@@ -48,6 +51,8 @@ function ReferenceModelSelector(props) {
 
     /**
      * Handles the change of the reference model selection.
+     * @see {@link fetchPlotDataForCurrentModels}
+     * @function
      */
     const handleChangeForRefModel = (_, value) => {
         if (value !== null) {
