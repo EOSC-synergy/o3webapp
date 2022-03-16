@@ -19,6 +19,8 @@ pipeline {
             }
             post {
                 always {
+                    // replace path in the docker container with relative path
+                    sh "sed -i 's/\\/sqaaas-build/./gi' eslint-codestyle.xml"
                     recordIssues(
                         enabledForFailure: true, aggregatingResults: true,
                         tool: checkStyle(pattern: 'eslint-codestyle.xml',
