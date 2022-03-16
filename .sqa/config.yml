@@ -9,19 +9,19 @@ sqa_criteria:
     repos:
       this_repo:
         commands:
-        - bash -c "npm ci --audit=false && ./node_modules/.bin/eslint ./ -f checkstyle -o eslint-codestyle.xml"
+        - sh -c "npm ci --audit=false && ./node_modules/.bin/eslint ./ -f checkstyle -o eslint-codestyle.xml"
         container: processing
   QC.Uni:
     repos:
       this_repo:
         commands:
-        - bash -c "npm run test -- --coverage --watchAll=false ."
+        - sh -c "npm run test -- --coverage --watchAll=false ."
         container: processing
   QC.Doc:
     repos:
       this_repo:
         commands:
-        - bash -c "npm run docs"
+        - sh -c "npm run docs"
         container: processing
 
 timeout: 600

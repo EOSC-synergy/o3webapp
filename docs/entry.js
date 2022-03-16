@@ -34,8 +34,8 @@ reactComponents['CookieConsentModal'] = Component2;
 import Component3 from '../src/components/DiscardChangesModal/DiscardChangesModal.js';
 reactComponents['DiscardChangesModal'] = Component3;
 
-import Component4 from '../src/views/landingPage/Sidebar/DownloadModal/DownloadModal.js';
-reactComponents['DownloadModal'] = Component4;
+import Component4 from '../src/services/downloading/otherFormats.js';
+reactComponents['downloadGraphAsCSV'] = Component4;
 
 import Component5 from '../src/views/landingPage/Sidebar/DownloadModal/DownloadModal.js';
 reactComponents['DownloadModal'] = Component5;
@@ -76,38 +76,35 @@ reactComponents['SearchBar'] = Component16;
 import Component17 from '../src/components/Navbar/NavBar.js';
 reactComponents['Navbar'] = Component17;
 
-import Component18 from '../src/views/landingPage/Sidebar/InputComponents/OffsetConfigurator/OffsetConfigurator.js';
-reactComponents['OffsetConfigurator'] = Component18;
+import Component18 from '../src/views/landingPage/Sidebar/InputComponents/PlotNameField/PlotNameField.js';
+reactComponents['PlotNameField'] = Component18;
 
-import Component19 from '../src/views/landingPage/Sidebar/InputComponents/PlotNameField/PlotNameField.js';
-reactComponents['PlotNameField'] = Component19;
+import Component19 from '../src/views/landingPage/Sidebar/InputComponents/PlotTypeSelector/PlotTypeSelector.js';
+reactComponents['PlotTypeSelector'] = Component19;
 
-import Component20 from '../src/views/landingPage/Sidebar/InputComponents/PlotTypeSelector/PlotTypeSelector.js';
-reactComponents['PlotTypeSelector'] = Component20;
+import Component20 from '../src/views/landingPage/Sidebar/InputComponents/ReferenceModelSelector/ReferenceModelSelector.js';
+reactComponents['ReferenceModelSelector'] = Component20;
 
-import Component21 from '../src/views/landingPage/Sidebar/InputComponents/ReferenceModelSelector/ReferenceModelSelector.js';
-reactComponents['ReferenceModelSelector'] = Component21;
+import Component21 from '../src/views/landingPage/Sidebar/InputComponents/ReferenceYearField/ReferenceYearField.js';
+reactComponents['ReferenceYearField'] = Component21;
 
-import Component22 from '../src/views/landingPage/Sidebar/InputComponents/ReferenceYearField/ReferenceYearField.js';
-reactComponents['ReferenceYearField'] = Component22;
+import Component22 from '../src/views/landingPage/Sidebar/InputComponents/RegionSelector/RegionSelector.js';
+reactComponents['RegionSelector'] = Component22;
 
-import Component23 from '../src/views/landingPage/Sidebar/InputComponents/RegionSelector/RegionSelector.js';
-reactComponents['RegionSelector'] = Component23;
+import Component23 from '../src/views/landingPage/Sidebar/InputComponents/TimeCheckboxGroup/SeasonCheckboxGroup/SeasonCheckBoxGroup.js';
+reactComponents['SeasonCheckBoxGroup'] = Component23;
 
-import Component24 from '../src/views/landingPage/Sidebar/InputComponents/TimeCheckboxGroup/SeasonCheckboxGroup/SeasonCheckBoxGroup.js';
-reactComponents['SeasonCheckBoxGroup'] = Component24;
+import Component24 from '../src/views/landingPage/Sidebar/Section/Section.js';
+reactComponents['Section'] = Component24;
 
-import Component25 from '../src/views/landingPage/Sidebar/Section/Section.js';
-reactComponents['Section'] = Component25;
+import Component25 from '../src/views/landingPage/Sidebar/Sidebar.js';
+reactComponents['Sidebar'] = Component25;
 
-import Component26 from '../src/views/landingPage/Sidebar/Sidebar.js';
-reactComponents['Sidebar'] = Component26;
+import Component26 from '../src/views/landingPage/Sidebar/InputComponents/TimeCheckboxGroup/TimeCheckboxGroup.js';
+reactComponents['TimeCheckBoxGroup'] = Component26;
 
-import Component27 from '../src/views/landingPage/Sidebar/InputComponents/TimeCheckboxGroup/TimeCheckboxGroup.js';
-reactComponents['TimeCheckBoxGroup'] = Component27;
+import Component27 from '../src/views/landingPage/Sidebar/InputComponents/XAxisField/XAxisField.js';
+reactComponents['XAxisField'] = Component27;
 
-import Component28 from '../src/views/landingPage/Sidebar/InputComponents/XAxisField/XAxisField.js';
-reactComponents['XAxisField'] = Component28;
-
-import Component29 from '../src/views/landingPage/Sidebar/InputComponents/YAxisField/YAxisField.js';
-reactComponents['YAxisField'] = Component29;
+import Component28 from '../src/views/landingPage/Sidebar/InputComponents/YAxisField/YAxisField.js';
+reactComponents['YAxisField'] = Component28;
