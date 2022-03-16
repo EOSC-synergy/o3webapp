@@ -273,8 +273,6 @@ describe("testing optionsFormatter functionality", () => {
             expect(JSON.stringify(result)).toEqual(JSON.stringify(expected)); // stringify results to not mess with anonymous functions
         });
 
-        test.todo('returns the correct options formatted correctly for tco3_zm');
-
     });
 
     it('converts the color name to hex codes', () => {
