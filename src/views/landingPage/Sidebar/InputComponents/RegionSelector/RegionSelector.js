@@ -5,7 +5,6 @@ import {selectPlotXRange, setDisplayXRange} from "../../../../../store/plotSlice
 import {ALL_REGIONS_ORDERED} from "../../../../../utils/constants";
 import {Grid} from "@mui/material";
 import CustomLatitudeSelector from "../LatitudeBandSelector/CustomLatitudeSelector/CustomLatitudeSelector";
-import PropTypes from 'prop-types';
 
 /**
  * Enables the user to select / deselect regions as well as entering a custom region.
@@ -13,13 +12,13 @@ import PropTypes from 'prop-types';
  * @see {@link LatitudeBandSelector}
  * 
  * @component
- * @param {Object} props specified in PropTypes
+ * @param {Object} props
+ * @param {function} props.reportError - used to report error functions
  * @returns {JSX.Element}
  */
 function RegionSelector() {
     /**
      * A dispatch function to dispatch actions to the redux store.
-     * @constant {function}
      */
     const dispatch = useDispatch()
 
@@ -93,13 +92,6 @@ function RegionSelector() {
             </Box>
         </Grid>
     );
-}
-
-RegionSelector.propTypes = {
-    /**
-     * function for error handling
-     */
-    reportError: PropTypes.func
 }
 
 export default RegionSelector;

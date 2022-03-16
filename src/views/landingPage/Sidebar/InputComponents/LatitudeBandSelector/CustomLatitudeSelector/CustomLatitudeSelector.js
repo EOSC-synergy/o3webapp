@@ -5,16 +5,12 @@ import {
     selectPlotLocation,
     setLocation,
 } from "../../../../../../store/plotSlice/plotSlice";
-import {fetchPlotDataForCurrentModels} from "../../../../../../services/API/apiSlice";
-import {
-    LATITUDE_BAND_MAX_VALUE,
-    LATITUDE_BAND_MIN_VALUE
-} from "../../../../../../utils/constants";
+import {fetchPlotDataForCurrentModels} from "../../../../../../services/API/apiSlice/apiSlice";
 import PropTypes from "prop-types";
 
 /**
  * A component to select the specific min and max latitude values for the custom region.
- * Used in {@link LatitudeBandSelector}.
+ * @memberof LatitudeBandSelector
  * @component
  * @returns {JSX.Element}    JSX with the component
  */
@@ -118,7 +114,7 @@ function CustomLatitudeSelector() {
     /**
      * A function to generate the helper text for the min. latitude box.
      *
-     * @returns {string}     Text that should be displayed in the helper text
+     * @returns {String}     Text that should be displayed in the helper text
      * @function
      */
     const generateHelperTextMin = () => {
@@ -132,7 +128,7 @@ function CustomLatitudeSelector() {
     /**
      * A function to generate the helper text for the max. latitude box.
      *
-     * @returns {string}     Text that should be displayed in the helper text
+     * @returns {String}     Text that should be displayed in the helper text
      * @function
      */
     const generateHelperTextMax = () => {

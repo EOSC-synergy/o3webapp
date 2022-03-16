@@ -27,3 +27,4 @@ yarn-error.log*
 /.idea/vcs.xml
 
 .cache/
+docs/

@@ -4,13 +4,13 @@ import {getOptions, generateSeries} from "../../../utils/optionsFormatter/option
 import {useSelector} from 'react-redux'
 import {selectPlotId, selectPlotTitle, selectPlotXRange, selectPlotYRange} from '../../../store/plotSlice/plotSlice';
 import {selectVisibility} from '../../../store/referenceSlice/referenceSlice';
-import {REQUEST_STATE, selectActivePlotData} from '../../../services/API/apiSlice';
+import {REQUEST_STATE, selectActivePlotData} from '../../../services/API/apiSlice/apiSlice';
 import {Typography, CircularProgress} from '@mui/material';
 import {Alert, Link} from '@mui/material';
 import {O3AS_PLOTS} from '../../../utils/constants';
 import {NO_MONTH_SELECTED} from '../../../utils/constants';
 import store from '../../../store/store';
-  
+
 /**
  * The Graph component. The input parameters are taken from the Redux Store.
  * @component
@@ -98,7 +98,7 @@ function Graph(props) {
     const [_, setDimensions] = React.useState({ 
         height: window.innerHeight,
         width: window.innerWidth
-    })
+    })[1];
 
     /**
      * Message to display if an error occured.
@@ -132,16 +132,17 @@ function Graph(props) {
     }, [activeData, reportError]);
 
     useEffect(() => {
-        const handleResize = () => {
-          setDimensions({
-            height: window.innerHeight,
-            width: window.innerWidth
-          })
-        }
-    
-        window.addEventListener('resize', handleResize)
-        return _ => window.removeEventListener('resize', handleResize);
-    })
+        const debouncedHandleResize = debounce(function handleResize() {
+            setDimensions({
+              height: window.innerHeight,
+              width: window.innerWidth
+            })
+          }, 1000);
+      
+          window.addEventListener('resize', debouncedHandleResize)
+      
+          return _ => window.removeEventListener('resize', debouncedHandleResize)      
+    });
 
     if (!(plotId in O3AS_PLOTS)) {
         const style = {

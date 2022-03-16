@@ -8,7 +8,10 @@ import PropTypes from 'prop-types';
  * Displays an given error message.
  * @component
  * 
- * @param {Object} props specified in propTypes
+ * @param {Object} props
+ * @param {boolean} props.isOpen -> whether the error message modal should be displayed
+ * @param {function} props.onClose -> handles closing of the modal
+ * @param {String} props.message -> error message
  * @returns {JSX.Element} a jsx file containing a modal with the given error message
  */
 function ErrorMessageModal(props) {
@@ -66,18 +69,8 @@ function ErrorMessageModal(props) {
 }
 
 ErrorMessageModal.propTypes = {
-    /**
-     * whether the error message modal should be displayed
-     */
     isOpen: PropTypes.bool.isRequired,
-    /**
-     * handles closing of the modal
-     */
-    onClose: PropTypes.func.isRequired,
-    /**
-     * error message
-     */
-    message: PropTypes.string
+    onClose: PropTypes.func.isRequired
 }
 
 export default ErrorMessageModal;

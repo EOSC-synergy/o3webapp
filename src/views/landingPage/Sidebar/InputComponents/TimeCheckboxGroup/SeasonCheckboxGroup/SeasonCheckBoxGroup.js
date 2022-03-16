@@ -6,10 +6,15 @@ import PropTypes from 'prop-types';
 
 /**
  * Enables the user to select/deselect seasons.
- * Used in {@link TimeCheckBoxGroup}
  * 
  * @component
- * @param {Object} props specified in propTypes
+ * @param {Object} props
+ * @param {String} props.label - label of this season
+ * @param {int} props.seasonId - the id of the season
+ * @param {Array.<Object>} props.months - array containing the months with monthId and selected status.
+ * @param {function} props.handleSeasonClicked - function to handle if the whole season got selected / deselected
+ * @param {function} props.handleMonthClicked - function to handle if a month got selected / deselected
+ * @param {function} props.reportError - a function to report an error
  * @returns {JSX.Element} a jsx containing a checkbox-group with given months and label
  */
 function SeasonCheckBoxGroup(props) {
@@ -88,29 +93,11 @@ function SeasonCheckBoxGroup(props) {
 }
 
 SeasonCheckBoxGroup.propTypes = {
-    /**
-     * label of this season
-     */
     label: PropTypes.string.isRequired,
-    /**
-     * the id of the season
-     */
     seasonId: PropTypes.number.isRequired,
-    /**
-     * array containing the months with monthId and selected status
-     */
     months: PropTypes.array.isRequired,
-    /**
-     * function to handle if a month got selected / deselected
-     */
     handleMonthClicked: PropTypes.func.isRequired,
-    /**
-     * function to handle if the whole season got selected / deselected
-     */
     handleSeasonClicked: PropTypes.func.isRequired,
-    /**
-     * a function to report an error
-     */
     reportError: PropTypes.func.isRequired
 }
 

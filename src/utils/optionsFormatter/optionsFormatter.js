@@ -598,13 +598,9 @@ export function generateSeries({plotId, data, modelsSlice, xAxisRange, yAxisRang
  * @param {Object} data the raw data from the api for the current options
  * @param {Object} modelsSlice the slice of the store containing information about the model groups
  * @param {boolean} refLineVisible visibility status of the reference line
-<<<<<<< HEAD
  * @returns {Object} A combination of data and statistical values series
- * @function
-=======
  * @param {function} getState store.getState
- * @returns a combination of data and statistical values series
->>>>>>> develop
+ * @function
  */
 function generateTco3_ZmSeries({data, modelsSlice, refLineVisible, getState}) {
     const series = {

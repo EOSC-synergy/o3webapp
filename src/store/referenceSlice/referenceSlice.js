@@ -21,18 +21,14 @@ export const DEFAULT_REF_YEAR = 1980;
  *
  * If you change this initial state you have to adapt the first test in the
  * corresponding test file, that tests the initial state.
- * @constant {object}
- * @category referenceSlice
  */
 const initialState = {
-
     settings: {
         year: DEFAULT_REF_YEAR,
         model: DEFAULT_REF_MODEL,
         visible: true,
         isOffsetApplied: false,
     },
-
 };
 
 
@@ -58,6 +54,7 @@ const referenceSlice = createSlice({
          * @param {object} action accepts the action returned from setYear()
          * @param {object} action.payload the payload is an object containing the given data
          * @param {number} action.payload.year a number that contains the new year.
+         * @example dispatch(setYear({year: 1980}));
          */
         setYear(state, action) {
             const {year} = action.payload;
@@ -76,6 +73,7 @@ const referenceSlice = createSlice({
          * @param {object} action accepts the action returned from setModel()
          * @param {object} action.payload the payload is an object containing the given data
          * @param {string} action.payload.id a string that contains the new reference model name.
+         * @example  dispatch(setModel({model: "CCMI-1_CCCma_CMAM-refC2"}));
          */
         setModel(state, action) {
             const {model} = action.payload;
@@ -94,6 +92,7 @@ const referenceSlice = createSlice({
          * @param {object} action accepts the action returned from setVisibility()
          * @param {object} action.payload the payload is an object containing the given data
          * @param {boolean} action.payload.visible the boolean for the reference line visibility.
+         * @example dispatch(setVisibility({visible: true}));
          */
         setVisibility(state, action) {
             const {visible} = action.payload;
@@ -112,6 +111,7 @@ const referenceSlice = createSlice({
          * @param {object} action accepts the action returned from setOffsetApplied()
          * @param {object} action.payload the payload is an object containing the given data
          * @param {boolean} action.payload.isOffsetApplied the boolean for the offset status.
+         * @example dispatch(setOffsetApplied({isOffsetApplied: true}));
          */
         setOffsetApplied(state, action) {
             const {isOffsetApplied} = action.payload;
@@ -123,8 +123,6 @@ const referenceSlice = createSlice({
 /**
  * The here listed actions are exported and serve as an interface for
  * the view (our React components).
- * @constant {object}
- * @category referenceSlice
  */
 export const {
     setYear,

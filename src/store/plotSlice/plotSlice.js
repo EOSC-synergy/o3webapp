@@ -15,8 +15,6 @@ const DEFAULT_MONTHS = [1, 2, 12];
  *
  * IF you change this initial state you have to adapt the first test in the
  * corresponding test file, that tests the initial state.
- * @constant {object}
- * @category plotSlice
  */
 export const initialState = {
 
@@ -118,7 +116,7 @@ const plotSlice = createSlice({
             location.minLat = minLat;
             location.maxLat = maxLat;
         },
-
+        //TODO: update following JSDoc
         /**
          * This reducer accepts an action object returned from setDisplayXRange()
          * and calculates the new state based on the action and the action
@@ -197,7 +195,7 @@ const plotSlice = createSlice({
          * data given in action.payload.
          *
          * In this case the current displayYRange is updated with the given min and max
-         * y values. "Current" is determined by the current active plotId. 
+         * y values. "Current" is determined by the current active plotId.
          *
          * @param {object} state the current store state of: state/plot
          * @param {object} action accepts the action returned from setDisplayYRange()
@@ -222,8 +220,8 @@ const plotSlice = createSlice({
          * and calculates the new state based on the action and the action
          * data given in action.payload.
          *
-         * In this case the displayYRange for the given plotId is updated with the 
-         * given min and max y values. 
+         * In this case the displayYRange for the given plotId is updated with the
+         * given min and max y values.
          *
          * @param {object} state the current store state of: state/plot
          * @param {object} action accepts the action returned from setDisplayYRange()
@@ -267,8 +265,6 @@ const plotSlice = createSlice({
 /**
  * The here listed actions are exported and serve as an interface for
  * the view (our React components).
- * @constant {object}
- * @category plotSlice
  */
 export const {
     setActivePlotId,
@@ -285,7 +281,6 @@ export const {
  * The reducer combining all reducers defined in the plot slice.
  * This has to be included in the redux store, otherwise dispatching
  * the above defined actions wouldn't trigger state updates.
- * @category plotSlice
  */
 export default plotSlice.reducer;
 
@@ -355,3 +350,12 @@ export const selectPlotYRange = state => state.plot.plotSpecificSettings[state.p
  * @category plotSlice
  */
 export const selectPlotMonths = state => state.plot.generalSettings.months;
+
+/**
+ * This selector allows components to select the current user region name.
+ *
+ * @param {object} state the global redux state
+ * @returns {string} the user region name
+ * @function
+ */
+export const selectUserRegionName = state => state.plot.plotSpecificSettings.tco3_return.userRegionName;

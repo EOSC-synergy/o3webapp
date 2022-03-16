@@ -8,21 +8,18 @@ import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import {useDispatch, useSelector} from "react-redux";
 import {selectPlotId, setActivePlotId} from "../../../../../store/plotSlice/plotSlice";
-import {REQUEST_STATE} from "../../../../../services/API/apiSlice";
+import {REQUEST_STATE} from "../../../../../services/API/apiSlice/apiSlice";
 
 
 /**
  * Enables the user to select a different plot type.
  * @component
- * @param {Object} props specified by propTypes
+ * @param {Object} props
+ * @param {function} props.reportError - function for error handling
  * @returns {JSX.Element} a jsx containing a dropdown to select the plot type
  */
 function PlotTypeSelector(props) {
 
-    /**
-     * A dispatch function to dispatch actions to the Redux store.
-     * @constant {function}
-     */
     const dispatch = useDispatch();
 
     /**
@@ -44,10 +41,11 @@ function PlotTypeSelector(props) {
      * @function
      */
     const changePlotType = (event) => {
-        dispatch(setActivePlotId({plotId: event.target.value}))
+        dispatch(setActivePlotId({plotId: event.target.value}));
     }
 
     let dropdownData;
+    let plotTypeData = plotType;
     if (plotTypesRequestData.status === REQUEST_STATE.loading
         || plotTypesRequestData.status === REQUEST_STATE.idle) {
         dropdownData = (<Box
@@ -59,6 +57,7 @@ function PlotTypeSelector(props) {
         >
             <CircularProgress data-testid="plotTypeSelectorLoading"/>
         </Box>);
+        plotTypeData = "";
     } else if (plotTypesRequestData.status === REQUEST_STATE.success) {
         dropdownData = plotTypesRequestData.data.map((name, idx) => {
             return (
@@ -80,7 +79,7 @@ function PlotTypeSelector(props) {
             <Select
                 labelId="plotTypeLabel"
                 id="plotType"
-                value={plotType}
+                value={plotTypeData}
                 label="Plot Type"
                 onChange={changePlotType}
             >
@@ -91,9 +90,6 @@ function PlotTypeSelector(props) {
 }
 
 PlotTypeSelector.propTypes = {
-    /**
-     * function for error handling
-     */
     reportError: PropTypes.func.isRequired,
 }
 

@@ -40,7 +40,11 @@ const DrawerHeader = styled('div')(({ theme }) => ({
  * Contains all input components responsible for the modification 
  * of the plot settings.
  * @component
- * @param {Object} props specified in PropTypes
+ * @param {Object} props 
+ * @param {boolean} props.isOpen -  whether sideBar should be open
+ * @param {function} props.onClose - handles closing of the sidebar
+ * @param {function} props.reportError - enables component to report an error
+ * @param {function} props.onOpen - handles opening of the sidebar
  * @returns {JSX.Element} a jsx containing a sidebar with sections containing input components, a download button and a plotType dropdown
  */
 function Sidebar(props) {
@@ -222,21 +226,9 @@ function Sidebar(props) {
 }
 
 Sidebar.propTypes = {
-    /**
-     * whether sideBar should be open
-     */
     isOpen: PropTypes.bool.isRequired,
-    /**
-     * enables component to report an error
-     */
     reportError: PropTypes.func.isRequired,
-    /**
-     * handles closing of the sidebar
-     */
     onClose: PropTypes.func.isRequired,
-    /**
-     * handles opening of the sidebar
-     */
     onOpen: PropTypes.func.isRequired
 }
 

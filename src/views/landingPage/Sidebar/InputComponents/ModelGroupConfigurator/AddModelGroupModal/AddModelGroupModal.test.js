@@ -8,7 +8,7 @@ import { createTestStore } from '../../../../../../store/store';
 import modelsResponse from "../../../../../../services/API/testing/models-response.json";
 import tco3zmResponse from "../../../../../../services/API/testing/tco3zm-response.json";
 import axios from 'axios';
-import { fetchModels } from '../../../../../../services/API/apiSlice';
+import { fetchModels } from '../../../../../../services/API/apiSlice/apiSlice';
 jest.mock('axios');
 
 let store;
@@ -19,14 +19,14 @@ describe('test addModelGroupModal rendering', () => {
 
     it('renders without crashing', () => {
         render(<Provider store={store}>
-            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} />
+            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} setOpen={() => {}} refresh={true}/>
         </Provider>);
     });
 
     
     it('renders correctly when open', () => {
         let { baseElement, container } = render(<Provider store={store}>
-            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} />
+            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} setOpen={() => {}} refresh={true}/>
         </Provider>
         );
         expect(baseElement).toMatchSnapshot();
@@ -35,7 +35,7 @@ describe('test addModelGroupModal rendering', () => {
 
     it('renders correctly when closed', () => {
         let { container, baseElement } = render(<Provider store={store}>
-            <AddModelGroupModal isOpen={false} onClose={() => {}} reportError={() => {}} />
+            <AddModelGroupModal isOpen={false} onClose={() => {}} reportError={() => {}} setOpen={() => {}} refresh={true}/>
         </Provider>
         );
         expect(baseElement).toMatchSnapshot();
@@ -45,7 +45,7 @@ describe('test addModelGroupModal rendering', () => {
     it('fires props.onClose when clicking on the closing icon button', () => {
         const onClose = jest.fn();
         const { getByTestId, container } = render(<Provider store={store}>
-            <AddModelGroupModal isOpen={true} onClose={onClose} reportError={() => {}} />
+            <AddModelGroupModal isOpen={true} onClose={onClose} reportError={() => {}} setOpen={() => {}} refresh={true}/>
         </Provider>
         );
         const closeButton = getByTestId(/close-button/);
@@ -74,7 +74,7 @@ describe('test addModelGroupModal rendering', () => {
     it("renders correctly if model list provided", () => {
 
         const { baseElement } = render(<Provider store={store}>
-            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}}/>
+            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} setOpen={() => {}} refresh={true}/>
         </Provider>);
 
         expect(baseElement).toMatchSnapshot();
@@ -90,7 +90,7 @@ describe('test addModelGroupModal functionality', () => {
 
     it('disables move all checked buttons if nothing is checked at beginning', () => {
         const { getByTestId } = render(<Provider store={store}>
-            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} />
+            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} setOpen={() => {}} refresh={true}/>
         </Provider>
         );
         const moveAllRightButton = getByTestId(/move-allChecked-left/);
@@ -101,7 +101,7 @@ describe('test addModelGroupModal functionality', () => {
 
     it("displays spinner when models are being fetched", () => {
         const { getAllByTestId } = render(<Provider store={store}>
-            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} />
+            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} setOpen={() => {}} refresh={true}/>
         </Provider>);
         const circularProgress = getAllByTestId(/AddModelGroupModal-spinner/);
         expect(circularProgress.length).toBe(2);
@@ -115,12 +115,12 @@ describe('test addModelGroupModal functionality', () => {
         });
         
         const { rerender } = render(<Provider store={store}>
-            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={mock} />
+            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={mock} setOpen={() => {}} refresh={true}/>
         </Provider>);
 
         await store.dispatch(fetchModels());
         rerender(<Provider store={store}>
-            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={mock} />
+            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={mock} setOpen={() => {}} refresh={true}/>
         </Provider>)
         expect(mock).toHaveBeenCalledWith(`API not responding: ${errorMessage}`);
     });
@@ -139,7 +139,7 @@ describe('test addModelGroupModal functionality without model group id', () => {
         await store.dispatch(fetchModels());
         
         rendered = render(<Provider store={store}>
-            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} />
+            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} setOpen={() => {}} refresh={true}/>
         </Provider>);
 
         await waitFor(() => {
@@ -216,7 +216,7 @@ describe('test addModelGroupModal functionality without model group id', () => {
         await store.dispatch(fetchModels());
         
         rendered = render(<Provider store={store}>
-            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} modelGroupId={0} />
+            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} modelGroupId={0} setOpen={() => {}} refresh={true}/>
         </Provider>);
 
         
@@ -284,7 +284,7 @@ describe('test error handling', () => {
         await store.dispatch(fetchModels());
         
         rendered = render(<Provider store={store}>
-            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}}/>
+            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} setOpen={() => {}} refresh={true}/>
         </Provider>);
 
         

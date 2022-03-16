@@ -3,19 +3,18 @@ import {useDispatch, useSelector} from "react-redux";
 import {setDisplayYRange, selectPlotYRange, selectPlotId} from "../../../../../store/plotSlice/plotSlice";
 import {Typography, Grid, FormControl, TextField} from "@mui/material";
 import store from '../../../../../store/store';
-import PropTypes from 'prop-types';
 import {O3AS_PLOTS} from "../../../../../utils/constants";
 
 /**
  * Enables the user to choose the range that should be visible on the y-axis of the plot.
  * @component
- * @param {Object} props specified in propTypes
+ * @param {Object} props
+ * @param {function} props.reportError function for error handling
  * @returns {JSX.Element} a jsx containing two text-fields and labels
  */
 function YAxisField(props) {
     /**
      * A dispatch function to dispatch actions to the redux store.
-     * @constant {function}
      */
     const dispatch = useDispatch();
 
@@ -111,7 +110,7 @@ function YAxisField(props) {
                                 (stateY_zm.minY < 0 ? `<0` : (stateY_zm.minY >= maxY ? `min>=max` : '')) :
                                 (stateY_return.minY < 0 ? `<0` : (stateY_return.minY >= maxY ? `min>=max` : ''))
                         }
-                        inputProps={{ "data-testid": "YAxisField-left-input" }}
+                        inputProps={{"data-testid": "YAxisField-left-input"}}
                     />
                 </FormControl>
             </Grid>
@@ -136,7 +135,7 @@ function YAxisField(props) {
                                 (stateY_zm.maxY < 0 ? `<0` : (minY >= stateY_zm.maxY ? `min>=max` : '')) :
                                 (stateY_return.maxY < 0 ? `<0` : (minY >= stateY_return.maxY ? `min>=max` : ''))
                         }
-                        inputProps={{ "data-testid": "YAxisField-right-input" }}
+                        inputProps={{"data-testid": "YAxisField-right-input"}}
                     />
                 </FormControl>
             </Grid>

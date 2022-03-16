@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import axios from 'axios';
 import modelsResponse from "../../../../../services/API/testing/models-response.json"
 import tco3zmResponse from "../../../../../services/API/testing/tco3zm-response.json"
-import { fetchModels } from '../../../../../services/API/apiSlice';
+import { fetchModels } from '../../../../../services/API/apiSlice/apiSlice';
 jest.mock('axios');
 
 

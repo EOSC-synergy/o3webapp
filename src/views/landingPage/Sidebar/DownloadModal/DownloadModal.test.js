@@ -5,7 +5,7 @@ import {Provider} from "react-redux";
 import {createTestStore} from '../../../../store/store';
 import tco3zmResponse from "../../../../services/API/testing/tco3zm-response.json";
 import axios from 'axios';
-import {fetchPlotData} from '../../../../services/API/apiSlice';
+import {fetchPlotData} from '../../../../services/API/apiSlice/apiSlice';
 import {O3AS_PLOTS} from '../../../../utils/constants';
 
 jest.mock('axios');

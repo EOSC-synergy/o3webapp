@@ -17,7 +17,8 @@ export const PLOT_NAME_MAX_LEN = 40;
 /**
  * Enables the user to rename and change the plot title.
  * @component
- * @param {Object} props specified in propTypes
+ * @param {Object} props
+ * @param {function} props.reportError - function for error handling
  * @returns {JSX.Element} a jsx containing a text-field to change the plot name
  */
 function PlotNameField() {
@@ -98,9 +99,6 @@ function PlotNameField() {
 }
 
 PlotNameField.propTypes = {
-    /**
-     * function for error handling
-     */
     reportError: PropTypes.func.isRequired
 }
 

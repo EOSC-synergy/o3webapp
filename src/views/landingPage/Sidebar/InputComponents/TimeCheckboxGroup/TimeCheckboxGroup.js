@@ -3,7 +3,7 @@ import SeasonCheckBoxGroup from "./SeasonCheckboxGroup/SeasonCheckBoxGroup";
 import {Alert, Checkbox, Divider, FormControlLabel, Grid} from "@mui/material";
 import {NUM_MONTHS_IN_SEASON, NUM_MONTHS} from "../../../../../utils/constants";
 import Typography from "@mui/material/Typography";
-import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice";
+import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice/apiSlice";
 import {useSelector, useDispatch} from "react-redux";
 import {selectPlotMonths, setMonths} from "../../../../../store/plotSlice/plotSlice";
 import PropTypes from 'prop-types';
@@ -58,11 +58,9 @@ const SEASONS_ARRAY = [Winter, Spring, Summer, Autumn];
 
 /**
  * enables the user to select a month, season or the whole year
- * 
- * Compromised of {@link SeasonCheckBoxGroup}
- * 
  * @component
  * @param {Object} props
+ * @param {function} props.reportError - function for error handling
  * @returns {JSX.Element} a jsx containing a checkboxgroup per season and a "all year" checkbox
  */
 function TimeCheckBoxGroup(props) {
@@ -76,7 +74,6 @@ function TimeCheckBoxGroup(props) {
 
     /**
      * A dispatch function to dispatch actions to the redux store.
-     * @constant {function}
      */
     const dispatch = useDispatch()
 
@@ -139,7 +136,6 @@ function TimeCheckBoxGroup(props) {
         } else {
             setCorrectSelection(true);
         }
-        ;
 
         dispatch(setMonths({months: monthCpy.sort((a, b) => a - b)}));
 
@@ -218,7 +214,6 @@ function TimeCheckBoxGroup(props) {
         } else {
             setCorrectSelection(true);
         }
-        ;
 
         updateDataProcedure(monthCpy);
     }

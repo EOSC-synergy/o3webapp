@@ -7,8 +7,8 @@ exports[`plot type selector test PlotTypeSelector renders correctly 1`] = `
     data-testid="plotTypeSelectorForm"
   >
     <label
-      class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary MuiFormLabel-filled css-1sumxir-MuiFormLabel-root-MuiInputLabel-root"
-      data-shrink="true"
+      class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root"
+      data-shrink="false"
       data-testid="plotTypeSelector"
       id="plotTypeLabel"
     >
@@ -36,7 +36,7 @@ exports[`plot type selector test PlotTypeSelector renders correctly 1`] = `
         aria-hidden="true"
         class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
         tabindex="-1"
-        value="tco3_zm"
+        value=""
       />
       <svg
         aria-hidden="true"
@@ -54,7 +54,7 @@ exports[`plot type selector test PlotTypeSelector renders correctly 1`] = `
         class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
       >
         <legend
-          class="css-1z7n62"
+          class="css-173wfxe"
         >
           <span>
             Plot Type
@@ -73,7 +73,7 @@ exports[`plot type selector test PlotTypeSelector renders correctly 2`] = `
     data-testid="plotTypeSelectorForm"
   >
     <label
-      class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-focused css-1sumxir-MuiFormLabel-root-MuiInputLabel-root"
+      class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary Mui-focused css-1sumxir-MuiFormLabel-root-MuiInputLabel-root"
       data-shrink="true"
       data-testid="plotTypeSelector"
       id="plotTypeLabel"
@@ -102,7 +102,7 @@ exports[`plot type selector test PlotTypeSelector renders correctly 2`] = `
         aria-hidden="true"
         class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
         tabindex="-1"
-        value="tco3_zm"
+        value=""
       />
       <svg
         aria-hidden="true"

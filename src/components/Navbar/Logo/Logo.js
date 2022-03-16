@@ -56,7 +56,7 @@ const Logo = (props) => {
                         fontSize: '28px'
                     }}
                 >
-                    {logoName}
+                    O3as: Webapp
                 </Typography>
             </Grid>
         </Link>

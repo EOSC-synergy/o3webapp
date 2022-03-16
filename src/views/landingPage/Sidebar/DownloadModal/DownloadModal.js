@@ -19,9 +19,9 @@ import {
 } from "../../../../services/downloading/otherFormats";
 import {useSelector} from "react-redux";
 import {selectPlotId, selectPlotTitle} from "../../../../store/plotSlice/plotSlice";
-import {selectActivePlotData} from "../../../../services/API/apiSlice";
+import {selectActivePlotData} from "../../../../services/API/apiSlice/apiSlice";
 import {selectAllModelGroups} from "../../../../store/modelsSlice/modelsSlice";
-import {REQUEST_STATE} from "../../../../services/API/apiSlice";
+import {REQUEST_STATE} from "../../../../services/API/apiSlice/apiSlice";
 import CloseIcon from "@mui/icons-material/Close";
 import CardHeader from "@mui/material/CardHeader";
 import CardActions from "@mui/material/CardActions";
@@ -38,7 +38,10 @@ const fileFormats = [
 /**
  * Opens a modal where the user can select the file format and download the plot.
  * @component
- * @param {Object} props specified in propTypes
+ * @param {Object} props
+ * @param {boolean} props.isOpen -> whether modal should be visible
+ * @param {function} props.onClose -> handles closing the modal
+ * @param {function} props.reportError -> enabling to report an error
  * @returns {JSX.Element} a jsx containing a modal with a dropdown to choose the file type and a download button
  */
 function DownloadModal(props) {
