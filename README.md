@@ -16,7 +16,7 @@
     The Webapp provides an intuitive user interface for detailed visualizations,
     e.g. ozone recovery analysis, and calculation of statistical values. Furthermore,
     plotted data can be downloaded to share gathered information. Plots can also be shared by simply copying the URL.
-    To get more information about the "O3as: Ozone Assessment" project, check out the [main website](https://o3as.data.kit.edu/).
+    To get more information about the "O3as: Ozone Assessment" project, check out the <a href="https://o3as.data.kit.edu/">main website</a>.
   </p>
 </div>
 
@@ -95,7 +95,7 @@ For testing purposes there is a runnig instance of the Webapp on a VM. You can v
 ```
 
 ### Data
-In order to see the API and try out some requests, visit: 
+In order to see the API and try out some requests, visit: [O3as Api](https://api.o3as.fedcloud.eu/api/v1/ui/#/)
 
 ### How to configurate the Webapp
 
