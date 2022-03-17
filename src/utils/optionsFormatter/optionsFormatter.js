@@ -1119,12 +1119,12 @@ export const preTransformApiData = ({plotId, data}) => {
  * visible in the resulting range and the scaling of the x-axis is properly formatted.
  * 
  * @param {Object} data The data for all models displayed
- * @param {Object} modelSlice   The modelSlice object
- * @returns {Object} An object containg the suggested values for the x- and y-axis
+ * @param {Object} modelSlice The modelSlice object
+ * @returns {Object} An object containing the suggested values for the x- and y-axis
  * @function
  */
-export function getSuggestedValues(data, modelsSlice) {
-    const visibleModels = getIncludedModels(modelsSlice);
+export function getSuggestedValues(data, modelSlice) {
+    const visibleModels = getIncludedModels(modelSlice);
 
     const suggested = {
         minX: Infinity,
@@ -1498,7 +1498,7 @@ export function parseSvName(name) {
 
 /**
  * A plugin-method for apexcharts to provide a custom tooltip.
- * In this case the tooltip is for the octs line chart. It provides
+ * In this case the tooltip is for the OCTS line chart. It provides
  * a richer tooltip and shows the data points correctly.
  *
  * @param {Array} series An array of series
@@ -1577,7 +1577,7 @@ export function getIncludedModels(modelsSlice) {
  *
  * @param {function} getState store.getState
  * @param {Object} referenceValue an object with an array with the values for the reference line among other things
- * @param {Object} svSeries an object with an array with the values for the statistical values linesy among other things
+ * @param {Object} svSeries an object with an array with the values for the statistical values lines among other things
  */
 function calcRecoveryPoints(getState, referenceValue, svSeries) {
     const points = [];
