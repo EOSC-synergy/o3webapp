@@ -292,8 +292,7 @@ describe("testing optionsFormatter functionality", () => {
 
     it('should calculate the optimal tick amount for the x-axis for the tco3_zm', () => {
         const max = 200;
-        const factor = 20;
-        expect(getOptimalTickAmount(0, max)).toEqual(max / factor);
+        expect(getOptimalTickAmount(0, max)).toEqual(6);
     });
 
     it('should calculate the optimal tick amount for the y-axis', () => {
