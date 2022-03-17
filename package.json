@@ -1,5 +1,5 @@
 {
-  "name": "example-code",
+  "name": "o3webapp",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -25,7 +25,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --silent --setupFiles '<rootDir>src/config/setupJest.js'",
     "eject": "react-scripts eject",
     "docs": "jsdoc -c jsdoc.conf.json"
   },
@@ -40,7 +40,14 @@
       "src/services/downloading",
       "src/App.js",
       "src/index.js"
-    ]
+    ],
+    "coverageThreshold": {
+      "global": {
+        "functions": 70,
+        "lines": 70
+      }
+    },
+    "clearMocks": true
   },
   "browserslist": {
     "production": [
