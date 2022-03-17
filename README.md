@@ -4,7 +4,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://git.scc.kit.edu/synergy.o3as/o3webapp/-/blob/issue_readMe_%2365">
+  <a href="https://git.scc.kit.edu/synergy.o3as/o3webapp/-/blob/develop">
     <img src="public/O3asWepAppIcon.png" alt="Logo" width="80" height="80">
   </a>
 
