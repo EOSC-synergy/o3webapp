@@ -49,7 +49,7 @@ describe('test searchbar functionality', () => {
         expect(callback.mock.calls[0][0]).toEqual([0, 2]); // expect the callback to be called with the correct indices
     });
 
-    it('returns the correct indices after searching for a string (string array)', () => {
+    it('returns the correct values after searching for a string (string array)', () => {
         const callback = jest.fn();
         const inputArray = ["hello", "world", "-hello-", "hell"];
         const { getByTestId } = render(<SearchBar inputArray={inputArray} foundIndicesCallback={callback} shouldReturnValues={true} />);

@@ -273,7 +273,7 @@ describe('tests fetchPlotData api interaction (integration)', () => {
         expect(plotSpecificSection.active).toEqual(exampleCacheKey);
         const cachedRequest = plotSpecificSection.cachedRequests[exampleCacheKey];
 
-        const {lookUpTable: transformedData, min, max} = preTransformApiData({
+        const {lookUpTable: transformedData} = preTransformApiData({
             plotId: O3AS_PLOTS.tco3_zm, 
             data: tco3zmResponse,
             modelsSlice: store.getState().models,
@@ -296,7 +296,7 @@ describe('tests fetchPlotData api interaction (integration)', () => {
         expect(plotSpecificSection.active).toEqual(exampleCacheKey);
         const cachedRequest = plotSpecificSection.cachedRequests[exampleCacheKey];
 
-        const {lookUpTable: transformedData, min, max} = preTransformApiData({
+        const {lookUpTable: transformedData} = preTransformApiData({
             plotId: O3AS_PLOTS.tco3_return, 
             data: tco3returnResponse,
             modelsSlice: store.getState().models,
