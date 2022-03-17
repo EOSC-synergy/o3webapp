@@ -63,18 +63,7 @@ describe("tests redux functionality", () => {
         fireEvent.click(getByTestId("CheckboxMonth2"));
         expect(store.getState().plot.generalSettings.months).toEqual([1, 2, 12]);
         
-    })
-    
-    it('selects a season correctly', () => {
-        
-        const { getByTestId } = render(<>
-            <Provider store={store}>
-                <TimeCheckBoxGroup reportError={() => {}} />
-            </Provider>
-            </>);
-        
-        expect(store.getState().plot.generalSettings.months).toEqual([1, 2, 12]); // assert: if it fails the initial state may have changed
-    })
+    });
     
     it('selects the "All Year" checkbox correctly', () => {
         
@@ -87,7 +76,7 @@ describe("tests redux functionality", () => {
         expect(store.getState().plot.generalSettings.months).toEqual([1, 2, 12]); // assert: if it fails the initial state may have changed
         fireEvent.click(getByTestId("CheckboxAllYear"));
         expect(store.getState().plot.generalSettings.months).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);  
-    })
+    });
 });
 
 describe("tests error handling", () => {

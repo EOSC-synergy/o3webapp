@@ -59,8 +59,6 @@ describe("tests redux functionality", () => {
 
 describe("tests error handling", () => {
     it("displays a warning if the reference year value is outside of the allowed range", () => {
-        const startValue = store.getState().reference.settings.year;
-
         const { getByTestId, container } = render(
             <Provider store={store}>
                 <ReferenceYearField />
