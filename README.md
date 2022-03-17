@@ -25,17 +25,17 @@
 - [npm.js](https://www.npmjs.com/) package manager
 - [React.js](https://reactjs.org/) main Javascript Framework
 - [Redux.js](https://redux.js.org/) internal store, simplifies communication between different components
-- [Apexcharts.js](https://apexcharts.com/) rused for endering of the graph. Used through the [react wrapper](https://apexcharts.com/docs/react-charts/)
+- [Apexcharts.js](https://apexcharts.com/) used for rendering of the graph. Used through the [React wrapper](https://apexcharts.com/docs/react-charts/)
 - [pdfmake](http://pdfmake.org/#/) used to export a pdf
 - [Jest.js](https://jestjs.io/) main framework for testing
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) provides more React specific tests
-- [MaterialUI](https://mui.com/) provides styled input components (similiar to Bootstrap)
+- [MaterialUI](https://mui.com/) provides styled input components (similar to Bootstrap)
 - [axios](https://axios-http.com/docs/intro) used for API communication
 - [jsdoc](https://jsdoc.app/index.html) used standard for documenting the code
-- [better docs](https://betterdocs.co/) provides custom `@component` tags specificially for React Apps, as well as `@category` tags
+- [better docs](https://betterdocs.co/) provides custom `@component` tags specifically for React Apps, as well as `@category` tags
 
 ## Documentation
-For now you have to locally create the docs. In the future we are going to host the docs and provide a link to them here.
+For now, you have to locally create the docs. In the future we are going to host the docs and provide a link to them here.
 
 
 ## Prerequisites
@@ -80,9 +80,9 @@ with
 
 ### Working on the VM
 
-For testing purposes there is a runnig instance of the Webapp on a VM. You can visit the test WebApp [here](http://o3web.test.fedcloud.eu:3000/).
+For testing purposes there is a running instance of the Webapp on a VM. You can visit the test WebApp [here](http://o3web.test.fedcloud.eu:3000/).
 
-- If you have a private key and and you want to connect to the VM where the WebApp is deployed, execute:
+- If you have a private key, and you want to connect to the VM where the WebApp is deployed, execute:
 
 ```
     ssh -i <your_private_key> cloudadm@o3web.test.fedcloud.eu
@@ -97,11 +97,67 @@ For testing purposes there is a runnig instance of the Webapp on a VM. You can v
 ### Data
 In order to see the API and try out some requests, visit: [O3as Api](https://api.o3as.fedcloud.eu/api/v1/ui/#/)
 
-### How to configurate the Webapp
+### How to configure the sections of the Webapp
 
-Configuration can be done in the config file.
-The default config specifies where to put certain fields, if after calling the API it is necessary to place them somewhere.
-Special config files for endpoints can be specified.
+Section configuration can be done in the config/ directory.
+defaultConfig.json specifies the default setup of the sections.
+When a new plot type is added, it has the section configuration of defaultConfig.json.
+To customize the setup of a specific plot type, go to the .json file with the corresponding plot type name.
+The specific config files overwrite defaultConfig.json.
+To overwrite a section, add the section with the same name in the specific config file.
+If the name of a section doesn't appear in defaultConfig.json, it will be added as a new section.
+
+Example:
+
+defaultConfig.json:
+```
+{
+  "sections": [
+    {
+      "name": "Appearance",
+      "components": ["PlotNameField", "XAxisField", "YAxisField"]
+    },
+    {
+      "name": "Models",
+      "components": ["ModelGroupConfigurator"]
+    }
+  ]
+}
+```
+and this specific config file:
+```
+{
+  "sections": [
+    {
+      "name": "Appearance",
+      "components": ["PlotNameField", "RegionSelector", "YAxisField"]
+    },
+    {
+      "name": "Filter Data",
+      "components": ["TimeCheckBoxGroup"]
+    }
+  ]
+}
+```
+will convert to
+```
+{
+  "sections": [
+    {
+      "name": "Appearance",
+      "components": ["PlotNameField", "RegionSelector", "YAxisField"]
+    },
+    {
+      "name": "Models",
+      "components": ["ModelGroupConfigurator"]
+    },
+    {
+      "name": "Filter Data",
+      "components": ["TimeCheckBoxGroup"]
+    }
+  ]
+}
+```
 
 
 ## Credits
@@ -116,7 +172,7 @@ Developers which worked on this project:
 
 
 ## License
-This project is liscensed under the [GNU License](https://git.scc.kit.edu/synergy.o3as/o3webapp/-/blob/develop/LICENSE).
+This project is licensed under the [GNU License](https://git.scc.kit.edu/synergy.o3as/o3webapp/-/blob/develop/LICENSE).
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
