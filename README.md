@@ -60,6 +60,9 @@ Make sure that you have installed
 ```
 
 - To generate docs, execute:
+```
+    npm run docs
+```
 
 Before building the docs for the first time, you have to go to `o3webapp/node_modules/better-docs/bundler.js` and remove the `--dist-dir ${outDist}` option. So replace
 ```js
@@ -68,10 +71,6 @@ Before building the docs for the first time, you have to go to `o3webapp/node_mo
 with
 ```js
   const cmd = `${process.platform === 'win32' ? 'SET ' : ''}NODE_ENV=development parcel build ${entry}`
-```
-
-```
-    npm run docs
 ```
 
 ### Working on the VM
