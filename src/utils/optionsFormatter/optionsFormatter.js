@@ -1071,7 +1071,7 @@ export const preTransformApiData = ({plotId, data}) => {
             // top structure
             let normalizedArray;
             if (datum.model === "reference_value") { // 
-                normalizedArray = Array(END_YEAR - START_YEAR).fill(datum.y[0]); // always stretch reference line from START_YEAR to END_YEAR
+                normalizedArray = Array(END_YEAR - START_YEAR + 1).fill(datum.y[0]); // always stretch reference line from START_YEAR to END_YEAR
             } else {
                 normalizedArray = normalizeArray(datum.x, datum.y);
             };
