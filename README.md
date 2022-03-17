@@ -97,11 +97,67 @@ For testing purposes there is a runnig instance of the Webapp on a VM. You can v
 ### Data
 In order to see the API and try out some requests, visit: [O3as Api](https://api.o3as.fedcloud.eu/api/v1/ui/#/)
 
-### How to configurate the Webapp
+### How to configure the sections of the Webapp
 
-Configuration can be done in the config file.
-The default config specifies where to put certain fields, if after calling the API it is necessary to place them somewhere.
-Special config files for endpoints can be specified.
+Section configuration can be done in the config/ directory.
+defaultConfig.json specifies the default setup of the sections.
+When a new plot type is added, it has the section configuration of defaultConfig.json.
+To customize the setup of a specific plot type, go to the .json file with the corresponding plot type name.
+The specific config files overwrite defaultConfig.json.
+To overwrite a section, add the section with the same name in the specific config file.
+If the name of a section doesn't appear in defaultConfig.json, it will be added as a new section.
+
+Example:
+
+defaultConfig.json:
+```
+{
+  "sections": [
+    {
+      "name": "Appearance",
+      "components": ["PlotNameField", "XAxisField", "YAxisField"]
+    },
+    {
+      "name": "Models",
+      "components": ["ModelGroupConfigurator"]
+    }
+  ]
+}
+```
+and this specific config file:
+```
+{
+  "sections": [
+    {
+      "name": "Appearance",
+      "components": ["PlotNameField", "RegionSelector", "YAxisField"]
+    },
+    {
+      "name": "Filter Data",
+      "components": ["TimeCheckBoxGroup"]
+    }
+  ]
+}
+```
+will convert to
+```
+{
+  "sections": [
+    {
+      "name": "Appearance",
+      "components": ["PlotNameField", "RegionSelector", "YAxisField"]
+    },
+    {
+      "name": "Models",
+      "components": ["ModelGroupConfigurator"]
+    },
+    {
+      "name": "Filter Data",
+      "components": ["TimeCheckBoxGroup"]
+    }
+  ]
+}
+```
 
 
 ## Credits
