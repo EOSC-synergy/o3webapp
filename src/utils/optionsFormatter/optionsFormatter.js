@@ -497,7 +497,6 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.xaxis.min = roundDownToMultipleOfTen(xAxisRange.years.minX);
         newOptions.xaxis.max = roundUpToMultipleOfTen(xAxisRange.years.maxX);
         newOptions.xaxis.tickAmount = getOptimalTickAmount(newOptions.xaxis.min, newOptions.xaxis.max);
-        console.log(newOptions.xaxis.tickAmount);
 
         const xIdx = 0;
         const yIdx = 1;
