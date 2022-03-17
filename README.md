@@ -25,17 +25,17 @@
 - [npm.js](https://www.npmjs.com/) package manager
 - [React.js](https://reactjs.org/) main Javascript Framework
 - [Redux.js](https://redux.js.org/) internal store, simplifies communication between different components
-- [Apexcharts.js](https://apexcharts.com/) rused for endering of the graph. Used through the [react wrapper](https://apexcharts.com/docs/react-charts/)
+- [Apexcharts.js](https://apexcharts.com/) used for rendering of the graph. Used through the [React wrapper](https://apexcharts.com/docs/react-charts/)
 - [pdfmake](http://pdfmake.org/#/) used to export a pdf
 - [Jest.js](https://jestjs.io/) main framework for testing
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) provides more React specific tests
-- [MaterialUI](https://mui.com/) provides styled input components (similiar to Bootstrap)
+- [MaterialUI](https://mui.com/) provides styled input components (similar to Bootstrap)
 - [axios](https://axios-http.com/docs/intro) used for API communication
 - [jsdoc](https://jsdoc.app/index.html) used standard for documenting the code
-- [better docs](https://betterdocs.co/) provides custom `@component` tags specificially for React Apps, as well as `@category` tags
+- [better docs](https://betterdocs.co/) provides custom `@component` tags specifically for React Apps, as well as `@category` tags
 
 ## Documentation
-For now you have to locally create the docs. In the future we are going to host the docs and provide a link to them here.
+For now, you have to locally create the docs. In the future we are going to host the docs and provide a link to them here.
 
 
 ## Prerequisites
@@ -80,9 +80,9 @@ with
 
 ### Working on the VM
 
-For testing purposes there is a runnig instance of the Webapp on a VM. You can visit the test WebApp [here](http://o3web.test.fedcloud.eu:3000/).
+For testing purposes there is a running instance of the Webapp on a VM. You can visit the test WebApp [here](http://o3web.test.fedcloud.eu:3000/).
 
-- If you have a private key and and you want to connect to the VM where the WebApp is deployed, execute:
+- If you have a private key, and you want to connect to the VM where the WebApp is deployed, execute:
 
 ```
     ssh -i <your_private_key> cloudadm@o3web.test.fedcloud.eu
@@ -172,7 +172,7 @@ Developers which worked on this project:
 
 
 ## License
-This project is liscensed under the [GNU License](https://git.scc.kit.edu/synergy.o3as/o3webapp/-/blob/develop/LICENSE).
+This project is licensed under the [GNU License](https://git.scc.kit.edu/synergy.o3as/o3webapp/-/blob/develop/LICENSE).
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
