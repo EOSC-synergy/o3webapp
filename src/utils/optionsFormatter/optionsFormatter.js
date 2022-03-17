@@ -493,9 +493,10 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.yaxis.push(getDefaultYAxisTco3Zm(undefined, minY, maxY, true, false, -1, tickAmount)); // on left side
         newOptions.yaxis.push(getDefaultYAxisTco3Zm(undefined, minY, maxY, true, true, 0, tickAmount)); // on right side
 
-        newOptions.xaxis.min = xAxisRange.years.minX;
-        newOptions.xaxis.max = xAxisRange.years.maxX;
-        newOptions.xaxis.tickAmount = getOptimalTickAmount(xAxisRange.years.minX, xAxisRange.years.maxX);
+        
+        newOptions.xaxis.min = roundDownToMultipleOfTen(xAxisRange.years.minX);
+        newOptions.xaxis.max = roundUpToMultipleOfTen(xAxisRange.years.maxX);
+        newOptions.xaxis.tickAmount = getOptimalTickAmount(newOptions.xaxis.min, newOptions.xaxis.max);
 
         const xIdx = 0;
         const yIdx = 1;
@@ -619,7 +620,7 @@ function generateTco3_ZmSeries({data, modelsSlice, refLineVisible, getState}) {
         series.dashArray.push(convertToStrokeStyle(data.reference_value.plotStyle.linestyle));
     }
 
-    for (const [id, groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups  // don't remove 'id'
+    for (const groupData of Object.values(modelsSlice.modelGroups)) { // iterate over model groups  // don't remove 'id'
         if (!groupData.isVisible) continue; // skip hidden groups
         for (const [model, modelInfo] of Object.entries(groupData.models)) {
             if (!modelInfo.isVisible) continue; // skip hidden models
@@ -870,7 +871,7 @@ function calculateBoxPlotValues({data, modelsSlice}) {
         boxPlotHolder[region] = []
     }
 
-    for (const [id, groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups  // don't remove 'id'
+    for (const groupData of Object.values(modelsSlice.modelGroups)) { // iterate over model groups  // don't remove 'id'
         if (!groupData.isVisible) continue; // skip hidden groups
         for (const [model, modelInfo] of Object.entries(groupData.models)) {
             if (!modelInfo.isVisible) continue; // skip hidden models
@@ -920,7 +921,7 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
     };
 
     const modelGroups = modelsSlice.modelGroups;
-    for (const [_, groupData] of Object.entries(modelGroups)) {
+    for (const groupData of Object.values(modelGroups)) {
 
         const svHolder = calculateSvForModels(Object.keys(groupData.models), data, groupData, buildMatrix);
 
@@ -1071,7 +1072,7 @@ export const preTransformApiData = ({plotId, data}) => {
             // top structure
             let normalizedArray;
             if (datum.model === "reference_value") { // 
-                normalizedArray = Array(END_YEAR - START_YEAR).fill(datum.y[0]); // always stretch reference line from START_YEAR to END_YEAR
+                normalizedArray = Array(END_YEAR - START_YEAR + 1).fill(datum.y[0]); // always stretch reference line from START_YEAR to END_YEAR
             } else {
                 normalizedArray = normalizeArray(datum.x, datum.y);
             };
@@ -1119,12 +1120,12 @@ export const preTransformApiData = ({plotId, data}) => {
  * visible in the resulting range and the scaling of the x-axis is properly formatted.
  * 
  * @param {Object} data The data for all models displayed
- * @param {Object} modelSlice   The modelSlice object
- * @returns {Object} An object containg the suggested values for the x- and y-axis
+ * @param {Object} modelSlice The modelSlice object
+ * @returns {Object} An object containing the suggested values for the x- and y-axis
  * @function
  */
-export function getSuggestedValues(data, modelsSlice) {
-    const visibleModels = getIncludedModels(modelsSlice);
+export function getSuggestedValues(data, modelSlice) {
+    const visibleModels = getIncludedModels(modelSlice);
 
     const suggested = {
         minX: Infinity,
@@ -1382,29 +1383,32 @@ function isIncludedInSv(model, groupData, svType) {
  */
 export function getOptimalTickAmount(min, max) {
     const width  = window.innerWidth || document.documentElement.clientWidth || 
-    document.body.clientWidth;
-    const height = window.innerHeight|| document.documentElement.clientHeight|| 
-    document.body.clientHeight;
+        document.body.clientWidth;
+    const height = window.innerHeight || document.documentElement.clientHeight || 
+        document.body.clientHeight;
 
-
-    if (width <= height) { // is mobile in portrait
+    if (width <= height || width <= 700) { // is mobile in portrait
         return 4;
     }
 
     let divider = 1;
-    if (width <= 600) divider = 4; 
-    else if (width <= 1100) divider = 2;
+    if (width <= 900) divider = 2;
+    else if (width <= 1100) divider = 3;
     
     const diff = max - min;
+    
+    let rv;
     if (diff <= 40) {
-        return diff / divider;
-    } else if (diff <= 80) {
-        return Math.floor(diff / 2) / divider;
-    } else if (diff <= 150) {
-        return Math.floor(diff / 5) / divider;
+        rv = diff / 2 / divider;
+    } else if (diff <= 120) {
+        rv = diff / 5 / divider;
     } else {
-        return Math.floor(diff / 10) / divider;
+        rv = diff / 10 / divider;
     }
+    
+    let rvRounded = Math.floor(rv);
+    rvRounded += rvRounded % 2; // never odd value
+    return Math.max(rvRounded, 4); // smallest possible tick number
 }
 
 /**
@@ -1434,24 +1438,24 @@ export function getTickAmountYAxis(min, max) {
  * Rounds a number up to a multiple of ten. If the number already is a multiple of
  * ten the number stays the same.
  *
- * @param {number} minY     The minY value that will be rounded to a multiple of 10
+ * @param {number} min     The minY value that will be rounded to a multiple of 10
  * @returns {number}        Number rounded down to a multiple of ten
  * @function
  */
-export function roundDownToMultipleOfTen(minY) {
-    return minY - minY % 10;
+export function roundDownToMultipleOfTen(min) {
+    return min - min % 10;
 }
 
 /**
  * Rounds a number up to a multiple of ten. If the number already is a multiple of
  * ten the number stays the same.
  *
- * @param {number} maxY     The maxY value that will be rounded to a multiple of 10
+ * @param {number} max     The maxY value that will be rounded to a multiple of 10
  * @returns {number}        Number rounded up to a multiple of ten
  * @function
  */
-export function roundUpToMultipleOfTen(maxY) {
-    return maxY % 10 ? maxY + (10 - maxY % 10) : maxY;
+export function roundUpToMultipleOfTen(max) {
+    return max % 10 ? max + (10 - max % 10) : max;
 }
 
 /**
@@ -1498,7 +1502,7 @@ export function parseSvName(name) {
 
 /**
  * A plugin-method for apexcharts to provide a custom tooltip.
- * In this case the tooltip is for the octs line chart. It provides
+ * In this case the tooltip is for the OCTS line chart. It provides
  * a richer tooltip and shows the data points correctly.
  *
  * @param {Array} series An array of series
@@ -1510,7 +1514,6 @@ export function parseSvName(name) {
  */
 export function customTooltipFormatter({series, seriesIndex, dataPointIndex, w}) {
     const modelName = w.globals.seriesNames[seriesIndex];
-    const listOfSv = Object.keys(SV_COLORING); // included mean+/-std
     const numDecimalsInDatapoint = 2;
     if (modelName.startsWith("Reference")) {
         let displayName = modelName.split("value")
@@ -1578,12 +1581,13 @@ export function getIncludedModels(modelsSlice) {
  *
  * @param {function} getState store.getState
  * @param {Object} referenceValue an object with an array with the values for the reference line among other things
- * @param {Object} svSeries an object with an array with the values for the statistical values linesy among other things
+ * @param {Object} svSeries an object with an array with the values for the statistical values lines among other things
  */
 function calcRecoveryPoints(getState, referenceValue, svSeries) {
     const points = [];
 
     const refYear = getState().reference.settings.year;
+    const maxYear = getState().plot.plotSpecificSettings.tco3_zm.displayXRange.years.maxX;
     const refValue = Math.max(...referenceValue.data);
 
     const dataName = [SV_DISPLAY_NAME.mean, SV_DISPLAY_NAME["mean+std"], SV_DISPLAY_NAME["mean-std"]];
@@ -1598,6 +1602,7 @@ function calcRecoveryPoints(getState, referenceValue, svSeries) {
         }
         for (let i = 0; i < svSeries.data[idx].data.length; i++) {
             if (svSeries.data[idx].data[i][yearIdx] <= refYear) continue;
+            if (svSeries.data[idx].data[i][yearIdx] > maxYear) break;
             if (svSeries.data[idx].data[i][valIdx] >= refValue) {
                 points.push(
                     [

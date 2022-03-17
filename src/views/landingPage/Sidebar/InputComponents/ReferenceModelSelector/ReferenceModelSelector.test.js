@@ -40,7 +40,7 @@ describe("tests redux functionality", () => {
         await store.dispatch(fetchModels()); // fetch models
         const { getByRole, getAllByRole } = render(
             <Provider store={store}>
-                <ReferenceModelSelector reportError={(i) => console.log(i)}/>
+                <ReferenceModelSelector reportError={() => {}}/>
             </Provider>
         );
         

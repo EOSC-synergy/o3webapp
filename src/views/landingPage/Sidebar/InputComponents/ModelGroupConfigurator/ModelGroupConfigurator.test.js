@@ -1,11 +1,10 @@
-import { render, fireEvent, waitForElementToBeRemoved } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { createTestStore } from '../../../../../store/store';
-import { Provider, useSelector } from "react-redux";
+import { Provider } from "react-redux";
 import ModelGroupConfigurator from './ModelGroupConfigurator';
 import userEvent from '@testing-library/user-event';
 import * as redux from 'react-redux';
-import { updatedModelGroup, addedModelGroup, selectAllGroupIds } from "../../../../../store/modelsSlice/modelsSlice";
 
 let store;
 describe('test ModelGroupCard rendering', () => {

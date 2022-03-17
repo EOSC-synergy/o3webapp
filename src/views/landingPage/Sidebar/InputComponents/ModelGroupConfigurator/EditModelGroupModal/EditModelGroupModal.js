@@ -43,7 +43,6 @@ const StyledDataGrid = styled(DataGrid)(() => ({
  */
 function createRows(modelList) {
     const rows = [];
-    const regex = /([a-z]|[A-Z]|[0-9]|-)*/g;
 
     for (let i = 0; i < modelList.length; i++) {
         const model = modelList[i];
@@ -226,7 +225,7 @@ function EditModelGroupModal(props) {
             setMeanVisible(modelList.map(model => modelData[model][mean]));  
         }
         
-    }, [props.isOpen]);
+    }, [props.isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
     /**
      * Gets the setter for the boolean list of checked and unchecked models of the selected type.
@@ -507,7 +506,7 @@ function EditModelGroupModal(props) {
         setStdVisible(modelList.map(model => modelData[model][std]));
         setMedianVisible(modelList.map(model => modelData[model].median));
         setPercentileVisible(modelList.map(model => modelData[model].percentile));
-    }, [props.isOpen]);
+    }, [props.isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
     /**
      * An array containing the specification for the columns of the data grid.

@@ -110,27 +110,3 @@ it('selects a season correctly', () => {
     expect(jestFunc).toHaveBeenCalledTimes(1);
 
 })
-
-it('selects a season correctly', () => {
-    const jestFunc = jest.fn();
-    const dummyFunc = () => {};
-    const dummyObj = [
-        {monthId: 1, checked: false},
-        {monthId: 2, checked: false},
-        {monthId: 3, checked: false}
-    ]
-    const { getByTestId } = render(<SeasonCheckBoxGroup 
-        label="" 
-        seasonId={0}
-        handleSeasonClicked={jestFunc}
-        handleMonthClicked={dummyFunc}
-        months={dummyObj}
-        reportError={dummyFunc}
-
-    />);
-    const checkbox = getByTestId("CheckboxSeasonNum0");
-    fireEvent.click(checkbox);
-
-    expect(jestFunc).toHaveBeenCalledTimes(1);
-
-})

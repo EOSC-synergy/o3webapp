@@ -1,9 +1,8 @@
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-redux'
 import XAxisField from './XAxisField';
 import { createTestStore } from "../../../../../store/store"
-import {fireEvent} from '@testing-library/dom';
 import { END_YEAR, START_YEAR } from '../../../../../utils/constants';
 
 describe('tests basic rendering', () => {

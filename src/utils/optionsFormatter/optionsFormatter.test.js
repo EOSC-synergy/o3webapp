@@ -8,7 +8,6 @@ import {
     normalizeArray,
     preTransformApiData,
     default_TCO3_return,
-    defaultTCO3_zm,
     getDefaultYAxisTco3Return,
     getOptimalTickAmount,
     getTickAmountYAxis,
@@ -273,8 +272,6 @@ describe("testing optionsFormatter functionality", () => {
             expect(JSON.stringify(result)).toEqual(JSON.stringify(expected)); // stringify results to not mess with anonymous functions
         });
 
-        test.todo('returns the correct options formatted correctly for tco3_zm');
-
     });
 
     it('converts the color name to hex codes', () => {
@@ -294,8 +291,7 @@ describe("testing optionsFormatter functionality", () => {
 
     it('should calculate the optimal tick amount for the x-axis for the tco3_zm', () => {
         const max = 200;
-        const factor = 20;
-        expect(getOptimalTickAmount(0, max)).toEqual(max / factor);
+        expect(getOptimalTickAmount(0, max)).toEqual(6);
     });
 
     it('should calculate the optimal tick amount for the y-axis', () => {
