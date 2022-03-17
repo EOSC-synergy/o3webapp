@@ -1,10 +1,9 @@
-import { fetchPlotTypes, REQUEST_STATE } from "../../../../../services/API/apiSlice/apiSlice";
+import { REQUEST_STATE } from "../../../../../services/API/apiSlice/apiSlice";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PlotTypeSelector from './PlotTypeSelector';
-import { render, fireEvent, within, getByTestId } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import {screen} from '@testing-library/dom';
 import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
 import { createTestStore } from '../../../../../store/store'
@@ -136,14 +135,13 @@ describe('plot type selector test', () => {
         ).mockReturnValueOnce("tco3_zm");
     
         
-        const { getByRole, getAllByRole } = render(<Provider store={store}>
+        const { getByRole } = render(<Provider store={store}>
             <PlotTypeSelector reportError={() => {}} />
         </Provider>);
         
         const trigger = getByRole('button');
         fireEvent.mouseDown(trigger);
 
-        const options = getAllByRole('option');
         const loader = screen.getByTestId("plotTypeSelectorLoading");
         expect(loader).toBeInTheDocument();
     });
