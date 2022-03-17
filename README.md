@@ -5,7 +5,7 @@
 <br />
 <div align="center">
   <a href="https://git.scc.kit.edu/synergy.o3as/o3webapp/-/blob/develop">
-    <img src="public/O3asWepAppIcon.png" alt="Logo" width="80" height="80">
+    <img src="https://o3as.data.kit.edu/img/logos/o3as-logo.svg" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">The O3as Webapp</h3>
