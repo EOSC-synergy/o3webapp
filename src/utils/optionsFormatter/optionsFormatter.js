@@ -1583,6 +1583,7 @@ function calcRecoveryPoints(getState, referenceValue, svSeries) {
     const points = [];
 
     const refYear = getState().reference.settings.year;
+    const maxYear = getState().plot.plotSpecificSettings.tco3_zm.displayXRange.years.maxX;
     const refValue = Math.max(...referenceValue.data);
 
     const dataName = [SV_DISPLAY_NAME.mean, SV_DISPLAY_NAME["mean+std"], SV_DISPLAY_NAME["mean-std"]];
@@ -1597,6 +1598,7 @@ function calcRecoveryPoints(getState, referenceValue, svSeries) {
         }
         for (let i = 0; i < svSeries.data[idx].data.length; i++) {
             if (svSeries.data[idx].data[i][yearIdx] <= refYear) continue;
+            if (svSeries.data[idx].data[i][yearIdx] > maxYear) break;
             if (svSeries.data[idx].data[i][valIdx] >= refValue) {
                 points.push(
                     [
