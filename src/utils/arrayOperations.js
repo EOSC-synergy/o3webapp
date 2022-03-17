@@ -52,7 +52,7 @@ export function union(a, b) {
  * @param {Array} a an array to compare
  * @param {Array} b an array to compare
  * @returns whether a equals b 
- * @constant {function}
+ * @function
  * @category Utils
  */
 export function arraysEqual(a, b) {
