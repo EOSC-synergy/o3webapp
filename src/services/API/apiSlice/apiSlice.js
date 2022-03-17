@@ -34,7 +34,6 @@ export const REQUEST_STATE = {
  */
 export const fetchModels = createAsyncThunk('api/fetchModels', async () => {
     const response = await getModels();
-    if (!response) throw new Error("hi there");
     return response.data;
 });
 
@@ -48,7 +47,6 @@ export const fetchModels = createAsyncThunk('api/fetchModels', async () => {
  */
 export const fetchPlotTypes = createAsyncThunk('api/fetchPlotTypes', async () => {
     const response = await getPlotTypes();
-    if (!response) throw new Error("and here");
     return response.data;
 });
 
