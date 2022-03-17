@@ -28,7 +28,7 @@
 - [Apexcharts.js](https://apexcharts.com/) rused for endering of the graph. Used through the [react wrapper](https://apexcharts.com/docs/react-charts/)
 - [pdfmake](http://pdfmake.org/#/) used to export a pdf
 - [Jest.js](https://jestjs.io/) main framework for testing
-- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) provided more React specific tests
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) provides more React specific tests
 - [MaterialUI](https://mui.com/) provides styled input components (similiar to Bootstrap)
 - [axios](https://axios-http.com/docs/intro) used for API communication
 - [jsdoc](https://jsdoc.app/index.html) used standard for documenting the code
@@ -97,7 +97,7 @@ For testing purposes there is a runnig instance of the Webapp on a VM. You can v
 ### Data
 
 The required data for this Webapp is provided via the O3as Swagger REST API.
-In order to see the API and try out some request, visit: 
+In order to see the API and try out some requests, visit: 
 https://api.o3as.fedcloud.eu/api/v1/ui/
 
 ### How to configurate the Webapp
