@@ -1,5 +1,4 @@
-import { render } from '@testing-library/react';
-import {fireEvent} from '@testing-library/dom';
+import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-redux'
 import YAxisField from './YAxisField';

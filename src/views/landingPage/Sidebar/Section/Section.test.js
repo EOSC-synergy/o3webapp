@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Section from './Section';
 import {render, screen} from '@testing-library/react';
 import defaultStructure from '../../../../config/defaultConfig.json';
