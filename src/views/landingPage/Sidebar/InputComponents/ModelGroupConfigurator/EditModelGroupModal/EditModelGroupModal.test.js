@@ -105,8 +105,8 @@ describe("test the functionality of EditModelGroupModal", () => {
         expect(queryByTestId("ColumnCheckboxIntermediateTypeMedian")).toBeNull();
     });
 
-    it("correctly shows the unchecked column header icon", () => {
-        const { queryByTestId, getByTestId} = render(<Provider store={store}><EditModelGroupModal isOpen={true} onClose={() => {}} modelGroupId={0} refresh={true} setOpen={() => {}}/></Provider>);
+    it("correctly unchecks column checkbox", () => {
+        const { queryByTestId } = render(<Provider store={store}><EditModelGroupModal isOpen={true} onClose={() => {}} modelGroupId={0} refresh={true} setOpen={() => {}}/></Provider>);
         const columnCheckbox = queryByTestId("ColumnCheckboxCheckedTypeMedian");
         expect(queryByTestId("ColumnCheckboxCheckedTypeMedian")).toBeInTheDocument();
 
@@ -116,5 +116,6 @@ describe("test the functionality of EditModelGroupModal", () => {
         expect(queryByTestId("ColumnCheckboxCheckedTypeMedian")).toBeNull();
         expect(queryByTestId("ColumnCheckboxIntermediateTypeMedian")).toBeNull();
     });
+    
 
 });
