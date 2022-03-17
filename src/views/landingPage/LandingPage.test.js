@@ -1,11 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import NavBar from "../../components/Navbar/NavBar";
 import LandingPage from './LandingPage';
-import {render, screen} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
-import {queryByTestId} from '@testing-library/dom';
 import {Provider} from "react-redux";
 import {createTestStore} from '../../store/store';
 
@@ -48,7 +46,7 @@ describe('test LandingPage component rendering', () => {
 
     it('closes sidebar, when clicking outside of sidebar', () => {
         const closeSidebar = jest.fn();
-        const {getByTestId, queryByTestId} = render(
+        const {getByTestId} = render(
             <Provider store={store}>
                 <NavBar/>
                 <LandingPage reportError={() => {

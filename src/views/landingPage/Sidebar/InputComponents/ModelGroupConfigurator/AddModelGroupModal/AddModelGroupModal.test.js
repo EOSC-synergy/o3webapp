@@ -1,6 +1,5 @@
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { render, fireEvent, waitFor, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import {within} from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import AddModelGroupModal from './AddModelGroupModal';
 import { Provider } from "react-redux";
@@ -34,24 +33,22 @@ describe('test addModelGroupModal rendering', () => {
     });
 
     it('renders correctly when closed', () => {
-        let { container, baseElement } = render(<Provider store={store}>
+        let { baseElement } = render(<Provider store={store}>
             <AddModelGroupModal isOpen={false} onClose={() => {}} reportError={() => {}} setOpen={() => {}} refresh={true}/>
         </Provider>
         );
         expect(baseElement).toMatchSnapshot();
-        expect(container).not.toBeVisible;
     });
 
     it('fires props.onClose when clicking on the closing icon button', () => {
         const onClose = jest.fn();
-        const { getByTestId, container } = render(<Provider store={store}>
+        const { getByTestId } = render(<Provider store={store}>
             <AddModelGroupModal isOpen={true} onClose={onClose} reportError={() => {}} setOpen={() => {}} refresh={true}/>
         </Provider>
         );
         const closeButton = getByTestId(/close-button/);
         fireEvent.click(closeButton);
         expect(onClose).toHaveBeenCalled();
-        expect(container).not.toBeVisible;
     });
 
     it('raises a console.error function if a required prop is not provided', () => {
@@ -94,9 +91,9 @@ describe('test addModelGroupModal functionality', () => {
         </Provider>
         );
         const moveAllRightButton = getByTestId(/move-allChecked-left/);
-        expect(moveAllRightButton).toBeDisabled;
+        expect(moveAllRightButton).toBeDisabled();
         const moveAllLeftButton = getByTestId(/move-allChecked-right/);
-        expect(moveAllLeftButton).toBeDisabled;
+        expect(moveAllLeftButton).toBeDisabled();
     });
 
     it("displays spinner when models are being fetched", () => {
@@ -206,7 +203,7 @@ describe('test addModelGroupModal functionality without model group id', () => {
 
 });
 
-describe('test addModelGroupModal functionality without model group id', () => {
+describe('test addModelGroupModal functionality with model group id', () => {
 
     beforeEach(async () => {
         store = createTestStore();
@@ -216,7 +213,13 @@ describe('test addModelGroupModal functionality without model group id', () => {
         await store.dispatch(fetchModels());
         
         rendered = render(<Provider store={store}>
-            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} modelGroupId={0} setOpen={() => {}} refresh={true}/>
+            <AddModelGroupModal 
+                isOpen={true} 
+                onClose={() => {}} 
+                reportError={() => {}} 
+                modelGroupId={0} 
+                setOpen={() => {}} 
+                refresh={true}/>
         </Provider>);
 
         
@@ -294,7 +297,7 @@ describe('test error handling', () => {
         });
     });
 
-    it("it displays an error message if no name is provided before saving", () => {
+    it("displays an error message if no name is provided before saving", () => {
         const { baseElement, getByTestId, getAllByTestId } = rendered;
         const expectedErrorMessage = "Please provide a model group name";
 
@@ -311,7 +314,7 @@ describe('test error handling', () => {
         expect(baseElement).toHaveTextContent(expectedErrorMessage); // error message
     });
 
-    it("it displays an error message if no model on the right is provided before saving", () => {
+    it("shows an error message if no model on the right is provided before saving", () => {
         const { baseElement, getByTestId } = rendered;
         const expectedErrorMessage = "Please provide a list of models for this group";
         

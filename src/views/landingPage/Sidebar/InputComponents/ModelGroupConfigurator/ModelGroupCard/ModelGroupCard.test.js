@@ -1,11 +1,9 @@
-import {render, fireEvent, waitForElementToBeRemoved} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import {createTestStore} from '../../../../../../store/store';
 import ModelGroupCard from './ModelGroupCard';
 import {Provider} from "react-redux";
 import userEvent from '@testing-library/user-event';
-import {setModelsOfModelGroup} from "../../../../../../store/modelsSlice/modelsSlice";
-import {DEFAULT_MODEL_GROUP, STATISTICAL_VALUES} from '../../../../../../utils/constants';
 
 let store;
 let reportError;
@@ -94,7 +92,7 @@ describe('test ModelGroupCard functionality', () => {
     });
 
     it("dispatches setStatisticalValueForGroup with correct payload when checkbox is clicked", () => {
-        const {baseElement, getByTestId} = render(
+        const {getByTestId} = render(
             <Provider store={store}>
                 <ModelGroupCard modelGroupId={groupId} reportError={reportError}/>
             </Provider>

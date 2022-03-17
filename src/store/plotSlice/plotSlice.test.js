@@ -9,54 +9,6 @@ import reducer,
     initialState,
 } from "./plotSlice";
 
-const definedInitialState = {
-    
-    plotId: "tco3_zm", // currently active plot
-    // maps plotids to their settings
-    settings: {
-        "tco3_zm": {
-            title: "OCTS Plot", // the title shown in the apexcharts generated chart
-            location: {
-                minLat: -90,
-                maxLat: 90
-            },
-            displayXRange: {
-                minX: 1960,
-                maxX: 2100,
-            },
-            displayYRange: {
-                minY: 200,
-                maxY: 400,
-            },
-            months: [
-                1
-            ],
-        },
-        "tco3_return": {
-            title: "Return/Recovery Plot",
-            location: { // custom user defined region
-                minLat: -90,
-                maxLat: 90
-            },
-            displayXRange: {
-                minX: 0,
-                maxX: 0,
-            },
-            displayYRange: {
-                minY: 200,
-                maxY: 400,
-            },
-            months: [
-                1
-            ],
-            regions: [
-                0
-            ],
-        }
-    }
-};
-
-
 test('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual(
       initialState // Expect initial state to be the defined initial state

@@ -35,13 +35,12 @@ describe('testing basic rendering & selection', () => {
     });
 
     it('renders correctly when closed', () => {
-        let {container, baseElement} = render(
+        let { baseElement} = render(
             <Provider store={store}> <DownloadModal isOpen={false} onClose={() => {
             }} reportError={() => {
             }}/></Provider>
         );
         expect(baseElement).toMatchSnapshot();
-        expect(container).not.toBeVisible;
     });
 
     it('raises a console.error function if a required prop is not provided', () => {
