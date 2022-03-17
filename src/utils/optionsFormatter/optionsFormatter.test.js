@@ -8,7 +8,6 @@ import {
     normalizeArray,
     preTransformApiData,
     default_TCO3_return,
-    defaultTCO3_zm,
     getDefaultYAxisTco3Return,
     getOptimalTickAmount,
     getTickAmountYAxis,

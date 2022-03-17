@@ -1,4 +1,4 @@
-import {getModels, getPlotData, getPlotTypes, postData} from './client';
+import {getModels, getPlotData, getPlotTypes} from './client';
 import * as axios from 'axios';
 import { NO_MONTH_SELECTED } from '../../../utils/constants';
 
@@ -51,7 +51,7 @@ describe("tests the getPlotData function", () => {
     it('should throw an error if the month array is empty', async () => {
         await getPlotData({ months: [] })
             .catch((e) => {
-                expect(String(e)).toEqual(`Error: ${NO_MONTH_SELECTED}`);
+                expect(String(e)).toEqual(`Error: ${NO_MONTH_SELECTED}`); // eslint-disable-line jest/no-conditional-expect
             })
     });
 });
