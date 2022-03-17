@@ -216,7 +216,13 @@ describe('test addModelGroupModal functionality without model group id', () => {
         await store.dispatch(fetchModels());
         
         rendered = render(<Provider store={store}>
-            <AddModelGroupModal isOpen={true} onClose={() => {}} reportError={() => {}} modelGroupId={0} setOpen={() => {}} refresh={true}/>
+            <AddModelGroupModal 
+                isOpen={true} 
+                onClose={() => {}} 
+                reportError={() => {}} 
+                modelGroupId={0} 
+                setOpen={() => {}} 
+                refresh={true}/>
         </Provider>);
 
         
