@@ -68,7 +68,7 @@ function ModelGroupConfigurator(props) {
                 onClick={() => openAddModal(true)}
                 data-testid="ModelGroupConfigurator-addModelGroup-button"
             >
-                Add Model Group
+                {addModelGroupButtonLabel}
             </Button>
             <AddModelGroupModal 
                 isOpen={isAddModalVisible} 
