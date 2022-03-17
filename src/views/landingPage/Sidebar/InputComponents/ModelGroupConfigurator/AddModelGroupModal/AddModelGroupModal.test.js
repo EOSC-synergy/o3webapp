@@ -201,7 +201,7 @@ describe('test addModelGroupModal functionality without model group id', () => {
         userEvent.type(getByTestId("SearchbarInput"), "ACCESS{enter}");
         const filteredModels = within(getByTestId("AddModelGroupModal-card-header-left")).queryAllByRole("listitem");
         expect(filteredModels.length).toEqual(accessModels.length); // compare length
-        expect(filteredModels.map(item => item.textContent)).toEqual(accessModels); // compare length
+        expect(filteredModels.map(item => item.textContent)).toEqual(accessModels);
     });
 
 });
@@ -241,6 +241,7 @@ describe('test addModelGroupModal functionality without model group id', () => {
         const { getByTestId } = rendered;
         const nameField = getByTestId("AddModelGroupModal-card-group-name");
         const title = "New Title";
+        expect(store.getState().models.modelGroups["0"].name).not.toEqual(title); // currently differs from title 
         const amountBackspace = store.getState().models.modelGroups["0"].name.length;
         userEvent.type(nameField, "{backspace}".repeat(amountBackspace)); // deletes old name
         userEvent.type(nameField, title);
