@@ -23,7 +23,7 @@ describe('tests graph component rendering', () => {
     });
     
     it('renders without crashing', () => {
-        const { container } = render(<Provider store={store}>
+        render(<Provider store={store}>
             <Graph />
         </Provider>);
     });
