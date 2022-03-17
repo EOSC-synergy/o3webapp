@@ -493,9 +493,10 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.yaxis.push(getDefaultYAxisTco3Zm(undefined, minY, maxY, true, false, -1, tickAmount)); // on left side
         newOptions.yaxis.push(getDefaultYAxisTco3Zm(undefined, minY, maxY, true, true, 0, tickAmount)); // on right side
 
-        newOptions.xaxis.min = xAxisRange.years.minX;
-        newOptions.xaxis.max = xAxisRange.years.maxX;
-        newOptions.xaxis.tickAmount = getOptimalTickAmount(xAxisRange.years.minX, xAxisRange.years.maxX);
+        
+        newOptions.xaxis.min = roundDownToMultipleOfTen(xAxisRange.years.minX);
+        newOptions.xaxis.max = roundUpToMultipleOfTen(xAxisRange.years.maxX);
+        newOptions.xaxis.tickAmount = getOptimalTickAmount(newOptions.xaxis.min, newOptions.xaxis.max);
 
         const xIdx = 0;
         const yIdx = 1;
@@ -1392,18 +1393,17 @@ export function getOptimalTickAmount(min, max) {
     }
 
     let divider = 1;
-    if (width <= 600) divider = 4; 
-    else if (width <= 1100) divider = 2;
+    if (width <= 800) divider = 2;
+    else if (width <= 1100) divider = 4;
     
     const diff = max - min;
+    
     if (diff <= 40) {
-        return diff / divider;
+        return diff / 2;
     } else if (diff <= 80) {
-        return Math.floor(diff / 2) / divider;
-    } else if (diff <= 150) {
-        return Math.floor(diff / 5) / divider;
+        return diff / 5 / divider;
     } else {
-        return Math.floor(diff / 10) / divider;
+        return diff / 10 / divider;
     }
 }
 
@@ -1434,24 +1434,24 @@ export function getTickAmountYAxis(min, max) {
  * Rounds a number up to a multiple of ten. If the number already is a multiple of
  * ten the number stays the same.
  *
- * @param {number} minY     The minY value that will be rounded to a multiple of 10
+ * @param {number} min     The minY value that will be rounded to a multiple of 10
  * @returns {number}        Number rounded down to a multiple of ten
  * @function
  */
-export function roundDownToMultipleOfTen(minY) {
-    return minY - minY % 10;
+export function roundDownToMultipleOfTen(min) {
+    return min - min % 10;
 }
 
 /**
  * Rounds a number up to a multiple of ten. If the number already is a multiple of
  * ten the number stays the same.
  *
- * @param {number} maxY     The maxY value that will be rounded to a multiple of 10
+ * @param {number} max     The maxY value that will be rounded to a multiple of 10
  * @returns {number}        Number rounded up to a multiple of ten
  * @function
  */
-export function roundUpToMultipleOfTen(maxY) {
-    return maxY % 10 ? maxY + (10 - maxY % 10) : maxY;
+export function roundUpToMultipleOfTen(max) {
+    return max % 10 ? max + (10 - max % 10) : max;
 }
 
 /**
