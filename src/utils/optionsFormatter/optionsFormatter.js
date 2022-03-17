@@ -619,7 +619,7 @@ function generateTco3_ZmSeries({data, modelsSlice, refLineVisible, getState}) {
         series.dashArray.push(convertToStrokeStyle(data.reference_value.plotStyle.linestyle));
     }
 
-    for (const [id, groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups  // don't remove 'id'
+    for (const groupData of Object.values(modelsSlice.modelGroups)) { // iterate over model groups  // don't remove 'id'
         if (!groupData.isVisible) continue; // skip hidden groups
         for (const [model, modelInfo] of Object.entries(groupData.models)) {
             if (!modelInfo.isVisible) continue; // skip hidden models
@@ -870,7 +870,7 @@ function calculateBoxPlotValues({data, modelsSlice}) {
         boxPlotHolder[region] = []
     }
 
-    for (const [id, groupData] of Object.entries(modelsSlice.modelGroups)) { // iterate over model groups  // don't remove 'id'
+    for (const groupData of Object.values(modelsSlice.modelGroups)) { // iterate over model groups  // don't remove 'id'
         if (!groupData.isVisible) continue; // skip hidden groups
         for (const [model, modelInfo] of Object.entries(groupData.models)) {
             if (!modelInfo.isVisible) continue; // skip hidden models
@@ -920,7 +920,7 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
     };
 
     const modelGroups = modelsSlice.modelGroups;
-    for (const [_, groupData] of Object.entries(modelGroups)) {
+    for (const groupData of Object.values(modelGroups)) {
 
         const svHolder = calculateSvForModels(Object.keys(groupData.models), data, groupData, buildMatrix);
 
@@ -1510,7 +1510,6 @@ export function parseSvName(name) {
  */
 export function customTooltipFormatter({series, seriesIndex, dataPointIndex, w}) {
     const modelName = w.globals.seriesNames[seriesIndex];
-    const listOfSv = Object.keys(SV_COLORING); // included mean+/-std
     const numDecimalsInDatapoint = 2;
     if (modelName.startsWith("Reference")) {
         let displayName = modelName.split("value")
