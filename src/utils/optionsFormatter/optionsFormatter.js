@@ -497,6 +497,7 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
         newOptions.xaxis.min = roundDownToMultipleOfTen(xAxisRange.years.minX);
         newOptions.xaxis.max = roundUpToMultipleOfTen(xAxisRange.years.maxX);
         newOptions.xaxis.tickAmount = getOptimalTickAmount(newOptions.xaxis.min, newOptions.xaxis.max);
+        console.log(newOptions.xaxis.tickAmount);
 
         const xIdx = 0;
         const yIdx = 1;
@@ -1383,28 +1384,32 @@ function isIncludedInSv(model, groupData, svType) {
  */
 export function getOptimalTickAmount(min, max) {
     const width  = window.innerWidth || document.documentElement.clientWidth || 
-    document.body.clientWidth;
-    const height = window.innerHeight|| document.documentElement.clientHeight|| 
-    document.body.clientHeight;
+        document.body.clientWidth;
+    const height = window.innerHeight || document.documentElement.clientHeight || 
+        document.body.clientHeight;
 
-
-    if (width <= height) { // is mobile in portrait
+    if (width <= height || width <= 700) { // is mobile in portrait
         return 4;
     }
 
     let divider = 1;
-    if (width <= 800) divider = 2;
-    else if (width <= 1100) divider = 4;
+    if (width <= 900) divider = 2;
+    else if (width <= 1100) divider = 3;
     
     const diff = max - min;
     
+    let rv;
     if (diff <= 40) {
-        return diff / 2;
-    } else if (diff <= 80) {
-        return diff / 5 / divider;
+        rv = diff / 2 / divider;
+    } else if (diff <= 120) {
+        rv = diff / 5 / divider;
     } else {
-        return diff / 10 / divider;
+        rv = diff / 10 / divider;
     }
+    
+    let rvRounded = Math.floor(rv);
+    rvRounded += rvRounded % 2; // never odd value
+    return Math.max(rvRounded, 4); // smallest possible tick number
 }
 
 /**
