@@ -8,11 +8,11 @@
         "marker": "o"
       },
       "x": [
-        "Antarctic(Oct)",
+        "NH Polar",
         "SH mid-lat",
         "Tropics",
         "NH mid-lat",
-        "Arctic(Mar)",
+        "SH Polar",
         "Near global",
         "Global",
         "User region"
@@ -37,11 +37,11 @@
         "marker": "o"
       },
       "x": [
-        "Antarctic(Oct)",
+        "NH Polar",
         "SH mid-lat",
         "Tropics",
         "NH mid-lat",
-        "Arctic(Mar)",
+        "SH Polar",
         "Near global",
         "Global",
         "User region"
@@ -66,10 +66,10 @@
         "marker": "x"
       },
       "x": [
-        "Antarctic(Oct)",
+        "NH Polar",
         "SH mid-lat",
         "NH mid-lat",
-        "Arctic(Mar)",
+        "SH Polar",
         "Near global",
         "Global",
         "User region"
@@ -95,10 +95,10 @@
         "mfc": "none"
       },
       "x": [
-        "Antarctic(Oct)",
+        "NH Polar",
         "SH mid-lat",
         "NH mid-lat",
-        "Arctic(Mar)",
+        "SH Polar",
         "Near global",
         "Global",
         "User region"
@@ -124,10 +124,10 @@
         "mfc": "none"
       },
       "x": [
-        "Antarctic(Oct)",
+        "NH Polar",
         "SH mid-lat",
         "NH mid-lat",
-        "Arctic(Mar)",
+        "SH Polar",
         "Near global",
         "Global",
         "User region"
@@ -153,11 +153,11 @@
         "mfc": "none"
       },
       "x": [
-        "Antarctic(Oct)",
+        "NH Polar",
         "SH mid-lat",
         "Tropics",
         "NH mid-lat",
-        "Arctic(Mar)",
+        "SH Polar",
         "Near global",
         "Global",
         "User region"
@@ -184,11 +184,11 @@
         "mfc": "none"
       },
       "x": [
-        "Antarctic(Oct)",
+        "NH Polar",
         "SH mid-lat",
         "Tropics",
         "NH mid-lat",
-        "Arctic(Mar)",
+        "SH Polar",
         "Near global",
         "Global",
         "User region"

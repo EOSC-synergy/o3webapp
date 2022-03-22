@@ -167,11 +167,11 @@ describe("testing optionsFormatter functionality", () => {
                       "marker":"o"
                    },
                    "data":{
-                      "Antarctic(Oct)":2064,
+                      "SH Polar":2064,
                       "SH mid-lat":2051,
                       "Tropics":2060,
                       "NH mid-lat":2041,
-                      "Arctic(Mar)":2040,
+                      "NH Polar":2040,
                       "Near global":2049,
                       "Global":2052,
                       "User region":2046
@@ -184,11 +184,11 @@ describe("testing optionsFormatter functionality", () => {
                       "marker":"o"
                    },
                    "data":{
-                      "Antarctic(Oct)":2071,
+                      "SH Polar":2071,
                       "SH mid-lat":2071,
                       "Tropics":2046,
                       "NH mid-lat":2066,
-                      "Arctic(Mar)":2064,
+                      "NH Polar":2064,
                       "Near global":2065,
                       "Global":2066,
                       "User region":2064
@@ -201,10 +201,10 @@ describe("testing optionsFormatter functionality", () => {
                       "marker":"x"
                    },
                    "data":{
-                      "Antarctic(Oct)":2087,
+                      "SH Polar":2087,
                       "SH mid-lat":2049,
                       "NH mid-lat":1986,
-                      "Arctic(Mar)":1986,
+                      "NH Polar":1986,
                       "Near global":2045,
                       "Global":2048,
                       "User region":2046
