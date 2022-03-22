@@ -7,7 +7,6 @@ import {
     quantile as calculatePercentile, std as calculateStd
 } from "../../services/math/math"
 import {
-    ALL_REGIONS_ORDERED,
     END_YEAR,
     EXTENDED_SV_LIST,
     months,
@@ -717,9 +716,12 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange, g
         dashArray: [],
     }
 
+
+    const firstKey = Object.keys(data)[0]; // grab first key to extract regions from api response
+    let regions = firstKey ? Object.keys(data[firstKey].data) : [];
     // 1. build boxplot
-    const boxPlotValues = calculateBoxPlotValues({data, modelsSlice});
-    let regionData = ALL_REGIONS_ORDERED.map(region => ({
+    const boxPlotValues = calculateBoxPlotValues({data, modelsSlice, regions});
+    let regionData = regions.map(region => ({
         x: region,
         y: boxPlotValues[region],
     }));
@@ -746,7 +748,7 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange, g
             if (!modelInfo.isVisible) continue; // skip hidden models
             const modelData = data[model];
             if (typeof modelData === "undefined") continue; // skip model if it is not available
-            const sortedData = ALL_REGIONS_ORDERED.map(region => ({
+            const sortedData = regions.map(region => ({
                 x: region,
                 y: filterOutOfRange(modelData.data[region], minY, maxY) || null, // null as default if data is missing
             }));
@@ -775,6 +777,7 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange, g
         buildMatrix: buildSvMatrixTco3Return,
         generateSingleSvSeries: generateSingleTco3ReturnSeries,
         getState,
+        regions,
     });
 
     // clear out data points which are outside min-max display range (scatter points are displayed in the legend otherwise)
@@ -802,9 +805,9 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange, g
  * @returns {Object} a series matching the tco3_return style for apexcharts.
  * @function
  */
-function generateSingleTco3ReturnSeries(name, svData, getState) {
-    const transformedData = ALL_REGIONS_ORDERED.map((region, index) => {
-        if (index !== ALL_REGIONS_ORDERED.length - 1) {
+function generateSingleTco3ReturnSeries(name, svData, getState, regions) {
+    const transformedData = regions.map((region, index) => {
+        if (index !== regions.length - 1) {
             return {
                 x: region,
                 y: svData[index],
@@ -838,11 +841,11 @@ function generateSingleTco3ReturnSeries(name, svData, getState) {
  * @returns {Array} A 2D array containing all the data (transpose matrix of given data)
  * @function
  */
-function buildSvMatrixTco3Return({modelList, data}) {
-    const matrix = create2dArray(ALL_REGIONS_ORDERED.length);
+function buildSvMatrixTco3Return({modelList, data, regions}) {
+    const matrix = create2dArray(regions.length);
 
-    for (const index in ALL_REGIONS_ORDERED) {
-        const region = ALL_REGIONS_ORDERED[index]; // iterate over regions
+    for (const index in regions) {
+        const region = regions[index]; // iterate over regions
         for (const model of modelList) {
             const modelData = data[model];
             if (typeof modelData === "undefined") continue;
@@ -865,9 +868,9 @@ function buildSvMatrixTco3Return({modelList, data}) {
  * @returns {Object} Object holding an array of 5 values (min, q1, median, q3, max) for each region
  * @function
  */
-function calculateBoxPlotValues({data, modelsSlice}) {
+function calculateBoxPlotValues({data, modelsSlice, regions}) {
     const boxPlotHolder = {}
-    for (let region of ALL_REGIONS_ORDERED) {
+    for (let region of regions) {
         boxPlotHolder[region] = []
     }
 
@@ -884,7 +887,7 @@ function calculateBoxPlotValues({data, modelsSlice}) {
     }
 
     const boxPlotValues = {}
-    for (let region of ALL_REGIONS_ORDERED) {
+    for (let region of regions) {
         boxPlotHolder[region].sort()
         const arr = boxPlotHolder[region]
         boxPlotValues[region] = []
@@ -912,7 +915,7 @@ function calculateBoxPlotValues({data, modelsSlice}) {
  * @returns {Array} An array holding all statistical series for the given modelSlice
  * @function
  */
-function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleSvSeries, getState}) {
+function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleSvSeries, getState, regions}) {
     const svSeries = {
         data: [],
         colors: [],
@@ -923,7 +926,7 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
     const modelGroups = modelsSlice.modelGroups;
     for (const groupData of Object.values(modelGroups)) {
 
-        const svHolder = calculateSvForModels(Object.keys(groupData.models), data, groupData, buildMatrix);
+        const svHolder = calculateSvForModels(Object.keys(groupData.models), data, groupData, buildMatrix, regions);
 
         for (const [sv, svData] of Object.entries(svHolder)) {
 
@@ -937,7 +940,7 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
             } else {
                 continue;
             }
-            svSeries.data.push(generateSingleSvSeries(`${SV_DISPLAY_NAME[sv]} (${groupData.name})`, svData, getState));
+            svSeries.data.push(generateSingleSvSeries(`${SV_DISPLAY_NAME[sv]} (${groupData.name})`, svData, getState, regions));
             svSeries.colors.push(SV_COLORING[sv]);
             svSeries.width.push(STATISTICAL_VALUE_LINE_THICKNESS);
             svSeries.dashArray.push(SV_DASHING[sv]);
@@ -958,10 +961,10 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
  * @returns {Object} An object containing the calculated values for the statistical values
  * @function
  */
-function calculateSvForModels(modelList, data, groupData, buildMatrix) { // pass group data
+function calculateSvForModels(modelList, data, groupData, buildMatrix, regions) { // pass group data
     // only mean at beginning
 
-    const matrix = buildMatrix({modelList, data}); // function supplied by caller
+    const matrix = buildMatrix({modelList, data, regions}); // function supplied by caller
 
     const PROCESS_SV = [...STATISTICAL_VALUES_LIST.filter(x => x !== STATISTICAL_VALUES.percentile), ...EXTENDED_SV_LIST];
 

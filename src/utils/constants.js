@@ -118,7 +118,7 @@ export const END_YEAR = 2100;
  * @constant {String}
  * @category Utils
  */
-const ANTARCTIC = "Antarctic(Oct)";
+const SH_POLAR = "SH Polar";
 
 /** This string stores the description of the south hemisphere region
  * @constant {String}
@@ -126,23 +126,24 @@ const ANTARCTIC = "Antarctic(Oct)";
 */
 const SH_MID = "SH mid-lat";
 
-/** This string stores the description of the north hemisphere region
- * @constant {String}
- * @category Utils
-*/
-const NH_MID = "NH mid-lat";
-
 /** This string stores the description of the tropics region
  * @constant {String}
  * @category Utils
 */
 const TROPICS = "Tropics";
 
+/** This string stores the description of the north hemisphere region
+ * @constant {String}
+ * @category Utils
+*/
+const NH_MID = "NH mid-lat";
+
+
 /** This string stores the description of the arctic region
  * @constant {String}
  * @category Utils
 */
-const ARCTIC = "Arctic(Mar)";
+const NH_POLAR = "NH Polar";
 
 /** This string stores the description of the near global region
  * @constant {String}
@@ -163,7 +164,7 @@ const GLOBAL = "Global";
 export const USER_REGION = "User region";
 
 // user region must be last element
-export const ALL_REGIONS_ORDERED = [ANTARCTIC, SH_MID, NH_MID, TROPICS, ARCTIC, NEAR_GLOBAL, GLOBAL, USER_REGION];
+export const ALL_REGIONS_ORDERED = [SH_POLAR, SH_MID, NH_MID, TROPICS, NH_POLAR, NEAR_GLOBAL, GLOBAL, USER_REGION];
 
 /**
  * The mean: this appears in the model group card and is used to identify its statistical value settings.

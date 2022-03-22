@@ -41,7 +41,7 @@ export const initialState = {
         [O3AS_PLOTS.tco3_return]: {
             title: "Return/Recovery Plot",
             displayXRange: {
-                regions: ALL_REGIONS_ORDERED.map((_, idx) => idx), // implicitly refers to ALL_REGIONS_ORDERED by storing only the indices
+                regions: [...Array(ALL_REGIONS_ORDERED.length).keys()], // implicitly refers to ALL_REGIONS_ORDERED by storing only the indices
             },
             displayYRange: { minY: 0, maxY: 0 }, // gets adjusted automatically on each request
         }
