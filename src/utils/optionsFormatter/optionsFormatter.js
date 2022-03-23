@@ -881,7 +881,9 @@ function calculateBoxPlotValues({data, modelsSlice, regions}) {
             const modelData = data[model];
             if (typeof modelData === "undefined") continue; // skip model if it is not available
             for (const [region, year] of Object.entries(modelData.data)) {
-                boxPlotHolder[region].push(year);
+                if (year || year === 0) { // allow 0 but not null | undefined
+                    boxPlotHolder[region].push(year);
+                }
             }
         }
     }
