@@ -44,7 +44,7 @@ exports[`tests basic rendering renders correctly 1`] = `
         <span
           class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
         >
-          Antarctic(Oct)
+          SH Polar
         </span>
       </label>
       <label
@@ -180,7 +180,7 @@ exports[`tests basic rendering renders correctly 1`] = `
         <span
           class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
         >
-          Arctic(Mar)
+          NH Polar
         </span>
       </label>
       <label
