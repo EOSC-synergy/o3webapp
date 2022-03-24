@@ -48,6 +48,12 @@ function YAxisField(props) {
     const [stateY_return, setStateY_return] = React.useState(store.getState().plot.plotSpecificSettings.tco3_return.displayYRange);
 
     /**
+     * The maximum y-axis difference the apexcharts library can handle.
+     * @constant {number}
+     */
+    const maxDiff = 400;
+
+    /**
      * Handles the change of the minimum value.
      *
      * @param event {Event} event that triggered the call of this function
@@ -56,13 +62,7 @@ function YAxisField(props) {
      * @see {@link setStateY_return}
      */
     const handleChangeMin = (event) => {
-        if (!isNaN(event.target.value)) {
-            if (plotId === O3AS_PLOTS.tco3_zm) setStateY_zm({minY: event.target.value, maxY: maxY});
-            else setStateY_return({minY: event.target.value, maxY: maxY});
-            if (event.target.value > 0 && event.target.value < maxY) {
-                dispatch(setDisplayYRange({minY: parseInt(event.target.value), maxY: maxY}));
-            }
-        }
+        handleChange(event, 'minY');
     }
 
     /**
@@ -74,11 +74,198 @@ function YAxisField(props) {
      * @see {@link setStateY_return}
      */
     const handleChangeMax = (event) => {
+        handleChange(event, 'maxY');
+    }
+
+    /**
+     * Handles the change of the minimum and the maximum value.
+     *
+     * @param event {Event} event that triggered the {@link handleChangeMin} or the {@link handleChangeMax} function
+     * @param extremum 'minY' or 'maxY', depending on the function that called this function
+     * @function
+     * @see {@link setStateY_zm}
+     * @see {@link setStateY_return}
+     */
+    const handleChange = (event, extremum) => {
         if (!isNaN(event.target.value)) {
-            if (plotId === O3AS_PLOTS.tco3_zm) setStateY_zm({minY: minY, maxY: event.target.value});
-            else setStateY_return({minY: minY, maxY: event.target.value});
-            if (event.target.value > 0 && minY < event.target.value) {
-                dispatch(setDisplayYRange({minY: minY, maxY: parseInt(event.target.value)}));
+            let value = event.target.value;
+            if (plotId === O3AS_PLOTS.tco3_zm) {
+                if (extremum === 'minY') {
+                    setStateY_zm({minY: value, maxY: stateY_zm.maxY});
+                    value = parseInt(value);
+                    if (
+                        !isNaN(parseInt(stateY_zm.maxY.toString())) &&
+                        value > 0 &&
+                        parseInt(stateY_zm.maxY.toString()) > 0 &&
+                        value < parseInt(stateY_zm.maxY.toString()) &&
+                        parseInt(stateY_zm.maxY.toString()) - value <= maxDiff
+                    ) {
+                        dispatch(setDisplayYRange({minY: value, maxY: parseInt(stateY_zm.maxY.toString())}));
+                    }
+                } else if (extremum === 'maxY') {
+                    setStateY_zm({minY: stateY_zm.minY, maxY: value});
+                    value = parseInt(value);
+                    if (
+                        !isNaN(parseInt(stateY_zm.minY.toString())) &&
+                        parseInt(stateY_zm.minY.toString()) > 0 &&
+                        value > 0 &&
+                        parseInt(stateY_zm.minY.toString()) < value &&
+                        value - parseInt(stateY_zm.minY.toString()) <= maxDiff
+                    ) {
+                        dispatch(setDisplayYRange({minY: parseInt(stateY_zm.minY.toString()), maxY: value}));
+                    }
+                } else {
+                    props.reportError("Invalid extremum string name in YAxisField.js");
+                }
+            } else {
+                if (extremum === 'minY') {
+                    setStateY_return({minY: value, maxY: stateY_return.maxY});
+                    value = parseInt(value);
+                    if (
+                        !isNaN(parseInt(stateY_return.maxY.toString())) &&
+                        value > 0 &&
+                        parseInt(stateY_return.maxY.toString()) > 0 &&
+                        value < parseInt(stateY_return.maxY.toString()) &&
+                        parseInt(stateY_return.maxY.toString()) - value <= maxDiff
+                    ) {
+                        dispatch(setDisplayYRange({minY: value, maxY: parseInt(stateY_return.maxY.toString())}));
+                    }
+                } else if (extremum === 'maxY') {
+                    setStateY_return({minY: stateY_return.minY, maxY: value});
+                    value = parseInt(value);
+                    if (
+                        !isNaN(parseInt(stateY_return.minY.toString())) &&
+                        parseInt(stateY_return.minY.toString()) > 0 &&
+                        value > 0 &&
+                        parseInt(stateY_return.minY.toString()) < value &&
+                        value - parseInt(stateY_return.minY.toString()) <= maxDiff
+                    ) {
+                        dispatch(setDisplayYRange({minY: parseInt(stateY_return.minY.toString()), maxY: value}));
+                    }
+                } else {
+                    props.reportError("Invalid extremum string name in YAxisField.js");
+                }
+            }
+
+        }
+    }
+
+    /**
+     * Evaluates, whether the input of the minimum input is valid or not.
+     *
+     * @return {boolean} true=valid, false=not valid
+     * @function
+     */
+    const errorMin = () => {
+        if (plotId === O3AS_PLOTS.tco3_zm) {
+            if (isNaN(parseInt(stateY_zm.minY.toString()))) return true;
+            if (isNaN(parseInt(stateY_zm.maxY.toString()))) return false;
+            return (
+                parseInt(stateY_zm.minY.toString()) < 0 ||
+                parseInt(stateY_zm.minY.toString()) >= parseInt(stateY_zm.maxY.toString()) ||
+                parseInt(stateY_zm.maxY.toString()) - parseInt(stateY_zm.minY.toString()) > maxDiff
+            );
+        } else {
+            if (isNaN(parseInt(stateY_return.minY.toString()))) return true;
+            if (isNaN(parseInt(stateY_return.maxY.toString()))) return false;
+            return (
+                parseInt(stateY_return.minY.toString()) < 0 ||
+                parseInt(stateY_return.minY.toString()) >= parseInt(stateY_return.maxY.toString()) ||
+                parseInt(stateY_return.maxY.toString()) - parseInt(stateY_return.minY.toString()) > maxDiff
+            );
+        }
+    }
+
+    /**
+     * Returns the corresponding error message if the input value is not valid.
+     *
+     * @return {string} the error message
+     * @function
+     */
+    const helperTextMin = () => {
+        if (plotId === O3AS_PLOTS.tco3_zm) {
+            if (isNaN(parseInt(stateY_zm.minY.toString()))) return '';
+            if (isNaN(parseInt(stateY_zm.maxY.toString()))) return '';
+            if (parseInt(stateY_zm.minY.toString()) < 0) {
+                return `<0`;
+            } else if (parseInt(stateY_zm.minY.toString()) >= parseInt(stateY_zm.maxY.toString())) {
+                return `min>=max`;
+            } else if(parseInt(stateY_zm.maxY.toString()) - parseInt(stateY_zm.minY.toString()) > maxDiff) {
+                return `ΔY>${maxDiff}`;
+            } else {
+                return '';
+            }
+        } else {
+            if (isNaN(parseInt(stateY_return.minY.toString()))) return '';
+            if (isNaN(parseInt(stateY_return.maxY.toString()))) return '';
+            if (parseInt(stateY_return.minY.toString()) < 0) {
+                return `<0`;
+            } else if (parseInt(stateY_return.minY.toString()) >= parseInt(stateY_return.maxY.toString())) {
+                return `min>=max`;
+            } else if (parseInt(stateY_return.maxY.toString()) - parseInt(stateY_return.minY.toString()) > maxDiff) {
+                return `ΔY>${maxDiff}`;
+            } else {
+                return '';
+            }
+        }
+    }
+
+    /**
+     * Evaluates, whether the input of the maximum input is valid or not.
+     *
+     * @return {boolean} true=valid, false=not valid
+     * @function
+     */
+    const errorMax = () => {
+        if (plotId === O3AS_PLOTS.tco3_zm) {
+            if (isNaN(parseInt(stateY_zm.maxY.toString()))) return true;
+            if (isNaN(parseInt(stateY_zm.minY.toString()))) return false;
+            return(
+                parseInt(stateY_zm.maxY.toString()) < 0 ||
+                parseInt(stateY_zm.minY.toString()) >= parseInt(stateY_zm.maxY.toString()) ||
+                parseInt(stateY_zm.maxY.toString()) - parseInt(stateY_zm.minY.toString()) > maxDiff
+            );
+        } else {
+            if (isNaN(parseInt(stateY_return.maxY.toString()))) return true;
+            if (isNaN(parseInt(stateY_return.minY.toString()))) return false;
+            return(
+                parseInt(stateY_return.maxY.toString()) < 0 ||
+                parseInt(stateY_return.minY.toString()) >= parseInt(stateY_return.maxY.toString()) ||
+                parseInt(stateY_return.maxY.toString()) - parseInt(stateY_return.minY.toString()) > maxDiff
+            );
+        }
+    }
+
+    /**
+     * Returns the corresponding error message if the input value is not valid.
+     *
+     * @return {string} the error message
+     * @function
+     */
+    const helperTextMax = () => {
+        if (plotId === O3AS_PLOTS.tco3_zm) {
+            if (isNaN(parseInt(stateY_zm.minY.toString()))) return '';
+            if (isNaN(parseInt(stateY_zm.maxY.toString()))) return '';
+            if (parseInt(stateY_zm.maxY.toString()) < 0) {
+                return `<0`;
+            } else if (parseInt(stateY_zm.minY.toString()) >= parseInt(stateY_zm.maxY.toString())) {
+                return `min>=max`;
+            } else if (parseInt(stateY_zm.maxY.toString()) - parseInt(stateY_zm.minY.toString()) > maxDiff) {
+                return `ΔY>${maxDiff}`;
+            } else {
+                return '';
+            }
+        } else {
+            if (isNaN(parseInt(stateY_return.minY.toString()))) return '';
+            if (isNaN(parseInt(stateY_return.maxY.toString()))) return '';
+            if (parseInt(stateY_return.maxY.toString()) < 0) {
+                return `<0`;
+            } else if (parseInt(stateY_return.minY.toString()) >= parseInt(stateY_return.maxY.toString())) {
+                return `min>=max`;
+            } else if (parseInt(stateY_return.maxY.toString()) - parseInt(stateY_return.minY.toString()) > maxDiff) {
+                return `ΔY>${maxDiff}`;
+            } else {
+                return '';
             }
         }
     }
@@ -101,16 +288,8 @@ function YAxisField(props) {
                         size="small"
                         value={plotId === 'tco3_zm' ? stateY_zm.minY : stateY_return.minY}
                         onChange={handleChangeMin}
-                        error={
-                            plotId === O3AS_PLOTS.tco3_zm ?
-                                stateY_zm.minY < 0 || stateY_zm.minY >= maxY :
-                                stateY_return.minY < 0 || stateY_return.minY >= maxY
-                        }
-                        helperText={
-                            plotId === O3AS_PLOTS.tco3_zm ?
-                                (stateY_zm.minY < 0 ? `<0` : (stateY_zm.minY >= maxY ? `min>=max` : '')) :
-                                (stateY_return.minY < 0 ? `<0` : (stateY_return.minY >= maxY ? `min>=max` : ''))
-                        }
+                        error={errorMin()}
+                        helperText={helperTextMin()}
                         inputProps={{"data-testid": "YAxisField-left-input"}}
                     />
                 </FormControl>
@@ -126,16 +305,8 @@ function YAxisField(props) {
                         size="small"
                         value={plotId === O3AS_PLOTS.tco3_zm ? stateY_zm.maxY : stateY_return.maxY}
                         onChange={handleChangeMax}
-                        error={
-                            plotId === O3AS_PLOTS.tco3_zm ?
-                                stateY_zm.maxY < 0 || minY >= stateY_zm.maxY :
-                                stateY_return.maxY < 0 || minY >= stateY_return.maxY
-                        }
-                        helperText={
-                            plotId === O3AS_PLOTS.tco3_zm ?
-                                (stateY_zm.maxY < 0 ? `<0` : (minY >= stateY_zm.maxY ? `min>=max` : '')) :
-                                (stateY_return.maxY < 0 ? `<0` : (minY >= stateY_return.maxY ? `min>=max` : ''))
-                        }
+                        error={errorMax()}
+                        helperText={helperTextMax()}
                         inputProps={{"data-testid": "YAxisField-right-input"}}
                     />
                 </FormControl>
