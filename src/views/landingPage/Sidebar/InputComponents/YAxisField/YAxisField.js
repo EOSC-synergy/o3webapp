@@ -191,7 +191,7 @@ function YAxisField(props) {
             } else if (parseInt(stateY_zm.minY.toString()) >= parseInt(stateY_zm.maxY.toString())) {
                 return `min>=max`;
             } else if(parseInt(stateY_zm.maxY.toString()) - parseInt(stateY_zm.minY.toString()) > maxDiff) {
-                return `diff>${maxDiff}`;
+                return `ΔY>${maxDiff}`;
             } else {
                 return '';
             }
@@ -203,7 +203,7 @@ function YAxisField(props) {
             } else if (parseInt(stateY_return.minY.toString()) >= parseInt(stateY_return.maxY.toString())) {
                 return `min>=max`;
             } else if (parseInt(stateY_return.maxY.toString()) - parseInt(stateY_return.minY.toString()) > maxDiff) {
-                return `diff>${maxDiff}`;
+                return `ΔY>${maxDiff}`;
             } else {
                 return '';
             }
@@ -251,7 +251,7 @@ function YAxisField(props) {
             } else if (parseInt(stateY_zm.minY.toString()) >= parseInt(stateY_zm.maxY.toString())) {
                 return `min>=max`;
             } else if (parseInt(stateY_zm.maxY.toString()) - parseInt(stateY_zm.minY.toString()) > maxDiff) {
-                return `diff>${maxDiff}`;
+                return `ΔY>${maxDiff}`;
             } else {
                 return '';
             }
@@ -263,7 +263,7 @@ function YAxisField(props) {
             } else if (parseInt(stateY_return.minY.toString()) >= parseInt(stateY_return.maxY.toString())) {
                 return `min>=max`;
             } else if (parseInt(stateY_return.maxY.toString()) - parseInt(stateY_return.minY.toString()) > maxDiff) {
-                return `diff>${maxDiff}`;
+                return `ΔY>${maxDiff}`;
             } else {
                 return '';
             }
