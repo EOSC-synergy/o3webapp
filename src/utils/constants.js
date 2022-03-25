@@ -164,7 +164,7 @@ const GLOBAL = "Global";
 export const USER_REGION = "User region";
 
 // user region must be last element
-export const ALL_REGIONS_ORDERED = [SH_POLAR, SH_MID, NH_MID, TROPICS, NH_POLAR, NEAR_GLOBAL, GLOBAL, USER_REGION];
+export const ALL_REGIONS_ORDERED = [SH_POLAR, SH_MID, TROPICS, NH_MID, NH_POLAR, NEAR_GLOBAL, GLOBAL, USER_REGION];
 
 /**
  * The mean: this appears in the model group card and is used to identify its statistical value settings.
