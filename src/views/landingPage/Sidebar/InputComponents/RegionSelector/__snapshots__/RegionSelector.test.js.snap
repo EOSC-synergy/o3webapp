@@ -112,7 +112,7 @@ exports[`tests basic rendering renders correctly 1`] = `
         <span
           class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
         >
-          NH mid-lat
+          Tropics
         </span>
       </label>
       <label
@@ -146,7 +146,7 @@ exports[`tests basic rendering renders correctly 1`] = `
         <span
           class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
         >
-          Tropics
+          NH mid-lat
         </span>
       </label>
       <label
