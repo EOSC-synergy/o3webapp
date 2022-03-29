@@ -1,7 +1,7 @@
 services:
   processing:
     command: sleep 6000000
-    image: node:16.13-alpine
+    image: node:16.13
     volumes:
     - source: ./
       target: /sqaaas-build

@@ -21,13 +21,13 @@ sqa_criteria:
     repos:
       this_repo:
         commands:
-        - sh -c "npm audit --audit-level=high"
+        - sh -c "npm config set production=true && npm audit --audit-level=high"
         container: processing
   QC.Doc:
     repos:
       this_repo:
         commands:
-        - sh -c "npm run docs"
+        - sh -c "patch ./node_modules/better-docs/bundler.js < ./better-docs-bundler.patch && npm run docs"
         container: processing
 
 timeout: 600
