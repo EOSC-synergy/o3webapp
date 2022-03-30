@@ -166,11 +166,12 @@ export function updateStoreWithURL(testStore = store, testString = queryString) 
         const plotId = urlParams.get('plot');
         store.dispatch(setActivePlotId({plotId: plotId}));
 
-        let groupStrings = []
-        while (urlParams.get(`group${groupStrings.length}`) !== null) {
-            groupStrings.push(urlParams.get(`group${groupStrings.length}`));
+        let groupStrings = [];
+        const groupIds = [...urlParams.keys()].filter(x => x.includes("group")).map(x => parseInt(x.replace("group", "")));
+        for (const id of groupIds) {
+            groupStrings.push(urlParams.get(`group${id}`));
         }
-        const dataPerModel = 5;
+        const dataPerModel = 5; // isVisible, mean, std, median, percentile
         const groups = groupStrings.map((elem) => {
             const name = elem.split('"')[1];
             const visibilities = elem.split('"')[2].split(',')[1].split("").map((elem) => {
