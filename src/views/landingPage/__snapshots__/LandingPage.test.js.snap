@@ -92,6 +92,7 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
       >
         <div
           class="MuiDrawer-root MuiDrawer-docked css-1gsudvg-MuiDrawer-docked"
+          style="position: absolute;"
         >
           <div
             class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiDrawer-paper MuiDrawer-paperAnchorRight MuiDrawer-paperAnchorDockedRight css-18sg6k4-MuiPaper-root-MuiDrawer-paper"
