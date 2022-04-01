@@ -1,0 +1,21 @@
+{
+  "sections": [
+    {
+      "name": "Appearance",
+      "components": ["PlotNameField", "XAxisField", "YAxisField"]
+    },
+    {
+      "name": "Models",
+      "components": ["ModelGroupConfigurator"]
+    },
+    {
+      "name": "Filter Data",
+      "components": ["LatitudeBandSelector", "TimeCheckBoxGroup"]
+    },
+    {
+      "name": "Reference Year",
+      "components": ["ReferenceModelSelector", "ReferenceYearField"]
+    }
+  ]
+}
+

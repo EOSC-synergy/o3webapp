@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<DocumentFragment>
+  <a
+    class="MuiTypography-root MuiTypography-inherit MuiTypography-noWrap MuiLink-root MuiLink-underlineAlways css-q2mzyx-MuiTypography-root-MuiLink-root"
+    data-testid="logo-container"
+    href="#page-top"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container css-1e0cb12-MuiGrid-root"
+    >
+      <img
+        alt="logo"
+        data-testid="logo-image"
+        src="https://o3as.data.kit.edu/img/logos/o3as-logo.svg"
+        style="height: 4em; margin: 0.5em;"
+      />
+      <h6
+        class="MuiTypography-root MuiTypography-h6 MuiTypography-noWrap css-154cv3q-MuiTypography-root"
+        data-testid="logo-text"
+      >
+        O3as: Webapp
+      </h6>
+    </div>
+  </a>
+</DocumentFragment>
+`;
