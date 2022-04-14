@@ -23,7 +23,7 @@ exports[`renders correctly 1`] = `
             >
               Copyright © KIT – The 
               <a
-                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-1ie09l3-MuiTypography-root-MuiLink-root"
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-158h6db-MuiTypography-root-MuiLink-root"
                 data-testid="footer-link-research-university}"
                 href="https://www.kit.edu/kit/english/research-university.php"
               >
@@ -42,7 +42,7 @@ exports[`renders correctly 1`] = `
           data-testid="footer-grid-item"
         >
           <a
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-1ie09l3-MuiTypography-root-MuiLink-root"
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-158h6db-MuiTypography-root-MuiLink-root"
             data-testid="footer-link-undefined"
             href="https://o3as.data.kit.edu/#page-top"
           >
@@ -58,7 +58,7 @@ exports[`renders correctly 1`] = `
           data-testid="footer-grid-item"
         >
           <a
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-1ie09l3-MuiTypography-root-MuiLink-root"
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-158h6db-MuiTypography-root-MuiLink-root"
             data-testid="footer-link-undefined"
             href="https://o3as.data.kit.edu/policies/privacy-policy.html"
           >
@@ -74,7 +74,7 @@ exports[`renders correctly 1`] = `
           data-testid="footer-grid-item"
         >
           <a
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-1ie09l3-MuiTypography-root-MuiLink-root"
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-158h6db-MuiTypography-root-MuiLink-root"
             data-testid="footer-link-undefined"
             href="https://o3as.data.kit.edu/policies/terms-of-use.html"
           >
@@ -90,7 +90,7 @@ exports[`renders correctly 1`] = `
           data-testid="footer-grid-item"
         >
           <a
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-1ie09l3-MuiTypography-root-MuiLink-root"
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-158h6db-MuiTypography-root-MuiLink-root"
             data-testid="footer-link-undefined"
             href="https://git.scc.kit.edu/synergy.o3as/o3webapp"
           >
@@ -106,7 +106,7 @@ exports[`renders correctly 1`] = `
           data-testid="footer-grid-item"
         >
           <a
-            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-1ie09l3-MuiTypography-root-MuiLink-root"
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-158h6db-MuiTypography-root-MuiLink-root"
             data-testid="footer-link-undefined"
             href="https://o3as.data.kit.edu/policies/how-to-acknowledge.html"
           >

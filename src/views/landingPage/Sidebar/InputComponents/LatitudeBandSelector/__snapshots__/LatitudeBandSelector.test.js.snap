@@ -20,7 +20,7 @@ exports[`tests basic rendering renders correctly 1`] = `
     class="MuiBox-root css-1n3sbe4"
   >
     <div
-      class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary css-vwjx0e-MuiInputBase-root-MuiOutlinedInput-root"
+      class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary  css-bx5laj-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
     >
       <div
         aria-expanded="false"
@@ -56,7 +56,7 @@ exports[`tests basic rendering renders correctly 1`] = `
         class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
       >
         <legend
-          class="css-nnbavb"
+          class="css-hdw1oc"
         >
           <span
             class="notranslate"

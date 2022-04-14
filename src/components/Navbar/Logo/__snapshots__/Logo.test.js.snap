@@ -3,7 +3,7 @@
 exports[`renders correctly 1`] = `
 <DocumentFragment>
   <a
-    class="MuiTypography-root MuiTypography-inherit MuiTypography-noWrap MuiLink-root MuiLink-underlineAlways css-q2mzyx-MuiTypography-root-MuiLink-root"
+    class="MuiTypography-root MuiTypography-inherit MuiTypography-noWrap MuiLink-root MuiLink-underlineAlways css-rg2xzg-MuiTypography-root-MuiLink-root"
     data-testid="logo-container"
     href="#page-top"
   >

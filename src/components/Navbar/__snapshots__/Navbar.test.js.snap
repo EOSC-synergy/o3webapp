@@ -23,7 +23,7 @@ exports[`renders correctly 1`] = `
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8 css-vok43g-MuiGrid-root"
             >
               <a
-                class="MuiTypography-root MuiTypography-inherit MuiTypography-noWrap MuiLink-root MuiLink-underlineAlways css-2grxvj-MuiTypography-root-MuiLink-root"
+                class="MuiTypography-root MuiTypography-inherit MuiTypography-noWrap MuiLink-root MuiLink-underlineAlways css-unxnra-MuiTypography-root-MuiLink-root"
                 data-testid="logo-container"
                 href="#page-top"
               >
