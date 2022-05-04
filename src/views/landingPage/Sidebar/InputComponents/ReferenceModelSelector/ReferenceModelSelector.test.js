@@ -45,7 +45,7 @@ describe("tests redux functionality", () => {
         );
         
         const model = "CCMI-1_ACCESS_ACCESS-CCM-refC2"; // this should be selected
-        const input = getByRole("textbox");
+        const input = getByRole("combobox");
         fireEvent.change(input, { target: { value: model } }); // type to get all options on virtual dom
         fireEvent.click(getAllByRole("option")[0]); // select
         

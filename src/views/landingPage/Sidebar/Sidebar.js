@@ -167,6 +167,7 @@ function Sidebar(props) {
                         backgroundColor: BACKGROUND_BASE_COLOR
                     },
                 }}
+                style={{position: "absolute"}}
             > 
                 <DrawerHeader>
                     <IconButton

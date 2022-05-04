@@ -12,6 +12,7 @@ exports[`test sidebar component renders closed sidebar correctly 1`] = `
     >
       <div
         class="MuiDrawer-root MuiDrawer-docked css-1gsudvg-MuiDrawer-docked"
+        style="position: absolute;"
       >
         <div
           class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiDrawer-paper MuiDrawer-paperAnchorRight MuiDrawer-paperAnchorDockedRight css-18sg6k4-MuiPaper-root-MuiDrawer-paper"
@@ -70,7 +71,7 @@ exports[`test sidebar component renders closed sidebar correctly 1`] = `
               Plot Type
             </label>
             <div
-              class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+              class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
             >
               <div
                 aria-expanded="false"
@@ -109,7 +110,7 @@ exports[`test sidebar component renders closed sidebar correctly 1`] = `
                 class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
               >
                 <legend
-                  class="css-173wfxe"
+                  class="css-1ftyaf0"
                 >
                   <span>
                     Plot Type
@@ -282,7 +283,7 @@ exports[`test sidebar component renders closed sidebar correctly 1`] = `
                                     class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                                   >
                                     <legend
-                                      class="css-nnbavb"
+                                      class="css-hdw1oc"
                                     >
                                       <span
                                         class="notranslate"
@@ -330,7 +331,7 @@ exports[`test sidebar component renders closed sidebar correctly 1`] = `
                                     class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                                   >
                                     <legend
-                                      class="css-nnbavb"
+                                      class="css-hdw1oc"
                                     >
                                       <span
                                         class="notranslate"
@@ -386,7 +387,7 @@ exports[`test sidebar component renders closed sidebar correctly 1`] = `
                                     class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                                   >
                                     <legend
-                                      class="css-nnbavb"
+                                      class="css-hdw1oc"
                                     >
                                       <span
                                         class="notranslate"
@@ -440,7 +441,7 @@ exports[`test sidebar component renders closed sidebar correctly 1`] = `
                                     class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                                   >
                                     <legend
-                                      class="css-nnbavb"
+                                      class="css-hdw1oc"
                                     >
                                       <span
                                         class="notranslate"
@@ -893,7 +894,7 @@ exports[`test sidebar component renders closed sidebar correctly 1`] = `
                           class="MuiBox-root css-1n3sbe4"
                         >
                           <div
-                            class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary css-vwjx0e-MuiInputBase-root-MuiOutlinedInput-root"
+                            class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary  css-bx5laj-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
                           >
                             <div
                               aria-expanded="false"
@@ -929,7 +930,7 @@ exports[`test sidebar component renders closed sidebar correctly 1`] = `
                               class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                             >
                               <legend
-                                class="css-nnbavb"
+                                class="css-hdw1oc"
                               >
                                 <span
                                   class="notranslate"
@@ -1722,10 +1723,8 @@ exports[`test sidebar component renders closed sidebar correctly 1`] = `
                         class="MuiAccordionDetails-root css-ta84vm-MuiAccordionDetails-root"
                       >
                         <div
-                          aria-expanded="false"
                           class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon css-dd2h8b-MuiAutocomplete-root"
                           data-testid="ReferenceModelSelector-reference-model"
-                          role="combobox"
                         >
                           <div
                             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -1743,11 +1742,13 @@ exports[`test sidebar component renders closed sidebar correctly 1`] = `
                             >
                               <input
                                 aria-autocomplete="list"
+                                aria-expanded="false"
                                 aria-invalid="false"
                                 autocapitalize="none"
                                 autocomplete="off"
                                 class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                                 id="locationAutocomplete"
+                                role="combobox"
                                 spellcheck="false"
                                 type="text"
                                 value="SBUV_GSFC_merged-SAT-ozone"
@@ -1805,7 +1806,7 @@ exports[`test sidebar component renders closed sidebar correctly 1`] = `
                                 class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                               >
                                 <legend
-                                  class="css-1z7n62"
+                                  class="css-1in441m"
                                 >
                                   <span>
                                     Reference Model
@@ -1855,7 +1856,7 @@ exports[`test sidebar component renders closed sidebar correctly 1`] = `
                                     class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                                   >
                                     <legend
-                                      class="css-nnbavb"
+                                      class="css-hdw1oc"
                                     >
                                       <span
                                         class="notranslate"
@@ -1951,6 +1952,7 @@ exports[`test sidebar component renders opened sidebar correctly 1`] = `
     >
       <div
         class="MuiDrawer-root MuiDrawer-docked css-1gsudvg-MuiDrawer-docked"
+        style="position: absolute;"
       >
         <div
           class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation0 MuiDrawer-paper MuiDrawer-paperAnchorRight MuiDrawer-paperAnchorDockedRight css-18sg6k4-MuiPaper-root-MuiDrawer-paper"
@@ -2009,7 +2011,7 @@ exports[`test sidebar component renders opened sidebar correctly 1`] = `
               Plot Type
             </label>
             <div
-              class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+              class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
             >
               <div
                 aria-expanded="false"
@@ -2048,7 +2050,7 @@ exports[`test sidebar component renders opened sidebar correctly 1`] = `
                 class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
               >
                 <legend
-                  class="css-173wfxe"
+                  class="css-1ftyaf0"
                 >
                   <span>
                     Plot Type
@@ -2221,7 +2223,7 @@ exports[`test sidebar component renders opened sidebar correctly 1`] = `
                                     class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                                   >
                                     <legend
-                                      class="css-nnbavb"
+                                      class="css-hdw1oc"
                                     >
                                       <span
                                         class="notranslate"
@@ -2269,7 +2271,7 @@ exports[`test sidebar component renders opened sidebar correctly 1`] = `
                                     class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                                   >
                                     <legend
-                                      class="css-nnbavb"
+                                      class="css-hdw1oc"
                                     >
                                       <span
                                         class="notranslate"
@@ -2325,7 +2327,7 @@ exports[`test sidebar component renders opened sidebar correctly 1`] = `
                                     class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                                   >
                                     <legend
-                                      class="css-nnbavb"
+                                      class="css-hdw1oc"
                                     >
                                       <span
                                         class="notranslate"
@@ -2379,7 +2381,7 @@ exports[`test sidebar component renders opened sidebar correctly 1`] = `
                                     class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                                   >
                                     <legend
-                                      class="css-nnbavb"
+                                      class="css-hdw1oc"
                                     >
                                       <span
                                         class="notranslate"
@@ -2832,7 +2834,7 @@ exports[`test sidebar component renders opened sidebar correctly 1`] = `
                           class="MuiBox-root css-1n3sbe4"
                         >
                           <div
-                            class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary css-vwjx0e-MuiInputBase-root-MuiOutlinedInput-root"
+                            class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary  css-bx5laj-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
                           >
                             <div
                               aria-expanded="false"
@@ -2868,7 +2870,7 @@ exports[`test sidebar component renders opened sidebar correctly 1`] = `
                               class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                             >
                               <legend
-                                class="css-nnbavb"
+                                class="css-hdw1oc"
                               >
                                 <span
                                   class="notranslate"
@@ -3661,10 +3663,8 @@ exports[`test sidebar component renders opened sidebar correctly 1`] = `
                         class="MuiAccordionDetails-root css-ta84vm-MuiAccordionDetails-root"
                       >
                         <div
-                          aria-expanded="false"
                           class="MuiAutocomplete-root MuiAutocomplete-hasClearIcon MuiAutocomplete-hasPopupIcon css-dd2h8b-MuiAutocomplete-root"
                           data-testid="ReferenceModelSelector-reference-model"
-                          role="combobox"
                         >
                           <div
                             class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
@@ -3682,11 +3682,13 @@ exports[`test sidebar component renders opened sidebar correctly 1`] = `
                             >
                               <input
                                 aria-autocomplete="list"
+                                aria-expanded="false"
                                 aria-invalid="false"
                                 autocapitalize="none"
                                 autocomplete="off"
                                 class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputAdornedEnd MuiAutocomplete-input MuiAutocomplete-inputFocused css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                                 id="locationAutocomplete"
+                                role="combobox"
                                 spellcheck="false"
                                 type="text"
                                 value="SBUV_GSFC_merged-SAT-ozone"
@@ -3744,7 +3746,7 @@ exports[`test sidebar component renders opened sidebar correctly 1`] = `
                                 class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                               >
                                 <legend
-                                  class="css-1z7n62"
+                                  class="css-1in441m"
                                 >
                                   <span>
                                     Reference Model
@@ -3794,7 +3796,7 @@ exports[`test sidebar component renders opened sidebar correctly 1`] = `
                                     class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                                   >
                                     <legend
-                                      class="css-nnbavb"
+                                      class="css-hdw1oc"
                                     >
                                       <span
                                         class="notranslate"
