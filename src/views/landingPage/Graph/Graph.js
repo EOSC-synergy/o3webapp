@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import Chart from "react-apexcharts"
+//import Chart from "react-apexcharts"
 import {getOptions, generateSeries} from "../../../utils/optionsFormatter/optionsFormatter"
 import {useSelector} from 'react-redux'
 import {selectPlotId, selectPlotTitle, selectPlotXRange, selectPlotYRange} from '../../../store/plotSlice/plotSlice';
@@ -10,6 +10,8 @@ import {Alert, Link} from '@mui/material';
 import {O3AS_PLOTS} from '../../../utils/constants';
 import {NO_MONTH_SELECTED} from '../../../utils/constants';
 import store from '../../../store/store';
+import dynamic from "next/dynamic";
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 /**
  * The Graph component. The input parameters are taken from the Redux Store.
@@ -95,11 +97,10 @@ function Graph(props) {
      * @constant {Array}
      * @default [window.innerHeight, window.innerWidth]
      */
-     const setDimensions = React.useState({ 
-        height: window.innerHeight,
-        width: window.innerWidth
-    })[1];
-
+     const [dimensions, setDimensions] = React.useState({
+        height: 1280,
+        width: 720
+    });
 
     /**
      * Message to display if an error occured.
@@ -155,7 +156,7 @@ function Graph(props) {
           window.addEventListener('resize', debouncedHandleResize)
       
           return _ => window.removeEventListener('resize', debouncedHandleResize)      
-    });
+    }, []);
 
     if (!(plotId in O3AS_PLOTS)) {
         const style = {

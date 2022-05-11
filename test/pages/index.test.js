@@ -1,10 +1,10 @@
 import React from 'react';
-import App from './App';
-import {createTestStore} from './store/store'
+import App from '../../pages';
+import {createTestStore} from '../../src/store/store'
 import {Provider} from "react-redux";
 import {render} from "@testing-library/react";
-import NavBar from "./components/Navbar/NavBar";
-import LandingPage from "./views/landingPage/LandingPage";
+import NavBar from "../../src/components/Navbar/NavBar";
+import LandingPage from "../../src/views/landingPage/LandingPage";
 
 jest.mock('react-apexcharts', () => {
     return {

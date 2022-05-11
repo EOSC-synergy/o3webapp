@@ -18,7 +18,8 @@ import {
 
 store.subscribe(updateURL);
 
-let queryString = window.location.search;
+//let queryString = window.location.search;
+let queryString = "";
 
 /**
  * This method uses the big-integer library

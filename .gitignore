@@ -29,3 +29,5 @@ yarn-error.log*
 .cache/
 docs/
 dist/
+.next/
+.idea/

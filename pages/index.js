@@ -1,10 +1,11 @@
 import * as React from 'react';
-import Navbar from "./components/Navbar/NavBar";
-import Footer from "./components/Footer/Footer";
-import ErrorMessageModal from './components/ErrorMessageModal/ErrorMessageModal';
-import LandingPage from './views/landingPage/LandingPage';
+import Navbar from "../src/components/Navbar/NavBar";
+import Footer from "../src/components/Footer/Footer";
+import ErrorMessageModal from '../src/components/ErrorMessageModal/ErrorMessageModal';
+import LandingPage from '../src/views/landingPage/LandingPage';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {disableBodyScroll, enableBodyScroll} from 'body-scroll-lock';
+import {useEffect} from "react";
 
 
 /**
@@ -39,7 +40,10 @@ function App() {
      */
     const [isSidebarOpen, setSidebarOpen] = React.useState(false);
 
-    isSidebarOpen ? disableBodyScroll(document) : enableBodyScroll(document);
+    useEffect(() => {
+        isSidebarOpen ? disableBodyScroll(document) : enableBodyScroll(document);
+    }, [isSidebarOpen]);
+
 
     /**
      * Function to open sidebar
