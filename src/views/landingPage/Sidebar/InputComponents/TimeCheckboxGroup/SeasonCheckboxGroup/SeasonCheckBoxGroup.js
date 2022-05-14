@@ -1,12 +1,11 @@
-import React from "react";
-import {Box, Checkbox, FormControlLabel, Grid} from "@mui/material";
-import { months, NUM_MONTHS_IN_SEASON } from "../../../../../../utils/constants";
+import React from 'react';
+import { Box, Checkbox, FormControlLabel, Grid } from '@mui/material';
+import { months, NUM_MONTHS_IN_SEASON } from '../../../../../../utils/constants';
 import PropTypes from 'prop-types';
-
 
 /**
  * Enables the user to select/deselect seasons.
- * 
+ *
  * @component
  * @param {Object} props
  * @param {String} props.label - label of this season
@@ -18,11 +17,9 @@ import PropTypes from 'prop-types';
  * @returns {JSX.Element} a jsx containing a checkbox-group with given months and label
  */
 function SeasonCheckBoxGroup(props) {
-
-
     /**
      * Checks if every month in this season is checked.
-     * 
+     *
      * @returns {boolean} True if every month in this season is checked
      */
     const isEveryMonthChecked = () => {
@@ -34,11 +31,11 @@ function SeasonCheckBoxGroup(props) {
             }
         }
         return all;
-    }
+    };
 
     /**
      * Checks if the SeasonCheckbox should be displayed as indeterminate, i.e. neither none nor all months are selected.
-     * 
+     *
      * @returns {boolean} True if the SeasonCheckbox should be displayed as indeterminate
      */
     const isIndeterminate = () => {
@@ -48,8 +45,8 @@ function SeasonCheckBoxGroup(props) {
                 count++;
             }
         }
-        return ((count > 0 && count < NUM_MONTHS_IN_SEASON));
-    }
+        return count > 0 && count < NUM_MONTHS_IN_SEASON;
+    };
 
     return (
         <div data-test-id={`CheckboxSeason${props.seasonId}`}>
@@ -59,32 +56,39 @@ function SeasonCheckBoxGroup(props) {
                         label={props.label}
                         control={
                             <Checkbox
-                                inputProps={{'data-testid':`CheckboxSeasonNum${props.seasonId}`}}
+                                inputProps={{ 'data-testid': `CheckboxSeasonNum${props.seasonId}` }}
                                 indeterminate={isIndeterminate()}
                                 checked={isEveryMonthChecked()}
                                 onChange={() => props.handleSeasonClicked(props.seasonId)}
-
                             />
                         }
                     />
                 </Grid>
                 <Grid item>
                     <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
-                        {props.months.map(({monthId, checked}) => {
-                            return (<React.Fragment key={monthId}> {
-                                <FormControlLabel
-                                    label={months[monthId - 1].description}
-                                    control={
-                                        <Checkbox
-                                            inputProps={{'data-testid':"CheckboxMonth" + monthId}}
-                                            checked={checked}
-                                            onChange={() => props.handleMonthClicked(monthId) }
+                        {props.months.map(({ monthId, checked }) => {
+                            return (
+                                <React.Fragment key={monthId}>
+                                    {' '}
+                                    {
+                                        <FormControlLabel
+                                            label={months[monthId - 1].description}
+                                            control={
+                                                <Checkbox
+                                                    inputProps={{
+                                                        'data-testid': 'CheckboxMonth' + monthId,
+                                                    }}
+                                                    checked={checked}
+                                                    onChange={() =>
+                                                        props.handleMonthClicked(monthId)
+                                                    }
+                                                />
+                                            }
                                         />
                                     }
-                                />
-                            }
-                            </React.Fragment>)}
-                        )}
+                                </React.Fragment>
+                            );
+                        })}
                     </Box>
                 </Grid>
             </Grid>
@@ -98,7 +102,7 @@ SeasonCheckBoxGroup.propTypes = {
     months: PropTypes.array.isRequired,
     handleMonthClicked: PropTypes.func.isRequired,
     handleSeasonClicked: PropTypes.func.isRequired,
-    reportError: PropTypes.func.isRequired
-}
+    reportError: PropTypes.func.isRequired,
+};
 
 export default SeasonCheckBoxGroup;

@@ -1,5 +1,4 @@
-import reducer, 
-{
+import reducer, {
     setModelsOfModelGroup,
     setStatisticalValueForGroup,
     setVisibilityForGroup,
@@ -11,170 +10,52 @@ import reducer,
     selectNameOfGroup,
     selectStatisticalValueSettingsOfGroup,
     selectVisibilityOfGroup,
-} from "./modelsSlice"
-import { mean, STATISTICAL_VALUES_LIST } from "../../utils/constants";
+} from './modelsSlice';
+import { mean, STATISTICAL_VALUES_LIST } from '../../utils/constants';
 
-const MODEL_DATA_TEMPLATE = {   
-    color: null,                
-    isVisible: true,          
-}
-STATISTICAL_VALUES_LIST.forEach(sv => MODEL_DATA_TEMPLATE[sv] = true);
+const MODEL_DATA_TEMPLATE = {
+    color: null,
+    isVisible: true,
+};
+STATISTICAL_VALUES_LIST.forEach((sv) => (MODEL_DATA_TEMPLATE[sv] = true));
 
-
-describe("reducer tests", () => {
-
+describe('reducer tests', () => {
     it('should edit the model list of the given group and leave other groups untoched', () => {
-    
-        const newModelList = ["modelB", "modelC"]
-        
+        const newModelList = ['modelB', 'modelC'];
+
         const previousState = {
             modelGroups: {
                 group1: {
                     models: {
-                        modelA: "dataA",
-                        modelB: "dataB",
+                        modelA: 'dataA',
+                        modelB: 'dataB',
                     },
                 },
                 group2: {
                     models: {
-                        modelA: "dataD",
-                        modelB: "dataE",
-                        modelC: "dataF",
+                        modelA: 'dataD',
+                        modelB: 'dataE',
+                        modelC: 'dataF',
                     },
                 },
             },
         };
-    
+
         const expected = {
             modelGroups: {
                 group1: {
                     models: {
-                        modelB: "dataB",
+                        modelB: 'dataB',
                         modelC: MODEL_DATA_TEMPLATE,
                     }, // empty
-                    name: "newName",
+                    name: 'newName',
                 },
                 group2: {
                     models: {
-                        modelA: "dataD",
-                        modelB: "dataE",
-                        modelC: "dataF",
+                        modelA: 'dataD',
+                        modelB: 'dataE',
+                        modelC: 'dataF',
                     },
-                },
-            },
-        };
-    
-        expect(
-            reducer(previousState, setModelsOfModelGroup({groupId: "group1", groupName: "newName", modelList: newModelList}))
-        ).toEqual(expected);
-    
-    });
-    
-    it('should create a new group if the given id is not present and increment the id counter', () => {
-        
-        const newModelList = ["modelA", "modelB"]
-        
-        const previousState = {
-            idCounter: 0,
-            modelGroups: {
-                
-            },
-        };
-
-        const visibleSV = {};
-        STATISTICAL_VALUES_LIST.forEach(sv => visibleSV[sv] = true);
-    
-        const expected = {
-            idCounter: 1,
-            modelGroups: {
-                0: {
-                    name: "fancy",
-                    models: {
-                        modelA: MODEL_DATA_TEMPLATE,
-                        modelB: MODEL_DATA_TEMPLATE,
-                    },
-                    isVisible: true,    // show/hide complete group
-                    visibleSV
-                },
-            },
-        };
-    
-        expect(
-            reducer(previousState, setModelsOfModelGroup({groupName: "fancy", modelList: newModelList}))
-        ).toEqual(expected);
-    
-    });
-    
-    it('should update the visibility of the given model in the given group', () => {
-        const previousState = {
-            modelGroupList: [0],
-            modelGroups: {
-                0: {
-                    modelList: ["modelA", "modelB"],
-                    models: {
-                        modelA: "dataA",
-                        modelB: "dataB",
-                    },
-                    isVisible: false,
-                },
-            },
-        };
-    
-        const expected = { // Expect the new state to have the updated visibility of modelA
-            modelGroupList: [0],
-            modelGroups: {
-                0: {
-                    modelList: ["modelA", "modelB"],
-                    models: {
-                        modelA: "dataA",
-                        modelB: "dataB",
-                    },
-                    isVisible: true,
-                },
-            },
-        };
-        
-        expect(
-            reducer(
-                previousState, // use initial state 
-                setVisibilityForGroup({groupId: 0, isVisible: true})
-            )
-        ).toEqual(
-            expected
-        );
-    });
-    
-    it('should delete the given model group', () => {
-        const previousState = {
-            modelGroups: {
-                0: {
-                    modelList: ["modelA", "modelB"],
-                    models: {
-                        modelA: "dataA",
-                        modelB: "dataB",
-                    },
-                    isVisible: false,
-                },
-                1: {
-                    modelList: ["modelC", "modelD"],
-                    models: {
-                        modelA: "dataC",
-                        modelB: "dataD",
-                    },
-                    isVisible: false,
-                },
-            },
-        };
-
-        const expected = {
-            modelGroups: {
-                1: {
-                    modelList: ["modelC", "modelD"],
-                    models: {
-                        modelA: "dataC",
-                        modelB: "dataD",
-                    },
-                    isVisible: false,
                 },
             },
         };
@@ -182,10 +63,123 @@ describe("reducer tests", () => {
         expect(
             reducer(
                 previousState,
-                deleteModelGroup({groupId: 0}),
+                setModelsOfModelGroup({
+                    groupId: 'group1',
+                    groupName: 'newName',
+                    modelList: newModelList,
+                })
             )
         ).toEqual(expected);
+    });
 
+    it('should create a new group if the given id is not present and increment the id counter', () => {
+        const newModelList = ['modelA', 'modelB'];
+
+        const previousState = {
+            idCounter: 0,
+            modelGroups: {},
+        };
+
+        const visibleSV = {};
+        STATISTICAL_VALUES_LIST.forEach((sv) => (visibleSV[sv] = true));
+
+        const expected = {
+            idCounter: 1,
+            modelGroups: {
+                0: {
+                    name: 'fancy',
+                    models: {
+                        modelA: MODEL_DATA_TEMPLATE,
+                        modelB: MODEL_DATA_TEMPLATE,
+                    },
+                    isVisible: true, // show/hide complete group
+                    visibleSV,
+                },
+            },
+        };
+
+        expect(
+            reducer(
+                previousState,
+                setModelsOfModelGroup({ groupName: 'fancy', modelList: newModelList })
+            )
+        ).toEqual(expected);
+    });
+
+    it('should update the visibility of the given model in the given group', () => {
+        const previousState = {
+            modelGroupList: [0],
+            modelGroups: {
+                0: {
+                    modelList: ['modelA', 'modelB'],
+                    models: {
+                        modelA: 'dataA',
+                        modelB: 'dataB',
+                    },
+                    isVisible: false,
+                },
+            },
+        };
+
+        const expected = {
+            // Expect the new state to have the updated visibility of modelA
+            modelGroupList: [0],
+            modelGroups: {
+                0: {
+                    modelList: ['modelA', 'modelB'],
+                    models: {
+                        modelA: 'dataA',
+                        modelB: 'dataB',
+                    },
+                    isVisible: true,
+                },
+            },
+        };
+
+        expect(
+            reducer(
+                previousState, // use initial state
+                setVisibilityForGroup({ groupId: 0, isVisible: true })
+            )
+        ).toEqual(expected);
+    });
+
+    it('should delete the given model group', () => {
+        const previousState = {
+            modelGroups: {
+                0: {
+                    modelList: ['modelA', 'modelB'],
+                    models: {
+                        modelA: 'dataA',
+                        modelB: 'dataB',
+                    },
+                    isVisible: false,
+                },
+                1: {
+                    modelList: ['modelC', 'modelD'],
+                    models: {
+                        modelA: 'dataC',
+                        modelB: 'dataD',
+                    },
+                    isVisible: false,
+                },
+            },
+        };
+
+        const expected = {
+            modelGroups: {
+                1: {
+                    modelList: ['modelC', 'modelD'],
+                    models: {
+                        modelA: 'dataC',
+                        modelB: 'dataD',
+                    },
+                    isVisible: false,
+                },
+            },
+        };
+
+        expect(reducer(previousState, deleteModelGroup({ groupId: 0 }))).toEqual(expected);
     });
 
     it('should update the properties of the model group accordingly', () => {
@@ -193,19 +187,19 @@ describe("reducer tests", () => {
             modelGroupList: [0],
             modelGroups: {
                 0: {
-                    modelList: ["modelA", "modelB"],
+                    modelList: ['modelA', 'modelB'],
                     models: {
-                        modelA: {   
-                            color: null,              
-                            isVisible: false,          
+                        modelA: {
+                            color: null,
+                            isVisible: false,
                             mean: true,
                             std: true,
                             median: true,
                             percentile: true,
                         },
-                        modelB: {   
-                            color: null,              
-                            isVisible: true,          
+                        modelB: {
+                            color: null,
+                            isVisible: true,
                             mean: false,
                             std: false,
                             median: false,
@@ -220,19 +214,19 @@ describe("reducer tests", () => {
             modelGroupList: [0],
             modelGroups: {
                 0: {
-                    modelList: ["modelA", "modelB"],
+                    modelList: ['modelA', 'modelB'],
                     models: {
-                        modelA: {   
-                            color: null,              
-                            isVisible: true,          
+                        modelA: {
+                            color: null,
+                            isVisible: true,
                             mean: false,
                             std: false,
                             median: false,
                             percentile: false,
                         },
-                        modelB: {   
-                            color: null,              
-                            isVisible: false,          
+                        modelB: {
+                            color: null,
+                            isVisible: false,
                             mean: true,
                             std: true,
                             median: true,
@@ -242,19 +236,19 @@ describe("reducer tests", () => {
                 },
             },
         };
-        
+
         const data = {
-            modelA: {   
-                color: null,              
-                isVisible: true,          
+            modelA: {
+                color: null,
+                isVisible: true,
                 mean: false,
                 std: false,
                 median: false,
                 percentile: false,
             },
-            modelB: {   
-                color: null,              
-                isVisible: false,          
+            modelB: {
+                color: null,
+                isVisible: false,
                 mean: true,
                 std: true,
                 median: true,
@@ -262,12 +256,15 @@ describe("reducer tests", () => {
             },
         };
 
-
-        expect(reducer(previousState, updatePropertiesOfModelGroup({
+        expect(
+            reducer(
+                previousState,
+                updatePropertiesOfModelGroup({
                     groupId: 0,
                     data,
                 })
-            )).toEqual(expected);
+            )
+        ).toEqual(expected);
     });
 
     it('should set the statistical value for the given group correct', () => {
@@ -282,7 +279,7 @@ describe("reducer tests", () => {
                         std: true,
                         median: true,
                         percentile: true,
-                    }
+                    },
                 },
             },
         };
@@ -298,7 +295,7 @@ describe("reducer tests", () => {
                         std: true,
                         median: true,
                         percentile: true,
-                    }
+                    },
                 },
             },
         };
@@ -306,20 +303,16 @@ describe("reducer tests", () => {
         expect(
             reducer(
                 previousState,
-                setStatisticalValueForGroup({groupId: 0, svType: mean, isIncluded: false})
+                setStatisticalValueForGroup({ groupId: 0, svType: mean, isIncluded: false })
             )
         ).toEqual(expected);
-
-        
     });
-
 });
 
-describe("selector tests", () => {
-    
+describe('selector tests', () => {
     it('should select the model list', () => {
-        const modelList = ["modelA", "modelB"];
-        
+        const modelList = ['modelA', 'modelB'];
+
         const globalState = {
             models: {
                 modelGroupList: [0],
@@ -327,8 +320,8 @@ describe("selector tests", () => {
                     0: {
                         modelList,
                         models: {
-                            modelA: "dataA",
-                            modelB: "dataB",
+                            modelA: 'dataA',
+                            modelB: 'dataB',
                         },
                     },
                 },
@@ -340,8 +333,8 @@ describe("selector tests", () => {
 
     it('should select the model data', () => {
         const modelData = {
-            modelA: "dataA",
-            modelB: "dataB",
+            modelA: 'dataA',
+            modelB: 'dataB',
         };
 
         const globalState = {
@@ -349,7 +342,7 @@ describe("selector tests", () => {
                 modelGroupList: [0],
                 modelGroups: {
                     0: {
-                        modelList: ["modelA", "modelB"],
+                        modelList: ['modelA', 'modelB'],
                         models: modelData,
                     },
                 },
@@ -360,19 +353,19 @@ describe("selector tests", () => {
     });
 
     it('should select the name', () => {
-        const name = "refC2";
-        
+        const name = 'refC2';
+
         const globalState = {
             models: {
                 modelGroupList: [0],
                 modelGroups: {
                     0: {
-                        name, 
+                        name,
                     },
                 },
             },
         };
-        
+
         expect(selectNameOfGroup(globalState, 0)).toEqual(name);
     });
 
@@ -382,14 +375,14 @@ describe("selector tests", () => {
             median: false,
             std: true,
             percentile: false,
-        }
-        
+        };
+
         const globalState = {
             models: {
                 modelGroupList: [0],
                 modelGroups: {
                     0: {
-                        visibleSV, 
+                        visibleSV,
                     },
                 },
             },
@@ -400,13 +393,13 @@ describe("selector tests", () => {
 
     it('should select the correct visibility', () => {
         const isVisible = true;
-        
+
         const globalState = {
             models: {
                 modelGroupList: [0],
                 modelGroups: {
                     0: {
-                        isVisible, 
+                        isVisible,
                     },
                 },
             },
@@ -417,8 +410,8 @@ describe("selector tests", () => {
 
     it('should select all group ids', () => {
         const allGroupIds = [0, 1, 2, 3, 4, 5];
-        const modelGroups = {}
-        allGroupIds.forEach(id => modelGroups[id] = {});
+        const modelGroups = {};
+        allGroupIds.forEach((id) => (modelGroups[id] = {}));
 
         const globalState = {
             models: {
@@ -428,6 +421,4 @@ describe("selector tests", () => {
 
         expect(selectAllGroupIds(globalState)).toEqual(allGroupIds);
     });
-
-
 });

@@ -1,6 +1,5 @@
 <div id="top"></div>
 
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -22,79 +21,88 @@
 
 ## Built With
 
-- [npm.js](https://www.npmjs.com/) package manager
-- [React.js](https://reactjs.org/) main Javascript Framework
-- [Redux.js](https://redux.js.org/) internal store, simplifies communication between different components
-- [Apexcharts.js](https://apexcharts.com/) used for rendering of the graph. Used through the [React wrapper](https://apexcharts.com/docs/react-charts/)
-- [pdfmake](http://pdfmake.org/#/) used to export a pdf
-- [Jest.js](https://jestjs.io/) main framework for testing
-- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) provides more React specific tests
-- [MaterialUI](https://mui.com/) provides styled input components (similar to Bootstrap)
-- [axios](https://axios-http.com/docs/intro) used for API communication
-- [jsdoc](https://jsdoc.app/index.html) used standard for documenting the code
-- [better docs](https://betterdocs.co/) provides custom `@component` tags specifically for React Apps, as well as `@category` tags
+-   [npm.js](https://www.npmjs.com/) package manager
+-   [React.js](https://reactjs.org/) main Javascript Framework
+-   [Redux.js](https://redux.js.org/) internal store, simplifies communication between different components
+-   [Apexcharts.js](https://apexcharts.com/) used for rendering of the graph. Used through the [React wrapper](https://apexcharts.com/docs/react-charts/)
+-   [pdfmake](http://pdfmake.org/#/) used to export a pdf
+-   [Jest.js](https://jestjs.io/) main framework for testing
+-   [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) provides more React specific tests
+-   [MaterialUI](https://mui.com/) provides styled input components (similar to Bootstrap)
+-   [axios](https://axios-http.com/docs/intro) used for API communication
+-   [jsdoc](https://jsdoc.app/index.html) used standard for documenting the code
+-   [better docs](https://betterdocs.co/) provides custom `@component` tags specifically for React Apps, as well as `@category` tags
 
 ## Documentation
-For now, you have to locally create the docs. In the future we are going to host the docs and provide a link to them here.
 
+For now, you have to locally create the docs. In the future we are going to host the docs and provide a link to them here.
 
 ## Prerequisites
 
 Make sure that you have installed
 
-- [node.js](https://nodejs.dev/learn/how-to-install-nodejs) (automatically also installs npm)
+-   [node.js](https://nodejs.dev/learn/how-to-install-nodejs) (automatically also installs npm)
 
 ## How to install and run the Project
 
-- After cloning the project execute this command in order to install the necessary packages:
+-   After cloning the project execute this command in order to install the necessary packages:
 
 ```
     npm install
 ```
 
-- If you want to start the App locally, execute:
+-   If you want to start the App locally, execute:
 
 ```
     npm start
 ```
 
-- To run tests and to see the test coverage, execute:
+-   To run tests and to see the test coverage, execute:
 
 ```
-    npm run test -- --watchAll --coverage 
+    npm run test -- --watchAll --coverage
 ```
 
-- To generate docs, execute:
+-   To generate docs, execute:
+
 ```
     npm run docs
 ```
 
 Before building the docs for the first time, you have to go to `o3webapp/node_modules/better-docs/bundler.js` and remove the `--dist-dir ${outDist}` option. So replace
+
 ```js
-  const cmd = `${process.platform === 'win32' ? 'SET ' : ''}NODE_ENV=development parcel build ${entry} --dist-dir ${outDist}`
+const cmd = `${
+    process.platform === 'win32' ? 'SET ' : ''
+}NODE_ENV=development parcel build ${entry} --dist-dir ${outDist}`;
 ```
+
 with
+
 ```js
-  const cmd = `${process.platform === 'win32' ? 'SET ' : ''}NODE_ENV=development parcel build ${entry}`
+const cmd = `${
+    process.platform === 'win32' ? 'SET ' : ''
+}NODE_ENV=development parcel build ${entry}`;
 ```
 
 ### Working on the VM
 
 For testing purposes there is a running instance of the Webapp on a VM. You can visit the test WebApp [here](http://o3web.test.fedcloud.eu:3000/).
 
-- If you have a private key, and you want to connect to the VM where the WebApp is deployed, execute:
+-   If you have a private key, and you want to connect to the VM where the WebApp is deployed, execute:
 
 ```
     ssh -i <your_private_key> cloudadm@o3web.test.fedcloud.eu
 ```
 
-- After connecting to the VM and you want to see the logs of the application, including messages from the container, execute:
+-   After connecting to the VM and you want to see the logs of the application, including messages from the container, execute:
 
 ```
     sudo docker-compose -f app
 ```
 
 ### Data
+
 In order to see the API and try out some requests, visit: [O3as Api](https://api.o3as.fedcloud.eu/api/v1/ui/#/)
 
 ### How to configure the sections of the Webapp
@@ -110,6 +118,7 @@ If the name of a section doesn't appear in defaultConfig.json, it will be added 
 Example:
 
 defaultConfig.json:
+
 ```
 {
   "sections": [
@@ -124,7 +133,9 @@ defaultConfig.json:
   ]
 }
 ```
+
 and this specific config file:
+
 ```
 {
   "sections": [
@@ -139,7 +150,9 @@ and this specific config file:
   ]
 }
 ```
+
 will convert to
+
 ```
 {
   "sections": [
@@ -159,20 +172,18 @@ will convert to
 }
 ```
 
-
 ## Credits
 
 Developers which worked on this project:
 
-- Furkan Çevik
-- Thomas Marwitz
-- Simon von Rönn
-- Nikolai Prjanikov
-- Jana Zeller
-
+-   Furkan Çevik
+-   Thomas Marwitz
+-   Simon von Rönn
+-   Nikolai Prjanikov
+-   Jana Zeller
 
 ## License
-This project is licensed under the [GNU License](https://git.scc.kit.edu/synergy.o3as/o3webapp/-/blob/develop/LICENSE).
 
+This project is licensed under the [GNU License](https://git.scc.kit.edu/synergy.o3as/o3webapp/-/blob/develop/LICENSE).
 
 <p align="right">(<a href="#top">back to top</a>)</p>

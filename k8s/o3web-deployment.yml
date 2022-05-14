@@ -2,44 +2,44 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: o3web-deployment
+    name: o3web-deployment
 spec:
-  replicas: 1
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
-  selector:
-    matchLabels:
-      name: o3web-pod
-  template:
-    metadata:
-      name: o3web-template
-      labels:
-        name: o3web-pod
-    spec:
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 20
-            podAffinityTerm:
-              labelSelector:
-                matchLabels:
-                  name: o3web-pod
-              topologyKey: kubernetes.io/hostname
-      priorityClassName: production-medium
-      containers:
-      - name: o3web-app
-        image: o3as/o3webapp
-        imagePullPolicy: Always
-        resources:
-          requests:
-            memory: "1900Mi"
-            cpu: "1100m"
-          limits:
-            memory: "1900Mi"
-            cpu: "1100m"
-        ports:
-        - containerPort: 3000
-          name: port0
+    replicas: 1
+    strategy:
+        type: RollingUpdate
+        rollingUpdate:
+            maxSurge: 1
+            maxUnavailable: 1
+    selector:
+        matchLabels:
+            name: o3web-pod
+    template:
+        metadata:
+            name: o3web-template
+            labels:
+                name: o3web-pod
+        spec:
+            affinity:
+                podAntiAffinity:
+                    preferredDuringSchedulingIgnoredDuringExecution:
+                        - weight: 20
+                          podAffinityTerm:
+                              labelSelector:
+                                  matchLabels:
+                                      name: o3web-pod
+                              topologyKey: kubernetes.io/hostname
+            priorityClassName: production-medium
+            containers:
+                - name: o3web-app
+                  image: o3as/o3webapp
+                  imagePullPolicy: Always
+                  resources:
+                      requests:
+                          memory: '1900Mi'
+                          cpu: '1100m'
+                      limits:
+                          memory: '1900Mi'
+                          cpu: '1100m'
+                  ports:
+                      - containerPort: 3000
+                        name: port0

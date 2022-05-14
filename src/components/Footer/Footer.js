@@ -13,26 +13,26 @@ import { BACKGROUND_BASE_COLOR } from '../../utils/constants';
  */
 export const links = [
     {
-        label: "O3as",
-        href: "https://o3as.data.kit.edu/#page-top"
+        label: 'O3as',
+        href: 'https://o3as.data.kit.edu/#page-top',
     },
     {
-        label: "Privacy Policy",
-        href: "https://o3as.data.kit.edu/policies/privacy-policy.html"
+        label: 'Privacy Policy',
+        href: 'https://o3as.data.kit.edu/policies/privacy-policy.html',
     },
     {
-        label: "Terms of Use",
-        href: "https://o3as.data.kit.edu/policies/terms-of-use.html"
+        label: 'Terms of Use',
+        href: 'https://o3as.data.kit.edu/policies/terms-of-use.html',
     },
     {
-        label: "Gitlab",
-        href: "https://git.scc.kit.edu/synergy.o3as/o3webapp"
+        label: 'Gitlab',
+        href: 'https://git.scc.kit.edu/synergy.o3as/o3webapp',
     },
     {
-        label: "How to Acknowledge",
-        href: "https://o3as.data.kit.edu/policies/how-to-acknowledge.html"
-    }
-]
+        label: 'How to Acknowledge',
+        href: 'https://o3as.data.kit.edu/policies/how-to-acknowledge.html',
+    },
+];
 
 /**
  * A container for copyright text and important links at the bottom of the Website.
@@ -40,11 +40,10 @@ export const links = [
  * @component
  */
 const Footer = (props) => {
-
     return (
         <div
             style={{
-                width: '100%'
+                width: '100%',
             }}
         >
             <Grid
@@ -61,7 +60,8 @@ const Footer = (props) => {
                     marginTop: '10px',
                     paddingTop: '3px',
                     paddingBottom: '20px',
-                }}>
+                }}
+            >
                 <Grid
                     item
                     container
@@ -75,32 +75,32 @@ const Footer = (props) => {
                         md={6}
                         sm={12}
                         sx={{
-                            textAlign:"center",
+                            textAlign: 'center',
                         }}
                         key="Copyright text KIT - inner grid"
                     >
-                    <span style={{color: '#fed136'}}>
-                        <Typography
-                            sx={{
-                                fontSize: 14,
-                                lineHeight: 3
-                            }}
-                        >
-                            Copyright © KIT – The&nbsp;
-                            <Link
-                                href={"https://www.kit.edu/kit/english/research-university.php"}
-                                data-testid={`footer-link-research-university}`}
+                        <span style={{ color: '#fed136' }}>
+                            <Typography
                                 sx={{
-                                    color: '#fed136',
-                                    textDecoration: 'none',
+                                    fontSize: 14,
+                                    lineHeight: 3,
                                 }}
-                                underline='hover'
                             >
-                                Research University
-                            </Link>
-                            &nbsp;in the Helmholtz Association
-                        </Typography>
-                    </span>
+                                Copyright © KIT – The&nbsp;
+                                <Link
+                                    href={'https://www.kit.edu/kit/english/research-university.php'}
+                                    data-testid={`footer-link-research-university}`}
+                                    sx={{
+                                        color: '#fed136',
+                                        textDecoration: 'none',
+                                    }}
+                                    underline="hover"
+                                >
+                                    Research University
+                                </Link>
+                                &nbsp;in the Helmholtz Association
+                            </Typography>
+                        </span>
                     </Grid>
                 </Grid>
                 <Grid
@@ -111,7 +111,7 @@ const Footer = (props) => {
                     md={6}
                     sm={12}
                     sx={{
-                        textAlign:"center",
+                        textAlign: 'center',
                     }}
                     key="links"
                 >
@@ -119,10 +119,10 @@ const Footer = (props) => {
                         return (
                             <Grid
                                 item
-                                md={"auto"}
+                                md={'auto'}
                                 key={idx}
                                 sx={{
-                                    mx: 1
+                                    mx: 1,
                                 }}
                                 data-testid={`footer-grid-item`}
                             >
@@ -133,12 +133,12 @@ const Footer = (props) => {
                                         color: '#fed136',
                                         textDecoration: 'none',
                                     }}
-                                    underline='hover'
+                                    underline="hover"
                                 >
                                     <Typography
                                         sx={{
                                             fontSize: 14,
-                                            lineHeight: 3
+                                            lineHeight: 3,
                                         }}
                                     >
                                         {x.label}
@@ -151,6 +151,6 @@ const Footer = (props) => {
             </Grid>
         </div>
     );
-}
+};
 
 export default Footer;

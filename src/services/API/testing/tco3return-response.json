@@ -1,207 +1,147 @@
 [
     {
-      "legalinfo": "https://o3as.data.kit.edu/policies/terms-of-use.html",
-      "model": "CCMI-1_ACCESS_ACCESS-CCM-refC2",
-      "plotstyle": {
-        "color": "purple",
-        "linestyle": "none",
-        "marker": "o"
-      },
-      "x": [
-        "NH Polar",
-        "SH mid-lat",
-        "Tropics",
-        "NH mid-lat",
-        "SH Polar",
-        "Near global",
-        "Global",
-        "User region"
-      ],
-      "y": [
-        2064,
-        2051,
-        2060,
-        2041,
-        2040,
-        2049,
-        2052,
-        2052
-      ]
+        "legalinfo": "https://o3as.data.kit.edu/policies/terms-of-use.html",
+        "model": "CCMI-1_ACCESS_ACCESS-CCM-refC2",
+        "plotstyle": {
+            "color": "purple",
+            "linestyle": "none",
+            "marker": "o"
+        },
+        "x": [
+            "NH Polar",
+            "SH mid-lat",
+            "Tropics",
+            "NH mid-lat",
+            "SH Polar",
+            "Near global",
+            "Global",
+            "User region"
+        ],
+        "y": [2064, 2051, 2060, 2041, 2040, 2049, 2052, 2052]
     },
     {
-      "legalinfo": "https://o3as.data.kit.edu/policies/terms-of-use.html",
-      "model": "CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG",
-      "plotstyle": {
-        "color": "purple",
-        "linestyle": "none",
-        "marker": "o"
-      },
-      "x": [
-        "NH Polar",
-        "SH mid-lat",
-        "Tropics",
-        "NH mid-lat",
-        "SH Polar",
-        "Near global",
-        "Global",
-        "User region"
-      ],
-      "y": [
-        2071,
-        2071,
-        2046,
-        2066,
-        2064,
-        2065,
-        2066,
-        2066
-      ]
+        "legalinfo": "https://o3as.data.kit.edu/policies/terms-of-use.html",
+        "model": "CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG",
+        "plotstyle": {
+            "color": "purple",
+            "linestyle": "none",
+            "marker": "o"
+        },
+        "x": [
+            "NH Polar",
+            "SH mid-lat",
+            "Tropics",
+            "NH mid-lat",
+            "SH Polar",
+            "Near global",
+            "Global",
+            "User region"
+        ],
+        "y": [2071, 2071, 2046, 2066, 2064, 2065, 2066, 2066]
     },
     {
-      "legalinfo": "https://o3as.data.kit.edu/policies/terms-of-use.html",
-      "model": "CCMI-1_CCCma_CMAM-refC2",
-      "plotstyle": {
-        "color": "red",
-        "linestyle": "none",
-        "marker": "x"
-      },
-      "x": [
-        "NH Polar",
-        "SH mid-lat",
-        "NH mid-lat",
-        "SH Polar",
-        "Near global",
-        "Global",
-        "User region"
-      ],
-      "y": [
-        2087,
-        2049,
-        1986,
-        1986,
-        2045,
-        2048,
-        2048
-      ]
+        "legalinfo": "https://o3as.data.kit.edu/policies/terms-of-use.html",
+        "model": "CCMI-1_CCCma_CMAM-refC2",
+        "plotstyle": {
+            "color": "red",
+            "linestyle": "none",
+            "marker": "x"
+        },
+        "x": [
+            "NH Polar",
+            "SH mid-lat",
+            "NH mid-lat",
+            "SH Polar",
+            "Near global",
+            "Global",
+            "User region"
+        ],
+        "y": [2087, 2049, 1986, 1986, 2045, 2048, 2048]
     },
     {
-      "legalinfo": "https://o3as.data.kit.edu/policies/terms-of-use.html",
-      "model": "MMMean",
-      "plotstyle": {
-        "color": "red",
-        "linestyle": "none",
-        "marker": "^",
-        "markersize": 14,
-        "mfc": "none"
-      },
-      "x": [
-        "NH Polar",
-        "SH mid-lat",
-        "NH mid-lat",
-        "SH Polar",
-        "Near global",
-        "Global",
-        "User region"
-      ],
-      "y": [
-        2076,
-        2060,
-        2042,
-        2041,
-        2054,
-        2058,
-        2058
-      ]
+        "legalinfo": "https://o3as.data.kit.edu/policies/terms-of-use.html",
+        "model": "MMMean",
+        "plotstyle": {
+            "color": "red",
+            "linestyle": "none",
+            "marker": "^",
+            "markersize": 14,
+            "mfc": "none"
+        },
+        "x": [
+            "NH Polar",
+            "SH mid-lat",
+            "NH mid-lat",
+            "SH Polar",
+            "Near global",
+            "Global",
+            "User region"
+        ],
+        "y": [2076, 2060, 2042, 2041, 2054, 2058, 2058]
     },
     {
-      "legalinfo": "https://o3as.data.kit.edu/policies/terms-of-use.html",
-      "model": "MMMean-Std",
-      "plotstyle": {
-        "color": "red",
-        "linestyle": "none",
-        "marker": "_",
-        "markersize": 10,
-        "mfc": "none"
-      },
-      "x": [
-        "NH Polar",
-        "SH mid-lat",
-        "NH mid-lat",
-        "SH Polar",
-        "Near global",
-        "Global",
-        "User region"
-      ],
-      "y": [
-        2087,
-        2075,
-        2065,
-        2065,
-        2065,
-        2065,
-        2065
-      ]
+        "legalinfo": "https://o3as.data.kit.edu/policies/terms-of-use.html",
+        "model": "MMMean-Std",
+        "plotstyle": {
+            "color": "red",
+            "linestyle": "none",
+            "marker": "_",
+            "markersize": 10,
+            "mfc": "none"
+        },
+        "x": [
+            "NH Polar",
+            "SH mid-lat",
+            "NH mid-lat",
+            "SH Polar",
+            "Near global",
+            "Global",
+            "User region"
+        ],
+        "y": [2087, 2075, 2065, 2065, 2065, 2065, 2065]
     },
     {
-      "legalinfo": "https://o3as.data.kit.edu/policies/terms-of-use.html",
-      "model": "MMMean+Std",
-      "plotstyle": {
-        "color": "red",
-        "linestyle": "none",
-        "marker": "_",
-        "markersize": 10,
-        "mfc": "none"
-      },
-      "x": [
-        "NH Polar",
-        "SH mid-lat",
-        "Tropics",
-        "NH mid-lat",
-        "SH Polar",
-        "Near global",
-        "Global",
-        "User region"
-      ],
-      "y": [
-        2063,
-        2047,
-        2047,
-        1986,
-        1986,
-        2044,
-        2045,
-        2045
-      ]
+        "legalinfo": "https://o3as.data.kit.edu/policies/terms-of-use.html",
+        "model": "MMMean+Std",
+        "plotstyle": {
+            "color": "red",
+            "linestyle": "none",
+            "marker": "_",
+            "markersize": 10,
+            "mfc": "none"
+        },
+        "x": [
+            "NH Polar",
+            "SH mid-lat",
+            "Tropics",
+            "NH mid-lat",
+            "SH Polar",
+            "Near global",
+            "Global",
+            "User region"
+        ],
+        "y": [2063, 2047, 2047, 1986, 1986, 2044, 2045, 2045]
     },
     {
-      "legalinfo": "https://o3as.data.kit.edu/policies/terms-of-use.html",
-      "model": "MMMedian",
-      "plotstyle": {
-        "color": "blue",
-        "linestyle": "none",
-        "marker": "o",
-        "markersize": 10,
-        "mfc": "none"
-      },
-      "x": [
-        "NH Polar",
-        "SH mid-lat",
-        "Tropics",
-        "NH mid-lat",
-        "SH Polar",
-        "Near global",
-        "Global",
-        "User region"
-      ],
-      "y": [
-        2071,
-        2051,
-        2060,
-        2041,
-        2040,
-        2049,
-        2052,
-        2052
-      ]
+        "legalinfo": "https://o3as.data.kit.edu/policies/terms-of-use.html",
+        "model": "MMMedian",
+        "plotstyle": {
+            "color": "blue",
+            "linestyle": "none",
+            "marker": "o",
+            "markersize": 10,
+            "mfc": "none"
+        },
+        "x": [
+            "NH Polar",
+            "SH mid-lat",
+            "Tropics",
+            "NH mid-lat",
+            "SH Polar",
+            "Near global",
+            "Global",
+            "User region"
+        ],
+        "y": [2071, 2051, 2060, 2041, 2040, 2049, 2052, 2052]
     }
 ]

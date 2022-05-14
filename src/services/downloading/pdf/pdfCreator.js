@@ -1,14 +1,14 @@
-import pdfMake from "pdfmake/build/pdfmake";
-import pdfFonts from "pdfmake/build/vfs_fonts";
-import {O3AS_PLOTS} from "../../../utils/constants";
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { O3AS_PLOTS } from '../../../utils/constants';
 
-/** 
+/**
  * This module handles all functions to create a pdf that can be downloaded from the site.
  * Downloading Pdf is not as trivial as downloading other formats, since Apex Charts does not provide a native function to support pdf download.
  * Moreover, extra legal information is appended to the pdf, which is not appended to the other supported downloadable datatypes.
- * 
+ *
  * @see {@link module:DownloadNotPdf} for all other format downloads
- * @module PdfCreator 
+ * @module PdfCreator
  * */ // used for auto generation of JSDocs with better-docs
 
 /**
@@ -20,30 +20,30 @@ import {O3AS_PLOTS} from "../../../utils/constants";
     "How to Acknowledge Link: https://o3as.data.kit.edu/policies/how-to-acknowledge.html"]
  */
 const legalNoticeLinks = [
-    "Terms of Use Link: https://o3as.data.kit.edu/policies/terms-of-use.html",
-    "Privacy Policy Link: https://o3as.data.kit.edu/policies/privacy-policy.html",
-    "How to Acknowledge Link: https://o3as.data.kit.edu/policies/how-to-acknowledge.html",
+    'Terms of Use Link: https://o3as.data.kit.edu/policies/terms-of-use.html',
+    'Privacy Policy Link: https://o3as.data.kit.edu/policies/privacy-policy.html',
+    'How to Acknowledge Link: https://o3as.data.kit.edu/policies/how-to-acknowledge.html',
 ];
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 pdfMake.fonts = {
-
     Roboto: {
         normal: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf',
         bold: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf',
-        italics: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf',
-        bolditalics: 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf'
+        italics:
+            'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf',
+        bolditalics:
+            'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf',
     },
-
 
     JetBrainsFont: {
         normal: 'https://fonts.cdnfonts.com/s/36131/JetbrainsMonoExtrabold-ywLd5.woff',
         bold: 'https://fonts.cdnfonts.com/s/36131/JetbrainsMonoExtrabold-ywLd5.woff',
         italics: 'https://fonts.cdnfonts.com/s/36131/JetbrainsMonoExtrabold-ywLd5.woff',
-        bolditalics: 'https://fonts.cdnfonts.com/s/36131/JetbrainsMonoExtrabold-ywLd5.woff'
+        bolditalics: 'https://fonts.cdnfonts.com/s/36131/JetbrainsMonoExtrabold-ywLd5.woff',
     },
-}
+};
 
 /**
  * Returns a Line presentation for the PDF concerning to the current line data.
@@ -52,14 +52,13 @@ pdfMake.fonts = {
  * @returns {Object} the Line Presentation which will be shown in the PDF.
  */
 function getLinePresentation(currentData, model) {
-
-    let linePattern = "";
+    let linePattern = '';
     if (currentData[model].plotStyle.linestyle === 'solid') {
-        linePattern = `────`
+        linePattern = `────`;
     } else if (currentData[model].plotStyle.linestyle === 'dashed') {
-        linePattern = `----`
+        linePattern = `----`;
     } else if (currentData[model].plotStyle.linestyle === 'dotted') {
-        linePattern = `••••`
+        linePattern = `••••`;
     }
 
     return {
@@ -68,10 +67,9 @@ function getLinePresentation(currentData, model) {
         fontSize: 10,
         characterSpacing: 0,
         border: [false, false, false, false],
-        color: `${currentData[model].plotStyle.color}`
-    }
+        color: `${currentData[model].plotStyle.color}`,
+    };
 }
-
 
 /**
  * This Method adjusts the svg element in order to scale it right in the pdf file.
@@ -85,9 +83,9 @@ function getLinePresentation(currentData, model) {
  */
 function getAdjustedSVG(svgElement) {
     let bBox = svgElement.getBBox();
-    let viewBoxParameters = "0 0 " + bBox.width + " " + bBox.height;
+    let viewBoxParameters = '0 0 ' + bBox.width + ' ' + bBox.height;
     let clone = svgElement.cloneNode(true);
-    clone.setAttribute("viewBox", viewBoxParameters);
+    clone.setAttribute('viewBox', viewBoxParameters);
     return clone.outerHTML;
 }
 
@@ -101,15 +99,10 @@ function getAdjustedSVG(svgElement) {
  * @async
  * @throws an Error if the given plotId is not supported. For available plot types check {@link O3AS_PLOTS}.
  */
-export async function downloadGraphAsPDF(
-    plotId,
-    fileName,
-    modelGroups,
-    currentData
-) {
+export async function downloadGraphAsPDF(plotId, fileName, modelGroups, currentData) {
     let modelGroupsList = getListOfModelsForPdf(plotId, modelGroups, currentData);
 
-    const svgElement = document.querySelector(".apexcharts-svg")
+    const svgElement = document.querySelector('.apexcharts-svg');
 
     let docDefinition = null;
 
@@ -122,16 +115,15 @@ export async function downloadGraphAsPDF(
                 {
                     svg: getAdjustedSVG(svgElement),
                     fit: [500, 250],
-                    margin: 10
+                    margin: 10,
                 },
                 {
-                    text: "List Of Used Models:",
-                    style: "header",
+                    text: 'List Of Used Models:',
+                    style: 'header',
                     fontSize: 10,
                     bold: true,
-
                 },
-                "\n",
+                '\n',
                 {
                     fontSize: 9,
                     ol: modelGroupsList,
@@ -139,7 +131,7 @@ export async function downloadGraphAsPDF(
                 {
                     fontSize: 9,
                     ul: legalNoticeLinks,
-                    pageBreak: "before",
+                    pageBreak: 'before',
                     bold: true,
                 },
             ],
@@ -150,7 +142,6 @@ export async function downloadGraphAsPDF(
     pdfMake.createPdf(docDefinition).download(fileName);
 }
 
-
 /**
  * Returns the List of models in the format which the pdfMake library accepts.
  *
@@ -160,25 +151,20 @@ export async function downloadGraphAsPDF(
  * @return {object} the List of all Model Groups which will be shown at the PDF.
  */
 function getListOfModelsForPdf(plotId, modelGroups, currentData) {
-    let modelGroupsList = [
-        [{text: "", style: "header"}, {ul: [{text: "", color: "red"}]}],
-    ];
+    let modelGroupsList = [[{ text: '', style: 'header' }, { ul: [{ text: '', color: 'red' }] }]];
 
     for (const modelGroup of Object.values(modelGroups)) {
-
         // if the model group is invisible, it won't be shown in the PDF.
         if (!modelGroup.isVisible) continue;
-
 
         let modelsInTheGroup = [];
 
         for (const [model, modelData] of Object.entries(modelGroup.models)) {
-
             // if the model is invisible, it won't be shown in the PDF.
             if (!modelData.isVisible) continue;
 
             // if the data of the model is undefined, it won't be shown in the PDF.
-            if (typeof currentData[model] === "undefined") continue;
+            if (typeof currentData[model] === 'undefined') continue;
 
             let textOfCurrentLineOfList;
 
@@ -189,7 +175,6 @@ function getListOfModelsForPdf(plotId, modelGroups, currentData) {
             }
 
             modelsInTheGroup.push([
-
                 getLinePresentation(currentData, model),
 
                 {
@@ -197,21 +182,20 @@ function getListOfModelsForPdf(plotId, modelGroups, currentData) {
                     fontSize: 9,
                     border: [false, false, false, false],
                 },
-
             ]);
         }
         modelGroupsList.push([
             {
                 text: modelGroup.name,
-                style: "header",
+                style: 'header',
                 bold: true,
                 fontSize: 10,
             },
             {
                 table: {
                     widths: ['auto', 'auto'],
-                    body: modelsInTheGroup
-                }
+                    body: modelsInTheGroup,
+                },
             },
         ]);
     }

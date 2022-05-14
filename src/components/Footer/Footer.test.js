@@ -6,8 +6,8 @@ import '@testing-library/jest-dom/extend-expect';
 import { links } from './Footer';
 
 it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<Footer />, div);
+    const div = document.createElement('div');
+    ReactDOM.render(<Footer />, div);
 });
 
 // Snapshot test

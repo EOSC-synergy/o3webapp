@@ -16,10 +16,9 @@ it('renders correctly', () => {
     expect(asFragment()).toMatchSnapshot();
 });
 
-
 it('displays the name of O3AS Webapp', () => {
     render(<Logo />);
-    expect(screen.getByTestId("logo-text")).toHaveTextContent("O3as: Webapp");
+    expect(screen.getByTestId('logo-text')).toHaveTextContent('O3as: Webapp');
 });
 
 it('displays the correct image', () => {
@@ -30,10 +29,10 @@ it('displays the correct image', () => {
 
 it('renders correct link onto logo', () => {
     render(<Logo />);
-    expect(screen.getByText("O3as: Webapp").closest('a')).toHaveAttribute('href', O3ASLink);
+    expect(screen.getByText('O3as: Webapp').closest('a')).toHaveAttribute('href', O3ASLink);
 });
 
 it('renders nothing if props.display={"none"}', () => {
     render(<Logo display={'none'} />);
-    expect(screen.getByTestId("logo-container")).not.toBeVisible();
-})
+    expect(screen.getByTestId('logo-container')).not.toBeVisible();
+});

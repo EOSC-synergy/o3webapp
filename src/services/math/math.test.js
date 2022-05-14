@@ -1,8 +1,8 @@
-import { asc, sum, mean, std, q25, q75, median,  } from "./math";
+import { asc, sum, mean, std, q25, q75, median } from './math';
 
-describe("tests the functions provided in the math package", () => {
+describe('tests the functions provided in the math package', () => {
     it('sorts an array of numbers in ascending order', () => {
-        const unsorted = [4, 2, 5, 1, 0, 3]
+        const unsorted = [4, 2, 5, 1, 0, 3];
         expect(asc(unsorted)).toEqual([...Array(unsorted.length).keys()]);
     });
 
@@ -27,11 +27,11 @@ describe("tests the functions provided in the math package", () => {
         it('takes the lower quartile of an array', () => {
             expect(q25(numbers)).toEqual(15);
         });
-        
+
         it('takes the median of an arry', () => {
             expect(median(numbers)).toEqual(40);
         });
-    
+
         it('takes the upper quartile of an array', () => {
             expect(q75(numbers)).toEqual(43);
         });
@@ -43,15 +43,13 @@ describe("tests the functions provided in the math package", () => {
         it('takes the lower quartile of an array', () => {
             expect(q25(numbers)).toEqual(15);
         });
-        
+
         it('takes the median of an arry', () => {
             expect(median(numbers)).toEqual(37.5);
         });
-    
+
         it('takes the upper quartile of an array', () => {
             expect(q75(numbers)).toEqual(40);
         });
     });
-
-    
 });

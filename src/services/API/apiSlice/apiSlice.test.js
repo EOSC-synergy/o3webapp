@@ -1,21 +1,29 @@
-import reducer, { fetchModels, fetchPlotData, fetchPlotTypes, generateCacheKey, REQUEST_STATE, selectActivePlotData, getAllSelectedModels } from "./apiSlice";
+import reducer, {
+    fetchModels,
+    fetchPlotData,
+    fetchPlotTypes,
+    generateCacheKey,
+    REQUEST_STATE,
+    selectActivePlotData,
+    getAllSelectedModels,
+} from './apiSlice';
 import axios from 'axios';
-import { configureStore } from "@reduxjs/toolkit";
-import { createTestStore } from "../../../store/store";
-import tco3zmResponse from "../testing/tco3zm-response.json";
-import tco3returnResponse from "../testing/tco3return-response.json";
-import { O3AS_PLOTS } from "../../../utils/constants";
-import { preTransformApiData } from "../../../utils/optionsFormatter/optionsFormatter";
+import { configureStore } from '@reduxjs/toolkit';
+import { createTestStore } from '../../../store/store';
+import tco3zmResponse from '../testing/tco3zm-response.json';
+import tco3returnResponse from '../testing/tco3return-response.json';
+import { O3AS_PLOTS } from '../../../utils/constants';
+import { preTransformApiData } from '../../../utils/optionsFormatter/optionsFormatter';
 
 jest.mock('axios');
 
-describe("tests fetchModels async thunk", () => {
+describe('tests fetchModels async thunk', () => {
     it('creates the action types', () => {
-        expect(fetchModels.pending.type).toBe('api/fetchModels/pending')
-        expect(fetchModels.fulfilled.type).toBe('api/fetchModels/fulfilled')
-        expect(fetchModels.rejected.type).toBe('api/fetchModels/rejected')
+        expect(fetchModels.pending.type).toBe('api/fetchModels/pending');
+        expect(fetchModels.fulfilled.type).toBe('api/fetchModels/fulfilled');
+        expect(fetchModels.rejected.type).toBe('api/fetchModels/rejected');
     });
-    
+
     it('updates store accordingly after successful request', async () => {
         const store = configureStore({
             reducer: {
@@ -23,7 +31,7 @@ describe("tests fetchModels async thunk", () => {
             },
         });
 
-        const mockedReturnedData = ["modelA", "modelB"];
+        const mockedReturnedData = ['modelA', 'modelB'];
 
         const expected = {
             api: {
@@ -40,19 +48,19 @@ describe("tests fetchModels async thunk", () => {
                 plotSpecific: {
                     tco3_zm: {
                         active: null,
-                        cachedRequests: { }
+                        cachedRequests: {},
                     },
                     tco3_return: {
                         active: null,
-                        cachedRequests: { }
+                        cachedRequests: {},
                     },
                 },
             },
         };
 
-        axios.get.mockResolvedValue({data: mockedReturnedData});
+        axios.get.mockResolvedValue({ data: mockedReturnedData });
         await store.dispatch(fetchModels());
-        expect(store.getState(state => state.api)).toEqual(expected);
+        expect(store.getState((state) => state.api)).toEqual(expected);
     });
 
     it('updates store accordingly after rejected request', async () => {
@@ -62,7 +70,7 @@ describe("tests fetchModels async thunk", () => {
             },
         });
 
-        const errorMessage = "Timeout of API";
+        const errorMessage = 'Timeout of API';
 
         const expected = {
             api: {
@@ -79,11 +87,11 @@ describe("tests fetchModels async thunk", () => {
                 plotSpecific: {
                     tco3_zm: {
                         active: null,
-                        cachedRequests: { }
+                        cachedRequests: {},
                     },
                     tco3_return: {
                         active: null,
-                        cachedRequests: { }
+                        cachedRequests: {},
                     },
                 },
             },
@@ -91,17 +99,17 @@ describe("tests fetchModels async thunk", () => {
 
         axios.get.mockReturnValue(Promise.reject(errorMessage));
         await store.dispatch(fetchModels());
-        expect(store.getState(state => state.api)).toEqual(expected);
-    });    
+        expect(store.getState((state) => state.api)).toEqual(expected);
+    });
 });
 
-describe("tests fetchPlotTypes async thunk", () => {
-    it('creates the action types', () => {    
-        expect(fetchPlotTypes.pending.type).toBe('api/fetchPlotTypes/pending')
-        expect(fetchPlotTypes.fulfilled.type).toBe('api/fetchPlotTypes/fulfilled')
-        expect(fetchPlotTypes.rejected.type).toBe('api/fetchPlotTypes/rejected')
+describe('tests fetchPlotTypes async thunk', () => {
+    it('creates the action types', () => {
+        expect(fetchPlotTypes.pending.type).toBe('api/fetchPlotTypes/pending');
+        expect(fetchPlotTypes.fulfilled.type).toBe('api/fetchPlotTypes/fulfilled');
+        expect(fetchPlotTypes.rejected.type).toBe('api/fetchPlotTypes/rejected');
     });
-    
+
     it('updates store accordingly after successful request', async () => {
         const store = configureStore({
             reducer: {
@@ -109,7 +117,7 @@ describe("tests fetchPlotTypes async thunk", () => {
             },
         });
 
-        const mockedReturnedData = ["tco3_zm", "tco3_return"];
+        const mockedReturnedData = ['tco3_zm', 'tco3_return'];
 
         const expected = {
             api: {
@@ -126,19 +134,19 @@ describe("tests fetchPlotTypes async thunk", () => {
                 plotSpecific: {
                     tco3_zm: {
                         active: null,
-                        cachedRequests: { }
+                        cachedRequests: {},
                     },
                     tco3_return: {
                         active: null,
-                        cachedRequests: { }
+                        cachedRequests: {},
                     },
                 },
             },
         };
 
-        axios.get.mockResolvedValue({data: mockedReturnedData});
+        axios.get.mockResolvedValue({ data: mockedReturnedData });
         await store.dispatch(fetchPlotTypes());
-        expect(store.getState(state => state.api)).toEqual(expected);
+        expect(store.getState((state) => state.api)).toEqual(expected);
     });
 
     it('updates store accordingly after rejected request', async () => {
@@ -148,7 +156,7 @@ describe("tests fetchPlotTypes async thunk", () => {
             },
         });
 
-        const errorMessage = "Timeout of API";
+        const errorMessage = 'Timeout of API';
 
         const expected = {
             api: {
@@ -165,11 +173,11 @@ describe("tests fetchPlotTypes async thunk", () => {
                 plotSpecific: {
                     tco3_zm: {
                         active: null,
-                        cachedRequests: { }
+                        cachedRequests: {},
                     },
                     tco3_return: {
                         active: null,
-                        cachedRequests: { }
+                        cachedRequests: {},
                     },
                 },
             },
@@ -177,29 +185,29 @@ describe("tests fetchPlotTypes async thunk", () => {
 
         axios.get.mockReturnValue(Promise.reject(errorMessage));
         await store.dispatch(fetchPlotTypes());
-        expect(store.getState(state => state.api)).toEqual(expected);
-    });    
+        expect(store.getState((state) => state.api)).toEqual(expected);
+    });
 });
 
-describe("tests the REQUEST_STATE enum", () => {
-    expect(REQUEST_STATE.loading).toEqual("loading");
-    expect(REQUEST_STATE.idle).toEqual("idle");
-    expect(REQUEST_STATE.error).toEqual("error");
-    expect(REQUEST_STATE.success).toEqual("success");
+describe('tests the REQUEST_STATE enum', () => {
+    expect(REQUEST_STATE.loading).toEqual('loading');
+    expect(REQUEST_STATE.idle).toEqual('idle');
+    expect(REQUEST_STATE.error).toEqual('error');
+    expect(REQUEST_STATE.success).toEqual('success');
 });
 
 let store;
 let modelsInGroup;
 describe('tests fetchPlotData api interaction (integration)', () => {
     const exampleRequestData = {
-        plotId: "tco3_zm",
-        latMin: -90, 
-        latMax: 90, 
+        plotId: 'tco3_zm',
+        latMin: -90,
+        latMax: 90,
         months: [1, 2, 12],
-        startYear: 1959, 
-        endYear: 2100, 
-        modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"], 
-        refModel: "SBUV_GSFC_merged-SAT-ozone", 
+        startYear: 1959,
+        endYear: 2100,
+        modelList: ['CCMI-1_ACCESS_ACCESS-CCM-refC2'],
+        refModel: 'SBUV_GSFC_merged-SAT-ozone',
         refYear: 1980,
     };
     const exampleCacheKey = generateCacheKey(exampleRequestData);
@@ -211,9 +219,15 @@ describe('tests fetchPlotData api interaction (integration)', () => {
 
     it('should generate the correct cacheKey', () => {
         expect(
-            generateCacheKey({latMin: -90, latMax: 90, months: [1,2], refModel: "modelRef", refYear: 420})
-        ).toEqual("lat_min=-90&lat_max=90&months=1,2&ref_meas=modelRef&ref_year=420");
-    })
+            generateCacheKey({
+                latMin: -90,
+                latMax: 90,
+                months: [1, 2],
+                refModel: 'modelRef',
+                refYear: 420,
+            })
+        ).toEqual('lat_min=-90&lat_max=90&months=1,2&ref_meas=modelRef&ref_year=420');
+    });
 
     /*
     it('should dispatch a loading status and add the models to loading', () => {
@@ -264,40 +278,45 @@ describe('tests fetchPlotData api interaction (integration)', () => {
     });
     */
 
-    
     it('should add loaded models to the list, update the status and save the transformed data for tco3_zm', async () => {
-        axios.post.mockResolvedValue({data: tco3zmResponse});
-        await store.dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_zm, models: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"]}));
-        
-        const plotSpecificSection = store.getState().api.plotSpecific["tco3_zm"];
+        axios.post.mockResolvedValue({ data: tco3zmResponse });
+        await store.dispatch(
+            fetchPlotData({
+                plotId: O3AS_PLOTS.tco3_zm,
+                models: ['CCMI-1_ACCESS_ACCESS-CCM-refC2'],
+            })
+        );
+
+        const plotSpecificSection = store.getState().api.plotSpecific['tco3_zm'];
         expect(plotSpecificSection.active).toEqual(exampleCacheKey);
         const cachedRequest = plotSpecificSection.cachedRequests[exampleCacheKey];
 
-        const {lookUpTable: transformedData} = preTransformApiData({
-            plotId: O3AS_PLOTS.tco3_zm, 
+        const { lookUpTable: transformedData } = preTransformApiData({
+            plotId: O3AS_PLOTS.tco3_zm,
             data: tco3zmResponse,
             modelsSlice: store.getState().models,
-        });        
+        });
         expect(cachedRequest).toEqual({
             data: transformedData, // expect data to be transformed
             error: null,
             status: REQUEST_STATE.success,
-            loadedModels: Object.values(tco3zmResponse).map(x => x.model),
+            loadedModels: Object.values(tco3zmResponse).map((x) => x.model),
             loadingModels: [],
         });
-        
     });
 
     it('should add loaded models to the list, update the status and save the transformed data for tco3_return', async () => {
-        axios.post.mockResolvedValue({data: tco3returnResponse});
-        await store.dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_return, models: modelsInGroup}));
-        
+        axios.post.mockResolvedValue({ data: tco3returnResponse });
+        await store.dispatch(
+            fetchPlotData({ plotId: O3AS_PLOTS.tco3_return, models: modelsInGroup })
+        );
+
         const plotSpecificSection = store.getState().api.plotSpecific[O3AS_PLOTS.tco3_return];
         expect(plotSpecificSection.active).toEqual(exampleCacheKey);
         const cachedRequest = plotSpecificSection.cachedRequests[exampleCacheKey];
 
-        const {lookUpTable: transformedData} = preTransformApiData({
-            plotId: O3AS_PLOTS.tco3_return, 
+        const { lookUpTable: transformedData } = preTransformApiData({
+            plotId: O3AS_PLOTS.tco3_return,
             data: tco3returnResponse,
             modelsSlice: store.getState().models,
         });
@@ -306,17 +325,18 @@ describe('tests fetchPlotData api interaction (integration)', () => {
             data: transformedData, // expect data to be transformed
             error: null,
             status: REQUEST_STATE.success,
-            loadedModels: Object.values(tco3returnResponse).map(x => x.model),
+            loadedModels: Object.values(tco3returnResponse).map((x) => x.model),
             loadingModels: [],
         });
-        
     });
 
     it('should set an error accordingly', async () => {
-        const errorMessage = "This is an error message [500]"
-        axios.post.mockReturnValue(Promise.reject({message: errorMessage}));
-        await store.dispatch(fetchPlotData({plotId: O3AS_PLOTS.tco3_return, models: modelsInGroup}));
-        
+        const errorMessage = 'This is an error message [500]';
+        axios.post.mockReturnValue(Promise.reject({ message: errorMessage }));
+        await store.dispatch(
+            fetchPlotData({ plotId: O3AS_PLOTS.tco3_return, models: modelsInGroup })
+        );
+
         const plotSpecificSection = store.getState().api.plotSpecific[O3AS_PLOTS.tco3_return];
         expect(plotSpecificSection.active).toEqual(exampleCacheKey);
         const cachedRequest = plotSpecificSection.cachedRequests[exampleCacheKey];
@@ -328,8 +348,7 @@ describe('tests fetchPlotData api interaction (integration)', () => {
             loadedModels: [],
             loadingModels: [],
         });
-        
-    })
+    });
 });
 
 describe('testing selectors', () => {
@@ -339,11 +358,13 @@ describe('testing selectors', () => {
                 plotSpecific: {
                     tco3_return: {
                         active: null,
-                    }
-                }
-            }
-        }
-        expect(selectActivePlotData(previousState, "tco3_return")).toEqual({status: REQUEST_STATE.loading});
+                    },
+                },
+            },
+        };
+        expect(selectActivePlotData(previousState, 'tco3_return')).toEqual({
+            status: REQUEST_STATE.loading,
+        });
     });
 
     it('should return the correct data from the cache if data is present', () => {
@@ -351,15 +372,15 @@ describe('testing selectors', () => {
             api: {
                 plotSpecific: {
                     tco3_return: {
-                        active: "key",
+                        active: 'key',
                         cachedRequests: {
-                            "key": "precious data",
-                        }
-                    }
-                }
-            }
-        }
-        expect(selectActivePlotData(previousState, "tco3_return")).toEqual("precious data");
+                            key: 'precious data',
+                        },
+                    },
+                },
+            },
+        };
+        expect(selectActivePlotData(previousState, 'tco3_return')).toEqual('precious data');
     });
 });
 
@@ -368,8 +389,12 @@ describe('testing utils functions', () => {
         store = createTestStore();
     });
 
-    test("getAllSelectedModels selects all models", () => {
+    test('getAllSelectedModels selects all models', () => {
         const selectedModels = getAllSelectedModels(store.getState);
-        expect(selectedModels).toEqual(["CCMI-1_ACCESS_ACCESS-CCM-refC2", "CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG", "CCMI-1_CCCma_CMAM-refC2"])
+        expect(selectedModels).toEqual([
+            'CCMI-1_ACCESS_ACCESS-CCM-refC2',
+            'CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG',
+            'CCMI-1_CCCma_CMAM-refC2',
+        ]);
     });
 });

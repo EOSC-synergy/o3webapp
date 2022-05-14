@@ -1,18 +1,17 @@
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { createTestStore } from '../../../../../store/store';
-import { Provider } from "react-redux";
+import { Provider } from 'react-redux';
 import ModelGroupConfigurator from './ModelGroupConfigurator';
 import userEvent from '@testing-library/user-event';
 import * as redux from 'react-redux';
 
 let store;
 describe('test ModelGroupCard rendering', () => {
-
     beforeEach(() => {
         store = createTestStore();
     });
-    
+
     it('renders without crashing', () => {
         render(
             <Provider store={store}>
@@ -20,7 +19,7 @@ describe('test ModelGroupCard rendering', () => {
             </Provider>
         );
     });
-    
+
     it('renders correctly', () => {
         const { container } = render(
             <Provider store={store}>
@@ -35,14 +34,14 @@ describe('test ModelGroupCard rendering', () => {
             <Provider store={store}>
                 <ModelGroupConfigurator reportError={jest.fn()} />
             </Provider>
-        );        
+        );
         expect(getByTestId(/addModelGroup-button/)).toBeInTheDocument();
         expect(getByTestId(/addModelGroup-button/)).toBeEnabled();
     });
 
     it('raises a console.error function if a required prop is not provided', () => {
         console.error = jest.fn();
-        render(            
+        render(
             <Provider store={store}>
                 <ModelGroupConfigurator />
             </Provider>
@@ -61,7 +60,7 @@ describe('test functionality buttons', () => {
             <Provider store={store}>
                 <ModelGroupConfigurator reportError={jest.fn()} />
             </Provider>
-        );        
+        );
         userEvent.click(getByTestId(/addModelGroup-button/));
         expect(getByTestId(/addModelGroupModal/)).toBeInTheDocument();
     });
@@ -76,14 +75,14 @@ describe('test functionality redux', () => {
         const spy = jest.spyOn(redux, 'useSelector');
         const modelGroupName = 'blob';
         const fakeModelGroupName = 'blub';
-        
+
         spy.mockReturnValueOnce([0])
             .mockReturnValueOnce(modelGroupName)
             .mockReturnValueOnce({
                 median: true,
                 mean: true,
-                "standard deviation": false,
-                percentile: true
+                'standard deviation': false,
+                percentile: true,
             })
             .mockReturnValueOnce(true);
 

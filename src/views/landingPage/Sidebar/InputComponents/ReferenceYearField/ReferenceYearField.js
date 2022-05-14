@@ -1,18 +1,18 @@
-import React from "react";
-import {Grid, Typography, FormControl, TextField, Checkbox} from "@mui/material";
-import {useDispatch} from "react-redux"
-import {useSelector} from "react-redux";
-import {END_YEAR, START_YEAR, O3AS_PLOTS} from "../../../../../utils/constants";
-import {fetchPlotDataForCurrentModels} from "../../../../../services/API/apiSlice/apiSlice";
+import React from 'react';
+import { Grid, Typography, FormControl, TextField, Checkbox } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { END_YEAR, START_YEAR, O3AS_PLOTS } from '../../../../../utils/constants';
+import { fetchPlotDataForCurrentModels } from '../../../../../services/API/apiSlice/apiSlice';
 import {
     setYear,
     setVisibility,
     selectRefYear,
-    selectVisibility
-} from "../../../../../store/referenceSlice/referenceSlice";
+    selectVisibility,
+} from '../../../../../store/referenceSlice/referenceSlice';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import MuiVisibilityIcon from '@mui/icons-material/Visibility';
-import {selectPlotId} from "../../../../../store/plotSlice/plotSlice";
+import { selectPlotId } from '../../../../../store/plotSlice/plotSlice';
 
 /**
  * Enables the user to select a reference year.
@@ -56,7 +56,7 @@ function ReferenceYearField() {
      */
     const handleChangeForRefYear = (event) => {
         if (!isNaN(event.target.value)) {
-            dispatch(setYear({year: event.target.value}));
+            dispatch(setYear({ year: event.target.value }));
             if (event.target.value >= START_YEAR && event.target.value <= END_YEAR) {
                 // fetch for tco3_zm and tco3_return
                 dispatch(fetchPlotDataForCurrentModels());
@@ -70,17 +70,20 @@ function ReferenceYearField() {
      * @param {Event} event the event that triggered the call of this function
      */
     const handleShowRefLineClicked = (event) => {
-        dispatch(setVisibility({visible: event.target.checked}));
-    }
+        dispatch(setVisibility({ visible: event.target.checked }));
+    };
 
     return (
         <>
-            <Grid container sx={{width: "90%", marginLeft: "auto", marginRight: "auto", marginTop: "5%"}}>
+            <Grid
+                container
+                sx={{ width: '90%', marginLeft: 'auto', marginRight: 'auto', marginTop: '5%' }}
+            >
                 <Grid item xs={5}>
                     <Typography>Reference Year:</Typography>
                 </Grid>
-                <Grid item xs={7} sx={{mt: "-8px"}}>
-                    <FormControl sx={{width: '35%'}}>
+                <Grid item xs={7} sx={{ mt: '-8px' }}>
+                    <FormControl sx={{ width: '35%' }}>
                         <TextField
                             variant="outlined"
                             id="outlined-basic"
@@ -88,23 +91,29 @@ function ReferenceYearField() {
                             value={selectedYear}
                             onChange={handleChangeForRefYear}
                             error={selectedYear < START_YEAR || selectedYear > END_YEAR}
-                            helperText={selectedYear < START_YEAR ? `<${START_YEAR}` : (selectedYear > END_YEAR ? `>${END_YEAR}` : '')}
-                            inputProps={{"data-testid": "ReferenceYearField-year"}}
+                            helperText={
+                                selectedYear < START_YEAR
+                                    ? `<${START_YEAR}`
+                                    : selectedYear > END_YEAR
+                                    ? `>${END_YEAR}`
+                                    : ''
+                            }
+                            inputProps={{ 'data-testid': 'ReferenceYearField-year' }}
                         />
                     </FormControl>
-                    {
-                        plotId === O3AS_PLOTS.tco3_zm
-                        &&
+                    {plotId === O3AS_PLOTS.tco3_zm && (
                         <FormControl>
                             <Checkbox
                                 checked={refLineVisibility}
-                                icon={<VisibilityOffIcon data-testid="RefLineInvisibleCheckbox"/>}
-                                checkedIcon={<MuiVisibilityIcon/>}
+                                icon={<VisibilityOffIcon data-testid="RefLineInvisibleCheckbox" />}
+                                checkedIcon={<MuiVisibilityIcon />}
                                 onClick={handleShowRefLineClicked}
-                                inputProps={{"data-testid": "ReferenceYearField-toggleVisibility"}}
+                                inputProps={{
+                                    'data-testid': 'ReferenceYearField-toggleVisibility',
+                                }}
                             />
                         </FormControl>
-                    }
+                    )}
                 </Grid>
             </Grid>
         </>

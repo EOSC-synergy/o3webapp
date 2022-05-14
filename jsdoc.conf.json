@@ -1,23 +1,23 @@
 {
     "tags": {
-      "allowUnknownTags": true,
-      "dictionaries": ["jsdoc", "closure"]
+        "allowUnknownTags": true,
+        "dictionaries": ["jsdoc", "closure"]
     },
     "source": {
-      "include": ["src"],
-      "includePattern": ".+\\.js(doc|x)?$",
-      "excludePattern": "(^|\\/|\\\\)_"
+        "include": ["src"],
+        "includePattern": ".+\\.js(doc|x)?$",
+        "excludePattern": "(^|\\/|\\\\)_"
     },
     "plugins": ["plugins/markdown", "better-docs/component", "better-docs/category"],
     "templates": {
-      "better-docs": {
-        "name": "O3as Webapp documentation"
-      }
+        "better-docs": {
+            "name": "O3as Webapp documentation"
+        }
     },
     "opts": {
-      "destination": "docs",
-      "recurse": true,
-      "readme": "README.md",
-      "template": "node_modules/better-docs"
+        "destination": "docs",
+        "recurse": true,
+        "readme": "README.md",
+        "template": "node_modules/better-docs"
     }
 }

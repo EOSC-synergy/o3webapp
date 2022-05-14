@@ -2,14 +2,14 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: o3web-service
+    name: o3web-service
 spec:
-  selector:
-    name: o3web-pod
-  ports:
-    - protocol: TCP
-      name: http3
-      port: 3000
-      nodePort: 30300
-  type: NodePort
+    selector:
+        name: o3web-pod
+    ports:
+        - protocol: TCP
+          name: http3
+          port: 3000
+          nodePort: 30300
+    type: NodePort
 #  type: LoadBalancer

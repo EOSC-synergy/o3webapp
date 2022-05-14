@@ -5,13 +5,13 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import Alert from '@mui/material/Alert';
 import { Card, IconButton } from '@mui/material';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import CardHeader from '@mui/material/CardHeader';
 import CloseIcon from '@mui/icons-material/Close';
 /**
  * Opens a non-closable discard changes modal to ask whether the users want to discard their changes
  * @component
- * @param {Object} props 
+ * @param {Object} props
  * @param {Boolean} props.isOpen whether the dialog modal should be opened or not
  * @param {Function} props.saveChanges function to save changes
  * @param {Function} props.discardChanges function to discard changes
@@ -20,49 +20,47 @@ import CloseIcon from '@mui/icons-material/Close';
  * can only be closed via clicking save or discard changes button
  */
 function DiscardChangesModal(props) {
-
     /**
      * A function to discard changes and close the modal.
      * @function
      */
-   const discardChangesAndCloseDialog = () => {
-       props.discardChanges();
-       props.closeDialog();
-       
-   }
+    const discardChangesAndCloseDialog = () => {
+        props.discardChanges();
+        props.closeDialog();
+    };
 
     /**
      * A function to save changes and close the modal.
      * @function
      */
-   const saveChangesAndCloseDialog = () => {
-       props.closeDialog();
-       props.saveChanges();
-   }
-
-   /**
-    * Title of the dialog
-    * @constant {string}
-    */
-   const heading = "Discard Changes";
-
-   /**
-    * Question string that is displayed to the user, if the Modal is shown.
-    * @constant {string}
-    */
-   const dialog = "Are you sure you want to discard all changes?";
+    const saveChangesAndCloseDialog = () => {
+        props.closeDialog();
+        props.saveChanges();
+    };
 
     /**
-    * Label for the discard changes button.
-    * @constant {string}
-    */
-   const discardButtonLabel = "Discard Changes";
+     * Title of the dialog
+     * @constant {string}
+     */
+    const heading = 'Discard Changes';
 
     /**
-    * Label for the save changes button.
-    * @constant {string}
-    */
-   const saveButtonLabel = "Save Changes";
+     * Question string that is displayed to the user, if the Modal is shown.
+     * @constant {string}
+     */
+    const dialog = 'Are you sure you want to discard all changes?';
+
+    /**
+     * Label for the discard changes button.
+     * @constant {string}
+     */
+    const discardButtonLabel = 'Discard Changes';
+
+    /**
+     * Label for the save changes button.
+     * @constant {string}
+     */
+    const saveButtonLabel = 'Save Changes';
 
     return (
         <Dialog
@@ -71,11 +69,15 @@ function DiscardChangesModal(props) {
             aria-describedby="alert-dialog-description"
             data-testid="discardChanges-dialog"
         >
-            <Card sx={{backgroundColor: "theme.palette.background.default"}}>
+            <Card sx={{ backgroundColor: 'theme.palette.background.default' }}>
                 <CardHeader
                     title={heading}
                     action={
-                        <IconButton onClick={props.onClose} aria-label="close" data-testid="DiscardChangedModal-close-modal">
+                        <IconButton
+                            onClick={props.onClose}
+                            aria-label="close"
+                            data-testid="DiscardChangedModal-close-modal"
+                        >
                             <CloseIcon />
                         </IconButton>
                     }
@@ -86,8 +88,17 @@ function DiscardChangesModal(props) {
                     </Alert>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={discardChangesAndCloseDialog} data-testid="discardChanges-discardButton">{discardButtonLabel}</Button>
-                    <Button onClick={saveChangesAndCloseDialog} data-testid="discardChanges-saveButton" autoFocus>
+                    <Button
+                        onClick={discardChangesAndCloseDialog}
+                        data-testid="discardChanges-discardButton"
+                    >
+                        {discardButtonLabel}
+                    </Button>
+                    <Button
+                        onClick={saveChangesAndCloseDialog}
+                        data-testid="discardChanges-saveButton"
+                        autoFocus
+                    >
                         {saveButtonLabel}
                     </Button>
                 </DialogActions>
@@ -114,6 +125,6 @@ DiscardChangesModal.propTypes = {
      * A function to close the dialog, called after saveChanges or discardChanges
      */
     closeDialog: PropTypes.func.isRequired,
-}
+};
 
 export default DiscardChangesModal;

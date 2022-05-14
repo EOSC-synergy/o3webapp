@@ -1,8 +1,8 @@
-import {render} from '@testing-library/react';
+import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import {createTestStore} from '../../../../../../store/store';
+import { createTestStore } from '../../../../../../store/store';
 import ModelGroupCard from './ModelGroupCard';
-import {Provider} from "react-redux";
+import { Provider } from 'react-redux';
 import userEvent from '@testing-library/user-event';
 
 let store;
@@ -12,7 +12,6 @@ let groupName;
 let visibleSV;
 
 describe('test ModelGroupCard rendering', () => {
-
     beforeEach(() => {
         store = createTestStore();
         const modelGroups = store.getState().models.modelGroups;
@@ -25,24 +24,24 @@ describe('test ModelGroupCard rendering', () => {
     it('renders without crashing', () => {
         render(
             <Provider store={store}>
-                <ModelGroupCard reportError={reportError} modelGroupId={groupId}/>
+                <ModelGroupCard reportError={reportError} modelGroupId={groupId} />
             </Provider>
         );
     });
 
     it('renders correctly', () => {
-        const {container} = render(
+        const { container } = render(
             <Provider store={store}>
-                <ModelGroupCard reportError={reportError} modelGroupId={groupId}/>
+                <ModelGroupCard reportError={reportError} modelGroupId={groupId} />
             </Provider>
         );
         expect(container).toMatchSnapshot();
     });
 
     it('renders modelGroup name', () => {
-        const {getByTestId} = render(
+        const { getByTestId } = render(
             <Provider store={store}>
-                <ModelGroupCard reportError={reportError} modelGroupId={groupId}/>
+                <ModelGroupCard reportError={reportError} modelGroupId={groupId} />
             </Provider>
         );
         expect(getByTestId(/groupName/)).toHaveTextContent(groupName);
@@ -52,16 +51,16 @@ describe('test ModelGroupCard rendering', () => {
         console.error = jest.fn();
         render(
             <Provider store={store}>
-                <ModelGroupCard modelGroupId={groupId}/>
+                <ModelGroupCard modelGroupId={groupId} />
             </Provider>
         );
         expect(console.error).toHaveBeenCalled();
     });
 
     it('renders checkboxes correctly checked', () => {
-        const {getByLabelText} = render(
+        const { getByLabelText } = render(
             <Provider store={store}>
-                <ModelGroupCard modelGroupId={groupId} reportError={reportError}/>
+                <ModelGroupCard modelGroupId={groupId} reportError={reportError} />
             </Provider>
         );
 
@@ -72,9 +71,9 @@ describe('test ModelGroupCard rendering', () => {
     });
 
     it('renders visibility icon correctly', () => {
-        const {getByTestId} = render(
+        const { getByTestId } = render(
             <Provider store={store}>
-                <ModelGroupCard modelGroupId={groupId} reportError={reportError}/>
+                <ModelGroupCard modelGroupId={groupId} reportError={reportError} />
             </Provider>
         );
         expect(getByTestId(/VisibilityIcon-visible/)).toBeInTheDocument();
@@ -82,7 +81,6 @@ describe('test ModelGroupCard rendering', () => {
 });
 
 describe('test ModelGroupCard functionality', () => {
-
     beforeEach(() => {
         store = createTestStore();
         const modelGroups = store.getState().models.modelGroups;
@@ -91,55 +89,44 @@ describe('test ModelGroupCard functionality', () => {
         visibleSV = modelGroups[groupId].visibleSV;
     });
 
-    it("dispatches setStatisticalValueForGroup with correct payload when checkbox is clicked", () => {
-        const {getByTestId} = render(
-            <Provider store={store}>
-                <ModelGroupCard modelGroupId={groupId} reportError={reportError}/>
-            </Provider>
-        );
-        
-        expect(
-            store.getState().models.modelGroups["0"].visibleSV
-        ).toEqual(
-            {
-                mean: true,
-                'standard deviation': true,
-                median: true,
-                percentile: true
-            }
-        );
-        userEvent.click(getByTestId("ModelGroupCard-toggle-mean-checkbox"));
-        expect(
-            store.getState().models.modelGroups["0"].visibleSV
-        ).toEqual(
-            {
-                mean: false,
-                'standard deviation': true,
-                median: true,
-                percentile: true
-            }
-        );
-    });
-
-    it("dispatches setVisibilityForGroup with correct payload when icon is clicked", () => {
+    it('dispatches setStatisticalValueForGroup with correct payload when checkbox is clicked', () => {
         const { getByTestId } = render(
             <Provider store={store}>
                 <ModelGroupCard modelGroupId={groupId} reportError={reportError} />
             </Provider>
         );
-        
-        
-        const visibilityIcon = getByTestId("ModelGroupCard-VisibilityIcon-visible");
+
+        expect(store.getState().models.modelGroups['0'].visibleSV).toEqual({
+            mean: true,
+            'standard deviation': true,
+            median: true,
+            percentile: true,
+        });
+        userEvent.click(getByTestId('ModelGroupCard-toggle-mean-checkbox'));
+        expect(store.getState().models.modelGroups['0'].visibleSV).toEqual({
+            mean: false,
+            'standard deviation': true,
+            median: true,
+            percentile: true,
+        });
+    });
+
+    it('dispatches setVisibilityForGroup with correct payload when icon is clicked', () => {
+        const { getByTestId } = render(
+            <Provider store={store}>
+                <ModelGroupCard modelGroupId={groupId} reportError={reportError} />
+            </Provider>
+        );
+
+        const visibilityIcon = getByTestId('ModelGroupCard-VisibilityIcon-visible');
         expect(visibilityIcon).toBeInTheDocument();
-        expect(store.getState().models.modelGroups["0"].isVisible).toEqual(true);
+        expect(store.getState().models.modelGroups['0'].isVisible).toEqual(true);
 
         userEvent.click(visibilityIcon); // toggle visibility
 
-        const invisibilityIcon = getByTestId("ModelGroupCard-VisibilityIcon-invisible");
+        const invisibilityIcon = getByTestId('ModelGroupCard-VisibilityIcon-invisible');
         expect(invisibilityIcon).toBeInTheDocument();
-        expect(store.getState().models.modelGroups["0"].isVisible).toEqual(false);
-        
-
+        expect(store.getState().models.modelGroups['0'].isVisible).toEqual(false);
     });
 
     it("opens the delete dialog and doesn't delete the model group if the keep button is clicked", () => {
@@ -148,45 +135,43 @@ describe('test ModelGroupCard functionality', () => {
                 <ModelGroupCard modelGroupId={groupId} reportError={reportError} />
             </Provider>
         );
-        const deleteIcon = getByTestId("ModelGroupCard-delete-model-group");
-        
-        expect(store.getState().models.modelGroups["0"]).not.toEqual(undefined);
-        userEvent.click(deleteIcon); // delete model group
-        expect(container).toHaveTextContent("Delete this model group?");
-        userEvent.click(getByTestId("ModelGroupCard-delete-model-keep"));
-        
-        expect(store.getState().models.modelGroups["0"]).not.toEqual(undefined);
-        expect(container).not.toHaveTextContent("Delete this model group?"); // delete dialog is closed
+        const deleteIcon = getByTestId('ModelGroupCard-delete-model-group');
 
+        expect(store.getState().models.modelGroups['0']).not.toEqual(undefined);
+        userEvent.click(deleteIcon); // delete model group
+        expect(container).toHaveTextContent('Delete this model group?');
+        userEvent.click(getByTestId('ModelGroupCard-delete-model-keep'));
+
+        expect(store.getState().models.modelGroups['0']).not.toEqual(undefined);
+        expect(container).not.toHaveTextContent('Delete this model group?'); // delete dialog is closed
     });
 
-    it("opens the delete dialog and deletes the model group if the delete button is clicked", () => {
+    it('opens the delete dialog and deletes the model group if the delete button is clicked', () => {
         const { getByTestId, container } = render(
             <Provider store={store}>
                 <ModelGroupCard modelGroupId={groupId} reportError={reportError} />
             </Provider>
         );
-        const deleteIcon = getByTestId("ModelGroupCard-delete-model-group");
-        
-        expect(store.getState().models.modelGroups["0"]).not.toEqual(undefined);
+        const deleteIcon = getByTestId('ModelGroupCard-delete-model-group');
+
+        expect(store.getState().models.modelGroups['0']).not.toEqual(undefined);
         userEvent.click(deleteIcon); // delete model group
-        expect(container).toHaveTextContent("Delete this model group?");
+        expect(container).toHaveTextContent('Delete this model group?');
 
         try {
-            userEvent.click(getByTestId("ModelGroupCard-delete-model-delete"));
+            userEvent.click(getByTestId('ModelGroupCard-delete-model-delete'));
         } catch (TypeError) {
             // for some reasons in the test environment another update cycle raises a type error
         }
-        
-        expect(store.getState().models.modelGroups["0"]).toEqual(undefined);
-        expect(container).not.toHaveTextContent("Delete this model group?"); // delete dialog is closed
 
+        expect(store.getState().models.modelGroups['0']).toEqual(undefined);
+        expect(container).not.toHaveTextContent('Delete this model group?'); // delete dialog is closed
     });
 
     it('opens edit model group modal', () => {
-        const {baseElement, getByTestId} = render(
+        const { baseElement, getByTestId } = render(
             <Provider store={store}>
-                <ModelGroupCard modelGroupId={groupId} reportError={reportError}/>
+                <ModelGroupCard modelGroupId={groupId} reportError={reportError} />
             </Provider>
         );
         expect(getByTestId(/EditModelGroupModal-button-open/)).toBeInTheDocument();
@@ -197,9 +182,9 @@ describe('test ModelGroupCard functionality', () => {
     });
 
     it('opens add model group modal', () => {
-        const {baseElement, getByTestId} = render(
+        const { baseElement, getByTestId } = render(
             <Provider store={store}>
-                <ModelGroupCard modelGroupId={groupId} reportError={reportError}/>
+                <ModelGroupCard modelGroupId={groupId} reportError={reportError} />
             </Provider>
         );
         expect(getByTestId(/EditModelGroupModal-button-open/)).toBeInTheDocument();
@@ -208,5 +193,4 @@ describe('test ModelGroupCard functionality', () => {
         expect(baseElement).toMatchSnapshot();
         expect(getByTestId(/AddModelGroupModal-modal-wrapper/)).toBeInTheDocument();
     });
-
 });
