@@ -4,8 +4,9 @@ import {
     median,
     q25,
     q75,
-    quantile as calculatePercentile, std as calculateStd
-} from "../../services/math/math"
+    quantile as calculatePercentile,
+    std as calculateStd,
+} from '../../services/math/math';
 import {
     END_YEAR,
     EXTENDED_SV_LIST,
@@ -22,21 +23,23 @@ import {
     latitudeBands,
     lowerPercentile,
     upperPercentile,
-} from "../constants"
-import {convertModelName} from "../ModelNameConverter";
+} from '../constants';
+import { convertModelName } from '../ModelNameConverter';
 
-/** 
+/**
  * A module containing functions to format the data given or stored in the redux store into a format
  * that is used and accepted by the corresponding target library/module/function (e.g. apexcharts).
- * 
- * 
- * @module OptionsFormatter */  // used for auto generation of JSDocs with better-docs
+ *
+ *
+ * @module OptionsFormatter */ // used for auto generation of JSDocs with better-docs
 
 /**
  * This array provides a list from start to end year with each year as a string
  * @constant {Array}
  */
-export const IMPLICIT_YEAR_LIST = [...Array(END_YEAR - START_YEAR + 1).keys()].map(number => `${START_YEAR + number}`);
+export const IMPLICIT_YEAR_LIST = [...Array(END_YEAR - START_YEAR + 1).keys()].map(
+    (number) => `${START_YEAR + number}`
+);
 
 /**
  * This parameter specifies how thick the line of plotted models should appear.
@@ -60,12 +63,11 @@ const SV_CALCULATION = {
     median: calculateMedian,
     percentile: calculatePercentile,
     stdMean: calculateMean, // mean for std+-
-}
+};
 SV_CALCULATION[std] = calculateStd;
-SV_CALCULATION[lowerPercentile] = arr => calculatePercentile(arr, .1587);
-SV_CALCULATION[upperPercentile] = arr => calculatePercentile(arr, .8413);
+SV_CALCULATION[lowerPercentile] = (arr) => calculatePercentile(arr, 0.1587);
+SV_CALCULATION[upperPercentile] = (arr) => calculatePercentile(arr, 0.8413);
 SV_CALCULATION[stdMean] = calculateMean;
-
 
 /**
  * This object maps each statistical value that should be calculated
@@ -73,15 +75,15 @@ SV_CALCULATION[stdMean] = calculateMean;
  * @constant {Object}
  */
 const SV_COLORING = {
-    mean: "#696969",
-    "standard deviation": "#0e4e78",//"#000",
-    median: "#000",
-    percentile: "#000",
-    "lowerPercentile": "#1e8509",
-    "upperPercentile": "#1e8509",
-    "mean+std": "#0e4e78",
-    "mean-std": "#0e4e78",
-}
+    mean: '#696969',
+    'standard deviation': '#0e4e78', //"#000",
+    median: '#000',
+    percentile: '#000',
+    lowerPercentile: '#1e8509',
+    upperPercentile: '#1e8509',
+    'mean+std': '#0e4e78',
+    'mean-std': '#0e4e78',
+};
 
 /**
  * This object maps each statistical value that should be calculated
@@ -96,11 +98,11 @@ const SV_DASHING = {
     mean: 0,
     median: 2,
     percentile: 0,
-    "mean+std": 8,
-    "mean-std": 8,
-    "lowerPercentile": 4,
-    "upperPercentile": 4,
-}
+    'mean+std': 8,
+    'mean-std': 8,
+    lowerPercentile: 4,
+    upperPercentile: 4,
+};
 
 /**
  * This object maps each statistical value to its corresponding name that
@@ -109,14 +111,14 @@ const SV_DASHING = {
  * @constant {Object}
  */
 const SV_DISPLAY_NAME = {
-    mean: "Mean",
-    median: "Median",
-    percentile: "Percentile",
-    "mean+std": "μ + σ",
-    "mean-std": "μ - σ",
-    "lowerPercentile": "Lower %",
-    "upperPercentile": "Upper %",
-}
+    mean: 'Mean',
+    median: 'Median',
+    percentile: 'Percentile',
+    'mean+std': 'μ + σ',
+    'mean-std': 'μ - σ',
+    lowerPercentile: 'Lower %',
+    upperPercentile: 'Upper %',
+};
 
 /**
  * Maps the plotId to a function that describes how the series are going
@@ -128,10 +130,9 @@ const SERIES_GENERATION = {}; // Map plotId to corresponding generation function
 SERIES_GENERATION[O3AS_PLOTS.tco3_zm] = generateTco3_ZmSeries;
 SERIES_GENERATION[O3AS_PLOTS.tco3_return] = generateTco3_ReturnSeries;
 
-
 /**
  * A string containing a list of used font families seperated by a comma.
- * 
+ *
  * @constant {string}
  */
 export const FONT_FAMILY = [
@@ -162,11 +163,13 @@ function createSubtitle(getState) {
     }
 
     let stMonths = [];
-    getState().plot.generalSettings.months.map((month) => stMonths.push(months[month - 1].description));
-    if (stMonths.length === NUM_MONTHS) stMonths = ["All year"];
+    getState().plot.generalSettings.months.map((month) =>
+        stMonths.push(months[month - 1].description)
+    );
+    if (stMonths.length === NUM_MONTHS) stMonths = ['All year'];
 
-    if (getState().plot.plotId === 'tco3_zm') return `${stLocationText} | ${stMonths.join(", ")}`;
-    else return stMonths.join(", ");
+    if (getState().plot.plotId === 'tco3_zm') return `${stLocationText} | ${stMonths.join(', ')}`;
+    else return stMonths.join(', ');
 }
 
 /**
@@ -180,20 +183,20 @@ function createSubtitle(getState) {
  */
 export const defaultTCO3_zm = {
     xaxis: {
-        type: "numeric",
+        type: 'numeric',
         min: START_YEAR,
         max: END_YEAR,
         decimalsInFloat: 0,
         labels: {
-            rotate: 0
+            rotate: 0,
         },
         title: {
-            text: "Year",
+            text: 'Year',
             style: {
-                fontSize: "1rem",
+                fontSize: '1rem',
                 fontFamily: FONT_FAMILY,
             },
-        }
+        },
     },
     yaxis: [],
     annotations: {
@@ -206,7 +209,7 @@ export const defaultTCO3_zm = {
         id: O3AS_PLOTS.tco3_zm,
         animations: {
             enabled: false,
-            easing: "linear"
+            easing: 'linear',
         },
         toolbar: {
             show: false,
@@ -223,16 +226,14 @@ export const defaultTCO3_zm = {
         zoom: {
             enabled: false,
         },
-        width: "100%"
+        width: '100%',
     },
     legend: {
         show: true,
         onItemClick: {
-            toggleDataSeries: false
+            toggleDataSeries: false,
         },
-        markers: {
-
-        },
+        markers: {},
         height: 80,
     },
     dataLabels: {
@@ -247,26 +248,26 @@ export const defaultTCO3_zm = {
         dashArray: null, //styling.dashArray,
     },
     title: {
-        text: "[title]", // title can only be changed in store/plotSlice.js
-        align: "center",
+        text: '[title]', // title can only be changed in store/plotSlice.js
+        align: 'center',
         floating: false,
         style: {
-            fontSize: "30px",
-            fontWeight: "bold",
+            fontSize: '30px',
+            fontWeight: 'bold',
             fontFamily: FONT_FAMILY,
-            color: "#000000",
-        }
+            color: '#000000',
+        },
     },
     subtitle: {
-        text: "[subtitle]", // subtitle can only be changed in createSubtitle function
-        align: "center",
+        text: '[subtitle]', // subtitle can only be changed in createSubtitle function
+        align: 'center',
         floating: false,
         offsetY: 40,
         style: {
-            fontSize: "20px",
+            fontSize: '20px',
             fontFamily: FONT_FAMILY,
-            color: "#000000",
-        }
+            color: '#000000',
+        },
     },
 };
 
@@ -284,7 +285,15 @@ export const defaultTCO3_zm = {
  * @returns {Object} The defaults for the YAxis of Tco3Zm plot
  * @function
  */
-export function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show = false, opposite = false, offsetX = -1, tickAmount = 0) {
+export function getDefaultYAxisTco3Zm(
+    seriesName,
+    minY,
+    maxY,
+    show = false,
+    opposite = false,
+    offsetX = -1,
+    tickAmount = 0
+) {
     return {
         show,
         opposite,
@@ -301,21 +310,21 @@ export function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show = false, oppo
         },
         tickAmount,
         title: {
-            text: opposite ? "" : "TCO(DU)", // don't show description on right side
+            text: opposite ? '' : 'TCO(DU)', // don't show description on right side
             style: {
-                fontSize: "1rem",
+                fontSize: '1rem',
                 fontFamily: FONT_FAMILY,
             },
         },
         labels: {
-            formatter: opposite ? () => "" : formatYLabelsNicely, // hide labels with function that always returns empty strings
+            formatter: opposite ? () => '' : formatYLabelsNicely, // hide labels with function that always returns empty strings
         },
         /*
         tooltip: {
           enabled: true, // => kinda messy
         }
         */
-    }
+    };
 }
 
 /**
@@ -332,7 +341,15 @@ export function getDefaultYAxisTco3Zm(seriesName, minY, maxY, show = false, oppo
  * @returns {Object} The defaults for the YAxis of Tco3Zm return
  * @function
  */
-export function getDefaultYAxisTco3Return(seriesName, minY, maxY, show = false, opposite = false, offsetX = -1, tickAmount = 0) {
+export function getDefaultYAxisTco3Return(
+    seriesName,
+    minY,
+    maxY,
+    show = false,
+    opposite = false,
+    offsetX = -1,
+    tickAmount = 0
+) {
     return {
         show,
         opposite,
@@ -350,16 +367,16 @@ export function getDefaultYAxisTco3Return(seriesName, minY, maxY, show = false, 
         },
         tickAmount,
         title: {
-            text: opposite ? "" : "Year", // don't show description on right side
+            text: opposite ? '' : 'Year', // don't show description on right side
             style: {
-                fontSize: "1rem",
+                fontSize: '1rem',
                 fontFamily: FONT_FAMILY,
             },
         },
         labels: {
-            formatter: opposite ? () => "" : formatYLabelsNicely, // hide labels with function that always returns empty strings
-        }
-    }
+            formatter: opposite ? () => '' : formatYLabelsNicely, // hide labels with function that always returns empty strings
+        },
+    };
 }
 
 /**
@@ -374,9 +391,9 @@ export function getDefaultYAxisTco3Return(seriesName, minY, maxY, show = false, 
 export const default_TCO3_return = {
     xaxis: {
         title: {
-            text: "Region",
+            text: 'Region',
             style: {
-                fontSize: "1rem",
+                fontSize: '1rem',
                 fontFamily: FONT_FAMILY,
             },
         },
@@ -396,30 +413,30 @@ export const default_TCO3_return = {
         },
         toolbar: {
             show: false,
-        }
+        },
     },
     colors: [undefined], // , ...styling.colors
     title: {
-        text: "[title]", // title can only be changed in store/plotSlice.js
-        align: "center",
+        text: '[title]', // title can only be changed in store/plotSlice.js
+        align: 'center',
         floating: false,
         style: {
-            fontSize: "30px",
-            fontWeight: "bold",
+            fontSize: '30px',
+            fontWeight: 'bold',
             fontFamily: FONT_FAMILY,
-            color: "#000000"
-        }
+            color: '#000000',
+        },
     },
     subtitle: {
-        text: "[subtitle]", // subtitle can only be changed in createSubtitle function
-        align: "center",
+        text: '[subtitle]', // subtitle can only be changed in createSubtitle function
+        align: 'center',
         floating: false,
         offsetY: 40,
         style: {
-            fontSize: "20px",
+            fontSize: '20px',
             fontFamily: FONT_FAMILY,
-            color: "#000000",
-        }
+            color: '#000000',
+        },
     },
     tooltip: {
         shared: false,
@@ -428,15 +445,15 @@ export const default_TCO3_return = {
     plotOptions: {
         boxPlot: {
             colors: {
-                upper: "#8def4e", //'#5C4742',
-                lower: "#63badb", //'#A5978B'
-            }
-        }
+                upper: '#8def4e', //'#5C4742',
+                lower: '#63badb', //'#A5978B'
+            },
+        },
     },
     legend: {
         show: true,
         height: 80,
-        fontSize: "16px",
+        fontSize: '16px',
     },
 
     markers: {
@@ -458,8 +475,7 @@ export const default_TCO3_return = {
             size: 10,
             sizeOffset: 10,
         },
-    }
-
+    },
 };
 
 /**
@@ -479,7 +495,15 @@ export const default_TCO3_return = {
  * @returns {Object} An default_TCO3_plotId object formatted with the given data
  * @function
  */
-export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, seriesNames, getState}) {
+export function getOptions({
+    plotId,
+    styling,
+    plotTitle,
+    xAxisRange,
+    yAxisRange,
+    seriesNames,
+    getState,
+}) {
     const minY = roundDownToMultipleOfTen(yAxisRange.minY);
     const maxY = roundUpToMultipleOfTen(yAxisRange.maxY);
 
@@ -488,21 +512,33 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
     if (plotId === O3AS_PLOTS.tco3_zm) {
         const newOptions = JSON.parse(JSON.stringify(defaultTCO3_zm)); // dirt simple and not overly horrible
 
-        newOptions.yaxis.push(...seriesNames.map(name => getDefaultYAxisTco3Zm(name, minY, maxY, false, false, 0, tickAmount)))
-        newOptions.yaxis.push(getDefaultYAxisTco3Zm(undefined, minY, maxY, true, false, -1, tickAmount)); // on left side
-        newOptions.yaxis.push(getDefaultYAxisTco3Zm(undefined, minY, maxY, true, true, 0, tickAmount)); // on right side
+        newOptions.yaxis.push(
+            ...seriesNames.map((name) =>
+                getDefaultYAxisTco3Zm(name, minY, maxY, false, false, 0, tickAmount)
+            )
+        );
+        newOptions.yaxis.push(
+            getDefaultYAxisTco3Zm(undefined, minY, maxY, true, false, -1, tickAmount)
+        ); // on left side
+        newOptions.yaxis.push(
+            getDefaultYAxisTco3Zm(undefined, minY, maxY, true, true, 0, tickAmount)
+        ); // on right side
 
-        
         newOptions.xaxis.min = roundDownToMultipleOfTen(xAxisRange.years.minX);
         newOptions.xaxis.max = roundUpToMultipleOfTen(xAxisRange.years.maxX);
-        newOptions.xaxis.tickAmount = getOptimalTickAmount(newOptions.xaxis.min, newOptions.xaxis.max);
+        newOptions.xaxis.tickAmount = getOptimalTickAmount(
+            newOptions.xaxis.min,
+            newOptions.xaxis.max
+        );
 
         const xIdx = 0;
         const yIdx = 1;
         for (let point of styling.points) {
-            newOptions.annotations.points.push(
-                {x: point[xIdx], y: point[yIdx], marker: {size: 4}/*, label: {text: point[xIdx]}*/}
-            );
+            newOptions.annotations.points.push({
+                x: point[xIdx],
+                y: point[yIdx],
+                marker: { size: 4 } /*, label: {text: point[xIdx]}*/,
+            });
         }
 
         newOptions.colors = styling.colors;
@@ -523,35 +559,42 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
             let linePattern;
             let fontSize = 20;
             if (dashing <= 0) {
-                linePattern = "<b>───</b>";
+                linePattern = '<b>───</b>';
             } else if (dashing <= 2) {
-                linePattern = "••••";
+                linePattern = '••••';
                 fontSize = 12;
             } else {
-                linePattern = "<b>---</b>";
+                linePattern = '<b>---</b>';
             }
             legendItems.push(
                 `<span style="color:${color};font-family:Consolas, monaco, monospace;font-size:${fontSize}px;">${linePattern}</span> <span style="font-size: 16px">${name}</span> `
-            )
+            );
         }
 
         newOptions.legend.customLegendItems = legendItems;
         newOptions.legend.markers.width = 0;
         return newOptions;
-
     } else if (plotId === O3AS_PLOTS.tco3_return) {
         const newOptions = JSON.parse(JSON.stringify(default_TCO3_return));
         newOptions.colors.push(...styling.colors); // for the legend!
-        newOptions.title = JSON.parse(JSON.stringify(newOptions.title));  // this is necessary in order for apexcharts to update the title
+        newOptions.title = JSON.parse(JSON.stringify(newOptions.title)); // this is necessary in order for apexcharts to update the title
         newOptions.title.text = plotTitle;
         newOptions.subtitle = JSON.parse(JSON.stringify(newOptions.subtitle)); // this is necessary in order for apexcharts to update the subtitle
         newOptions.subtitle.text = createSubtitle(getState);
 
         const minY = roundDownToMultipleOfTen(yAxisRange.minY);
         const maxY = roundUpToMultipleOfTen(yAxisRange.maxY);
-        newOptions.yaxis.push(...seriesNames.map(name => getDefaultYAxisTco3Return(name, minY, maxY, false, false, 0, tickAmount)))
-        newOptions.yaxis.push(getDefaultYAxisTco3Return(undefined, minY, maxY, true, false, 3, tickAmount)); // on left side
-        newOptions.yaxis.push(getDefaultYAxisTco3Return(undefined, minY, maxY, true, true, -3, tickAmount)); // on right side
+        newOptions.yaxis.push(
+            ...seriesNames.map((name) =>
+                getDefaultYAxisTco3Return(name, minY, maxY, false, false, 0, tickAmount)
+            )
+        );
+        newOptions.yaxis.push(
+            getDefaultYAxisTco3Return(undefined, minY, maxY, true, false, 3, tickAmount)
+        ); // on left side
+        newOptions.yaxis.push(
+            getDefaultYAxisTco3Return(undefined, minY, maxY, true, true, -3, tickAmount)
+        ); // on right side
 
         return newOptions;
     }
@@ -578,8 +621,23 @@ export function getOptions({plotId, styling, plotTitle, xAxisRange, yAxisRange, 
  * @returns {Object} series object which includes a subdivision into a data and a styling object.
  * @function
  */
-export function generateSeries({plotId, data, modelsSlice, xAxisRange, yAxisRange, refLineVisible, getState}) {
-    const series = SERIES_GENERATION[plotId]({data, modelsSlice, xAxisRange, yAxisRange, refLineVisible, getState}); // execute correct function based on mapping
+export function generateSeries({
+    plotId,
+    data,
+    modelsSlice,
+    xAxisRange,
+    yAxisRange,
+    refLineVisible,
+    getState,
+}) {
+    const series = SERIES_GENERATION[plotId]({
+        data,
+        modelsSlice,
+        xAxisRange,
+        yAxisRange,
+        refLineVisible,
+        getState,
+    }); // execute correct function based on mapping
     return {
         data: series.data,
         styling: {
@@ -587,7 +645,7 @@ export function generateSeries({plotId, data, modelsSlice, xAxisRange, yAxisRang
             dashArray: series.dashArray,
             width: series.width,
             points: series.points,
-        }
+        },
     }; // return generated series with styling to pass to apexcharts chart
 }
 
@@ -602,13 +660,13 @@ export function generateSeries({plotId, data, modelsSlice, xAxisRange, yAxisRang
  * @param {function} getState store.getState
  * @function
  */
-function generateTco3_ZmSeries({data, modelsSlice, refLineVisible, getState}) {
+function generateTco3_ZmSeries({ data, modelsSlice, refLineVisible, getState }) {
     const series = {
         data: [],
         colors: [],
         width: [],
         dashArray: [],
-    }
+    };
     if (refLineVisible) {
         series.data.push({
             name: data.reference_value.plotStyle.label,
@@ -619,12 +677,13 @@ function generateTco3_ZmSeries({data, modelsSlice, refLineVisible, getState}) {
         series.dashArray.push(convertToStrokeStyle(data.reference_value.plotStyle.linestyle));
     }
 
-    for (const groupData of Object.values(modelsSlice.modelGroups)) { // iterate over model groups  // don't remove 'id'
+    for (const groupData of Object.values(modelsSlice.modelGroups)) {
+        // iterate over model groups  // don't remove 'id'
         if (!groupData.isVisible) continue; // skip hidden groups
         for (const [model, modelInfo] of Object.entries(groupData.models)) {
             if (!modelInfo.isVisible) continue; // skip hidden models
             const modelData = data[model]; // retrieve data (api)
-            if (typeof modelData === "undefined") continue; // skip model if it is not available
+            if (typeof modelData === 'undefined') continue; // skip model if it is not available
             series.data.push({
                 name: model,
                 data: modelData.data.map((e, idx) => [START_YEAR + idx, e]),
@@ -641,13 +700,12 @@ function generateTco3_ZmSeries({data, modelsSlice, refLineVisible, getState}) {
         data,
         modelsSlice,
         buildMatrix: buildSvMatrixTco3Zm,
-        generateSingleSvSeries: generateSingleTco3ZmSeries
+        generateSingleSvSeries: generateSingleTco3ZmSeries,
     });
 
-    return Object.assign(
-        combineSeries(series, svSeries),
-        {points: refLineVisible ? calcRecoveryPoints(getState, data.reference_value, svSeries) : []}
-    );
+    return Object.assign(combineSeries(series, svSeries), {
+        points: refLineVisible ? calcRecoveryPoints(getState, data.reference_value, svSeries) : [],
+    });
 }
 
 /**
@@ -663,7 +721,7 @@ function generateSingleTco3ZmSeries(name, svData) {
     return {
         name: name,
         data: svData.map((e, idx) => [START_YEAR + idx, e]),
-    }
+    };
 }
 
 /**
@@ -680,7 +738,7 @@ function generateSingleTco3ZmSeries(name, svData) {
  * @returns {Array} A 2D array containing all the data (transpose matrix of given data)
  * @function
  */
-function buildSvMatrixTco3Zm({modelList, data}) {
+function buildSvMatrixTco3Zm({ modelList, data }) {
     const SERIES_LENGTH = data[modelList[0]].data.length; // grab length of first model, should all be same
 
     const matrix = create2dArray(SERIES_LENGTH); // for arr of matrix: mean(arr), etc.
@@ -688,10 +746,10 @@ function buildSvMatrixTco3Zm({modelList, data}) {
     for (let i = 0; i < SERIES_LENGTH; ++i) {
         for (const model of modelList) {
             const modelData = data[model];
-            if (typeof modelData === "undefined") continue;
+            if (typeof modelData === 'undefined') continue;
             matrix[i].push(
                 modelData.data[i] // add null anyway to remain index mapping (null is filtered out later)
-            )
+            );
         }
     }
     return matrix;
@@ -708,47 +766,45 @@ function buildSvMatrixTco3Zm({modelList, data}) {
  * @returns {Object} A combination of data and statistical values series
  * @function
  */
-function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange, getState}) {
+function generateTco3_ReturnSeries({ data, modelsSlice, xAxisRange, yAxisRange, getState }) {
     const series = {
         data: [],
         colors: [],
         width: [],
         dashArray: [],
-    }
-
+    };
 
     const firstKey = Object.keys(data)[0]; // grab first key to extract regions from api response
     let regions = firstKey ? Object.keys(data[firstKey].data) : [];
     // 1. build boxplot
-    const boxPlotValues = calculateBoxPlotValues({data, modelsSlice, regions});
-    let regionData = regions.map(region => ({
+    const boxPlotValues = calculateBoxPlotValues({ data, modelsSlice, regions });
+    let regionData = regions.map((region) => ({
         x: region,
         y: boxPlotValues[region],
     }));
     regionData.pop();
     regionData.push({
         x: formatLatitude(getState().plot.generalSettings.location), // generate title according to custom min-max values
-        y: boxPlotValues[USER_REGION]
+        y: boxPlotValues[USER_REGION],
     });
     series.data.push({
-            name: '', // removed name of box, so it doesn't show up in the legend!
-            type: 'boxPlot',
+        name: '', // removed name of box, so it doesn't show up in the legend!
+        type: 'boxPlot',
 
-            data: regionData
-        }
-    );
-
+        data: regionData,
+    });
 
     // 2. build scatter plot
     const minY = yAxisRange.minY;
     const maxY = yAxisRange.maxY;
-    for (const groupData of Object.values(modelsSlice.modelGroups)) { // iterate over model groups
+    for (const groupData of Object.values(modelsSlice.modelGroups)) {
+        // iterate over model groups
         if (!groupData.isVisible) continue; // skip hidden groups
         for (const [model, modelInfo] of Object.entries(groupData.models)) {
             if (!modelInfo.isVisible) continue; // skip hidden models
             const modelData = data[model];
-            if (typeof modelData === "undefined") continue; // skip model if it is not available
-            const sortedData = regions.map(region => ({
+            if (typeof modelData === 'undefined') continue; // skip model if it is not available
+            const sortedData = regions.map((region) => ({
                 x: region,
                 y: filterOutOfRange(modelData.data[region], minY, maxY) || null, // null as default if data is missing
             }));
@@ -761,11 +817,9 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange, g
             series.data.push({
                 name: model,
                 data: sortedData,
-                type: "scatter",
+                type: 'scatter',
             });
-            series.colors.push(
-                colorNameToHex(modelData.plotStyle.color)
-            )
+            series.colors.push(colorNameToHex(modelData.plotStyle.color));
         }
     }
 
@@ -789,7 +843,8 @@ function generateTco3_ReturnSeries({data, modelsSlice, xAxisRange, yAxisRange, g
 
     const combined = combineSeries(series, svSeries);
 
-    for (const series of combined.data) { // select chosen regions
+    for (const series of combined.data) {
+        // select chosen regions
         series.data = series.data.filter((value, idx) => xAxisRange.regions.includes(idx));
     }
 
@@ -811,19 +866,19 @@ function generateSingleTco3ReturnSeries(name, svData, getState, regions) {
             return {
                 x: region,
                 y: svData[index],
-            }
+            };
         } else {
             return {
                 x: formatLatitude(getState().plot.generalSettings.location),
                 y: svData[index],
-            }
+            };
         }
     });
 
     return {
         name: name,
         data: transformedData,
-        type: "scatter"
+        type: 'scatter',
     };
 }
 
@@ -841,21 +896,18 @@ function generateSingleTco3ReturnSeries(name, svData, getState, regions) {
  * @returns {Array} A 2D array containing all the data (transpose matrix of given data)
  * @function
  */
-function buildSvMatrixTco3Return({modelList, data, regions}) {
+function buildSvMatrixTco3Return({ modelList, data, regions }) {
     const matrix = create2dArray(regions.length);
 
     for (const index in regions) {
         const region = regions[index]; // iterate over regions
         for (const model of modelList) {
             const modelData = data[model];
-            if (typeof modelData === "undefined") continue;
-            matrix[index].push(
-                modelData.data[region] || null
-            )
+            if (typeof modelData === 'undefined') continue;
+            matrix[index].push(modelData.data[region] || null);
         }
     }
     return matrix;
-
 }
 
 /**
@@ -868,40 +920,36 @@ function buildSvMatrixTco3Return({modelList, data, regions}) {
  * @returns {Object} Object holding an array of 5 values (min, q1, median, q3, max) for each region
  * @function
  */
-function calculateBoxPlotValues({data, modelsSlice, regions}) {
-    const boxPlotHolder = {}
+function calculateBoxPlotValues({ data, modelsSlice, regions }) {
+    const boxPlotHolder = {};
     for (let region of regions) {
-        boxPlotHolder[region] = []
+        boxPlotHolder[region] = [];
     }
 
-    for (const groupData of Object.values(modelsSlice.modelGroups)) { // iterate over model groups  // don't remove 'id'
+    for (const groupData of Object.values(modelsSlice.modelGroups)) {
+        // iterate over model groups  // don't remove 'id'
         if (!groupData.isVisible) continue; // skip hidden groups
         for (const [model, modelInfo] of Object.entries(groupData.models)) {
             if (!modelInfo.isVisible) continue; // skip hidden models
             const modelData = data[model];
-            if (typeof modelData === "undefined") continue; // skip model if it is not available
+            if (typeof modelData === 'undefined') continue; // skip model if it is not available
             for (const [region, year] of Object.entries(modelData.data)) {
-                if (year || year === 0) { // allow 0 but not null | undefined
+                if (year || year === 0) {
+                    // allow 0 but not null | undefined
                     boxPlotHolder[region].push(year);
                 }
             }
         }
     }
 
-    const boxPlotValues = {}
+    const boxPlotValues = {};
     for (let region of regions) {
-        boxPlotHolder[region].sort()
-        const arr = boxPlotHolder[region]
-        boxPlotValues[region] = []
-        boxPlotValues[region].push(
-            arr[0],
-            q25(arr),
-            median(arr),
-            q75(arr),
-            arr[arr.length - 1]
-        )
+        boxPlotHolder[region].sort();
+        const arr = boxPlotHolder[region];
+        boxPlotValues[region] = [];
+        boxPlotValues[region].push(arr[0], q25(arr), median(arr), q75(arr), arr[arr.length - 1]);
     }
-    return boxPlotValues
+    return boxPlotValues;
 }
 
 /**
@@ -917,7 +965,14 @@ function calculateBoxPlotValues({data, modelsSlice, regions}) {
  * @returns {Array} An array holding all statistical series for the given modelSlice
  * @function
  */
-function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleSvSeries, getState, regions}) {
+function buildStatisticalSeries({
+    data,
+    modelsSlice,
+    buildMatrix,
+    generateSingleSvSeries,
+    getState,
+    regions,
+}) {
     const svSeries = {
         data: [],
         colors: [],
@@ -927,22 +982,37 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
 
     const modelGroups = modelsSlice.modelGroups;
     for (const groupData of Object.values(modelGroups)) {
-
-        const svHolder = calculateSvForModels(Object.keys(groupData.models), data, groupData, buildMatrix, regions);
+        const svHolder = calculateSvForModels(
+            Object.keys(groupData.models),
+            data,
+            groupData,
+            buildMatrix,
+            regions
+        );
 
         for (const [sv, svData] of Object.entries(svHolder)) {
+            if (
+                sv === std || // std
+                sv === percentile
+            )
+                continue; // skip for now
 
-            if (sv === std // std
-                || sv === percentile) continue; // skip for now
-
-
-            if (groupData.visibleSV[sv] // mean und median
-                || (sv.includes("std") && groupData.visibleSV[std])
-                || (sv.toLowerCase().includes(percentile) && groupData.visibleSV[percentile])) {
+            if (
+                groupData.visibleSV[sv] || // mean und median
+                (sv.includes('std') && groupData.visibleSV[std]) ||
+                (sv.toLowerCase().includes(percentile) && groupData.visibleSV[percentile])
+            ) {
             } else {
                 continue;
             }
-            svSeries.data.push(generateSingleSvSeries(`${SV_DISPLAY_NAME[sv]} (${groupData.name})`, svData, getState, regions));
+            svSeries.data.push(
+                generateSingleSvSeries(
+                    `${SV_DISPLAY_NAME[sv]} (${groupData.name})`,
+                    svData,
+                    getState,
+                    regions
+                )
+            );
             svSeries.colors.push(SV_COLORING[sv]);
             svSeries.width.push(STATISTICAL_VALUE_LINE_THICKNESS);
             svSeries.dashArray.push(SV_DASHING[sv]);
@@ -950,7 +1020,6 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
     }
     return svSeries;
 }
-
 
 /**
  * Calculates the statistical values for the given modelList (from a certain model group).
@@ -963,47 +1032,53 @@ function buildStatisticalSeries({data, modelsSlice, buildMatrix, generateSingleS
  * @returns {Object} An object containing the calculated values for the statistical values
  * @function
  */
-function calculateSvForModels(modelList, data, groupData, buildMatrix, regions) { // pass group data
+function calculateSvForModels(modelList, data, groupData, buildMatrix, regions) {
+    // pass group data
     // only mean at beginning
 
-    const matrix = buildMatrix({modelList, data, regions}); // function supplied by caller
+    const matrix = buildMatrix({ modelList, data, regions }); // function supplied by caller
 
-    const PROCESS_SV = [...STATISTICAL_VALUES_LIST.filter(x => x !== STATISTICAL_VALUES.percentile), ...EXTENDED_SV_LIST];
+    const PROCESS_SV = [
+        ...STATISTICAL_VALUES_LIST.filter((x) => x !== STATISTICAL_VALUES.percentile),
+        ...EXTENDED_SV_LIST,
+    ];
 
     const svHolder = {};
     PROCESS_SV.forEach(
-        sv => svHolder[sv] = [] // init with empty array
+        (sv) => (svHolder[sv] = []) // init with empty array
     );
 
-    for (const arr of matrix) { // fill with calculated sv
+    for (const arr of matrix) {
+        // fill with calculated sv
         for (const sv of PROCESS_SV) {
             // filter out values from not included models or null values
-            const filtered = arr.filter((value, idx) => value !== null && isIncludedInSv(modelList[idx], groupData, sv));
+            const filtered = arr.filter(
+                (value, idx) => value !== null && isIncludedInSv(modelList[idx], groupData, sv)
+            );
 
             const value = SV_CALCULATION[sv](filtered); // null as default if NaN or undefined
-            if (isNaN(value) || typeof value === "undefined") {
-                svHolder[sv].push(null);    //apexcharts default "missing" value placeholder
+            if (isNaN(value) || typeof value === 'undefined') {
+                svHolder[sv].push(null); //apexcharts default "missing" value placeholder
             } else {
                 svHolder[sv].push(value);
             }
         }
     }
 
-    svHolder["mean+std"] = [];
-    svHolder["mean-std"] = [];
+    svHolder['mean+std'] = [];
+    svHolder['mean-std'] = [];
     for (let i = 0; i < svHolder[std].length; ++i) {
         if (svHolder[stdMean][i] === null || svHolder[std][i] === null) {
-            svHolder["mean+std"].push(null);
-            svHolder["mean-std"].push(null);
+            svHolder['mean+std'].push(null);
+            svHolder['mean-std'].push(null);
         } else {
-            svHolder["mean+std"].push(svHolder[stdMean][i] + svHolder[std][i]);
-            svHolder["mean-std"].push(svHolder[stdMean][i] - svHolder[std][i]);
+            svHolder['mean+std'].push(svHolder[stdMean][i] + svHolder[std][i]);
+            svHolder['mean-std'].push(svHolder[stdMean][i] - svHolder[std][i]);
         }
     }
-    delete svHolder["stdMean"];
+    delete svHolder['stdMean'];
     return svHolder;
 }
-
 
 // API FORMATTING:
 
@@ -1068,34 +1143,31 @@ export function normalizeArray(xValues, yValues) {
  * @returns {Object} The pre transformed API data
  * @function
  */
-export const preTransformApiData = ({plotId, data}) => {
+export const preTransformApiData = ({ plotId, data }) => {
     const lookUpTable = {};
 
     if (plotId === O3AS_PLOTS.tco3_zm) {
-
         for (let datum of data) {
             // top structure
             let normalizedArray;
-            if (datum.model === "reference_value") { // 
+            if (datum.model === 'reference_value') {
+                //
                 normalizedArray = Array(END_YEAR - START_YEAR + 1).fill(datum.y[0]); // always stretch reference line from START_YEAR to END_YEAR
             } else {
                 normalizedArray = normalizeArray(datum.x, datum.y);
-            };
+            }
             lookUpTable[datum.model] = {
                 plotStyle: datum.plotstyle,
                 data: normalizedArray, // this should speed up the calculation of the statistical values later
                 suggested: {
                     minX: Math.min(...datum.x),
                     maxX: Math.max(...datum.x),
-                    minY: Math.min(...normalizedArray.filter(x => x !== null)),
+                    minY: Math.min(...normalizedArray.filter((x) => x !== null)),
                     maxY: Math.max(...normalizedArray),
-                }
+                },
             };
-
         }
-
     } else if (plotId === O3AS_PLOTS.tco3_return) {
-
         for (let datum of data) {
             // top structure
             lookUpTable[datum.model] = {
@@ -1105,25 +1177,25 @@ export const preTransformApiData = ({plotId, data}) => {
             };
 
             // fill data
-            const temp = []
+            const temp = [];
             for (let index in datum.x) {
                 temp.push(datum.y[index]);
                 lookUpTable[datum.model].data[datum.x[index]] = datum.y[index];
             }
 
             lookUpTable[datum.model].suggested = {
-                minY: Math.min(...temp.filter(x => x !== null)),
+                minY: Math.min(...temp.filter((x) => x !== null)),
                 maxY: Math.max(...temp),
-            }
+            };
         }
     }
-    return {lookUpTable};
-}
+    return { lookUpTable };
+};
 
 /**
  * Gets the suggested values for the y-axis and x-axis so that the displayed models are all
  * visible in the resulting range and the scaling of the x-axis is properly formatted.
- * 
+ *
  * @param {Object} data The data for all models displayed
  * @param {Object} modelSlice The modelSlice object
  * @returns {Object} An object containing the suggested values for the x- and y-axis
@@ -1137,8 +1209,7 @@ export function getSuggestedValues(data, modelSlice) {
         maxX: -Infinity,
         minY: Infinity,
         maxY: -Infinity,
-
-    }
+    };
 
     for (let model of visibleModels) {
         const { minX, maxX, minY, maxY } = data[model].suggested;
@@ -1151,7 +1222,6 @@ export function getSuggestedValues(data, modelSlice) {
     return suggested;
 }
 
-
 // UTILITY:
 
 /**
@@ -1163,151 +1233,150 @@ export function getSuggestedValues(data, modelSlice) {
  */
 export function colorNameToHex(color) {
     const colors = {
-        "aliceblue": "#f0f8ff",
-        "antiquewhite": "#faebd7",
-        "aqua": "#00ffff",
-        "aquamarine": "#7fffd4",
-        "azure": "#f0ffff",
-        "beige": "#f5f5dc",
-        "bisque": "#ffe4c4",
-        "black": "#000000",
-        "blanchedalmond": "#ffebcd",
-        "blue": "#0000ff",
-        "blueviolet": "#8a2be2",
-        "brown": "#a52a2a",
-        "burlywood": "#deb887",
-        "cadetblue": "#5f9ea0",
-        "chartreuse": "#7fff00",
-        "chocolate": "#d2691e",
-        "coral": "#ff7f50",
-        "cornflowerblue": "#6495ed",
-        "cornsilk": "#fff8dc",
-        "crimson": "#dc143c",
-        "cyan": "#00ffff",
-        "darkblue": "#00008b",
-        "darkcyan": "#008b8b",
-        "darkgoldenrod": "#b8860b",
-        "darkgray": "#a9a9a9",
-        "darkgreen": "#006400",
-        "darkkhaki": "#bdb76b",
-        "darkmagenta": "#8b008b",
-        "darkolivegreen": "#556b2f",
-        "darkorange": "#ff8c00",
-        "darkorchid": "#9932cc",
-        "darkred": "#8b0000",
-        "darksalmon": "#e9967a",
-        "darkseagreen": "#8fbc8f",
-        "darkslateblue": "#483d8b",
-        "darkslategray": "#2f4f4f",
-        "darkturquoise": "#00ced1",
-        "darkviolet": "#9400d3",
-        "deeppink": "#ff1493",
-        "deepskyblue": "#00bfff",
-        "dimgray": "#696969",
-        "dodgerblue": "#1e90ff",
-        "firebrick": "#b22222",
-        "floralwhite": "#fffaf0",
-        "forestgreen": "#228b22",
-        "fuchsia": "#ff00ff",
-        "gainsboro": "#dcdcdc",
-        "ghostwhite": "#f8f8ff",
-        "gold": "#ffd700",
-        "goldenrod": "#daa520",
-        "gray": "#808080",
-        "green": "#008000",
-        "greenyellow": "#adff2f",
-        "honeydew": "#f0fff0",
-        "hotpink": "#ff69b4",
-        "indianred ": "#cd5c5c",
-        "indigo": "#4b0082",
-        "ivory": "#fffff0",
-        "khaki": "#f0e68c",
-        "lavender": "#e6e6fa",
-        "lavenderblush": "#fff0f5",
-        "lawngreen": "#7cfc00",
-        "lemonchiffon": "#fffacd",
-        "lightblue": "#add8e6",
-        "lightcoral": "#f08080",
-        "lightcyan": "#e0ffff",
-        "lightgoldenrodyellow": "#fafad2",
-        "lightgrey": "#d3d3d3",
-        "lightgreen": "#90ee90",
-        "lightpink": "#ffb6c1",
-        "lightsalmon": "#ffa07a",
-        "lightseagreen": "#20b2aa",
-        "lightskyblue": "#87cefa",
-        "lightslategray": "#778899",
-        "lightsteelblue": "#b0c4de",
-        "lightyellow": "#ffffe0",
-        "lime": "#00ff00",
-        "limegreen": "#32cd32",
-        "linen": "#faf0e6",
-        "magenta": "#ff00ff",
-        "maroon": "#800000",
-        "mediumaquamarine": "#66cdaa",
-        "mediumblue": "#0000cd",
-        "mediumorchid": "#ba55d3",
-        "mediumpurple": "#9370d8",
-        "mediumseagreen": "#3cb371",
-        "mediumslateblue": "#7b68ee",
-        "mediumspringgreen": "#00fa9a",
-        "mediumturquoise": "#48d1cc",
-        "mediumvioletred": "#c71585",
-        "midnightblue": "#191970",
-        "mintcream": "#f5fffa",
-        "mistyrose": "#ffe4e1",
-        "moccasin": "#ffe4b5",
-        "navajowhite": "#ffdead",
-        "navy": "#000080",
-        "oldlace": "#fdf5e6",
-        "olive": "#808000",
-        "olivedrab": "#6b8e23",
-        "orange": "#ffa500",
-        "orangered": "#ff4500",
-        "orchid": "#da70d6",
-        "palegoldenrod": "#eee8aa",
-        "palegreen": "#98fb98",
-        "paleturquoise": "#afeeee",
-        "palevioletred": "#d87093",
-        "papayawhip": "#ffefd5",
-        "peachpuff": "#ffdab9",
-        "peru": "#cd853f",
-        "pink": "#ffc0cb",
-        "plum": "#dda0dd",
-        "powderblue": "#b0e0e6",
-        "purple": "#800080",
-        "rebeccapurple": "#663399",
-        "red": "#ff0000",
-        "rosybrown": "#bc8f8f",
-        "royalblue": "#4169e1",
-        "saddlebrown": "#8b4513",
-        "salmon": "#fa8072",
-        "sandybrown": "#f4a460",
-        "seagreen": "#2e8b57",
-        "seashell": "#fff5ee",
-        "sienna": "#a0522d",
-        "silver": "#c0c0c0",
-        "skyblue": "#87ceeb",
-        "slateblue": "#6a5acd",
-        "slategray": "#708090",
-        "snow": "#fffafa",
-        "springgreen": "#00ff7f",
-        "steelblue": "#4682b4",
-        "tan": "#d2b48c",
-        "teal": "#008080",
-        "thistle": "#d8bfd8",
-        "tomato": "#ff6347",
-        "turquoise": "#40e0d0",
-        "violet": "#ee82ee",
-        "wheat": "#f5deb3",
-        "white": "#ffffff",
-        "whitesmoke": "#f5f5f5",
-        "yellow": "#ffff00",
-        "yellowgreen": "#9acd32"
+        aliceblue: '#f0f8ff',
+        antiquewhite: '#faebd7',
+        aqua: '#00ffff',
+        aquamarine: '#7fffd4',
+        azure: '#f0ffff',
+        beige: '#f5f5dc',
+        bisque: '#ffe4c4',
+        black: '#000000',
+        blanchedalmond: '#ffebcd',
+        blue: '#0000ff',
+        blueviolet: '#8a2be2',
+        brown: '#a52a2a',
+        burlywood: '#deb887',
+        cadetblue: '#5f9ea0',
+        chartreuse: '#7fff00',
+        chocolate: '#d2691e',
+        coral: '#ff7f50',
+        cornflowerblue: '#6495ed',
+        cornsilk: '#fff8dc',
+        crimson: '#dc143c',
+        cyan: '#00ffff',
+        darkblue: '#00008b',
+        darkcyan: '#008b8b',
+        darkgoldenrod: '#b8860b',
+        darkgray: '#a9a9a9',
+        darkgreen: '#006400',
+        darkkhaki: '#bdb76b',
+        darkmagenta: '#8b008b',
+        darkolivegreen: '#556b2f',
+        darkorange: '#ff8c00',
+        darkorchid: '#9932cc',
+        darkred: '#8b0000',
+        darksalmon: '#e9967a',
+        darkseagreen: '#8fbc8f',
+        darkslateblue: '#483d8b',
+        darkslategray: '#2f4f4f',
+        darkturquoise: '#00ced1',
+        darkviolet: '#9400d3',
+        deeppink: '#ff1493',
+        deepskyblue: '#00bfff',
+        dimgray: '#696969',
+        dodgerblue: '#1e90ff',
+        firebrick: '#b22222',
+        floralwhite: '#fffaf0',
+        forestgreen: '#228b22',
+        fuchsia: '#ff00ff',
+        gainsboro: '#dcdcdc',
+        ghostwhite: '#f8f8ff',
+        gold: '#ffd700',
+        goldenrod: '#daa520',
+        gray: '#808080',
+        green: '#008000',
+        greenyellow: '#adff2f',
+        honeydew: '#f0fff0',
+        hotpink: '#ff69b4',
+        'indianred ': '#cd5c5c',
+        indigo: '#4b0082',
+        ivory: '#fffff0',
+        khaki: '#f0e68c',
+        lavender: '#e6e6fa',
+        lavenderblush: '#fff0f5',
+        lawngreen: '#7cfc00',
+        lemonchiffon: '#fffacd',
+        lightblue: '#add8e6',
+        lightcoral: '#f08080',
+        lightcyan: '#e0ffff',
+        lightgoldenrodyellow: '#fafad2',
+        lightgrey: '#d3d3d3',
+        lightgreen: '#90ee90',
+        lightpink: '#ffb6c1',
+        lightsalmon: '#ffa07a',
+        lightseagreen: '#20b2aa',
+        lightskyblue: '#87cefa',
+        lightslategray: '#778899',
+        lightsteelblue: '#b0c4de',
+        lightyellow: '#ffffe0',
+        lime: '#00ff00',
+        limegreen: '#32cd32',
+        linen: '#faf0e6',
+        magenta: '#ff00ff',
+        maroon: '#800000',
+        mediumaquamarine: '#66cdaa',
+        mediumblue: '#0000cd',
+        mediumorchid: '#ba55d3',
+        mediumpurple: '#9370d8',
+        mediumseagreen: '#3cb371',
+        mediumslateblue: '#7b68ee',
+        mediumspringgreen: '#00fa9a',
+        mediumturquoise: '#48d1cc',
+        mediumvioletred: '#c71585',
+        midnightblue: '#191970',
+        mintcream: '#f5fffa',
+        mistyrose: '#ffe4e1',
+        moccasin: '#ffe4b5',
+        navajowhite: '#ffdead',
+        navy: '#000080',
+        oldlace: '#fdf5e6',
+        olive: '#808000',
+        olivedrab: '#6b8e23',
+        orange: '#ffa500',
+        orangered: '#ff4500',
+        orchid: '#da70d6',
+        palegoldenrod: '#eee8aa',
+        palegreen: '#98fb98',
+        paleturquoise: '#afeeee',
+        palevioletred: '#d87093',
+        papayawhip: '#ffefd5',
+        peachpuff: '#ffdab9',
+        peru: '#cd853f',
+        pink: '#ffc0cb',
+        plum: '#dda0dd',
+        powderblue: '#b0e0e6',
+        purple: '#800080',
+        rebeccapurple: '#663399',
+        red: '#ff0000',
+        rosybrown: '#bc8f8f',
+        royalblue: '#4169e1',
+        saddlebrown: '#8b4513',
+        salmon: '#fa8072',
+        sandybrown: '#f4a460',
+        seagreen: '#2e8b57',
+        seashell: '#fff5ee',
+        sienna: '#a0522d',
+        silver: '#c0c0c0',
+        skyblue: '#87ceeb',
+        slateblue: '#6a5acd',
+        slategray: '#708090',
+        snow: '#fffafa',
+        springgreen: '#00ff7f',
+        steelblue: '#4682b4',
+        tan: '#d2b48c',
+        teal: '#008080',
+        thistle: '#d8bfd8',
+        tomato: '#ff6347',
+        turquoise: '#40e0d0',
+        violet: '#ee82ee',
+        wheat: '#f5deb3',
+        white: '#ffffff',
+        whitesmoke: '#f5f5f5',
+        yellow: '#ffff00',
+        yellowgreen: '#9acd32',
     };
 
-    if (typeof colors[color.toLowerCase()] != 'undefined')
-        return colors[color.toLowerCase()];
+    if (typeof colors[color.toLowerCase()] != 'undefined') return colors[color.toLowerCase()];
 
     return false;
 }
@@ -1321,13 +1390,12 @@ export function colorNameToHex(color) {
  */
 export function convertToStrokeStyle(apiStyle) {
     const styles = {
-        "solid": 0,
-        "dotted": 1,
-        "dashed": 3,
+        solid: 0,
+        dotted: 1,
+        dashed: 3,
     };
 
-    if (typeof styles[apiStyle.toLowerCase()] != 'undefined')
-        return styles[apiStyle.toLowerCase()];
+    if (typeof styles[apiStyle.toLowerCase()] != 'undefined') return styles[apiStyle.toLowerCase()];
     return false;
 }
 
@@ -1371,14 +1439,14 @@ function create2dArray(i) {
  * @function
  */
 function isIncludedInSv(model, groupData, svType) {
-    if (svType === "stdMean") return groupData.models[model][std]; // the std mean should only be calculated if the std is necessary
+    if (svType === 'stdMean') return groupData.models[model][std]; // the std mean should only be calculated if the std is necessary
     if (svType.toLowerCase().includes(percentile)) return groupData.models[model][percentile];
     return groupData.models[model][svType];
 }
 
 /**
  * Determines the optimal tick amount for a given max and min year for the x-axis.
- * Takes into account the current screen width, uses a heuristic approach 
+ * Takes into account the current screen width, uses a heuristic approach
  * (all values are determined through experimentation).
  *
  * @param {number} min      The selected min. year of the plot
@@ -1387,21 +1455,22 @@ function isIncludedInSv(model, groupData, svType) {
  * @function
  */
 export function getOptimalTickAmount(min, max) {
-    const width  = window.innerWidth || document.documentElement.clientWidth || 
-        document.body.clientWidth;
-    const height = window.innerHeight || document.documentElement.clientHeight || 
-        document.body.clientHeight;
+    const width =
+        window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    const height =
+        window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
-    if (width <= height || width <= 700) { // is mobile in portrait
+    if (width <= height || width <= 700) {
+        // is mobile in portrait
         return 4;
     }
 
     let divider = 1;
     if (width <= 900) divider = 2;
     else if (width <= 1100) divider = 3;
-    
+
     const diff = max - min;
-    
+
     let rv;
     if (diff <= 40) {
         rv = diff / 2 / divider;
@@ -1410,7 +1479,7 @@ export function getOptimalTickAmount(min, max) {
     } else {
         rv = diff / 10 / divider;
     }
-    
+
     let rvRounded = Math.floor(rv);
     rvRounded += rvRounded % 2; // never odd value
     return Math.max(rvRounded, 4); // smallest possible tick number
@@ -1448,7 +1517,7 @@ export function getTickAmountYAxis(min, max) {
  * @function
  */
 export function roundDownToMultipleOfTen(min) {
-    return min - min % 10;
+    return min - (min % 10);
 }
 
 /**
@@ -1460,7 +1529,7 @@ export function roundDownToMultipleOfTen(min) {
  * @function
  */
 export function roundUpToMultipleOfTen(max) {
-    return max % 10 ? max + (10 - max % 10) : max;
+    return max % 10 ? max + (10 - (max % 10)) : max;
 }
 
 /**
@@ -1474,7 +1543,7 @@ export function roundUpToMultipleOfTen(max) {
  * @function
  */
 export function filterOutOfRange(value, min, max) {
-    return (min <= value && value <= max) ? value : null;
+    return min <= value && value <= max ? value : null;
 }
 
 /**
@@ -1485,7 +1554,7 @@ export function filterOutOfRange(value, min, max) {
  * @returns {number}        The value if it is a multiple of ten or an empty string to hide the label
  * @function
  */
-export const formatYLabelsNicely = value => value % 10 ? "" : value
+export const formatYLabelsNicely = (value) => (value % 10 ? '' : value);
 
 /**
  * This function parses the auto-generated sv names to separate
@@ -1496,13 +1565,12 @@ export const formatYLabelsNicely = value => value % 10 ? "" : value
  * @function
  */
 export function parseSvName(name) {
-    const regex = new RegExp("([^(]+)(([^)]+))");
+    const regex = new RegExp('([^(]+)(([^)]+))');
     const info = name.match(regex);
     return {
         sv: info[1],
         groupName: info[2].substring(1),
-    }
-
+    };
 }
 
 /**
@@ -1517,57 +1585,63 @@ export function parseSvName(name) {
  * @returns {string}          The desired html tooltip formatted with the correct information
  * @function
  */
-export function customTooltipFormatter({series, seriesIndex, dataPointIndex, w}) {
+export function customTooltipFormatter({ series, seriesIndex, dataPointIndex, w }) {
     const modelName = w.globals.seriesNames[seriesIndex];
     const numDecimalsInDatapoint = 2;
-    if (modelName.startsWith("Reference")) {
-        let displayName = modelName.split("value")
+    if (modelName.startsWith('Reference')) {
+        let displayName = modelName.split('value');
 
-        return (
-            `
+        return `
                 <div>
-                    <div style="margin:2px"><strong>${w.globals.seriesX[seriesIndex][dataPointIndex]}</strong></div>
-                    <div>Reference ${displayName[1]}: <strong>${series[seriesIndex][dataPointIndex].toFixed(numDecimalsInDatapoint)}</strong></div>
+                    <div style="margin:2px"><strong>${
+                        w.globals.seriesX[seriesIndex][dataPointIndex]
+                    }</strong></div>
+                    <div>Reference ${displayName[1]}: <strong>${series[seriesIndex][
+            dataPointIndex
+        ].toFixed(numDecimalsInDatapoint)}</strong></div>
                 </div>
-            `
-        )
+            `;
     }
 
     for (const svName in SV_DISPLAY_NAME) {
         if (modelName.startsWith(SV_DISPLAY_NAME[svName])) {
             // parse sv
-            const {sv, groupName} = parseSvName(modelName);
-            return (
-                `
+            const { sv, groupName } = parseSvName(modelName);
+            return `
                 <div>
-                    <div style="margin:2px"><strong>${w.globals.seriesX[seriesIndex][dataPointIndex]}</strong></div>
-                    <div>${sv}: <strong>${series[seriesIndex][dataPointIndex].toFixed(numDecimalsInDatapoint)}</strong></div>
+                    <div style="margin:2px"><strong>${
+                        w.globals.seriesX[seriesIndex][dataPointIndex]
+                    }</strong></div>
+                    <div>${sv}: <strong>${series[seriesIndex][dataPointIndex].toFixed(
+                numDecimalsInDatapoint
+            )}</strong></div>
                     <div>Group: ${groupName}</div>
                 </div>
-                `
-            )
+                `;
         }
     }
 
-    let {project, institute, name} = convertModelName(modelName);
-    return (
-        `
+    let { project, institute, name } = convertModelName(modelName);
+    return `
         <div>
-            <div style="margin:2px"><strong>${w.globals.seriesX[seriesIndex][dataPointIndex]}</strong></div>
-            <div>${name}: <strong>${series[seriesIndex][dataPointIndex].toFixed(numDecimalsInDatapoint)}</strong></div>
+            <div style="margin:2px"><strong>${
+                w.globals.seriesX[seriesIndex][dataPointIndex]
+            }</strong></div>
+            <div>${name}: <strong>${series[seriesIndex][dataPointIndex].toFixed(
+        numDecimalsInDatapoint
+    )}</strong></div>
             <div>Project: ${project}</div>
             <div>Institue: ${institute}</div>
         </div>
-        `
-    )
+        `;
 }
 
 /**
  * Gets all included models from the modelsSlice.
- * 
+ *
  * @param {Object} modelsSlice  The modelsSlice needed to get the models from the model groups
  * @returns {Array} All included models from all model groups
- * @function    
+ * @function
  */
 export function getIncludedModels(modelsSlice) {
     const visible = [];
@@ -1595,13 +1669,17 @@ function calcRecoveryPoints(getState, referenceValue, svSeries) {
     const maxYear = getState().plot.plotSpecificSettings.tco3_zm.displayXRange.years.maxX;
     const refValue = Math.max(...referenceValue.data);
 
-    const dataName = [SV_DISPLAY_NAME.mean, SV_DISPLAY_NAME["mean+std"], SV_DISPLAY_NAME["mean-std"]];
+    const dataName = [
+        SV_DISPLAY_NAME.mean,
+        SV_DISPLAY_NAME['mean+std'],
+        SV_DISPLAY_NAME['mean-std'],
+    ];
 
     const yearIdx = 0;
     const valIdx = 1;
 
     for (let idx = 0; idx < svSeries.data.length; idx++) {
-        if (!dataName.includes(svSeries.data[idx].name.split("(")[0].slice(0, -1))) {
+        if (!dataName.includes(svSeries.data[idx].name.split('(')[0].slice(0, -1))) {
             points.push([null, null]);
             continue;
         }
@@ -1609,12 +1687,10 @@ function calcRecoveryPoints(getState, referenceValue, svSeries) {
             if (svSeries.data[idx].data[i][yearIdx] <= refYear) continue;
             if (svSeries.data[idx].data[i][yearIdx] > maxYear) break;
             if (svSeries.data[idx].data[i][valIdx] >= refValue) {
-                points.push(
-                    [
-                        svSeries.data[idx].data[i][yearIdx],
-                        svSeries.data[idx].data[i][valIdx]
-                    ]
-                );
+                points.push([
+                    svSeries.data[idx].data[i][yearIdx],
+                    svSeries.data[idx].data[i][valIdx],
+                ]);
                 break;
             }
         }
@@ -1628,33 +1704,37 @@ function calcRecoveryPoints(getState, referenceValue, svSeries) {
  * E.g. {minLat: -20, maxLat: 20} ==> '(20°S-20°N)'
  *
  * @example formatLatitude({minLat: -20, maxLat: 20});
- * 
+ *
  * @param {Object} locationValue    The minLat and maxLat values
  * @return {string}                 The formatted latitude band
  * @function
  */
 export const formatLatitude = (locationValue) => {
-    const hemisphereExtensionMin = (locationValue.minLat < 0 && locationValue.maxLat > 0 ? '°S' : '');
-    const hemisphereExtensionMax = (locationValue.maxLat <= 0 ? '°S' : '°N');
-    return `${Math.abs(locationValue.minLat)}${hemisphereExtensionMin}-${Math.abs(locationValue.maxLat)}${hemisphereExtensionMax}`;
-}
- 
+    const hemisphereExtensionMin = locationValue.minLat < 0 && locationValue.maxLat > 0 ? '°S' : '';
+    const hemisphereExtensionMax = locationValue.maxLat <= 0 ? '°S' : '°N';
+    return `${Math.abs(locationValue.minLat)}${hemisphereExtensionMin}-${Math.abs(
+        locationValue.maxLat
+    )}${hemisphereExtensionMax}`;
+};
 
 /**
  * Finds the latitude band by the currently selected location
  * @param {function} getState   A function to get the state
  * @returns {String} The found Latitude Band
- * @function 
+ * @function
  */
 const findLatitudeBandByLocation = (getState) => {
     const selectedLocation = getState().plot.generalSettings.location;
     if (typeof selectedLocation === 'undefined') return null;
 
     for (let i = 0; i < latitudeBands.length - 1; i++) {
-        if (latitudeBands[i].value.minLat === selectedLocation.minLat && latitudeBands[i].value.maxLat === selectedLocation.maxLat) {
+        if (
+            latitudeBands[i].value.minLat === selectedLocation.minLat &&
+            latitudeBands[i].value.maxLat === selectedLocation.maxLat
+        ) {
             return latitudeBands[i].text.description;
         }
     }
 
     return latitudeBands[latitudeBands.length - 1].text.description; // Custom (fallback, has to be custom if none of the predefined regions matched)
-}
+};

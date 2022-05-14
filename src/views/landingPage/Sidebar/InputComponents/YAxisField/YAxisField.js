@@ -1,9 +1,12 @@
-import React, {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {setDisplayYRange, selectPlotYRange, selectPlotId} from "../../../../../store/plotSlice/plotSlice";
-import {Typography, Grid, FormControl, TextField} from "@mui/material";
-import store from '../../../../../store/store';
-import {O3AS_PLOTS} from "../../../../../utils/constants";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector, useStore } from 'react-redux';
+import {
+    setDisplayYRange,
+    selectPlotYRange,
+    selectPlotId,
+} from '../../../../../store/plotSlice/plotSlice';
+import { Typography, Grid, FormControl, TextField } from '@mui/material';
+import { O3AS_PLOTS } from '../../../../../utils/constants';
 import PropTypes from 'prop-types';
 
 /**
@@ -14,6 +17,8 @@ import PropTypes from 'prop-types';
  * @returns {JSX.Element} a jsx containing two text-fields and labels
  */
 function YAxisField(props) {
+    const store = useStore();
+
     /**
      * A dispatch function to dispatch actions to the redux store.
      */
@@ -24,7 +29,7 @@ function YAxisField(props) {
      * @see {@link selectPlotYRange}
      * @constant {Object}
      */
-    const {minY, maxY} = useSelector(selectPlotYRange);
+    const { minY, maxY } = useSelector(selectPlotYRange);
 
     /**
      * A string containing the active plot type.
@@ -38,14 +43,18 @@ function YAxisField(props) {
      * and checks their validation before sending it to the Redux store.
      * @constant {Array}
      */
-    const [stateY_zm, setStateY_zm] = React.useState(store.getState().plot.plotSpecificSettings.tco3_zm.displayYRange);
+    const [stateY_zm, setStateY_zm] = React.useState(
+        store.getState().plot.plotSpecificSettings.tco3_zm.displayYRange
+    );
 
     /**
      * Stores the minY and maxY values for tco3_return
      * and checks their validation before sending it to the Redux store.
      * @constant {Array}
      */
-    const [stateY_return, setStateY_return] = React.useState(store.getState().plot.plotSpecificSettings.tco3_return.displayYRange);
+    const [stateY_return, setStateY_return] = React.useState(
+        store.getState().plot.plotSpecificSettings.tco3_return.displayYRange
+    );
 
     /**
      * The maximum y-axis difference the apexcharts library can handle.
@@ -63,7 +72,7 @@ function YAxisField(props) {
      */
     const handleChangeMin = (event) => {
         handleChange(event, 'minY');
-    }
+    };
 
     /**
      * Handles the change of the maximum value.
@@ -75,7 +84,7 @@ function YAxisField(props) {
      */
     const handleChangeMax = (event) => {
         handleChange(event, 'maxY');
-    }
+    };
 
     /**
      * Handles the change of the minimum and the maximum value.
@@ -91,7 +100,7 @@ function YAxisField(props) {
             let value = event.target.value;
             if (plotId === O3AS_PLOTS.tco3_zm) {
                 if (extremum === 'minY') {
-                    setStateY_zm({minY: value, maxY: stateY_zm.maxY});
+                    setStateY_zm({ minY: value, maxY: stateY_zm.maxY });
                     value = parseInt(value);
                     if (
                         !isNaN(parseInt(stateY_zm.maxY.toString())) &&
@@ -100,10 +109,15 @@ function YAxisField(props) {
                         value < parseInt(stateY_zm.maxY.toString()) &&
                         parseInt(stateY_zm.maxY.toString()) - value <= maxDiff
                     ) {
-                        dispatch(setDisplayYRange({minY: value, maxY: parseInt(stateY_zm.maxY.toString())}));
+                        dispatch(
+                            setDisplayYRange({
+                                minY: value,
+                                maxY: parseInt(stateY_zm.maxY.toString()),
+                            })
+                        );
                     }
                 } else if (extremum === 'maxY') {
-                    setStateY_zm({minY: stateY_zm.minY, maxY: value});
+                    setStateY_zm({ minY: stateY_zm.minY, maxY: value });
                     value = parseInt(value);
                     if (
                         !isNaN(parseInt(stateY_zm.minY.toString())) &&
@@ -112,14 +126,19 @@ function YAxisField(props) {
                         parseInt(stateY_zm.minY.toString()) < value &&
                         value - parseInt(stateY_zm.minY.toString()) <= maxDiff
                     ) {
-                        dispatch(setDisplayYRange({minY: parseInt(stateY_zm.minY.toString()), maxY: value}));
+                        dispatch(
+                            setDisplayYRange({
+                                minY: parseInt(stateY_zm.minY.toString()),
+                                maxY: value,
+                            })
+                        );
                     }
                 } else {
-                    props.reportError("Invalid extremum string name in YAxisField.js");
+                    props.reportError('Invalid extremum string name in YAxisField.js');
                 }
             } else {
                 if (extremum === 'minY') {
-                    setStateY_return({minY: value, maxY: stateY_return.maxY});
+                    setStateY_return({ minY: value, maxY: stateY_return.maxY });
                     value = parseInt(value);
                     if (
                         !isNaN(parseInt(stateY_return.maxY.toString())) &&
@@ -128,10 +147,15 @@ function YAxisField(props) {
                         value < parseInt(stateY_return.maxY.toString()) &&
                         parseInt(stateY_return.maxY.toString()) - value <= maxDiff
                     ) {
-                        dispatch(setDisplayYRange({minY: value, maxY: parseInt(stateY_return.maxY.toString())}));
+                        dispatch(
+                            setDisplayYRange({
+                                minY: value,
+                                maxY: parseInt(stateY_return.maxY.toString()),
+                            })
+                        );
                     }
                 } else if (extremum === 'maxY') {
-                    setStateY_return({minY: stateY_return.minY, maxY: value});
+                    setStateY_return({ minY: stateY_return.minY, maxY: value });
                     value = parseInt(value);
                     if (
                         !isNaN(parseInt(stateY_return.minY.toString())) &&
@@ -140,15 +164,19 @@ function YAxisField(props) {
                         parseInt(stateY_return.minY.toString()) < value &&
                         value - parseInt(stateY_return.minY.toString()) <= maxDiff
                     ) {
-                        dispatch(setDisplayYRange({minY: parseInt(stateY_return.minY.toString()), maxY: value}));
+                        dispatch(
+                            setDisplayYRange({
+                                minY: parseInt(stateY_return.minY.toString()),
+                                maxY: value,
+                            })
+                        );
                     }
                 } else {
-                    props.reportError("Invalid extremum string name in YAxisField.js");
+                    props.reportError('Invalid extremum string name in YAxisField.js');
                 }
             }
-
         }
-    }
+    };
 
     /**
      * Evaluates, whether the input of the minimum input is valid or not.
@@ -170,11 +198,13 @@ function YAxisField(props) {
             if (isNaN(parseInt(stateY_return.maxY.toString()))) return false;
             return (
                 parseInt(stateY_return.minY.toString()) < 0 ||
-                parseInt(stateY_return.minY.toString()) >= parseInt(stateY_return.maxY.toString()) ||
-                parseInt(stateY_return.maxY.toString()) - parseInt(stateY_return.minY.toString()) > maxDiff
+                parseInt(stateY_return.minY.toString()) >=
+                    parseInt(stateY_return.maxY.toString()) ||
+                parseInt(stateY_return.maxY.toString()) - parseInt(stateY_return.minY.toString()) >
+                    maxDiff
             );
         }
-    }
+    };
 
     /**
      * Returns the corresponding error message if the input value is not valid.
@@ -190,7 +220,10 @@ function YAxisField(props) {
                 return `<0`;
             } else if (parseInt(stateY_zm.minY.toString()) >= parseInt(stateY_zm.maxY.toString())) {
                 return `min>=max`;
-            } else if(parseInt(stateY_zm.maxY.toString()) - parseInt(stateY_zm.minY.toString()) > maxDiff) {
+            } else if (
+                parseInt(stateY_zm.maxY.toString()) - parseInt(stateY_zm.minY.toString()) >
+                maxDiff
+            ) {
                 return `ΔY>${maxDiff}`;
             } else {
                 return '';
@@ -200,15 +233,20 @@ function YAxisField(props) {
             if (isNaN(parseInt(stateY_return.maxY.toString()))) return '';
             if (parseInt(stateY_return.minY.toString()) < 0) {
                 return `<0`;
-            } else if (parseInt(stateY_return.minY.toString()) >= parseInt(stateY_return.maxY.toString())) {
+            } else if (
+                parseInt(stateY_return.minY.toString()) >= parseInt(stateY_return.maxY.toString())
+            ) {
                 return `min>=max`;
-            } else if (parseInt(stateY_return.maxY.toString()) - parseInt(stateY_return.minY.toString()) > maxDiff) {
+            } else if (
+                parseInt(stateY_return.maxY.toString()) - parseInt(stateY_return.minY.toString()) >
+                maxDiff
+            ) {
                 return `ΔY>${maxDiff}`;
             } else {
                 return '';
             }
         }
-    }
+    };
 
     /**
      * Evaluates, whether the input of the maximum input is valid or not.
@@ -220,7 +258,7 @@ function YAxisField(props) {
         if (plotId === O3AS_PLOTS.tco3_zm) {
             if (isNaN(parseInt(stateY_zm.maxY.toString()))) return true;
             if (isNaN(parseInt(stateY_zm.minY.toString()))) return false;
-            return(
+            return (
                 parseInt(stateY_zm.maxY.toString()) < 0 ||
                 parseInt(stateY_zm.minY.toString()) >= parseInt(stateY_zm.maxY.toString()) ||
                 parseInt(stateY_zm.maxY.toString()) - parseInt(stateY_zm.minY.toString()) > maxDiff
@@ -228,13 +266,15 @@ function YAxisField(props) {
         } else {
             if (isNaN(parseInt(stateY_return.maxY.toString()))) return true;
             if (isNaN(parseInt(stateY_return.minY.toString()))) return false;
-            return(
+            return (
                 parseInt(stateY_return.maxY.toString()) < 0 ||
-                parseInt(stateY_return.minY.toString()) >= parseInt(stateY_return.maxY.toString()) ||
-                parseInt(stateY_return.maxY.toString()) - parseInt(stateY_return.minY.toString()) > maxDiff
+                parseInt(stateY_return.minY.toString()) >=
+                    parseInt(stateY_return.maxY.toString()) ||
+                parseInt(stateY_return.maxY.toString()) - parseInt(stateY_return.minY.toString()) >
+                    maxDiff
             );
         }
-    }
+    };
 
     /**
      * Returns the corresponding error message if the input value is not valid.
@@ -250,7 +290,10 @@ function YAxisField(props) {
                 return `<0`;
             } else if (parseInt(stateY_zm.minY.toString()) >= parseInt(stateY_zm.maxY.toString())) {
                 return `min>=max`;
-            } else if (parseInt(stateY_zm.maxY.toString()) - parseInt(stateY_zm.minY.toString()) > maxDiff) {
+            } else if (
+                parseInt(stateY_zm.maxY.toString()) - parseInt(stateY_zm.minY.toString()) >
+                maxDiff
+            ) {
                 return `ΔY>${maxDiff}`;
             } else {
                 return '';
@@ -260,28 +303,33 @@ function YAxisField(props) {
             if (isNaN(parseInt(stateY_return.maxY.toString()))) return '';
             if (parseInt(stateY_return.maxY.toString()) < 0) {
                 return `<0`;
-            } else if (parseInt(stateY_return.minY.toString()) >= parseInt(stateY_return.maxY.toString())) {
+            } else if (
+                parseInt(stateY_return.minY.toString()) >= parseInt(stateY_return.maxY.toString())
+            ) {
                 return `min>=max`;
-            } else if (parseInt(stateY_return.maxY.toString()) - parseInt(stateY_return.minY.toString()) > maxDiff) {
+            } else if (
+                parseInt(stateY_return.maxY.toString()) - parseInt(stateY_return.minY.toString()) >
+                maxDiff
+            ) {
                 return `ΔY>${maxDiff}`;
             } else {
                 return '';
             }
         }
-    }
+    };
 
     useEffect(() => {
-        if (plotId === O3AS_PLOTS.tco3_zm) setStateY_zm({minY, maxY});
-        else setStateY_return({minY, maxY});
+        if (plotId === O3AS_PLOTS.tco3_zm) setStateY_zm({ minY, maxY });
+        else setStateY_return({ minY, maxY });
     }, [plotId, minY, maxY]);
 
     return (
-        <Grid container sx={{width: "90%", marginLeft: "auto", marginRight: "auto"}}>
+        <Grid container sx={{ width: '90%', marginLeft: 'auto', marginRight: 'auto' }}>
             <Grid item xs={3}>
                 <Typography>Y-Axis:</Typography>
             </Grid>
-            <Grid item xs={3} sx={{mt: "-8px"}}>
-                <FormControl sx={{width: '85%'}}>
+            <Grid item xs={3} sx={{ mt: '-8px' }}>
+                <FormControl sx={{ width: '85%' }}>
                     <TextField
                         variant="outlined"
                         id="outlined-basic"
@@ -290,15 +338,15 @@ function YAxisField(props) {
                         onChange={handleChangeMin}
                         error={errorMin()}
                         helperText={helperTextMin()}
-                        inputProps={{"data-testid": "YAxisField-left-input"}}
+                        inputProps={{ 'data-testid': 'YAxisField-left-input' }}
                     />
                 </FormControl>
             </Grid>
-            <Grid item xs={1} sx={{mt: "-5px"}}>
-                <h2 style={{display: "inline"}}> - </h2>
+            <Grid item xs={1} sx={{ mt: '-5px' }}>
+                <h2 style={{ display: 'inline' }}> - </h2>
             </Grid>
-            <Grid item xs={3} sx={{mt: "-8px"}}>
-                <FormControl sx={{width: '85%'}}>
+            <Grid item xs={3} sx={{ mt: '-8px' }}>
+                <FormControl sx={{ width: '85%' }}>
                     <TextField
                         variant="outlined"
                         id="outlined-basic"
@@ -307,7 +355,7 @@ function YAxisField(props) {
                         onChange={handleChangeMax}
                         error={errorMax()}
                         helperText={helperTextMax()}
-                        inputProps={{"data-testid": "YAxisField-right-input"}}
+                        inputProps={{ 'data-testid': 'YAxisField-right-input' }}
                     />
                 </FormControl>
             </Grid>
@@ -319,7 +367,7 @@ YAxisField.propTypes = {
     /**
      * function for error handling
      */
-    reportError: PropTypes.func
-}
+    reportError: PropTypes.func,
+};
 
 export default YAxisField;

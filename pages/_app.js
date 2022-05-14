@@ -1,41 +1,20 @@
-import react, {useEffect} from "react";
-import {Provider} from "react-redux";
-import store from '../src/store/store';
-import {fetchModels, fetchPlotDataForCurrentModels, fetchPlotTypes} from '../src/services/API/apiSlice/apiSlice';
-import {setModelsOfModelGroup} from "../src/store/modelsSlice/modelsSlice";
-import {DEFAULT_MODEL_GROUP} from '../src/utils/constants';
-import {updateStoreWithURL, updateURL} from "../src/services/url/url";
-import {useRouter} from "next/router";
-import "../styles/main.css";
+import { wrapper } from '../src/store/store';
+import '../styles/main.css';
+import React from 'react';
+import Head from 'next/head';
 
-function MyApp({Component, pageProps}) {
-    const router = useRouter();
-
-    useEffect(() => {
-        if (router.isReady) {
-            const emptyQuery = true;
-
-            store.dispatch(fetchPlotTypes());
-            store.dispatch(fetchModels()).then(
-                () => {
-                    // updateStoreWithURL();
-                    store.dispatch(fetchPlotDataForCurrentModels(emptyQuery));
-                    // updateURL();
-                }
-            );
-
-            if (emptyQuery) {
-                store.dispatch(setModelsOfModelGroup(DEFAULT_MODEL_GROUP));
-            }
-        }
-    }, [router.isReady, router.query])
-
-    return <react.StrictMode>
-        <Provider store={store}>
-            <Component {...pageProps} />
-        </Provider>
-    </react.StrictMode>
+function MyApp({ Component, pageProps }) {
+    return (
+        <>
+            <Head>
+                <title>O3AS Webapp</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+            </Head>
+            <React.StrictMode>
+                <Component {...pageProps} />
+            </React.StrictMode>
+        </>
+    );
 }
 
-
-export default MyApp
+export default wrapper.withRedux(MyApp);
