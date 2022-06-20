@@ -18,7 +18,7 @@ const drawerWidth = 400;
  * @memberof LandingPage
  * @constant {JSX.Element}
  */
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{ open?: boolean }>(
     ({ theme, open }) => ({
         flexGrow: 1,
         padding: theme.spacing(3),
@@ -37,17 +37,28 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
     })
 );
 
+type LandingPageProps = {
+    reportError: (error: string) => void;
+    openSidebar: () => void;
+    closeSidebar: () => void;
+    isSidebarOpen: boolean;
+};
+
 /**
  * Main view of web page. Wrapper for all other components on the landing PAge.
  * @component
- * @param {Object} props
- * @param {function} props.reportError - function to report an error
- * @param {function} props.openSidebar - function to open the sidebar
- * @param {function} props.closeSidebar - function to close the sidebar
- * @param {boolean} props.isSidebarOpen - boolean to indicate whether the sidebar is open or not
+ * @param reportError function to report an error
+ * @param openSidebar function to open the sidebar
+ * @param closeSidebar function to close the sidebar
+ * @param isSidebarOpen boolean to indicate whether the sidebar is open or not
  * @returns {JSX.Element} a jsx containing all main components
  */
-function LandingPage(props) {
+const LandingPage: React.FC<LandingPageProps> = ({
+    reportError,
+    openSidebar,
+    closeSidebar,
+    isSidebarOpen,
+}) => {
     /**
      * state to keep track of the current height of the landing Page.
      * @const {Array}
@@ -56,16 +67,18 @@ function LandingPage(props) {
     const [landingPageHeight, setLandingPageHeight] = React.useState(0);
 
     React.useEffect(() => {
-        setLandingPageHeight(window.innerHeight - document.getElementById('Navbar').offsetHeight);
+        setLandingPageHeight(
+            window.innerHeight - (document.getElementById('Navbar')?.offsetHeight ?? 0)
+        );
     }, []);
 
     return (
         <div data-testid="landingPage" style={{ width: '100%', height: '100%' }}>
             <Sidebar
-                reportError={props.reportError}
-                onOpen={props.openSidebar}
-                isOpen={props.isSidebarOpen}
-                onClose={props.closeSidebar}
+                reportError={reportError}
+                onOpen={openSidebar}
+                isOpen={isSidebarOpen}
+                onClose={closeSidebar}
             />
             <div
                 style={{
@@ -75,15 +88,15 @@ function LandingPage(props) {
                     height: landingPageHeight,
                 }}
                 data-testid="landingPage-not-sidebar"
-                onClick={props.closeSidebar}
+                onClick={closeSidebar}
             >
-                <Main open={props.isSidebarOpen}>
-                    <Graph reportError={props.reportError} isSidebarOpen={props.isSidebarOpen} />
+                <Main open={isSidebarOpen}>
+                    <Graph />
                 </Main>
             </div>
         </div>
     );
-}
+};
 
 LandingPage.propTypes = {
     reportError: PropTypes.func.isRequired,
