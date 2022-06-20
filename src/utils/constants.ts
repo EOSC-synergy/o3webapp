@@ -55,14 +55,14 @@ export const NUM_MONTHS_IN_SEASON = 3;
  */
 export const NUM_MONTHS = 12;
 
+export type Latitude = {
+    minLat: number;
+    maxLat: number;
+};
+
 export type LatitudeBand = {
     text: Symbol;
-    value:
-        | {
-              minLat: number;
-              maxLat: number;
-          }
-        | string;
+    value: Latitude | string;
 };
 
 /** Stores the latitude bands and its min/max values
