@@ -13,7 +13,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import PropTypes from 'prop-types';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import { BACKGROUND_BASE_COLOR, O3AS_PLOTS } from '../../../utils/constants.js';
+import { BACKGROUND_BASE_COLOR, O3AS_PLOTS } from '../../../utils/constants';
 
 /**
  * The default width of the sidebar / drawer in pixels.
