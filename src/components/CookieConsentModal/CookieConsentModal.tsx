@@ -4,16 +4,19 @@ import { Button, Card, Grid, Modal, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import CookieOutlinedIcon from '@mui/icons-material/CookieOutlined';
 
+type CookieConsentModalProps = {
+    isOpen: boolean;
+    onClose: () => void;
+};
+
 /**
  * A modal that asks the user to accept the cookies provieded by the website.
  *
  * @component
- * @param {Object} props
- * @param {boolean} props.isOpen -> whether the cookie consent modal should be displayed
- * @param {function} props.onClose -> handles closing of the modal
- * @returns {JSX.Element} a jsx file containing the modal
+ * @param isOpen whether the cookie consent modal should be displayed
+ * @param onClose handles closing of the modal
  */
-function CookieConsentModal(props) {
+const CookieConsentModal: React.FC<CookieConsentModalProps> = ({ isOpen, onClose }) => {
     /**
      * An object holding the styling information about the modal.
      *
@@ -32,15 +35,15 @@ function CookieConsentModal(props) {
      * Function that is called when the user agrees to cookies
      * @function
      */
-    const agreeToCookies = () => props.onClose();
+    const agreeToCookies = () => onClose();
     /**
      * Function that is called when the user disagrees to cookies
      * @function
      */
-    const disagreeToCookies = () => props.onClose();
+    const disagreeToCookies = () => onClose();
 
     return (
-        <Modal disableEscapeKeyDown={true} open={props.isOpen} onClose={props.onClose}>
+        <Modal disableEscapeKeyDown={true} open={isOpen} onClose={onClose}>
             <Card sx={style}>
                 <Grid container direction="column">
                     <Grid
@@ -84,7 +87,7 @@ function CookieConsentModal(props) {
             </Card>
         </Modal>
     );
-}
+};
 
 CookieConsentModal.propTypes = {
     /**
