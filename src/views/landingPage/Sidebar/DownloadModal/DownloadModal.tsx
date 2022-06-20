@@ -11,6 +11,7 @@ import {
     IconButton,
     CardContent,
 } from '@mui/material';
+import type { SelectChangeEvent } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import { downloadGraphAsPDF } from '../../../../services/downloading/pdf/pdfCreator';
@@ -35,16 +36,21 @@ import CardActions from '@mui/material/CardActions';
  */
 const fileFormats = [Symbol('CSV'), Symbol('PDF'), Symbol('PNG'), Symbol('SVG')];
 
+type DownloadModalProps = {
+    isOpen: boolean;
+    onClose: () => void;
+    reportError?: (error: string) => void;
+};
+
 /**
  * Opens a modal where the user can select the file format and download the plot.
  * @component
- * @param {Object} props
- * @param {boolean} props.isOpen -> whether modal should be visible
- * @param {function} props.onClose -> handles closing the modal
- * @param {function} props.reportError -> enabling to report an error
+ * @param isOpen whether modal should be visible
+ * @param onClose handles closing the modal
+ * @param reportError enabling to report an error
  * @returns {JSX.Element} a jsx containing a modal with a dropdown to choose the file type and a download button
  */
-function DownloadModal(props) {
+const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose, reportError }) => {
     /**
      * An array containing all model groups.
      * @constant {Array}
@@ -97,13 +103,13 @@ function DownloadModal(props) {
      */
     const handleDownloadPlot = () => {
         if (selectedFileFormat === 'PDF') {
-            downloadGraphAsPDF(plotId, plotTitle, modelGroups, activeData.data, props.reportError);
+            downloadGraphAsPDF(plotId, plotTitle, modelGroups, activeData.data);
         } else if (selectedFileFormat === 'PNG') {
-            downloadGraphAsPNG(plotTitle, props.reportError);
+            downloadGraphAsPNG(plotTitle);
         } else if (selectedFileFormat === 'SVG') {
-            downloadGraphAsSVG(plotTitle, props.reportError);
+            downloadGraphAsSVG(plotTitle);
         } else if (selectedFileFormat === 'CSV') {
-            downloadGraphAsCSV(plotTitle, plotId, props.reportError);
+            downloadGraphAsCSV(plotTitle, plotId, reportError);
         }
     };
 
@@ -113,18 +119,18 @@ function DownloadModal(props) {
      * @param {Object} event    The event object given by the dropdown menu.
      * @function
      */
-    const changeFileFormat = (event) => {
+    const changeFileFormat = (event: SelectChangeEvent) => {
         setSelectedFileFormat(event.target.value);
     };
 
     return (
-        <Modal open={props.isOpen} onClose={props.onClose}>
+        <Modal open={isOpen} onClose={onClose}>
             <Card sx={style}>
                 <CardHeader
                     title="Download Plot"
                     action={
                         <IconButton
-                            onClick={props.onClose}
+                            onClick={onClose}
                             aria-label="close"
                             data-testid="DownloadModal-close"
                         >
@@ -166,7 +172,7 @@ function DownloadModal(props) {
             </Card>
         </Modal>
     );
-}
+};
 
 DownloadModal.propTypes = {
     /**
