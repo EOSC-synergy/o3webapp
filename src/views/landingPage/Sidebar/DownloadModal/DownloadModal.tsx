@@ -14,17 +14,17 @@ import {
 import type { SelectChangeEvent } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import PropTypes from 'prop-types';
-import { downloadGraphAsPDF } from '../../../../services/downloading/pdf/pdfCreator';
+import { downloadGraphAsPDF } from 'services/downloading/pdf/pdfCreator';
 import {
     downloadGraphAsCSV,
     downloadGraphAsPNG,
     downloadGraphAsSVG,
-} from '../../../../services/downloading/otherFormats';
+} from 'services/downloading/otherFormats';
 import { useSelector } from 'react-redux';
-import { selectPlotId, selectPlotTitle } from '../../../../store/plotSlice/plotSlice';
-import { selectActivePlotData } from '../../../../services/API/apiSlice/apiSlice';
-import { selectAllModelGroups } from '../../../../store/modelsSlice/modelsSlice';
-import { REQUEST_STATE } from '../../../../services/API/apiSlice/apiSlice';
+import { selectPlotId, selectPlotTitle } from 'store/plotSlice/plotSlice';
+import { selectActivePlotData } from 'services/API/apiSlice/apiSlice';
+import { selectAllModelGroups } from 'store/modelsSlice/modelsSlice';
+import { REQUEST_STATE } from 'services/API/apiSlice/apiSlice';
 import CloseIcon from '@mui/icons-material/Close';
 import CardHeader from '@mui/material/CardHeader';
 import CardActions from '@mui/material/CardActions';
