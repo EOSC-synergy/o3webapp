@@ -7,7 +7,7 @@ import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import CustomLatitudeSelector from '../InputComponents/LatitudeBandSelector/CustomLatitudeSelector/CustomLatitudeSelector';
+import CustomLatitudeSelector from '../InputComponents/LatitudeBandSelector/CustomLatitudeSelector';
 import LatitudeBandSelector from '../InputComponents/LatitudeBandSelector/LatitudeBandSelector';
 import LocationSelector from '../InputComponents/LatitudeBandSelector/LatitudeBandSelector';
 import ModelGroupConfigurator from '../InputComponents/ModelGroupConfigurator/ModelGroupConfigurator';

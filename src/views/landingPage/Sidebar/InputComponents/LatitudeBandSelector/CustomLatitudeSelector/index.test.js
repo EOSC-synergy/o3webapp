@@ -1,7 +1,7 @@
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
-import CustomLatitudeSelector from './CustomLatitudeSelector';
+import CustomLatitudeSelector from '.';
 import { createTestStore } from '../../../../../../store/store';
 
 let store;

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
-import Section from './Section/Section.js';
+import Section from './Section/Section';
 import defaultStructure from '../../../config/defaultConfig.json';
 import tco3_zm from '../../../config/tco3_zm.json';
 import tco3_return from '../../../config/tco3_return.json';

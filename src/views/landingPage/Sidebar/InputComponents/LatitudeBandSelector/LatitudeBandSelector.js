@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import { latitudeBands } from '../../../../../utils/constants';
 import PropTypes from 'prop-types';
 import { fetchPlotDataForCurrentModels } from '../../../../../services/API/apiSlice/apiSlice';
-import CustomLatitudeSelector from './CustomLatitudeSelector/CustomLatitudeSelector';
+import CustomLatitudeSelector from './CustomLatitudeSelector';
 
 /**
  * An object containing the current minLat and maxLat Values.

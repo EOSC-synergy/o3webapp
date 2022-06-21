@@ -1,9 +1,10 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Grid, TextField, FormControl } from '@mui/material';
-import { selectPlotLocation, setLocation } from '../../../../../../store/plotSlice/plotSlice';
-import { fetchPlotDataForCurrentModels } from '../../../../../../services/API/apiSlice/apiSlice';
+import { selectPlotLocation, setLocation } from 'store/plotSlice/plotSlice';
+import { fetchPlotDataForCurrentModels } from 'services/API/apiSlice/apiSlice';
 import PropTypes from 'prop-types';
+import { Latitude } from '../../../../../../utils/constants';
 
 /**
  * A component to select the specific min and max latitude values for the custom region.
@@ -11,7 +12,7 @@ import PropTypes from 'prop-types';
  * @component
  * @returns {JSX.Element}    JSX with the component
  */
-function CustomLatitudeSelector() {
+const CustomLatitudeSelector: React.FC = () => {
     /**
      * The biggest possible latitude value.
      * @constant {number}
@@ -36,7 +37,7 @@ function CustomLatitudeSelector() {
      * An object containing the current minLat and maxLat Values.
      * @constant {Object}
      */
-    const selectedLocation = useSelector(selectPlotLocation);
+    const selectedLocation = useSelector(selectPlotLocation) as Latitude;
 
     /**
      * The currently selected minLat value.
@@ -52,23 +53,23 @@ function CustomLatitudeSelector() {
 
     /**
      * A state variable to store the state of the min. latitude box.
-     * @constant {string}
+     * @constant
      */
     const [minLatState, setMinLatState] = React.useState(minLat);
 
     /**
      * A state variable to store the state of the max. latitude box.
-     * @constant {string}
+     * @constant
      */
     const [maxLatState, setMaxLatState] = React.useState(maxLat);
 
     /**
      * Handles the change if the min. latitude box is changed.
      *
-     * @param {*} event The event object holding the new value of the text box
+     * @param event The event object holding the new value of the text box
      * @function
      */
-    const handleChangeMin = (event) => {
+    const handleChangeMin = (event: React.ChangeEvent<HTMLInputElement>) => {
         let selectedLocationCopy = { ...selectedLocation };
         let val = parseInt(event.target.value);
         if (!isNaN(val)) {
@@ -83,20 +84,21 @@ function CustomLatitudeSelector() {
                     maxLat: selectedLocationCopy.maxLat,
                 })
             );
+            // @ts-expect-error TODO: dispatch typing
             dispatch(fetchPlotDataForCurrentModels());
             setMinLatState(val);
         } else {
-            setMinLatState(event.target.value);
+            setMinLatState(parseFloat(event.target.value));
         }
     };
 
     /**
      * Handles the change if the max. latitude box is changed.
      *
-     * @param {*} event The event object holding the new value of the text box
+     * @param event The event object holding the new value of the text box
      * @function
      */
-    const handleChangeMax = (event) => {
+    const handleChangeMax = (event: React.ChangeEvent<HTMLInputElement>) => {
         let selectedLocationCopy = { ...selectedLocation };
         let val = parseInt(event.target.value);
         if (!isNaN(val)) {
@@ -111,27 +113,32 @@ function CustomLatitudeSelector() {
                     maxLat: selectedLocationCopy.maxLat,
                 })
             );
+            // @ts-expect-error TODO: dispatch typing
             dispatch(fetchPlotDataForCurrentModels());
             setMaxLatState(val);
         } else {
-            setMaxLatState(event.target.value);
+            setMaxLatState(parseFloat(event.target.value));
         }
     };
 
     /**
      * A function to generate the helper text for the min. latitude box.
      *
-     * @returns {String}     Text that should be displayed in the helper text
+     * @returns Text that should be displayed in the helper text
      * @function
      */
     const generateHelperTextMin = () => {
-        if (typeof minLatState === 'string') return '';
-        if (typeof minLatState === 'string' && typeof maxLatState === 'string')
+        if (typeof minLatState === 'string') {
+            return '';
+        }
+        if (typeof minLatState === 'string' && typeof maxLatState === 'string') {
             return `< ${LATITUDE_BAND_MIN_VALUE}`;
+        }
         if (minLatState < LATITUDE_BAND_MIN_VALUE) return `> ${LATITUDE_BAND_MIN_VALUE}`;
         if (minLatState > LATITUDE_BAND_MAX_VALUE) return `< ${LATITUDE_BAND_MAX_VALUE}`;
-        if (minLatState > maxLatState)
+        if (minLatState > maxLatState) {
             return maxLatState >= LATITUDE_BAND_MAX_VALUE ? '' : `< ${maxLatState}`;
+        }
     };
 
     /**
@@ -141,13 +148,17 @@ function CustomLatitudeSelector() {
      * @function
      */
     const generateHelperTextMax = () => {
-        if (typeof maxLatState === 'string') return '';
-        if (typeof minLatState === 'string' && typeof maxLatState === 'string')
+        if (typeof maxLatState === 'string') {
+            return '';
+        }
+        if (typeof minLatState === 'string' && typeof maxLatState === 'string') {
             return `> ${LATITUDE_BAND_MAX_VALUE}`;
+        }
         if (maxLatState < LATITUDE_BAND_MIN_VALUE) return `> ${LATITUDE_BAND_MIN_VALUE}`;
         if (maxLatState > LATITUDE_BAND_MAX_VALUE) return `< ${LATITUDE_BAND_MAX_VALUE}`;
-        if (minLatState > maxLatState)
+        if (minLatState > maxLatState) {
             return minLatState >= LATITUDE_BAND_MAX_VALUE ? '' : `> ${minLatState}`;
+        }
     };
 
     return (
@@ -215,7 +226,7 @@ function CustomLatitudeSelector() {
             </div>
         </>
     );
-}
+};
 
 CustomLatitudeSelector.propTypes = {
     /**
