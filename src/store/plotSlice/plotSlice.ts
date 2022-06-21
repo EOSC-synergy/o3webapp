@@ -161,6 +161,7 @@ const plotSlice = createSlice({
         setLocation(state: PlotState, { payload }: Payload<Latitude>) {
             state.generalSettings.location = payload;
         },
+
         //TODO: update following JSDoc
         /**
          * This reducer accepts an action object returned from setDisplayXRange()
@@ -174,9 +175,8 @@ const plotSlice = createSlice({
          * values, i.e. you have to pass {regions: [0, 1, 2]} as payload.
          *
          *
-         * @param {object} state the current store state of: state/plot
-         * @param {object} action accepts the action returned from setDisplayXRange()
-         * @param {XRange} action.payload the payload is an object containing the given data
+         * @param state the current store state of: state/plot
+         * @param payload the payload is an object containing the given data
          * @example dispatch(setDisplayXRange({years: {minX: 1960, maxX: 2100}}));
          * @example dispatch(setDisplayXRange({regions: [0, 1, 2]}));
          */
@@ -207,11 +207,11 @@ const plotSlice = createSlice({
          * values, i.e. you have to pass {regions: [0, 1, 2]} as payload.
          *
          *
-         * @param {object} state the current store state of: state/plot
-         * @param {object} payload the payload is an object containing the given data
-         * @param {number} payload.years.minX a number specifying the start of the x range for tco3_zm
-         * @param {number} payload.years.maxX a number specifying the end of the x range for tco3_zm
-         * @param {array} payload.regions an array specifying the selected regions (on the x-axis) for the tco3_return
+         * @param state the current store state of: state/plot
+         * @param payload
+         * @param payload.years.minX a number specifying the start of the x range for tco3_zm
+         * @param payload.years.maxX a number specifying the end of the x range for tco3_zm
+         * @param payload.regions an array specifying the selected regions (on the x-axis) for the tco3_return
          * @example dispatch(setDisplayXRange({years: {minX: 1960, maxX: 2100}}));
          * @example dispatch(setDisplayXRange({regions: [0, 1, 2]}));
          */
@@ -245,22 +245,24 @@ const plotSlice = createSlice({
          * In this case the current displayYRange is updated with the given min and max
          * y values. "Current" is determined by the current active plotId.
          *
-         * @param {object} state the current store state of: state/plot
-         * @param {object} action accepts the action returned from setDisplayYRange()
-         * @param {object} action.payload the payload is an object containing the given data
-         * @param {number} action.payload.minY a number specifying the start of the y range
-         * @param {number} action.payload.maxY a number specifying the end of the y range
+         * @param state the current store state of: state/plot
+         * @param payload
+         * @param payload.minY a number specifying the start of the y range
+         * @param payload.maxY a number specifying the end of the y range
          * @example dispatch(setDisplayYRange({minY: 200, maxY: 400}));
          */
-        setDisplayYRange(state, action) {
-            const { minY, maxY } = action.payload;
-            if (minY === null || maxY === null) return;
-            if (!Number.isFinite(minY) || !Number.isFinite(maxY)) return;
-            if (isNaN(minY) || isNaN(maxY)) return;
+        setDisplayYRange(state: PlotState, { payload }: { payload: YRange }) {
+            if (payload.minY === null || payload.maxY === null) {
+                return;
+            }
+            if (!Number.isFinite(payload.minY) || !Number.isFinite(payload.maxY)) {
+                return;
+            }
+            if (isNaN(payload.minY) || isNaN(payload.maxY)) {
+                return;
+            }
 
-            const displayYRange = state.plotSpecificSettings[state.plotId].displayYRange;
-            displayYRange.minY = minY;
-            displayYRange.maxY = maxY;
+            state.plotSpecificSettings[state.plotId].displayYRange = payload;
         },
 
         /**
@@ -271,7 +273,7 @@ const plotSlice = createSlice({
          * In this case the displayYRange for the given plotId is updated with the
          * given min and max y values.
          *
-         * @param {object} state the current store state of: state/plot
+         * @param state the current store state of: state/plot
          * @param plotId tco3_zm | tco3_return
          * @param payload.plotId
          * @param payload.minY a number specifying the start of the y range
@@ -307,19 +309,17 @@ const plotSlice = createSlice({
          *
          * In this case the current selected months are updated to the given array.
          *
-         * @param {object} state the current store state of: state/plot
-         * @param {object} action accepts the action returned from setMonths()
-         * @param {object} action.payload the payload is an object containing the given data
-         * @param {array} action.payload.months an array of integers describing the new months
+         * @param state the current store state of: state/plot
+         * @param payload the payload is an object containing the given data
+         * @param payload.months an array of integers describing the new months
          * @example dispatch(setMonths({months: [3, 4, 5]}));
          */
-        setMonths(state, action) {
-            state.generalSettings.months = action.payload.months;
+        setMonths(state: PlotState, { payload }: { payload: { months: number[] } }) {
+            state.generalSettings.months = payload.months;
         },
     },
     extraReducers: {
         [HYDRATE]: (state, action) => {
-            console.log('HYDRATE', state, action.payload);
             return {
                 ...state,
                 ...action.payload.subject,
@@ -355,8 +355,8 @@ export default plotSlice.reducer;
  * from the store. The plot id is a string using the same naming as the
  * o3as api e.g. tco3_zm or tco3_return
  *
- * @param {object} state the global redux state
- * @returns {string} the current active plot id
+ * @param state the global redux state
+ * @returns the current active plot id
  * @category plotSlice
  * @function
  */
@@ -366,8 +366,8 @@ export const selectPlotId = (state: GlobalPlotState) => state.plot.plotId;
  * This selector allows components to select the current plot title
  * from the store.
  *
- * @param {object} state the global redux state
- * @returns {string} the current active plot title
+ * @param state the global redux state
+ * @returns the current active plot title
  * @function
  * @category plotSlice
  */
@@ -378,8 +378,8 @@ export const selectPlotTitle = (state: GlobalPlotState) =>
  * This selector allows components to select the current plot location
  * from the store. The location is an object containing a minLat and maxLat attribute.
  *
- * @param {object} state the global redux state
- * @returns {object} holds the current location that includes a minLat and maxLat attribute.
+ * @param state the global redux state
+ * @returns holds the current location that includes a minLat and maxLat attribute.
  * @function
  * @category plotSlice
  */
@@ -389,8 +389,8 @@ export const selectPlotLocation = (state: GlobalPlotState) => state.plot.general
  * This selector allows components to select the current x range
  * from the store.
  *
- * @param {object} state the global redux state
- * @returns {object} holds the current x range that includes minX and maxX
+ * @param state the global redux state
+ * @returns holds the current x range that includes minX and maxX
  * @function
  * @category plotSlice
  */
@@ -401,8 +401,8 @@ export const selectPlotXRange = (state: GlobalPlotState) =>
  * This selector allows components to select the current y range
  * from the store.
  *
- * @param {object} state the global redux state
- * @returns {object} holds the current x range that includes minY and maxY
+ * @param state the global redux state
+ * @returns holds the current x range that includes minY and maxY
  * @function
  * @category plotSlice
  */
@@ -413,8 +413,8 @@ export const selectPlotYRange = (state: GlobalPlotState) =>
  * This selector allows components to select the current selected months
  * from the store.
  *
- * @param {object} state the global redux state
- * @returns {array} array of integers describing the current selected months
+ * @param state the global redux state
+ * @returns array of integers describing the current selected months
  * @function
  * @category plotSlice
  */
@@ -423,8 +423,8 @@ export const selectPlotMonths = (state: GlobalPlotState) => state.plot.generalSe
 /**
  * This selector allows components to select the current user region name.
  *
- * @param {object} state the global redux state
- * @returns {string} the user region name
+ * @param state the global redux state
+ * @returns the user region name
  * @function
  */
 export const selectUserRegionName = (state: GlobalPlotState) =>
