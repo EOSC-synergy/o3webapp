@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Footer from './Footer';
+import Footer, { links } from '.';
 import { render, screen, within } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { links } from './Footer';
 
 it('renders without crashing', () => {
     const div = document.createElement('div');
