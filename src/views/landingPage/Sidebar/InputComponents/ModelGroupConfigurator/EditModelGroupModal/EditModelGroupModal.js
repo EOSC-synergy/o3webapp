@@ -25,7 +25,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material/styles';
 import { convertModelName } from '../../../../../../utils/ModelNameConverter';
 import { alpha } from '@mui/system';
-import DiscardChangesModal from '../../../../../../components/DiscardChangesModal/DiscardChangesModal';
+import DiscardChangesModal from '../../../../../../components/DiscardChangesModal';
 import { arraysEqual } from '../../../../../../utils/arrayOperations';
 
 /**

@@ -6,7 +6,6 @@ import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
@@ -20,7 +19,7 @@ import { convertModelName } from '../../../../../../utils/ModelNameConverter';
 import { union, not, intersection } from '../../../../../../utils/arrayOperations';
 import CloseIcon from '@mui/icons-material/Close';
 import Alert from '@mui/material/Alert';
-import DiscardChangesModal from '../../../../../../components/DiscardChangesModal/DiscardChangesModal';
+import DiscardChangesModal from '../../../../../../components/DiscardChangesModal';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import {
@@ -351,10 +350,9 @@ function AddModelGroupModal(props) {
                         const labelId = `transfer-list-all-item-${modelId}-label`;
                         let model = convertModelName(modelId);
                         return (
-                            <ListItem
+                            <ListItemButton
                                 key={idx}
                                 role="listitem"
-                                button
                                 onClick={handleChangeElement(modelId)}
                             >
                                 <ListItemIcon>
@@ -373,7 +371,7 @@ function AddModelGroupModal(props) {
                                     primary={model.name}
                                     secondary={`Institute: ${model.institute}\nProject: ${model.project}`}
                                 />
-                            </ListItem>
+                            </ListItemButton>
                         );
                     })}
                 </List>
