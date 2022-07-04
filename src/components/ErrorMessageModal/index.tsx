@@ -10,14 +10,13 @@ type ErrorMessageModalProps = {
     message: string;
 };
 /**
- * Displays an given error message.
+ * Displays a given error message.
  * @component
  *
- * @param {Object} props
- * @param {boolean} props.isOpen -> whether the error message modal should be displayed
- * @param {function} props.onClose -> handles closing of the modal
- * @param {String} props.message -> error message
- * @returns {JSX.Element} a jsx file containing a modal with the given error message
+ * @param isOpen -> whether the error message modal should be displayed
+ * @param onClose -> handles closing of the modal
+ * @param message -> error message
+ * @returns a jsx file containing a modal with the given error message
  */
 const ErrorMessageModal: React.FC<ErrorMessageModalProps> = ({ isOpen, onClose, message }) => {
     /**
