@@ -1,40 +1,34 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectPlotLocation, setLocation } from '../../../../../store/plotSlice/plotSlice';
-import { Box, Divider, MenuItem, Select } from '@mui/material';
+import { selectPlotLocation, setLocation } from 'store/plotSlice/plotSlice';
+import { Box, Divider, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { latitudeBands } from '../../../../../utils/constants';
+import { Latitude, latitudeBands } from 'utils/constants';
 import PropTypes from 'prop-types';
-import { fetchPlotDataForCurrentModels } from '../../../../../services/API/apiSlice/apiSlice';
+import { fetchPlotDataForCurrentModels } from 'services/API/apiSlice/apiSlice';
 import CustomLatitudeSelector from './CustomLatitudeSelector';
-
-/**
- * An object containing the current minLat and maxLat Values.
- * @memberof LatitudeBandSelector
- * @type {Object}
- * @see {@link selectPlotLocation}
- */
-let selectedLocation;
-
-/**
- * whether the user selected to enter a custom latitude band
- * @memberof LatitudeBandSelector
- * @type {Array}
- * @default [null, null]
- */
-let [isCustomizable, setIsCustomizable] = [null, null];
 
 /**
  * Enables the user to choose minimum and maximum latitude
  * @component
- * @param {Object} props
- * @param {function} props.reportError - error handling
  * @returns {JSX.Element} a JSX containing a dropdown and if "individual latitude band" is selected a number input field
  */
-function LatitudeBandSelector(props) {
-    selectedLocation = useSelector(selectPlotLocation);
+const LatitudeBandSelector: React.FC = () => {
+    /**
+     * An object containing the current minLat and maxLat Values.
+     * @memberof LatitudeBandSelector
+     * @type {Object}
+     * @see {@link selectPlotLocation}
+     */
+    const selectedLocation = useSelector(selectPlotLocation);
 
-    [isCustomizable, setIsCustomizable] = React.useState(false);
+    /**
+     * whether the user selected to enter a custom latitude band
+     * @memberof LatitudeBandSelector
+     * @type {Array}
+     * @default [null, null]
+     */
+    const [isCustomizable, setIsCustomizable] = React.useState(false);
 
     /**
      * A dispatch function to dispatch actions to the redux store.
@@ -46,19 +40,21 @@ function LatitudeBandSelector(props) {
      * if the user selected custom sets isCustomizable to true
      * @param {event} event the event that triggered this function call
      */
-    const handleChangeLatitudeBand = (event) => {
+    const handleChangeLatitudeBand = (event: SelectChangeEvent<Latitude>) => {
         if (event.target.value === 'custom') {
             setIsCustomizable(true);
         } else {
             setIsCustomizable(false);
+            const latitude = event.target.value as Latitude;
             dispatch(
                 setLocation({
-                    minLat: event.target.value.minLat,
-                    maxLat: event.target.value.maxLat,
+                    minLat: latitude.minLat,
+                    maxLat: latitude.maxLat,
                 })
             );
 
             // fetch for tco3_zm and tco3_return
+            // @ts-expect-error TODO: dispatch typing<
             dispatch(fetchPlotDataForCurrentModels());
         }
     };
@@ -75,15 +71,26 @@ function LatitudeBandSelector(props) {
                     value={
                         isCustomizable
                             ? latitudeBands[latitudeBands.length - 1].value
-                            : findLatitudeBandByLocation(false)
+                            : findLatitudeBandByLocation(
+                                  isCustomizable,
+                                  setIsCustomizable,
+                                  selectedLocation,
+                                  false
+                              )
                     }
                     onChange={handleChangeLatitudeBand}
-                    defaultValue={findLatitudeBandByLocation(false)}
+                    defaultValue={findLatitudeBandByLocation(
+                        isCustomizable,
+                        setIsCustomizable,
+                        selectedLocation,
+                        false
+                    )}
                     inputProps={{ 'data-testid': 'LatitudeBandSelector-select-region' }}
                 >
                     {
                         // maps all latitude bands from constants.js to ´MenuItem´s
                         latitudeBands.map((s, idx) => (
+                            // @ts-expect-error MenuItem accepts objects, see https://github.com/mui/material-ui/issues/14286
                             <MenuItem key={idx} value={s.value}>
                                 {s.text.description}
                             </MenuItem>
@@ -95,7 +102,7 @@ function LatitudeBandSelector(props) {
             </Box>
         </>
     );
-}
+};
 
 LatitudeBandSelector.propTypes = {
     reportError: PropTypes.func,
@@ -106,13 +113,20 @@ export default LatitudeBandSelector;
 /**
  * Finds selectedLocation in latitudeBands.
  *
+ * @param isCustomizable
+ * @param setIsCustomizable
+ * @param selectedLocation
  * @param {boolean} forceCustomizable if true, acts like isCustomizable is true - if false, does nothing
  * @returns the location
  * @memberof LatitudeBandSelector
  * @function
  */
-const findLatitudeBandByLocation = (forceCustomizable) => {
-    if (typeof selectedLocation === 'undefined') return null;
+const findLatitudeBandByLocation = (
+    isCustomizable: boolean,
+    setIsCustomizable: (customizable: boolean) => void,
+    selectedLocation: Latitude,
+    forceCustomizable?: boolean
+): Latitude => {
     if (!forceCustomizable) {
         for (let i = 0; i < latitudeBands.length - 1; i++) {
             if (
@@ -127,5 +141,5 @@ const findLatitudeBandByLocation = (forceCustomizable) => {
         return latitudeBands[latitudeBands.length - 1].value;
     }
     setIsCustomizable(true);
-    findLatitudeBandByLocation(true);
+    return findLatitudeBandByLocation(isCustomizable, setIsCustomizable, selectedLocation, true);
 };

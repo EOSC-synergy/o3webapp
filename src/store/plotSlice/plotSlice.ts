@@ -33,7 +33,7 @@ export type YRange = {
 type PlotState = {
     plotId: O3AS_PLOTS;
     generalSettings: {
-        location: Latitude | string;
+        location: Latitude;
         months: number[];
     };
     plotSpecificSettings: {

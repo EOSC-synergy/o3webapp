@@ -62,7 +62,7 @@ export type Latitude = {
 
 export type LatitudeBand = {
     text: Symbol;
-    value: Latitude | string;
+    value: Latitude;
 };
 
 /** Stores the latitude bands and its min/max values
@@ -100,7 +100,8 @@ export const latitudeBands: LatitudeBand[] = [
     // !!! Custom must be last in array !!!
     {
         text: Symbol('Custom'),
-        value: 'custom',
+        // @ts-ignore-error TODO: figure out this
+        value: 'custom' as unknown as Latitude,
     },
 ];
 
