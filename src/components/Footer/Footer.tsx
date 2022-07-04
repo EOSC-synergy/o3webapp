@@ -39,7 +39,7 @@ export const links = [
  * Contains links to home page, privacy policy, terms of use and how to acknowledge
  * @component
  */
-const Footer = (props) => {
+const Footer: React.FC = () => {
     return (
         <div
             style={{
@@ -115,7 +115,7 @@ const Footer = (props) => {
                     }}
                     key="links"
                 >
-                    {links.map((x, idx) => {
+                    {links.map((link, idx) => {
                         return (
                             <Grid
                                 item
@@ -127,8 +127,8 @@ const Footer = (props) => {
                                 data-testid={`footer-grid-item`}
                             >
                                 <Link
-                                    href={x.href}
-                                    data-testid={`footer-link-${links.label}`}
+                                    href={link.href}
+                                    data-testid={`footer-link-${link.label}`}
                                     sx={{
                                         color: '#fed136',
                                         textDecoration: 'none',
@@ -141,7 +141,7 @@ const Footer = (props) => {
                                             lineHeight: 3,
                                         }}
                                     >
-                                        {x.label}
+                                        {link.label}
                                     </Typography>
                                 </Link>
                             </Grid>

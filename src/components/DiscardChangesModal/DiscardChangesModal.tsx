@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -8,25 +8,39 @@ import { Card, IconButton } from '@mui/material';
 import PropTypes from 'prop-types';
 import CardHeader from '@mui/material/CardHeader';
 import CloseIcon from '@mui/icons-material/Close';
+
+type DiscardChangesModalProps = {
+    isOpen: boolean;
+    saveChanges: () => void;
+    discardChanges: () => void;
+    onClose: () => void;
+    closeDialog: () => void;
+};
 /**
  * Opens a non-closable discard changes modal to ask whether the users want to discard their changes
  * @component
- * @param {Object} props
- * @param {Boolean} props.isOpen whether the dialog modal should be opened or not
- * @param {Function} props.saveChanges function to save changes
- * @param {Function} props.discardChanges function to discard changes
- * @param {Function} props.onClose function to close the dialog, called after saveChanges or discardChanges
- * @returns {JSX.Element} containing a Dialog that asks the user whether to save or discard changes
+ * @param isOpen whether the dialog modal should be opened or not
+ * @param saveChanges function to save changes
+ * @param discardChanges function to discard changes
+ * @param onClose function to close the dialog, called after saveChanges or discardChanges
+ * @param closeDialog
+ * @returns containing a Dialog that asks the user whether to save or discard changes
  * can only be closed via clicking save or discard changes button
  */
-function DiscardChangesModal(props) {
+const DiscardChangesModal: React.FC<DiscardChangesModalProps> = ({
+    isOpen,
+    saveChanges,
+    discardChanges,
+    onClose,
+    closeDialog,
+}) => {
     /**
      * A function to discard changes and close the modal.
      * @function
      */
     const discardChangesAndCloseDialog = () => {
-        props.discardChanges();
-        props.closeDialog();
+        discardChanges();
+        closeDialog();
     };
 
     /**
@@ -34,8 +48,8 @@ function DiscardChangesModal(props) {
      * @function
      */
     const saveChangesAndCloseDialog = () => {
-        props.closeDialog();
-        props.saveChanges();
+        closeDialog();
+        saveChanges();
     };
 
     /**
@@ -64,7 +78,7 @@ function DiscardChangesModal(props) {
 
     return (
         <Dialog
-            open={props.isOpen}
+            open={isOpen}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
             data-testid="discardChanges-dialog"
@@ -74,7 +88,7 @@ function DiscardChangesModal(props) {
                     title={heading}
                     action={
                         <IconButton
-                            onClick={props.onClose}
+                            onClick={onClose}
                             aria-label="close"
                             data-testid="DiscardChangedModal-close-modal"
                         >
@@ -105,7 +119,7 @@ function DiscardChangesModal(props) {
             </Card>
         </Dialog>
     );
-}
+};
 
 DiscardChangesModal.propTypes = {
     /**
