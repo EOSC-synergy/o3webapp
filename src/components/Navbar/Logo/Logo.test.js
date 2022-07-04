@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Logo from './Logo';
+import Logo, { logoSrc, O3ASLink } from '.';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { logoSrc, O3ASLink } from './Logo';
 
 it('renders without crashing', () => {
     const div = document.createElement('div');

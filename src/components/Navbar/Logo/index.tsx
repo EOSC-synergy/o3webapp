@@ -20,13 +20,17 @@ export const logoSrc = 'https://o3as.data.kit.edu/img/logos/o3as-logo.svg';
  */
 export const O3ASLink = '#page-top';
 
+type LogoProps = {
+    // TODO: Object typing? see https://mui.com/system/display/
+    display?: string | Object;
+};
 /**
  * Returns a logo from O3AS and the text "O3AS Webapp".
  * @component
- * @param {Object} props specified in PropTypes
+ * @param display see https://mui.com/system/display/
  * @returns {JSX.Element} JSX Element containing one image and one text wrapped in a Link component
  */
-const Logo = (props) => {
+const Logo: React.FC<LogoProps> = ({ display }): JSX.Element => {
     /**
      * Name of the webapp that should be displayed in the logo
      * @constant {String}
@@ -41,7 +45,7 @@ const Logo = (props) => {
                 flexGrow: 1,
                 textDecoration: 'inherit',
                 color: 'inherit',
-                display: props.display,
+                display: display,
             }}
             noWrap
             data-testid="logo-container"

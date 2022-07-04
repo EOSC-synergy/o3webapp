@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import { AppBar, Button, Container, Grid, Toolbar } from '@mui/material';
-import Logo from './Logo/Logo';
+import Logo from './Logo';
 import EditIcon from '@mui/icons-material/Edit';
 import Typography from '@mui/material/Typography';
 import { BACKGROUND_BASE_COLOR } from '../../utils/constants';
