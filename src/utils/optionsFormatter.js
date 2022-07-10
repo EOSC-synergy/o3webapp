@@ -6,7 +6,7 @@ import {
     q75,
     quantile as calculatePercentile,
     std as calculateStd,
-} from '../../services/math/math';
+} from '../services/math/math';
 import {
     END_YEAR,
     EXTENDED_SV_LIST,
@@ -23,8 +23,8 @@ import {
     latitudeBands,
     lowerPercentile,
     upperPercentile,
-} from '../constants';
-import { convertModelName } from '../ModelNameConverter';
+} from './constants';
+import { convertModelName } from './ModelNameConverter';
 
 /**
  * A module containing functions to format the data given or stored in the redux store into a format
@@ -62,12 +62,12 @@ const SV_CALCULATION = {
     mean: calculateMean,
     median: calculateMedian,
     percentile: calculatePercentile,
-    stdMean: calculateMean, // mean for std+-
+    //stdMean: calculateMean, // mean for std+-
+    [std]: calculateStd,
+    [lowerPercentile]: (arr) => calculatePercentile(arr, 0.1587),
+    [upperPercentile]: (arr) => calculatePercentile(arr, 0.8413),
+    [stdMean]: calculateMean,
 };
-SV_CALCULATION[std] = calculateStd;
-SV_CALCULATION[lowerPercentile] = (arr) => calculatePercentile(arr, 0.1587);
-SV_CALCULATION[upperPercentile] = (arr) => calculatePercentile(arr, 0.8413);
-SV_CALCULATION[stdMean] = calculateMean;
 
 /**
  * This object maps each statistical value that should be calculated
@@ -126,9 +126,10 @@ const SV_DISPLAY_NAME = {
  * generic.
  * @constant {Object}
  */
-const SERIES_GENERATION = {}; // Map plotId to corresponding generation function
-SERIES_GENERATION[O3AS_PLOTS.tco3_zm] = generateTco3_ZmSeries;
-SERIES_GENERATION[O3AS_PLOTS.tco3_return] = generateTco3_ReturnSeries;
+const SERIES_GENERATION = {
+    [O3AS_PLOTS.tco3_zm]: generateTco3_ZmSeries,
+    [O3AS_PLOTS.tco3_return]: generateTco3_ReturnSeries,
+}; // Map plotId to corresponding generation function
 
 /**
  * A string containing a list of used font families seperated by a comma.
@@ -166,10 +167,15 @@ function createSubtitle(getState) {
     getState().plot.generalSettings.months.map((month) =>
         stMonths.push(months[month - 1].description)
     );
-    if (stMonths.length === NUM_MONTHS) stMonths = ['All year'];
+    if (stMonths.length === NUM_MONTHS) {
+        stMonths = ['All year'];
+    }
 
-    if (getState().plot.plotId === 'tco3_zm') return `${stLocationText} | ${stMonths.join(', ')}`;
-    else return stMonths.join(', ');
+    if (getState().plot.plotId === 'tco3_zm') {
+        return `${stLocationText} | ${stMonths.join(', ')}`;
+    } else {
+        return stMonths.join(', ');
+    }
 }
 
 /**
@@ -679,11 +685,17 @@ function generateTco3_ZmSeries({ data, modelsSlice, refLineVisible, getState }) 
 
     for (const groupData of Object.values(modelsSlice.modelGroups)) {
         // iterate over model groups  // don't remove 'id'
-        if (!groupData.isVisible) continue; // skip hidden groups
+        if (!groupData.isVisible) {
+            continue;
+        } // skip hidden groups
         for (const [model, modelInfo] of Object.entries(groupData.models)) {
-            if (!modelInfo.isVisible) continue; // skip hidden models
+            if (!modelInfo.isVisible) {
+                continue;
+            } // skip hidden models
             const modelData = data[model]; // retrieve data (api)
-            if (typeof modelData === 'undefined') continue; // skip model if it is not available
+            if (typeof modelData === 'undefined') {
+                continue;
+            } // skip model if it is not available
             series.data.push({
                 name: model,
                 data: modelData.data.map((e, idx) => [START_YEAR + idx, e]),
@@ -746,7 +758,9 @@ function buildSvMatrixTco3Zm({ modelList, data }) {
     for (let i = 0; i < SERIES_LENGTH; ++i) {
         for (const model of modelList) {
             const modelData = data[model];
-            if (typeof modelData === 'undefined') continue;
+            if (typeof modelData === 'undefined') {
+                continue;
+            }
             matrix[i].push(
                 modelData.data[i] // add null anyway to remain index mapping (null is filtered out later)
             );
@@ -799,11 +813,17 @@ function generateTco3_ReturnSeries({ data, modelsSlice, xAxisRange, yAxisRange, 
     const maxY = yAxisRange.maxY;
     for (const groupData of Object.values(modelsSlice.modelGroups)) {
         // iterate over model groups
-        if (!groupData.isVisible) continue; // skip hidden groups
+        if (!groupData.isVisible) {
+            continue;
+        } // skip hidden groups
         for (const [model, modelInfo] of Object.entries(groupData.models)) {
-            if (!modelInfo.isVisible) continue; // skip hidden models
+            if (!modelInfo.isVisible) {
+                continue;
+            } // skip hidden models
             const modelData = data[model];
-            if (typeof modelData === 'undefined') continue; // skip model if it is not available
+            if (typeof modelData === 'undefined') {
+                continue;
+            } // skip model if it is not available
             const sortedData = regions.map((region) => ({
                 x: region,
                 y: filterOutOfRange(modelData.data[region], minY, maxY) || null, // null as default if data is missing
@@ -903,7 +923,9 @@ function buildSvMatrixTco3Return({ modelList, data, regions }) {
         const region = regions[index]; // iterate over regions
         for (const model of modelList) {
             const modelData = data[model];
-            if (typeof modelData === 'undefined') continue;
+            if (typeof modelData === 'undefined') {
+                continue;
+            }
             matrix[index].push(modelData.data[region] || null);
         }
     }
@@ -928,11 +950,17 @@ function calculateBoxPlotValues({ data, modelsSlice, regions }) {
 
     for (const groupData of Object.values(modelsSlice.modelGroups)) {
         // iterate over model groups  // don't remove 'id'
-        if (!groupData.isVisible) continue; // skip hidden groups
+        if (!groupData.isVisible) {
+            continue;
+        } // skip hidden groups
         for (const [model, modelInfo] of Object.entries(groupData.models)) {
-            if (!modelInfo.isVisible) continue; // skip hidden models
+            if (!modelInfo.isVisible) {
+                continue;
+            } // skip hidden models
             const modelData = data[model];
-            if (typeof modelData === 'undefined') continue; // skip model if it is not available
+            if (typeof modelData === 'undefined') {
+                continue;
+            } // skip model if it is not available
             for (const [region, year] of Object.entries(modelData.data)) {
                 if (year || year === 0) {
                     // allow 0 but not null | undefined
@@ -991,18 +1019,17 @@ function buildStatisticalSeries({
         );
 
         for (const [sv, svData] of Object.entries(svHolder)) {
-            if (
-                sv === std || // std
-                sv === percentile
-            )
-                continue; // skip for now
+            if (sv === std || sv === percentile) {
+                continue;
+            } // skip for now
 
             if (
-                groupData.visibleSV[sv] || // mean und median
-                (sv.includes('std') && groupData.visibleSV[std]) ||
-                (sv.toLowerCase().includes(percentile) && groupData.visibleSV[percentile])
+                !(
+                    groupData.visibleSV[sv] || // mean und median
+                    (sv.includes('std') && groupData.visibleSV[std]) ||
+                    (sv.toLowerCase().includes(percentile) && groupData.visibleSV[percentile])
+                )
             ) {
-            } else {
                 continue;
             }
             svSeries.data.push(
@@ -1376,7 +1403,9 @@ export function colorNameToHex(color) {
         yellowgreen: '#9acd32',
     };
 
-    if (typeof colors[color.toLowerCase()] != 'undefined') return colors[color.toLowerCase()];
+    if (typeof colors[color.toLowerCase()] != 'undefined') {
+        return colors[color.toLowerCase()];
+    }
 
     return false;
 }
@@ -1395,7 +1424,9 @@ export function convertToStrokeStyle(apiStyle) {
         dashed: 3,
     };
 
-    if (typeof styles[apiStyle.toLowerCase()] != 'undefined') return styles[apiStyle.toLowerCase()];
+    if (typeof styles[apiStyle.toLowerCase()] != 'undefined') {
+        return styles[apiStyle.toLowerCase()];
+    }
     return false;
 }
 
@@ -1439,8 +1470,12 @@ function create2dArray(i) {
  * @function
  */
 function isIncludedInSv(model, groupData, svType) {
-    if (svType === 'stdMean') return groupData.models[model][std]; // the std mean should only be calculated if the std is necessary
-    if (svType.toLowerCase().includes(percentile)) return groupData.models[model][percentile];
+    if (svType === 'stdMean') {
+        return groupData.models[model][std];
+    } // the std mean should only be calculated if the std is necessary
+    if (svType.toLowerCase().includes(percentile)) {
+        return groupData.models[model][percentile];
+    }
     return groupData.models[model][svType];
 }
 
@@ -1466,8 +1501,11 @@ export function getOptimalTickAmount(min, max) {
     }
 
     let divider = 1;
-    if (width <= 900) divider = 2;
-    else if (width <= 1100) divider = 3;
+    if (width <= 900) {
+        divider = 2;
+    } else if (width <= 1100) {
+        divider = 3;
+    }
 
     const diff = max - min;
 
@@ -1684,8 +1722,12 @@ function calcRecoveryPoints(getState, referenceValue, svSeries) {
             continue;
         }
         for (let i = 0; i < svSeries.data[idx].data.length; i++) {
-            if (svSeries.data[idx].data[i][yearIdx] <= refYear) continue;
-            if (svSeries.data[idx].data[i][yearIdx] > maxYear) break;
+            if (svSeries.data[idx].data[i][yearIdx] <= refYear) {
+                continue;
+            }
+            if (svSeries.data[idx].data[i][yearIdx] > maxYear) {
+                break;
+            }
             if (svSeries.data[idx].data[i][valIdx] >= refValue) {
                 points.push([
                     svSeries.data[idx].data[i][yearIdx],
@@ -1694,7 +1736,9 @@ function calcRecoveryPoints(getState, referenceValue, svSeries) {
                 break;
             }
         }
-        if (points.length < idx + 1) points.push([null, null]);
+        if (points.length < idx + 1) {
+            points.push([null, null]);
+        }
     }
     return points;
 }
@@ -1725,7 +1769,9 @@ export const formatLatitude = (locationValue) => {
  */
 const findLatitudeBandByLocation = (getState) => {
     const selectedLocation = getState().plot.generalSettings.location;
-    if (typeof selectedLocation === 'undefined') return null;
+    if (typeof selectedLocation === 'undefined') {
+        return null;
+    }
 
     for (let i = 0; i < latitudeBands.length - 1; i++) {
         if (

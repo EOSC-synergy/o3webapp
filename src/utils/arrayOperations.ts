@@ -14,8 +14,8 @@
  * //returns [1]
  * not([1, 2], [2])
  */
-export function not(a, b) {
-    return a.filter((value) => b.indexOf(value) === -1);
+export function not<T>(a: T[], b: T[]): T[] {
+    return a.filter((value) => !b.includes(value));
 }
 
 /**
@@ -28,8 +28,8 @@ export function not(a, b) {
  * //returns [3]
  * intersection([1, 2, 3], [3, 4, 5])
  */
-export function intersection(a, b) {
-    return a.filter((value) => b.indexOf(value) !== -1);
+export function intersection<T>(a: T[], b: T[]): T[] {
+    return a.filter((value) => b.includes(value));
 }
 
 /**
@@ -42,7 +42,7 @@ export function intersection(a, b) {
  * //returns [1, 2, 3, 4]
  * union([1, 2], [3, 4])
  */
-export function union(a, b) {
+export function union<T>(a: T[], b: T[]): T[] {
     return [...a, ...not(b, a)];
 }
 
@@ -54,13 +54,21 @@ export function union(a, b) {
  * @function
  * @category Utils
  */
-export function arraysEqual(a, b) {
-    if (a === b) return true;
-    if (a == null || b == null) return false;
-    if (a.length !== b.length) return false;
+export function arraysEqual<T>(a: T[], b: T[]): boolean {
+    if (a === b) {
+        return true;
+    }
+    if (a == null || b == null) {
+        return false;
+    }
+    if (a.length !== b.length) {
+        return false;
+    }
 
     for (let i = 0; i < a.length; ++i) {
-        if (a[i] !== b[i]) return false;
+        if (a[i] !== b[i]) {
+            return false;
+        }
     }
     return true;
 }

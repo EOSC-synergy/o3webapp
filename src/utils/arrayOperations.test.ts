@@ -1,6 +1,6 @@
 import { union, not, intersection, arraysEqual } from './arrayOperations';
 
-let a, b;
+let a: number[], b: number[];
 describe('union works expectedly', () => {
     it('handles no intersection', () => {
         // no intersection
@@ -40,8 +40,8 @@ describe('union works expectedly', () => {
 
 describe('intersection works expectedly', () => {
     it('works with no intersection', () => {
-        let a = [1, 2, 3];
-        let b = [4, 5, 6];
+        const a = [1, 2, 3];
+        const b = [4, 5, 6];
         expect(intersection(a, b)).toStrictEqual([]);
     });
 
@@ -72,8 +72,8 @@ describe('intersection works expectedly', () => {
 
 describe('not works expectedly', () => {
     it('works with no intersection', () => {
-        let a = [1, 2, 3];
-        let b = [4, 5, 6];
+        const a = [1, 2, 3];
+        const b = [4, 5, 6];
         expect(not(a, b)).toStrictEqual([1, 2, 3]);
         expect(not(b, a)).toStrictEqual([4, 5, 6]);
     });

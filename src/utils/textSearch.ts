@@ -12,21 +12,21 @@
  * @returns whether the search string was found
  * @category Utils
  */
-export const fullTextSearch = (elem: Object | string, searchStr: string) => {
+export function fullTextSearch<T>(elem: T, searchStr: string) {
     const lowerSearchStr = searchStr.toLowerCase();
-    if (typeof elem === 'object') {
+    if (typeof elem === 'string') {
+        return elem.toLowerCase().includes(lowerSearchStr);
+    } else {
         const elemValues = Object.values(elem);
 
-        for (let value of elemValues) {
+        for (const value of elemValues) {
             if (String(value).toLowerCase().includes(lowerSearchStr)) {
                 return true;
             }
         }
         return false;
-    } else {
-        return elem.toLowerCase().includes(lowerSearchStr);
     }
-};
+}
 
 /**
  * Searches for occurrences of a string in an array. Searches either
@@ -41,15 +41,15 @@ export const fullTextSearch = (elem: Object | string, searchStr: string) => {
  * @function
  * @category Utils
  */
-export const performSearch = (
-    array: (string | object)[],
+export function performSearch<T>(
+    array: T[],
     searchString: string,
-    shouldReturnValues: boolean
-): (string | object | number)[] => {
+    shouldReturnValues = false
+): (T | number)[] {
     let arrayMappedToIndices = array.map((elem, index) => ({ index, value: elem }));
-    arrayMappedToIndices = arrayMappedToIndices.filter(({ index, value }) =>
+    arrayMappedToIndices = arrayMappedToIndices.filter(({ value }) =>
         fullTextSearch(value, searchString)
     );
 
     return arrayMappedToIndices.map(({ index, value }) => (shouldReturnValues ? value : index));
-};
+}

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 //import Chart from "react-apexcharts"
-import { getOptions, generateSeries } from '../../../utils/optionsFormatter/optionsFormatter';
+import { getOptions, generateSeries } from '../../../utils/optionsFormatter';
 import { useSelector, useStore } from 'react-redux';
 import {
     selectPlotId,

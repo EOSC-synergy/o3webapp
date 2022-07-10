@@ -7,23 +7,21 @@
  *
  * Project_Institute_Modelname (whereas modelname can contain underscores)
  *
- * @param {string} name of the model
+ * @param name of the model
  * @returns the regex match object
  * @function
  */
-export const convertModelName = (name) => {
-    if (typeof name !== 'string') {
-        throw new Error('provided name that is not of type string');
-    }
+export const convertModelName = (name: string) => {
     const regex = new RegExp('^([^_]+)_([^_]+)_(.*)$');
     const info = name.match(regex);
 
-    if (info === null)
+    if (info === null) {
         return {
             project: '',
             institute: '',
             name,
         };
+    }
     return {
         project: info[1],
         institute: info[2],
