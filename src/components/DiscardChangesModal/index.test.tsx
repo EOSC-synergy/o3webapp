@@ -11,7 +11,7 @@ describe('test DiscardChangesModal rendering', () => {
                 onClose={mockFunction}
                 saveChanges={mockFunction}
                 discardChanges={mockFunction}
-                closeDialog={() => {}}
+                closeDialog={() => undefined}
             />
         );
     });
@@ -24,7 +24,7 @@ describe('test DiscardChangesModal rendering', () => {
                 onClose={mockFunction}
                 saveChanges={mockFunction}
                 discardChanges={mockFunction}
-                closeDialog={() => {}}
+                closeDialog={() => undefined}
             />
         );
         expect(baseElement).toMatchSnapshot();
@@ -39,7 +39,7 @@ describe('test DiscardChangesModal rendering', () => {
                 onClose={mockFunction}
                 saveChanges={mockFunction}
                 discardChanges={mockFunction}
-                closeDialog={() => {}}
+                closeDialog={() => undefined}
             />
         );
         expect(baseElement).toMatchSnapshot();
@@ -55,7 +55,7 @@ describe('test DiscardChangesModal functionality', () => {
             <DiscardChangesModal
                 isOpen={true}
                 closeDialog={mockOnClose}
-                onClose={() => {}}
+                onClose={() => undefined}
                 saveChanges={mockFunction}
                 discardChanges={mockFunction}
             />
@@ -74,7 +74,7 @@ describe('test DiscardChangesModal functionality', () => {
         const { getByTestId } = render(
             <DiscardChangesModal
                 isOpen={true}
-                closeDialog={() => {}}
+                closeDialog={() => undefined}
                 onClose={mockFunction}
                 saveChanges={mockFunction}
                 discardChanges={mockDiscardChanges}
@@ -94,7 +94,7 @@ describe('test DiscardChangesModal functionality', () => {
         const { getByTestId } = render(
             <DiscardChangesModal
                 isOpen={true}
-                closeDialog={() => {}}
+                closeDialog={() => undefined}
                 onClose={mockFunction}
                 saveChanges={mockSaveChanges}
                 discardChanges={mockFunction}
