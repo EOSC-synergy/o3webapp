@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Card, Button, Checkbox, IconButton, CardActions, Box } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
-import SearchBar from '../../../../../../components/Searchbar/Searchbar';
+import SearchBar from '../../../../../../components/Searchbar';
 import { styled } from '@mui/material/styles';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';

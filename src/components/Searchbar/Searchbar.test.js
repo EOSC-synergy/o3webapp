@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
-import SearchBar from './Searchbar';
+import SearchBar from '.';
 
 describe('test searchbar rendering', () => {
     it('renders without crashing', () => {

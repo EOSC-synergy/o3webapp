@@ -4,6 +4,7 @@ import { styled, alpha } from '@mui/material/styles';
 import React from 'react';
 import { performSearch } from '../../utils/textSearch';
 import PropTypes from 'prop-types';
+import useId from '@mui/utils/useId';
 
 /**
  * A JSX Element containing a wrapper for a SearchIcon.
@@ -69,6 +70,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
+type SearchBarProps = {
+    shouldReturnValues?: boolean;
+    inputArray: (string | object)[];
+    foundIndicesCallback: (indices: unknown[]) => void;
+};
 /**
  * A searchbar component that is used for searching a string in a data array
  * that either contains strings or objects. If the array contains objects the
@@ -77,22 +83,21 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
  * @param {Object} props further specified in propTypes
  * @returns {JSX} a pretty searchbar component
  */
-export default function SearchBar(props) {
-    const { inputArray, foundIndicesCallback } = props;
-    let shouldReturnValues = false;
-    if ('shouldReturnValues' in props) {
-        shouldReturnValues = props.shouldReturnValues;
-    }
-
+const SearchBar: React.FC<SearchBarProps> = ({
+    shouldReturnValues = false,
+    inputArray,
+    foundIndicesCallback,
+}) => {
     /**
      * handles the change of the input -> performs the search
      * @see {@link module:TextSearch.performSearch}
-     * @param {Event} event the event that triggered this function call
+     * @param newInput new text in the input
      */
-    const handleInputChange = (event) => {
-        const newInput = event.target.value;
+    const handleInputChange = (newInput: string) => {
         foundIndicesCallback(performSearch(inputArray, newInput, shouldReturnValues));
     };
+
+    const id = useId();
 
     return (
         <Search>
@@ -106,18 +111,28 @@ export default function SearchBar(props) {
                     alt: 'Searchbar',
                     'data-testid': 'SearchbarInput',
                 }}
-                onBlur={handleInputChange}
-                onKeyPress={(event) => {
+                id={id}
+                onBlur={(e) => handleInputChange(e.target.value)}
+                onKeyUp={(event) => {
                     if (event.key === 'Enter') {
-                        handleInputChange(event);
+                        // TODO: better way about this?
+                        handleInputChange(
+                            (
+                                document.getElementById(id!)! as
+                                    | HTMLInputElement
+                                    | HTMLTextAreaElement
+                            ).value
+                        );
                     }
                 }}
             />
         </Search>
     );
-}
+};
 
 SearchBar.propTypes = {
     inputArray: PropTypes.array.isRequired,
     foundIndicesCallback: PropTypes.func.isRequired,
 };
+
+export default SearchBar;
