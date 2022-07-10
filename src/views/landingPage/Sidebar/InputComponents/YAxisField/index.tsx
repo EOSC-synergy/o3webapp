@@ -1,22 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector, useStore } from 'react-redux';
-import {
-    setDisplayYRange,
-    selectPlotYRange,
-    selectPlotId,
-} from '../../../../../store/plotSlice/plotSlice';
+import { setDisplayYRange, selectPlotYRange, selectPlotId } from 'store/plotSlice/plotSlice';
 import { Typography, Grid, FormControl, TextField } from '@mui/material';
-import { O3AS_PLOTS } from '../../../../../utils/constants';
+import { O3AS_PLOTS } from 'utils/constants';
 import PropTypes from 'prop-types';
+
+type YAxisFieldProps = {
+    reportError?: (error: string) => void;
+};
 
 /**
  * Enables the user to choose the range that should be visible on the y-axis of the plot.
  * @component
- * @param {Object} props
- * @param {function} props.reportError function for error handling
+ * @param reportError function for error handling
  * @returns {JSX.Element} a jsx containing two text-fields and labels
  */
-function YAxisField(props) {
+const YAxisField: React.FC<YAxisFieldProps> = ({ reportError = () => undefined }) => {
     const store = useStore();
 
     /**
@@ -70,7 +69,7 @@ function YAxisField(props) {
      * @see {@link setStateY_zm}
      * @see {@link setStateY_return}
      */
-    const handleChangeMin = (event) => {
+    const handleChangeMin = (event: ChangeEvent<HTMLInputElement>) => {
         handleChange(event, 'minY');
     };
 
@@ -82,7 +81,7 @@ function YAxisField(props) {
      * @see {@link setStateY_zm}
      * @see {@link setStateY_return}
      */
-    const handleChangeMax = (event) => {
+    const handleChangeMax = (event: ChangeEvent<HTMLInputElement>) => {
         handleChange(event, 'maxY');
     };
 
@@ -95,13 +94,15 @@ function YAxisField(props) {
      * @see {@link setStateY_zm}
      * @see {@link setStateY_return}
      */
-    const handleChange = (event, extremum) => {
-        if (!isNaN(event.target.value)) {
-            let value = event.target.value;
+    const handleChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+        extremum: 'minY' | 'maxY'
+    ) => {
+        if (!isNaN(event.target.valueAsNumber)) {
+            const value = event.target.valueAsNumber;
             if (plotId === O3AS_PLOTS.tco3_zm) {
                 if (extremum === 'minY') {
                     setStateY_zm({ minY: value, maxY: stateY_zm.maxY });
-                    value = parseInt(value);
                     if (
                         !isNaN(parseInt(stateY_zm.maxY.toString())) &&
                         value > 0 &&
@@ -118,7 +119,6 @@ function YAxisField(props) {
                     }
                 } else if (extremum === 'maxY') {
                     setStateY_zm({ minY: stateY_zm.minY, maxY: value });
-                    value = parseInt(value);
                     if (
                         !isNaN(parseInt(stateY_zm.minY.toString())) &&
                         parseInt(stateY_zm.minY.toString()) > 0 &&
@@ -134,12 +134,11 @@ function YAxisField(props) {
                         );
                     }
                 } else {
-                    props.reportError('Invalid extremum string name in YAxisField.js');
+                    reportError('Invalid extremum string name in YAxisField.js');
                 }
             } else {
                 if (extremum === 'minY') {
                     setStateY_return({ minY: value, maxY: stateY_return.maxY });
-                    value = parseInt(value);
                     if (
                         !isNaN(parseInt(stateY_return.maxY.toString())) &&
                         value > 0 &&
@@ -156,7 +155,6 @@ function YAxisField(props) {
                     }
                 } else if (extremum === 'maxY') {
                     setStateY_return({ minY: stateY_return.minY, maxY: value });
-                    value = parseInt(value);
                     if (
                         !isNaN(parseInt(stateY_return.minY.toString())) &&
                         parseInt(stateY_return.minY.toString()) > 0 &&
@@ -172,7 +170,7 @@ function YAxisField(props) {
                         );
                     }
                 } else {
-                    props.reportError('Invalid extremum string name in YAxisField.js');
+                    reportError('Invalid extremum string name in YAxisField.js');
                 }
             }
         }
@@ -186,16 +184,24 @@ function YAxisField(props) {
      */
     const errorMin = () => {
         if (plotId === O3AS_PLOTS.tco3_zm) {
-            if (isNaN(parseInt(stateY_zm.minY.toString()))) return true;
-            if (isNaN(parseInt(stateY_zm.maxY.toString()))) return false;
+            if (isNaN(parseInt(stateY_zm.minY.toString()))) {
+                return true;
+            }
+            if (isNaN(parseInt(stateY_zm.maxY.toString()))) {
+                return false;
+            }
             return (
                 parseInt(stateY_zm.minY.toString()) < 0 ||
                 parseInt(stateY_zm.minY.toString()) >= parseInt(stateY_zm.maxY.toString()) ||
                 parseInt(stateY_zm.maxY.toString()) - parseInt(stateY_zm.minY.toString()) > maxDiff
             );
         } else {
-            if (isNaN(parseInt(stateY_return.minY.toString()))) return true;
-            if (isNaN(parseInt(stateY_return.maxY.toString()))) return false;
+            if (isNaN(parseInt(stateY_return.minY.toString()))) {
+                return true;
+            }
+            if (isNaN(parseInt(stateY_return.maxY.toString()))) {
+                return false;
+            }
             return (
                 parseInt(stateY_return.minY.toString()) < 0 ||
                 parseInt(stateY_return.minY.toString()) >=
@@ -214,8 +220,12 @@ function YAxisField(props) {
      */
     const helperTextMin = () => {
         if (plotId === O3AS_PLOTS.tco3_zm) {
-            if (isNaN(parseInt(stateY_zm.minY.toString()))) return '';
-            if (isNaN(parseInt(stateY_zm.maxY.toString()))) return '';
+            if (isNaN(parseInt(stateY_zm.minY.toString()))) {
+                return '';
+            }
+            if (isNaN(parseInt(stateY_zm.maxY.toString()))) {
+                return '';
+            }
             if (parseInt(stateY_zm.minY.toString()) < 0) {
                 return `<0`;
             } else if (parseInt(stateY_zm.minY.toString()) >= parseInt(stateY_zm.maxY.toString())) {
@@ -229,8 +239,12 @@ function YAxisField(props) {
                 return '';
             }
         } else {
-            if (isNaN(parseInt(stateY_return.minY.toString()))) return '';
-            if (isNaN(parseInt(stateY_return.maxY.toString()))) return '';
+            if (isNaN(parseInt(stateY_return.minY.toString()))) {
+                return '';
+            }
+            if (isNaN(parseInt(stateY_return.maxY.toString()))) {
+                return '';
+            }
             if (parseInt(stateY_return.minY.toString()) < 0) {
                 return `<0`;
             } else if (
@@ -256,16 +270,24 @@ function YAxisField(props) {
      */
     const errorMax = () => {
         if (plotId === O3AS_PLOTS.tco3_zm) {
-            if (isNaN(parseInt(stateY_zm.maxY.toString()))) return true;
-            if (isNaN(parseInt(stateY_zm.minY.toString()))) return false;
+            if (isNaN(parseInt(stateY_zm.maxY.toString()))) {
+                return true;
+            }
+            if (isNaN(parseInt(stateY_zm.minY.toString()))) {
+                return false;
+            }
             return (
                 parseInt(stateY_zm.maxY.toString()) < 0 ||
                 parseInt(stateY_zm.minY.toString()) >= parseInt(stateY_zm.maxY.toString()) ||
                 parseInt(stateY_zm.maxY.toString()) - parseInt(stateY_zm.minY.toString()) > maxDiff
             );
         } else {
-            if (isNaN(parseInt(stateY_return.maxY.toString()))) return true;
-            if (isNaN(parseInt(stateY_return.minY.toString()))) return false;
+            if (isNaN(parseInt(stateY_return.maxY.toString()))) {
+                return true;
+            }
+            if (isNaN(parseInt(stateY_return.minY.toString()))) {
+                return false;
+            }
             return (
                 parseInt(stateY_return.maxY.toString()) < 0 ||
                 parseInt(stateY_return.minY.toString()) >=
@@ -284,8 +306,12 @@ function YAxisField(props) {
      */
     const helperTextMax = () => {
         if (plotId === O3AS_PLOTS.tco3_zm) {
-            if (isNaN(parseInt(stateY_zm.minY.toString()))) return '';
-            if (isNaN(parseInt(stateY_zm.maxY.toString()))) return '';
+            if (isNaN(parseInt(stateY_zm.minY.toString()))) {
+                return '';
+            }
+            if (isNaN(parseInt(stateY_zm.maxY.toString()))) {
+                return '';
+            }
             if (parseInt(stateY_zm.maxY.toString()) < 0) {
                 return `<0`;
             } else if (parseInt(stateY_zm.minY.toString()) >= parseInt(stateY_zm.maxY.toString())) {
@@ -299,8 +325,12 @@ function YAxisField(props) {
                 return '';
             }
         } else {
-            if (isNaN(parseInt(stateY_return.minY.toString()))) return '';
-            if (isNaN(parseInt(stateY_return.maxY.toString()))) return '';
+            if (isNaN(parseInt(stateY_return.minY.toString()))) {
+                return '';
+            }
+            if (isNaN(parseInt(stateY_return.maxY.toString()))) {
+                return '';
+            }
             if (parseInt(stateY_return.maxY.toString()) < 0) {
                 return `<0`;
             } else if (
@@ -319,8 +349,11 @@ function YAxisField(props) {
     };
 
     useEffect(() => {
-        if (plotId === O3AS_PLOTS.tco3_zm) setStateY_zm({ minY, maxY });
-        else setStateY_return({ minY, maxY });
+        if (plotId === O3AS_PLOTS.tco3_zm) {
+            setStateY_zm({ minY, maxY });
+        } else {
+            setStateY_return({ minY, maxY });
+        }
     }, [plotId, minY, maxY]);
 
     return (
@@ -361,7 +394,7 @@ function YAxisField(props) {
             </Grid>
         </Grid>
     );
-}
+};
 
 YAxisField.propTypes = {
     /**

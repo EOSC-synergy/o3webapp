@@ -1,7 +1,7 @@
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
-import XAxisField from './XAxisField';
+import XAxisField from '.';
 import { createTestStore } from '../../../../../store/store';
 import { END_YEAR, START_YEAR } from '../../../../../utils/constants';
 

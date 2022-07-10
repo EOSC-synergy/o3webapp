@@ -1,17 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setDisplayXRange, selectPlotXRange } from '../../../../../store/plotSlice/plotSlice';
+import {
+    setDisplayXRange,
+    selectPlotXRange,
+    YearsBasedXRange,
+} from '../../../../../store/plotSlice/plotSlice';
 import { Typography, Grid, TextField, FormControl } from '@mui/material';
 import { START_YEAR, END_YEAR } from '../../../../../utils/constants';
 
 /**
  * Enables the user to choose the range that should be visible on the x-axis of the plot.
  * @component
- * @param {Object} props
- * @param {function} props.reportError function for error handling
  * @returns {JSX.Element} a jsx containing two text-fields and labels
  */
-function XAxisField() {
+const XAxisField: React.FC = () => {
     /**
      * A dispatch function to dispatch actions to the redux store.
      * @constant {function}
@@ -25,7 +27,7 @@ function XAxisField() {
      */
     const {
         years: { minX, maxX },
-    } = useSelector(selectPlotXRange);
+    } = useSelector(selectPlotXRange) as YearsBasedXRange;
 
     /**
      * Stores the minX and maxX values
@@ -41,16 +43,16 @@ function XAxisField() {
      * @see {@link setDisplayXRange}
      * @param event {Event} event that triggered the call of this function
      */
-    const handleChangeMin = (event) => {
-        if (!isNaN(event.target.value)) {
-            setStateX({ minX: event.target.value, maxX: maxX });
+    const handleChangeMin = (event: ChangeEvent<HTMLInputElement>) => {
+        if (!isNaN(event.target.valueAsNumber)) {
+            setStateX({ minX: event.target.valueAsNumber, maxX: maxX });
             if (
-                event.target.value >= START_YEAR &&
-                event.target.value <= END_YEAR &&
-                event.target.value < maxX
+                event.target.valueAsNumber >= START_YEAR &&
+                event.target.valueAsNumber <= END_YEAR &&
+                event.target.valueAsNumber < maxX
             ) {
                 dispatch(
-                    setDisplayXRange({ years: { minX: parseInt(event.target.value), maxX: maxX } })
+                    setDisplayXRange({ years: { minX: event.target.valueAsNumber, maxX: maxX } })
                 );
             }
         }
@@ -67,16 +69,16 @@ function XAxisField() {
      * @see {@link setStateX}
      * @see {@link setDisplayXRange}
      */
-    const handleChangeMax = (event) => {
-        if (!isNaN(event.target.value)) {
-            setStateX({ minX: minX, maxX: event.target.value });
+    const handleChangeMax = (event: ChangeEvent<HTMLInputElement>) => {
+        if (!isNaN(event.target.valueAsNumber)) {
+            setStateX({ minX: minX, maxX: event.target.valueAsNumber });
             if (
-                event.target.value >= START_YEAR &&
-                event.target.value <= END_YEAR &&
-                minX < event.target.value
+                event.target.valueAsNumber >= START_YEAR &&
+                event.target.valueAsNumber <= END_YEAR &&
+                minX < event.target.valueAsNumber
             ) {
                 dispatch(
-                    setDisplayXRange({ years: { minX: minX, maxX: parseInt(event.target.value) } })
+                    setDisplayXRange({ years: { minX: minX, maxX: event.target.valueAsNumber } })
                 );
             }
         }
@@ -144,6 +146,6 @@ function XAxisField() {
             </Grid>
         </Grid>
     );
-}
+};
 
 export default XAxisField;

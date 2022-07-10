@@ -15,8 +15,8 @@ import ReferenceModelSelector from '../InputComponents/ReferenceModelSelector/Re
 import ReferenceYearField from '../InputComponents/ReferenceYearField/ReferenceYearField';
 import RegionSelector from '../InputComponents/RegionSelector/RegionSelector';
 import TimeCheckBoxGroup from '../InputComponents/TimeCheckboxGroup/TimeCheckboxGroup';
-import XAxisField from '../InputComponents/XAxisField/XAxisField';
-import YAxisField from '../InputComponents/YAxisField/YAxisField';
+import XAxisField from '../InputComponents/XAxisField';
+import YAxisField from '../InputComponents/YAxisField';
 
 /**
  * Stores the name of the CustomLatitudeSelector component as a Symbol.
@@ -95,7 +95,7 @@ const YAF_Symbol = Symbol('YAxisField');
  * @memberof Section
  */
 const Accordion = styled((props) => (
-    // @ts-ignore-error TODO: missing children prop? we're just stying it though
+    // @ts-expect-error TODO: missing children prop? we're just stying it though
     <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
     border: `1px solid ${theme.palette.divider}`,

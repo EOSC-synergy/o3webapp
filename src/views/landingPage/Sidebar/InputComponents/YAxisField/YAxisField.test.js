@@ -1,7 +1,7 @@
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
-import YAxisField from './YAxisField';
+import YAxisField from '.';
 import { createTestStore } from '../../../../../store/store';
 import { setActivePlotId, setDisplayYRangeForPlot } from '../../../../../store/plotSlice/plotSlice';
 import { O3AS_PLOTS } from '../../../../../utils/constants';
