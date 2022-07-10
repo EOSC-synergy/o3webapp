@@ -115,12 +115,12 @@ const Footer: React.FC = () => {
                     }}
                     key="links"
                 >
-                    {links.map((link, idx) => {
+                    {links.map((link) => {
                         return (
                             <Grid
                                 item
                                 md={'auto'}
-                                key={idx}
+                                key={link.href}
                                 sx={{
                                     mx: 1,
                                 }}

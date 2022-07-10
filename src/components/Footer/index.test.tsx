@@ -22,7 +22,7 @@ it('renders all menu buttons in the expanded menu', () => {
     expect(footerLinks).toHaveLength(links.length);
 
     for (let i = 0; i < links.length; i++) {
-        let textContent = new RegExp(links[i].label);
+        const textContent = new RegExp(links[i].label);
         expect(footerLinks[i]).toHaveTextContent(textContent);
     }
 });

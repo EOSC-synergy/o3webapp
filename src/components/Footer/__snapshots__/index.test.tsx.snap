@@ -43,7 +43,7 @@ exports[`renders correctly 1`] = `
         >
           <a
             class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-158h6db-MuiTypography-root-MuiLink-root"
-            data-testid="footer-link-undefined"
+            data-testid="footer-link-O3as"
             href="https://o3as.data.kit.edu/#page-top"
           >
             <p
@@ -59,7 +59,7 @@ exports[`renders correctly 1`] = `
         >
           <a
             class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-158h6db-MuiTypography-root-MuiLink-root"
-            data-testid="footer-link-undefined"
+            data-testid="footer-link-Privacy Policy"
             href="https://o3as.data.kit.edu/policies/privacy-policy.html"
           >
             <p
@@ -75,7 +75,7 @@ exports[`renders correctly 1`] = `
         >
           <a
             class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-158h6db-MuiTypography-root-MuiLink-root"
-            data-testid="footer-link-undefined"
+            data-testid="footer-link-Terms of Use"
             href="https://o3as.data.kit.edu/policies/terms-of-use.html"
           >
             <p
@@ -91,7 +91,7 @@ exports[`renders correctly 1`] = `
         >
           <a
             class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-158h6db-MuiTypography-root-MuiLink-root"
-            data-testid="footer-link-undefined"
+            data-testid="footer-link-Gitlab"
             href="https://git.scc.kit.edu/synergy.o3as/o3webapp"
           >
             <p
@@ -107,7 +107,7 @@ exports[`renders correctly 1`] = `
         >
           <a
             class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-158h6db-MuiTypography-root-MuiLink-root"
-            data-testid="footer-link-undefined"
+            data-testid="footer-link-How to Acknowledge"
             href="https://o3as.data.kit.edu/policies/how-to-acknowledge.html"
           >
             <p
