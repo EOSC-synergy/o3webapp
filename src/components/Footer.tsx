@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 import Typography from '@mui/material/Typography';
 import { Grid, Link } from '@mui/material';
-import { BACKGROUND_BASE_COLOR } from '../../utils/constants';
+import { BACKGROUND_BASE_COLOR } from 'utils/constants';
 
 /**
  * The links on the right-hand side in the footer with label and href.

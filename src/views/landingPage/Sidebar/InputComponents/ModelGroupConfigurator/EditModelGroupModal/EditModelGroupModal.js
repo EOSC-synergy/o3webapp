@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Card, Button, Checkbox, IconButton, CardActions, Box } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
-import SearchBar from '../../../../../../components/Searchbar';
+import SearchBar from '../../../../../../components/SearchBar';
 import { styled } from '@mui/material/styles';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
@@ -296,7 +296,9 @@ function EditModelGroupModal(props) {
      * @function
      */
     const areAllCheckboxesSelected = (type) => {
-        if (filteredRows.length === 0) return false;
+        if (filteredRows.length === 0) {
+            return false;
+        }
         const checkedList = getCheckedListByType(type);
 
         let allRowsSelected = true;
@@ -316,7 +318,9 @@ function EditModelGroupModal(props) {
      * @function
      */
     const areNoCheckboxesSelected = (type) => {
-        if (filteredRows.length === 0) return true;
+        if (filteredRows.length === 0) {
+            return true;
+        }
         const checkedList = getCheckedListByType(type);
 
         let noSelectedRows = true;
@@ -337,7 +341,9 @@ function EditModelGroupModal(props) {
      * @function
      */
     const columnHeaderClick = (params) => {
-        if (!typeList.includes(params.colDef.field)) return;
+        if (!typeList.includes(params.colDef.field)) {
+            return;
+        }
         const type = params.colDef.headerName;
         const visibleCopy = [...getCheckedListByType(type)];
         const allCheckboxesSelected = areAllCheckboxesSelected(type);
@@ -649,7 +655,7 @@ function EditModelGroupModal(props) {
                 isOpen={discardChangesOpen}
                 onClose={closeDiscardChangesDialog}
                 saveChanges={applyChanges}
-                discardChanges={() => {}}
+                discardChanges={() => undefined}
                 closeDialog={() => setDiscardChangesOpen(false)}
             />
         </React.Fragment>

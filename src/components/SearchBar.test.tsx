@@ -1,21 +1,23 @@
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
-import SearchBar from '.';
+import SearchBar from './SearchBar';
 
 describe('test searchbar rendering', () => {
     it('renders without crashing', () => {
-        render(<SearchBar inputArray={[]} foundIndicesCallback={() => {}} />);
+        render(<SearchBar inputArray={[]} foundIndicesCallback={() => undefined} />);
     });
 
     it('renders correctly', () => {
-        const { container } = render(<SearchBar inputArray={[]} foundIndicesCallback={() => {}} />);
+        const { container } = render(
+            <SearchBar inputArray={[]} foundIndicesCallback={() => undefined} />
+        );
         expect(container).toMatchSnapshot();
     });
 
     it('renders the input of the sarchbar', () => {
         const { getByTestId } = render(
-            <SearchBar inputArray={[]} foundIndicesCallback={() => {}} />
+            <SearchBar inputArray={[]} foundIndicesCallback={() => undefined} />
         );
         const input = getByTestId('SearchbarInput');
         expect(input).toBeInTheDocument();

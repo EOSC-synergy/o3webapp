@@ -2,7 +2,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { InputBase } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import React from 'react';
-import { performSearch } from '../../utils/textSearch';
+import { performSearch } from 'utils/textSearch';
 import PropTypes from 'prop-types';
 import useId from '@mui/utils/useId';
 

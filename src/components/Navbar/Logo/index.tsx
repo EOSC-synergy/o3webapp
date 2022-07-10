@@ -22,7 +22,7 @@ export const O3ASLink = '#page-top';
 
 type LogoProps = {
     // TODO: Object typing? see https://mui.com/system/display/
-    display?: string | Object;
+    display?: string | object;
 };
 /**
  * Returns a logo from O3AS and the text "O3AS Webapp".

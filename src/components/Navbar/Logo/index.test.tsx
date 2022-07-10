@@ -22,7 +22,7 @@ it('displays the name of O3AS Webapp', () => {
 
 it('displays the correct image', () => {
     render(<Logo />);
-    const image = screen.getByAltText('logo');
+    const image = screen.getByAltText('logo') as HTMLImageElement;
     expect(image.src).toContain(logoSrc);
 });
 

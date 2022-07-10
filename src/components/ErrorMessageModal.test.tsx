@@ -1,5 +1,5 @@
 import React from 'react';
-import ErrorMessageModal from '.';
+import ErrorMessageModal from './ErrorMessageModal';
 import { render } from '@testing-library/react';
 
 describe('test ErrorMessageModal component rendering', () => {

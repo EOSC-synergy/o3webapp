@@ -1,5 +1,5 @@
 import React from 'react';
-import NavBar from '../../components/Navbar/NavBar';
+import NavBar from '../../components/Navbar';
 import LandingPage from './LandingPage';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';

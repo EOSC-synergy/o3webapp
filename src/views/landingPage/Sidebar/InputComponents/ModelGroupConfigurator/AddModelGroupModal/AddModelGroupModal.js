@@ -14,7 +14,7 @@ import { Card } from '@mui/material';
 import CardActions from '@mui/material/CardActions';
 import CircularProgress from '@mui/material/CircularProgress';
 import CardHeader from '@mui/material/CardHeader';
-import Searchbar from '../../../../../../components/Searchbar';
+import Searchbar from '../../../../../../components/SearchBar';
 import { convertModelName } from '../../../../../../utils/ModelNameConverter';
 import { union, not, intersection } from '../../../../../../utils/arrayOperations';
 import CloseIcon from '@mui/icons-material/Close';
@@ -426,13 +426,19 @@ function AddModelGroupModal(props) {
 
         // compare group name
         const modelGroupName = selectNameOfGroup(store.getState(), modelGroupId);
-        if (modelGroupName !== groupName) return true;
+        if (modelGroupName !== groupName) {
+            return true;
+        }
 
         // compare model list (equality not identity)
         const modelGroupNames = Object.keys(selectModelDataOfGroup(store.getState(), modelGroupId));
-        if (modelGroupNames.length !== right.length) return true;
+        if (modelGroupNames.length !== right.length) {
+            return true;
+        }
         for (let idx in right) {
-            if (modelGroupNames[idx] !== right[idx]) return true;
+            if (modelGroupNames[idx] !== right[idx]) {
+                return true;
+            }
         }
 
         return false;
@@ -583,7 +589,7 @@ function AddModelGroupModal(props) {
                 isOpen={discardChangesOpen}
                 onClose={closeDiscardChangesDialog}
                 saveChanges={saveChanges}
-                discardChanges={() => {}}
+                discardChanges={() => undefined}
                 closeDialog={() => setDiscardChangesOpen(false)}
             />
         </React.Fragment>

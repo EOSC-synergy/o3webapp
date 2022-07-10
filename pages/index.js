@@ -1,5 +1,5 @@
-import * as React from 'react';
-import Navbar from '../src/components/Navbar/NavBar';
+import React from 'react';
+import Navbar from '../src/components/Navbar';
 import Footer from '../src/components/Footer';
 import ErrorMessageModal from '../src/components/ErrorMessageModal';
 import LandingPage from '../src/views/landingPage/LandingPage';

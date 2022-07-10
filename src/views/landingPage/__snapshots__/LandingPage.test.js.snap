@@ -3,11 +3,11 @@
 exports[`test LandingPage component rendering LandingPage renders correctly 1`] = `
 <div>
   <div
-    id="Navbar"
+    id="NavBar"
   >
     <header
       class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic css-18lypu8-MuiPaper-root-MuiAppBar-root"
-      data-testid="Navbar"
+      data-testid="NavBar"
     >
       <div
         class="MuiContainer-root MuiContainer-disableGutters css-td5xp0-MuiContainer-root"

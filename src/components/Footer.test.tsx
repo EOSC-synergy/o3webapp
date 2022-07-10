@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Footer, { links } from '.';
+import Footer, { links } from './Footer';
 import { render, screen, within } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 

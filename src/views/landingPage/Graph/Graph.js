@@ -231,7 +231,7 @@ function Graph(props) {
         });
         const uniqueNumber = Date.now(); // forces apexcharts to re-render correctly!
         const HEIGHT =
-            (window.innerHeight - document.getElementById('Navbar').offsetHeight) * 0.975;
+            (window.innerHeight - document.getElementById('NavBar').offsetHeight) * 0.975;
         return (
             <Chart
                 key={uniqueNumber}

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Navbar from './NavBar';
+import Navbar from './index';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 

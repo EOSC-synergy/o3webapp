@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import DiscardChangesModal from '.';
+import DiscardChangesModal from './DiscardChangesModal';
 
 describe('test DiscardChangesModal rendering', () => {
     it('renders without crashing', () => {
