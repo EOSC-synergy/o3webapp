@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector, useStore } from 'react-redux';
-import { setDisplayYRange, selectPlotYRange, selectPlotId } from 'store/plotSlice/plotSlice';
+import { setDisplayYRange, selectPlotYRange, selectPlotId } from 'store/plotSlice';
 import { Typography, Grid, FormControl, TextField } from '@mui/material';
 import { O3AS_PLOTS } from 'utils/constants';
 import PropTypes from 'prop-types';

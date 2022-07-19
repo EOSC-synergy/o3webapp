@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { selectPlotId, setTitle } from '../../../../../store/plotSlice/plotSlice';
+import { selectPlotId, setTitle, selectPlotTitle } from '../../../../../store/plotSlice';
 import { Divider, Typography, Box, FormControl, TextField } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { selectPlotTitle } from '../../../../../store/plotSlice/plotSlice';
 import PropTypes from 'prop-types';
 
 /**

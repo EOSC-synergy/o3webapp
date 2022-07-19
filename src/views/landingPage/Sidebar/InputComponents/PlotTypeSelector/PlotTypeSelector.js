@@ -7,7 +7,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectPlotId, setActivePlotId } from '../../../../../store/plotSlice/plotSlice';
+import { selectPlotId, setActivePlotId } from '../../../../../store/plotSlice';
 import { REQUEST_STATE } from '../../../../../services/API/apiSlice/apiSlice';
 
 /**

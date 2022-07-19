@@ -21,7 +21,7 @@ import {
     downloadGraphAsSVG,
 } from 'services/downloading/otherFormats';
 import { useSelector } from 'react-redux';
-import { selectPlotId, selectPlotTitle } from 'store/plotSlice/plotSlice';
+import { selectPlotId, selectPlotTitle } from 'store/plotSlice';
 import { selectActivePlotData } from 'services/API/apiSlice/apiSlice';
 import { selectAllModelGroups } from 'store/modelsSlice/modelsSlice';
 import { REQUEST_STATE } from 'services/API/apiSlice/apiSlice';

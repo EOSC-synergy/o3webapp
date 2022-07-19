@@ -12,7 +12,7 @@ import {
 } from '../../../../../store/referenceSlice/referenceSlice';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import MuiVisibilityIcon from '@mui/icons-material/Visibility';
-import { selectPlotId } from '../../../../../store/plotSlice/plotSlice';
+import { selectPlotId } from '../../../../../store/plotSlice';
 
 /**
  * Enables the user to select a reference year.

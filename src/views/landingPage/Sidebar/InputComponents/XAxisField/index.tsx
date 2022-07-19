@@ -4,7 +4,7 @@ import {
     setDisplayXRange,
     selectPlotXRange,
     YearsBasedXRange,
-} from '../../../../../store/plotSlice/plotSlice';
+} from '../../../../../store/plotSlice';
 import { Typography, Grid, TextField, FormControl } from '@mui/material';
 import { START_YEAR, END_YEAR } from '../../../../../utils/constants';
 

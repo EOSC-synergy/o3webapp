@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Grid, TextField, FormControl } from '@mui/material';
-import { selectPlotLocation, setLocation } from 'store/plotSlice/plotSlice';
+import { selectPlotLocation, setLocation } from 'store/plotSlice';
 import { fetchPlotDataForCurrentModels } from 'services/API/apiSlice/apiSlice';
 import PropTypes from 'prop-types';
 import { Latitude } from '../../../../../../utils/constants';
@@ -70,8 +70,8 @@ const CustomLatitudeSelector: React.FC = () => {
      * @function
      */
     const handleChangeMin = (event: React.ChangeEvent<HTMLInputElement>) => {
-        let selectedLocationCopy = { ...selectedLocation };
-        let val = parseInt(event.target.value);
+        const selectedLocationCopy = { ...selectedLocation };
+        const val = parseInt(event.target.value);
         if (!isNaN(val)) {
             if (val > maxLat || val > LATITUDE_BAND_MAX_VALUE || val < LATITUDE_BAND_MIN_VALUE) {
                 setMinLatState(val);
@@ -99,8 +99,8 @@ const CustomLatitudeSelector: React.FC = () => {
      * @function
      */
     const handleChangeMax = (event: React.ChangeEvent<HTMLInputElement>) => {
-        let selectedLocationCopy = { ...selectedLocation };
-        let val = parseInt(event.target.value);
+        const selectedLocationCopy = { ...selectedLocation };
+        const val = parseInt(event.target.value);
         if (!isNaN(val)) {
             if (val < minLat || val > LATITUDE_BAND_MAX_VALUE || val < LATITUDE_BAND_MIN_VALUE) {
                 setMaxLatState(val);
@@ -134,8 +134,12 @@ const CustomLatitudeSelector: React.FC = () => {
         if (typeof minLatState === 'string' && typeof maxLatState === 'string') {
             return `< ${LATITUDE_BAND_MIN_VALUE}`;
         }
-        if (minLatState < LATITUDE_BAND_MIN_VALUE) return `> ${LATITUDE_BAND_MIN_VALUE}`;
-        if (minLatState > LATITUDE_BAND_MAX_VALUE) return `< ${LATITUDE_BAND_MAX_VALUE}`;
+        if (minLatState < LATITUDE_BAND_MIN_VALUE) {
+            return `> ${LATITUDE_BAND_MIN_VALUE}`;
+        }
+        if (minLatState > LATITUDE_BAND_MAX_VALUE) {
+            return `< ${LATITUDE_BAND_MAX_VALUE}`;
+        }
         if (minLatState > maxLatState) {
             return maxLatState >= LATITUDE_BAND_MAX_VALUE ? '' : `< ${maxLatState}`;
         }
@@ -154,8 +158,12 @@ const CustomLatitudeSelector: React.FC = () => {
         if (typeof minLatState === 'string' && typeof maxLatState === 'string') {
             return `> ${LATITUDE_BAND_MAX_VALUE}`;
         }
-        if (maxLatState < LATITUDE_BAND_MIN_VALUE) return `> ${LATITUDE_BAND_MIN_VALUE}`;
-        if (maxLatState > LATITUDE_BAND_MAX_VALUE) return `< ${LATITUDE_BAND_MAX_VALUE}`;
+        if (maxLatState < LATITUDE_BAND_MIN_VALUE) {
+            return `> ${LATITUDE_BAND_MIN_VALUE}`;
+        }
+        if (maxLatState > LATITUDE_BAND_MAX_VALUE) {
+            return `< ${LATITUDE_BAND_MAX_VALUE}`;
+        }
         if (minLatState > maxLatState) {
             return minLatState >= LATITUDE_BAND_MAX_VALUE ? '' : `> ${minLatState}`;
         }

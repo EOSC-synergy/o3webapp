@@ -1,5 +1,5 @@
 import { applyMiddleware, combineReducers, configureStore, createStore } from '@reduxjs/toolkit';
-import plotReducer from './plotSlice/plotSlice';
+import plotReducer from './plotSlice';
 import modelsReducer, { setModelsOfModelGroup } from './modelsSlice/modelsSlice';
 import referenceReducer from './referenceSlice/referenceSlice';
 import apiReducer from '../services/API/apiSlice/apiSlice';

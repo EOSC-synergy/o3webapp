@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectPlotLocation, setLocation } from 'store/plotSlice/plotSlice';
+import { selectPlotLocation, setLocation } from 'store/plotSlice';
 import { Box, Divider, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { Latitude, latitudeBands } from 'utils/constants';

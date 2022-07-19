@@ -13,7 +13,7 @@ import {
     setLocation,
     setMonths,
     setTitle,
-} from '../../store/plotSlice/plotSlice';
+} from '../../store/plotSlice';
 import { setModel, setVisibility, setYear } from '../../store/referenceSlice/referenceSlice';
 import {
     setModelsOfModelGroup,
@@ -85,7 +85,9 @@ export function generateNewUrl(store) {
     };
 
     for (let i = 0; i < store.getState().models.idCounter; i++) {
-        if (typeof store.getState().models.modelGroups[i] === 'undefined') continue;
+        if (typeof store.getState().models.modelGroups[i] === 'undefined') {
+            continue;
+        }
         const modelGroup = store.getState().models.modelGroups[i];
         const name = modelGroup.name;
         const visibilities = [
@@ -203,7 +205,9 @@ export function updateStoreWithQuery(store, query) {
             let modelSettings = elem.split('"')[2].split(',').slice(-1)[0];
             const binary = parseBigInt(modelSettings, 36, 2);
             let leadingZeros = '0' * (models.length * dataPerModel - binary.length);
-            if (typeof leadingZeros === 'number') leadingZeros = '';
+            if (typeof leadingZeros === 'number') {
+                leadingZeros = '';
+            }
             modelSettings = leadingZeros + binary;
             modelSettings = modelSettings.split('').map((e) => {
                 return Boolean(parseInt(e));

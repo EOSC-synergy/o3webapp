@@ -5,7 +5,7 @@ import { NUM_MONTHS_IN_SEASON, NUM_MONTHS } from '../../../../../utils/constants
 import Typography from '@mui/material/Typography';
 import { fetchPlotDataForCurrentModels } from '../../../../../services/API/apiSlice/apiSlice';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectPlotMonths, setMonths } from '../../../../../store/plotSlice/plotSlice';
+import { selectPlotMonths, setMonths } from '../../../../../store/plotSlice';
 import PropTypes from 'prop-types';
 
 /**
@@ -147,7 +147,9 @@ function TimeCheckBoxGroup(props) {
     const handleYearChecked = () => {
         let shouldBeSelected = false;
         for (let i = 0; i < NUM_MONTHS; i++) {
-            if (!selectedMonths.includes(i + 1)) shouldBeSelected = true;
+            if (!selectedMonths.includes(i + 1)) {
+                shouldBeSelected = true;
+            }
         }
         const monthCpy = [];
         if (shouldBeSelected) {
@@ -174,7 +176,9 @@ function TimeCheckBoxGroup(props) {
             const currMonthInSeason = SEASONS_ARRAY[seasonId].months[i];
             monthsInSeason.push(currMonthInSeason);
 
-            if (shouldBeSelected) continue;
+            if (shouldBeSelected) {
+                continue;
+            }
             shouldBeSelected = !monthCpy.includes(currMonthInSeason);
         }
 
