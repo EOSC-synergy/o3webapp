@@ -174,13 +174,13 @@ const Section: React.FC<SectionProps> = ({
      * maps a given name to a corresponding component from the ./InputComponents folder
      * if there is no component with the given name, calls the props.reportError function
      * @public
-     * @param name the name of the component
+     * @param name_ the name of the component
      * @param key a unique key for the given input component
      * @returns {JSX.Element} a component from './InputComponents
      */
-    function mapNameToComponent(name: string, key: number) {
+    function mapNameToComponent(name_: string, key: number) {
         if (reportError !== undefined) {
-            switch (name) {
+            switch (name_) {
                 case CLS_Symbol.description:
                     return <CustomLatitudeSelector key={key} />;
                 case LBS_Symbol.description:
@@ -204,7 +204,7 @@ const Section: React.FC<SectionProps> = ({
                 case YAF_Symbol.description:
                     return <YAxisField key={key} reportError={reportError} />;
                 default:
-                    reportError(`Section ${name} found no match for an input component ${name}`);
+                    reportError(`Section ${name} found no match for an input component ${name_}`);
             }
         } else {
             return <> `props.ReportError` not defined </>;

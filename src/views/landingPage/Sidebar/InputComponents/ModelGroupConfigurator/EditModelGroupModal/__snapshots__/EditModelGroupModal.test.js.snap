@@ -102,6 +102,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
               aria-label="search"
               class="MuiInputBase-input css-yz9k0d-MuiInputBase-input"
               data-testid="SearchbarInput"
+              id="mui-23"
               placeholder="Search…"
               type="text"
               value=""

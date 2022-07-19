@@ -30,7 +30,7 @@ export type YRange = {
     maxY: number;
 };
 
-type PlotState = {
+export type PlotState = {
     plotId: O3AS_PLOTS;
     generalSettings: {
         location: Latitude;

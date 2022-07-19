@@ -80,11 +80,11 @@ exports[`test addModelGroupModal rendering renders correctly if model list provi
               class="MuiInput-root MuiInput-underline MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-1480iag-MuiInputBase-root-MuiInput-root"
             >
               <input
-                aria-describedby="mui-4-helper-text"
+                aria-describedby="mui-7-helper-text"
                 aria-invalid="false"
                 class="MuiInput-input MuiInputBase-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
                 data-testid="AddModelGroupModal-card-group-name"
-                id="mui-4"
+                id="mui-7"
                 placeholder="Your group"
                 type="text"
                 value=""
@@ -92,7 +92,7 @@ exports[`test addModelGroupModal rendering renders correctly if model list provi
             </div>
             <p
               class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-1d1r5q-MuiFormHelperText-root"
-              id="mui-4-helper-text"
+              id="mui-7-helper-text"
             >
               The name will only appear in the legend of the exported plot.
             </p>
@@ -128,6 +128,7 @@ exports[`test addModelGroupModal rendering renders correctly if model list provi
                 aria-label="search"
                 class="MuiInputBase-input css-yz9k0d-MuiInputBase-input"
                 data-testid="SearchbarInput"
+                id="mui-8"
                 placeholder="Search…"
                 type="text"
                 value=""
@@ -342,11 +343,11 @@ exports[`test addModelGroupModal rendering renders correctly when open 1`] = `
               class="MuiInput-root MuiInput-underline MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-1480iag-MuiInputBase-root-MuiInput-root"
             >
               <input
-                aria-describedby="mui-2-helper-text"
+                aria-describedby="mui-3-helper-text"
                 aria-invalid="false"
                 class="MuiInput-input MuiInputBase-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
                 data-testid="AddModelGroupModal-card-group-name"
-                id="mui-2"
+                id="mui-3"
                 placeholder="Your group"
                 type="text"
                 value=""
@@ -354,7 +355,7 @@ exports[`test addModelGroupModal rendering renders correctly when open 1`] = `
             </div>
             <p
               class="MuiFormHelperText-root MuiFormHelperText-sizeMedium css-1d1r5q-MuiFormHelperText-root"
-              id="mui-2-helper-text"
+              id="mui-3-helper-text"
             >
               The name will only appear in the legend of the exported plot.
             </p>
@@ -390,6 +391,7 @@ exports[`test addModelGroupModal rendering renders correctly when open 1`] = `
                 aria-label="search"
                 class="MuiInputBase-input css-yz9k0d-MuiInputBase-input"
                 data-testid="SearchbarInput"
+                id="mui-4"
                 placeholder="Search…"
                 type="text"
                 value=""

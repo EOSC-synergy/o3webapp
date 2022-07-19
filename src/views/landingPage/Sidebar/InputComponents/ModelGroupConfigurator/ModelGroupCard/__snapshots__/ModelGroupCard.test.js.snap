@@ -360,11 +360,11 @@ exports[`test ModelGroupCard functionality opens add model group modal 1`] = `
               class="MuiInput-root MuiInput-underline MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-1480iag-MuiInputBase-root-MuiInput-root"
             >
               <input
-                aria-describedby="mui-22-helper-text"
+                aria-describedby="mui-23-helper-text"
                 aria-invalid="false"
                 class="MuiInput-input MuiInputBase-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
                 data-testid="AddModelGroupModal-card-group-name"
-                id="mui-22"
+                id="mui-23"
                 placeholder="Your group"
                 type="text"
                 value="Example Group"
@@ -372,7 +372,7 @@ exports[`test ModelGroupCard functionality opens add model group modal 1`] = `
             </div>
             <p
               class="MuiFormHelperText-root MuiFormHelperText-sizeMedium MuiFormHelperText-filled css-1d1r5q-MuiFormHelperText-root"
-              id="mui-22-helper-text"
+              id="mui-23-helper-text"
             >
               The name will only appear in the legend of the exported plot.
             </p>
@@ -408,6 +408,7 @@ exports[`test ModelGroupCard functionality opens add model group modal 1`] = `
                 aria-label="search"
                 class="MuiInputBase-input css-yz9k0d-MuiInputBase-input"
                 data-testid="SearchbarInput"
+                id="mui-24"
                 placeholder="Search…"
                 type="text"
                 value=""
@@ -908,6 +909,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
               aria-label="search"
               class="MuiInputBase-input css-yz9k0d-MuiInputBase-input"
               data-testid="SearchbarInput"
+              id="mui-1"
               placeholder="Search…"
               type="text"
               value=""
