@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { NO_MONTH_SELECTED } from '../../../utils/constants';
+import { NO_MONTH_SELECTED } from 'utils/constants';
 
 /**
  * This module is responsible for the communication with the [API]{@link https://api.o3as.fedcloud.eu/api/v1/ui/} and
@@ -27,25 +27,25 @@ const timeoutVal = 5 * 60 * 1000; // 5 min at least (fetching the models took 29
 /**
  * Makes a GET request to a specified endpoint of the API.
  *
- * @param {string} endpoint the endpoint of the URL
+ * @param endpoint the endpoint of the URL
  * @returns the request promise from axios
  * @function
  * @example getFromAPI("/plots")
  */
-const getFromAPI = (endpoint) => {
+const getFromAPI = (endpoint: string) => {
     return axios.get(baseURL + endpoint, { timeout: timeoutVal });
 };
 
 /**
  * Makes a POST request to a specified endpoint of the API with the given data.
  *
- * @param {string} endpoint the endpoint of the URL
- * @param {Array.<Object>} data the data for the params of the post request
+ * @param endpoint the endpoint of the URL
+ * @param data the data for the params of the post request
  * @returns the request promise from axios
  * @function
  * @example postAtAPI("/models/plotstyle", {ptype: "tco3_zm"})
  */
-const postAtAPI = (endpoint, data) => {
+const postAtAPI = (endpoint: string, data: unknown) => {
     // don't pack "data" in an object, the api accepts only an array of values (e.g. model list)
     return axios.post(baseURL + endpoint, data, { timeout: timeoutVal });
 };
@@ -63,15 +63,18 @@ export const getPlotTypes = () => {
 /**
  * Gets the models from the API.
  *
- * @param {string} plotType the plot type for which the models should be fetched
- * @param {string} select a selection of specific models
+ * @param plotType the plot type for which the models should be fetched
+ * @param select a selection of specific models
  * @returns the request promise from axios
  * @function
  * @example getModels("tco3_zm", "refC2")
  */
-export const getModels = (plotType = undefined, select = undefined) => {
-    const hasPlotType = typeof plotType !== 'undefined';
-    const hasSelect = typeof select !== 'undefined';
+export const getModels = (
+    plotType: string | undefined = undefined,
+    select: string | undefined = undefined
+) => {
+    const hasPlotType = plotType != undefined;
+    const hasSelect = select != undefined;
     const hasOne = hasPlotType || hasSelect;
     const hasBoth = hasPlotType && hasSelect;
 
@@ -85,12 +88,12 @@ export const getModels = (plotType = undefined, select = undefined) => {
 /**
  * Gets the plot style via a post request.
  *
- * @param {string} plotType the plot type for which the plot style should be fetched
+ * @param plotType the plot type for which the plot style should be fetched
  * @returns the request promise from axios
  * @function
  * @example postModelsPlotStyle("tco3_zm")
  */
-export const postModelsPlotStyle = (plotType) => {
+export const postModelsPlotStyle = (plotType: string) => {
     return postAtAPI('/models/plotstyle', {
         ptype: plotType,
     });
@@ -99,15 +102,15 @@ export const postModelsPlotStyle = (plotType) => {
 /**
  * Performs a request to /plots/plotId to fetch the plot data from the API formatted with the given parameters.
  *
- * @param {string} plotId a string describing the plot - has to be the official plot name (e.g. tco3_zm)
- * @param {int} latMin specifies the minimum latitude
- * @param {int} latMax specifies specifying the maximum latitude
- * @param {Array.<int>} months represents the selected months
- * @param {Array.<String>} modelList lists the desired models
- * @param {int} startYear from which point the data should start
- * @param {int} endYear until which point the data is required
- * @param {string} refModel the reference model to "normalize the data"
- * @param {int} refYear the reference year to "normalize the data"
+ * @param plotId a string describing the plot - has to be the official plot name (e.g. tco3_zm)
+ * @param latMin specifies the minimum latitude
+ * @param latMax specifies specifying the maximum latitude
+ * @param months represents the selected months
+ * @param modelList lists the desired models
+ * @param startYear from which point the data should start
+ * @param endYear until which point the data is required
+ * @param refModel the reference model to "normalize the data"
+ * @param refYear the reference year to "normalize the data"
  * @returns the request promise from axios
  * @function
  * @example getPlotData({
@@ -132,6 +135,16 @@ export const getPlotData = ({
     endYear,
     refModel,
     refYear,
+}: {
+    plotId: string;
+    latMin: number;
+    latMax: number;
+    months: number[];
+    modelList: string[];
+    startYear: number;
+    endYear: number;
+    refModel: string;
+    refYear: number;
 }) => {
     if (months.length === 0) {
         return Promise.reject(new Error(NO_MONTH_SELECTED));

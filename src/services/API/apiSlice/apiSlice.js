@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, createAction } from '@reduxjs/toolkit';
-import { getModels, getPlotTypes, getPlotData } from '../client/client';
+import { getModels, getPlotTypes, getPlotData } from '../client';
 import { getSuggestedValues, preTransformApiData } from '../../../utils/optionsFormatter';
 import { START_YEAR, END_YEAR, O3AS_PLOTS } from '../../../utils/constants';
 import {
