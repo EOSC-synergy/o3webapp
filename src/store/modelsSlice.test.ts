@@ -10,17 +10,14 @@ import reducer, {
     selectNameOfGroup,
     selectStatisticalValueSettingsOfGroup,
     selectVisibilityOfGroup,
+    MODEL_DATA_TEMPLATE,
+    ModelState,
+    GlobalModelState,
 } from './modelsSlice';
-import { mean, STATISTICAL_VALUES_LIST } from '../../utils/constants';
-
-const MODEL_DATA_TEMPLATE = {
-    color: null,
-    isVisible: true,
-};
-STATISTICAL_VALUES_LIST.forEach((sv) => (MODEL_DATA_TEMPLATE[sv] = true));
+import { mean, STATISTICAL_VALUES_LIST } from 'utils/constants';
 
 describe('reducer tests', () => {
-    it('should edit the model list of the given group and leave other groups untoched', () => {
+    it('should edit the model list of the given group and leave other groups untouched', () => {
         const newModelList = ['modelB', 'modelC'];
 
         const previousState = {
@@ -39,7 +36,7 @@ describe('reducer tests', () => {
                     },
                 },
             },
-        };
+        } as unknown as ModelState;
 
         const expected = {
             modelGroups: {
@@ -80,8 +77,9 @@ describe('reducer tests', () => {
             modelGroups: {},
         };
 
-        const visibleSV = {};
-        STATISTICAL_VALUES_LIST.forEach((sv) => (visibleSV[sv] = true));
+        const visibleSV = STATISTICAL_VALUES_LIST.reduce((p, c) => {
+            return { ...p, [c]: true };
+        }, {});
 
         const expected = {
             idCounter: 1,
@@ -119,7 +117,7 @@ describe('reducer tests', () => {
                     isVisible: false,
                 },
             },
-        };
+        } as unknown as ModelState;
 
         const expected = {
             // Expect the new state to have the updated visibility of modelA
@@ -164,7 +162,7 @@ describe('reducer tests', () => {
                     isVisible: false,
                 },
             },
-        };
+        } as unknown as ModelState;
 
         const expected = {
             modelGroups: {
@@ -208,7 +206,7 @@ describe('reducer tests', () => {
                     },
                 },
             },
-        };
+        } as unknown as ModelState;
 
         const expected = {
             modelGroupList: [0],
@@ -220,7 +218,7 @@ describe('reducer tests', () => {
                             color: null,
                             isVisible: true,
                             mean: false,
-                            std: false,
+                            'standard deviation': false,
                             median: false,
                             percentile: false,
                         },
@@ -228,7 +226,7 @@ describe('reducer tests', () => {
                             color: null,
                             isVisible: false,
                             mean: true,
-                            std: true,
+                            'standard deviation': true,
                             median: true,
                             percentile: true,
                         },
@@ -242,7 +240,7 @@ describe('reducer tests', () => {
                 color: null,
                 isVisible: true,
                 mean: false,
-                std: false,
+                'standard deviation': false,
                 median: false,
                 percentile: false,
             },
@@ -250,7 +248,7 @@ describe('reducer tests', () => {
                 color: null,
                 isVisible: false,
                 mean: true,
-                std: true,
+                'standard deviation': true,
                 median: true,
                 percentile: true,
             },
@@ -282,7 +280,7 @@ describe('reducer tests', () => {
                     },
                 },
             },
-        };
+        } as unknown as ModelState;
 
         const expected = {
             modelGroupList: [0],
@@ -326,7 +324,7 @@ describe('selector tests', () => {
                     },
                 },
             },
-        };
+        } as unknown as GlobalModelState;
 
         expect(selectModelsOfGroup(globalState, 0)).toEqual(modelList);
     });
@@ -347,7 +345,7 @@ describe('selector tests', () => {
                     },
                 },
             },
-        };
+        } as unknown as GlobalModelState;
 
         expect(selectModelDataOfGroup(globalState, 0)).toEqual(modelData);
     });
@@ -364,7 +362,7 @@ describe('selector tests', () => {
                     },
                 },
             },
-        };
+        } as unknown as GlobalModelState;
 
         expect(selectNameOfGroup(globalState, 0)).toEqual(name);
     });
@@ -386,7 +384,7 @@ describe('selector tests', () => {
                     },
                 },
             },
-        };
+        } as unknown as GlobalModelState;
 
         expect(selectStatisticalValueSettingsOfGroup(globalState, 0)).toEqual(visibleSV);
     });
@@ -403,21 +401,22 @@ describe('selector tests', () => {
                     },
                 },
             },
-        };
+        } as unknown as GlobalModelState;
 
         expect(selectVisibilityOfGroup(globalState, 0)).toEqual(isVisible);
     });
 
     it('should select all group ids', () => {
         const allGroupIds = [0, 1, 2, 3, 4, 5];
-        const modelGroups = {};
-        allGroupIds.forEach((id) => (modelGroups[id] = {}));
+        const modelGroups = allGroupIds.reduce((p, c) => {
+            return { ...p, [c]: {} };
+        }, {});
 
         const globalState = {
             models: {
                 modelGroups,
             },
-        };
+        } as unknown as GlobalModelState;
 
         expect(selectAllGroupIds(globalState)).toEqual(allGroupIds);
     });

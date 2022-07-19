@@ -20,7 +20,7 @@ import {
     setStatisticalValueForGroup,
     setVisibilityForGroup,
     updatePropertiesOfModelGroup,
-} from '../../store/modelsSlice/modelsSlice';
+} from '../../store/modelsSlice';
 import _ from 'lodash';
 
 /**

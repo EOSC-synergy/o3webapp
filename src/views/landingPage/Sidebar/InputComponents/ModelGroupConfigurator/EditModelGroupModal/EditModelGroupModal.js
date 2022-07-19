@@ -11,7 +11,7 @@ import {
     selectModelsOfGroup,
     selectModelDataOfGroup,
     updatePropertiesOfModelGroup,
-} from '../../../../../../store/modelsSlice/modelsSlice';
+} from '../../../../../../store/modelsSlice';
 import {
     STATISTICAL_VALUES,
     mean,

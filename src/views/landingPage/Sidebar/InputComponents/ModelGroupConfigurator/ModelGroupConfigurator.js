@@ -4,7 +4,7 @@ import ModelGroupCard from './ModelGroupCard/ModelGroupCard';
 import { Button } from '@mui/material';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { selectAllGroupIds } from '../../../../../store/modelsSlice/modelsSlice';
+import { selectAllGroupIds } from '../../../../../store/modelsSlice';
 
 /**
  * Enables the user to configure models that should be visible in the plot clustered as model groups.

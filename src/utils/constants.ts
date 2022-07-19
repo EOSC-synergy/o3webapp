@@ -61,7 +61,7 @@ export type Latitude = {
 };
 
 export type LatitudeBand = {
-    text: Symbol;
+    text: symbol;
     value: Latitude;
 };
 
@@ -212,7 +212,7 @@ export const STATISTICAL_VALUES = {
     [std]: std,
     [median]: median,
     [percentile]: percentile,
-};
+} as const;
 export type STATISTICAL_VALUES = typeof STATISTICAL_VALUES[keyof typeof STATISTICAL_VALUES];
 
 /**

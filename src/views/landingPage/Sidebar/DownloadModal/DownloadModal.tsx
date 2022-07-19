@@ -23,7 +23,7 @@ import {
 import { useSelector } from 'react-redux';
 import { selectPlotId, selectPlotTitle } from 'store/plotSlice';
 import { selectActivePlotData } from 'services/API/apiSlice/apiSlice';
-import { selectAllModelGroups } from 'store/modelsSlice/modelsSlice';
+import { GlobalModelState, selectAllModelGroups } from 'store/modelsSlice';
 import { REQUEST_STATE } from 'services/API/apiSlice/apiSlice';
 import CloseIcon from '@mui/icons-material/Close';
 import CardHeader from '@mui/material/CardHeader';
@@ -55,7 +55,7 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose, reportEr
      * An array containing all model groups.
      * @constant {Array}
      */
-    const modelGroups = useSelector((state) => selectAllModelGroups(state));
+    const modelGroups = useSelector((state: GlobalModelState) => selectAllModelGroups(state));
 
     /**
      * The plot id of the graph (tco3_zm, tco3_return etc.).

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { setModelsOfModelGroup } from '../../../../../../store/modelsSlice/modelsSlice';
+import { setModelsOfModelGroup } from '../../../../../../store/modelsSlice';
 import { useTheme } from '@mui/material/styles';
 import { CardContent, Divider, IconButton, ListItemButton, Modal, TextField } from '@mui/material';
 import { Box } from '@mui/system';
@@ -26,10 +26,7 @@ import {
     fetchPlotDataForCurrentModels,
     REQUEST_STATE,
 } from '../../../../../../services/API/apiSlice/apiSlice';
-import {
-    selectNameOfGroup,
-    selectModelDataOfGroup,
-} from '../../../../../../store/modelsSlice/modelsSlice';
+import { selectNameOfGroup, selectModelDataOfGroup } from '../../../../../../store/modelsSlice';
 
 /**
  * Opens a modal where the user can add a new model group.

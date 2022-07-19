@@ -14,7 +14,7 @@ import {
     getAllSelectedModels,
 } from '../src/services/API/apiSlice/apiSlice';
 import { generateNewUrl, updateStoreWithQuery } from '../src/services/url/url';
-import { setModelsOfModelGroup } from '../src/store/modelsSlice/modelsSlice';
+import { setModelsOfModelGroup } from '../src/store/modelsSlice';
 import { DEFAULT_MODEL_GROUP } from '../src/utils/constants';
 import { bindActionCreators } from 'redux';
 import { connect, useStore } from 'react-redux';
