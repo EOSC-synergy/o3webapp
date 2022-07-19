@@ -6,7 +6,7 @@ import {
     q75,
     quantile as calculatePercentile,
     std as calculateStd,
-} from '../services/math/math';
+} from '../services/math';
 import {
     END_YEAR,
     EXTENDED_SV_LIST,
