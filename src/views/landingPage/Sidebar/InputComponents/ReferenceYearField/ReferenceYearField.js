@@ -9,7 +9,7 @@ import {
     setVisibility,
     selectRefYear,
     selectVisibility,
-} from '../../../../../store/referenceSlice/referenceSlice';
+} from '../../../../../store/referenceSlice';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import MuiVisibilityIcon from '@mui/icons-material/Visibility';
 import { selectPlotId } from '../../../../../store/plotSlice';

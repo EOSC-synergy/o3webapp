@@ -8,7 +8,7 @@ import {
     selectPlotXRange,
     selectPlotYRange,
 } from '../../../store/plotSlice';
-import { selectVisibility } from '../../../store/referenceSlice/referenceSlice';
+import { selectVisibility } from '../../../store/referenceSlice';
 import { REQUEST_STATE, selectActivePlotData } from '../../../services/API/apiSlice/apiSlice';
 import { Typography, CircularProgress } from '@mui/material';
 import { Alert, Link } from '@mui/material';

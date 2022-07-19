@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Autocomplete, TextField } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { setModel, selectRefModel } from '../../../../../store/referenceSlice/referenceSlice';
+import { setModel, selectRefModel } from '../../../../../store/referenceSlice';
 import PropTypes from 'prop-types';
 import { fetchPlotDataForCurrentModels } from '../../../../../services/API/apiSlice/apiSlice';
 import { REQUEST_STATE } from '../../../../../services/API/apiSlice/apiSlice';

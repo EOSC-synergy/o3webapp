@@ -3,18 +3,29 @@ import { HYDRATE } from 'next-redux-wrapper';
 
 /**
  * The string identifying the default reference model used in the webApp
- * @constant {string}
  * @category referenceSlice
  * @default "SBUV_GSFC_merged-SAT-ozone"
  */
 export const DEFAULT_REF_MODEL = 'SBUV_GSFC_merged-SAT-ozone';
+
 /**
  * The default year of the reference year
- * @constant {number}
  * @category referenceSlice
  * @default 1980
  */
 export const DEFAULT_REF_YEAR = 1980;
+
+export type ReferenceState = {
+    settings: {
+        year: number;
+        model: string;
+        visible: boolean;
+        isOffsetApplied: boolean;
+    };
+};
+export type GlobalReferenceState = {
+    reference: ReferenceState;
+};
 
 /**
  * The initial state of the referenceSlice defines the data structure in the
@@ -23,13 +34,17 @@ export const DEFAULT_REF_YEAR = 1980;
  * If you change this initial state you have to adapt the first test in the
  * corresponding test file, that tests the initial state.
  */
-const initialState = {
+const initialState: ReferenceState = {
     settings: {
         year: DEFAULT_REF_YEAR,
         model: DEFAULT_REF_MODEL,
         visible: true,
         isOffsetApplied: false,
     },
+};
+
+type Payload<T> = {
+    payload: T;
 };
 
 /**
@@ -50,14 +65,11 @@ const referenceSlice = createSlice({
          *
          * In this case the current year is set to the given year.
          *
-         * @param {object} state the current store state of: state/reference
-         * @param {object} action accepts the action returned from setYear()
-         * @param {object} action.payload the payload is an object containing the given data
-         * @param {number} action.payload.year a number that contains the new year.
+         * @param state the current store state of: state/reference
+         * @param year the new year.
          * @example dispatch(setYear({year: 1980}));
          */
-        setYear(state, action) {
-            const { year } = action.payload;
+        setYear(state: ReferenceState, { payload: { year } }: Payload<{ year: number }>) {
             state.settings.year = year;
         },
 
@@ -69,14 +81,11 @@ const referenceSlice = createSlice({
          *
          * In this case the current model is set to the given model.
          *
-         * @param {object} state the current store state of: state/reference
-         * @param {object} action accepts the action returned from setModel()
-         * @param {object} action.payload the payload is an object containing the given data
-         * @param {string} action.payload.id a string that contains the new reference model name.
+         * @param state the current store state of: state/reference
+         * @param model the new reference model name.
          * @example  dispatch(setModel({model: "CCMI-1_CCCma_CMAM-refC2"}));
          */
-        setModel(state, action) {
-            const { model } = action.payload;
+        setModel(state: ReferenceState, { payload: { model } }: Payload<{ model: string }>) {
             state.settings.model = model;
         },
 
@@ -88,14 +97,14 @@ const referenceSlice = createSlice({
          *
          * In this case the current visibility is set to the given visibility.
          *
-         * @param {object} state the current store state of: state/reference
-         * @param {object} action accepts the action returned from setVisibility()
-         * @param {object} action.payload the payload is an object containing the given data
-         * @param {boolean} action.payload.visible the boolean for the reference line visibility.
+         * @param state the current store state of: state/reference
+         * @param visible whether the reference line should be visible.
          * @example dispatch(setVisibility({visible: true}));
          */
-        setVisibility(state, action) {
-            const { visible } = action.payload;
+        setVisibility(
+            state: ReferenceState,
+            { payload: { visible } }: Payload<{ visible: boolean }>
+        ) {
             state.settings.visible = visible;
         },
 
@@ -113,13 +122,15 @@ const referenceSlice = createSlice({
          * @param {boolean} action.payload.isOffsetApplied the boolean for the offset status.
          * @example dispatch(setOffsetApplied({isOffsetApplied: true}));
          */
-        setOffsetApplied(state, action) {
-            const { isOffsetApplied } = action.payload;
+        setOffsetApplied(
+            state: ReferenceState,
+            { payload: { isOffsetApplied } }: Payload<{ isOffsetApplied: boolean }>
+        ) {
             state.settings.isOffsetApplied = isOffsetApplied;
         },
     },
     extraReducers: {
-        [HYDRATE]: (state, action) => {
+        [HYDRATE]: (state: ReferenceState, action) => {
             console.log('HYDRATE', state, action.payload);
             return {
                 ...state,
@@ -153,7 +164,7 @@ export default referenceSlice.reducer;
  * @category referenceSlice
  * @function
  */
-export const selectRefYear = (state) => state.reference.settings.year;
+export const selectRefYear = (state: GlobalReferenceState) => state.reference.settings.year;
 
 /**
  * This selector allows components to select the current reference model
@@ -164,7 +175,7 @@ export const selectRefYear = (state) => state.reference.settings.year;
  * @function
  * @category referenceSlice
  */
-export const selectRefModel = (state) => state.reference.settings.model;
+export const selectRefModel = (state: GlobalReferenceState) => state.reference.settings.model;
 
 /**
  * This selector allows components to select the current visibility of the reference line
@@ -175,7 +186,7 @@ export const selectRefModel = (state) => state.reference.settings.model;
  * @function
  * @category referenceSlice
  */
-export const selectVisibility = (state) => state.reference.settings.visible;
+export const selectVisibility = (state: GlobalReferenceState) => state.reference.settings.visible;
 
 /**
  * This selector allows components to select the current status of the offset
@@ -186,4 +197,5 @@ export const selectVisibility = (state) => state.reference.settings.visible;
  * @function
  * @category referenceSlice
  */
-export const selectIsOffsetApplied = (state) => state.reference.settings.isOffsetApplied;
+export const selectIsOffsetApplied = (state: GlobalReferenceState) =>
+    state.reference.settings.isOffsetApplied;

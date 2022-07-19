@@ -1,7 +1,7 @@
 import { applyMiddleware, combineReducers, configureStore, createStore } from '@reduxjs/toolkit';
 import plotReducer from './plotSlice';
 import modelsReducer, { setModelsOfModelGroup } from './modelsSlice/modelsSlice';
-import referenceReducer from './referenceSlice/referenceSlice';
+import referenceReducer from './referenceSlice';
 import apiReducer from '../services/API/apiSlice/apiSlice';
 import { DEFAULT_MODEL_GROUP } from '../utils/constants';
 import { HYDRATE, createWrapper } from 'next-redux-wrapper';

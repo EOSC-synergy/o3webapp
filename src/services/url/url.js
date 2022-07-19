@@ -14,7 +14,7 @@ import {
     setMonths,
     setTitle,
 } from '../../store/plotSlice';
-import { setModel, setVisibility, setYear } from '../../store/referenceSlice/referenceSlice';
+import { setModel, setVisibility, setYear } from '../../store/referenceSlice';
 import {
     setModelsOfModelGroup,
     setStatisticalValueForGroup,
