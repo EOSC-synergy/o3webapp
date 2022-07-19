@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Logo, { logoSrc, O3ASLink } from '.';
+import Logo, { logoSrc, O3ASLink } from './Logo';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
