@@ -68,7 +68,9 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose, reportEr
      * @constant {Object}
      *
      */
-    const activeData = useSelector((state) => selectActivePlotData(state, plotId));
+    const activeData = useSelector((state: GlobalModelState) =>
+        selectActivePlotData(state, plotId)
+    );
 
     /**
      * The plot title which is shown above the graph.
