@@ -1,10 +1,10 @@
 import React from 'react';
 import { Box, Checkbox, FormControlLabel, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectPlotXRange, setDisplayXRange } from '../../../../../store/plotSlice';
-import { ALL_REGIONS_ORDERED } from '../../../../../utils/constants';
+import { RegionBasedXRange, selectPlotXRange, setDisplayXRange } from 'store/plotSlice';
+import { ALL_REGIONS_ORDERED } from 'utils/constants';
 import { Grid } from '@mui/material';
-import CustomLatitudeSelector from '../LatitudeBandSelector/CustomLatitudeSelector';
+import CustomLatitudeSelector from './LatitudeBandSelector/CustomLatitudeSelector';
 
 /**
  * Enables the user to select / deselect regions as well as entering a custom region.
@@ -12,11 +12,9 @@ import CustomLatitudeSelector from '../LatitudeBandSelector/CustomLatitudeSelect
  * @see {@link LatitudeBandSelector}
  *
  * @component
- * @param {Object} props
- * @param {function} props.reportError - used to report error functions
  * @returns {JSX.Element}
  */
-function RegionSelector() {
+const RegionSelector: React.FC = () => {
     /**
      * A dispatch function to dispatch actions to the redux store.
      */
@@ -39,8 +37,8 @@ function RegionSelector() {
      * @param {number} regionIdx The index of the region that was clicked.
      * @function
      */
-    const handleRegionChecked = (regionIdx) => {
-        let regionCpy = [...xRangeRegions.regions];
+    const handleRegionChecked = (regionIdx: number) => {
+        let regionCpy = [...(xRangeRegions as RegionBasedXRange).regions];
         if (regionCpy.includes(regionIdx)) {
             regionCpy = regionCpy.filter((m) => m !== regionIdx);
         } else {
@@ -83,7 +81,9 @@ function RegionSelector() {
                             }
                             control={
                                 <Checkbox
-                                    checked={xRangeRegions.regions.includes(idx)}
+                                    checked={(xRangeRegions as RegionBasedXRange).regions.includes(
+                                        idx
+                                    )}
                                     onClick={() => handleRegionChecked(idx)}
                                     data-testid={`RegionSelector-${idx}`}
                                 />
@@ -94,6 +94,6 @@ function RegionSelector() {
             </Box>
         </Grid>
     );
-}
+};
 
 export default RegionSelector;

@@ -2,10 +2,10 @@ import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
 import RegionSelector from './RegionSelector';
-import { createTestStore } from '../../../../../store/store';
-import { setActivePlotId } from '../../../../../store/plotSlice/plotSlice';
+import { AppStore, createTestStore } from 'store/store';
+import { setActivePlotId } from 'store/plotSlice';
 
-let store;
+let store: AppStore;
 beforeEach(() => {
     store = createTestStore();
     store.dispatch(setActivePlotId({ plotId: 'tco3_return' })); // this component is only for the
@@ -16,7 +16,7 @@ describe('tests basic rendering', () => {
         render(
             <>
                 <Provider store={store}>
-                    <RegionSelector reportError={() => {}} />
+                    <RegionSelector />
                 </Provider>
             </>
         );
@@ -26,7 +26,7 @@ describe('tests basic rendering', () => {
         const { container } = render(
             <>
                 <Provider store={store}>
-                    <RegionSelector reportError={() => {}} />
+                    <RegionSelector />
                 </Provider>
             </>
         );
@@ -39,7 +39,7 @@ describe('tests redux functionality', () => {
     it('updates the region(s) accordingly to the deselection in the store', () => {
         const { getByTestId } = render(
             <Provider store={store}>
-                <RegionSelector reportError={() => {}} />
+                <RegionSelector />
             </Provider>
         );
 
@@ -62,7 +62,7 @@ describe('tests redux functionality', () => {
     it('updates the region(s) accordingly to the selection in the store', () => {
         const { getByTestId } = render(
             <Provider store={store}>
-                <RegionSelector reportError={() => {}} />
+                <RegionSelector />
             </Provider>
         );
 

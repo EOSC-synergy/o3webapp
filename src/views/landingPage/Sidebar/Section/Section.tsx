@@ -13,7 +13,7 @@ import ModelGroupConfigurator from '../InputComponents/ModelGroupConfigurator/Mo
 import PlotNameField from '../InputComponents/PlotNameField/PlotNameField';
 import ReferenceModelSelector from '../InputComponents/ReferenceModelSelector/ReferenceModelSelector';
 import ReferenceYearField from '../InputComponents/ReferenceYearField/ReferenceYearField';
-import RegionSelector from '../InputComponents/RegionSelector/RegionSelector';
+import RegionSelector from '../InputComponents/RegionSelector';
 import TimeCheckBoxGroup from '../InputComponents/TimeCheckboxGroup/TimeCheckboxGroup';
 import XAxisField from '../InputComponents/XAxisField';
 import YAxisField from '../InputComponents/YAxisField';
