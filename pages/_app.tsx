@@ -2,8 +2,9 @@ import { wrapper } from '../src/store/store';
 import '../styles/main.css';
 import React from 'react';
 import Head from 'next/head';
+import { AppProps } from 'next/app';
 
-function MyApp({ Component, pageProps }) {
+const MyApp = ({ Component, pageProps }: AppProps) => {
     return (
         <>
             <Head>
@@ -15,6 +16,6 @@ function MyApp({ Component, pageProps }) {
             </React.StrictMode>
         </>
     );
-}
+};
 
 export default wrapper.withRedux(MyApp);

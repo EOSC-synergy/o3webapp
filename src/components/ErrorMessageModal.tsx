@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 type ErrorMessageModalProps = {
     isOpen: boolean;
     onClose: () => void;
-    message: string;
+    message: string | null;
 };
 /**
  * Displays a given error message.

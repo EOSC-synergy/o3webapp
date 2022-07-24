@@ -1,8 +1,8 @@
 import React from 'react';
-import Navbar from '../src/components/Navbar';
-import Footer from '../src/components/Footer';
-import ErrorMessageModal from '../src/components/ErrorMessageModal';
-import LandingPage from '../src/views/landingPage/LandingPage';
+import Navbar from 'components/Navbar';
+import Footer from 'components/Footer';
+import ErrorMessageModal from 'components/ErrorMessageModal';
+import LandingPage from 'views/landingPage/LandingPage';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { useEffect, useState } from 'react';
@@ -12,14 +12,14 @@ import {
     fetchPlotDataForCurrentModels,
     fetchPlotTypes,
     getAllSelectedModels,
-} from '../src/services/API/apiSlice/apiSlice';
-import { generateNewUrl, updateStoreWithQuery } from '../src/services/url/url';
-import { setModelsOfModelGroup } from '../src/store/modelsSlice';
-import { DEFAULT_MODEL_GROUP } from '../src/utils/constants';
-import { bindActionCreators } from 'redux';
+} from 'services/API/apiSlice/apiSlice';
+import { generateNewUrl, updateStoreWithQuery } from 'services/url/url';
+import { setModelsOfModelGroup } from 'store/modelsSlice';
+import { DEFAULT_MODEL_GROUP } from 'utils/constants';
 import { connect, useStore } from 'react-redux';
-import { wrapper } from '../src/store/store';
+import { AppState, useAppDispatch, wrapper } from 'store/store';
 import _ from 'lodash';
+import { GetStaticProps, NextPage } from 'next';
 
 /**
  * Main container of the Webapp.
@@ -27,35 +27,39 @@ import _ from 'lodash';
  * @component
  * @returns {JSX.Element} A jsx containing all main components
  */
-function App({ fetchPlotTypes, fetchModels, fetchPlotDataForCurrentModels, models }) {
+const App: NextPage<IndexProps> = ({ models }) => {
     const store = useStore();
 
     /**
      * State that holds the boolean whether the ErrorMessageModal is currently visible or not.
      * @constant {boolean}
      */
-    const [isErrorModalVisible, setErrorModalVisible] = React.useState(false);
+    const [isErrorModalVisible, setErrorModalVisible] = useState(false);
     /**
      * The error message if an error has occured.
      * If no error occured the state is set to null.
      * @constant {string}
      */
-    const [errorMessage, setErrorMessage] = React.useState(null); // if errorMessage null no error
+    const [errorMessage, setErrorMessage] = useState<string | null>(null); // if errorMessage null no error
 
     /**
      * A queue holding all incoming and unprocessed error messages.
      * @constant {Array}
      */
-    const [errorMessages, setErrorMessages] = React.useState([]);
+    const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
     /**
      * State that holds the boolean whether the Sidebar is currently open or not.
      * @constant {boolean}
      */
-    const [isSidebarOpen, setSidebarOpen] = React.useState(false);
+    const [isSidebarOpen, setSidebarOpen] = useState(false);
 
     useEffect(() => {
-        isSidebarOpen ? disableBodyScroll(document) : enableBodyScroll(document);
+        if (isSidebarOpen) {
+            disableBodyScroll(document.body);
+        } else {
+            enableBodyScroll(document.body);
+        }
     }, [isSidebarOpen]);
 
     /**
@@ -69,35 +73,38 @@ function App({ fetchPlotTypes, fetchModels, fetchPlotDataForCurrentModels, model
     /**
      * Function to close sidebar,
      * if the user does not currently try to navigate the sidebar
-     * @param {event} event the event that triggered the call of this function
+     * @param event the event that triggered the call of this function
      * @function
      */
-    const closeSidebar = (event) => {
+    // TODO: event?
+    const closeSidebar = (/*event*/) => {
+        /*
         // for accessibility do not close sidebar if users
         // try to navigate sidebar using Tab or Shift
         if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
         }
+        */
         setSidebarOpen(false);
     };
 
     /**
      * Function to report an error from other components.
      * Automatically opens errorModal
-     * @param {string} msg the message of the reported error
+     * @param message the message of the reported error
      * @function
      */
-    const reportError = (msg) => {
+    const reportError = (message: string) => {
         for (let i = 0; i < errorMessages.length; i++) {
-            if (errorMessages[i] === msg) {
+            if (errorMessages[i] === message) {
                 return;
             }
         }
-        let copy = errorMessages;
-        copy.push(msg);
+        const copy = errorMessages;
+        copy.push(message);
         setErrorMessages(copy);
 
-        setErrorMessage(msg);
+        setErrorMessage(message);
         setErrorModalVisible(true);
     };
 
@@ -129,13 +136,22 @@ function App({ fetchPlotTypes, fetchModels, fetchPlotDataForCurrentModels, model
 
     const [ready, setReady] = useState(false);
 
+    const dispatch = useAppDispatch();
+
     useEffect(() => {
         if (router.isReady && !ready) {
-            fetchPlotTypes();
+            dispatch(fetchPlotTypes());
+            dispatch(fetchModels()).then(() => {
+                updateStoreWithQuery(store, router.query);
+                dispatch(fetchPlotDataForCurrentModels(models, _.isEmpty(router.query)));
+            });
+            /*
+            fetchPlotTypes()
             fetchModels().then(() => {
                 updateStoreWithQuery(store, router.query);
                 fetchPlotDataForCurrentModels(models, _.isEmpty(router.query));
             });
+            */
 
             store.subscribe(() => {
                 router.push(
@@ -154,7 +170,7 @@ function App({ fetchPlotTypes, fetchModels, fetchPlotDataForCurrentModels, model
     return (
         <ThemeProvider theme={theme}>
             <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-                <Navbar reportError={reportError} openSidebar={openSidebar} />
+                <Navbar openSidebar={openSidebar} />
                 {ready && (
                     <LandingPage
                         reportError={reportError}
@@ -163,7 +179,7 @@ function App({ fetchPlotTypes, fetchModels, fetchPlotDataForCurrentModels, model
                         isSidebarOpen={isSidebarOpen}
                     />
                 )}
-                <Footer reportError={reportError} />
+                <Footer />
                 <ErrorMessageModal
                     isOpen={isErrorModalVisible}
                     message={errorMessage}
@@ -173,24 +189,33 @@ function App({ fetchPlotTypes, fetchModels, fetchPlotDataForCurrentModels, model
             </div>
         </ThemeProvider>
     );
-}
+};
 
-export const getStaticProps = wrapper.getStaticProps((store) => () => {
+export const getStaticProps: GetStaticProps = wrapper.getStaticProps((store) => async () => {
     store.dispatch(setModelsOfModelGroup(DEFAULT_MODEL_GROUP));
+    return {
+        props: {},
+    };
 });
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: AppState) => {
     return {
         models: getAllSelectedModels(() => state),
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
+/**
+ * Does not work nicely with redux-toolkit / redux nextjs due to bindActionCreators forcing native
+ * redux 'Dispatch' type which does not support async stuff we need
+ */
+const mapDispatchToProps = (/*dispatch: AppDispatch*/) => {
     return {
-        fetchPlotTypes: bindActionCreators(fetchPlotTypes, dispatch),
-        fetchModels: bindActionCreators(fetchModels, dispatch),
-        fetchPlotDataForCurrentModels: bindActionCreators(fetchPlotDataForCurrentModels, dispatch),
+        //fetchPlotTypes: bindActionCreators(fetchPlotTypes, dispatch),
+        //fetchModels: bindActionCreators(fetchModels, dispatch),
+        //fetchPlotDataForCurrentModels: bindActionCreators(fetchPlotDataForCurrentModels, dispatch),
     };
 };
+
+type IndexProps = ReturnType<typeof mapDispatchToProps> & ReturnType<typeof mapStateToProps>;
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

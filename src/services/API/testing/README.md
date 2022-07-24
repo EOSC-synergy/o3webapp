@@ -11,7 +11,7 @@ Inside your jest file do the following:
 ```
     let store;
     beforeEach(() => {
-        store = createTestStore(); // make sure to import this function from store.js
+        store = createTestStore(); // make sure to import this function from store.ts
     });
 ```
 

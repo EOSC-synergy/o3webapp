@@ -12,7 +12,7 @@
  * @category Utils
  */
 export const DEFAULT_MODEL_GROUP = {
-    groupId: null, // no valid id => add new group
+    groupId: undefined, // no valid id => add new group
     groupName: 'Example Group',
     modelList: [
         'CCMI-1_ACCESS_ACCESS-CCM-refC2',
@@ -100,7 +100,7 @@ export const latitudeBands: LatitudeBand[] = [
     // !!! Custom must be last in array !!!
     {
         text: Symbol('Custom'),
-        // @ts-ignore-error TODO: figure out this
+        // ts-expect-error TODO: figure out this
         value: 'custom' as unknown as Latitude,
     },
 ];
