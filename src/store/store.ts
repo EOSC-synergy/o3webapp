@@ -6,7 +6,7 @@ import apiReducer from '../services/API/apiSlice/apiSlice';
 import { DEFAULT_MODEL_GROUP } from '../utils/constants';
 import { createWrapper, HYDRATE } from 'next-redux-wrapper';
 import thunkMiddleware from 'redux-thunk';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useStore } from 'react-redux';
 
 type GlobalState =
     | undefined
@@ -49,12 +49,12 @@ export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppState, unkn
 export type AppDispatch = AppStore['dispatch'];
 export const useAppDispatch = () => useDispatch<AppDispatch>(); // Export a hook that can be reused to resolve types
 
+export const useAppStore = () => useStore<AppState>();
+
 export const wrapper = createWrapper(initStore);
 
 export function createTestStore() {
-    const store = configureStore({
-        reducer: combinedReducer,
-    });
+    const store = initStore();
     store.dispatch(setModelsOfModelGroup(DEFAULT_MODEL_GROUP)); // fill with default group
     return store;
 }

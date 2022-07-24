@@ -1,12 +1,12 @@
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
-import XAxisField from '.';
-import { createTestStore } from '../../../../../store/store';
-import { END_YEAR, START_YEAR } from '../../../../../utils/constants';
+import XAxisField from './XAxisField';
+import { AppStore, createTestStore } from 'store/store';
+import { END_YEAR, START_YEAR } from 'utils/constants';
 
 describe('tests basic rendering', () => {
-    let store;
+    let store: AppStore;
     beforeEach(() => {
         store = createTestStore();
     });
@@ -15,7 +15,7 @@ describe('tests basic rendering', () => {
         render(
             <>
                 <Provider store={store}>
-                    <XAxisField reportError={() => {}} />
+                    <XAxisField />
                 </Provider>
             </>
         );
@@ -25,7 +25,7 @@ describe('tests basic rendering', () => {
         const { container } = render(
             <>
                 <Provider store={store}>
-                    <XAxisField reportError={() => {}} />
+                    <XAxisField />
                 </Provider>
             </>
         );
@@ -35,7 +35,7 @@ describe('tests basic rendering', () => {
 });
 
 describe('test functionality redux', () => {
-    let store;
+    let store: AppStore;
     beforeEach(() => {
         store = createTestStore();
     });
@@ -78,7 +78,7 @@ describe('test functionality redux', () => {
 });
 
 describe('test error handling functionality', () => {
-    let store;
+    let store: AppStore;
     beforeEach(() => {
         store = createTestStore();
     });

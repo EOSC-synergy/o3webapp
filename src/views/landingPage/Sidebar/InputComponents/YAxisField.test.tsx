@@ -1,13 +1,13 @@
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
-import YAxisField from '.';
-import { createTestStore } from '../../../../../store/store';
-import { setActivePlotId, setDisplayYRangeForPlot } from '../../../../../store/plotSlice/plotSlice';
-import { O3AS_PLOTS } from '../../../../../utils/constants';
+import YAxisField from './YAxisField';
+import { AppStore, createTestStore } from 'store/store';
+import { setActivePlotId, setDisplayYRangeForPlot } from 'store/plotSlice';
+import { O3AS_PLOTS } from 'utils/constants';
 
 describe('tests basic rendering', () => {
-    let store;
+    let store: AppStore;
     beforeEach(() => {
         store = createTestStore();
     });
@@ -16,7 +16,7 @@ describe('tests basic rendering', () => {
         render(
             <>
                 <Provider store={store}>
-                    <YAxisField reportError={() => {}} />
+                    <YAxisField reportError={() => undefined} />
                 </Provider>
             </>
         );
@@ -26,7 +26,7 @@ describe('tests basic rendering', () => {
         const { container } = render(
             <>
                 <Provider store={store}>
-                    <YAxisField reportError={() => {}} />
+                    <YAxisField reportError={() => undefined} />
                 </Provider>
             </>
         );
@@ -36,7 +36,7 @@ describe('tests basic rendering', () => {
 });
 
 describe('test functionality redux for tco3_zm', () => {
-    let store;
+    let store: AppStore;
     beforeEach(() => {
         store = createTestStore();
         store.dispatch(
@@ -81,7 +81,7 @@ describe('test functionality redux for tco3_zm', () => {
 });
 
 describe('test functionality redux for tco3_return', () => {
-    let store;
+    let store: AppStore;
     beforeEach(() => {
         store = createTestStore();
         store.dispatch(setActivePlotId({ plotId: O3AS_PLOTS.tco3_return }));
@@ -129,7 +129,7 @@ describe('test functionality redux for tco3_return', () => {
 });
 
 describe('test error handling functionality', () => {
-    let store;
+    let store: AppStore;
     beforeEach(() => {
         store = createTestStore();
         store.dispatch(

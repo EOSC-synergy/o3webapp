@@ -1,12 +1,8 @@
 import React, { ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    setDisplayXRange,
-    selectPlotXRange,
-    YearsBasedXRange,
-} from '../../../../../store/plotSlice';
+import { setDisplayXRange, selectPlotXRange, YearsBasedXRange } from 'store/plotSlice';
 import { Typography, Grid, TextField, FormControl } from '@mui/material';
-import { START_YEAR, END_YEAR } from '../../../../../utils/constants';
+import { START_YEAR, END_YEAR } from 'utils/constants';
 
 /**
  * Enables the user to choose the range that should be visible on the x-axis of the plot.
@@ -112,6 +108,7 @@ const XAxisField: React.FC = () => {
                                 : ''
                         }
                         inputProps={{ 'data-testid': 'XAxisField-left-input' }}
+                        type="number"
                     />
                 </FormControl>
             </Grid>
@@ -141,6 +138,7 @@ const XAxisField: React.FC = () => {
                                 : ''
                         }
                         inputProps={{ 'data-testid': 'XAxisField-right-input' }}
+                        type="number"
                     />
                 </FormControl>
             </Grid>
