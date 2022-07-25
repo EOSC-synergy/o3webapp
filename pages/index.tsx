@@ -11,13 +11,12 @@ import {
     fetchModels,
     fetchPlotDataForCurrentModels,
     fetchPlotTypes,
-    getAllSelectedModels,
 } from 'services/API/apiSlice/apiSlice';
 import { generateNewUrl, updateStoreWithQuery } from 'services/url/url';
 import { setModelsOfModelGroup } from 'store/modelsSlice';
 import { DEFAULT_MODEL_GROUP } from 'utils/constants';
 import { connect, useStore } from 'react-redux';
-import { AppState, useAppDispatch, wrapper } from 'store/store';
+import { useAppDispatch, wrapper } from 'store/store';
 import _ from 'lodash';
 import { GetStaticProps, NextPage } from 'next';
 
@@ -27,7 +26,7 @@ import { GetStaticProps, NextPage } from 'next';
  * @component
  * @returns {JSX.Element} A jsx containing all main components
  */
-const App: NextPage<IndexProps> = ({ models }) => {
+const App: NextPage<IndexProps> = () => {
     const store = useStore();
 
     /**
@@ -73,7 +72,6 @@ const App: NextPage<IndexProps> = ({ models }) => {
     /**
      * Function to close sidebar,
      * if the user does not currently try to navigate the sidebar
-     * @param event the event that triggered the call of this function
      * @function
      */
     // TODO: event?
@@ -143,7 +141,7 @@ const App: NextPage<IndexProps> = ({ models }) => {
             dispatch(fetchPlotTypes());
             dispatch(fetchModels()).then(() => {
                 updateStoreWithQuery(store, router.query);
-                dispatch(fetchPlotDataForCurrentModels(models, _.isEmpty(router.query)));
+                dispatch(fetchPlotDataForCurrentModels(_.isEmpty(router.query)));
             });
             /*
             fetchPlotTypes()
@@ -198,9 +196,9 @@ export const getStaticProps: GetStaticProps = wrapper.getStaticProps((store) => 
     };
 });
 
-const mapStateToProps = (state: AppState) => {
+const mapStateToProps = (/*state: AppState*/) => {
     return {
-        models: getAllSelectedModels(() => state),
+        //models: getAllSelectedModels(() => state),
     };
 };
 

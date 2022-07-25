@@ -160,19 +160,19 @@ export const updateDataAndDisplaySuggestions = ({ plotId, cacheKey, data, sugges
  * @param {boolean} suggest whether the suggestions should be calculated or not
  * @returns the async thunk function that is dispatched against the store.
  */
-export const fetchPlotDataForCurrentModels = (models, suggest = true) => {
-    return (dispatch) => {
+export const fetchPlotDataForCurrentModels = (suggest = true) => {
+    return (dispatch, getState) => {
         dispatch(
             fetchPlotData({
                 plotId: O3AS_PLOTS.tco3_zm,
-                models,
+                models: getAllSelectedModels(getState),
                 suggest,
             })
         );
         dispatch(
             fetchPlotData({
                 plotId: O3AS_PLOTS.tco3_return,
-                models,
+                models: getAllSelectedModels(getState),
                 suggest,
             })
         );
