@@ -1,5 +1,5 @@
 import { O3AS_PLOTS } from '../../utils/constants';
-import { generateCsv } from '../csv/csvParser';
+import { generateCsv } from '../csvParser';
 
 /**
  * This module is responsible for providing functions to download the plot as png, svg or csv.
@@ -95,7 +95,9 @@ export const downloadGraphAsCSV = (plotTitle, plotId, reportError) => {
                 category: categoryLabels[regionIndex],
             };
             for (let seriesIndex in seriesNames) {
-                if (!seriesNames[seriesIndex]) continue; // skip "box" which is empty
+                if (!seriesNames[seriesIndex]) {
+                    continue;
+                } // skip "box" which is empty
                 const value = series[seriesIndex][regionIndex];
                 line[seriesNames[seriesIndex]] = value ? value.toFixed(2) : value;
             }

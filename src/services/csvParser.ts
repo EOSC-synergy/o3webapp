@@ -12,15 +12,15 @@
  * @param {Array.<Object>} objArray contains the data that should be converted to csv
  * @returns a string containing the csv formatted data
  */
-export function generateCsv(objArray) {
+export function generateCsv(objArray: Record<string, unknown>[] | string) {
     const array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
     let line = '';
     let result = '';
-    const columns = [];
+    const columns: string[] = [];
 
     let i = 0;
     for (let j = 0; j < array.length; j++) {
-        for (let key in array[j]) {
+        for (const key in array[j]) {
             let keyString = key + '';
             keyString = '"' + keyString.replace(/"/g, '""') + '",';
             if (!columns.includes(key)) {
