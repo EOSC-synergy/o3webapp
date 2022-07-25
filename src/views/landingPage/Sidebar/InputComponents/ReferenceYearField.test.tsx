@@ -2,12 +2,12 @@ import React from 'react';
 import ReferenceYearField from './ReferenceYearField';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { createTestStore } from '../../../../../store/store';
+import { AppStore, createTestStore } from 'store/store';
 import { Provider } from 'react-redux';
-import { END_YEAR, START_YEAR } from '../../../../../utils/constants';
+import { END_YEAR, START_YEAR } from 'utils/constants';
 import userEvent from '@testing-library/user-event';
 
-let store;
+let store: AppStore;
 
 beforeEach(() => {
     store = createTestStore();
@@ -45,7 +45,7 @@ describe('tests redux functionality', () => {
         );
         const inputField = getByTestId('ReferenceYearField-year');
         fireEvent.change(inputField, { target: { value: newValue } }); // change input
-        expect(store.getState().reference.settings.year).toEqual(String(newValue));
+        expect(store.getState().reference.settings.year).toEqual(newValue);
     });
 
     it('toggles the visibility of the reference line in the store correctly', () => {

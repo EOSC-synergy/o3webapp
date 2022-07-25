@@ -1,32 +1,25 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { Grid, Typography, FormControl, TextField, Checkbox } from '@mui/material';
-import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { END_YEAR, START_YEAR, O3AS_PLOTS } from '../../../../../utils/constants';
-import { fetchPlotDataForCurrentModels } from '../../../../../services/API/apiSlice/apiSlice';
-import {
-    setYear,
-    setVisibility,
-    selectRefYear,
-    selectVisibility,
-} from '../../../../../store/referenceSlice';
+import { END_YEAR, START_YEAR, O3AS_PLOTS } from 'utils/constants';
+import { fetchPlotDataForCurrentModels } from 'services/API/apiSlice/apiSlice';
+import { setYear, setVisibility, selectRefYear, selectVisibility } from 'store/referenceSlice';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import MuiVisibilityIcon from '@mui/icons-material/Visibility';
-import { selectPlotId } from '../../../../../store/plotSlice';
+import { selectPlotId } from 'store/plotSlice';
+import { useAppDispatch } from 'store/store';
 
 /**
  * Enables the user to select a reference year.
  * @component
- * @param {Object} props
- * @param {function} props.reportError - function to handle errors
  * @returns {JSX.Element} a jsx containing a text field to select the reference year
  */
-function ReferenceYearField() {
+const ReferenceYearField: React.FC = () => {
     /**
      * A dispatch function to dispatch actions to the redux store.
      * @constant {function}
      */
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     /**
      * The selected reference year from the redux store.
@@ -54,10 +47,13 @@ function ReferenceYearField() {
      * @see {@link fetchPlotDataForCurrentModels}
      * @param {Event} event the event that triggered the call of this function.
      */
-    const handleChangeForRefYear = (event) => {
-        if (!isNaN(event.target.value)) {
-            dispatch(setYear({ year: event.target.value }));
-            if (event.target.value >= START_YEAR && event.target.value <= END_YEAR) {
+    const handleChangeForRefYear = (event: ChangeEvent<HTMLInputElement>) => {
+        if (!isNaN(event.target.valueAsNumber)) {
+            dispatch(setYear({ year: event.target.valueAsNumber }));
+            if (
+                event.target.valueAsNumber >= START_YEAR &&
+                event.target.valueAsNumber <= END_YEAR
+            ) {
                 // fetch for tco3_zm and tco3_return
                 dispatch(fetchPlotDataForCurrentModels());
             }
@@ -69,7 +65,7 @@ function ReferenceYearField() {
      * @function
      * @param {Event} event the event that triggered the call of this function
      */
-    const handleShowRefLineClicked = (event) => {
+    const handleShowRefLineClicked = (event: ChangeEvent<HTMLInputElement>) => {
         dispatch(setVisibility({ visible: event.target.checked }));
     };
 
@@ -99,6 +95,7 @@ function ReferenceYearField() {
                                     : ''
                             }
                             inputProps={{ 'data-testid': 'ReferenceYearField-year' }}
+                            type="number"
                         />
                     </FormControl>
                     {plotId === O3AS_PLOTS.tco3_zm && (
@@ -107,8 +104,9 @@ function ReferenceYearField() {
                                 checked={refLineVisibility}
                                 icon={<VisibilityOffIcon data-testid="RefLineInvisibleCheckbox" />}
                                 checkedIcon={<MuiVisibilityIcon />}
-                                onClick={handleShowRefLineClicked}
+                                onChange={handleShowRefLineClicked}
                                 inputProps={{
+                                    // @ts-expect-error https://github.com/mui/material-ui/issues/20160
                                     'data-testid': 'ReferenceYearField-toggleVisibility',
                                 }}
                             />
@@ -118,6 +116,6 @@ function ReferenceYearField() {
             </Grid>
         </>
     );
-}
+};
 
 export default ReferenceYearField;

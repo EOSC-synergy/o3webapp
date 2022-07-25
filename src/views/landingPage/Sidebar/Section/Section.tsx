@@ -12,7 +12,7 @@ import LocationSelector from '../InputComponents/LatitudeBandSelector/LatitudeBa
 import ModelGroupConfigurator from '../InputComponents/ModelGroupConfigurator/ModelGroupConfigurator';
 import PlotNameField from '../InputComponents/PlotNameField/PlotNameField';
 import ReferenceModelSelector from '../InputComponents/ReferenceModelSelector/ReferenceModelSelector';
-import ReferenceYearField from '../InputComponents/ReferenceYearField/ReferenceYearField';
+import ReferenceYearField from '../InputComponents/ReferenceYearField';
 import RegionSelector from '../InputComponents/RegionSelector';
 import TimeCheckBoxGroup from '../InputComponents/TimeCheckboxGroup/TimeCheckboxGroup';
 import XAxisField from '../InputComponents/XAxisField';

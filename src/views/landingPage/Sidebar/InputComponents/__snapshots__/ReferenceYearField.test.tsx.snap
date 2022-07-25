@@ -31,7 +31,7 @@ exports[`tests basic rendering renders correctly 1`] = `
               class="MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputSizeSmall css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input"
               data-testid="ReferenceYearField-year"
               id="outlined-basic"
-              type="text"
+              type="number"
               value="1980"
             />
             <fieldset
@@ -49,7 +49,6 @@ exports[`tests basic rendering renders correctly 1`] = `
               </legend>
             </fieldset>
           </div>
-          
         </div>
       </div>
       <div
