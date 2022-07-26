@@ -1,0 +1,8 @@
+# .gitignore in generated-client gets overwritten every run, thus putting this here instead
+generated-client/.npmignore
+generated-client/git_push.sh
+generated-client/.openapi-generator-ignore
+generated-client/.openapi-generator
+openapitools.json
+# gitignore the spec?
+swagger.yml
