@@ -10,7 +10,8 @@ import Typography from '@mui/material/Typography';
  * @memberof Logo
  * @default "https://o3as.data.kit.edu/img/logos/o3as-logo.svg"
  */
-export const logoSrc = 'https://o3as.data.kit.edu/img/logos/o3as-logo.svg';
+export const logoSrc =
+    process.env.NEXT_PUBLIC_LOGO_SRC ?? 'https://o3as.data.kit.edu/img/logos/o3as-logo.svg';
 
 /**
  * The link to the O3AS Webapp

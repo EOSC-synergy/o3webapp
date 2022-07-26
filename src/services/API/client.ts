@@ -16,7 +16,7 @@ import { NO_MONTH_SELECTED } from 'utils/constants';
  * It is used as the destination address for all API requests.
  * @constant {string}
  */
-const baseURL = 'https://api.o3as.fedcloud.eu/api/v1';
+const baseURL = process.env.NEXT_PUBLIC_API_HOST ?? 'https://api.o3as.fedcloud.eu/api/v1';
 
 /**
  * The timeout value at which an error is thrown and fetching data stops in milliseconds
