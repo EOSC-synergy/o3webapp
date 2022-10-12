@@ -1,9 +1,14 @@
 config:
-  credentials: []
   project_repos: {}
+  credentials:
+    - id: o3as-dockerhub-vykozlov
+      username_var: JPL_DOCKERUSER
+      password_var: JPL_DOCKERPASS
 environment:
+  JPL_DOCKERPUSH: "o3webapp"
   JPL_DOCKERFORCEBUILD: enabled
   JPL_KEEPGOING: disabled
+  LANG: C.UTF-8
 sqa_criteria:
   QC.Sty:
     repos:

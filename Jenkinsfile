@@ -5,6 +5,12 @@ def projectConfig
 pipeline {
     agent any
 
+    environment {
+        O3WEBAPP_DOCKER_TAG = "${env.BRANCH_NAME == 'main' ? 'stage' : env.BRANCH_NAME}"
+        //O3WEBAPP_DOCKER_TARGET = "${env.BRANCH_NAME == 'main' ? 'production' : 'development'}"
+        O3WEBAPP_DOCKER_TARGET = "production"
+    }
+
     stages {
         stage('SQA baseline criterion: QC.Sty & QC.Uni & QC.Sec & QC.Doc') {
             steps {

@@ -7,4 +7,13 @@ services:
       target: /sqaaas-build
       type: bind
     working_dir: /sqaaas-build
+
+  o3webapp:
+     build:
+        context: "."
+        dockerfile: "./Dockerfile"
+        args:
+          target: ${O3WEBAPP_DOCKER_TARGET}
+     image: "o3as/o3webapp:${O3WEBAPP_DOCKER_TAG}"
+
 version: '3.7'
