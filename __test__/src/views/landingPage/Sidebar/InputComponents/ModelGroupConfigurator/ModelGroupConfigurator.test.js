@@ -64,7 +64,13 @@ describe('test functionality redux', () => {
     });
 
     it('renders all model group cards in store', () => {
-        const spy = jest.spyOn(redux, 'useSelector');
+        const mockSelector = jest.fn();
+        const redux = jest.mock('react-redux', () => ({
+            ...jest.requireActual('react-redux'),
+            useSelector: () => mockSelector,
+        }));
+        const spy = mockSelector;
+        //const spy = jest.spyOn(redux, 'useSelector');
         const modelGroupName = 'blob';
         const fakeModelGroupName = 'blub';
 
