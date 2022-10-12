@@ -7,14 +7,14 @@ config:
 environment:
   JPL_DOCKERPUSH: "o3webapp"
   JPL_DOCKERFORCEBUILD: enabled
-  JPL_KEEPGOING: disabled
   LANG: C.UTF-8
 sqa_criteria:
   QC.Sty:
     repos:
       this_repo:
         commands:
-        - sh -c "npm ci --audit=false && ./node_modules/.bin/eslint src/ -f checkstyle -o eslint-codestyle.xml"
+        # always returns true, i.e. style is checked but build is not interrupted
+        - sh -c "npm ci --audit=false && ./node_modules/.bin/eslint src/ -f checkstyle -o eslint-codestyle.xml || true"
         container: processing
   QC.Uni:
     repos:
