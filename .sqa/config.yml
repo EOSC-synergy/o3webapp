@@ -7,7 +7,8 @@ config:
 environment:
   JPL_DOCKERPUSH: "o3webapp"
   JPL_DOCKERFORCEBUILD: enabled
-  JPL_IGNOREFAILURES: enabled
+#  JPL_IGNOREFAILURES: enabled
+  JPL_KEEPGOING: enabled # need to comment out, if stop on failure is expected
   LANG: C.UTF-8
 sqa_criteria:
   QC.Sty:
