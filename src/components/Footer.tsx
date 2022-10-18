@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import { Grid, Link } from '@mui/material';
 import { BACKGROUND_BASE_COLOR } from 'utils/constants';
 
+const DEFAULT_LINKS = '[{"label": "O3as","href": "https://o3as.data.kit.edu/"},{"label": "Privacy Policy","href": "https://o3as.data.kit.edu/policies/privacy-policy.html"},{"label": "Terms of Use","href": "https://o3as.data.kit.edu/policies/terms-of-use.html"},{"label": "Gitlab","href": "https://git.scc.kit.edu/synergy.o3as/o3webapp"},{"label": "How to Acknowledge","href": "https://o3as.data.kit.edu/policies/how-to-acknowledge.html"}]';
 /**
  * The links on the right-hand side in the footer with label and href.
  * Exported due to testing reasons.
@@ -11,28 +12,7 @@ import { BACKGROUND_BASE_COLOR } from 'utils/constants';
  * @constant
  * @memberof Footer
  */
-export const links = [
-    {
-        label: 'O3as',
-        href: 'https://o3as.data.kit.edu/#page-top',
-    },
-    {
-        label: 'Privacy Policy',
-        href: 'https://o3as.data.kit.edu/policies/privacy-policy.html',
-    },
-    {
-        label: 'Terms of Use',
-        href: 'https://o3as.data.kit.edu/policies/terms-of-use.html',
-    },
-    {
-        label: 'Gitlab',
-        href: 'https://git.scc.kit.edu/synergy.o3as/o3webapp',
-    },
-    {
-        label: 'How to Acknowledge',
-        href: 'https://o3as.data.kit.edu/policies/how-to-acknowledge.html',
-    },
-];
+export const links: {label:string, href:string}[] = JSON.parse(process.env.NEXT_PUBLIC_FOOTER_LINKS ?? DEFAULT_LINKS);
 
 /**
  * A container for copyright text and important links at the bottom of the Website.

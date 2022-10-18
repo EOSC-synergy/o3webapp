@@ -31,3 +31,5 @@ docs/
 dist/
 .next/
 .idea/
+
+/.env
