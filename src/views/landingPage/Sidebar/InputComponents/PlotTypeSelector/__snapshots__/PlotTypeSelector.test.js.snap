@@ -15,7 +15,7 @@ exports[`plot type selector test PlotTypeSelector renders correctly 1`] = `
       Plot Type
     </label>
     <div
-      class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+      class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
     >
       <div
         aria-expanded="false"
@@ -54,7 +54,7 @@ exports[`plot type selector test PlotTypeSelector renders correctly 1`] = `
         class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
       >
         <legend
-          class="css-173wfxe"
+          class="css-1ftyaf0"
         >
           <span>
             Plot Type
@@ -81,7 +81,7 @@ exports[`plot type selector test PlotTypeSelector renders correctly 2`] = `
       Plot Type
     </label>
     <div
-      class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary Mui-focused MuiInputBase-formControl css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root"
+      class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary Mui-focused MuiInputBase-formControl  css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root"
     >
       <div
         aria-expanded="false"
@@ -120,7 +120,7 @@ exports[`plot type selector test PlotTypeSelector renders correctly 2`] = `
         class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
       >
         <legend
-          class="css-1z7n62"
+          class="css-1in441m"
         >
           <span>
             Plot Type

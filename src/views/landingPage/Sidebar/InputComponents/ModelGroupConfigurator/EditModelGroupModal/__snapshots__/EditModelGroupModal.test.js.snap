@@ -110,10 +110,10 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
         </div>
       </div>
       <div
-        aria-colcount="3"
+        aria-colcount="8"
         aria-multiselectable="false"
         aria-rowcount="3"
-        class="MuiDataGrid-root css-ph8yah-MuiDataGrid-root"
+        class="MuiDataGrid-root css-mofsyo-MuiDataGrid-root"
         role="grid"
       >
         <div>
@@ -123,7 +123,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
           class="MuiDataGrid-main css-204u17-MuiDataGrid-main"
         >
           <div
-            class="MuiDataGrid-columnHeaders css-okt5j6-MuiDataGrid-columnHeaders"
+            class="MuiDataGrid-columnHeaders css-f3jnds-MuiDataGrid-columnHeaders"
             style="min-height: 56px; max-height: 56px; line-height: 56px;"
           >
             <div
@@ -148,11 +148,15 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                     class="MuiDataGrid-columnHeaderTitleContainer"
                   >
                     <div
-                      aria-label=""
-                      class="MuiDataGrid-columnHeaderTitle css-1jbbcbn-MuiDataGrid-columnHeaderTitle"
-                      data-mui-internal-clone-element="true"
+                      class="MuiDataGrid-columnHeaderTitleContainerContent"
                     >
-                      Project
+                      <div
+                        aria-label=""
+                        class="MuiDataGrid-columnHeaderTitle css-1jbbcbn-MuiDataGrid-columnHeaderTitle"
+                        data-mui-internal-clone-element="true"
+                      >
+                        Project
+                      </div>
                     </div>
                     <div
                       class="MuiDataGrid-iconButtonContainer css-ltf0zy-MuiDataGrid-iconButtonContainer"
@@ -215,11 +219,15 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                     class="MuiDataGrid-columnHeaderTitleContainer"
                   >
                     <div
-                      aria-label=""
-                      class="MuiDataGrid-columnHeaderTitle css-1jbbcbn-MuiDataGrid-columnHeaderTitle"
-                      data-mui-internal-clone-element="true"
+                      class="MuiDataGrid-columnHeaderTitleContainerContent"
                     >
-                      Institute
+                      <div
+                        aria-label=""
+                        class="MuiDataGrid-columnHeaderTitle css-1jbbcbn-MuiDataGrid-columnHeaderTitle"
+                        data-mui-internal-clone-element="true"
+                      >
+                        Institute
+                      </div>
                     </div>
                     <div
                       class="MuiDataGrid-iconButtonContainer css-ltf0zy-MuiDataGrid-iconButtonContainer"
@@ -282,11 +290,15 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                     class="MuiDataGrid-columnHeaderTitleContainer"
                   >
                     <div
-                      aria-label=""
-                      class="MuiDataGrid-columnHeaderTitle css-1jbbcbn-MuiDataGrid-columnHeaderTitle"
-                      data-mui-internal-clone-element="true"
+                      class="MuiDataGrid-columnHeaderTitleContainerContent"
                     >
-                      Model
+                      <div
+                        aria-label=""
+                        class="MuiDataGrid-columnHeaderTitle css-1jbbcbn-MuiDataGrid-columnHeaderTitle"
+                        data-mui-internal-clone-element="true"
+                      >
+                        Model
+                      </div>
                     </div>
                     <div
                       class="MuiDataGrid-iconButtonContainer css-ltf0zy-MuiDataGrid-iconButtonContainer"
@@ -349,24 +361,28 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                     class="MuiDataGrid-columnHeaderTitleContainer"
                   >
                     <div
-                      style="display: flex; align-items: center; flex-wrap: wrap; cursor: pointer;"
+                      class="MuiDataGrid-columnHeaderTitleContainerContent"
                     >
                       <div
-                        class="MuiBox-root css-kp3790"
+                        style="display: flex; align-items: center; flex-wrap: wrap; cursor: pointer;"
                       >
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-ci5apu-MuiSvgIcon-root"
-                          data-testid="ColumnCheckboxCheckedTypeMean"
-                          focusable="false"
-                          viewBox="0 0 24 24"
+                        <div
+                          class="MuiBox-root css-kp3790"
                         >
-                          <path
-                            d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-                          />
-                        </svg>
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-ci5apu-MuiSvgIcon-root"
+                            data-testid="ColumnCheckboxCheckedTypeMean"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                            />
+                          </svg>
+                        </div>
+                        Mean
                       </div>
-                      Mean
                     </div>
                   </div>
                 </div>
@@ -403,24 +419,28 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                     class="MuiDataGrid-columnHeaderTitleContainer"
                   >
                     <div
-                      style="display: flex; align-items: center; flex-wrap: wrap; cursor: pointer;"
+                      class="MuiDataGrid-columnHeaderTitleContainerContent"
                     >
                       <div
-                        class="MuiBox-root css-kp3790"
+                        style="display: flex; align-items: center; flex-wrap: wrap; cursor: pointer;"
                       >
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-ci5apu-MuiSvgIcon-root"
-                          data-testid="ColumnCheckboxCheckedTypeStandard deviation"
-                          focusable="false"
-                          viewBox="0 0 24 24"
+                        <div
+                          class="MuiBox-root css-kp3790"
                         >
-                          <path
-                            d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-                          />
-                        </svg>
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-ci5apu-MuiSvgIcon-root"
+                            data-testid="ColumnCheckboxCheckedTypeStandard deviation"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                            />
+                          </svg>
+                        </div>
+                        Standard deviation
                       </div>
-                      Standard deviation
                     </div>
                   </div>
                 </div>
@@ -457,24 +477,28 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                     class="MuiDataGrid-columnHeaderTitleContainer"
                   >
                     <div
-                      style="display: flex; align-items: center; flex-wrap: wrap; cursor: pointer;"
+                      class="MuiDataGrid-columnHeaderTitleContainerContent"
                     >
                       <div
-                        class="MuiBox-root css-kp3790"
+                        style="display: flex; align-items: center; flex-wrap: wrap; cursor: pointer;"
                       >
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-ci5apu-MuiSvgIcon-root"
-                          data-testid="ColumnCheckboxCheckedTypeMedian"
-                          focusable="false"
-                          viewBox="0 0 24 24"
+                        <div
+                          class="MuiBox-root css-kp3790"
                         >
-                          <path
-                            d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-                          />
-                        </svg>
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-ci5apu-MuiSvgIcon-root"
+                            data-testid="ColumnCheckboxCheckedTypeMedian"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                            />
+                          </svg>
+                        </div>
+                        Median
                       </div>
-                      Median
                     </div>
                   </div>
                 </div>
@@ -511,24 +535,28 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                     class="MuiDataGrid-columnHeaderTitleContainer"
                   >
                     <div
-                      style="display: flex; align-items: center; flex-wrap: wrap; cursor: pointer;"
+                      class="MuiDataGrid-columnHeaderTitleContainerContent"
                     >
                       <div
-                        class="MuiBox-root css-kp3790"
+                        style="display: flex; align-items: center; flex-wrap: wrap; cursor: pointer;"
                       >
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-ci5apu-MuiSvgIcon-root"
-                          data-testid="ColumnCheckboxCheckedTypePercentile"
-                          focusable="false"
-                          viewBox="0 0 24 24"
+                        <div
+                          class="MuiBox-root css-kp3790"
                         >
-                          <path
-                            d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-                          />
-                        </svg>
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-ci5apu-MuiSvgIcon-root"
+                            data-testid="ColumnCheckboxCheckedTypePercentile"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                            />
+                          </svg>
+                        </div>
+                        Percentile
                       </div>
-                      Percentile
                     </div>
                   </div>
                 </div>
@@ -565,24 +593,28 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                     class="MuiDataGrid-columnHeaderTitleContainer"
                   >
                     <div
-                      style="display: flex; align-items: center; flex-wrap: wrap; cursor: pointer;"
+                      class="MuiDataGrid-columnHeaderTitleContainerContent"
                     >
                       <div
-                        class="MuiBox-root css-kp3790"
+                        style="display: flex; align-items: center; flex-wrap: wrap; cursor: pointer;"
                       >
-                        <svg
-                          aria-hidden="true"
-                          class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-ci5apu-MuiSvgIcon-root"
-                          data-testid="ColumnCheckboxCheckedTypeVisible"
-                          focusable="false"
-                          viewBox="0 0 24 24"
+                        <div
+                          class="MuiBox-root css-kp3790"
                         >
-                          <path
-                            d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-                          />
-                        </svg>
+                          <svg
+                            aria-hidden="true"
+                            class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-ci5apu-MuiSvgIcon-root"
+                            data-testid="ColumnCheckboxCheckedTypeVisible"
+                            focusable="false"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                            />
+                          </svg>
+                        </div>
+                        Visible
                       </div>
-                      Visible
                     </div>
                   </div>
                 </div>
@@ -609,15 +641,16 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
             style="overflow: visible; height: 0px; width: 0px;"
           >
             <div
-              class="MuiDataGrid-virtualScroller css-1pans1z-MuiDataGrid-virtualScroller"
+              class="MuiDataGrid-virtualScroller css-1w5m2wr-MuiDataGrid-virtualScroller"
               style="width: 0px; height: auto; margin-top: 56px; overflow-x: hidden;"
             >
               <div
-                class="MuiDataGrid-virtualScrollerContent css-jz7yqw-MuiDataGrid-virtualScrollerContent"
-                style="width: auto; height: 156px;"
+                class="MuiDataGrid-virtualScrollerContent MuiDataGrid-virtualScrollerContent--overflowed css-1kwdphh-MuiDataGrid-virtualScrollerContent"
+                style="width: auto; height: 156px; min-height: auto;"
               >
                 <div
-                  class="MuiDataGrid-virtualScrollerRenderZone css-uw2ren-MuiDataGrid-virtualScrollerRenderZone"
+                  class="MuiDataGrid-virtualScrollerRenderZone css-s1v7zr-MuiDataGrid-virtualScrollerRenderZone"
+                  style="transform: translate3d(0px, 0px, 0px);"
                 >
                   <div
                     aria-rowindex="2"
@@ -630,6 +663,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                   >
                     <div
                       aria-colindex="1"
+                      aria-colspan="1"
                       class="MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="0"
                       data-field="project"
@@ -637,10 +671,15 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       style="min-width: 120px; max-width: 120px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
-                      CCMI-1
+                      <div
+                        class="MuiDataGrid-cellContent"
+                      >
+                        CCMI-1
+                      </div>
                     </div>
                     <div
                       aria-colindex="2"
+                      aria-colspan="1"
                       class="MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="1"
                       data-field="institute"
@@ -648,10 +687,15 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       style="min-width: 150px; max-width: 150px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
-                      ACCESS
+                      <div
+                        class="MuiDataGrid-cellContent"
+                      >
+                        ACCESS
+                      </div>
                     </div>
                     <div
                       aria-colindex="3"
+                      aria-colspan="1"
                       class="MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="2"
                       data-field="model"
@@ -659,10 +703,15 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       style="min-width: 225px; max-width: 225px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
-                      ACCESS-CCM-refC2
+                      <div
+                        class="MuiDataGrid-cellContent"
+                      >
+                        ACCESS-CCM-refC2
+                      </div>
                     </div>
                     <div
                       aria-colindex="4"
+                      aria-colspan="1"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="3"
                       data-field="mean"
@@ -706,6 +755,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                     </div>
                     <div
                       aria-colindex="5"
+                      aria-colspan="1"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="4"
                       data-field="standard deviation"
@@ -749,6 +799,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                     </div>
                     <div
                       aria-colindex="6"
+                      aria-colspan="1"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="5"
                       data-field="median"
@@ -792,6 +843,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                     </div>
                     <div
                       aria-colindex="7"
+                      aria-colspan="1"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="6"
                       data-field="percentile"
@@ -835,6 +887,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                     </div>
                     <div
                       aria-colindex="8"
+                      aria-colspan="1"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="7"
                       data-field="visible"
@@ -888,6 +941,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                   >
                     <div
                       aria-colindex="1"
+                      aria-colspan="1"
                       class="MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="0"
                       data-field="project"
@@ -895,10 +949,15 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       style="min-width: 120px; max-width: 120px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
-                      CCMI-1
+                      <div
+                        class="MuiDataGrid-cellContent"
+                      >
+                        CCMI-1
+                      </div>
                     </div>
                     <div
                       aria-colindex="2"
+                      aria-colspan="1"
                       class="MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="1"
                       data-field="institute"
@@ -906,10 +965,15 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       style="min-width: 150px; max-width: 150px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
-                      ACCESS
+                      <div
+                        class="MuiDataGrid-cellContent"
+                      >
+                        ACCESS
+                      </div>
                     </div>
                     <div
                       aria-colindex="3"
+                      aria-colspan="1"
                       class="MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="2"
                       data-field="model"
@@ -917,10 +981,15 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       style="min-width: 225px; max-width: 225px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
-                      ACCESS-CCM-senC2fGHG
+                      <div
+                        class="MuiDataGrid-cellContent"
+                      >
+                        ACCESS-CCM-senC2fGHG
+                      </div>
                     </div>
                     <div
                       aria-colindex="4"
+                      aria-colspan="1"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="3"
                       data-field="mean"
@@ -964,6 +1033,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                     </div>
                     <div
                       aria-colindex="5"
+                      aria-colspan="1"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="4"
                       data-field="standard deviation"
@@ -1007,6 +1077,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                     </div>
                     <div
                       aria-colindex="6"
+                      aria-colspan="1"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="5"
                       data-field="median"
@@ -1050,6 +1121,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                     </div>
                     <div
                       aria-colindex="7"
+                      aria-colspan="1"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="6"
                       data-field="percentile"
@@ -1093,6 +1165,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                     </div>
                     <div
                       aria-colindex="8"
+                      aria-colspan="1"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="7"
                       data-field="visible"
@@ -1138,7 +1211,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                   <div
                     aria-rowindex="4"
                     aria-selected="false"
-                    class="MuiDataGrid-row"
+                    class="MuiDataGrid-row MuiDataGrid-row--lastVisible"
                     data-id="2"
                     data-rowindex="2"
                     role="row"
@@ -1146,6 +1219,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                   >
                     <div
                       aria-colindex="1"
+                      aria-colspan="1"
                       class="MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="0"
                       data-field="project"
@@ -1153,10 +1227,15 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       style="min-width: 120px; max-width: 120px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
-                      CCMI-1
+                      <div
+                        class="MuiDataGrid-cellContent"
+                      >
+                        CCMI-1
+                      </div>
                     </div>
                     <div
                       aria-colindex="2"
+                      aria-colspan="1"
                       class="MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="1"
                       data-field="institute"
@@ -1164,10 +1243,15 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       style="min-width: 150px; max-width: 150px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
-                      CCCma
+                      <div
+                        class="MuiDataGrid-cellContent"
+                      >
+                        CCCma
+                      </div>
                     </div>
                     <div
                       aria-colindex="3"
+                      aria-colspan="1"
                       class="MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="2"
                       data-field="model"
@@ -1175,10 +1259,15 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                       style="min-width: 225px; max-width: 225px; min-height: 52px; max-height: 52px;"
                       tabindex="-1"
                     >
-                      CMAM-refC2
+                      <div
+                        class="MuiDataGrid-cellContent"
+                      >
+                        CMAM-refC2
+                      </div>
                     </div>
                     <div
                       aria-colindex="4"
+                      aria-colspan="1"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="3"
                       data-field="mean"
@@ -1222,6 +1311,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                     </div>
                     <div
                       aria-colindex="5"
+                      aria-colspan="1"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="4"
                       data-field="standard deviation"
@@ -1265,6 +1355,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                     </div>
                     <div
                       aria-colindex="6"
+                      aria-colspan="1"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="5"
                       data-field="median"
@@ -1308,6 +1399,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                     </div>
                     <div
                       aria-colindex="7"
+                      aria-colspan="1"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="6"
                       data-field="percentile"
@@ -1351,6 +1443,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
                     </div>
                     <div
                       aria-colindex="8"
+                      aria-colspan="1"
                       class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft"
                       data-colindex="7"
                       data-field="visible"
@@ -1414,7 +1507,7 @@ exports[`test EditModelGroupModal rendering renders correctly when open 1`] = `
         </div>
         <div>
           <div
-            class="MuiDataGrid-footerContainer css-1b34haf-MuiDataGrid-footerContainer"
+            class="MuiDataGrid-footerContainer css-17jjc08-MuiDataGrid-footerContainer"
           >
             <div />
             <div

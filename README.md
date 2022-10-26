@@ -1,5 +1,7 @@
-<div id="top"></div>
 
+[![Build Status](https://jenkins.eosc-synergy.eu/buildStatus/icon?job=eosc-synergy-org%2Fo3webapp%2Fmain)](https://jenkins.eosc-synergy.eu/job/eosc-synergy-org/job/o3webapp/job/main/)
+
+<div id="top"></div>
 
 <!-- PROJECT LOGO -->
 <br />
