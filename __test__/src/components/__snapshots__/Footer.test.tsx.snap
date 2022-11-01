@@ -1,0 +1,124 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<DocumentFragment>
+  <div
+    style="width: 100%;"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-17ipc21-MuiGrid-root"
+      data-testid="footer-grid-container"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-sm-12 MuiGrid-grid-md-6 css-1llulah-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-12 MuiGrid-grid-md-6 css-1j2yvk0-MuiGrid-root"
+        >
+          <span
+            style="color: rgb(254, 209, 54);"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-h0dnht-MuiTypography-root"
+            >
+              Copyright © KIT – The 
+              <a
+                class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-158h6db-MuiTypography-root-MuiLink-root"
+                data-testid="footer-link-research-university}"
+                href="https://www.kit.edu/kit/english/research-university.php"
+              >
+                Research University
+              </a>
+               in the Helmholtz Association
+            </p>
+          </span>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-sm-12 MuiGrid-grid-md-6 css-1onxwcp-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-md-auto css-1qkvljz-MuiGrid-root"
+          data-testid="footer-grid-item"
+        >
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-158h6db-MuiTypography-root-MuiLink-root"
+            data-testid="footer-link-O3as"
+            href="https://o3as.data.kit.edu/"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-h0dnht-MuiTypography-root"
+            >
+              O3as
+            </p>
+          </a>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-md-auto css-1qkvljz-MuiGrid-root"
+          data-testid="footer-grid-item"
+        >
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-158h6db-MuiTypography-root-MuiLink-root"
+            data-testid="footer-link-Privacy Policy"
+            href="https://o3as.data.kit.edu/policies/privacy-policy.html"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-h0dnht-MuiTypography-root"
+            >
+              Privacy Policy
+            </p>
+          </a>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-md-auto css-1qkvljz-MuiGrid-root"
+          data-testid="footer-grid-item"
+        >
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-158h6db-MuiTypography-root-MuiLink-root"
+            data-testid="footer-link-Terms of Use"
+            href="https://o3as.data.kit.edu/policies/terms-of-use.html"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-h0dnht-MuiTypography-root"
+            >
+              Terms of Use
+            </p>
+          </a>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-md-auto css-1qkvljz-MuiGrid-root"
+          data-testid="footer-grid-item"
+        >
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-158h6db-MuiTypography-root-MuiLink-root"
+            data-testid="footer-link-Gitlab"
+            href="https://git.scc.kit.edu/synergy.o3as/o3webapp"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-h0dnht-MuiTypography-root"
+            >
+              Gitlab
+            </p>
+          </a>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-md-auto css-1qkvljz-MuiGrid-root"
+          data-testid="footer-grid-item"
+        >
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-158h6db-MuiTypography-root-MuiLink-root"
+            data-testid="footer-link-How to Acknowledge"
+            href="https://o3as.data.kit.edu/policies/how-to-acknowledge.html"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-h0dnht-MuiTypography-root"
+            >
+              How to Acknowledge
+            </p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

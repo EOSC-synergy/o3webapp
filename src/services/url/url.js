@@ -21,6 +21,7 @@ import {
     setVisibilityForGroup,
     updatePropertiesOfModelGroup,
 } from '../../store/modelsSlice';
+import bigInt from 'big-integer';
 import _ from 'lodash';
 
 /**
@@ -41,8 +42,6 @@ import _ from 'lodash';
  * @returns {string} the output number as a string
  */
 function parseBigInt(str, baseFrom, baseTo) {
-    const bigInt = require('big-integer');
-
     baseFrom = bigInt(baseFrom);
     baseTo = bigInt(baseTo);
     let bigint = bigInt(0);

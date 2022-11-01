@@ -94,8 +94,7 @@ const YAF_Symbol = Symbol('YAxisField');
  * @constant {JSX.Element}
  * @memberof Section
  */
-const Accordion = styled((props) => (
-    // @ts-expect-error TODO: missing children prop? we're just stying it though
+const Accordion = styled((props: Parameters<typeof MuiAccordion>[0] /* type of props param */) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
     border: `1px solid ${theme.palette.divider}`,
@@ -112,12 +111,14 @@ const Accordion = styled((props) => (
  * @const {JSX.Element}
  * @memberof Section
  */
-const AccordionSummary = styled((props) => (
-    <MuiAccordionSummary
-        expandIcon={<ArrowForwardIosIcon sx={{ fontSize: '0.9rem' }} />}
-        {...props}
-    />
-))(({ theme }) => ({
+const AccordionSummary = styled(
+    (props: Parameters<typeof MuiAccordionSummary>[0] /* type of props param */) => (
+        <MuiAccordionSummary
+            expandIcon={<ArrowForwardIosIcon sx={{ fontSize: '0.9rem' }} />}
+            {...props}
+        />
+    )
+)(({ theme }) => ({
     backgroundColor:
         theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, .05)' : 'rgba(0, 0, 0, .03)',
     flexDirection: 'row-reverse',

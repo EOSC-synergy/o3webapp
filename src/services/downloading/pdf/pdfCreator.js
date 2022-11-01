@@ -155,16 +155,22 @@ function getListOfModelsForPdf(plotId, modelGroups, currentData) {
 
     for (const modelGroup of Object.values(modelGroups)) {
         // if the model group is invisible, it won't be shown in the PDF.
-        if (!modelGroup.isVisible) continue;
+        if (!modelGroup.isVisible) {
+            continue;
+        }
 
         let modelsInTheGroup = [];
 
         for (const [model, modelData] of Object.entries(modelGroup.models)) {
             // if the model is invisible, it won't be shown in the PDF.
-            if (!modelData.isVisible) continue;
+            if (!modelData.isVisible) {
+                continue;
+            }
 
             // if the data of the model is undefined, it won't be shown in the PDF.
-            if (typeof currentData[model] === 'undefined') continue;
+            if (typeof currentData[model] === 'undefined') {
+                continue;
+            }
 
             let textOfCurrentLineOfList;
 

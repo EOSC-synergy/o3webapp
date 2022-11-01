@@ -99,16 +99,13 @@ const YAxisField: React.FC<YAxisFieldProps> = ({ reportError = () => undefined }
         event: React.ChangeEvent<HTMLInputElement>,
         extremum: 'minY' | 'maxY'
     ) => {
-        console.log('Hello');
         if (isNaN(event.target.valueAsNumber)) {
             console.error('input is NaN');
             return;
         }
         const value = event.target.valueAsNumber;
         if (plotId === O3AS_PLOTS.tco3_zm) {
-            console.info('plot zm');
             if (extremum === 'minY') {
-                console.info('minY');
                 setStateY_zm({ minY: value, maxY: stateY_zm.maxY });
                 if (
                     !isNaN(parseInt(stateY_zm.maxY.toString())) &&

@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div>
+  <div
+    class="MuiDivider-root MuiDivider-fullWidth MuiDivider-withChildren css-1ws8119-MuiDivider-root"
+    role="separator"
+  >
+    <span
+      class="MuiDivider-wrapper css-qywfm8-MuiDivider-wrapper"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+      >
+        PLOT NAME
+      </p>
+    </span>
+  </div>
+  <div
+    class="MuiBox-root css-1c0g717"
+  >
+    <div
+      class="MuiFormControl-root css-q8hpuo-MuiFormControl-root"
+    >
+      <div
+        class="MuiFormControl-root MuiTextField-root css-1u3bzj6-MuiFormControl-root-MuiTextField-root"
+        data-testid="plot-field"
+      >
+        <label
+          class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-standard MuiFormLabel-root MuiFormLabel-colorPrimary MuiFormLabel-filled css-1c2i806-MuiFormLabel-root-MuiInputLabel-root"
+          data-shrink="true"
+          for="standard-basic-plot-title-input"
+          id="standard-basic-plot-title-input-label"
+        >
+          New Plot Name
+        </label>
+        <div
+          class="MuiInput-root MuiInput-underline MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-1ptx2yq-MuiInputBase-root-MuiInput-root"
+        >
+          <input
+            aria-invalid="false"
+            class="MuiInput-input MuiInputBase-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
+            id="standard-basic-plot-title-input"
+            type="text"
+            value="OCTS Plot"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
