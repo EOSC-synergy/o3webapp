@@ -470,7 +470,6 @@ exports[`Section renders correclty renders correctly from config file 2`] = `
                       <span
                         class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
                         data-testid="ModelGroupCard-toggle-mean-checkbox"
-                        labelid="ModelGroupCard-toggle-mean-label"
                       >
                         <input
                           checked=""
@@ -511,7 +510,6 @@ exports[`Section renders correclty renders correctly from config file 2`] = `
                       <span
                         class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
                         data-testid="ModelGroupCard-toggle-standard deviation-checkbox"
-                        labelid="ModelGroupCard-toggle-standard deviation-label"
                       >
                         <input
                           checked=""
@@ -552,7 +550,6 @@ exports[`Section renders correclty renders correctly from config file 2`] = `
                       <span
                         class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
                         data-testid="ModelGroupCard-toggle-median-checkbox"
-                        labelid="ModelGroupCard-toggle-median-label"
                       >
                         <input
                           checked=""
@@ -593,7 +590,6 @@ exports[`Section renders correclty renders correctly from config file 2`] = `
                       <span
                         class="MuiCheckbox-root MuiCheckbox-colorPrimary MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary PrivateSwitchBase-root Mui-checked css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
                         data-testid="ModelGroupCard-toggle-percentile-checkbox"
-                        labelid="ModelGroupCard-toggle-percentile-label"
                       >
                         <input
                           checked=""

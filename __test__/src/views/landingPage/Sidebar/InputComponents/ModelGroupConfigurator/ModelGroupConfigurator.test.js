@@ -38,16 +38,6 @@ describe('test ModelGroupCard rendering', () => {
         expect(getByTestId(/addModelGroup-button/)).toBeInTheDocument();
         expect(getByTestId(/addModelGroup-button/)).toBeEnabled();
     });
-
-    it('raises a console.error function if a required prop is not provided', () => {
-        console.error = jest.fn();
-        render(
-            <Provider store={store}>
-                <ModelGroupConfigurator />
-            </Provider>
-        );
-        expect(console.error).toHaveBeenCalled();
-    });
 });
 
 describe('test functionality buttons', () => {

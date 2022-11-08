@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -8,9 +8,8 @@ import { Checkbox, Divider, IconButton, FormControlLabel } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import EditModelGroupModal from '../EditModelGroupModal/EditModelGroupModal';
 import AddModelGroupModal from '../AddModelGroupModal/AddModelGroupModal';
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+
 import { CardActions, Button } from '@mui/material';
 import {
     setStatisticalValueForGroup,
@@ -20,7 +19,20 @@ import {
     selectVisibilityOfGroup,
     deleteModelGroup,
 } from '../../../../../../store/modelsSlice';
-import { STATISTICAL_VALUES } from '../../../../../../utils/constants';
+import { STATISTICAL_VALUES, STATISTICAL_VALUES_LIST } from '../../../../../../utils/constants';
+import { ChangeEvent, FC, useState } from 'react';
+import { AppState, useAppDispatch } from '../../../../../../store/store';
+
+type ModelGroupCardProps = {
+    /**
+     * The id of the model group this card should belong to
+     */
+    modelGroupId: number;
+    /**
+     * function for error handling
+     */
+    reportError: (error: string) => void;
+};
 
 /**
  * A card containing information about a model group.
@@ -32,22 +44,24 @@ import { STATISTICAL_VALUES } from '../../../../../../utils/constants';
  * @param {int} props.modelGroupId -> id of the model group
  * @returns {JSX.Element} a jsx containing a modal with a data grid with all models from the model group
  */
-function ModelGroupCard(props) {
-    const dispatch = useDispatch();
+const ModelGroupCard: FC<ModelGroupCardProps> = (props) => {
+    const dispatch = useAppDispatch();
 
     /**
      * the name of the model group. Retrieved from the Redux Store
      * @see {@link selectNameOfGroup}
      * @constant {Array}
      */
-    const modelGroupName = useSelector((state) => selectNameOfGroup(state, props.modelGroupId));
+    const modelGroupName = useSelector((state: AppState) =>
+        selectNameOfGroup(state, props.modelGroupId)
+    );
 
     /**
      * gets the statisticalVales of the model Group. Retrieved from the Redux Store.
      * @see {@link selectStatisticalValueSettingsOfGroup}
      * @constant {Object}
      */
-    const modelGroupStatisticalValue = useSelector((state) =>
+    const modelGroupStatisticalValue = useSelector((state: AppState) =>
         selectStatisticalValueSettingsOfGroup(state, props.modelGroupId)
     );
 
@@ -56,7 +70,7 @@ function ModelGroupCard(props) {
      * @see {@link selectVisibilityOfGroup}
      * @constant {boolean}
      */
-    const isModelGroupVisible = useSelector((state) =>
+    const isModelGroupVisible = useSelector((state: AppState) =>
         selectVisibilityOfGroup(state, props.modelGroupId)
     );
 
@@ -68,7 +82,10 @@ function ModelGroupCard(props) {
      * @param {String} statisticalValue the name of the statistical value that should be toggled
      * @function
      */
-    const toggleModelGroupStatisticalValueVisibility = (event, statisticalValue) => {
+    const toggleModelGroupStatisticalValueVisibility = (
+        event: ChangeEvent<HTMLInputElement>,
+        statisticalValue: STATISTICAL_VALUES
+    ) => {
         dispatch(
             setStatisticalValueForGroup({
                 groupId: props.modelGroupId,
@@ -102,14 +119,14 @@ function ModelGroupCard(props) {
      * @constant {Array}
      * @default false
      */
-    const [isEditModalVisible, setEditModalVisible] = React.useState(false);
+    const [isEditModalVisible, setEditModalVisible] = useState(false);
 
     /**
      * State to keep track of whether the add group modal (used to edit group members) is currently visible or not.
      * @constant {Array}
      * @default false
      */
-    const [isAddModalVisible, setAddModalVisible] = React.useState(false);
+    const [isAddModalVisible, setAddModalVisible] = useState(false);
 
     /**
      * State to keep track of whether a delete request is open or not.
@@ -118,16 +135,14 @@ function ModelGroupCard(props) {
      */
     const [isDeleteRequest, setDeleteRequest] = React.useState(false);
 
-    const [refreshAddModelGroupModalState, setRefreshAddModelGroupModalState] =
-        React.useState(true);
-    const [refreshEditModalGroupModalState, setRefreshEditModalGroupModalState] =
-        React.useState(true);
+    const [refreshAddModelGroupModalState, setRefreshAddModelGroupModalState] = useState(true);
+    const [refreshEditModalGroupModalState, setRefreshEditModalGroupModalState] = useState(true);
 
     /**
      * Shows the edit group modal.
      * @cfunction
      */
-    const showEditModal = (refresh) => {
+    const showEditModal = (refresh: boolean) => {
         setAddModalVisible(false); // avoid two modals being visible under all circumstances
         setEditModalVisible(true);
         setRefreshEditModalGroupModalState(refresh);
@@ -145,7 +160,7 @@ function ModelGroupCard(props) {
      * Shows the add model group modal (used to edit group members).
      * @function
      */
-    const showAddModal = (refresh) => {
+    const showAddModal = (refresh: boolean) => {
         setEditModalVisible(false); // avoid two modals being visible under all circumstances
         setAddModalVisible(true);
         setRefreshAddModelGroupModalState(refresh);
@@ -238,7 +253,7 @@ function ModelGroupCard(props) {
                 </Grid>
                 <Divider />
                 <Grid container sx={{ paddingTop: '0.5em' }}>
-                    {Object.keys(STATISTICAL_VALUES).map((key, idx) => {
+                    {STATISTICAL_VALUES_LIST.map((key, idx) => {
                         return (
                             <Grid item key={idx} xs={6} sx={{ paddingLeft: '1em' }}>
                                 <FormControlLabel
@@ -254,7 +269,7 @@ function ModelGroupCard(props) {
                                             }
                                             checked={modelGroupStatisticalValue[key]}
                                             id={`ModelGroupCard-toggle-${key}-checkbox`}
-                                            labelid={`ModelGroupCard-toggle-${key}-label`}
+                                            //labelid={`ModelGroupCard-toggle-${key}-label`}
                                             data-testid={`ModelGroupCard-toggle-${key}-checkbox`}
                                         />
                                     }
@@ -313,7 +328,7 @@ function ModelGroupCard(props) {
                         </Button>
                         <Button
                             size="medium"
-                            variant="filled"
+                            //variant="filled"
                             onClick={deleteGroup}
                             sx={{
                                 ml: '10px',
@@ -332,17 +347,6 @@ function ModelGroupCard(props) {
             </Card>
         );
     }
-}
-
-ModelGroupCard.propTypes = {
-    /**
-     * The id of the model group this card should belong to
-     */
-    modelGroupId: PropTypes.number.isRequired,
-    /**
-     * function for error handling
-     */
-    reportError: PropTypes.func.isRequired,
 };
 
 export default ModelGroupCard;
