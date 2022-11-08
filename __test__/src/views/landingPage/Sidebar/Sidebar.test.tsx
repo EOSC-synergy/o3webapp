@@ -1,15 +1,14 @@
 import React from 'react';
-import Sidebar from '../../../../../src/views/landingPage/Sidebar/Sidebar';
-import { render } from '@testing-library/react';
-import '@testing-library/jest-dom';
+import Sidebar from 'views/landingPage/Sidebar/Sidebar';
+import { render, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
-import { createTestStore } from '../../../../../src/store/store';
-import { setActivePlotId } from '../../../../../src/store/plotSlice';
-import { O3AS_PLOTS } from '../../../../../src/utils/constants';
+import { AppStore, createTestStore } from 'store/store';
+import { setActivePlotId } from 'store/plotSlice';
+import { O3AS_PLOTS } from 'utils/constants';
 
 describe('test sidebar component', () => {
-    let store;
+    let store: AppStore;
     beforeEach(() => {
         store = createTestStore();
     });
@@ -113,7 +112,15 @@ describe('test sidebar component', () => {
                 />
             </Provider>
         );
-        userEvent.click(getByText(/Download/i));
-        userEvent.click(getByTestId('DownloadModal-close'));
+
+        act(() => {
+            userEvent.click(getByText(/Download/i));
+        });
+        const downloadModalCloseButton = getByTestId('DownloadModal-close');
+        expect(downloadModalCloseButton).toBeInTheDocument();
+        act(() => {
+            userEvent.click(downloadModalCloseButton);
+        });
+        expect(downloadModalCloseButton).not.toBeInTheDocument();
     });
 });

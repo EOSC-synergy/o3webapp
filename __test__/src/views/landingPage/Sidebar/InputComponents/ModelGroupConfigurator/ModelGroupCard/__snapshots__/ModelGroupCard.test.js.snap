@@ -273,16 +273,7 @@ exports[`test ModelGroupCard functionality opens add model group modal 1`] = `
           Edit group members
           <span
             class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-          >
-            <span
-              class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible"
-              style="width: 2.8284271247461903px; height: 2.8284271247461903px; top: -1.4142135623730951px; left: -1.4142135623730951px;"
-            >
-              <span
-                class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
-              />
-            </span>
-          </span>
+          />
         </button>
       </div>
     </div>
@@ -357,14 +348,14 @@ exports[`test ModelGroupCard functionality opens add model group modal 1`] = `
             class="MuiFormControl-root MuiTextField-root css-3d5apm-MuiFormControl-root-MuiTextField-root"
           >
             <div
-              class="MuiInput-root MuiInput-underline MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-1480iag-MuiInputBase-root-MuiInput-root"
+              class="MuiInput-root MuiInput-underline MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-1ptx2yq-MuiInputBase-root-MuiInput-root"
             >
               <input
-                aria-describedby="mui-23-helper-text"
+                aria-describedby=":r2:-helper-text"
                 aria-invalid="false"
                 class="MuiInput-input MuiInputBase-input css-1x51dt5-MuiInputBase-input-MuiInput-input"
                 data-testid="AddModelGroupModal-card-group-name"
-                id="mui-23"
+                id=":r2:"
                 placeholder="Your group"
                 type="text"
                 value="Example Group"
@@ -372,7 +363,7 @@ exports[`test ModelGroupCard functionality opens add model group modal 1`] = `
             </div>
             <p
               class="MuiFormHelperText-root MuiFormHelperText-sizeMedium MuiFormHelperText-filled css-1d1r5q-MuiFormHelperText-root"
-              id="mui-23-helper-text"
+              id=":r2:-helper-text"
             >
               The name will only appear in the legend of the exported plot.
             </p>
@@ -408,7 +399,7 @@ exports[`test ModelGroupCard functionality opens add model group modal 1`] = `
                 aria-label="search"
                 class="MuiInputBase-input css-yz9k0d-MuiInputBase-input"
                 data-testid="SearchbarInput"
-                id="mui-24"
+                id=":r3:"
                 placeholder="Search…"
                 type="text"
                 value=""
@@ -509,7 +500,6 @@ exports[`test ModelGroupCard functionality opens add model group modal 1`] = `
             </div>
           </div>
         </div>
-        
       </div>
       <div
         class="MuiCardActions-root MuiCardActions-spacing css-19l6csj-MuiCardActions-root"
@@ -797,16 +787,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
           Edit statistical values
           <span
             class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-          >
-            <span
-              class="css-y4cjyz-MuiTouchRipple-ripple MuiTouchRipple-ripple MuiTouchRipple-rippleVisible"
-              style="width: 2.8284271247461903px; height: 2.8284271247461903px; top: -1.4142135623730951px; left: -1.4142135623730951px;"
-            >
-              <span
-                class="MuiTouchRipple-child MuiTouchRipple-childLeaving"
-              />
-            </span>
-          </span>
+          />
         </button>
         <button
           class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeSmall MuiButton-outlinedSizeSmall MuiButtonBase-root  css-1k23hlb-MuiButtonBase-root-MuiButton-root"
@@ -909,7 +890,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
               aria-label="search"
               class="MuiInputBase-input css-yz9k0d-MuiInputBase-input"
               data-testid="SearchbarInput"
-              id="mui-1"
+              id=":r2:"
               placeholder="Search…"
               type="text"
               value=""
@@ -921,7 +902,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
         aria-colcount="8"
         aria-multiselectable="false"
         aria-rowcount="3"
-        class="MuiDataGrid-root css-mofsyo-MuiDataGrid-root"
+        class="MuiDataGrid-root MuiDataGrid-root--densityStandard css-1vy8075-MuiDataGrid-root"
         role="grid"
       >
         <div>
@@ -942,6 +923,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
             >
               <div
                 aria-colindex="1"
+                aria-sort="none"
                 class="MuiDataGrid-columnHeader MuiDataGrid-columnHeader--sortable"
                 data-field="project"
                 role="columnheader"
@@ -1013,6 +995,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
               </div>
               <div
                 aria-colindex="2"
+                aria-sort="none"
                 class="MuiDataGrid-columnHeader MuiDataGrid-columnHeader--sortable"
                 data-field="institute"
                 role="columnheader"
@@ -1084,6 +1067,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
               </div>
               <div
                 aria-colindex="3"
+                aria-sort="none"
                 class="MuiDataGrid-columnHeader MuiDataGrid-columnHeader--sortable"
                 data-field="model"
                 role="columnheader"
@@ -1155,6 +1139,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
               </div>
               <div
                 aria-colindex="4"
+                aria-sort="none"
                 class="MuiDataGrid-columnHeader"
                 data-field="mean"
                 role="columnheader"
@@ -1213,6 +1198,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
               </div>
               <div
                 aria-colindex="5"
+                aria-sort="none"
                 class="MuiDataGrid-columnHeader"
                 data-field="standard deviation"
                 role="columnheader"
@@ -1271,6 +1257,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
               </div>
               <div
                 aria-colindex="6"
+                aria-sort="none"
                 class="MuiDataGrid-columnHeader"
                 data-field="median"
                 role="columnheader"
@@ -1329,6 +1316,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
               </div>
               <div
                 aria-colindex="7"
+                aria-sort="none"
                 class="MuiDataGrid-columnHeader"
                 data-field="percentile"
                 role="columnheader"
@@ -1387,6 +1375,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
               </div>
               <div
                 aria-colindex="8"
+                aria-sort="none"
                 class="MuiDataGrid-columnHeader"
                 data-field="visible"
                 role="columnheader"
@@ -2322,7 +2311,7 @@ exports[`test ModelGroupCard functionality opens edit model group modal 1`] = `
               class="MuiTablePagination-root css-rtrcn9-MuiTablePagination-root"
             >
               <div
-                class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular MuiTablePagination-toolbar css-11bfvty-MuiToolbar-root-MuiTablePagination-toolbar"
+                class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular MuiTablePagination-toolbar css-78c6dr-MuiToolbar-root-MuiTablePagination-toolbar"
               >
                 <div
                   class="MuiTablePagination-spacer css-1psng7p-MuiTablePagination-spacer"

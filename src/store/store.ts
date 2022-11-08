@@ -53,7 +53,7 @@ export const useAppStore = () => useStore<AppState>();
 
 export const wrapper = createWrapper(initStore);
 
-export function createTestStore() {
+export function createTestStore(): AppStore {
     const store = initStore();
     store.dispatch(setModelsOfModelGroup(DEFAULT_MODEL_GROUP)); // fill with default group
     return store;

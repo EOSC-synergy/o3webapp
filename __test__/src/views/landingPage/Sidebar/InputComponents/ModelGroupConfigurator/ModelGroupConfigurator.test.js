@@ -61,7 +61,9 @@ describe('test functionality buttons', () => {
                 <ModelGroupConfigurator reportError={jest.fn()} />
             </Provider>
         );
-        userEvent.click(getByTestId(/addModelGroup-button/));
+        act(() => {
+            userEvent.click(getByTestId(/addModelGroup-button/));
+        });
         expect(getByTestId(/addModelGroupModal/)).toBeInTheDocument();
     });
 });

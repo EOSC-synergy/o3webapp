@@ -3,7 +3,7 @@ import '@testing-library/jest-dom';
 import PlotNameField, {
     PLOT_NAME_MAX_LEN,
 } from '../../../../../../../src/views/landingPage/Sidebar/InputComponents/PlotNameField/PlotNameField';
-import { render } from '@testing-library/react';
+import { render, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createTestStore } from '../../../../../../../src/store/store';
 import { Provider } from 'react-redux';
@@ -56,13 +56,17 @@ it('changes the name correctly', () => {
     );
 
     // Check if the value updates correctly
-    userEvent.clear(selectNode);
-    userEvent.type(selectNode, 'Test{enter}');
+    act(() => {
+        userEvent.clear(selectNode);
+        userEvent.type(selectNode, 'Test{enter}');
+    });
     expect(store.getState().plot.plotSpecificSettings.tco3_zm.title).toEqual('Test');
 
     // Check for max. length.
-    userEvent.clear(selectNode);
-    userEvent.type(selectNode, Array(PLOT_NAME_MAX_LEN + 1).join('A') + 'B{enter}');
+    act(() => {
+        userEvent.clear(selectNode);
+        userEvent.type(selectNode, Array(PLOT_NAME_MAX_LEN + 1).join('A') + 'B{enter}');
+    });
     expect(store.getState().plot.plotSpecificSettings.tco3_zm.title).toEqual(
         Array(PLOT_NAME_MAX_LEN + 1).join('A')
     ); //

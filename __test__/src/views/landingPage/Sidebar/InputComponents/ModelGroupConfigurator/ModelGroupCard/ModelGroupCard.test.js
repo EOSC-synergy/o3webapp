@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { createTestStore } from '../../../../../../../../src/store/store';
 import ModelGroupCard from '../../../../../../../../src/views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator/ModelGroupCard/ModelGroupCard';
@@ -102,7 +102,9 @@ describe('test ModelGroupCard functionality', () => {
             median: true,
             percentile: true,
         });
-        userEvent.click(getByTestId('ModelGroupCard-toggle-mean-checkbox'));
+        act(() => {
+            userEvent.click(getByTestId('ModelGroupCard-toggle-mean-checkbox'));
+        });
         expect(store.getState().models.modelGroups['0'].visibleSV).toEqual({
             mean: false,
             'standard deviation': true,
@@ -122,7 +124,9 @@ describe('test ModelGroupCard functionality', () => {
         expect(visibilityIcon).toBeInTheDocument();
         expect(store.getState().models.modelGroups['0'].isVisible).toEqual(true);
 
-        userEvent.click(visibilityIcon); // toggle visibility
+        act(() => {
+            userEvent.click(visibilityIcon); // toggle visibility
+        });
 
         const invisibilityIcon = getByTestId('ModelGroupCard-VisibilityIcon-invisible');
         expect(invisibilityIcon).toBeInTheDocument();
@@ -138,9 +142,13 @@ describe('test ModelGroupCard functionality', () => {
         const deleteIcon = getByTestId('ModelGroupCard-delete-model-group');
 
         expect(store.getState().models.modelGroups['0']).not.toEqual(undefined);
-        userEvent.click(deleteIcon); // delete model group
+        act(() => {
+            userEvent.click(deleteIcon); // delete model group
+        });
         expect(container).toHaveTextContent('Delete this model group?');
-        userEvent.click(getByTestId('ModelGroupCard-delete-model-keep'));
+        act(() => {
+            userEvent.click(getByTestId('ModelGroupCard-delete-model-keep'));
+        });
 
         expect(store.getState().models.modelGroups['0']).not.toEqual(undefined);
         expect(container).not.toHaveTextContent('Delete this model group?'); // delete dialog is closed
@@ -155,7 +163,9 @@ describe('test ModelGroupCard functionality', () => {
         const deleteIcon = getByTestId('ModelGroupCard-delete-model-group');
 
         expect(store.getState().models.modelGroups['0']).not.toEqual(undefined);
-        userEvent.click(deleteIcon); // delete model group
+        act(() => {
+            userEvent.click(deleteIcon); // delete model group
+        });
         expect(container).toHaveTextContent('Delete this model group?');
 
         try {
@@ -176,8 +186,9 @@ describe('test ModelGroupCard functionality', () => {
         );
         expect(getByTestId(/EditModelGroupModal-button-open/)).toBeInTheDocument();
         const editSVButton = getByTestId(/EditModelGroupModal-button-open/);
-        userEvent.click(editSVButton);
-        expect(baseElement).toMatchSnapshot();
+        act(() => {
+            userEvent.click(editSVButton);
+        });
         expect(getByTestId(/EditModelGroupModal-modal-wrapper/)).toBeInTheDocument();
     });
 
@@ -189,8 +200,9 @@ describe('test ModelGroupCard functionality', () => {
         );
         expect(getByTestId(/EditModelGroupModal-button-open/)).toBeInTheDocument();
         const editMemberButton = getByTestId(/AddModelGroupModal-button-open/);
-        userEvent.click(editMemberButton);
-        expect(baseElement).toMatchSnapshot();
+        act(() => {
+            userEvent.click(editMemberButton);
+        });
         expect(getByTestId(/AddModelGroupModal-modal-wrapper/)).toBeInTheDocument();
     });
 });

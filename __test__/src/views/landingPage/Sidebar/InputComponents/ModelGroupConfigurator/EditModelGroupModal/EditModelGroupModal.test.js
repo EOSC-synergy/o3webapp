@@ -37,7 +37,6 @@ describe('test EditModelGroupModal rendering', () => {
                 />
             </Provider>
         );
-        expect(baseElement).toMatchSnapshot();
         expect(queryByTestId(/modal-wrapper/)).toBeInTheDocument();
     });
 
@@ -110,7 +109,9 @@ describe('test the functionality of EditModelGroupModal', () => {
         );
         const input = getByTestId('SearchbarInput');
         expect(queryByText('ACCESS-CCM-refC2')).toBeInTheDocument(); // If this fails, the default store might have been modified.
-        userEvent.type(input, 'NotAnElementInTheModelList{enter}');
+        act(() => {
+            userEvent.type(input, 'NotAnElementInTheModelList{enter}');
+        });
         expect(queryByText('ACCESS-CCM-refC2')).toBeNull();
     });
 

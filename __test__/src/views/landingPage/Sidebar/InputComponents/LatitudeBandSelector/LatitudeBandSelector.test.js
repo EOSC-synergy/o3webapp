@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
@@ -42,12 +42,18 @@ describe('tests redux functionality', () => {
             </Provider>
         );
 
-        userEvent.click(getByRole('button'));
+        act(() => {
+            userEvent.click(getByRole('button'));
+        });
         const options = getAllByRole('option');
-        userEvent.click(options[2]);
+        act(() => {
+            userEvent.click(options[2]);
+        });
 
         expect(store.getState().plot.generalSettings.location).toEqual({ minLat: -20, maxLat: 20 }); // Tropics
-        userEvent.click(options[options.length - 1]);
+        act(() => {
+            userEvent.click(options[options.length - 1]);
+        });
     });
 
     it('displays a custom latitude band selector if custom region is selected', () => {
@@ -57,12 +63,16 @@ describe('tests redux functionality', () => {
             </Provider>
         );
 
-        userEvent.click(getByRole('button'));
+        act(() => {
+            userEvent.click(getByRole('button'));
+        });
         const options = getAllByRole('option');
 
         expect(container).not.toHaveTextContent('Min. Lat');
         expect(container).not.toHaveTextContent('Max. Lat');
-        userEvent.click(options[options.length - 1]);
+        act(() => {
+            userEvent.click(options[options.length - 1]);
+        });
         expect(container).toHaveTextContent('Min. Lat');
         expect(container).toHaveTextContent('Max. Lat');
     });

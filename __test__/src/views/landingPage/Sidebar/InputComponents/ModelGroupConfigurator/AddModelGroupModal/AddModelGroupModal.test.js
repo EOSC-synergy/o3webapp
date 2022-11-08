@@ -1,4 +1,4 @@
-import { render, fireEvent, waitFor, within } from '@testing-library/react';
+import { render, fireEvent, waitFor, within, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import AddModelGroupModal from '../../../../../../../../src/views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator/AddModelGroupModal/AddModelGroupModal';
@@ -113,8 +113,6 @@ describe('test addModelGroupModal rendering', () => {
                 />
             </Provider>
         );
-
-        expect(baseElement).toMatchSnapshot();
     });
 });
 
@@ -242,9 +240,11 @@ describe('test addModelGroupModal functionality without model group id', () => {
             'listitem'
         );
         const moveModel = listItems[0].textContent;
-        userEvent.click(listItems[0]);
 
-        userEvent.click(getByTestId('AddModelGroupModal-button-move-allChecked-right'));
+        act(() => {
+            userEvent.click(listItems[0]);
+            userEvent.click(getByTestId('AddModelGroupModal-button-move-allChecked-right'));
+        });
         const rightListItems = within(
             getByTestId('AddModelGroupModal-card-header-right')
         ).queryAllByRole('listitem');
@@ -262,8 +262,10 @@ describe('test addModelGroupModal functionality without model group id', () => {
         const moveAllRight = getByTestId('AddModelGroupModal-button-move-allChecked-right');
         const moveAllLeft = getByTestId('AddModelGroupModal-button-move-allChecked-left');
 
-        userEvent.click(selectAllLeft);
-        userEvent.click(moveAllRight); // move everything to the right
+        act(() => {
+            userEvent.click(selectAllLeft);
+            userEvent.click(moveAllRight); // move everything to the right
+        });
 
         expect(
             within(getByTestId('AddModelGroupModal-card-header-right')).queryAllByRole('listitem')
@@ -274,8 +276,10 @@ describe('test addModelGroupModal functionality without model group id', () => {
                 .length
         ).toEqual(0);
 
-        userEvent.click(selectAllRight);
-        userEvent.click(moveAllLeft); // move everything to the left
+        act(() => {
+            userEvent.click(selectAllRight);
+            userEvent.click(moveAllLeft); // move everything to the left
+        });
 
         expect(
             within(getByTestId('AddModelGroupModal-card-header-right')).queryAllByRole('listitem')
@@ -297,7 +301,9 @@ describe('test addModelGroupModal functionality without model group id', () => {
         const accessModels = listItems
             .map((item) => item.textContent)
             .filter((item) => item.includes(searchString));
-        userEvent.type(getByTestId('SearchbarInput'), 'ACCESS{enter}');
+        act(() => {
+            userEvent.type(getByTestId('SearchbarInput'), 'ACCESS{enter}');
+        });
         const filteredModels = within(
             getByTestId('AddModelGroupModal-card-header-left')
         ).queryAllByRole('listitem');
@@ -354,9 +360,11 @@ describe('test addModelGroupModal functionality with model group id', () => {
         const title = 'New Title';
         expect(store.getState().models.modelGroups['0'].name).not.toEqual(title); // currently differs from title
         const amountBackspace = store.getState().models.modelGroups['0'].name.length;
-        userEvent.type(nameField, '{backspace}'.repeat(amountBackspace)); // deletes old name
-        userEvent.type(nameField, title);
-        userEvent.click(getByTestId('AddModelGroupModal-save-button')); // save changes
+        act(() => {
+            userEvent.type(nameField, '{backspace}'.repeat(amountBackspace)); // deletes old name
+            userEvent.type(nameField, title);
+            userEvent.click(getByTestId('AddModelGroupModal-save-button')); // save changes
+        });
         expect(store.getState().models.modelGroups['0'].name).toEqual(title);
     });
 
@@ -378,7 +386,9 @@ describe('test addModelGroupModal functionality with model group id', () => {
 
         const partOfDynamicErrorMsg = 'hidden model';
         expect(baseElement).not.toHaveTextContent(partOfDynamicErrorMsg);
-        userEvent.type(getByTestId('SearchbarInput'), 'ACCESS{enter}');
+        act(() => {
+            userEvent.type(getByTestId('SearchbarInput'), 'ACCESS{enter}');
+        });
         expect(baseElement).toHaveTextContent(partOfDynamicErrorMsg);
     });
 });
@@ -420,7 +430,9 @@ describe('test error handling', () => {
         userEvent.click(moveAllRight); // move everything to the right
 
         expect(baseElement).not.toHaveTextContent(expectedErrorMessage); // no error message
-        userEvent.click(getByTestId('AddModelGroupModal-save-button')); // save changes
+        act(() => {
+            userEvent.click(getByTestId('AddModelGroupModal-save-button')); // save changes
+        });
         expect(baseElement).toHaveTextContent(expectedErrorMessage); // error message
     });
 
@@ -434,7 +446,9 @@ describe('test error handling', () => {
         userEvent.type(nameField, title);
 
         expect(baseElement).not.toHaveTextContent(expectedErrorMessage); // no error message
-        userEvent.click(getByTestId('AddModelGroupModal-save-button')); // save changes
+        act(() => {
+            userEvent.click(getByTestId('AddModelGroupModal-save-button')); // save changes
+        });
         expect(baseElement).toHaveTextContent(expectedErrorMessage); // error message
     });
 });
