@@ -358,14 +358,14 @@ describe('test addModelGroupModal functionality with model group id', () => {
         const { getByTestId } = rendered;
         const nameField = getByTestId('AddModelGroupModal-card-group-name');
         const title = 'New Title';
-        expect(store.getState().models.modelGroups['0'].name).not.toEqual(title); // currently differs from title
+        expect(store.getState().models.modelGroups[0].name).not.toEqual(title); // currently differs from title
         const amountBackspace = store.getState().models.modelGroups['0'].name.length;
         act(() => {
             userEvent.type(nameField, '{backspace}'.repeat(amountBackspace)); // deletes old name
             userEvent.type(nameField, title);
             userEvent.click(getByTestId('AddModelGroupModal-save-button')); // save changes
         });
-        expect(store.getState().models.modelGroups['0'].name).toEqual(title);
+        expect(store.getState().models.modelGroups[0].name).toEqual(title);
     });
 
     it('exits without changing', () => {

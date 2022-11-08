@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { setModelsOfModelGroup } from '../../../../../../store/modelsSlice';
+import React, { ChangeEvent, FC, useEffect } from 'react';
+import { GlobalModelState, ModelId, setModelsOfModelGroup } from 'store/modelsSlice';
 import { useTheme } from '@mui/material/styles';
 import { CardContent, Divider, IconButton, ListItemButton, Modal, TextField } from '@mui/material';
 import { Box } from '@mui/system';
@@ -14,19 +14,38 @@ import { Card } from '@mui/material';
 import CardActions from '@mui/material/CardActions';
 import CircularProgress from '@mui/material/CircularProgress';
 import CardHeader from '@mui/material/CardHeader';
-import Searchbar from '../../../../../../components/SearchBar';
-import { convertModelName } from '../../../../../../utils/ModelNameConverter';
-import { union, not, intersection } from '../../../../../../utils/arrayOperations';
+import Searchbar from 'components/SearchBar';
+import { convertModelName } from 'utils/ModelNameConverter';
+import { union, not, intersection } from 'utils/arrayOperations';
 import CloseIcon from '@mui/icons-material/Close';
 import Alert from '@mui/material/Alert';
-import DiscardChangesModal from '../../../../../../components/DiscardChangesModal';
-import PropTypes from 'prop-types';
-import { useDispatch, useSelector, useStore } from 'react-redux';
-import {
-    fetchPlotDataForCurrentModels,
-    REQUEST_STATE,
-} from '../../../../../../services/API/apiSlice/apiSlice';
-import { selectNameOfGroup, selectModelDataOfGroup } from '../../../../../../store/modelsSlice';
+import DiscardChangesModal from 'components/DiscardChangesModal';
+import { useSelector } from 'react-redux';
+import { fetchPlotDataForCurrentModels, REQUEST_STATE } from 'services/API/apiSlice/apiSlice';
+import { selectNameOfGroup, selectModelDataOfGroup } from 'store/modelsSlice';
+import { AppState, useAppDispatch, useAppStore } from '../../../../../../store/store';
+
+type AddModelGroupModalProps = {
+    /**
+     * Function for error handling
+     */
+    reportError: (error: string) => void;
+    onClose: () => void;
+    isOpen: boolean;
+    /**
+     * Function to call if modal should be closed
+     */
+    setOpen: (open: boolean) => void;
+    /**
+     * Boolean whether the modal should be visible
+     */
+    refresh: boolean;
+    /**
+     * Number identifying the model group,
+     * if this model should be used to edit an existing model group
+     */
+    modelGroupId?: number;
+};
 
 /**
  * Opens a modal where the user can add a new model group.
@@ -37,8 +56,8 @@ import { selectNameOfGroup, selectModelDataOfGroup } from '../../../../../../sto
  * @returns {JSX.Element} a jsx containing a modal with a transfer list with all available models
  * @component AddModelGroupModal
  */
-function AddModelGroupModal(props) {
-    const store = useStore();
+const AddModelGroupModal: FC<AddModelGroupModalProps> = (props) => {
+    const store = useAppStore();
 
     /**
      * True if the Modal is open in the "Edit Mode".
@@ -56,16 +75,16 @@ function AddModelGroupModal(props) {
      * A function to dispatch actions to the redux store.
      * @function
      */
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     /**
      * Selected modelList data.
      * @constant {Object}
      */
-    const modelListRequestedData = useSelector((state) => state.api.models);
+    const modelListRequestedData = useSelector((state: AppState) => state.api.models);
 
     let isLoading = true;
-    let allModels = [];
+    let allModels: string[] = [];
     if (
         modelListRequestedData.status === REQUEST_STATE.idle ||
         modelListRequestedData.status === REQUEST_STATE.loading
@@ -87,28 +106,29 @@ function AddModelGroupModal(props) {
      * Array containing all currently checked models.
      * @constant {Array}
      */
-    const [checked, setChecked] = React.useState([]);
+    const [checked, setChecked] = React.useState<ModelId[]>([]);
+
     /**
      * Array containing all models, that are currently plotted in the right transfer list
      * -> models that should eventually be added
      * @constant {Array}
      */
     const storeRight = Object.keys(
-        useSelector((state) => selectModelDataOfGroup(state, modelGroupId))
+        useSelector((state: GlobalModelState) => selectModelDataOfGroup(state, modelGroupId))
     );
-    const [right, setRight] = React.useState(storeRight);
+    const [right, setRight] = React.useState<ModelId[]>(storeRight);
 
     /**
      * Array containing all models that should currently be visibile
      * because of the search function those might differ from all models.
      * @constant {Array}
      */
-    const [visible, setVisible] = React.useState([]);
+    const [visible, setVisible] = React.useState<ModelId[]>([]);
     /**
      * The currently enetered group name.
      * @constant {string}
      */
-    const storeGroupName = useSelector((state) => selectNameOfGroup(state, modelGroupId));
+    const storeGroupName = useSelector((state: AppState) => selectNameOfGroup(state, modelGroupId));
     const [groupName, setGroupName] = React.useState(storeGroupName);
 
     /**
@@ -161,7 +181,7 @@ function AddModelGroupModal(props) {
      * @returns the number of checked models in models
      * @function
      */
-    const numberOfChecked = (models) => intersection(checked, models).length;
+    const numberOfChecked = (models: ModelId[]) => intersection(checked, models).length;
     /**
      * All models that are currently on the left side
      * -> all models that are not currently on the right side are on the left side
@@ -199,15 +219,15 @@ function AddModelGroupModal(props) {
      * Toggles one element
      * i.e. checks the element if it had not been checked before
      * and unchecks it if it has been checked
-     * @param {String} value the id of the model that has been clicked
+     * @param {String} modelId the id of the model that has been clicked
      * @function
      */
-    const handleChangeElement = (value) => () => {
-        const currentIndex = checked.indexOf(value);
+    const handleChangeElement = (modelId: ModelId) => () => {
+        const currentIndex = checked.indexOf(modelId);
         const newChecked = [...checked];
 
         if (currentIndex === -1) {
-            newChecked.push(value);
+            newChecked.push(modelId);
         } else {
             newChecked.splice(currentIndex, 1);
         }
@@ -218,14 +238,14 @@ function AddModelGroupModal(props) {
      * Toggles whole list of elements
      * i.e. checks all if one element in items has not been checked before
      * and unchecks all if all elements in items have been checked
-     * @param {Array} items array containing model ids to check / uncheck
+     * @param {Array} modelIds array containing model ids to check / uncheck
      * @function
      */
-    const handleToggleAll = (items) => () => {
-        if (numberOfChecked(items) === items.length) {
-            setChecked(not(checked, items));
+    const handleToggleAll = (modelIds: ModelId[]) => () => {
+        if (numberOfChecked(modelIds) === modelIds.length) {
+            setChecked(not(checked, modelIds));
         } else {
-            setChecked(union(checked, items));
+            setChecked(union(checked, modelIds));
         }
     };
 
@@ -281,7 +301,7 @@ function AddModelGroupModal(props) {
      * @param {Array} visibleModels array of models that should be currently visible
      * @function
      */
-    const setCurrentlyVisibleModels = (visibleModels) => {
+    const setCurrentlyVisibleModels = (visibleModels: ModelId[]) => {
         setVisible(visibleModels);
     };
 
@@ -305,7 +325,7 @@ function AddModelGroupModal(props) {
      * @returns {JSX.Element} a Card containing a custom transfer list and a warning if checked models are currently not visible
      * @function
      */
-    const customList = (models, modelsChecked, modelsVisible) => {
+    const customList = (models: ModelId[], modelsChecked: ModelId[], modelsVisible: ModelId[]) => {
         const modelsCheckedInvisible = intersection(not(models, modelsVisible), modelsChecked);
         return (
             <Card sx={{ backgroundColor: theme.palette.background.paper }}>
@@ -325,6 +345,7 @@ function AddModelGroupModal(props) {
                             disabled={modelsVisible.length === 0}
                             inputProps={{
                                 'aria-label': 'all items selected',
+                                // @ts-expect-error TODO: how to add testid properly
                                 'data-testid': 'AddModelGroupModal-select-all',
                             }}
                         />
@@ -345,7 +366,7 @@ function AddModelGroupModal(props) {
                 >
                     {modelsVisible.map((modelId, idx) => {
                         const labelId = `transfer-list-all-item-${modelId}-label`;
-                        let model = convertModelName(modelId);
+                        const model = convertModelName(modelId);
                         return (
                             <ListItemButton
                                 key={idx}
@@ -406,7 +427,7 @@ function AddModelGroupModal(props) {
      * @param {Object} event    The event that called this function
      * @function
      */
-    const updateGroupName = (event) => {
+    const updateGroupName = (event: ChangeEvent<HTMLInputElement>) => {
         setGroupName(event.target.value);
     };
 
@@ -432,7 +453,7 @@ function AddModelGroupModal(props) {
         if (modelGroupNames.length !== right.length) {
             return true;
         }
-        for (let idx in right) {
+        for (const idx in right) {
             if (modelGroupNames[idx] !== right[idx]) {
                 return true;
             }
@@ -490,7 +511,7 @@ function AddModelGroupModal(props) {
                                 defaultValue={groupName}
                                 helperText="The name will only appear in the legend of the exported plot."
                                 variant="standard"
-                                onBlur={updateGroupName}
+                                onChange={updateGroupName}
                                 sx={{ marginBottom: '0.5em', marginLeft: '0.5em' }}
                                 placeholder="Your group"
                                 inputProps={{ 'data-testid': 'AddModelGroupModal-card-group-name' }}
@@ -499,6 +520,7 @@ function AddModelGroupModal(props) {
                         <Box id="modal-modal-description" sx={{ mt: 2 }}>
                             <Searchbar
                                 inputArray={allModels}
+                                // @ts-expect-error TODO: Searchbar foundIndicesCallback jank
                                 foundIndicesCallback={setCurrentlyVisibleModels}
                                 shouldReturnValues={true}
                             />
@@ -591,28 +613,6 @@ function AddModelGroupModal(props) {
             />
         </React.Fragment>
     );
-}
-
-AddModelGroupModal.propTypes = {
-    /**
-     * Function for error handling
-     */
-    reportError: PropTypes.func.isRequired,
-    onClose: PropTypes.func.isRequired,
-    isOpen: PropTypes.bool.isRequired,
-    /**
-     * Function to call if modal should be closed
-     */
-    setOpen: PropTypes.func.isRequired,
-    /**
-     * Boolean whether the modal should be visible
-     */
-    refresh: PropTypes.bool.isRequired,
-    /**
-     * Number identifying the model group,
-     * if this model should be used to edit an existing model group
-     */
-    modelGroupId: PropTypes.number,
 };
 
 export default AddModelGroupModal;

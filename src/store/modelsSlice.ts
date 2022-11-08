@@ -62,9 +62,11 @@ const MODEL_GROUP_TEMPLATE: ModelGroup = {
     }, {}) as Record<STATISTICAL_VALUES, boolean>,
 };
 
+export type ModelId = string;
+
 export type ModelState = {
     idCounter: number;
-    modelGroups: Record<number | string, ModelGroup>;
+    modelGroups: Record<ModelId, ModelGroup>;
 };
 
 export type GlobalModelState = {
@@ -132,10 +134,10 @@ const modelsSlice = createSlice({
             state: ModelState,
             {
                 payload: { groupId, groupName, modelList },
-            }: Payload<{ groupId?: number | string; groupName: string; modelList: string[] }>
+            }: Payload<{ groupId?: number; groupName: string; modelList: string[] }>
         ) {
             // set model group
-            if (groupId && groupId in state.modelGroups) {
+            if (groupId != null && groupId in state.modelGroups) {
                 const selectedModelGroup = state.modelGroups[groupId];
                 state.modelGroups[groupId].name = groupName;
                 // remove unwanted
@@ -357,7 +359,10 @@ export const selectModelsOfGroup = (state: GlobalModelState, groupId: number) =>
  * @function
  * @category modelSlice
  */
-export const selectModelDataOfGroup = (state: GlobalModelState, groupId: number) => {
+export const selectModelDataOfGroup = (state: GlobalModelState, groupId?: number) => {
+    if (groupId == null) {
+        return {};
+    }
     if (typeof state.models.modelGroups[groupId] !== 'undefined') {
         return state.models.modelGroups[groupId].models;
     }
@@ -372,7 +377,10 @@ export const selectModelDataOfGroup = (state: GlobalModelState, groupId: number)
  * @function
  * @category modelSlice
  */
-export const selectNameOfGroup = (state: GlobalModelState, groupId: number) => {
+export const selectNameOfGroup = (state: GlobalModelState, groupId?: number): string => {
+    if (groupId == null) {
+        return '';
+    }
     if (typeof state.models.modelGroups[groupId] !== 'undefined') {
         return state.models.modelGroups[groupId].name;
     }
