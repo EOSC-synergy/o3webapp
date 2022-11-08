@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { createTestStore } from '../../../../../../../src/store/store';
 import { Provider } from 'react-redux';
