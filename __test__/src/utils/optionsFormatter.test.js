@@ -1,4 +1,4 @@
-import store, { createTestStore } from '../../../src/store/store';
+import { createTestStore } from '../../../src/store/store';
 import { O3AS_PLOTS, START_YEAR } from '../../../src/utils/constants';
 import {
     colorNameToHex,
@@ -275,6 +275,12 @@ describe('testing optionsFormatter functionality', () => {
     });
 
     describe('tests the generation of the plot options', () => {
+        let store;
+
+        beforeEach(() => {
+            store = createTestStore();
+        });
+
         it('returns the correct options formatted correctly for tco3_return', () => {
             const expected = JSON.parse(JSON.stringify(default_TCO3_return));
             const yaxis = [
