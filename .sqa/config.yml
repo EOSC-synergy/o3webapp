@@ -27,7 +27,7 @@ sqa_criteria:
     repos:
       this_repo:
         commands:
-        - sh -c "npm config set production=true && npm audit --audit-level=high"
+        - sh -c "yarn audit --groups dependencies --level=high"
         container: processing
   QC.Doc:
     repos:
