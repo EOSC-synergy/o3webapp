@@ -4,7 +4,7 @@ FROM node:16.13-alpine as base
 WORKDIR /o3webapp
 ENV PATH="./node_modules/.bin:$PATH"
 COPY . .
-RUN npm install --development
+RUN yarn install
 
 FROM base as production
 ENV NODE_ENV=production
