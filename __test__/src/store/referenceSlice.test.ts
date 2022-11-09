@@ -11,6 +11,7 @@ const definedInitialState = {
 };
 
 test('should return the initial state', () => {
+    // @ts-expect-error intentionally giving empty stage
     expect(reducer(undefined, {})).toEqual(
         definedInitialState // Expect initial state to be the defined initial state
     );
@@ -32,6 +33,7 @@ test('should update the reference year of the current refference settings.', () 
 
     expect(
         reducer(
+            // @ts-expect-error intentionally only using partial state
             previousState, // use initial state
             setYear({ year: 2022 })
         )
@@ -54,6 +56,7 @@ test('should update the reference model of the current refference settings.', ()
 
     expect(
         reducer(
+            // @ts-expect-error intentionally only using partial state
             previousState, // use initial state
             setModel({ model: 'CCMI-1_CCCma_CMAM-senC2CH4rcp85' })
         )
@@ -74,6 +77,7 @@ test('should update the visibility of the current refference line.', () => {
 
     expect(
         reducer(
+            // @ts-expect-error intentionally only using partial state
             previousState, // use initial state
             setVisibility({ visible: true })
         )
@@ -94,6 +98,7 @@ test('should update the offset applied status of the current refference line.', 
 
     expect(
         reducer(
+            // @ts-expect-error intentionally only using partial state
             previousState, // use initial state
             setOffsetApplied({ isOffsetApplied: true })
         )

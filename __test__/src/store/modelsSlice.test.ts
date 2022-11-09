@@ -22,13 +22,13 @@ describe('reducer tests', () => {
 
         const previousState = {
             modelGroups: {
-                group1: {
+                '0': {
                     models: {
                         modelA: 'dataA',
                         modelB: 'dataB',
                     },
                 },
-                group2: {
+                '1': {
                     models: {
                         modelA: 'dataD',
                         modelB: 'dataE',
@@ -40,14 +40,14 @@ describe('reducer tests', () => {
 
         const expected = {
             modelGroups: {
-                group1: {
+                '0': {
                     models: {
                         modelB: 'dataB',
                         modelC: MODEL_DATA_TEMPLATE,
                     }, // empty
                     name: 'newName',
                 },
-                group2: {
+                '1': {
                     models: {
                         modelA: 'dataD',
                         modelB: 'dataE',
@@ -61,7 +61,7 @@ describe('reducer tests', () => {
             reducer(
                 previousState,
                 setModelsOfModelGroup({
-                    groupId: 'group1',
+                    groupId: 0,
                     groupName: 'newName',
                     modelList: newModelList,
                 })
