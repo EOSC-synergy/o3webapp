@@ -241,8 +241,10 @@ describe('test addModelGroupModal functionality without model group id', () => {
         );
         const moveModel = listItems[0].textContent;
 
-        act(() => {
+        await act(() => {
             userEvent.click(listItems[0]);
+        });
+        await act(() => {
             userEvent.click(getByTestId('AddModelGroupModal-button-move-allChecked-right'));
         });
         const rightListItems = within(
