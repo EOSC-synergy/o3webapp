@@ -15,7 +15,7 @@ sqa_criteria:
     repos:
       this_repo:
         commands:
-        - sh -c "npm ci --audit=false && ./node_modules/.bin/eslint src/ -f checkstyle -o eslint-codestyle.xml"
+        - sh -c "yarn install --frozen-lockfile --audit=false && ./node_modules/.bin/eslint src/ -f checkstyle -o eslint-codestyle.xml"
         container: processing
   QC.Uni:
     repos:
