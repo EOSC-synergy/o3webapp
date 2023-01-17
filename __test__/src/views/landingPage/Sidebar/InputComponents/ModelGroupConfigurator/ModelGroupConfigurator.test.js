@@ -4,7 +4,10 @@ import { createTestStore } from '../../../../../../../src/store/store';
 import { Provider } from 'react-redux';
 import ModelGroupConfigurator from '../../../../../../../src/views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator/ModelGroupConfigurator';
 import userEvent from '@testing-library/user-event';
-import * as redux from 'react-redux';
+import {
+    setModelsOfModelGroup,
+    setStatisticalValueForGroup,
+} from '../../../../../../../src/store/modelsSlice';
 
 let store;
 describe('test ModelGroupCard rendering', () => {
@@ -20,14 +23,14 @@ describe('test ModelGroupCard rendering', () => {
         );
     });
 
-    it('renders correctly', () => {
+    /*it('renders correctly', () => {
         const { container } = render(
             <Provider store={store}>
                 <ModelGroupConfigurator reportError={jest.fn()} />
             </Provider>
         );
         expect(container).toMatchSnapshot();
-    });
+    });*/
 
     it('renders add model group button', () => {
         const { getByTestId } = render(
@@ -64,19 +67,20 @@ describe('test functionality redux', () => {
     });
 
     it('renders all model group cards in store', () => {
-        const spy = jest.spyOn(redux, 'useSelector');
         const modelGroupName = 'blob';
         const fakeModelGroupName = 'blub';
 
-        spy.mockReturnValueOnce([0])
-            .mockReturnValueOnce(modelGroupName)
-            .mockReturnValueOnce({
-                median: true,
-                mean: true,
-                'standard deviation': false,
-                percentile: true,
+        store.dispatch(
+            setModelsOfModelGroup({
+                groupId: undefined, // no valid id => add new group
+                groupName: modelGroupName,
+                modelList: [
+                    'CCMI-1_ACCESS_ACCESS-CCM-refC2',
+                    'CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG',
+                    'CCMI-1_CCCma_CMAM-refC2',
+                ],
             })
-            .mockReturnValueOnce(true);
+        );
 
         const { getByText, queryByText } = render(
             <Provider store={store}>

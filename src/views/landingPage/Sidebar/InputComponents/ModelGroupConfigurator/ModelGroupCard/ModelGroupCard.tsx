@@ -64,6 +64,7 @@ const ModelGroupCard: FC<ModelGroupCardProps> = (props) => {
     const modelGroupStatisticalValue = useSelector((state: AppState) =>
         selectStatisticalValueSettingsOfGroup(state, props.modelGroupId)
     );
+    console.debug({ modelGroupStatisticalValue });
 
     /**
      * whether the model group is currenly visible or not. Retrieved from the Redux Store.
@@ -73,6 +74,7 @@ const ModelGroupCard: FC<ModelGroupCardProps> = (props) => {
     const isModelGroupVisible = useSelector((state: AppState) =>
         selectVisibilityOfGroup(state, props.modelGroupId)
     );
+    console.debug({ isModelGroupVisible });
 
     /**
      * Toggles the visibility of the given statistical value

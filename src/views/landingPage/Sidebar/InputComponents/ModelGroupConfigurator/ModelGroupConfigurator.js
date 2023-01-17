@@ -53,6 +53,8 @@ function ModelGroupConfigurator(props) {
         setRefreshState(refresh);
     };
 
+    console.debug(allGroupIds);
+
     return (
         <>
             {allGroupIds.map((id, idx) => {
