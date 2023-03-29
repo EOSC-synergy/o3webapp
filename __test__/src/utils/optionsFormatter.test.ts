@@ -1,4 +1,4 @@
-import { createTestStore } from '../../../src/store';
+import { AppStore, createTestStore } from '../../../src/store';
 import { O3AS_PLOTS, START_YEAR } from '../../../src/utils/constants';
 import {
     colorNameToHex,
@@ -20,13 +20,16 @@ import {
     customTooltipFormatter,
     IMPLICIT_YEAR_LIST,
     MODEL_LINE_THICKNESS,
+    Styling,
 } from '../../../src/utils/optionsFormatter';
+import { GlobalModelState } from '../../../src/store/modelsSlice';
+import { Entry, ProcessedO3Data } from '../../../src/services/API/apiSlice';
 
 describe('testing optionsFormatter functionality', () => {
     const spacedYearArray = [...Array(10).keys()].map((number) => `${START_YEAR + 2 * number}`);
     const valueArray = [...Array(10).keys()]; // arbitrary values 0...9
-    const expectedNormalize = [];
-    for (let year of IMPLICIT_YEAR_LIST) {
+    const expectedNormalize: (number | null)[] = [];
+    for (const year of IMPLICIT_YEAR_LIST) {
         const idx = spacedYearArray.indexOf(year);
         if (idx !== -1) {
             expectedNormalize.push(valueArray[idx]);
@@ -48,21 +51,17 @@ describe('testing optionsFormatter functionality', () => {
             const apiData = [
                 {
                     model: 'modelA',
-                    plotstyle: 'plotstyleData',
+                    //plotstyle: 'plotstyleData',
                     x: spacedYearArray,
                     y: valueArray,
                 },
             ];
 
-            const { lookUpTable } = preTransformApiData({
-                plotId: O3AS_PLOTS.tco3_zm,
-                data: apiData,
-                modelsSlice: { modelGroups: {} },
-            });
+            const lookUpTable = preTransformApiData(O3AS_PLOTS.tco3_zm, apiData);
             expect(lookUpTable).toEqual({
                 modelA: {
                     data: expectedNormalize,
-                    plotStyle: 'plotstyleData',
+                    //plotStyle: 'plotstyleData',
                     suggested: {
                         minX: 1960,
                         maxX: 1978,
@@ -77,20 +76,16 @@ describe('testing optionsFormatter functionality', () => {
             const apiData = [
                 {
                     model: 'modelA',
-                    plotstyle: 'plotstyleData',
+                    //plotstyle: 'plotstyleData',
                     x: ['regionA', 'regionB'],
                     y: [2010, 2022],
                 },
             ];
 
-            const { lookUpTable } = preTransformApiData({
-                plotId: O3AS_PLOTS.tco3_return,
-                data: apiData,
-                modelsSlice: { modelGroups: {} },
-            });
+            const lookUpTable = preTransformApiData(O3AS_PLOTS.tco3_return, apiData);
             expect(lookUpTable).toEqual({
                 modelA: {
-                    plotStyle: 'plotstyleData',
+                    //plotStyle: 'plotstyleData',
                     data: {
                         regionA: 2010,
                         regionB: 2022,
@@ -105,8 +100,8 @@ describe('testing optionsFormatter functionality', () => {
     });
 
     describe('tests the generation of plot series', () => {
-        let store;
-        let modelsSlice;
+        let store: AppStore;
+        let modelsSlice: GlobalModelState['models'];
         const testArray = Array(141)
             .fill(0)
             .map((e, i) => [START_YEAR + i, e]);
@@ -122,10 +117,10 @@ describe('testing optionsFormatter functionality', () => {
                     { name: 'CCMI-1_ACCESS_ACCESS-CCM-refC2', data: testArray },
                     { name: 'CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG', data: testArray },
                     { name: 'CCMI-1_CCCma_CMAM-refC2', data: testArray },
-                    { name: 'Mean (Example Group)', data: testArray },
-                    { name: 'Median (Example Group)', data: testArray },
                     { name: 'Lower % (Example Group)', data: testArray },
                     { name: 'Upper % (Example Group)', data: testArray },
+                    { name: 'Mean (Example Group)', data: testArray },
+                    { name: 'Median (Example Group)', data: testArray },
                     { name: 'μ + σ (Example Group)', data: testArray },
                     { name: 'μ - σ (Example Group)', data: testArray },
                 ],
@@ -135,46 +130,52 @@ describe('testing optionsFormatter functionality', () => {
                         '#000000',
                         '#000000',
                         '#000000',
+                        '#1e8509',
+                        '#1e8509',
                         '#696969',
                         '#000',
-                        '#1e8509',
-                        '#1e8509',
                         '#0e4e78',
                         '#0e4e78',
                     ],
-                    dashArray: [0, 0, 0, 0, 0, 2, 4, 4, 8, 8],
+                    dashArray: [0, 0, 0, 0, 4, 4, 0, 2, 8, 8],
                     width: Array(10).fill(MODEL_LINE_THICKNESS),
                     points: [
+                        [null, null],
+                        [null, null],
                         [1981, 0],
-                        [null, null],
-                        [null, null],
                         [null, null],
                         [1981, 0],
                         [1981, 0],
                     ],
                 },
             };
-            const data = {};
-            Object.keys(modelsSlice.modelGroups[0].models).forEach((key) => {
-                data[key] = {};
-                data[key]['plotStyle'] = {};
-                data[key].plotStyle.color = 'black';
-                data[key].plotStyle.linestyle = 'solid';
-                data[key].data = Array(141).fill(0);
-            });
-            data['reference_value'] = {
-                plotStyle: {
-                    color: 'black',
-                    linestyle: 'solid',
-                },
-                data: Array(141).fill(0),
+            const data: ProcessedO3Data = {
+                reference_value: {
+                    plotStyle: {
+                        color: 'black',
+                        linestyle: 'solid',
+                    },
+                    data: Array(141).fill(0),
+                } as Entry,
             };
+            Object.keys(modelsSlice.modelGroups[0].models).forEach((key) => {
+                data[key] = {
+                    plotStyle: {
+                        color: 'black',
+                        linestyle: 'solid',
+                    },
+                    data: Array(141).fill(0),
+                } as Entry;
+            });
             const series = generateSeries({
                 plotId: O3AS_PLOTS.tco3_zm,
                 data: data,
                 modelsSlice: modelsSlice,
                 refLineVisible: true,
-                getState: store.getState,
+                state: store.getState(),
+                // not used for zm but still needed in type
+                xAxisRange: { regions: [] },
+                yAxisRange: { maxY: -1, minY: -1 },
             });
             expect(series).toEqual(dataExpected);
         });
@@ -197,7 +198,7 @@ describe('testing optionsFormatter functionality', () => {
                         Global: 2052,
                         'User region': 2046,
                     },
-                },
+                } as unknown as Entry,
                 'CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG': {
                     plotStyle: {
                         color: 'purple',
@@ -214,7 +215,7 @@ describe('testing optionsFormatter functionality', () => {
                         Global: 2066,
                         'User region': 2064,
                     },
-                },
+                } as unknown as Entry,
                 'CCMI-1_CCCma_CMAM-refC2': {
                     plotStyle: {
                         color: 'red',
@@ -230,7 +231,9 @@ describe('testing optionsFormatter functionality', () => {
                         Global: 2048,
                         'User region': 2046,
                     },
-                },
+                } as unknown as Entry,
+                // needed for typing
+                reference_value: {} as Entry,
             };
             const dataExpected = {
                 data: [
@@ -238,10 +241,10 @@ describe('testing optionsFormatter functionality', () => {
                     { name: 'CCMI-1_ACCESS_ACCESS-CCM-refC2', data: [], type: 'scatter' },
                     { name: 'CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG', data: [], type: 'scatter' },
                     { name: 'CCMI-1_CCCma_CMAM-refC2', data: [], type: 'scatter' },
-                    { name: 'Mean (Example Group)', data: [], type: 'scatter' },
-                    { name: 'Median (Example Group)', data: [], type: 'scatter' },
                     { name: 'Lower % (Example Group)', data: [], type: 'scatter' },
                     { name: 'Upper % (Example Group)', data: [], type: 'scatter' },
+                    { name: 'Mean (Example Group)', data: [], type: 'scatter' },
+                    { name: 'Median (Example Group)', data: [], type: 'scatter' },
                     { name: 'μ + σ (Example Group)', data: [], type: 'scatter' },
                     { name: 'μ - σ (Example Group)', data: [], type: 'scatter' },
                 ],
@@ -250,14 +253,14 @@ describe('testing optionsFormatter functionality', () => {
                         '#800080',
                         '#800080',
                         '#ff0000',
+                        '#1e8509',
+                        '#1e8509',
                         '#696969',
                         '#000',
-                        '#1e8509',
-                        '#1e8509',
                         '#0e4e78',
                         '#0e4e78',
                     ],
-                    dashArray: [0, 2, 4, 4, 8, 8],
+                    dashArray: [4, 4, 0, 2, 8, 8],
                     width: Array(6).fill(MODEL_LINE_THICKNESS),
                 },
             };
@@ -266,16 +269,19 @@ describe('testing optionsFormatter functionality', () => {
                 plotId: O3AS_PLOTS.tco3_return,
                 data: data,
                 modelsSlice: modelsSlice,
-                getState: store.getState,
-                xAxisRange: { regions: ['Global'] },
+                state: store.getState(),
+                // TODO: region sometimes number sometimes string?
+                xAxisRange: { regions: ['Global'] as unknown as number[] },
                 yAxisRange: { minY: 270, maxY: 330 },
+                // needed for typing
+                refLineVisible: false,
             });
             expect(series).toEqual(dataExpected);
         });
     });
 
     describe('tests the generation of the plot options', () => {
-        let store;
+        let store: AppStore;
 
         beforeEach(() => {
             store = createTestStore();
@@ -292,16 +298,16 @@ describe('testing optionsFormatter functionality', () => {
 
             expected.yaxis.push(...yaxis);
 
-            const xAxisRange = { minX: 0, maxY: 10 };
+            const xAxisRange = { years: { minX: 0, maxX: 10 } };
             const yAxisRange = { minY: 0, maxY: 10 };
             const result = getOptions({
                 plotId: O3AS_PLOTS.tco3_return,
-                styling: { colors: [] },
+                styling: {} as Styling,
                 plotTitle: 'title',
                 xAxisRange,
                 yAxisRange,
                 seriesNames: [],
-                getState: store.getState,
+                state: store.getState(),
             });
             expect(JSON.stringify(result)).toEqual(JSON.stringify(expected)); // stringify results to not mess with anonymous functions
         });
@@ -342,7 +348,7 @@ describe('testing optionsFormatter functionality', () => {
     });
 
     it('should format the y-labels nicely', () => {
-        expect(formatYLabelsNicely(30)).toEqual(30);
+        expect(formatYLabelsNicely(30)).toEqual('30');
         expect(formatYLabelsNicely(5)).toEqual('');
         expect(formatYLabelsNicely(7)).toEqual('');
     });
@@ -390,7 +396,7 @@ describe('testing optionsFormatter functionality', () => {
     it('should return a correct formatted tooltip for a normal series', () => {
         const expected = `
         <div>
-            <div style="margin:2px"><strong>2021</strong></div>
+            <div style='margin:2px'><strong>2021</strong></div>
             <div>MODELNAME: <strong>42.00</strong></div>
             <div>Project: PROJECT-X</div>
             <div>Institue: INSTITUTE-Y</div>
@@ -399,7 +405,7 @@ describe('testing optionsFormatter functionality', () => {
 
         expect(
             customTooltipFormatter({
-                series: [[42]],
+                series: [[42]] as unknown as Parameters<typeof customTooltipFormatter>[0]['series'],
                 seriesIndex: 0,
                 dataPointIndex: 0,
                 w: {

@@ -33,7 +33,7 @@ import { O3Data } from 'services/API/generated-client';
 import { RegionBasedXRange, YearsBasedXRange, YRange } from 'store/plotSlice';
 import { GlobalModelState, ModelGroup } from 'store/modelsSlice';
 import { Entry, EntryPlotStyle, ProcessedO3Data, ZmData } from 'services/API/apiSlice';
-import { zipWith } from 'lodash';
+import { merge, zipWith } from 'lodash';
 import { ApexOptions } from 'apexcharts';
 
 /**
@@ -382,11 +382,14 @@ export function getDefaultYAxisTco3Return(
     };
 }
 
-type Styling = {
+export type Styling = {
     colors: string[];
     // see ApexStroke['width']
     width: number[];
     dashArray: number[];
+
+    // only zm?
+    points?: [number, number | null][];
 };
 
 /**
@@ -425,7 +428,6 @@ export const default_TCO3_return: ApexOptions = {
             show: false,
         },
     },
-    colors: [undefined], // , ...styling.colors
     title: {
         text: '[title]', // title can only be changed in store/plotSlice.js
         align: 'center',
@@ -534,97 +536,117 @@ export function getOptions({
             // dirt simple and not overly horrible
             const xAxisMin = roundDownToMultipleOfTen(xAxisRange.years.minX);
             const xAxisMax = roundUpToMultipleOfTen(xAxisRange.years.maxX);
-            return {
-                ...defaultTCO3_zm,
-                yaxis: [
-                    ...seriesNames.map((name) =>
-                        getDefaultYAxisTco3Zm(name, minY, maxY, false, false, 0, tickAmount)
-                    ),
-                    // on left side
-                    getDefaultYAxisTco3Zm(undefined, minY, maxY, true, false, -1, tickAmount),
-                    // on right side
-                    getDefaultYAxisTco3Zm(undefined, minY, maxY, true, true, 0, tickAmount),
-                ],
-                xaxis: {
-                    min: xAxisMin,
-                    max: xAxisMax,
-                    tickAmount: getOptimalTickAmount(xAxisMin, xAxisMax),
-                },
-                // TODO: no corresponding points are generated in generateSeries, what's up with this?
-                /*
-                annotations: {
-                    points: styling.points.map((point) => ({
-                        x: point[0],
-                        y: point[1],
-                        marker: {
-                            size: 4,
-                        },
-                        // label: {text: point[xIdx]}
-                    })),
-                },
-                 */
-                colors: styling.colors,
-                stroke: {
-                    width: styling.width,
-                    dashArray: styling.dashArray,
-                },
-                title: {
-                    text: plotTitle,
-                },
-                subtitle: {
-                    text: createSubtitle(state),
-                },
-                tooltip: {
-                    custom: customTooltipFormatter,
-                },
-                legend: {
-                    markers: {
-                        width: 0,
+            return merge(
+                { ...defaultTCO3_zm },
+                {
+                    yaxis: [
+                        ...seriesNames.map((name) =>
+                            getDefaultYAxisTco3Zm(name, minY, maxY, false, false, 0, tickAmount)
+                        ),
+                        // on left side
+                        getDefaultYAxisTco3Zm(undefined, minY, maxY, true, false, -1, tickAmount),
+                        // on right side
+                        getDefaultYAxisTco3Zm(undefined, minY, maxY, true, true, 0, tickAmount),
+                    ],
+                    xaxis: {
+                        min: xAxisMin,
+                        max: xAxisMax,
+                        tickAmount: getOptimalTickAmount(xAxisMin, xAxisMax),
                     },
-                    customLegendItems: seriesNames.map((name, i) => {
-                        const color = styling.colors[i];
-                        const dashing = styling.dashArray[i];
-                        let linePattern;
-                        let fontSize = 20;
-                        if (dashing <= 0) {
-                            linePattern = '<b>───</b>';
-                        } else if (dashing <= 2) {
-                            linePattern = '••••';
-                            fontSize = 12;
-                        } else {
-                            linePattern = '<b>---</b>';
-                        }
-                        return `
+                    // TODO: no corresponding points are generated in generateSeries, what's up with this?
+
+                    annotations: {
+                        points: styling.points?.map((point) => ({
+                            x: point[0],
+                            y: point[1],
+                            marker: {
+                                size: 4,
+                            },
+                            // label: {text: point[xIdx]}
+                        })),
+                    },
+
+                    colors: styling.colors,
+                    stroke: {
+                        width: styling.width,
+                        dashArray: styling.dashArray,
+                    },
+                    title: {
+                        text: plotTitle,
+                    },
+                    subtitle: {
+                        text: createSubtitle(state),
+                    },
+                    tooltip: {
+                        custom: customTooltipFormatter,
+                    },
+                    legend: {
+                        markers: {
+                            width: 0,
+                        },
+                        customLegendItems: seriesNames.map((name, i) => {
+                            const color = styling.colors[i];
+                            const dashing = styling.dashArray[i];
+                            let linePattern;
+                            let fontSize = 20;
+                            if (dashing <= 0) {
+                                linePattern = '<b>───</b>';
+                            } else if (dashing <= 2) {
+                                linePattern = '••••';
+                                fontSize = 12;
+                            } else {
+                                linePattern = '<b>---</b>';
+                            }
+                            return `
                     <span style='color:${color};font-family:Consolas, monaco, monospace;font-size:${fontSize}px;'>
                         ${linePattern}
                     </span>
                     <span style='font-size: 16px'>${name}</span>`;
-                    }),
-                },
-            };
+                        }),
+                    },
+                }
+            );
         }
         case O3AS_PLOTS.tco3_return: {
-            const newOptions = {
-                ...default_TCO3_return,
-                colors: styling.colors,
-                title: {
-                    text: plotTitle,
+            return merge(
+                {
+                    ...default_TCO3_return,
                 },
-                subtitle: {
-                    text: createSubtitle(state),
-                },
-                yaxis: [
-                    ...seriesNames.map((name) =>
-                        getDefaultYAxisTco3Return(name, minY, maxY, false, false, 0, tickAmount)
-                    ),
-                    // on left side
-                    getDefaultYAxisTco3Return(undefined, minY, maxY, true, false, 3, tickAmount),
-                    // on right side
-                    getDefaultYAxisTco3Return(undefined, minY, maxY, true, true, -3, tickAmount),
-                ],
-            };
-
-            return newOptions;
+                {
+                    colors: styling.colors,
+                    title: {
+                        text: plotTitle,
+                    },
+                    subtitle: {
+                        text: createSubtitle(state),
+                    },
+                    yaxis: [
+                        ...seriesNames.map((name) =>
+                            getDefaultYAxisTco3Return(name, minY, maxY, false, false, 0, tickAmount)
+                        ),
+                        // on left side
+                        getDefaultYAxisTco3Return(
+                            undefined,
+                            minY,
+                            maxY,
+                            true,
+                            false,
+                            3,
+                            tickAmount
+                        ),
+                        // on right side
+                        getDefaultYAxisTco3Return(
+                            undefined,
+                            minY,
+                            maxY,
+                            true,
+                            true,
+                            -3,
+                            tickAmount
+                        ),
+                    ],
+                }
+            );
         }
     }
     // tco3_return
@@ -700,18 +722,18 @@ type ReturnSeriesRest = Array<{
 type ReturnSeriesData = [ReturnSeriesFirst, ...ReturnSeriesRest];
 
 type ZmSeriesData = {
-    name: string;
+    name?: string;
     data: [number, number][];
     type?: 'scatter' | 'boxPlot';
 }[];
-type Series<SeriesData extends ApexAxisChartSeries> = {
+export type Series<SeriesData extends ApexAxisChartSeries> = {
     data: SeriesData;
 
     styling: Styling;
 };
 
-const NO_COLOR = 'NO COLOR';
-const NO_LINESTYLE = 'NO LINE STYLE';
+const NO_COLOR = '#000000';
+const NO_LINESTYLE = 0;
 
 /**
  * This method generates the data series for tco3_zm for all models that should be displayed (specified via groups).
@@ -741,29 +763,24 @@ function generateTco3_ZmSeries({
             colors: [],
             width: [],
             dashArray: [],
+            points: [],
         },
     };
     if (refLineVisible) {
         // TODO: see Entry["data"] in apiSlice.ts
         const zmRefData = data.reference_value.data as number[];
         series.data.push({
-            name: data.reference_value.plotStyle?.label ?? '?',
+            name: data.reference_value.plotStyle?.label,
 
             data: zmRefData.map((e, idx) => [START_YEAR + idx, e]),
         });
         // TODO: better way to handle no color?
         series.styling.colors.push(
-            colorNameToHex(data.reference_value.plotStyle?.color ?? NO_COLOR)
-        );
-        console.warn(
-            'ref has color',
-            colorNameToHex(data.reference_value.plotStyle?.color ?? NO_COLOR),
-            'because',
-            data.reference_value.plotStyle
+            colorNameToHex(data.reference_value.plotStyle?.color ?? NO_COLOR) || '#000000'
         );
         // TODO: better way to handle no line style?
         series.styling.dashArray.push(
-            convertToStrokeStyle(data.reference_value.plotStyle?.linestyle ?? NO_LINESTYLE)
+            convertToStrokeStyle(data.reference_value.plotStyle?.linestyle ?? '') || NO_LINESTYLE
         );
         series.styling.width.push(MODEL_LINE_THICKNESS);
     }
@@ -792,16 +809,11 @@ function generateTco3_ZmSeries({
                 data: zmData.map((e, idx) => [START_YEAR + idx, e]),
             });
 
-            series.styling.colors.push(colorNameToHex(modelData.plotStyle?.color ?? NO_COLOR));
-            console.warn(
-                model,
-                'has color',
-                colorNameToHex(modelData.plotStyle?.color ?? NO_COLOR),
-                'because',
-                modelData.plotStyle
+            series.styling.colors.push(
+                colorNameToHex(modelData.plotStyle?.color ?? '') || NO_COLOR
             );
             series.styling.dashArray.push(
-                convertToStrokeStyle(modelData.plotStyle?.linestyle ?? NO_LINESTYLE)
+                convertToStrokeStyle(modelData.plotStyle?.linestyle ?? '') || NO_LINESTYLE
             ); // default line thickness
             series.styling.width.push(MODEL_LINE_THICKNESS);
         }
@@ -816,8 +828,10 @@ function generateTco3_ZmSeries({
         state
     );
 
-    return Object.assign(combineSeries<ZmSeriesData>(series, svSeries), {
-        points: refLineVisible ? calcRecoveryPoints(state, data.reference_value, svSeries) : [],
+    return merge(combineSeries<ZmSeriesData>(series, svSeries), {
+        styling: {
+            points: refLineVisible ? calcRecoveryPoints(state, data.reference_value, svSeries) : [],
+        },
     });
 }
 
@@ -970,7 +984,9 @@ function generateTco3_ReturnSeries({
                 type: 'scatter',
             });
             // TODO: better way to handle no color?
-            series.styling.colors.push(colorNameToHex(modelData.plotStyle?.color ?? NO_COLOR));
+            series.styling.colors.push(
+                colorNameToHex(modelData.plotStyle?.color ?? '') || NO_COLOR
+            );
         }
     }
 
@@ -1378,7 +1394,7 @@ export const preTransformApiData = (plotId: LEGAL_PLOT_ID, data: O3Data[]): Proc
                 };
             }
             break;
-        case O3AS_PLOTS.tco3_return: {
+        case O3AS_PLOTS.tco3_return:
             for (const datum of data) {
                 // fill data
                 const yArray = [];
@@ -1399,8 +1415,9 @@ export const preTransformApiData = (plotId: LEGAL_PLOT_ID, data: O3Data[]): Proc
                     },
                 };
             }
-        }
+            break;
     }
+
     return lookUpTable;
 };
 
@@ -1596,7 +1613,7 @@ export function colorNameToHex(color: string) {
     }
 
     // TODO: sane default?
-    return colors.black;
+    return false;
 }
 
 /**
@@ -1616,8 +1633,8 @@ export function convertToStrokeStyle(apiStyle: string) {
     if (typeof styles[apiStyle.toLowerCase() as keyof typeof styles] != 'undefined') {
         return styles[apiStyle.toLowerCase() as keyof typeof styles];
     }
-    // TODO: is this a sane fallback?
-    return styles.solid;
+    // TODO: is there a sane fallback?
+    return false;
 }
 
 /**
@@ -1876,7 +1893,7 @@ export function customTooltipFormatter({
             <div>${name}: <strong>${
         // @ts-expect-error TODO: type this somehow?
         series[seriesIndex][dataPointIndex].toFixed(numDecimalsInDatapoint)
-    }}</strong></div>
+    }</strong></div>
             <div>Project: ${project}</div>
             <div>Institue: ${institute}</div>
         </div>
@@ -1931,7 +1948,7 @@ function calcRecoveryPoints(
     const valIdx = 1;
 
     for (let idx = 0; idx < svSeries.data.length; idx++) {
-        if (!dataName.includes(svSeries.data[idx].name.split('(')[0].slice(0, -1))) {
+        if (!dataName.includes((svSeries.data[idx].name ?? '').split('(')[0].slice(0, -1))) {
             points.push([null, null]);
             continue;
         }

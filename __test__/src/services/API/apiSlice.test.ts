@@ -6,16 +6,21 @@ import reducer, {
     REQUEST_STATE,
     selectActivePlotData,
     getAllSelectedModels,
-} from '../../../../src/services/API/apiSlice';
-import axios from 'axios';
+    GlobalAPIState,
+} from 'services/API/apiSlice';
 import { configureStore } from '@reduxjs/toolkit';
-import { createTestStore } from '../../../../src/store';
+import { AppState, AppStore, createTestStore } from 'store';
 import tco3zmResponse from './testing/tco3zm-response.json';
 import tco3returnResponse from './testing/tco3return-response.json';
-import { O3AS_PLOTS } from '../../../../src/utils/constants';
-import { preTransformApiData } from '../../../../src/utils/optionsFormatter';
+import { O3AS_PLOTS } from 'utils/constants';
+import { preTransformApiData } from 'utils/optionsFormatter';
 
-jest.mock('axios');
+import * as client from 'services/API/client';
+import { fakeAxiosResponse } from 'services/API/fakeResponse';
+
+jest.mock('services/API/client');
+
+const mockedClient = client as jest.Mocked<typeof client>;
 
 describe('tests fetchModels async thunk', () => {
     it('creates the action types', () => {
@@ -25,42 +30,34 @@ describe('tests fetchModels async thunk', () => {
     });
 
     it('updates store accordingly after successful request', async () => {
-        const store = configureStore({
-            reducer: {
-                api: reducer,
-            },
-        });
+        const store = createTestStore();
 
         const mockedReturnedData = ['modelA', 'modelB'];
 
         const expected = {
-            api: {
-                models: {
-                    status: REQUEST_STATE.success,
-                    error: null,
-                    data: mockedReturnedData,
+            models: {
+                status: REQUEST_STATE.success,
+                data: mockedReturnedData,
+            },
+            plotTypes: {
+                status: REQUEST_STATE.idle,
+                data: [],
+            },
+            plotSpecific: {
+                tco3_zm: {
+                    active: null,
+                    cachedRequests: {},
                 },
-                plotTypes: {
-                    status: REQUEST_STATE.idle,
-                    error: null,
-                    data: [],
-                },
-                plotSpecific: {
-                    tco3_zm: {
-                        active: null,
-                        cachedRequests: {},
-                    },
-                    tco3_return: {
-                        active: null,
-                        cachedRequests: {},
-                    },
+                tco3_return: {
+                    active: null,
+                    cachedRequests: {},
                 },
             },
         };
 
-        axios.get.mockResolvedValue({ data: mockedReturnedData });
+        mockedClient.getModels.mockResolvedValue(fakeAxiosResponse(mockedReturnedData));
         await store.dispatch(fetchModels());
-        expect(store.getState((state) => state.api)).toEqual(expected);
+        expect(store.getState().api).toEqual(expected);
     });
 
     it('updates store accordingly after rejected request', async () => {
@@ -81,7 +78,6 @@ describe('tests fetchModels async thunk', () => {
                 },
                 plotTypes: {
                     status: REQUEST_STATE.idle,
-                    error: null,
                     data: [],
                 },
                 plotSpecific: {
@@ -97,9 +93,9 @@ describe('tests fetchModels async thunk', () => {
             },
         };
 
-        axios.get.mockReturnValue(Promise.reject(errorMessage));
+        mockedClient.getModels.mockRejectedValue({ message: errorMessage });
         await store.dispatch(fetchModels());
-        expect(store.getState((state) => state.api)).toEqual(expected);
+        expect(store.getState()).toEqual(expected);
     });
 });
 
@@ -111,81 +107,66 @@ describe('tests fetchPlotTypes async thunk', () => {
     });
 
     it('updates store accordingly after successful request', async () => {
-        const store = configureStore({
-            reducer: {
-                api: reducer,
-            },
-        });
+        const store = createTestStore();
 
         const mockedReturnedData = ['tco3_zm', 'tco3_return'];
 
         const expected = {
-            api: {
-                models: {
-                    status: REQUEST_STATE.idle,
-                    error: null,
-                    data: [],
+            models: {
+                status: REQUEST_STATE.idle,
+                data: [],
+            },
+            plotTypes: {
+                status: REQUEST_STATE.success,
+                data: mockedReturnedData,
+            },
+            plotSpecific: {
+                tco3_zm: {
+                    active: null,
+                    cachedRequests: {},
                 },
-                plotTypes: {
-                    status: REQUEST_STATE.success,
-                    error: null,
-                    data: mockedReturnedData,
-                },
-                plotSpecific: {
-                    tco3_zm: {
-                        active: null,
-                        cachedRequests: {},
-                    },
-                    tco3_return: {
-                        active: null,
-                        cachedRequests: {},
-                    },
+                tco3_return: {
+                    active: null,
+                    cachedRequests: {},
                 },
             },
         };
 
-        axios.get.mockResolvedValue({ data: mockedReturnedData });
+        mockedClient.getPlotTypes.mockResolvedValue(fakeAxiosResponse(mockedReturnedData));
         await store.dispatch(fetchPlotTypes());
-        expect(store.getState((state) => state.api)).toEqual(expected);
+        expect(store.getState().api).toEqual(expected);
     });
 
     it('updates store accordingly after rejected request', async () => {
-        const store = configureStore({
-            reducer: {
-                api: reducer,
-            },
-        });
+        const store = createTestStore();
 
         const errorMessage = 'Timeout of API';
 
         const expected = {
-            api: {
-                models: {
-                    status: REQUEST_STATE.idle,
-                    error: null,
-                    data: [],
+            models: {
+                status: REQUEST_STATE.idle,
+                data: [],
+            },
+            plotTypes: {
+                status: REQUEST_STATE.error,
+                error: errorMessage,
+                data: [],
+            },
+            plotSpecific: {
+                tco3_zm: {
+                    active: null,
+                    cachedRequests: {},
                 },
-                plotTypes: {
-                    status: REQUEST_STATE.error,
-                    error: errorMessage,
-                    data: [],
-                },
-                plotSpecific: {
-                    tco3_zm: {
-                        active: null,
-                        cachedRequests: {},
-                    },
-                    tco3_return: {
-                        active: null,
-                        cachedRequests: {},
-                    },
+                tco3_return: {
+                    active: null,
+                    cachedRequests: {},
                 },
             },
         };
 
-        axios.get.mockReturnValue(Promise.reject(errorMessage));
+        mockedClient.getPlotTypes.mockRejectedValue({ message: errorMessage });
         await store.dispatch(fetchPlotTypes());
-        expect(store.getState((state) => state.api)).toEqual(expected);
+        expect(store.getState().api).toEqual(expected);
     });
 });
 
@@ -196,8 +177,8 @@ describe('tests the REQUEST_STATE enum', () => {
     expect(REQUEST_STATE.success).toEqual('success');
 });
 
-let store;
-let modelsInGroup;
+let store: AppStore;
+let modelsInGroup: string[];
 describe('tests fetchPlotData api interaction (integration)', () => {
     const exampleRequestData = {
         plotId: 'tco3_zm',
@@ -279,11 +260,12 @@ describe('tests fetchPlotData api interaction (integration)', () => {
     */
 
     it('should add loaded models to the list, update the status and save the transformed data for tco3_zm', async () => {
-        axios.post.mockResolvedValue({ data: tco3zmResponse });
+        mockedClient.getPlotData.mockResolvedValue(fakeAxiosResponse(tco3zmResponse));
         await store.dispatch(
             fetchPlotData({
                 plotId: O3AS_PLOTS.tco3_zm,
                 models: ['CCMI-1_ACCESS_ACCESS-CCM-refC2'],
+                suggest: false,
             })
         );
 
@@ -291,50 +273,46 @@ describe('tests fetchPlotData api interaction (integration)', () => {
         expect(plotSpecificSection.active).toEqual(exampleCacheKey);
         const cachedRequest = plotSpecificSection.cachedRequests[exampleCacheKey];
 
-        const { lookUpTable: transformedData } = preTransformApiData({
-            plotId: O3AS_PLOTS.tco3_zm,
-            data: tco3zmResponse,
-            modelsSlice: store.getState().models,
-        });
+        const transformedData = preTransformApiData(O3AS_PLOTS.tco3_zm, tco3zmResponse);
         expect(cachedRequest).toEqual({
+            cacheKey:
+                'lat_min=-90&lat_max=90&months=1,2,12&ref_meas=SBUV_GSFC_merged-SAT-ozone&ref_year=1980',
             data: transformedData, // expect data to be transformed
-            error: null,
             status: REQUEST_STATE.success,
             loadedModels: Object.values(tco3zmResponse).map((x) => x.model),
             loadingModels: [],
+            plotId: 'tco3_zm',
         });
     });
 
     it('should add loaded models to the list, update the status and save the transformed data for tco3_return', async () => {
-        axios.post.mockResolvedValue({ data: tco3returnResponse });
+        mockedClient.getPlotData.mockResolvedValue(fakeAxiosResponse(tco3returnResponse));
         await store.dispatch(
-            fetchPlotData({ plotId: O3AS_PLOTS.tco3_return, models: modelsInGroup })
+            fetchPlotData({ plotId: O3AS_PLOTS.tco3_return, models: modelsInGroup, suggest: false })
         );
 
         const plotSpecificSection = store.getState().api.plotSpecific[O3AS_PLOTS.tco3_return];
         expect(plotSpecificSection.active).toEqual(exampleCacheKey);
         const cachedRequest = plotSpecificSection.cachedRequests[exampleCacheKey];
 
-        const { lookUpTable: transformedData } = preTransformApiData({
-            plotId: O3AS_PLOTS.tco3_return,
-            data: tco3returnResponse,
-            modelsSlice: store.getState().models,
-        });
+        const transformedData = preTransformApiData(O3AS_PLOTS.tco3_return, tco3returnResponse);
 
         expect(cachedRequest).toEqual({
+            cacheKey:
+                'lat_min=-90&lat_max=90&months=1,2,12&ref_meas=SBUV_GSFC_merged-SAT-ozone&ref_year=1980',
             data: transformedData, // expect data to be transformed
-            error: null,
             status: REQUEST_STATE.success,
             loadedModels: Object.values(tco3returnResponse).map((x) => x.model),
             loadingModels: [],
+            plotId: 'tco3_return',
         });
     });
 
     it('should set an error accordingly', async () => {
         const errorMessage = 'This is an error message [500]';
-        axios.post.mockReturnValue(Promise.reject({ message: errorMessage }));
+        mockedClient.getPlotData.mockRejectedValue({ message: errorMessage });
         await store.dispatch(
-            fetchPlotData({ plotId: O3AS_PLOTS.tco3_return, models: modelsInGroup })
+            fetchPlotData({ plotId: O3AS_PLOTS.tco3_return, models: modelsInGroup, suggest: false })
         );
 
         const plotSpecificSection = store.getState().api.plotSpecific[O3AS_PLOTS.tco3_return];
@@ -342,11 +320,13 @@ describe('tests fetchPlotData api interaction (integration)', () => {
         const cachedRequest = plotSpecificSection.cachedRequests[exampleCacheKey];
 
         expect(cachedRequest).toEqual({
-            data: {}, // expect data to be transformed
+            cacheKey:
+                'lat_min=-90&lat_max=90&months=1,2,12&ref_meas=SBUV_GSFC_merged-SAT-ozone&ref_year=1980',
             error: errorMessage,
             status: REQUEST_STATE.error,
             loadedModels: [],
             loadingModels: [],
+            plotId: 'tco3_return',
         });
     });
 });
@@ -361,7 +341,7 @@ describe('testing selectors', () => {
                     },
                 },
             },
-        };
+        } as GlobalAPIState as AppState;
         expect(selectActivePlotData(previousState, 'tco3_return')).toEqual({
             status: REQUEST_STATE.loading,
         });
@@ -379,7 +359,7 @@ describe('testing selectors', () => {
                     },
                 },
             },
-        };
+        } as unknown as GlobalAPIState as AppState;
         expect(selectActivePlotData(previousState, 'tco3_return')).toEqual('precious data');
     });
 });
