@@ -1128,7 +1128,6 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                           <div
                                             class="MuiBox-root css-agnjr6"
                                           >
-                                             
                                             <label
                                               class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                             >
@@ -1163,7 +1162,6 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                                 Dec
                                               </span>
                                             </label>
-                                             
                                             <label
                                               class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                             >
@@ -1198,7 +1196,6 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                                 Jan
                                               </span>
                                             </label>
-                                             
                                             <label
                                               class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                             >
@@ -1290,7 +1287,6 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                           <div
                                             class="MuiBox-root css-agnjr6"
                                           >
-                                             
                                             <label
                                               class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                             >
@@ -1324,7 +1320,6 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                                 Mar
                                               </span>
                                             </label>
-                                             
                                             <label
                                               class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                             >
@@ -1358,7 +1353,6 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                                 Apr
                                               </span>
                                             </label>
-                                             
                                             <label
                                               class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                             >
@@ -1453,7 +1447,6 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                           <div
                                             class="MuiBox-root css-agnjr6"
                                           >
-                                             
                                             <label
                                               class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                             >
@@ -1487,7 +1480,6 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                                 Jun
                                               </span>
                                             </label>
-                                             
                                             <label
                                               class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                             >
@@ -1521,7 +1513,6 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                                 Jul
                                               </span>
                                             </label>
-                                             
                                             <label
                                               class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                             >
@@ -1612,7 +1603,6 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                           <div
                                             class="MuiBox-root css-agnjr6"
                                           >
-                                             
                                             <label
                                               class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                             >
@@ -1646,7 +1636,6 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                                 Sep
                                               </span>
                                             </label>
-                                             
                                             <label
                                               class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                             >
@@ -1680,7 +1669,6 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                                 Oct
                                               </span>
                                             </label>
-                                             
                                             <label
                                               class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                             >
@@ -1976,8 +1964,6 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
         </div>
         <button
           class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-s2dwfl-MuiButtonBase-root-MuiButton-root"
-          elevation="3"
-          position="fixed"
           tabindex="0"
           type="button"
         >

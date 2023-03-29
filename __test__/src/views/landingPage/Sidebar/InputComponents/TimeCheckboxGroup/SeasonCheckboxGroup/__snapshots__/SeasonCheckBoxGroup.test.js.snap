@@ -49,7 +49,6 @@ exports[`renders correctly 1`] = `
         <div
           class="MuiBox-root css-agnjr6"
         >
-           
           <label
             class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
           >
@@ -83,7 +82,6 @@ exports[`renders correctly 1`] = `
               Jan
             </span>
           </label>
-           
           <label
             class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
           >
@@ -117,7 +115,6 @@ exports[`renders correctly 1`] = `
               Feb
             </span>
           </label>
-           
           <label
             class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
           >

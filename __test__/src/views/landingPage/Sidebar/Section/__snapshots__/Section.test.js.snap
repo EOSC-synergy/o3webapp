@@ -912,7 +912,6 @@ exports[`Section renders correclty renders correctly from config file 3`] = `
                               <div
                                 class="MuiBox-root css-agnjr6"
                               >
-                                 
                                 <label
                                   class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                 >
@@ -947,7 +946,6 @@ exports[`Section renders correclty renders correctly from config file 3`] = `
                                     Dec
                                   </span>
                                 </label>
-                                 
                                 <label
                                   class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                 >
@@ -982,7 +980,6 @@ exports[`Section renders correclty renders correctly from config file 3`] = `
                                     Jan
                                   </span>
                                 </label>
-                                 
                                 <label
                                   class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                 >
@@ -1074,7 +1071,6 @@ exports[`Section renders correclty renders correctly from config file 3`] = `
                               <div
                                 class="MuiBox-root css-agnjr6"
                               >
-                                 
                                 <label
                                   class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                 >
@@ -1108,7 +1104,6 @@ exports[`Section renders correclty renders correctly from config file 3`] = `
                                     Mar
                                   </span>
                                 </label>
-                                 
                                 <label
                                   class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                 >
@@ -1142,7 +1137,6 @@ exports[`Section renders correclty renders correctly from config file 3`] = `
                                     Apr
                                   </span>
                                 </label>
-                                 
                                 <label
                                   class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                 >
@@ -1237,7 +1231,6 @@ exports[`Section renders correclty renders correctly from config file 3`] = `
                               <div
                                 class="MuiBox-root css-agnjr6"
                               >
-                                 
                                 <label
                                   class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                 >
@@ -1271,7 +1264,6 @@ exports[`Section renders correclty renders correctly from config file 3`] = `
                                     Jun
                                   </span>
                                 </label>
-                                 
                                 <label
                                   class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                 >
@@ -1305,7 +1297,6 @@ exports[`Section renders correclty renders correctly from config file 3`] = `
                                     Jul
                                   </span>
                                 </label>
-                                 
                                 <label
                                   class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                 >
@@ -1396,7 +1387,6 @@ exports[`Section renders correclty renders correctly from config file 3`] = `
                               <div
                                 class="MuiBox-root css-agnjr6"
                               >
-                                 
                                 <label
                                   class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                 >
@@ -1430,7 +1420,6 @@ exports[`Section renders correclty renders correctly from config file 3`] = `
                                     Sep
                                   </span>
                                 </label>
-                                 
                                 <label
                                   class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                 >
@@ -1464,7 +1453,6 @@ exports[`Section renders correclty renders correctly from config file 3`] = `
                                     Oct
                                   </span>
                                 </label>
-                                 
                                 <label
                                   class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
                                 >
