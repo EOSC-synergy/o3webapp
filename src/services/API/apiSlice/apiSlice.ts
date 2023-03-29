@@ -22,7 +22,7 @@ export const REQUEST_STATE = {
     success: 'success',
     error: 'error',
 } as const;
-export type REQUEST_STATE = typeof REQUEST_STATE[keyof typeof REQUEST_STATE];
+export type REQUEST_STATE = (typeof REQUEST_STATE)[keyof typeof REQUEST_STATE];
 
 /**
  * This thunk action creator is created via redux toolkit. It allows dispatching

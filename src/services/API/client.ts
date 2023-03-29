@@ -62,23 +62,23 @@ export const getPlotTypes = () => {
  * @function
  * @example getModels("tco3_zm", "refC2")
  */
-export const getModels = (plotType?: string, select?: string) => {
-    return modelsApi.o3apiApiGetModelsList({
+export const getModels = async (plotType?: string, select?: string) => {
+    return await modelsApi.o3apiApiGetModelsList({
         ptype: plotType,
         select,
     });
 };
 
-/**
- * Gets the plot style via a post request.
- *
- * @param plotType the plot type for which the plot style should be fetched
- * @returns the request promise from axios
- * @function
- * @example postModelsPlotStyle("tco3_zm")
- */
-export const postModelsPlotStyle = (plotType: string) => {
-    return modelsApi.o3apiApiGetPlotStyle({
+export const postModelsPlotStyle = async (plotType: string) => {
+    /**
+     * Gets the plot style via a post request.
+     *
+     * @param plotType the plot type for which the plot style should be fetched
+     * @returns the request promise from axios
+     * @function
+     * @example postModelsPlotStyle("tco3_zm")
+     */
+    return await modelsApi.o3apiApiGetPlotStyle({
         ptype: plotType,
     });
 };
@@ -111,7 +111,7 @@ export type LEGAL_PLOT_ID = 'tco3_zm' | 'tco3_return';
  *              refYear: 1980
  *          })
  */
-export const getPlotData = ({
+export const getPlotData = async ({
     plotId,
     latMin,
     latMax,
@@ -140,7 +140,7 @@ export const getPlotData = ({
     }
 
     if (plotId === 'tco3_zm') {
-        return plotsApi.o3apiApiPlotTco3Zm({
+        return await plotsApi.o3apiApiPlotTco3Zm({
             begin: startYear,
             end: endYear,
             // TODO: typing? API spec says array number, old code did string join
@@ -152,7 +152,7 @@ export const getPlotData = ({
             models: modelList,
         });
     }
-    return plotsApi.o3apiApiPlotTco3Return({
+    return await plotsApi.o3apiApiPlotTco3Return({
         month: months,
         latMin,
         latMax,

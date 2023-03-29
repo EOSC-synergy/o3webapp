@@ -1,16 +1,21 @@
-import { render, fireEvent, waitFor, within, act } from '@testing-library/react';
+import { render, fireEvent, waitFor, within, act, RenderResult } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
-import AddModelGroupModal from '../../../../../../../../src/views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator/AddModelGroupModal';
+import AddModelGroupModal from 'views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator/AddModelGroupModal';
 import { Provider } from 'react-redux';
-import { createTestStore } from '../../../../../../../../src/store/store';
-import modelsResponse from '__test__/src/services/API/testing/models-response.json';
-import tco3zmResponse from '__test__/src/services/API/testing/tco3zm-response.json';
-import axios from 'axios';
-import { fetchModels } from '../../../../../../../../src/services/API/apiSlice/apiSlice';
-jest.mock('axios');
+import { AppStore, createTestStore } from 'store/store';
+import modelsResponse from '../../../../../../../__test__/src/services/API/testing/models-response.json';
+import tco3zmResponse from '../../../../../../../__test__/src/services/API/testing/tco3zm-response.json';
+import { fetchModels } from 'services/API/apiSlice/apiSlice';
+import * as client from 'services/API/client';
+import { AxiosResponse } from 'axios';
+import { fakeAxiosResponse } from 'services/API/fakeResponse';
 
-let store;
+jest.mock('services/API/client');
+
+const mockedClient = client as jest.Mocked<typeof client>;
+
+let store: AppStore;
 describe('test addModelGroupModal rendering', () => {
     beforeEach(() => {
         store = createTestStore();
@@ -21,9 +26,9 @@ describe('test addModelGroupModal rendering', () => {
             <Provider store={store}>
                 <AddModelGroupModal
                     isOpen={true}
-                    onClose={() => {}}
-                    reportError={() => {}}
-                    setOpen={() => {}}
+                    onClose={() => undefined}
+                    reportError={() => undefined}
+                    setOpen={() => undefined}
                     refresh={true}
                 />
             </Provider>
@@ -68,8 +73,8 @@ describe('test addModelGroupModal rendering', () => {
                 <AddModelGroupModal
                     isOpen={true}
                     onClose={onClose}
-                    reportError={() => {}}
-                    setOpen={() => {}}
+                    reportError={() => undefined}
+                    setOpen={() => undefined}
                     refresh={true}
                 />
             </Provider>
@@ -79,36 +84,14 @@ describe('test addModelGroupModal rendering', () => {
         expect(onClose).toHaveBeenCalled();
     });
 
-    it('raises a console.error function if a required prop is not provided', () => {
-        console.error = jest.fn();
-        render(
-            <Provider store={store}>
-                <AddModelGroupModal />
-            </Provider>
-        );
-        expect(console.error).toHaveBeenCalled();
-        render(
-            <Provider store={store}>
-                <AddModelGroupModal isOpen={false} reportError={() => {}} />
-            </Provider>
-        );
-        expect(console.error).toHaveBeenCalled();
-        render(
-            <Provider store={store}>
-                <AddModelGroupModal onClose={() => {}} />
-            </Provider>
-        );
-        expect(console.error).toHaveBeenCalled();
-    });
-
     it('renders correctly if model list provided', () => {
-        const { baseElement } = render(
+        render(
             <Provider store={store}>
                 <AddModelGroupModal
                     isOpen={true}
-                    onClose={() => {}}
-                    reportError={() => {}}
-                    setOpen={() => {}}
+                    onClose={() => undefined}
+                    reportError={() => undefined}
+                    setOpen={() => undefined}
                     refresh={true}
                 />
             </Provider>
@@ -126,9 +109,9 @@ describe('test addModelGroupModal functionality', () => {
             <Provider store={store}>
                 <AddModelGroupModal
                     isOpen={true}
-                    onClose={() => {}}
-                    reportError={() => {}}
-                    setOpen={() => {}}
+                    onClose={() => undefined}
+                    reportError={() => undefined}
+                    setOpen={() => undefined}
                     refresh={true}
                 />
             </Provider>
@@ -144,9 +127,9 @@ describe('test addModelGroupModal functionality', () => {
             <Provider store={store}>
                 <AddModelGroupModal
                     isOpen={true}
-                    onClose={() => {}}
-                    reportError={() => {}}
-                    setOpen={() => {}}
+                    onClose={() => undefined}
+                    reportError={() => undefined}
+                    setOpen={() => undefined}
                     refresh={true}
                 />
             </Provider>
@@ -158,30 +141,35 @@ describe('test addModelGroupModal functionality', () => {
     it('calls props.reportError if fetching models failed', async () => {
         const errorMessage = 'blob';
         const mock = jest.fn();
-        axios.get.mockImplementation(() => {
-            return Promise.reject({ message: errorMessage }); //Promise.resolve({data: modelsResponse})
+        mockedClient.getModels.mockImplementation((): Promise<AxiosResponse> => {
+            return Promise.reject({
+                message: errorMessage,
+            });
         });
 
         const { rerender } = render(
             <Provider store={store}>
                 <AddModelGroupModal
                     isOpen={true}
-                    onClose={() => {}}
+                    onClose={() => undefined}
                     reportError={mock}
-                    setOpen={() => {}}
+                    setOpen={() => undefined}
                     refresh={true}
                 />
             </Provider>
         );
 
-        await store.dispatch(fetchModels());
+        await act(async () => {
+            await store.dispatch(fetchModels());
+        });
+
         rerender(
             <Provider store={store}>
                 <AddModelGroupModal
                     isOpen={true}
-                    onClose={() => {}}
+                    onClose={() => undefined}
                     reportError={mock}
-                    setOpen={() => {}}
+                    setOpen={() => undefined}
                     refresh={true}
                 />
             </Provider>
@@ -190,12 +178,12 @@ describe('test addModelGroupModal functionality', () => {
     });
 });
 
-let rendered;
+let rendered: RenderResult;
 describe('test addModelGroupModal functionality without model group id', () => {
     beforeEach(async () => {
         store = createTestStore();
-        axios.get.mockImplementation(() => {
-            return Promise.resolve({ data: modelsResponse });
+        mockedClient.getModels.mockImplementation(() => {
+            return Promise.resolve(fakeAxiosResponse(modelsResponse as string[]));
         });
         await store.dispatch(fetchModels());
 
@@ -203,9 +191,9 @@ describe('test addModelGroupModal functionality without model group id', () => {
             <Provider store={store}>
                 <AddModelGroupModal
                     isOpen={true}
-                    onClose={() => {}}
-                    reportError={() => {}}
-                    setOpen={() => {}}
+                    onClose={() => undefined}
+                    reportError={() => undefined}
+                    setOpen={() => undefined}
                     refresh={true}
                 />
             </Provider>
@@ -302,7 +290,7 @@ describe('test addModelGroupModal functionality without model group id', () => {
         );
         const accessModels = listItems
             .map((item) => item.textContent)
-            .filter((item) => item.includes(searchString));
+            .filter((item) => item?.includes(searchString) ?? false);
         act(() => {
             userEvent.type(getByTestId('SearchbarInput'), 'ACCESS{enter}');
         });
@@ -317,8 +305,8 @@ describe('test addModelGroupModal functionality without model group id', () => {
 describe('test addModelGroupModal functionality with model group id', () => {
     beforeEach(async () => {
         store = createTestStore();
-        axios.get.mockImplementation(() => {
-            return Promise.resolve({ data: modelsResponse });
+        mockedClient.getModels.mockImplementation(() => {
+            return Promise.resolve(fakeAxiosResponse(modelsResponse));
         });
         await store.dispatch(fetchModels());
 
@@ -326,10 +314,10 @@ describe('test addModelGroupModal functionality with model group id', () => {
             <Provider store={store}>
                 <AddModelGroupModal
                     isOpen={true}
-                    onClose={() => {}}
-                    reportError={() => {}}
+                    onClose={() => undefined}
+                    reportError={() => undefined}
                     modelGroupId={0}
-                    setOpen={() => {}}
+                    setOpen={() => undefined}
                     refresh={true}
                 />
             </Provider>
@@ -356,7 +344,9 @@ describe('test addModelGroupModal functionality with model group id', () => {
     });
 
     it('changes the model name and updates the store on edit', () => {
-        axios.post.mockImplementation(() => Promise.resolve({ data: tco3zmResponse }));
+        mockedClient.getPlotData.mockImplementation(() =>
+            Promise.resolve(fakeAxiosResponse(tco3zmResponse))
+        );
         const { getByTestId } = rendered;
         const nameField = getByTestId('AddModelGroupModal-card-group-name');
         const title = 'New Title';
@@ -398,18 +388,20 @@ describe('test addModelGroupModal functionality with model group id', () => {
 describe('test error handling', () => {
     beforeEach(async () => {
         store = createTestStore();
-        axios.get.mockImplementation(() => {
-            return Promise.resolve({ data: modelsResponse });
+        mockedClient.getModels.mockImplementation(() => {
+            return Promise.resolve(fakeAxiosResponse(modelsResponse));
         });
-        await store.dispatch(fetchModels());
+        await act(async () => {
+            await store.dispatch(fetchModels());
+        });
 
         rendered = render(
             <Provider store={store}>
                 <AddModelGroupModal
                     isOpen={true}
-                    onClose={() => {}}
-                    reportError={() => {}}
-                    setOpen={() => {}}
+                    onClose={() => undefined}
+                    reportError={() => undefined}
+                    setOpen={() => undefined}
                     refresh={true}
                 />
             </Provider>

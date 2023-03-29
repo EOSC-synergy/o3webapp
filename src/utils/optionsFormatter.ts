@@ -1306,19 +1306,13 @@ function calculateSvForModels(
  * @function
  */
 export function normalizeArray(xValues: string[], yValues: number[]): number[] {
-    const result = [];
-
     const values: [string, number][] = zipWith(xValues, yValues, (x, y) => [x, y]);
 
-    for (const year of IMPLICIT_YEAR_LIST) {
+    // @ts-expect-error TODO: will have to live with these nulls for now, makes rest of the typing much worse :(
+    return IMPLICIT_YEAR_LIST.map((year) => {
         const value = values.find(([x]) => x === year);
-        if (value == null) {
-            throw Error('cannot normalize array, year not found: ' + year);
-        }
-        result.push(value[1]);
-        //result.push(value ? value[1] : null);
-    }
-    return result;
+        return value !== undefined ? value[1] : null;
+    });
 }
 
 /**
