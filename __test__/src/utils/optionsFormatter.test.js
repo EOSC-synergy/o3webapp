@@ -1,4 +1,4 @@
-import { createTestStore } from '../../../src/store/store';
+import { createTestStore } from '../../../src/store';
 import { O3AS_PLOTS, START_YEAR } from '../../../src/utils/constants';
 import {
     colorNameToHex,

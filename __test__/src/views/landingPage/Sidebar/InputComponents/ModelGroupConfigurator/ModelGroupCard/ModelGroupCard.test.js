@@ -1,6 +1,6 @@
 import { render, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { createTestStore } from '../../../../../../../../src/store/store';
+import { createTestStore } from '../../../../../../../../src/store';
 import ModelGroupCard from '../../../../../../../../src/views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator/ModelGroupCard';
 import { Provider } from 'react-redux';
 import userEvent from '@testing-library/user-event';

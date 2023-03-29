@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { type FC, useState } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Section from './Section';
 import defaultStructure from 'config/defaultConfig.json';
@@ -13,7 +13,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import { BACKGROUND_BASE_COLOR, O3AS_PLOTS } from 'utils/constants';
-import { ErrorReporter } from 'utils/reportError';
+import { type ErrorReporter } from 'utils/reportError';
 
 /**
  * The default width of the sidebar / drawer in pixels.

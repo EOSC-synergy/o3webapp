@@ -1,13 +1,13 @@
-import React, { ChangeEvent } from 'react';
+import React, { type ChangeEvent } from 'react';
 import { Grid, Typography, FormControl, TextField, Checkbox } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { END_YEAR, START_YEAR, O3AS_PLOTS } from 'utils/constants';
-import { fetchPlotDataForCurrentModels } from 'services/API/apiSlice/apiSlice';
+import { fetchPlotDataForCurrentModels } from 'services/API/apiSlice';
 import { setYear, setVisibility, selectRefYear, selectVisibility } from 'store/referenceSlice';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import MuiVisibilityIcon from '@mui/icons-material/Visibility';
 import { selectPlotId } from 'store/plotSlice';
-import { useAppDispatch } from 'store/store';
+import { useAppDispatch } from 'store';
 
 /**
  * Enables the user to select a reference year.

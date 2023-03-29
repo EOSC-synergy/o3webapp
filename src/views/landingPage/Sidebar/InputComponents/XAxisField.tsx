@@ -1,6 +1,6 @@
-import React, { ChangeEvent, useEffect } from 'react';
+import React, { type ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setDisplayXRange, selectPlotXRange, YearsBasedXRange } from 'store/plotSlice';
+import { setDisplayXRange, selectPlotXRange, type YearsBasedXRange } from 'store/plotSlice';
 import { Typography, Grid, TextField, FormControl } from '@mui/material';
 import { START_YEAR, END_YEAR } from 'utils/constants';
 

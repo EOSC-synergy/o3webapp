@@ -5,7 +5,7 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
-import { createTestStore } from '../../../../src/store/store';
+import { createTestStore } from '../../../../src/store';
 
 jest.mock('react-apexcharts', () => {
     return {

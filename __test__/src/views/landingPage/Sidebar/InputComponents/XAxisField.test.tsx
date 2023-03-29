@@ -2,7 +2,7 @@ import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
 import XAxisField from 'views/landingPage/Sidebar/InputComponents/XAxisField';
-import { AppStore, createTestStore } from 'store/store';
+import { AppStore, createTestStore } from 'store';
 import { END_YEAR, START_YEAR } from 'utils/constants';
 
 describe('tests basic rendering', () => {

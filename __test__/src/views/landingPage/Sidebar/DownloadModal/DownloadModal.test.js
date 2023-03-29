@@ -2,10 +2,10 @@ import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import DownloadModal from '../../../../../../src/views/landingPage/Sidebar/DownloadModal';
 import { Provider } from 'react-redux';
-import { createTestStore } from '../../../../../../src/store/store';
+import { createTestStore } from '../../../../../../src/store';
 import tco3zmResponse from '../../../../../src/services/API/testing/tco3zm-response.json';
 import axios from 'axios';
-import { fetchPlotData } from '../../../../../../src/services/API/apiSlice/apiSlice';
+import { fetchPlotData } from '../../../../../../src/services/API/apiSlice';
 import { O3AS_PLOTS } from '../../../../../../src/utils/constants';
 
 jest.mock('axios');

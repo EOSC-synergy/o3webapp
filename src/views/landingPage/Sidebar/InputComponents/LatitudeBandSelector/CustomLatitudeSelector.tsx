@@ -1,10 +1,10 @@
-import React, { FC, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { type FC, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Grid, TextField, FormControl } from '@mui/material';
 import { selectPlotLocation, setLocation } from 'store/plotSlice';
-import { fetchPlotDataForCurrentModels } from 'services/API/apiSlice/apiSlice';
-import { Latitude } from 'utils/constants';
-import { useAppDispatch } from '../../../../../store/store';
+import { fetchPlotDataForCurrentModels } from 'services/API/apiSlice';
+import { type Latitude } from 'utils/constants';
+import { useAppDispatch } from 'store';
 
 /**
  * A component to select the specific min and max latitude values for the custom region.

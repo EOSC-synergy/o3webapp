@@ -1,4 +1,4 @@
-import { createTestStore } from '../../../../src/store/store';
+import { createTestStore } from '../../../../src/store';
 //import { updateStoreWithQuery, generateNewUrl } from '../../../../src/services/url';
 //import { O3AS_PLOTS } from '../../../../src/utils/constants';
 

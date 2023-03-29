@@ -27,12 +27,12 @@ import {
     USER_REGION,
 } from './constants';
 import { convertModelName } from './ModelNameConverter';
-import { AppState } from '../store/store';
-import { LEGAL_PLOT_ID } from '../services/API/client';
-import { O3Data } from '../services/API/generated-client';
-import { RegionBasedXRange, YearsBasedXRange, YRange } from '../store/plotSlice';
-import { GlobalModelState, ModelGroup } from '../store/modelsSlice';
-import { Entry, EntryPlotStyle, ProcessedO3Data, ZmData } from '../services/API/apiSlice/apiSlice';
+import { AppState } from 'store';
+import { LEGAL_PLOT_ID } from 'services/API/client';
+import { O3Data } from 'services/API/generated-client';
+import { RegionBasedXRange, YearsBasedXRange, YRange } from 'store/plotSlice';
+import { GlobalModelState, ModelGroup } from 'store/modelsSlice';
+import { Entry, EntryPlotStyle, ProcessedO3Data, ZmData } from 'services/API/apiSlice';
 import { zipWith } from 'lodash';
 import { ApexOptions } from 'apexcharts';
 

@@ -3,7 +3,7 @@ import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import LatitudeBandSelector from '../../../../../../../src/views/landingPage/Sidebar/InputComponents/LatitudeBandSelector';
-import { createTestStore } from '../../../../../../../src/store/store';
+import { createTestStore } from '../../../../../../../src/store';
 
 let store;
 beforeEach(() => {

@@ -3,7 +3,7 @@ import Sidebar from 'views/landingPage/Sidebar/Sidebar';
 import { render, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
-import { AppStore, createTestStore } from 'store/store';
+import { AppStore, createTestStore } from 'store';
 import { setActivePlotId } from 'store/plotSlice';
 import { O3AS_PLOTS } from 'utils/constants';
 

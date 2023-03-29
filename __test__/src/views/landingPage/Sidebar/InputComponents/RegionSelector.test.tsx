@@ -2,7 +2,7 @@ import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
 import RegionSelector from 'views/landingPage/Sidebar/InputComponents/RegionSelector';
-import { AppStore, createTestStore } from 'store/store';
+import { AppStore, createTestStore } from 'store';
 import { setActivePlotId } from 'store/plotSlice';
 
 let store: AppStore;

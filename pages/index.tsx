@@ -7,17 +7,13 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import {
-    fetchModels,
-    fetchPlotDataForCurrentModels,
-    fetchPlotTypes,
-} from 'services/API/apiSlice/apiSlice';
+import { fetchModels, fetchPlotDataForCurrentModels, fetchPlotTypes } from 'services/API/apiSlice';
 import { generateNewUrl, updateStoreWithQuery } from 'services/url';
 import { setModelsOfModelGroup } from 'store/modelsSlice';
 import { DEFAULT_MODEL_GROUP } from 'utils/constants';
 import { connect } from 'react-redux';
-import { useAppDispatch, useAppStore, wrapper } from 'store/store';
-import _ from 'lodash';
+import { useAppDispatch, useAppStore, wrapper } from 'store';
+import { isEmpty } from 'lodash';
 import { GetStaticProps, NextPage } from 'next';
 
 /**
@@ -145,7 +141,7 @@ const App: NextPage<IndexProps> = () => {
                     store.getState(),
                     router.query as Record<string, string>
                 );
-                dispatch(fetchPlotDataForCurrentModels(_.isEmpty(router.query)));
+                dispatch(fetchPlotDataForCurrentModels(isEmpty(router.query)));
             });
             /*
             fetchPlotTypes()

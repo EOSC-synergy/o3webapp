@@ -11,7 +11,7 @@ import {
     IconButton,
     CardContent,
 } from '@mui/material';
-import type { SelectChangeEvent } from '@mui/material';
+import { type SelectChangeEvent } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { downloadGraphAsPDF } from 'services/downloading/pdf/pdfCreator';
 import {
@@ -21,14 +21,13 @@ import {
 } from 'services/downloading/otherFormats';
 import { useSelector } from 'react-redux';
 import { selectPlotId, selectPlotTitle } from 'store/plotSlice';
-import { selectActivePlotData } from 'services/API/apiSlice/apiSlice';
-import { GlobalModelState, selectAllModelGroups } from 'store/modelsSlice';
-import { REQUEST_STATE } from 'services/API/apiSlice/apiSlice';
+import { selectActivePlotData, REQUEST_STATE } from 'services/API/apiSlice';
+import { type GlobalModelState, selectAllModelGroups } from 'store/modelsSlice';
 import CloseIcon from '@mui/icons-material/Close';
 import CardHeader from '@mui/material/CardHeader';
 import CardActions from '@mui/material/CardActions';
-import { AppState } from 'store/store';
-import { ErrorReporter } from '../../../utils/reportError';
+import { type AppState } from 'store';
+import { type ErrorReporter } from 'utils/reportError';
 
 /**
  * The file formats which can be selected in the dropdown menu.

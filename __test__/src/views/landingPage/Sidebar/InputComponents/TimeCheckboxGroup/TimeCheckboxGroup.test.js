@@ -3,7 +3,7 @@ import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
 import TimeCheckBoxGroup from '../../../../../../../src/views/landingPage/Sidebar/InputComponents/TimeCheckboxGroup';
 import { NUM_MONTHS } from '../../../../../../../src/utils/constants';
-import { createTestStore } from '../../../../../../../src/store/store';
+import { createTestStore } from '../../../../../../../src/store';
 
 let store;
 beforeEach(() => {

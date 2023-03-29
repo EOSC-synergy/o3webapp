@@ -1,10 +1,10 @@
-import React, { FC, useState } from 'react';
+import React, { type FC, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectPlotLocation, setLocation } from 'store/plotSlice';
-import { Box, Divider, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { Box, Divider, MenuItem, Select, type SelectChangeEvent } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { Latitude, latitudeBands } from 'utils/constants';
-import { fetchPlotDataForCurrentModels } from 'services/API/apiSlice/apiSlice';
+import { type Latitude, latitudeBands } from 'utils/constants';
+import { type fetchPlotDataForCurrentModels } from 'services/API/apiSlice';
 import CustomLatitudeSelector from './CustomLatitudeSelector';
 
 /**

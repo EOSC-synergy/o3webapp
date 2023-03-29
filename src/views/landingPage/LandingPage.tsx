@@ -1,7 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import Graph from './Graph';
 import Sidebar from './Sidebar/Sidebar';
-import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 
 /**
@@ -96,13 +95,6 @@ const LandingPage: React.FC<LandingPageProps> = ({
             </div>
         </div>
     );
-};
-
-LandingPage.propTypes = {
-    reportError: PropTypes.func.isRequired,
-    isSidebarOpen: PropTypes.bool.isRequired,
-    closeSidebar: PropTypes.func.isRequired,
-    openSidebar: PropTypes.func.isRequired,
 };
 
 export default LandingPage;

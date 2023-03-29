@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk, createAction } from '@reduxjs/toolkit';
-import { getModels, getPlotTypes, getPlotData, LEGAL_PLOT_ID } from '../client';
-import { getSuggestedValues, preTransformApiData } from '../../../utils/optionsFormatter';
-import { START_YEAR, END_YEAR, O3AS_PLOTS, USER_REGION } from '../../../utils/constants';
-import { setDisplayXRangeForPlot, setDisplayYRangeForPlot } from '../../../store/plotSlice';
-import { AppDispatch, AppState, AppStore } from '../../../store/store';
-import { O3Data } from '../generated-client';
+import { getModels, getPlotTypes, getPlotData, LEGAL_PLOT_ID } from './client';
+import { getSuggestedValues, preTransformApiData } from 'utils/optionsFormatter';
+import { START_YEAR, END_YEAR, O3AS_PLOTS, USER_REGION } from 'utils/constants';
+import { setDisplayXRangeForPlot, setDisplayYRangeForPlot } from 'store/plotSlice';
+import { AppDispatch, AppState, AppStore } from 'store';
+import { O3Data } from './generated-client';
 
 export let cacheKey = '';
 

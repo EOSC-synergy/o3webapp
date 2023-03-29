@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type ChangeEvent, type FC, useState } from 'react';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -20,9 +20,8 @@ import {
     deleteModelGroup,
 } from 'store/modelsSlice';
 import { STATISTICAL_VALUES, STATISTICAL_VALUES_LIST } from 'utils/constants';
-import { ChangeEvent, FC, useState } from 'react';
-import { AppState, useAppDispatch } from 'store/store';
-import { ErrorReporter } from 'utils/reportError';
+import { type AppState, useAppDispatch } from 'store';
+import { type ErrorReporter } from 'utils/reportError';
 
 type ModelGroupCardProps = {
     /**

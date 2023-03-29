@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react';
 import defaultStructure from '../../../../../../src/config/defaultConfig.json';
 import '@testing-library/jest-dom/extend-expect';
 import { Provider } from 'react-redux';
-import { createTestStore } from '../../../../../../src/store/store';
+import { createTestStore } from '../../../../../../src/store';
 
 let store;
 describe('Section renders correclty', () => {

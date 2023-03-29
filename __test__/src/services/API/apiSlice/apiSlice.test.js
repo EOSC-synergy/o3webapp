@@ -6,10 +6,10 @@ import reducer, {
     REQUEST_STATE,
     selectActivePlotData,
     getAllSelectedModels,
-} from '../../../../../src/services/API/apiSlice/apiSlice';
+} from '../../../../../src/services/API/apiSlice';
 import axios from 'axios';
 import { configureStore } from '@reduxjs/toolkit';
-import { createTestStore } from '../../../../../src/store/store';
+import { createTestStore } from '../../../../../src/store';
 import tco3zmResponse from '../testing/tco3zm-response.json';
 import tco3returnResponse from '../testing/tco3return-response.json';
 import { O3AS_PLOTS } from '../../../../../src/utils/constants';

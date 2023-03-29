@@ -2,8 +2,8 @@ import Graph from '../../../../../src/views/landingPage/Graph';
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { createTestStore } from '../../../../../src/store/store';
-import { REQUEST_STATE } from '../../../../../src/services/API/apiSlice/apiSlice';
+import { createTestStore } from '../../../../../src/store';
+import { REQUEST_STATE } from '../../../../../src/services/API/apiSlice';
 
 jest.mock('react-apexcharts', () => {
     return {

@@ -5,7 +5,7 @@ import PlotNameField, {
 } from '../../../../../../../src/views/landingPage/Sidebar/InputComponents/PlotNameField';
 import { render, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { createTestStore } from '../../../../../../../src/store/store';
+import { createTestStore } from '../../../../../../../src/store';
 import { Provider } from 'react-redux';
 import { initialState } from '../../../../../../../src/store/plotSlice';
 

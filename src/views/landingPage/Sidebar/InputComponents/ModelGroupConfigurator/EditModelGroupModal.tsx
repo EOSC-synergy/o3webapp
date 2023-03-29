@@ -1,7 +1,7 @@
-import React, { FC, MouseEventHandler, useEffect, useState } from 'react';
+import React, { type FC, type MouseEventHandler, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Modal, Card, Button, Checkbox, IconButton, CardActions, Box } from '@mui/material';
-import { DataGrid, GridColDef, GridColumnHeaderParams } from '@mui/x-data-grid';
+import { DataGrid, type GridColDef, type GridColumnHeaderParams } from '@mui/x-data-grid';
 import SearchBar from 'components/SearchBar';
 import { styled } from '@mui/material/styles';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
@@ -20,7 +20,7 @@ import { convertModelName } from 'utils/ModelNameConverter';
 import { alpha } from '@mui/system';
 import DiscardChangesModal from 'components/DiscardChangesModal';
 import { arraysEqual } from 'utils/arrayOperations';
-import { AppState, useAppDispatch } from 'store/store';
+import { type AppState, useAppDispatch } from 'store';
 
 /**
  * A DataGrid with applied CSS styling.

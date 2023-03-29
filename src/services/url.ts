@@ -23,7 +23,7 @@ import {
 } from 'store/modelsSlice';
 import bigInt from 'big-integer';
 import { isEmpty } from 'lodash';
-import { AppDispatch, AppState } from 'store/store';
+import { AppDispatch, AppState } from 'store';
 
 /**
  * This method uses the big-integer library

@@ -2,12 +2,11 @@ import React from 'react';
 import ReferenceModelSelector from 'views/landingPage/Sidebar/InputComponents/ReferenceModelSelector';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { createTestStore } from 'store/store';
+import { createTestStore, type AppStore } from 'store';
 import { Provider } from 'react-redux';
 import modelsResponse from '../../../../../../__test__/src/services/API/testing/models-response.json';
 import tco3zmResponse from '../../../../../../__test__/src/services/API/testing/tco3zm-response.json';
-import { fetchModels } from 'services/API/apiSlice/apiSlice';
-import { AppStore } from 'store/store';
+import { fetchModels } from 'services/API/apiSlice';
 import * as client from 'services/API/client';
 import { fakeAxiosResponse } from 'services/API/fakeResponse';
 

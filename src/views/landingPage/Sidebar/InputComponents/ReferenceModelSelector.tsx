@@ -2,10 +2,9 @@ import React, { type FC, useEffect } from 'react';
 import { Autocomplete, TextField } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { setModel, selectRefModel } from 'store/referenceSlice';
-import { fetchPlotDataForCurrentModels } from 'services/API/apiSlice/apiSlice';
-import { REQUEST_STATE } from 'services/API/apiSlice/apiSlice';
-import { AppState, useAppDispatch } from 'store/store';
-import { ErrorReporter } from 'utils/reportError';
+import { fetchPlotDataForCurrentModels, REQUEST_STATE } from 'services/API/apiSlice';
+import { type AppState, useAppDispatch } from 'store';
+import { type ErrorReporter } from 'utils/reportError';
 
 type ReferenceModelSelectorProps = {
     reportError: ErrorReporter;

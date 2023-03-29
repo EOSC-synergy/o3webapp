@@ -2,7 +2,7 @@ import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
 import CustomLatitudeSelector from '../../../../../../../../src/views/landingPage/Sidebar/InputComponents/LatitudeBandSelector/CustomLatitudeSelector';
-import { createTestStore } from '../../../../../../../../src/store/store';
+import { createTestStore } from '../../../../../../../../src/store';
 
 let store;
 beforeEach(() => {

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { type FC } from 'react';
 import { Box, Checkbox, FormControlLabel, Grid } from '@mui/material';
 import { months as MONTHS, NUM_MONTHS_IN_SEASON } from 'utils/constants';
 

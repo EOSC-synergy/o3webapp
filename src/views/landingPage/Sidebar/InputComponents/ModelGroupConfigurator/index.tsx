@@ -1,10 +1,10 @@
-import React, { FC, useState } from 'react';
+import React, { type FC, useState } from 'react';
 import AddModelGroupModal from './AddModelGroupModal';
 import ModelGroupCard from './ModelGroupCard';
 import { Button } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { selectAllGroupIds } from 'store/modelsSlice';
-import { ErrorReporter } from 'utils/reportError';
+import { type ErrorReporter } from 'utils/reportError';
 
 type ModelGroupConfiguratorProps = {
     reportError: ErrorReporter;

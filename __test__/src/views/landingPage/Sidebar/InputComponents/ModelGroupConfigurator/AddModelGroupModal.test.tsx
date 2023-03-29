@@ -3,12 +3,11 @@ import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import AddModelGroupModal from 'views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator/AddModelGroupModal';
 import { Provider } from 'react-redux';
-import { AppStore, createTestStore } from 'store/store';
+import { AppStore, createTestStore } from 'store';
 import modelsResponse from '../../../../../../../__test__/src/services/API/testing/models-response.json';
 import tco3zmResponse from '../../../../../../../__test__/src/services/API/testing/tco3zm-response.json';
-import { fetchModels } from 'services/API/apiSlice/apiSlice';
+import { fetchModels } from 'services/API/apiSlice';
 import * as client from 'services/API/client';
-import { AxiosResponse } from 'axios';
 import { fakeAxiosResponse } from 'services/API/fakeResponse';
 
 jest.mock('services/API/client');

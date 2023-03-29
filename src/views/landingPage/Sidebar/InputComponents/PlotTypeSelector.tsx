@@ -1,5 +1,4 @@
-import React, { FC, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { type FC, useEffect } from 'react';
 import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
@@ -8,11 +7,11 @@ import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import { useSelector } from 'react-redux';
 import { selectPlotId, setActivePlotId } from 'store/plotSlice';
-import { REQUEST_STATE } from 'services/API/apiSlice/apiSlice';
-import { AppState, useAppDispatch } from 'store/store';
-import { ErrorReporter } from 'utils/reportError';
-import { SelectChangeEvent } from '@mui/material';
-import { O3AS_PLOTS } from '../../../../utils/constants';
+import { REQUEST_STATE } from 'services/API/apiSlice';
+import { type AppState, useAppDispatch } from 'store';
+import { type ErrorReporter } from 'utils/reportError';
+import { type SelectChangeEvent } from '@mui/material';
+import { O3AS_PLOTS } from 'utils/constants';
 
 type PlotTypeSelectorProps = {
     reportError: ErrorReporter;
@@ -110,10 +109,6 @@ const PlotTypeSelector: FC<PlotTypeSelectorProps> = (props) => {
             </FormControl>
         </>
     );
-};
-
-PlotTypeSelector.propTypes = {
-    reportError: PropTypes.func.isRequired,
 };
 
 export default PlotTypeSelector;

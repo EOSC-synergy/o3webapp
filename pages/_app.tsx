@@ -1,4 +1,4 @@
-import { wrapper } from '../src/store/store';
+import { wrapper } from '../src/store';
 import '../styles/main.css';
 import React from 'react';
 import Head from 'next/head';

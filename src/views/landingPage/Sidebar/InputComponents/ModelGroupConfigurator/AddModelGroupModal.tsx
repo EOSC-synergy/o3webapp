@@ -1,5 +1,5 @@
-import React, { ChangeEvent, FC, useEffect, useState } from 'react';
-import { GlobalModelState, ModelId, setModelsOfModelGroup } from 'store/modelsSlice';
+import React, { type ChangeEvent, type FC, useEffect, useState } from 'react';
+import { type GlobalModelState, type ModelId, setModelsOfModelGroup } from 'store/modelsSlice';
 import { useTheme } from '@mui/material/styles';
 import { CardContent, Divider, IconButton, ListItemButton, Modal, TextField } from '@mui/material';
 import { Box } from '@mui/system';
@@ -21,10 +21,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import Alert from '@mui/material/Alert';
 import DiscardChangesModal from 'components/DiscardChangesModal';
 import { useSelector } from 'react-redux';
-import { fetchPlotDataForCurrentModels, REQUEST_STATE } from 'services/API/apiSlice/apiSlice';
+import { fetchPlotDataForCurrentModels, REQUEST_STATE } from 'services/API/apiSlice';
 import { selectNameOfGroup, selectModelDataOfGroup } from 'store/modelsSlice';
-import { AppState, useAppDispatch, useAppStore } from 'store/store';
-import { ErrorReporter } from 'utils/reportError';
+import { type AppState, useAppDispatch, useAppStore } from 'store';
+import { type ErrorReporter } from 'utils/reportError';
 
 type AddModelGroupModalProps = {
     /**

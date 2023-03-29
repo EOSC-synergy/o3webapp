@@ -16,7 +16,7 @@ import RegionSelector from './InputComponents/RegionSelector';
 import TimeCheckBoxGroup from './InputComponents/TimeCheckboxGroup';
 import XAxisField from './InputComponents/XAxisField';
 import YAxisField from './InputComponents/YAxisField';
-import { ErrorReporter } from '../../../utils/reportError';
+import { type ErrorReporter } from 'utils/reportError';
 
 /**
  * Stores the name of the CustomLatitudeSelector component as a Symbol.

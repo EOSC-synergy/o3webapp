@@ -1,10 +1,9 @@
-import React, { ChangeEvent, useEffect } from 'react';
+import React, { type ChangeEvent, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { setDisplayYRange, selectPlotYRange, selectPlotId } from 'store/plotSlice';
 import { Typography, Grid, FormControl, TextField } from '@mui/material';
 import { O3AS_PLOTS } from 'utils/constants';
-import PropTypes from 'prop-types';
-import { useAppDispatch, useAppStore } from 'store/store';
+import { useAppDispatch, useAppStore } from 'store';
 
 type YAxisFieldProps = {
     reportError?: (error: string) => void;
@@ -400,13 +399,6 @@ const YAxisField: React.FC<YAxisFieldProps> = ({ reportError = () => undefined }
             </Grid>
         </Grid>
     );
-};
-
-YAxisField.propTypes = {
-    /**
-     * function for error handling
-     */
-    reportError: PropTypes.func,
 };
 
 export default YAxisField;

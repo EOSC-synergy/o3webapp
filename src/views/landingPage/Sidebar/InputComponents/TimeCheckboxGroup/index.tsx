@@ -1,12 +1,12 @@
-import React, { FC, useState } from 'react';
+import React, { type FC, useState } from 'react';
 import SeasonCheckBoxGroup from './SeasonCheckBoxGroup';
 import { Alert, Checkbox, Divider, FormControlLabel, Grid } from '@mui/material';
 import { NUM_MONTHS_IN_SEASON, NUM_MONTHS } from 'utils/constants';
 import Typography from '@mui/material/Typography';
-import { fetchPlotDataForCurrentModels } from 'services/API/apiSlice/apiSlice';
+import { fetchPlotDataForCurrentModels } from 'services/API/apiSlice';
 import { useSelector } from 'react-redux';
 import { selectPlotMonths, setMonths } from 'store/plotSlice';
-import { useAppDispatch } from 'store/store';
+import { useAppDispatch } from 'store';
 
 /**
  * Stores the season Winter and its corresponding months.

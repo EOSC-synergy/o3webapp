@@ -10,14 +10,14 @@ import {
     YearsBasedXRange,
 } from 'store/plotSlice';
 import { selectVisibility } from 'store/referenceSlice';
-import { REQUEST_STATE, selectActivePlotData } from 'services/API/apiSlice/apiSlice';
+import { REQUEST_STATE, selectActivePlotData } from 'services/API/apiSlice';
 import { Typography, CircularProgress } from '@mui/material';
 import { Alert, Link } from '@mui/material';
 import { O3AS_PLOTS } from 'utils/constants';
 import { NO_MONTH_SELECTED } from 'utils/constants';
 import dynamic from 'next/dynamic';
 import { debounce } from 'lodash';
-import { AppState, useAppStore } from '../../store/store';
+import { AppState, useAppStore } from 'store';
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 import type { Props as ApexProps } from 'react-apexcharts';
 import { LEGAL_PLOT_ID } from '../../services/API/client';

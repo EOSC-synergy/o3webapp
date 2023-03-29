@@ -1,4 +1,9 @@
-import React, { type FC, FocusEventHandler, KeyboardEventHandler, useEffect } from 'react';
+import React, {
+    type FC,
+    type FocusEventHandler,
+    type KeyboardEventHandler,
+    useEffect,
+} from 'react';
 import { useDispatch } from 'react-redux';
 import { selectPlotId, setTitle, selectPlotTitle } from 'store/plotSlice';
 import { Divider, Typography, Box, FormControl, TextField } from '@mui/material';

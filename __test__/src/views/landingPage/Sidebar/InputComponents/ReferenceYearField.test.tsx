@@ -2,7 +2,7 @@ import React from 'react';
 import ReferenceYearField from 'views/landingPage/Sidebar/InputComponents/ReferenceYearField';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { AppStore, createTestStore } from 'store/store';
+import { AppStore, createTestStore } from 'store';
 import { Provider } from 'react-redux';
 import { END_YEAR, START_YEAR } from 'utils/constants';
 import userEvent from '@testing-library/user-event';
