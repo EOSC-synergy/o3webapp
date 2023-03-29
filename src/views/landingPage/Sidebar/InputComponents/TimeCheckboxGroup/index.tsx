@@ -232,14 +232,10 @@ const TimeCheckBoxGroup: FC = () => {
         months: number[];
         seasonId: number;
     }) => {
-        const monthsInSeason = [];
-        for (const month of months) {
-            monthsInSeason.push({
-                monthId: month,
-                checked: selectedMonths.includes(month),
-                description: month.toString(),
-            });
-        }
+        const monthsInSeason = months.map((month) => ({
+            monthId: month,
+            checked: selectedMonths.includes(month),
+        }));
 
         return (
             <Grid item xs={6}>

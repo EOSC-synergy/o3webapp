@@ -52,8 +52,6 @@ const ModelGroupConfigurator: FC<ModelGroupConfiguratorProps> = ({ reportError }
         setRefreshState(refresh);
     };
 
-    console.debug(allGroupIds);
-
     return (
         <>
             {allGroupIds.map((id, idx) => {

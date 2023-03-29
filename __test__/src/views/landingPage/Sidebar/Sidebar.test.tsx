@@ -1,6 +1,6 @@
 import React from 'react';
 import Sidebar from 'views/landingPage/Sidebar/Sidebar';
-import { render, screen, act } from '@testing-library/react';
+import { render, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import { AppStore, createTestStore } from 'store/store';

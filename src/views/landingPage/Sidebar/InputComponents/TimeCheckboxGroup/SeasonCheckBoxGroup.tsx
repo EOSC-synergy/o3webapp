@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import { Box, Checkbox, FormControlLabel, Grid } from '@mui/material';
-import { NUM_MONTHS_IN_SEASON } from 'utils/constants';
+import { months as MONTHS, NUM_MONTHS_IN_SEASON } from 'utils/constants';
 
 type SeasonCheckBoxGroupProps = {
     label: string;
     seasonId: number;
-    months: { monthId: number; checked: boolean; description: string }[];
+    months: { monthId: number; checked: boolean }[];
     handleSeasonClicked: (seasonId: number) => void;
     handleMonthClicked: (monthId: number) => void;
 };
@@ -31,31 +31,19 @@ const SeasonCheckBoxGroup: FC<SeasonCheckBoxGroupProps> = ({
     /**
      * Checks if every month in this season is checked.
      *
-     * @returns {boolean} True if every month in this season is checked
+     * @returns True if every month in this season is checked
      */
     const isEveryMonthChecked = () => {
-        let all = true;
-        for (let i = 0; i < months.length; i++) {
-            if (!months[i].checked) {
-                all = false;
-                break;
-            }
-        }
-        return all;
+        return months.every((month) => month.checked);
     };
 
     /**
      * Checks if the SeasonCheckbox should be displayed as indeterminate, i.e. neither none nor all months are selected.
      *
-     * @returns {boolean} True if the SeasonCheckbox should be displayed as indeterminate
+     * @returns True if the SeasonCheckbox should be displayed as indeterminate
      */
     const isIndeterminate = () => {
-        let count = 0;
-        for (let i = 0; i < months.length; i++) {
-            if (months[i].checked) {
-                count++;
-            }
-        }
+        const count = months.reduce((acc, month) => (month.checked ? acc + 1 : acc), 0);
         return count > 0 && count < NUM_MONTHS_IN_SEASON;
     };
 
@@ -84,7 +72,7 @@ const SeasonCheckBoxGroup: FC<SeasonCheckBoxGroupProps> = ({
                             return (
                                 <React.Fragment key={monthId}>
                                     <FormControlLabel
-                                        label={months[monthId - 1].description}
+                                        label={MONTHS[monthId - 1].description}
                                         control={
                                             <Checkbox
                                                 inputProps={{
