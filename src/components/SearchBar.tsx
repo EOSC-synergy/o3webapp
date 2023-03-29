@@ -1,7 +1,7 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { InputBase } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
-import React from 'react';
+import React, { FC } from 'react';
 import { performSearch } from 'utils/textSearch';
 import PropTypes from 'prop-types';
 import useId from '@mui/utils/useId';
@@ -83,7 +83,7 @@ type SearchBarProps = {
  * @param {Object} props further specified in propTypes
  * @returns {JSX} a pretty searchbar component
  */
-const SearchBar: React.FC<SearchBarProps> = ({
+const SearchBar: FC<SearchBarProps> = ({
     shouldReturnValues = false,
     inputArray,
     foundIndicesCallback,

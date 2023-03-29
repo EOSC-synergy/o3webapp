@@ -1,19 +1,19 @@
-import React from 'react';
+import React, { FC, useState } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
-import Section from './Section/Section';
-import defaultStructure from '../../../config/defaultConfig.json';
-import tco3_zm from '../../../config/tco3_zm.json';
-import tco3_return from '../../../config/tco3_return.json';
-import DownloadModal from './DownloadModal/DownloadModal';
-import { selectPlotId } from '../../../store/plotSlice';
+import Section from './Section';
+import defaultStructure from 'config/defaultConfig.json';
+import tco3_zm from 'config/tco3_zm.json';
+import tco3_return from 'config/tco3_return.json';
+import DownloadModal from './DownloadModal';
+import { selectPlotId } from 'store/plotSlice';
 import { useSelector } from 'react-redux';
 import PlotTypeSelector from './InputComponents/PlotTypeSelector/PlotTypeSelector.js';
 import { Button, Typography, Divider, SwipeableDrawer, Drawer } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
-import PropTypes from 'prop-types';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import { BACKGROUND_BASE_COLOR, O3AS_PLOTS } from '../../../utils/constants';
+import { BACKGROUND_BASE_COLOR, O3AS_PLOTS } from 'utils/constants';
+import { ErrorReporter } from 'utils/reportError';
 
 /**
  * The default width of the sidebar / drawer in pixels.
@@ -36,6 +36,12 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     backgroundColor: BACKGROUND_BASE_COLOR,
 }));
 
+type SidebarProps = {
+    isOpen: boolean;
+    onClose: () => void;
+    reportError: ErrorReporter;
+    onOpen: () => void;
+};
 /**
  * Contains all input components responsible for the modification
  * of the plot settings.
@@ -47,7 +53,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
  * @param {function} props.onOpen - handles opening of the sidebar
  * @returns {JSX.Element} a jsx containing a sidebar with sections containing input components, a download button and a plotType dropdown
  */
-function Sidebar(props) {
+const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, reportError, onOpen }) => {
     /**
      * The theme used in this sideBar provided by Material UI's [createTheme]{@link https://mui.com/customization/theming/}.
      * @constant {Object}
@@ -58,12 +64,12 @@ function Sidebar(props) {
      * State to track whether the download modal is visible
      * @constant {Array}
      */
-    const [isDownloadModalVisible, setDownloadModalVisible] = React.useState(false);
+    const [isDownloadModalVisible, setDownloadModalVisible] = useState(false);
     /**
      * State to track which section is currently expanded
      * @constant {Array}
      */
-    const [expandedSection, setExpandedSection] = React.useState(null); // -> idx of sections array
+    const [expandedSection, setExpandedSection] = useState<number | null>(null); // -> idx of sections array
 
     /**
      * closes the download modal
@@ -95,7 +101,7 @@ function Sidebar(props) {
      * @param {int} i the section that should be expanded
      * @function
      */
-    const expandSection = (i) => {
+    const expandSection = (i: number) => {
         setExpandedSection(i);
     };
 
@@ -111,7 +117,7 @@ function Sidebar(props) {
      * @function
      */
     const createSectionStructure = () => {
-        let sections = [...defaultStructure['sections']];
+        const sections = [...defaultStructure['sections']];
         let specificSections;
         switch (selectedPlot) {
             case O3AS_PLOTS.tco3_zm:
@@ -121,7 +127,7 @@ function Sidebar(props) {
                 specificSections = tco3_return['sections'];
                 break;
             default:
-                props.reportError('Invalid plot type.');
+                reportError('Invalid plot type.');
                 return [];
         }
         for (let i = 0; i < specificSections.length; i++) {
@@ -143,9 +149,9 @@ function Sidebar(props) {
     return (
         <SwipeableDrawer
             anchor="right"
-            open={props.isOpen}
-            onClose={props.onClose}
-            onOpen={props.onOpen}
+            open={isOpen}
+            onClose={onClose}
+            onOpen={onOpen}
             variant="persistent"
             sx={{
                 '& .MuiDrawer-paper': {
@@ -169,7 +175,7 @@ function Sidebar(props) {
                 style={{ position: 'absolute' }}
             >
                 <DrawerHeader>
-                    <IconButton onClick={props.onClose} data-testid="sidebarClose">
+                    <IconButton onClick={onClose} data-testid="sidebarClose">
                         <CloseIcon />
                     </IconButton>
                 </DrawerHeader>
@@ -180,7 +186,7 @@ function Sidebar(props) {
                     </Divider>
                 </div>
 
-                <PlotTypeSelector reportError={props.reportError} />
+                <PlotTypeSelector reportError={reportError} />
 
                 <div style={{ marginBottom: '2%' }}>
                     <Divider>
@@ -201,11 +207,11 @@ function Sidebar(props) {
                         <Section
                             name={s.name}
                             key={idx}
-                            isExpanded={idx === expandedSection}
+                            //isExpanded={idx === expandedSection}
                             components={s.components}
-                            onCollapse={() => collapseSection(idx)}
-                            onExpand={() => expandSection(idx)}
-                            reportError={props.reportError}
+                            //onCollapse={() => collapseSection()}
+                            //onExpand={() => expandSection(idx)}
+                            reportError={reportError}
                         />
                     </div>
                 ))}
@@ -213,7 +219,7 @@ function Sidebar(props) {
             <Button
                 startIcon={<FileDownloadIcon />}
                 variant="contained"
-                position="fixed"
+                //position="fixed"
                 sx={{
                     position: 'fixed',
                     bottom: 0,
@@ -223,25 +229,18 @@ function Sidebar(props) {
                     height: '8%',
                     borderRadius: 0,
                 }}
-                elevation={3}
+                //elevation={3}
                 onClick={openDownloadModal}
             >
                 Download
             </Button>
             <DownloadModal
-                reportError={props.reportError}
+                reportError={reportError}
                 isOpen={isDownloadModalVisible}
                 onClose={closeDownloadModal}
             />
         </SwipeableDrawer>
     );
-}
-
-Sidebar.propTypes = {
-    isOpen: PropTypes.bool.isRequired,
-    reportError: PropTypes.func.isRequired,
-    onClose: PropTypes.func.isRequired,
-    onOpen: PropTypes.func.isRequired,
 };
 
 export default Sidebar;

@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { FC, MouseEventHandler, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Modal, Card, Button, Checkbox, IconButton, CardActions, Box } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
-import SearchBar from '../../../../../../components/SearchBar';
+import { DataGrid, GridColDef, GridColumnHeaderParams } from '@mui/x-data-grid';
+import SearchBar from 'components/SearchBar';
 import { styled } from '@mui/material/styles';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
@@ -11,22 +11,16 @@ import {
     selectModelsOfGroup,
     selectModelDataOfGroup,
     updatePropertiesOfModelGroup,
-} from '../../../../../../store/modelsSlice';
-import {
-    STATISTICAL_VALUES,
-    mean,
-    std,
-    median,
-    percentile,
-} from '../../../../../../utils/constants';
-import PropTypes from 'prop-types';
+} from 'store/modelsSlice';
+import { STATISTICAL_VALUES, mean, std, median, percentile } from 'utils/constants';
 import CardHeader from '@mui/material/CardHeader';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTheme } from '@mui/material/styles';
-import { convertModelName } from '../../../../../../utils/ModelNameConverter';
+import { convertModelName } from 'utils/ModelNameConverter';
 import { alpha } from '@mui/system';
-import DiscardChangesModal from '../../../../../../components/DiscardChangesModal';
-import { arraysEqual } from '../../../../../../utils/arrayOperations';
+import DiscardChangesModal from 'components/DiscardChangesModal';
+import { arraysEqual } from 'utils/arrayOperations';
+import { AppState, useAppDispatch } from 'store/store';
 
 /**
  * A DataGrid with applied CSS styling.
@@ -45,7 +39,7 @@ const StyledDataGrid = styled(DataGrid)(() => ({
  * @param {Array} modelList     A list of models that will be parsed into data grid rows
  * @returns {Array}             The rows representing the models of the modelList in the data grid
  */
-function createRows(modelList) {
+function createRows(modelList: string[]) {
     const rows = [];
 
     for (let i = 0; i < modelList.length; i++) {
@@ -66,15 +60,32 @@ function createRows(modelList) {
     return rows;
 }
 
+type EditModelGroupModalProps = {
+    isOpen: boolean;
+    onClose: () => void;
+    modelGroupId: number;
+    /**
+     * A function to call if modal should be closed
+     */
+    setOpen: (open: boolean) => void;
+    /**
+     * boolean indicating whether the state should be refreshed. This is usually
+     * set to false, true is only required when the discard changes modal is closed
+     * without saving or ultimately discarding the changes.
+     */
+    refresh: boolean;
+};
 /**
  * A modal where the user can edit the visibility and the inclusion in statistical value calculation
  * of each model in an existing model group.
- *
- * @component
- * @param {Object} props Specified in propTypes
- * @returns {JSX.Element} A JSX containing a modal with a data grid with all models from the model group
  */
-function EditModelGroupModal(props) {
+const EditModelGroupModal: FC<EditModelGroupModalProps> = ({
+    isOpen,
+    onClose,
+    modelGroupId,
+    setOpen,
+    refresh,
+}) => {
     const theme = useTheme();
 
     /**
@@ -111,7 +122,7 @@ function EditModelGroupModal(props) {
      * A dispatch function to dispatch actions to the redux store.
      * @function
      */
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     /**
      * A list of all models in the currently selected model group.
@@ -119,7 +130,7 @@ function EditModelGroupModal(props) {
      * @constant {Array}
      * @see selectModelsOfGroup
      */
-    const modelList = useSelector((state) => selectModelsOfGroup(state, props.modelGroupId));
+    const modelList = useSelector((state: AppState) => selectModelsOfGroup(state, modelGroupId));
 
     /**
      * An object containing all data about the visibility and inclusion in the statistical values'
@@ -128,7 +139,7 @@ function EditModelGroupModal(props) {
      * @constant {Object}
      * @see selectModelDataOfGroup
      */
-    const modelData = useSelector((state) => selectModelDataOfGroup(state, props.modelGroupId));
+    const modelData = useSelector((state: AppState) => selectModelDataOfGroup(state, modelGroupId));
 
     /**
      * All rows that are represented in the data grid.
@@ -143,14 +154,14 @@ function EditModelGroupModal(props) {
      * @default rows
      * @constant {Array}
      */
-    const [filteredRows, setFilteredRows] = React.useState(rows);
+    const [filteredRows, setFilteredRows] = useState(rows);
 
     /**
      * An array filled with boolean values that indicate whether a model is included in the mean calculation or not.
      * The index of each model in the array is its corresponding row id.
      * @constant {Array}
      */
-    const [meanVisible, setMeanVisible] = React.useState(
+    const [meanVisible, setMeanVisible] = useState(
         modelList.map((model) => modelData[model][mean])
     );
 
@@ -159,16 +170,14 @@ function EditModelGroupModal(props) {
      * The index of each model in the array is its corresponding row id.
      * @constant {Array}
      */
-    const [stdVisible, setStdVisible] = React.useState(
-        modelList.map((model) => modelData[model][std])
-    );
+    const [stdVisible, setStdVisible] = useState(modelList.map((model) => modelData[model][std]));
 
     /**
      * An array filled with boolean values that indicate whether a model is included in the median calculation or not.
      * The index of each model in the array is its corresponding row id.
      * @constant {Array}
      */
-    const [medianVisible, setMedianVisible] = React.useState(
+    const [medianVisible, setMedianVisible] = useState(
         modelList.map((model) => modelData[model][median])
     );
 
@@ -177,7 +186,7 @@ function EditModelGroupModal(props) {
      * The index of each model in the array is its corresponding row id.
      * @constant {Array}
      */
-    const [percentileVisible, setPercentileVisible] = React.useState(
+    const [percentileVisible, setPercentileVisible] = useState(
         modelList.map((model) => modelData[model][percentile])
     );
 
@@ -186,18 +195,18 @@ function EditModelGroupModal(props) {
      * The index of each model in the array is its corresponding row id.
      * @constant {Array}
      */
-    const [isVisible, setIsVisible] = React.useState(
+    const [isVisible, setIsVisible] = useState(
         modelList.map((model) => modelData[model].isVisible)
     );
 
-    const [discardChangesOpen, setDiscardChangesOpen] = React.useState(false);
+    const [discardChangesOpen, setDiscardChangesOpen] = useState(false);
 
     /**
      * List of all checkbox and selection types that should be editable in the data grid.
      * It includes all statistical values and the "visible" type.
      * @constant {Array}
      */
-    const typeList = Object.values(STATISTICAL_VALUES);
+    const typeList: string[] = Object.values(STATISTICAL_VALUES);
     typeList.push('visible');
 
     /**
@@ -205,11 +214,11 @@ function EditModelGroupModal(props) {
      * The type is either a statistical value or the visible property.
      * E.g. "visible" would return the isVisible boolean list.
      *
-     * @param {string} type     The type of the list
-     * @returns {Array}         The boolean checked list of the selected type
+     * @param type     The type of the list
+     * @returns         The boolean checked list of the selected type
      * @function
      */
-    const getCheckedListByType = (type) => {
+    const getCheckedListByType = (type: string) => {
         switch (type.toLowerCase()) {
             case 'mean':
                 return meanVisible;
@@ -227,7 +236,7 @@ function EditModelGroupModal(props) {
     };
 
     useEffect(() => {
-        if (props.isOpen && props.refresh) {
+        if (isOpen && refresh) {
             setFilteredRows(rows);
             setPercentileVisible(modelList.map((model) => modelData[model][percentile]));
             setIsVisible(modelList.map((model) => modelData[model]['isVisible']));
@@ -235,18 +244,18 @@ function EditModelGroupModal(props) {
             setMedianVisible(modelList.map((model) => modelData[model][median]));
             setMeanVisible(modelList.map((model) => modelData[model][mean]));
         }
-    }, [props.isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
     /**
      * Gets the setter for the boolean list of checked and unchecked models of the selected type.
      * The type is either a statistical value or the visible property.
      * E.g. "visible" would return the setIsVisible setter.
      *
-     * @param {string} type     The type of the setter
-     * @returns {function}      The setter for the boolean checked list of the selected type
+     * @param type     The type of the setter
+     * @returns      The setter for the boolean checked list of the selected type
      * @function
      */
-    const getCheckedSetterByType = (type) => {
+    const getCheckedSetterByType = (type: string) => {
         switch (type.toLowerCase()) {
             case 'mean':
                 return setMeanVisible;
@@ -266,36 +275,37 @@ function EditModelGroupModal(props) {
     /**
      * Applies the filtered rows by the Searchbar to the filteredRows component state.
      *
-     * @param {Array} indexArray    Array of the filtered indexes of the search result that identify the filtered rows.
+     * @param indexArray    Array of the filtered indexes of the search result that identify the filtered rows.
      * @see setFilteredRows
      * @function
      */
-    const foundIndices = (indexArray) => {
+    const foundIndices = (indexArray: number[]) => {
         setFilteredRows(indexArray.map((idx) => rows[idx])); // translates indices into selected rows
     };
 
     /**
      * Generates a function that handles if a specific cell in the data grid is checked.
      *
-     * @param {Array} checkedList       The boolean list with the information on which row is checked or not (e.g. isVisible)
-     * @param {function} setter         The setter function for the checkedList (e.g. setIsVisible)
+     * @param checkedList       The boolean list with the information on which row is checked or not (e.g. isVisible)
+     * @param setter         The setter function for the checkedList (e.g. setIsVisible)
      * @returns {function}              A function to handle the event if a Cell-Checkbox is clicked
      * @function
      */
-    const handleChecked = (checkedList, setter) => (id) => {
-        let checkedListCopy = [...checkedList];
-        checkedListCopy[id] = !checkedListCopy[id];
-        setter(checkedListCopy);
-    };
+    const handleChecked =
+        (checkedList: boolean[], setter: (list: boolean[]) => void) => (id: number) => {
+            const checkedListCopy = [...checkedList];
+            checkedListCopy[id] = !checkedListCopy[id];
+            setter(checkedListCopy);
+        };
 
     /**
      * Checks if all currently filtered checkboxes of the given type are selected.
      *
-     * @param {string} type          The type of the checkbox (e.g. visible)
-     * @returns {boolean}            True if all checkboxes of the given type are selected
+     * @param type          The type of the checkbox (e.g. visible)
+     * @returns            True if all checkboxes of the given type are selected
      * @function
      */
-    const areAllCheckboxesSelected = (type) => {
+    const areAllCheckboxesSelected = (type: string): boolean => {
         if (filteredRows.length === 0) {
             return false;
         }
@@ -313,11 +323,11 @@ function EditModelGroupModal(props) {
     /**
      * Checks if none of the currently filtered checkboxes of the given type are selected.
      *
-     * @param {string} type     The type of the checkbox (e.g. visible)
-     * @returns {boolean}       True if no checkboxes of the given type are selected
+     * @param     type The type of the checkbox (e.g. visible)
+     * @returns      True if no checkboxes of the given type are selected
      * @function
      */
-    const areNoCheckboxesSelected = (type) => {
+    const areNoCheckboxesSelected = (type: string): boolean => {
         if (filteredRows.length === 0) {
             return true;
         }
@@ -335,16 +345,18 @@ function EditModelGroupModal(props) {
     /**
      * Handles the change if a column header is clicked.
      *
-     * @param {Object} params                       The default parameters with metadata about the clicked column
-     * @param {string} params.colDef.field          The fieldId of the clicked column
-     * @param {string} params.colDef.headerName     The name of the column that is displayed
+     * @param params.colDef.field          The fieldId of the clicked column
+     * @param params.colDef.headerName     The name of the column that is displayed
      * @function
      */
-    const columnHeaderClick = (params) => {
+    const columnHeaderClick = (params: GridColumnHeaderParams) => {
         if (!typeList.includes(params.colDef.field)) {
             return;
         }
         const type = params.colDef.headerName;
+        if (!type) {
+            return;
+        }
         const visibleCopy = [...getCheckedListByType(type)];
         const allCheckboxesSelected = areAllCheckboxesSelected(type);
         filteredRows.forEach((prop) => {
@@ -360,7 +372,7 @@ function EditModelGroupModal(props) {
      */
     const closeDiscardChangesDialog = () => {
         setDiscardChangesOpen(false);
-        props.setOpen(false); // re-open without refreshing the state
+        setOpen(false); // re-open without refreshing the state
     };
 
     /**
@@ -411,8 +423,8 @@ function EditModelGroupModal(props) {
             dataCpy[model][percentile] = percentileVisible[i];
             dataCpy[model]['isVisible'] = isVisible[i];
         }
-        dispatch(updatePropertiesOfModelGroup({ groupId: props.modelGroupId, data: dataCpy }));
-        props.onClose();
+        dispatch(updatePropertiesOfModelGroup({ groupId: modelGroupId, data: dataCpy }));
+        onClose();
     };
 
     /**
@@ -423,11 +435,11 @@ function EditModelGroupModal(props) {
     const closeModal = () => {
         if (hasChanges()) {
             // made changes, open discard changes modal
-            props.onClose();
+            onClose();
             setDiscardChangesOpen(true);
         } else {
             // no changes made
-            props.onClose();
+            onClose();
         }
     };
 
@@ -438,7 +450,7 @@ function EditModelGroupModal(props) {
      * @returns {JSX.Element}   JSX with the generated header name.
      * @function
      */
-    const generateHeaderName = (type) => {
+    const generateHeaderName = (type: string) => {
         return (
             <div
                 style={{
@@ -487,13 +499,17 @@ function EditModelGroupModal(props) {
         );
     };
 
+    type CustomCheckboxProps = {
+        isChecked: boolean;
+        handleChecked: MouseEventHandler<HTMLButtonElement>;
+    };
     /**
      * A customized MUI Checkbox.
      *
-     * @param {Object} props    Props for the MUI Checkbox
-     * @returns {JSX.Element}   JSX with the customized Checkbox
+     * @param props    Props for the MUI Checkbox
+     * @returns JSX with the customized Checkbox
      */
-    const CustomCheckbox = (props) => {
+    const CustomCheckbox: FC<CustomCheckboxProps> = ({ isChecked, handleChecked }) => {
         return (
             <div
                 className="d-flex justify-content-between align-items-center"
@@ -501,23 +517,24 @@ function EditModelGroupModal(props) {
             >
                 <Checkbox
                     size="medium"
-                    checked={props.isChecked}
-                    onClick={props.handleChecked}
+                    checked={isChecked}
+                    onClick={handleChecked}
                     sx={{ ml: '4px' }}
                 />
             </div>
         );
     };
 
+    type CellCheckboxProps = { row: { id: number } };
     /**
      * Creates a checkbox for a specific cell in the data grid.
      *
-     * @param {Object} params   The params containing metadata about the row
-     * @param {String} type     The type of the selection (e.g. visible)
-     * @returns {JSX.Element}   JSX element with the customized Cell-Checkbox
+     * @param params   The params containing metadata about the row
+     * @param type     The type of the selection (e.g. visible)
+     * @returns JSX element with the customized Cell-Checkbox
      * @function
      */
-    const createCellCheckBox = (params, type) => {
+    const createCellCheckBox = (params: CellCheckboxProps, type: string) => {
         const checkedList = getCheckedListByType(type);
         const setter = getCheckedSetterByType(type);
         return (
@@ -539,13 +556,12 @@ function EditModelGroupModal(props) {
         setStdVisible(modelList.map((model) => modelData[model][std]));
         setMedianVisible(modelList.map((model) => modelData[model].median));
         setPercentileVisible(modelList.map((model) => modelData[model].percentile));
-    }, [props.isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
     /**
      * An array containing the specification for the columns of the data grid.
-     * @constant {Array}
      */
-    const columns = [
+    const columns: GridColDef[] = [
         { field: 'project', headerName: 'Project', width: 120, editable: false },
         { field: 'institute', headerName: 'Institute', width: 150, editable: false },
         { field: 'model', headerName: 'Model', width: 225, editable: false },
@@ -554,9 +570,9 @@ function EditModelGroupModal(props) {
             headerName: 'Mean',
             sortable: false,
             width: 140,
-            disableClickEventBubbling: true,
+            //disableClickEventBubbling: true,
             renderHeader: () => generateHeaderName('Mean'),
-            renderCell: (params) => {
+            renderCell: (params: CellCheckboxProps) => {
                 return createCellCheckBox(params, 'Mean');
             },
         },
@@ -565,9 +581,9 @@ function EditModelGroupModal(props) {
             headerName: 'Standard deviation',
             sortable: false,
             width: 200,
-            disableClickEventBubbling: true,
+            //disableClickEventBubbling: true,
             renderHeader: () => generateHeaderName('Standard deviation'),
-            renderCell: (params) => {
+            renderCell: (params: CellCheckboxProps) => {
                 return createCellCheckBox(params, 'Standard deviation');
             },
         },
@@ -576,9 +592,9 @@ function EditModelGroupModal(props) {
             headerName: 'Median',
             sortable: false,
             width: 140,
-            disableClickEventBubbling: true,
+            //disableClickEventBubbling: true,
             renderHeader: () => generateHeaderName('Median'),
-            renderCell: (params) => {
+            renderCell: (params: CellCheckboxProps) => {
                 return createCellCheckBox(params, 'Median');
             },
         },
@@ -587,9 +603,9 @@ function EditModelGroupModal(props) {
             headerName: 'Percentile',
             width: 150,
             sortable: false,
-            disableClickEventBubbling: true,
+            //disableClickEventBubbling: true,
             renderHeader: () => generateHeaderName('Percentile'),
-            renderCell: (params) => {
+            renderCell: (params: CellCheckboxProps) => {
                 return createCellCheckBox(params, 'Percentile');
             },
         },
@@ -598,18 +614,18 @@ function EditModelGroupModal(props) {
             headerName: 'Visible',
             sortable: false,
             width: 140,
-            disableClickEventBubbling: true,
+            //disableClickEventBubbling: true,
             renderHeader: () => generateHeaderName('Visible'),
-            renderCell: (params) => {
+            renderCell: (params: CellCheckboxProps) => {
                 return createCellCheckBox(params, 'Visible');
             },
         },
     ];
 
     return (
-        <React.Fragment>
+        <>
             <Modal
-                open={props.isOpen}
+                open={isOpen}
                 onClose={closeModal}
                 aria-labelledby="EditModelGroupModal-modal"
                 data-testid="EditModelGroupModal-modal-wrapper"
@@ -628,7 +644,11 @@ function EditModelGroupModal(props) {
                         }
                     />
                     <div style={{ width: '95%' }}>
-                        <SearchBar inputArray={rows} foundIndicesCallback={foundIndices} />
+                        <SearchBar
+                            inputArray={rows}
+                            // @ts-expect-error TODO: foundIndicesCallback typing
+                            foundIndicesCallback={foundIndices}
+                        />
                     </div>
                     <StyledDataGrid
                         rows={filteredRows}
@@ -658,28 +678,8 @@ function EditModelGroupModal(props) {
                 discardChanges={() => undefined}
                 closeDialog={() => setDiscardChangesOpen(false)}
             />
-        </React.Fragment>
+        </>
     );
-}
-
-EditModelGroupModal.propTypes = {
-    isOpen: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired,
-    modelGroupId: PropTypes.number.isRequired,
-    /**
-     * A function to call if modal should be closed
-     */
-    setOpen: PropTypes.func.isRequired,
-    /**
-     * boolean indicating whether the state should be refreshed. This is usually
-     * set to false, true is only required when the discard changes modal is closed
-     * without saving or ultimately discarding the changes.
-     */
-    refresh: PropTypes.bool.isRequired,
-    /**
-     * A function for error handling
-     */
-    reportError: PropTypes.func,
 };
 
 export default EditModelGroupModal;

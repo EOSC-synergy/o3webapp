@@ -1,20 +1,19 @@
-import React from 'react';
-import AddModelGroupModal from './AddModelGroupModal/AddModelGroupModal';
-import ModelGroupCard from './ModelGroupCard/ModelGroupCard';
+import React, { FC, useState } from 'react';
+import AddModelGroupModal from './AddModelGroupModal';
+import ModelGroupCard from './ModelGroupCard';
 import { Button } from '@mui/material';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
-import { selectAllGroupIds } from '../../../../../store/modelsSlice';
+import { selectAllGroupIds } from 'store/modelsSlice';
+import { ErrorReporter } from 'utils/reportError';
 
+type ModelGroupConfiguratorProps = {
+    reportError: ErrorReporter;
+};
 /**
  * Enables the user to configure models that should be visible in the plot clustered as model groups.
  * Compromised of {@link EditModelGroupModal}, {@link ModelGroupCard} and {@link AddModelGroupModal}.
- * @component
- * @param {Object} props
- * @param {function} props.reportError - function to report errors
- * @returns {JSX} a jsx containing a ModelGroupModal and a ModelGroupCard and EditModelGroupModal per model group
  */
-function ModelGroupConfigurator(props) {
+const ModelGroupConfigurator: FC<ModelGroupConfiguratorProps> = ({ reportError }) => {
     /**
      * Label that is displayed in the add model group button
      * @constant {String}
@@ -33,8 +32,8 @@ function ModelGroupConfigurator(props) {
      * State that tracks whether the addModelGroupModal is visible or not
      * @constant {Array}
      */
-    const [isAddModalVisible, setAddModalVisible] = React.useState(false);
-    const [refreshState, setRefreshState] = React.useState(true);
+    const [isAddModalVisible, setAddModalVisible] = useState(false);
+    const [refreshState, setRefreshState] = useState(true);
 
     /**
      * Function to close addModelGroupModal
@@ -48,7 +47,7 @@ function ModelGroupConfigurator(props) {
      * Function to open addModelGroupModal
      * @function
      */
-    const openAddModal = (refresh) => {
+    const openAddModal = (refresh: boolean) => {
         setAddModalVisible(true);
         setRefreshState(refresh);
     };
@@ -58,9 +57,7 @@ function ModelGroupConfigurator(props) {
     return (
         <>
             {allGroupIds.map((id, idx) => {
-                return (
-                    <ModelGroupCard key={idx} modelGroupId={id} reportError={props.reportError} />
-                );
+                return <ModelGroupCard key={idx} modelGroupId={id} reportError={reportError} />;
             })}
             <Button
                 sx={{ width: '100%' }}
@@ -73,19 +70,12 @@ function ModelGroupConfigurator(props) {
             <AddModelGroupModal
                 isOpen={isAddModalVisible}
                 onClose={closeAddModal}
-                reportError={props.reportError}
                 setOpen={openAddModal}
                 refresh={refreshState}
+                reportError={reportError}
             />
         </>
     );
-}
-
-ModelGroupConfigurator.propTypes = {
-    /**
-     * function for error handling
-     */
-    reportError: PropTypes.func,
 };
 
 export default ModelGroupConfigurator;

@@ -1,22 +1,22 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
-import PropTypes from 'prop-types';
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import CustomLatitudeSelector from '../InputComponents/LatitudeBandSelector/CustomLatitudeSelector';
-import LatitudeBandSelector from '../InputComponents/LatitudeBandSelector/LatitudeBandSelector';
-import LocationSelector from '../InputComponents/LatitudeBandSelector/LatitudeBandSelector';
-import ModelGroupConfigurator from '../InputComponents/ModelGroupConfigurator/ModelGroupConfigurator';
-import PlotNameField from '../InputComponents/PlotNameField/PlotNameField';
-import ReferenceModelSelector from '../InputComponents/ReferenceModelSelector/ReferenceModelSelector';
-import ReferenceYearField from '../InputComponents/ReferenceYearField';
-import RegionSelector from '../InputComponents/RegionSelector';
-import TimeCheckBoxGroup from '../InputComponents/TimeCheckboxGroup/TimeCheckboxGroup';
-import XAxisField from '../InputComponents/XAxisField';
-import YAxisField from '../InputComponents/YAxisField';
+import CustomLatitudeSelector from './InputComponents/LatitudeBandSelector/CustomLatitudeSelector';
+import LatitudeBandSelector from './InputComponents/LatitudeBandSelector/LatitudeBandSelector';
+import LocationSelector from './InputComponents/LatitudeBandSelector/LatitudeBandSelector';
+import ModelGroupConfigurator from './InputComponents/ModelGroupConfigurator';
+import PlotNameField from './InputComponents/PlotNameField/PlotNameField';
+import ReferenceModelSelector from './InputComponents/ReferenceModelSelector/ReferenceModelSelector';
+import ReferenceYearField from './InputComponents/ReferenceYearField';
+import RegionSelector from './InputComponents/RegionSelector';
+import TimeCheckBoxGroup from './InputComponents/TimeCheckboxGroup/TimeCheckboxGroup';
+import XAxisField from './InputComponents/XAxisField';
+import YAxisField from './InputComponents/YAxisField';
+import { ErrorReporter } from '../../../utils/reportError';
 
 /**
  * Stores the name of the CustomLatitudeSelector component as a Symbol.
@@ -146,10 +146,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 type SectionProps = {
     components: string[];
     name: string;
-    reportError: (error: string) => void;
-    isExpanded: boolean;
-    onCollapse?: () => void;
-    onExpand?: () => void;
+    reportError: ErrorReporter;
 };
 
 /**
@@ -158,19 +155,9 @@ type SectionProps = {
  * @param components -> an array containing a string representation of all components that should be plotted
  * @param name -> the name of the section
  * @param reportError -> used for error handling
- * @param isExpanded -> whether this section should be expanded
- * @param onCollapse -> function to collapse this section
- * @param onExpand -> function to expand this section
  * @returns an accordion that once expanded displays the components specified by the config files and the API doc
  */
-const Section: React.FC<SectionProps> = ({
-    components,
-    name,
-    reportError,
-    isExpanded,
-    onCollapse,
-    onExpand,
-}) => {
+const Section: React.FC<SectionProps> = ({ components, name, reportError }) => {
     /**
      * maps a given name to a corresponding component from the ./InputComponents folder
      * if there is no component with the given name, calls the props.reportError function
@@ -255,15 +242,6 @@ const Section: React.FC<SectionProps> = ({
             </AccordionDetails>
         </Accordion>
     );
-};
-
-Section.propTypes = {
-    name: PropTypes.string.isRequired,
-    reportError: PropTypes.func.isRequired,
-    components: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-    isExpanded: PropTypes.bool.isRequired,
-    onCollapse: PropTypes.func,
-    onExpand: PropTypes.func,
 };
 
 export default Section;

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useEffect } from 'react';
+import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import { GlobalModelState, ModelId, setModelsOfModelGroup } from 'store/modelsSlice';
 import { useTheme } from '@mui/material/styles';
 import { CardContent, Divider, IconButton, ListItemButton, Modal, TextField } from '@mui/material';
@@ -23,13 +23,14 @@ import DiscardChangesModal from 'components/DiscardChangesModal';
 import { useSelector } from 'react-redux';
 import { fetchPlotDataForCurrentModels, REQUEST_STATE } from 'services/API/apiSlice/apiSlice';
 import { selectNameOfGroup, selectModelDataOfGroup } from 'store/modelsSlice';
-import { AppState, useAppDispatch, useAppStore } from '../../../../../../store/store';
+import { AppState, useAppDispatch, useAppStore } from 'store/store';
+import { ErrorReporter } from 'utils/reportError';
 
 type AddModelGroupModalProps = {
     /**
      * Function for error handling
      */
-    reportError: (error: string) => void;
+    reportError: ErrorReporter;
     onClose: () => void;
     isOpen: boolean;
     /**
@@ -50,20 +51,22 @@ type AddModelGroupModalProps = {
 /**
  * Opens a modal where the user can add a new model group.
  * Used in {@link ModelGroupConfigurator}.
- *
- * @component
- * @param {Object} props specified in propTypes
- * @returns {JSX.Element} a jsx containing a modal with a transfer list with all available models
- * @component AddModelGroupModal
  */
-const AddModelGroupModal: FC<AddModelGroupModalProps> = (props) => {
+const AddModelGroupModal: FC<AddModelGroupModalProps> = ({
+    modelGroupId = -1,
+    onClose,
+    isOpen,
+    setOpen,
+    refresh,
+    reportError,
+}) => {
     const store = useAppStore();
 
     /**
      * True if the Modal is open in the "Edit Mode".
      * @constant {boolean}
      */
-    const isEditMode = 'modelGroupId' in props;
+    const isEditMode = modelGroupId !== -1;
 
     /**
      * The label in the card heading.
@@ -96,17 +99,10 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = (props) => {
     }
 
     /**
-     * The Id of the currently open model group.
-     * If the modal is opened in the "Edit Mode" the value is set to -1.
-     * @constant {number}
-     */
-    const modelGroupId = isEditMode ? props.modelGroupId : -1;
-
-    /**
      * Array containing all currently checked models.
      * @constant {Array}
      */
-    const [checked, setChecked] = React.useState<ModelId[]>([]);
+    const [checked, setChecked] = useState<ModelId[]>([]);
 
     /**
      * Array containing all models, that are currently plotted in the right transfer list
@@ -116,44 +112,38 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = (props) => {
     const storeRight = Object.keys(
         useSelector((state: GlobalModelState) => selectModelDataOfGroup(state, modelGroupId))
     );
-    const [right, setRight] = React.useState<ModelId[]>(storeRight);
+    const [right, setRight] = useState<ModelId[]>(storeRight);
 
     /**
      * Array containing all models that should currently be visibile
      * because of the search function those might differ from all models.
      * @constant {Array}
      */
-    const [visible, setVisible] = React.useState<ModelId[]>([]);
+    const [visible, setVisible] = useState<ModelId[]>([]);
     /**
      * The currently enetered group name.
      * @constant {string}
      */
     const storeGroupName = useSelector((state: AppState) => selectNameOfGroup(state, modelGroupId));
-    const [groupName, setGroupName] = React.useState(storeGroupName);
+    const [groupName, setGroupName] = useState(storeGroupName);
 
     /**
      * Stores the error message if an error occured.
      * @constant {string}
      */
-    const [errorMessage, setErrorMessage] = React.useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     /**
      * The object containing the information about the theming of the webapp
      * @constant {Object}
      */
     const theme = useTheme();
-    /**
-     * reportError function provided by props.
-     * Stored separetly in order to pass it to useEffect
-     * @function
-     */
-    const reportError = props.reportError;
 
     const openDiscardChangesDialog = () => setDiscardChangesOpen(true);
 
     const closeDiscardChangesDialog = () => {
         setDiscardChangesOpen(false);
-        props.setOpen(false);
+        setOpen(false);
     };
 
     useEffect(() => {
@@ -166,14 +156,14 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = (props) => {
     }, [allModels]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
-        if (props.isOpen && props.refresh) {
+        if (isOpen && refresh) {
             setGroupName(storeGroupName);
             setVisible(allModels);
             setChecked([]);
             setRight(storeRight);
             setErrorMessage('');
         }
-    }, [props.isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
     /**
      * Returns how many models in the provided array are currently checked
@@ -213,7 +203,7 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = (props) => {
      * This state tracks whether the discard changes modal is currently visible.
      * @default false
      */
-    const [discardChangesOpen, setDiscardChangesOpen] = React.useState(false);
+    const [discardChangesOpen, setDiscardChangesOpen] = useState(false);
 
     /**
      * Toggles one element
@@ -285,13 +275,13 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = (props) => {
         }
         dispatch(
             setModelsOfModelGroup({
-                groupId: props.modelGroupId,
+                groupId: modelGroupId,
                 groupName: groupName,
                 modelList: right,
             })
         );
         dispatch(fetchPlotDataForCurrentModels());
-        props.onClose();
+        onClose();
         return true;
     };
 
@@ -313,16 +303,16 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = (props) => {
     const saveChanges = () => {
         const success = addOrEditGroup();
         if (!success) {
-            props.setOpen(false); // re-open because saving failed
+            setOpen(false); // re-open because saving failed
         }
     };
 
     /**
      * Renders a custom transfer list component with provided lists
-     * @param {Array} models array of modelIDs that belong to the list
-     * @param {Array} modelsChecked array of modelIDs that are currently checked
-     * @param {Array} modelsVisible array of modelIDS that are currently visible
-     * @returns {JSX.Element} a Card containing a custom transfer list and a warning if checked models are currently not visible
+     * @param models array of modelIDs that belong to the list
+     * @param modelsChecked array of modelIDs that are currently checked
+     * @param modelsVisible array of modelIDS that are currently visible
+     * @returns a Card containing a custom transfer list and a warning if checked models are currently not visible
      * @function
      */
     const customList = (models: ModelId[], modelsChecked: ModelId[], modelsVisible: ModelId[]) => {
@@ -470,18 +460,18 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = (props) => {
     const closeModal = () => {
         if (hasChanges()) {
             // made changes, reset
-            props.onClose();
+            onClose();
             openDiscardChangesDialog();
         } else {
             // no changes made
-            props.onClose();
+            onClose();
         }
     };
 
     return (
-        <React.Fragment>
+        <>
             <Modal
-                open={props.isOpen}
+                open={isOpen}
                 onClose={closeModal}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
@@ -611,7 +601,7 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = (props) => {
                 discardChanges={() => undefined}
                 closeDialog={() => setDiscardChangesOpen(false)}
             />
-        </React.Fragment>
+        </>
     );
 };
 

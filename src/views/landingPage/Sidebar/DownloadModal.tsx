@@ -13,7 +13,6 @@ import {
 } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import PropTypes from 'prop-types';
 import { downloadGraphAsPDF } from 'services/downloading/pdf/pdfCreator';
 import {
     downloadGraphAsCSV,
@@ -28,7 +27,8 @@ import { REQUEST_STATE } from 'services/API/apiSlice/apiSlice';
 import CloseIcon from '@mui/icons-material/Close';
 import CardHeader from '@mui/material/CardHeader';
 import CardActions from '@mui/material/CardActions';
-import { AppState } from '../../../../store/store';
+import { AppState } from 'store/store';
+import { ErrorReporter } from '../../../utils/reportError';
 
 /**
  * The file formats which can be selected in the dropdown menu.
@@ -40,7 +40,7 @@ const fileFormats = [Symbol('CSV'), Symbol('PDF'), Symbol('PNG'), Symbol('SVG')]
 type DownloadModalProps = {
     isOpen: boolean;
     onClose: () => void;
-    reportError?: (error: string) => void;
+    reportError?: ErrorReporter;
 };
 
 /**
@@ -177,21 +177,6 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose, reportEr
             </Card>
         </Modal>
     );
-};
-
-DownloadModal.propTypes = {
-    /**
-     * Tracks whether modal should be visible
-     */
-    isOpen: PropTypes.bool.isRequired,
-    /**
-     * Handles closing the modal
-     */
-    onClose: PropTypes.func.isRequired,
-    /**
-     * A function for error handling
-     */
-    reportError: PropTypes.func,
 };
 
 export default DownloadModal;

@@ -6,8 +6,8 @@ import MuiVisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Checkbox, Divider, IconButton, FormControlLabel } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import EditModelGroupModal from '../EditModelGroupModal/EditModelGroupModal';
-import AddModelGroupModal from '../AddModelGroupModal/AddModelGroupModal';
+import EditModelGroupModal from './EditModelGroupModal';
+import AddModelGroupModal from './AddModelGroupModal';
 import { useSelector } from 'react-redux';
 
 import { CardActions, Button } from '@mui/material';
@@ -18,10 +18,11 @@ import {
     setVisibilityForGroup,
     selectVisibilityOfGroup,
     deleteModelGroup,
-} from '../../../../../../store/modelsSlice';
-import { STATISTICAL_VALUES, STATISTICAL_VALUES_LIST } from '../../../../../../utils/constants';
+} from 'store/modelsSlice';
+import { STATISTICAL_VALUES, STATISTICAL_VALUES_LIST } from 'utils/constants';
 import { ChangeEvent, FC, useState } from 'react';
-import { AppState, useAppDispatch } from '../../../../../../store/store';
+import { AppState, useAppDispatch } from 'store/store';
+import { ErrorReporter } from 'utils/reportError';
 
 type ModelGroupCardProps = {
     /**
@@ -31,7 +32,7 @@ type ModelGroupCardProps = {
     /**
      * function for error handling
      */
-    reportError: (error: string) => void;
+    reportError: ErrorReporter;
 };
 
 /**
@@ -135,7 +136,7 @@ const ModelGroupCard: FC<ModelGroupCardProps> = (props) => {
      * @constant {Array}
      * @default false
      */
-    const [isDeleteRequest, setDeleteRequest] = React.useState(false);
+    const [isDeleteRequest, setDeleteRequest] = useState(false);
 
     const [refreshAddModelGroupModalState, setRefreshAddModelGroupModalState] = useState(true);
     const [refreshEditModalGroupModalState, setRefreshEditModalGroupModalState] = useState(true);
