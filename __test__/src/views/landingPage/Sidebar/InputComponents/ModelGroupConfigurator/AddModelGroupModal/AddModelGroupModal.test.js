@@ -1,7 +1,7 @@
 import { render, fireEvent, waitFor, within, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
-import AddModelGroupModal from '../../../../../../../../src/views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator/AddModelGroupModal/AddModelGroupModal';
+import AddModelGroupModal from '../../../../../../../../src/views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator/AddModelGroupModal';
 import { Provider } from 'react-redux';
 import { createTestStore } from '../../../../../../../../src/store/store';
 import modelsResponse from '__test__/src/services/API/testing/models-response.json';

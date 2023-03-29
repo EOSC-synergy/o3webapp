@@ -1,7 +1,7 @@
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
-import TimeCheckBoxGroup from '../../../../../../../src/views/landingPage/Sidebar/InputComponents/TimeCheckboxGroup/TimeCheckboxGroup';
+import TimeCheckBoxGroup from '../../../../../../../src/views/landingPage/Sidebar/InputComponents/TimeCheckboxGroup';
 import { NUM_MONTHS } from '../../../../../../../src/utils/constants';
 import { createTestStore } from '../../../../../../../src/store/store';
 

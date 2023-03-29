@@ -1,5 +1,5 @@
 import React from 'react';
-import ReferenceModelSelector from '../../../../../../../src/views/landingPage/Sidebar/InputComponents/ReferenceModelSelector/ReferenceModelSelector';
+import ReferenceModelSelector from '../../../../../../../src/views/landingPage/Sidebar/InputComponents/ReferenceModelSelector';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { createTestStore } from '../../../../../../../src/store/store';

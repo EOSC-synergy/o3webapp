@@ -2,12 +2,9 @@ import { render, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { createTestStore } from '../../../../../../../src/store/store';
 import { Provider } from 'react-redux';
-import ModelGroupConfigurator from '../../../../../../../src/views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator/ModelGroupConfigurator';
+import ModelGroupConfigurator from '../../../../../../../src/views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator';
 import userEvent from '@testing-library/user-event';
-import {
-    setModelsOfModelGroup,
-    setStatisticalValueForGroup,
-} from '../../../../../../../src/store/modelsSlice';
+import { setModelsOfModelGroup } from '../../../../../../../src/store/modelsSlice';
 
 let store;
 describe('test ModelGroupCard rendering', () => {

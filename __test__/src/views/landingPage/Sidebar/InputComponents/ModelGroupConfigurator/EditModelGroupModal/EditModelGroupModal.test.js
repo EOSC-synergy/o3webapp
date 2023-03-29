@@ -2,7 +2,7 @@ import { render, fireEvent, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import '@testing-library/jest-dom';
-import EditModelGroupModal from '../../../../../../../../src/views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator/EditModelGroupModal/EditModelGroupModal';
+import EditModelGroupModal from '../../../../../../../../src/views/landingPage/Sidebar/InputComponents/ModelGroupConfigurator/EditModelGroupModal';
 import { createTestStore } from '../../../../../../../../src/store/store';
 
 let store;

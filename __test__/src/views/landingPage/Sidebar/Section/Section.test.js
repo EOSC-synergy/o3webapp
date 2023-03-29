@@ -1,5 +1,5 @@
 import React from 'react';
-import Section from '../../../../../../src/views/landingPage/Sidebar/Section/Section';
+import Section from '../../../../../../src/views/landingPage/Sidebar/Section';
 import { render, screen } from '@testing-library/react';
 import defaultStructure from '../../../../../../src/config/defaultConfig.json';
 import '@testing-library/jest-dom/extend-expect';

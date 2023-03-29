@@ -2,7 +2,7 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import PlotNameField, {
     PLOT_NAME_MAX_LEN,
-} from '../../../../../../../src/views/landingPage/Sidebar/InputComponents/PlotNameField/PlotNameField';
+} from '../../../../../../../src/views/landingPage/Sidebar/InputComponents/PlotNameField';
 import { render, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createTestStore } from '../../../../../../../src/store/store';

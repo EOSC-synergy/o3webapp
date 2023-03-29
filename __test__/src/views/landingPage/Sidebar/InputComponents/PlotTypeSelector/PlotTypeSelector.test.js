@@ -1,14 +1,12 @@
 import { REQUEST_STATE } from '../../../../../../../src/services/API/apiSlice/apiSlice';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PlotTypeSelector from '../../../../../../../src/views/landingPage/Sidebar/InputComponents/PlotTypeSelector/PlotTypeSelector';
+import PlotTypeSelector from '../../../../../../../src/views/landingPage/Sidebar/InputComponents/PlotTypeSelector';
 import { render, fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { act } from 'react-dom/test-utils';
-import userEvent from '@testing-library/user-event';
 import { createTestStore } from '../../../../../../../src/store/store';
 import { Provider } from 'react-redux';
-import * as redux from 'react-redux';
 
 let store;
 describe('plot type selector test', () => {
