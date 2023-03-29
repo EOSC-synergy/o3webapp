@@ -1,5 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { STATISTICAL_VALUES, STATISTICAL_VALUES_LIST } from 'utils/constants';
+import {
+    PROCESS_SV_WITH_PERCENTILE,
+    STATISTICAL_VALUES,
+    STATISTICAL_VALUES_LIST,
+} from 'utils/constants';
 import { HYDRATE } from 'next-redux-wrapper';
 import _ from 'lodash';
 
@@ -8,12 +12,7 @@ type ModelData = {
     color: string | null; // if not set it defaults to standard value from api
     isVisible: boolean; // show/hide individual models from a group
     // init statistical values dynamically with for-loop
-    [STATISTICAL_VALUES.mean]: boolean;
-    // TODO: fix typing for this BS
-    'standard deviation': boolean;
-    [STATISTICAL_VALUES.median]: boolean;
-    [STATISTICAL_VALUES.percentile]: boolean;
-};
+} & Record<PROCESS_SV_WITH_PERCENTILE, boolean>;
 /**
  * This object serves as a template, whenever a new model is added to a group
  * this object describes the default settings of the freshly added model.
@@ -25,22 +24,16 @@ export const MODEL_DATA_TEMPLATE: ModelData = {
     // single model
     color: null, // if not set it defaults to standard value from api
     isVisible: true, // show/hide individual models from a group
-    ...(STATISTICAL_VALUES_LIST.reduce((p, c) => {
+    ...(PROCESS_SV_WITH_PERCENTILE.reduce((p, c) => {
         return { ...p, [c]: true };
-    }, {}) as Record<STATISTICAL_VALUES, boolean>),
+    }, {}) as Record<PROCESS_SV_WITH_PERCENTILE, boolean>),
 };
 
-type ModelGroup = {
+export type ModelGroup = {
     name: string;
     models: Record<string, ModelData>;
     isVisible: boolean;
-    visibleSV: {
-        [STATISTICAL_VALUES.mean]: boolean;
-        // TODO: fix typing for this BS
-        'standard deviation': boolean;
-        [STATISTICAL_VALUES.median]: boolean;
-        [STATISTICAL_VALUES.percentile]: boolean;
-    };
+    visibleSV: Record<STATISTICAL_VALUES, boolean>;
 };
 
 /**

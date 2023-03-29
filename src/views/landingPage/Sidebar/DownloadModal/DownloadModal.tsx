@@ -28,6 +28,7 @@ import { REQUEST_STATE } from 'services/API/apiSlice/apiSlice';
 import CloseIcon from '@mui/icons-material/Close';
 import CardHeader from '@mui/material/CardHeader';
 import CardActions from '@mui/material/CardActions';
+import { AppState } from '../../../../store/store';
 
 /**
  * The file formats which can be selected in the dropdown menu.
@@ -68,9 +69,7 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose, reportEr
      * @constant {Object}
      *
      */
-    const activeData = useSelector((state: GlobalModelState) =>
-        selectActivePlotData(state, plotId)
-    );
+    const activeData = useSelector((state: AppState) => selectActivePlotData(state, plotId));
 
     /**
      * The plot title which is shown above the graph.
@@ -104,6 +103,10 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose, reportEr
      * @function
      */
     const handleDownloadPlot = () => {
+        if (activeData.status != REQUEST_STATE.success) {
+            // TODO: error message
+            return;
+        }
         if (selectedFileFormat === 'PDF') {
             downloadGraphAsPDF(plotId, plotTitle, modelGroups, activeData.data);
         } else if (selectedFileFormat === 'PNG') {

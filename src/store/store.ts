@@ -2,7 +2,7 @@ import { Action, combineReducers, configureStore, ThunkAction } from '@reduxjs/t
 import plotReducer, { GlobalPlotState } from './plotSlice';
 import modelsReducer, { GlobalModelState, setModelsOfModelGroup } from './modelsSlice';
 import referenceReducer, { GlobalReferenceState } from './referenceSlice';
-import apiReducer from '../services/API/apiSlice/apiSlice';
+import apiReducer, { GlobalAPIState } from '../services/API/apiSlice/apiSlice';
 import { DEFAULT_MODEL_GROUP } from '../utils/constants';
 import { createWrapper, HYDRATE } from 'next-redux-wrapper';
 import thunkMiddleware from 'redux-thunk';
@@ -10,7 +10,7 @@ import { useDispatch, useStore } from 'react-redux';
 
 type GlobalState =
     | undefined
-    | (GlobalPlotState & GlobalModelState & GlobalReferenceState & { api: any });
+    | (GlobalPlotState & GlobalModelState & GlobalReferenceState & GlobalAPIState);
 
 const combinedReducer = combineReducers({
     plot: plotReducer,

@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { NO_MONTH_SELECTED } from 'utils/constants';
+import { ApiApi, Configuration, DataApi, ModelsApi, O3Data, PlotsApi } from './generated-client';
 
 /**
  * This module is responsible for the communication with the [API]{@link https://api.o3as.fedcloud.eu/api/v1/ui/} and
@@ -24,31 +24,24 @@ const baseURL = process.env.NEXT_PUBLIC_API_HOST ?? 'https://api.o3as.fedcloud.e
  */
 const timeoutVal = 5 * 60 * 1000; // 5 min at least (fetching the models took 29s)
 
-/**
- * Makes a GET request to a specified endpoint of the API.
- *
- * @param endpoint the endpoint of the URL
- * @returns the request promise from axios
- * @function
- * @example getFromAPI("/plots")
- */
-const getFromAPI = (endpoint: string) => {
-    return axios.get(baseURL + endpoint, { timeout: timeoutVal });
+const DEFAULT_CONFIG = {
+    basePath: baseURL,
+    baseOptions: {
+        timeout: timeoutVal,
+    },
 };
 
-/**
- * Makes a POST request to a specified endpoint of the API with the given data.
- *
- * @param endpoint the endpoint of the URL
- * @param data the data for the params of the post request
- * @returns the request promise from axios
- * @function
- * @example postAtAPI("/models/plotstyle", {ptype: "tco3_zm"})
+/*
+const useModelApi = buildApi(ModelsApi);
+const useDataApi = buildApi(DataApi);
+const useApiApi = buildApi(ApiApi);
+const usePlotsApi = buildApi(PlotsApi);
  */
-const postAtAPI = (endpoint: string, data: unknown) => {
-    // don't pack "data" in an object, the api accepts only an array of values (e.g. model list)
-    return axios.post(baseURL + endpoint, data, { timeout: timeoutVal });
-};
+const _configuration = new Configuration(DEFAULT_CONFIG);
+export const modelsApi = new ModelsApi(_configuration);
+export const dataApi = new DataApi(_configuration);
+export const apiApi = new ApiApi(_configuration);
+export const plotsApi = new PlotsApi(_configuration);
 
 /**
  * Gets the plot types from the API.
@@ -57,7 +50,7 @@ const postAtAPI = (endpoint: string, data: unknown) => {
  * @function
  */
 export const getPlotTypes = () => {
-    return getFromAPI('/plots');
+    return plotsApi.o3apiApiGetPlotTypes();
 };
 
 /**
@@ -69,20 +62,11 @@ export const getPlotTypes = () => {
  * @function
  * @example getModels("tco3_zm", "refC2")
  */
-export const getModels = (
-    plotType: string | undefined = undefined,
-    select: string | undefined = undefined
-) => {
-    const hasPlotType = plotType != undefined;
-    const hasSelect = select != undefined;
-    const hasOne = hasPlotType || hasSelect;
-    const hasBoth = hasPlotType && hasSelect;
-
-    return getFromAPI(
-        `/models${hasOne ? '?' : ''}${hasPlotType ? `ptype=${plotType}` : ''}${hasBoth ? '&' : ''}${
-            hasSelect ? `select=${select}` : ''
-        }`
-    );
+export const getModels = (plotType?: string, select?: string) => {
+    return modelsApi.o3apiApiGetModelsList({
+        ptype: plotType,
+        select,
+    });
 };
 
 /**
@@ -94,10 +78,12 @@ export const getModels = (
  * @example postModelsPlotStyle("tco3_zm")
  */
 export const postModelsPlotStyle = (plotType: string) => {
-    return postAtAPI('/models/plotstyle', {
+    return modelsApi.o3apiApiGetPlotStyle({
         ptype: plotType,
     });
 };
+
+export type LEGAL_PLOT_ID = 'tco3_zm' | 'tco3_return';
 
 /**
  * Performs a request to /plots/plotId to fetch the plot data from the API formatted with the given parameters.
@@ -136,7 +122,7 @@ export const getPlotData = ({
     refModel,
     refYear,
 }: {
-    plotId: string;
+    plotId: LEGAL_PLOT_ID;
     latMin: number;
     latMax: number;
     months: number[];
@@ -150,22 +136,28 @@ export const getPlotData = ({
         return Promise.reject(new Error(NO_MONTH_SELECTED));
     }
     if (modelList.length === 0) {
-        return Promise.resolve({ data: [] });
+        return Promise.resolve({ data: [] as O3Data[] });
     }
 
     if (plotId === 'tco3_zm') {
-        return postAtAPI(
-            `/plots/${plotId}?begin=${startYear}&end=${endYear}&month=${months.join(
-                ','
-            )}&lat_min=${latMin}&lat_max=${latMax}&ref_meas=${refModel}&ref_year=${refYear}`,
-            modelList
-        );
-    } else if (plotId === 'tco3_return') {
-        return postAtAPI(
-            `/plots/${plotId}?month=${months.join(
-                ','
-            )}&lat_min=${latMin}&lat_max=${latMax}&ref_meas=${refModel}&ref_year=${refYear}`,
-            modelList
-        );
+        return plotsApi.o3apiApiPlotTco3Zm({
+            begin: startYear,
+            end: endYear,
+            // TODO: typing? API spec says array number, old code did string join
+            month: months,
+            latMin,
+            latMax,
+            refMeas: refModel,
+            refYear: refYear,
+            models: modelList,
+        });
     }
+    return plotsApi.o3apiApiPlotTco3Return({
+        month: months,
+        latMin,
+        latMax,
+        refMeas: refModel,
+        refYear,
+        models: modelList,
+    });
 };

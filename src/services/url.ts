@@ -5,7 +5,7 @@ import {
     percentile,
     STATISTICAL_VALUES_LIST,
     std,
-} from '../../utils/constants';
+} from 'utils/constants';
 import {
     setActivePlotId,
     setDisplayXRange,
@@ -13,16 +13,17 @@ import {
     setLocation,
     setMonths,
     setTitle,
-} from '../../store/plotSlice';
-import { setModel, setVisibility, setYear } from '../../store/referenceSlice';
+} from 'store/plotSlice';
+import { setModel, setVisibility, setYear } from 'store/referenceSlice';
 import {
     setModelsOfModelGroup,
     setStatisticalValueForGroup,
     setVisibilityForGroup,
     updatePropertiesOfModelGroup,
-} from '../../store/modelsSlice';
+} from 'store/modelsSlice';
 import bigInt from 'big-integer';
-import _ from 'lodash';
+import { isEmpty } from 'lodash';
+import { AppDispatch, AppState } from 'store/store';
 
 /**
  * This method uses the big-integer library
@@ -41,20 +42,17 @@ import _ from 'lodash';
  * @param baseTo the base of the output number
  * @returns {string} the output number as a string
  */
-function parseBigInt(str, baseFrom, baseTo) {
-    baseFrom = bigInt(baseFrom);
-    baseTo = bigInt(baseTo);
+function parseBigInt(str: string, baseFrom: number, baseTo: number) {
     let bigint = bigInt(0);
-    for (let char of str) {
-        bigint = bigInt(bigInt(bigInt(baseFrom).multiply(bigint)).add(parseInt(char, baseFrom)));
+    const _baseFrom = bigInt(baseFrom);
+    const _baseTo = bigInt(baseTo);
+    for (const char of str) {
+        bigint = _baseFrom.multiply(bigint).add(parseInt(char, baseFrom));
     }
     let result = '';
-    while (bigInt(bigint).greater(bigInt(0))) {
-        result =
-            bigInt(bigInt(bigint).mod(bigInt(baseTo)))
-                .toString(baseTo)
-                .toUpperCase() + result;
-        bigint = bigInt(bigInt(bigint).divide(bigInt(baseTo)));
+    while (bigint.greater(bigInt(0))) {
+        result = bigint.mod(bigInt(baseTo)).toString(baseTo).toUpperCase() + result;
+        bigint = bigint.divide(_baseTo);
     }
     return result;
 }
@@ -62,19 +60,17 @@ function parseBigInt(str, baseFrom, baseTo) {
 /**
  * This method updates the URL based on the data in the store.
  *
- * @param store a test store for testing the function
+ * @param state
  */
-export function generateNewUrl(store) {
-    const plotSpecific = store.getState().plot.plotSpecificSettings;
-    const otherSettings = {
-        lat_min: store.getState().plot.generalSettings.location.minLat,
-        lat_max: store.getState().plot.generalSettings.location.maxLat,
-        months: store.getState().plot.generalSettings.months.join(','),
-        ref_meas: store
-            .getState()
-            .api.models.data.indexOf(store.getState().reference.settings.model),
-        ref_year: store.getState().reference.settings.year,
-        ref_visible: +store.getState().reference.settings.visible,
+export function generateNewUrl(state: AppState) {
+    const plotSpecific = state.plot.plotSpecificSettings;
+    const _otherSettings = {
+        lat_min: state.plot.generalSettings.location.minLat,
+        lat_max: state.plot.generalSettings.location.maxLat,
+        months: state.plot.generalSettings.months.join(','),
+        ref_meas: state.api.models.data.indexOf(state.reference.settings.model),
+        ref_year: state.reference.settings.year,
+        ref_visible: +state.reference.settings.visible,
         x_zm: `${plotSpecific.tco3_zm.displayXRange.years.minX}-${plotSpecific.tco3_zm.displayXRange.years.maxX}`,
         y_zm: `${plotSpecific.tco3_zm.displayYRange.minY}-${plotSpecific.tco3_zm.displayYRange.maxY}`,
         x_return: plotSpecific.tco3_return.displayXRange.regions.join(','),
@@ -82,12 +78,16 @@ export function generateNewUrl(store) {
         title_zm: `"${plotSpecific.tco3_zm.title}"`,
         title_return: `"${plotSpecific.tco3_return.title}"`,
     };
+    const otherSettings: typeof _otherSettings & {
+        // Intersection type to ensure all keys start with 'group'
+        [key in `group${string}`]: string | number | undefined | null;
+    } = _otherSettings;
 
-    for (let i = 0; i < store.getState().models.idCounter; i++) {
-        if (typeof store.getState().models.modelGroups[i] === 'undefined') {
+    for (let i = 0; i < state.models.idCounter; i++) {
+        if (typeof state.models.modelGroups[i] === 'undefined') {
             continue;
         }
-        const modelGroup = store.getState().models.modelGroups[i];
+        const modelGroup = state.models.modelGroups[i];
         const name = modelGroup.name;
         const visibilities = [
             +modelGroup.isVisible,
@@ -96,24 +96,24 @@ export function generateNewUrl(store) {
             +modelGroup.visibleSV.median,
             +modelGroup.visibleSV.percentile,
         ];
-        let models = [];
-        let modelSettings = [];
-        for (let model of Object.keys(modelGroup.models)) {
-            models.push(store.getState().api.models.data.indexOf(model));
+        const models = [];
+        const modelSettings: number[] = [];
+        for (const model of Object.keys(modelGroup.models)) {
+            models.push(state.api.models.data.indexOf(model));
             modelSettings.push(+modelGroup.models[model]['isVisible']);
             modelSettings.push(+modelGroup.models[model][mean]);
             modelSettings.push(+modelGroup.models[model][std]);
             modelSettings.push(+modelGroup.models[model][median]);
             modelSettings.push(+modelGroup.models[model][percentile]);
         }
-        modelSettings = parseBigInt(modelSettings.join(''), 2, 36);
+        const modelSettings2 = parseBigInt(modelSettings.join(''), 2, 36);
         otherSettings[`group${i}`] = `"${name}",${visibilities.join('')},${models.join(
             ','
-        )},${modelSettings}`;
+        )},${modelSettings2}`;
     }
 
     return {
-        plot: store.getState().plot.plotId,
+        plot: state.plot.plotId,
         ...otherSettings,
     };
 }
@@ -121,45 +121,50 @@ export function generateNewUrl(store) {
 /**
  * This method updates the store based on the data in the URL.
  *
- * @param store a test store for testing the function
+ * @param dispatch
+ * @param state
  * @param query a object with the query parameters
  */
-export function updateStoreWithQuery(store, query) {
-    if (!_.isEmpty(query)) {
+export function updateStoreWithQuery(
+    dispatch: AppDispatch,
+    state: AppState,
+    query: Record<string, string>
+) {
+    if (!isEmpty(query)) {
         console.log(query);
         const latMin = parseInt(query.lat_min);
         const latMax = parseInt(query.lat_max);
-        store.dispatch(setLocation({ minLat: latMin, maxLat: latMax }));
+        dispatch(setLocation({ minLat: latMin, maxLat: latMax }));
 
         const months = query.months.split(',').map((item) => {
             return parseInt(item);
         });
-        store.dispatch(setMonths({ months }));
+        dispatch(setMonths({ months }));
 
-        const refModel = store.getState().api.models.data[parseInt(query.ref_meas)];
-        store.dispatch(setModel({ model: refModel }));
+        const refModel = state.api.models.data[parseInt(query.ref_meas)];
+        dispatch(setModel({ model: refModel }));
 
         const refYear = parseInt(query.ref_year);
-        store.dispatch(setYear({ year: refYear }));
+        dispatch(setYear({ year: refYear }));
 
         const refVisible = Boolean(parseInt(query.ref_visible));
-        store.dispatch(setVisibility({ visible: refVisible }));
+        dispatch(setVisibility({ visible: refVisible }));
 
         const xZM = query.x_zm.split('-').map((item) => {
             return parseInt(item);
         });
-        store.dispatch(setDisplayXRange({ years: { minX: xZM[0], maxX: xZM[1] } }));
+        dispatch(setDisplayXRange({ years: { minX: xZM[0], maxX: xZM[1] } }));
 
         const yZM = query.y_zm.split('-').map((item) => {
             return parseInt(item);
         });
-        store.dispatch(setDisplayYRange({ minY: yZM[0], maxY: yZM[1] }));
+        dispatch(setDisplayYRange({ minY: yZM[0], maxY: yZM[1] }));
 
-        query.title_zm && store.dispatch(setTitle({ title: query.title_zm.split('"')[1] }));
+        query.title_zm && dispatch(setTitle({ title: query.title_zm.split('"')[1] }));
 
-        store.dispatch(setActivePlotId({ plotId: O3AS_PLOTS.tco3_return }));
+        dispatch(setActivePlotId({ plotId: O3AS_PLOTS.tco3_return }));
 
-        store.dispatch(
+        dispatch(
             setDisplayXRange({
                 regions: query.x_return.split(',').map((item) => {
                     return parseInt(item);
@@ -170,14 +175,14 @@ export function updateStoreWithQuery(store, query) {
         const yReturn = query.y_return.split('-').map((item) => {
             return parseInt(item);
         });
-        store.dispatch(setDisplayYRange({ minY: yReturn[0], maxY: yReturn[1] }));
+        dispatch(setDisplayYRange({ minY: yReturn[0], maxY: yReturn[1] }));
 
-        store.dispatch(setTitle({ title: query.title_return.split('"')[1] }));
+        dispatch(setTitle({ title: query.title_return.split('"')[1] }));
 
-        const plotId = query.plot;
-        store.dispatch(setActivePlotId({ plotId: plotId }));
+        const plotId = query.plot as O3AS_PLOTS;
+        dispatch(setActivePlotId({ plotId: plotId }));
 
-        let groupStrings = [];
+        const groupStrings = [];
         const groupIds = [...Object.keys(query)]
             .filter((x) => x.includes('group'))
             .map((x) => parseInt(x.replace('group', '')));
@@ -199,38 +204,34 @@ export function updateStoreWithQuery(store, query) {
                 .split(',')
                 .slice(2, -1)
                 .map((e) => {
-                    return store.getState().api.models.data[parseInt(e)];
+                    return state.api.models.data[parseInt(e)];
                 });
-            let modelSettings = elem.split('"')[2].split(',').slice(-1)[0];
+            const modelSettings = elem.split('"')[2].split(',').slice(-1)[0];
             const binary = parseBigInt(modelSettings, 36, 2);
-            let leadingZeros = '0' * (models.length * dataPerModel - binary.length);
-            if (typeof leadingZeros === 'number') {
-                leadingZeros = '';
-            }
-            modelSettings = leadingZeros + binary;
-            modelSettings = modelSettings.split('').map((e) => {
-                return Boolean(parseInt(e));
-            });
+            const modelSettings2 = binary
+                .padStart(models.length * dataPerModel, '0')
+                .split('')
+                .map((e) => {
+                    return Boolean(parseInt(e));
+                });
             return {
                 name: name,
                 visibilities: visibilities,
                 models: models,
-                modelSettings: modelSettings,
+                modelSettings: modelSettings2,
             };
         });
         for (let i = 0; i < groups.length; i++) {
-            store.dispatch(
+            dispatch(
                 setModelsOfModelGroup({
                     groupId: i,
                     groupName: groups[i].name,
                     modelList: groups[i].models,
                 })
             );
-            store.dispatch(
-                setVisibilityForGroup({ groupId: i, isVisible: groups[i].visibilities[0] })
-            );
+            dispatch(setVisibilityForGroup({ groupId: i, isVisible: groups[i].visibilities[0] }));
             for (let j = 1; j < groups[i].visibilities.length; j++) {
-                store.dispatch(
+                dispatch(
                     setStatisticalValueForGroup({
                         groupId: i,
                         svType: STATISTICAL_VALUES_LIST[j - 1],
@@ -238,9 +239,7 @@ export function updateStoreWithQuery(store, query) {
                     })
                 );
             }
-            const dataCpy = JSON.parse(
-                JSON.stringify(store.getState().models.modelGroups[i].models)
-            );
+            const dataCpy = JSON.parse(JSON.stringify(state.models.modelGroups[i].models));
             for (let j = 0; j < groups[i].models.length; j++) {
                 const model = groups[i].models[j];
                 dataCpy[model]['isVisible'] = groups[i].modelSettings[dataPerModel * j];
@@ -249,7 +248,7 @@ export function updateStoreWithQuery(store, query) {
                 dataCpy[model][median] = groups[i].modelSettings[dataPerModel * j + 3];
                 dataCpy[model][percentile] = groups[i].modelSettings[dataPerModel * j + 4];
             }
-            store.dispatch(updatePropertiesOfModelGroup({ groupId: i, data: dataCpy }));
+            dispatch(updatePropertiesOfModelGroup({ groupId: i, data: dataCpy }));
         }
     }
 }

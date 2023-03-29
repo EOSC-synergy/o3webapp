@@ -12,11 +12,11 @@ import {
     fetchPlotDataForCurrentModels,
     fetchPlotTypes,
 } from 'services/API/apiSlice/apiSlice';
-import { generateNewUrl, updateStoreWithQuery } from 'services/url/url';
+import { generateNewUrl, updateStoreWithQuery } from 'services/url';
 import { setModelsOfModelGroup } from 'store/modelsSlice';
 import { DEFAULT_MODEL_GROUP } from 'utils/constants';
-import { connect, useStore } from 'react-redux';
-import { useAppDispatch, wrapper } from 'store/store';
+import { connect } from 'react-redux';
+import { useAppDispatch, useAppStore, wrapper } from 'store/store';
 import _ from 'lodash';
 import { GetStaticProps, NextPage } from 'next';
 
@@ -27,7 +27,7 @@ import { GetStaticProps, NextPage } from 'next';
  * @returns {JSX.Element} A jsx containing all main components
  */
 const App: NextPage<IndexProps> = () => {
-    const store = useStore();
+    const store = useAppStore();
 
     /**
      * State that holds the boolean whether the ErrorMessageModal is currently visible or not.
@@ -140,7 +140,11 @@ const App: NextPage<IndexProps> = () => {
         if (router.isReady && !ready) {
             dispatch(fetchPlotTypes());
             dispatch(fetchModels()).then(() => {
-                updateStoreWithQuery(store, router.query);
+                updateStoreWithQuery(
+                    store.dispatch,
+                    store.getState(),
+                    router.query as Record<string, string>
+                );
                 dispatch(fetchPlotDataForCurrentModels(_.isEmpty(router.query)));
             });
             /*
@@ -154,7 +158,7 @@ const App: NextPage<IndexProps> = () => {
             store.subscribe(() => {
                 router.push(
                     {
-                        query: generateNewUrl(store),
+                        query: generateNewUrl(store.getState()),
                     },
                     undefined,
                     { shallow: true }

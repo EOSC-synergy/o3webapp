@@ -239,7 +239,32 @@ export const upperPercentile = 'upperPercentile';
  * but TWO lines. Same goes for percentile which is lower- AND upper-percentile.
  * @category Utils
  */
-export const EXTENDED_SV_LIST = [stdMean, lowerPercentile, upperPercentile];
+export const EXTENDED_SV_LIST = [stdMean, lowerPercentile, upperPercentile] as const;
+
+// ensure that the end of this array is EXTENDED_SV_LIST
+export const PROCESS_SV = [
+    mean,
+    std,
+    median,
+    //percentile,
+    stdMean,
+    lowerPercentile,
+    upperPercentile,
+] as const;
+export type PROCESS_SV = typeof PROCESS_SV[number];
+
+export const PROCESS_SV_WITH_PERCENTILE = [
+    mean,
+    std,
+    median,
+    percentile,
+    stdMean,
+    lowerPercentile,
+    upperPercentile,
+] as const;
+export type PROCESS_SV_WITH_PERCENTILE = typeof PROCESS_SV_WITH_PERCENTILE[number];
+
+export type PROCESSED_SV = Exclude<PROCESS_SV, 'stdMean'> | 'mean+std' | 'mean-std';
 
 /**
  * The same statistical values as a list to verify certain payload data.

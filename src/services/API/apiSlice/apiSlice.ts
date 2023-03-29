@@ -1,8 +1,10 @@
 import { createSlice, createAsyncThunk, createAction } from '@reduxjs/toolkit';
-import { getModels, getPlotTypes, getPlotData } from '../client';
+import { getModels, getPlotTypes, getPlotData, LEGAL_PLOT_ID } from '../client';
 import { getSuggestedValues, preTransformApiData } from '../../../utils/optionsFormatter';
-import { START_YEAR, END_YEAR, O3AS_PLOTS } from '../../../utils/constants';
+import { START_YEAR, END_YEAR, O3AS_PLOTS, USER_REGION } from '../../../utils/constants';
 import { setDisplayXRangeForPlot, setDisplayYRangeForPlot } from '../../../store/plotSlice';
+import { AppDispatch, AppState, AppStore } from '../../../store/store';
+import { O3Data } from '../generated-client';
 
 export let cacheKey = '';
 
@@ -19,7 +21,8 @@ export const REQUEST_STATE = {
     loading: 'loading',
     success: 'success',
     error: 'error',
-};
+} as const;
+export type REQUEST_STATE = typeof REQUEST_STATE[keyof typeof REQUEST_STATE];
 
 /**
  * This thunk action creator is created via redux toolkit. It allows dispatching
@@ -54,19 +57,110 @@ export const fetchPlotTypes = createAsyncThunk('api/fetchPlotTypes', async () =>
  * This function concatenates all given information into a string serving as an identifier
  * for cached requests in the store.
  *
- * @param {int} latMin specifies the minimum latitude
- * @param {int} latMax specifies the maximum latitude
- * @param {array} months represents the selected months
- * @param {string} refModel the reference model to "normalize the data"
- * @param {int} refYear the reference year to "normalize the data"
+ * @param latMin specifies the minimum latitude
+ * @param latMax specifies the maximum latitude
+ * @param months represents the selected months
+ * @param refModel the reference model to "normalize the data"
+ * @param refYear the reference year to "normalize the data"
  * @returns the generated string
  * @function
  * @category apiSlice
  */
-export const generateCacheKey = ({ latMin, latMax, months, refModel, refYear }) => {
+export const generateCacheKey = ({
+    latMin,
+    latMax,
+    months,
+    refModel,
+    refYear,
+}: {
+    latMin: number;
+    latMax: number;
+    months: number[];
+    refModel: string;
+    refYear: number;
+}) => {
     return `lat_min=${latMin}&lat_max=${latMax}&months=${months.join(
         ','
     )}&ref_meas=${refModel}&ref_year=${refYear}`;
+};
+
+type FetchPlotData = {
+    plotId: LEGAL_PLOT_ID;
+    cacheKey: string;
+    loadingModels: string[];
+    loadedModels: string[];
+};
+
+export type EntryPlotStyle = {
+    label: string;
+    color: string;
+    linestyle: string;
+};
+
+export type ZmData = number[];
+export type ReturnData = { [USER_REGION]?: number } & Record<string, number>;
+
+// TODO: taken from optionsFormatter
+export type Entry = {
+    plotStyle?: /*?*/ EntryPlotStyle;
+    // TODO: better typing, move strings elsewhere? get rid of USER_REGION
+    data:
+        | ZmData // zm
+        | ReturnData; // return
+    suggested: {
+        minX?: number;
+        maxX?: number;
+        minY: number;
+        maxY: number;
+    };
+};
+
+type IdleResponse = {
+    status: 'idle';
+};
+type LoadingResponse = {
+    status: 'loading';
+};
+export type ProcessedO3Data = { reference_value: Entry } & Record<string, Entry>;
+type SuccessfulResponse = {
+    status: 'success';
+    data: ProcessedO3Data;
+};
+type ErrorResponse = {
+    status: 'error';
+    error: string;
+};
+
+type RequestCache = FetchPlotData &
+    (IdleResponse | LoadingResponse | SuccessfulResponse | ErrorResponse);
+
+type InitiallyPendingPayload = {
+    plotId: LEGAL_PLOT_ID;
+    cacheKey: string;
+    loadingModels: string[];
+};
+
+type RefetchingPayload = {
+    plotId: LEGAL_PLOT_ID;
+    cacheKey: string;
+    loadingModels: string[];
+};
+
+type SuccessPayload = {
+    plotId: LEGAL_PLOT_ID;
+    cacheKey: string;
+    data: O3Data[];
+};
+
+type RejectedPayload = {
+    error: string;
+    plotId: LEGAL_PLOT_ID;
+    cacheKey: string;
+};
+
+type SelectExistingPayload = {
+    plotId: LEGAL_PLOT_ID;
+    cacheKey: string;
 };
 
 /**
@@ -78,7 +172,9 @@ export const generateCacheKey = ({ latMin, latMax, months, refModel, refYear }) 
  * @function
  * @category apiSlice
  */
-const fetchPlotDataInitiallyPending = createAction('api/fetchPlotData/initiallyPending');
+const fetchPlotDataInitiallyPending = createAction<InitiallyPendingPayload>(
+    'api/fetchPlotData/initiallyPending'
+);
 
 /**
  * This action creator generates an action that is dispatched against the store
@@ -89,7 +185,7 @@ const fetchPlotDataInitiallyPending = createAction('api/fetchPlotData/initiallyP
  * @function
  * @category apiSlice
  */
-const fetchPlotDataRefetching = createAction('api/fetchPlotData/refetching');
+const fetchPlotDataRefetching = createAction<RefetchingPayload>('api/fetchPlotData/refetching');
 
 /**
  * This action creator generates an action that is dispatched against the store
@@ -98,7 +194,7 @@ const fetchPlotDataRefetching = createAction('api/fetchPlotData/refetching');
  * @function
  * @category apiSlice
  */
-const fetchPlotDataSuccess = createAction('api/fetchPlotData/success');
+const fetchPlotDataSuccess = createAction<SuccessPayload>('api/fetchPlotData/success');
 /**
  * This action creator generates an action that is dispatched against the store
  * when the request of the data failed. The payload object contains the
@@ -106,7 +202,7 @@ const fetchPlotDataSuccess = createAction('api/fetchPlotData/success');
  * @function
  * @category apiSlice
  */
-const fetchPlotDataRejected = createAction('api/fetchPlotData/rejected');
+const fetchPlotDataRejected = createAction<RejectedPayload>('api/fetchPlotData/rejected');
 /**
  * This action creator generates an action that is dispatched against the store
  * when the requested data is already in the cache and only needs to be selected.
@@ -114,7 +210,7 @@ const fetchPlotDataRejected = createAction('api/fetchPlotData/rejected');
  * @function
  * @category apiSlice
  */
-const selectExistingPlotData = createAction('api/selectPlotData');
+const selectExistingPlotData = createAction<SelectExistingPayload>('api/selectPlotData');
 
 /**
  * This action encapsulates the operation of fetching the data, unpacking the calculated min and max values of the
@@ -123,16 +219,27 @@ const selectExistingPlotData = createAction('api/selectPlotData');
  *
  * @function
  * @category apiSlice
- * @param {string} obj.plotId the name for which the data is fetched
- * @param {string} obj.cacheKey the cache key specifying the settings for the fetched data and where the data is fetched
- * @param {object} obj.data the fetched data from the api
+ * @param {string} plotId the name for which the data is fetched
+ * @param {string} cacheKey the cache key specifying the settings for the fetched data and where the data is fetched
+ * @param {object} data the fetched data from the api
  * @returns the async thunk action that is dispatched against the store.
  */
-export const updateDataAndDisplaySuggestions = ({ plotId, cacheKey, data, suggest }) => {
-    return (dispatch, getState) => {
+export const updateDataAndDisplaySuggestions = ({
+    plotId,
+    cacheKey,
+    data,
+    suggest,
+}: {
+    plotId: LEGAL_PLOT_ID;
+    cacheKey: string;
+    data: O3Data[];
+    suggest: boolean;
+}) => {
+    return (dispatch: AppDispatch, getState: AppStore['getState']) => {
         dispatch(fetchPlotDataSuccess({ data, plotId, cacheKey }));
-        if (suggest) {
-            const requestData = getState().api.plotSpecific[plotId].cachedRequests[cacheKey].data;
+        const cachedRequest = getState().api.plotSpecific[plotId].cachedRequests[cacheKey];
+        if (suggest && cachedRequest.status === 'success') {
+            const requestData = cachedRequest.data;
 
             const { minX, maxX, minY, maxY } = getSuggestedValues(requestData, getState().models);
 
@@ -161,7 +268,7 @@ export const updateDataAndDisplaySuggestions = ({ plotId, cacheKey, data, sugges
  * @returns the async thunk function that is dispatched against the store.
  */
 export const fetchPlotDataForCurrentModels = (suggest = true) => {
-    return (dispatch, getState) => {
+    return (dispatch: AppDispatch, getState: AppStore['getState']) => {
         dispatch(
             fetchPlotData({
                 plotId: O3AS_PLOTS.tco3_zm,
@@ -191,8 +298,16 @@ export const fetchPlotDataForCurrentModels = (suggest = true) => {
  * @function
  * @category apiSlice
  */
-export const fetchPlotData = ({ plotId, models, suggest }) => {
-    return (dispatch, getState) => {
+export const fetchPlotData = ({
+    plotId,
+    models,
+    suggest,
+}: {
+    plotId: LEGAL_PLOT_ID;
+    models: string[];
+    suggest: boolean;
+}) => {
+    return (dispatch: AppDispatch, getState: AppStore['getState']) => {
         if (typeof plotId === 'undefined') {
             plotId = getState().plot.plotId;
         } // backwards compatible
@@ -219,12 +334,13 @@ export const fetchPlotData = ({ plotId, models, suggest }) => {
             );
         } else {
             const allSelected = getAllSelectedModels(getState);
-            const loaded = cachedRequest.loadedModels; // models that are already loaded
-            const loading = cachedRequest.loadingModels; // models that are beeing loaded at the moment
+            const loaded = cachedRequest.loadedModels ?? []; // models that are already loaded
+            const loading = cachedRequest.loadingModels ?? []; // models that are beeing loaded at the moment
 
+            // keep only models that are not loaded and currently not loading
             const required = allSelected.filter(
                 (model) => !loaded.includes(model) && !loading.includes(model)
-            ); // keep only models that are not loaded and currently not loading
+            );
             if (required.length === 0) {
                 // fetched data already satisfies users needs
                 // old: status == success
@@ -270,7 +386,7 @@ export const fetchPlotData = ({ plotId, models, suggest }) => {
                     updateDataAndDisplaySuggestions({
                         plotId,
                         cacheKey,
-                        data: response?.data,
+                        data: response.data,
                         suggest,
                     })
                 ),
@@ -293,8 +409,8 @@ export const fetchPlotData = ({ plotId, models, suggest }) => {
  * @param {function} getState a function to get the state of the store
  * @returns {Array.<string>} all selected models from the store
  */
-export function getAllSelectedModels(getState) {
-    let allModels = [];
+export function getAllSelectedModels(getState: AppStore['getState']) {
+    const allModels: string[] = [];
     const modelGroups = getState().models.modelGroups;
     for (const groupId in modelGroups) {
         const models = Object.keys(modelGroups[groupId].models);
@@ -303,6 +419,27 @@ export function getAllSelectedModels(getState) {
     }
     return Array.from(new Set(allModels));
 }
+
+type APIState = {
+    models: {
+        status: REQUEST_STATE;
+        error?: string;
+        data: string[];
+    };
+    plotTypes: {
+        status: REQUEST_STATE;
+        error?: string;
+        data: string[];
+    };
+    plotSpecific: Record<
+        LEGAL_PLOT_ID,
+        { active: string | null; cachedRequests: Record<string, RequestCache> }
+    >;
+};
+
+export type GlobalAPIState = {
+    api: APIState;
+};
 
 /**
  * This initial state describes how the data fetched from the api is stored in this
@@ -315,15 +452,13 @@ export function getAllSelectedModels(getState) {
  * @constant {object}
  * @category apiSlice
  */
-const initialState = {
+const initialState: APIState = {
     models: {
         status: REQUEST_STATE.idle,
-        error: null,
         data: [],
     },
     plotTypes: {
         status: REQUEST_STATE.idle,
-        error: null,
         data: [],
     },
     plotSpecific: {
@@ -392,11 +527,11 @@ const apiSlice = createSlice({
                 const plotSpecificSection = state.plotSpecific[plotId];
 
                 plotSpecificSection.cachedRequests[cacheKey] = {
+                    plotId,
+                    cacheKey,
                     status: REQUEST_STATE.loading,
                     loadingModels: [...loadingModels], // models that are currently beeing fetched
                     loadedModels: [],
-                    error: null,
-                    data: {},
                 };
                 plotSpecificSection.active = cacheKey; // select this request after dispatching it
             })
@@ -405,16 +540,28 @@ const apiSlice = createSlice({
                 const plotSpecificSection = state.plotSpecific[plotId];
                 const cachedRequest = plotSpecificSection.cachedRequests[cacheKey];
                 cachedRequest.status = REQUEST_STATE.loading;
-                cachedRequest.loadingModels.push(...loadingModels);
+                if (cachedRequest.loadingModels !== undefined) {
+                    cachedRequest.loadingModels?.push(...loadingModels);
+                } else {
+                    cachedRequest.loadingModels = loadingModels;
+                }
 
                 plotSpecificSection.active = cacheKey; // select this request after dispatching it
             })
             .addCase(fetchPlotDataSuccess, (state, action) => {
                 const { data, plotId, cacheKey } = action.payload;
-                const storage = state.plotSpecific[plotId].cachedRequests[cacheKey];
-
-                const { lookUpTable } = preTransformApiData({ plotId, data });
-                Object.assign(storage.data, lookUpTable); // copy over new values
+                const storageOrig = state.plotSpecific[plotId].cachedRequests[
+                    cacheKey
+                ] as SuccessfulResponse & FetchPlotData;
+                const lookUpTable = preTransformApiData(plotId, data);
+                const storage = (state.plotSpecific[plotId].cachedRequests[cacheKey] = {
+                    ...storageOrig,
+                    status: 'success',
+                    data: {
+                        ...storageOrig.data,
+                        ...lookUpTable,
+                    },
+                });
 
                 // update loaded / loading
                 const fetchedModels = Object.keys(lookUpTable);
@@ -429,11 +576,13 @@ const apiSlice = createSlice({
             })
             .addCase(fetchPlotDataRejected, (state, action) => {
                 const { error, plotId, cacheKey } = action.payload;
-                const storage = state.plotSpecific[plotId].cachedRequests[cacheKey];
-                storage.status = REQUEST_STATE.error;
-                storage.error = error;
-                storage.loadedModels = []; // everything should be refetched if an error occurred
-                storage.loadingModels = []; // loading failed, reset all, otherwise re-loading wouldn't be possible
+                state.plotSpecific[plotId].cachedRequests[cacheKey] = {
+                    ...state.plotSpecific[plotId].cachedRequests[cacheKey],
+                    status: REQUEST_STATE.error,
+                    error: error,
+                    loadedModels: [], // everything should be refetched if an error occurred
+                    loadingModels: [], // loading failed, reset all, otherwise re-loading wouldn't be possible
+                };
             })
 
             // select existing data from cache
@@ -460,13 +609,13 @@ export default apiSlice.reducer;
  * of the current selected plot. That means whenever this data is about to change, e.g. because
  * a new fetch request is dispatched, the component re-renders.
  *
- * @param {object} state the state, handed by redux
- * @param {string} plotId identifies the plot
+ * @param state the state, handed by redux
+ * @param plotId identifies the plot
  * @returns the current active data for the active plot
  * @function
  * @category apiSlice
  */
-export const selectActivePlotData = (state, plotId) => {
+export const selectActivePlotData = (state: AppState, plotId: LEGAL_PLOT_ID) => {
     const plotSpecificSection = state.api.plotSpecific[plotId];
     const activeCacheKey = plotSpecificSection.active;
     if (activeCacheKey === null) {

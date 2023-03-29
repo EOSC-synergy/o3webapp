@@ -3,6 +3,9 @@
  *
  * @module TextSearch */ // used for auto generation of JSDocs with better-docs
 
+// TODO: get rid of object?
+type SomethingSearchable = string | Record<string | number | symbol, unknown> | object;
+
 /**
  * Performs a simple full text search on the given element and looks
  * for the given search string.
@@ -12,7 +15,7 @@
  * @returns whether the search string was found
  * @category Utils
  */
-export function fullTextSearch<T>(elem: T, searchStr: string) {
+export function fullTextSearch<T extends SomethingSearchable>(elem: T, searchStr: string) {
     const lowerSearchStr = searchStr.toLowerCase();
     if (typeof elem === 'string') {
         return elem.toLowerCase().includes(lowerSearchStr);
@@ -41,7 +44,7 @@ export function fullTextSearch<T>(elem: T, searchStr: string) {
  * @function
  * @category Utils
  */
-export function performSearch<T>(
+export function performSearch<T extends SomethingSearchable>(
     array: T[],
     searchString: string,
     shouldReturnValues = false
