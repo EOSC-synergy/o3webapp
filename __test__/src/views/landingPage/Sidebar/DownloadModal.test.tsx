@@ -1,17 +1,21 @@
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import DownloadModal from '../../../../../src/views/landingPage/Sidebar/DownloadModal';
+import DownloadModal from 'views/landingPage/Sidebar/DownloadModal';
 import { Provider } from 'react-redux';
-import { createTestStore } from '../../../../../src/store';
+import { AppStore, createTestStore } from 'store';
 import tco3zmResponse from '../../../../src/services/API/testing/tco3zm-response.json';
 import axios from 'axios';
-import { fetchPlotData } from '../../../../../src/services/API/apiSlice';
-import { O3AS_PLOTS } from '../../../../../src/utils/constants';
+import { fetchPlotData } from 'services/API/apiSlice';
+import { O3AS_PLOTS } from 'utils/constants';
+import * as client from 'services/API/client';
+import { fakeAxiosResponse } from 'services/API/fakeResponse';
 
-jest.mock('axios');
+jest.mock('services/API/client');
+
+const mockedClient = client as jest.Mocked<typeof client>;
 
 describe('testing basic rendering & selection', () => {
-    let store;
+    let store: AppStore;
     beforeEach(() => {
         store = createTestStore();
     });
@@ -20,16 +24,24 @@ describe('testing basic rendering & selection', () => {
         render(
             <Provider store={store}>
                 {' '}
-                <DownloadModal reportError={() => {}} onClose={() => {}} isOpen={true} />
+                <DownloadModal
+                    reportError={() => undefined}
+                    onClose={() => undefined}
+                    isOpen={true}
+                />
             </Provider>
         );
     });
 
     it('renders correctly when open', () => {
-        let { baseElement, container } = render(
+        const { baseElement, container } = render(
             <Provider store={store}>
                 {' '}
-                <DownloadModal isOpen={true} onClose={() => {}} reportError={() => {}} />{' '}
+                <DownloadModal
+                    isOpen={true}
+                    onClose={() => undefined}
+                    reportError={() => undefined}
+                />{' '}
             </Provider>
         );
         expect(baseElement).toMatchSnapshot();
@@ -37,31 +49,17 @@ describe('testing basic rendering & selection', () => {
     });
 
     it('renders correctly when closed', () => {
-        let { baseElement } = render(
+        const { baseElement } = render(
             <Provider store={store}>
                 {' '}
-                <DownloadModal isOpen={false} onClose={() => {}} reportError={() => {}} />
+                <DownloadModal
+                    isOpen={false}
+                    onClose={() => undefined}
+                    reportError={() => undefined}
+                />
             </Provider>
         );
         expect(baseElement).toMatchSnapshot();
-    });
-
-    it('raises a console.error function if a required prop is not provided', () => {
-        console.error = jest.fn();
-        render(
-            <Provider store={store}>
-                {' '}
-                <DownloadModal onClose={() => {}} reportError={() => {}} />
-            </Provider>
-        );
-        expect(console.error).toHaveBeenCalled();
-        render(
-            <Provider store={store}>
-                {' '}
-                <DownloadModal isOpen={true} reportError={() => {}} />
-            </Provider>
-        );
-        expect(console.error).toHaveBeenCalled();
     });
 
     it('testing select file format functionality', async () => {
@@ -69,19 +67,19 @@ describe('testing basic rendering & selection', () => {
         const mock = jest.fn();
         // mock api => data
         // simpler, but less powerful: axios.post.mockResolvedValue({data: tco3zmResponse});
-        axios.post.mockImplementation((requestUrl) => {
-            return Promise.resolve({ data: tco3zmResponse });
-        });
+        mockedClient.getPlotData.mockResolvedValue(fakeAxiosResponse(tco3zmResponse));
         await store.dispatch(
             fetchPlotData({
                 plotId: O3AS_PLOTS.tco3_zm,
                 models: ['CCMI-1_ACCESS_ACCESS-CCM-refC2'],
+                // TODO: what is suggest for
+                suggest: false,
             })
         );
 
-        let { getByTestId } = render(
+        const { getByTestId } = render(
             <Provider store={store}>
-                <DownloadModal isOpen={true} onClose={() => {}} reportError={mock} />
+                <DownloadModal isOpen={true} onClose={() => undefined} reportError={mock} />
             </Provider>
         );
 
