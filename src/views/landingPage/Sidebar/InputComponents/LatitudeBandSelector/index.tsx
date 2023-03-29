@@ -1,11 +1,12 @@
 import React, { type FC, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectPlotLocation, setLocation } from 'store/plotSlice';
 import { Box, Divider, MenuItem, Select, type SelectChangeEvent } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { type Latitude, latitudeBands } from 'utils/constants';
-import { type fetchPlotDataForCurrentModels } from 'services/API/apiSlice';
+import { fetchPlotDataForCurrentModels } from 'services/API/apiSlice';
 import CustomLatitudeSelector from './CustomLatitudeSelector';
+import { useAppDispatch } from '../../../../../store';
 
 /**
  * Enables the user to choose minimum and maximum latitude
@@ -32,7 +33,7 @@ const LatitudeBandSelector: FC = () => {
     /**
      * A dispatch function to dispatch actions to the redux store.
      */
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     /**
      * handles the change when the user clicked on a new latitude band option
@@ -53,7 +54,6 @@ const LatitudeBandSelector: FC = () => {
             );
 
             // fetch for tco3_zm and tco3_return
-            // @ts-expect-error TODO: dispatch typing<
             dispatch(fetchPlotDataForCurrentModels());
         }
     };

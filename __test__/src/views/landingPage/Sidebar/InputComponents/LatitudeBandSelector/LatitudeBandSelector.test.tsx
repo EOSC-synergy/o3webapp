@@ -2,10 +2,10 @@ import { render, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
-import LatitudeBandSelector from '../../../../../../../src/views/landingPage/Sidebar/InputComponents/LatitudeBandSelector';
-import { createTestStore } from '../../../../../../../src/store';
+import LatitudeBandSelector from 'views/landingPage/Sidebar/InputComponents/LatitudeBandSelector';
+import { AppStore, createTestStore } from 'store';
 
-let store;
+let store: AppStore;
 beforeEach(() => {
     store = createTestStore();
 });
@@ -15,7 +15,7 @@ describe('tests basic rendering', () => {
         render(
             <>
                 <Provider store={store}>
-                    <LatitudeBandSelector reportError={() => {}} />
+                    <LatitudeBandSelector />
                 </Provider>
             </>
         );
@@ -25,7 +25,7 @@ describe('tests basic rendering', () => {
         const { container } = render(
             <>
                 <Provider store={store}>
-                    <LatitudeBandSelector reportError={() => {}} />
+                    <LatitudeBandSelector />
                 </Provider>
             </>
         );
@@ -38,7 +38,7 @@ describe('tests redux functionality', () => {
     it('updates the region accordingly in the store', () => {
         const { getByRole, getAllByRole } = render(
             <Provider store={store}>
-                <LatitudeBandSelector reportError={() => {}} />
+                <LatitudeBandSelector />
             </Provider>
         );
 
@@ -59,7 +59,7 @@ describe('tests redux functionality', () => {
     it('displays a custom latitude band selector if custom region is selected', () => {
         const { getByRole, getAllByRole, container } = render(
             <Provider store={store}>
-                <LatitudeBandSelector reportError={() => {}} />
+                <LatitudeBandSelector />
             </Provider>
         );
 
