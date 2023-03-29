@@ -8,7 +8,7 @@ import { createWrapper, HYDRATE } from 'next-redux-wrapper';
 import thunkMiddleware from 'redux-thunk';
 import { useDispatch, useStore } from 'react-redux';
 
-type GlobalState =
+export type GlobalState =
     | undefined
     | (GlobalPlotState & GlobalModelState & GlobalReferenceState & GlobalAPIState);
 
@@ -33,13 +33,18 @@ const reducer = (state: GlobalState, action: { type: string; payload: any }) => 
 
 //let store: ReturnType<typeof configureStore<GlobalState, >>;
 
-const initStore = () => {
-    //store = createStore(reducer, bindMiddleware([thunkMiddleware]));
+const makeStore = (defaultState?: GlobalState) => {
     return configureStore({
         reducer,
         devTools: process.env.NODE_ENV !== 'production',
         middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunkMiddleware),
+        preloadedState: defaultState,
     });
+};
+
+const initStore = () => {
+    //store = createStore(reducer, bindMiddleware([thunkMiddleware]));
+    return makeStore();
 };
 
 export type AppStore = ReturnType<typeof initStore>;
@@ -53,8 +58,8 @@ export const useAppStore = () => useStore<AppState>();
 
 export const wrapper = createWrapper(initStore);
 
-export function createTestStore(): AppStore {
-    const store = initStore();
+export function createTestStore(defaultState?: GlobalState): AppStore {
+    const store = makeStore(defaultState);
     store.dispatch(setModelsOfModelGroup(DEFAULT_MODEL_GROUP)); // fill with default group
     return store;
 }

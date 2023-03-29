@@ -5,7 +5,7 @@ import {
     STATISTICAL_VALUES_LIST,
 } from 'utils/constants';
 import { HYDRATE } from 'next-redux-wrapper';
-import _ from 'lodash';
+import { pick } from 'lodash';
 
 type ModelData = {
     // single model
@@ -132,28 +132,27 @@ const modelsSlice = createSlice({
             // set model group
             if (groupId != null && groupId in state.modelGroups) {
                 const selectedModelGroup = state.modelGroups[groupId];
-                state.modelGroups[groupId].name = groupName;
+                selectedModelGroup.name = groupName;
                 // remove unwanted
-                selectedModelGroup.models = _.pick(selectedModelGroup.models, modelList);
+                selectedModelGroup.models = pick(selectedModelGroup.models, modelList);
 
                 // add new ones
                 for (const model of modelList) {
                     if (!(model in selectedModelGroup.models)) {
                         // initialize with default settings
-                        selectedModelGroup.models[model] = MODEL_DATA_TEMPLATE;
+                        selectedModelGroup.models[model] = { ...MODEL_DATA_TEMPLATE };
                     }
                 }
             } else {
                 // create new group
-                const newGroupId = state.idCounter++;
-                const currentGroup = JSON.parse(JSON.stringify(MODEL_GROUP_TEMPLATE));
-                currentGroup.name = groupName;
-
-                for (const model of modelList) {
-                    currentGroup.models[model] = JSON.parse(JSON.stringify(MODEL_DATA_TEMPLATE));
-                }
-
-                state.modelGroups[newGroupId] = currentGroup;
+                state.modelGroups[state.idCounter++] = {
+                    ...MODEL_GROUP_TEMPLATE,
+                    name: groupName,
+                    models: modelList.reduce((acc, model) => {
+                        acc[model] = { ...MODEL_DATA_TEMPLATE };
+                        return acc;
+                    }, {} as Record<string, ModelData>),
+                };
             }
             // change name either way
         },
