@@ -5,7 +5,7 @@ import {
     q25,
     q75,
     quantile as calculatePercentile,
-    std as calculateStd
+    std as calculateStd,
 } from '../services/math';
 import {
     END_YEAR,
@@ -24,7 +24,7 @@ import {
     std,
     stdMean,
     upperPercentile,
-    USER_REGION
+    USER_REGION,
 } from './constants';
 import { convertModelName } from './ModelNameConverter';
 import { AppState } from '../store/store';
@@ -76,7 +76,7 @@ const SV_CALCULATION = {
     [std]: calculateStd,
     [lowerPercentile]: (arr: number[]) => calculatePercentile(arr, 0.1587),
     [upperPercentile]: (arr: number[]) => calculatePercentile(arr, 0.8413),
-    [stdMean]: calculateMean
+    [stdMean]: calculateMean,
 };
 
 /**
@@ -92,7 +92,7 @@ const SV_COLORING = {
     lowerPercentile: '#1e8509',
     upperPercentile: '#1e8509',
     'mean+std': '#0e4e78',
-    'mean-std': '#0e4e78'
+    'mean-std': '#0e4e78',
 };
 
 /**
@@ -111,7 +111,7 @@ const SV_DASHING = {
     'mean+std': 8,
     'mean-std': 8,
     lowerPercentile: 4,
-    upperPercentile: 4
+    upperPercentile: 4,
 };
 
 /**
@@ -127,7 +127,7 @@ const SV_DISPLAY_NAME = {
     'mean+std': 'μ + σ',
     'mean-std': 'μ - σ',
     lowerPercentile: 'Lower %',
-    upperPercentile: 'Upper %'
+    upperPercentile: 'Upper %',
 };
 
 /**
@@ -145,7 +145,7 @@ export const FONT_FAMILY = [
     'sans-serif',
     '"Apple Color Emoji"',
     '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"'
+    '"Segoe UI Symbol"',
 ].join(',');
 
 /**
@@ -163,9 +163,7 @@ function createSubtitle(state: AppState): string {
     }
 
     let stMonths: string[] = [];
-    state.plot.generalSettings.months.map((month) =>
-        stMonths.push(months[month - 1].description!)
-    );
+    state.plot.generalSettings.months.map((month) => stMonths.push(months[month - 1].description!));
     if (stMonths.length === NUM_MONTHS) {
         stMonths = ['All year'];
     }
@@ -193,28 +191,28 @@ export const defaultTCO3_zm: ApexOptions = {
         max: END_YEAR,
         decimalsInFloat: 0,
         labels: {
-            rotate: 0
+            rotate: 0,
         },
         title: {
             text: 'Year',
             style: {
                 fontSize: '1rem',
-                fontFamily: FONT_FAMILY
-            }
-        }
+                fontFamily: FONT_FAMILY,
+            },
+        },
     },
     yaxis: [],
     annotations: {
-        points: []
+        points: [],
     },
     grid: {
-        show: false
+        show: false,
     },
     chart: {
         id: O3AS_PLOTS.tco3_zm,
         animations: {
             enabled: false,
-            easing: 'linear'
+            easing: 'linear',
         },
         toolbar: {
             show: false,
@@ -225,27 +223,27 @@ export const defaultTCO3_zm: ApexOptions = {
                 pan: false,
                 zoomin: false,
                 zoomout: false,
-                zoom: false
-            }
+                zoom: false,
+            },
         },
         zoom: {
-            enabled: false
+            enabled: false,
         },
-        width: '100%'
+        width: '100%',
     },
     legend: {
         show: true,
         onItemClick: {
-            toggleDataSeries: false
+            toggleDataSeries: false,
         },
         markers: {},
-        height: 80
+        height: 80,
     },
     dataLabels: {
-        enabled: false
+        enabled: false,
     },
     tooltip: {
-        shared: false
+        shared: false,
     },
     /*colors: undefined, //styling.colors
     stroke: {
@@ -260,8 +258,8 @@ export const defaultTCO3_zm: ApexOptions = {
             fontSize: '30px',
             fontWeight: 'bold',
             fontFamily: FONT_FAMILY,
-            color: '#000000'
-        }
+            color: '#000000',
+        },
     },
     subtitle: {
         text: '[subtitle]', // subtitle can only be changed in createSubtitle function
@@ -271,9 +269,9 @@ export const defaultTCO3_zm: ApexOptions = {
         style: {
             fontSize: '20px',
             fontFamily: FONT_FAMILY,
-            color: '#000000'
-        }
-    }
+            color: '#000000',
+        },
+    },
 };
 
 /**
@@ -308,22 +306,22 @@ export function getDefaultYAxisTco3Zm(
         decimalsInFloat: 0,
         axisBorder: {
             show: true,
-            offsetX
+            offsetX,
         },
         axisTicks: {
-            show: true
+            show: true,
         },
         tickAmount,
         title: {
             text: opposite ? '' : 'TCO(DU)', // don't show description on right side
             style: {
                 fontSize: '1rem',
-                fontFamily: FONT_FAMILY
-            }
+                fontFamily: FONT_FAMILY,
+            },
         },
         labels: {
-            formatter: opposite ? () => '' : formatYLabelsNicely // hide labels with function that always returns empty strings
-        }
+            formatter: opposite ? () => '' : formatYLabelsNicely, // hide labels with function that always returns empty strings
+        },
         /*
         tooltip: {
           enabled: true, // => kinda messy
@@ -365,28 +363,27 @@ export function getDefaultYAxisTco3Return(
         decimalsInFloat: 0,
         axisBorder: {
             show: true,
-            offsetX
+            offsetX,
         },
         axisTicks: {
-            show: true
+            show: true,
         },
         tickAmount,
         title: {
             text: opposite ? '' : 'Year', // don't show description on right side
             style: {
                 fontSize: '1rem',
-                fontFamily: FONT_FAMILY
-            }
+                fontFamily: FONT_FAMILY,
+            },
         },
         labels: {
-            formatter: opposite ? () => '' : formatYLabelsNicely // hide labels with function that always returns empty strings
-        }
+            formatter: opposite ? () => '' : formatYLabelsNicely, // hide labels with function that always returns empty strings
+        },
     };
 }
 
 type Styling = {
-    //points: [number, number][];
-    colors: any[];
+    colors: string[];
     // see ApexStroke['width']
     width: number[];
     dashArray: number[];
@@ -407,26 +404,26 @@ export const default_TCO3_return: ApexOptions = {
             text: 'Region',
             style: {
                 fontSize: '1rem',
-                fontFamily: FONT_FAMILY
-            }
-        }
+                fontFamily: FONT_FAMILY,
+            },
+        },
     },
     yaxis: [],
     grid: {
-        show: false
+        show: false,
     },
     chart: {
         id: O3AS_PLOTS.tco3_return,
         type: 'boxPlot',
         animations: {
-            enabled: false // disable animations
+            enabled: false, // disable animations
         },
         zoom: {
-            enabled: false
+            enabled: false,
         },
         toolbar: {
-            show: false
-        }
+            show: false,
+        },
     },
     colors: [undefined], // , ...styling.colors
     title: {
@@ -437,8 +434,8 @@ export const default_TCO3_return: ApexOptions = {
             fontSize: '30px',
             fontWeight: 'bold',
             fontFamily: FONT_FAMILY,
-            color: '#000000'
-        }
+            color: '#000000',
+        },
     },
     subtitle: {
         text: '[subtitle]', // subtitle can only be changed in createSubtitle function
@@ -448,25 +445,25 @@ export const default_TCO3_return: ApexOptions = {
         style: {
             fontSize: '20px',
             fontFamily: FONT_FAMILY,
-            color: '#000000'
-        }
+            color: '#000000',
+        },
     },
     tooltip: {
         shared: false,
-        intersect: true
+        intersect: true,
     },
     plotOptions: {
         boxPlot: {
             colors: {
                 upper: '#8def4e', //'#5C4742',
-                lower: '#63badb' //'#A5978B'
-            }
-        }
+                lower: '#63badb', //'#A5978B'
+            },
+        },
     },
     legend: {
         show: true,
         height: 80,
-        fontSize: '16px'
+        fontSize: '16px',
     },
 
     markers: {
@@ -486,9 +483,9 @@ export const default_TCO3_return: ApexOptions = {
         showNullDataPoints: true,
         hover: {
             size: 10,
-            sizeOffset: 10
-        }
-    }
+            sizeOffset: 10,
+        },
+    },
 };
 
 type OptionsParams = {
@@ -519,14 +516,14 @@ type OptionsParams = {
  * @function
  */
 export function getOptions({
-                               plotId,
-                               styling,
-                               plotTitle,
-                               xAxisRange,
-                               yAxisRange,
-                               seriesNames,
-                               state
-                           }: OptionsParams): ApexOptions {
+    plotId,
+    styling,
+    plotTitle,
+    xAxisRange,
+    yAxisRange,
+    seriesNames,
+    state,
+}: OptionsParams): ApexOptions {
     const minY = roundDownToMultipleOfTen(yAxisRange.minY);
     const maxY = roundUpToMultipleOfTen(yAxisRange.maxY);
 
@@ -546,12 +543,12 @@ export function getOptions({
                     // on left side
                     getDefaultYAxisTco3Zm(undefined, minY, maxY, true, false, -1, tickAmount),
                     // on right side
-                    getDefaultYAxisTco3Zm(undefined, minY, maxY, true, true, 0, tickAmount)
+                    getDefaultYAxisTco3Zm(undefined, minY, maxY, true, true, 0, tickAmount),
                 ],
                 xaxis: {
                     min: xAxisMin,
                     max: xAxisMax,
-                    tickAmount: getOptimalTickAmount(xAxisMin, xAxisMax)
+                    tickAmount: getOptimalTickAmount(xAxisMin, xAxisMax),
                 },
                 // TODO: no corresponding points are generated in generateSeries, what's up with this?
                 /*
@@ -569,20 +566,20 @@ export function getOptions({
                 colors: styling.colors,
                 stroke: {
                     width: styling.width,
-                    dashArray: styling.dashArray
+                    dashArray: styling.dashArray,
                 },
                 title: {
-                    text: plotTitle
+                    text: plotTitle,
                 },
                 subtitle: {
-                    text: createSubtitle(state)
+                    text: createSubtitle(state),
                 },
                 tooltip: {
-                    custom: customTooltipFormatter
+                    custom: customTooltipFormatter,
                 },
                 legend: {
                     markers: {
-                        width: 0
+                        width: 0,
                     },
                     customLegendItems: seriesNames.map((name, i) => {
                         const color = styling.colors[i];
@@ -602,8 +599,8 @@ export function getOptions({
                         ${linePattern}
                     </span>
                     <span style='font-size: 16px'>${name}</span>`;
-                    })
-                }
+                    }),
+                },
             };
         }
         case O3AS_PLOTS.tco3_return: {
@@ -611,10 +608,10 @@ export function getOptions({
                 ...default_TCO3_return,
                 colors: styling.colors,
                 title: {
-                    text: plotTitle
+                    text: plotTitle,
                 },
                 subtitle: {
-                    text: createSubtitle(state)
+                    text: createSubtitle(state),
                 },
                 yaxis: [
                     ...seriesNames.map((name) =>
@@ -623,8 +620,8 @@ export function getOptions({
                     // on left side
                     getDefaultYAxisTco3Return(undefined, minY, maxY, true, false, 3, tickAmount),
                     // on right side
-                    getDefaultYAxisTco3Return(undefined, minY, maxY, true, true, -3, tickAmount)
-                ]
+                    getDefaultYAxisTco3Return(undefined, minY, maxY, true, true, -3, tickAmount),
+                ],
             };
 
             return newOptions;
@@ -667,14 +664,14 @@ type GenerateSeriesParams = {
  * @function
  */
 export function generateSeries({
-                                   plotId,
-                                   data,
-                                   modelsSlice,
-                                   xAxisRange,
-                                   yAxisRange,
-                                   refLineVisible,
-                                   state
-                               }: GenerateSeriesParams) {
+    plotId,
+    data,
+    modelsSlice,
+    xAxisRange,
+    yAxisRange,
+    refLineVisible,
+    state,
+}: GenerateSeriesParams) {
     switch (plotId) {
         case 'tco3_return':
             return generateTco3_ReturnSeries({
@@ -682,14 +679,14 @@ export function generateSeries({
                 modelsSlice,
                 xAxisRange,
                 yAxisRange,
-                state
+                state,
             });
         case 'tco3_zm':
             return generateTco3_ZmSeries({
                 data,
                 modelsSlice,
                 refLineVisible,
-                state
+                state,
             });
     }
 }
@@ -728,11 +725,11 @@ const NO_LINESTYLE = 'NO LINE STYLE';
  * @function
  */
 function generateTco3_ZmSeries({
-                                   data,
-                                   modelsSlice,
-                                   refLineVisible,
-                                   state
-                               }: {
+    data,
+    modelsSlice,
+    refLineVisible,
+    state,
+}: {
     data: ProcessedO3Data;
     modelsSlice: GlobalModelState['models'];
     refLineVisible: boolean;
@@ -743,8 +740,8 @@ function generateTco3_ZmSeries({
         styling: {
             colors: [],
             width: [],
-            dashArray: []
-        }
+            dashArray: [],
+        },
     };
     if (refLineVisible) {
         // TODO: see Entry["data"] in apiSlice.ts
@@ -752,11 +749,18 @@ function generateTco3_ZmSeries({
         series.data.push({
             name: data.reference_value.plotStyle?.label ?? '?',
 
-            data: zmRefData.map((e, idx) => [START_YEAR + idx, e])
+            data: zmRefData.map((e, idx) => [START_YEAR + idx, e]),
         });
         // TODO: better way to handle no color?
-        series.styling.colors.push(colorNameToHex(data.reference_value.plotStyle?.color ?? NO_COLOR));
-        console.warn('ref has color', colorNameToHex(data.reference_value.plotStyle?.color ?? NO_COLOR), 'because', data.reference_value.plotStyle);
+        series.styling.colors.push(
+            colorNameToHex(data.reference_value.plotStyle?.color ?? NO_COLOR)
+        );
+        console.warn(
+            'ref has color',
+            colorNameToHex(data.reference_value.plotStyle?.color ?? NO_COLOR),
+            'because',
+            data.reference_value.plotStyle
+        );
         // TODO: better way to handle no line style?
         series.styling.dashArray.push(
             convertToStrokeStyle(data.reference_value.plotStyle?.linestyle ?? NO_LINESTYLE)
@@ -785,12 +789,20 @@ function generateTco3_ZmSeries({
             const zmData = modelData.data as number[];
             series.data.push({
                 name: model,
-                data: zmData.map((e, idx) => [START_YEAR + idx, e])
+                data: zmData.map((e, idx) => [START_YEAR + idx, e]),
             });
 
             series.styling.colors.push(colorNameToHex(modelData.plotStyle?.color ?? NO_COLOR));
-            console.warn(model, 'has color', colorNameToHex(modelData.plotStyle?.color ?? NO_COLOR), 'because', modelData.plotStyle);
-            series.styling.dashArray.push(convertToStrokeStyle(modelData.plotStyle?.linestyle ?? NO_LINESTYLE)); // default line thickness
+            console.warn(
+                model,
+                'has color',
+                colorNameToHex(modelData.plotStyle?.color ?? NO_COLOR),
+                'because',
+                modelData.plotStyle
+            );
+            series.styling.dashArray.push(
+                convertToStrokeStyle(modelData.plotStyle?.linestyle ?? NO_LINESTYLE)
+            ); // default line thickness
             series.styling.width.push(MODEL_LINE_THICKNESS);
         }
     }
@@ -805,7 +817,7 @@ function generateTco3_ZmSeries({
     );
 
     return Object.assign(combineSeries<ZmSeriesData>(series, svSeries), {
-        points: refLineVisible ? calcRecoveryPoints(state, data.reference_value, svSeries) : []
+        points: refLineVisible ? calcRecoveryPoints(state, data.reference_value, svSeries) : [],
     });
 }
 
@@ -818,13 +830,10 @@ function generateTco3_ZmSeries({
  * @returns A series matching the tco3_zm style for apexcharts.
  * @function
  */
-function generateSingleTco3ZmSeries(
-    name: string,
-    svData: (number | null)[]
-) {
+function generateSingleTco3ZmSeries(name: string, svData: (number | null)[]) {
     return {
         name: name,
-        data: svData.map((e, idx) => [START_YEAR + idx, e] satisfies [number, number | null])
+        data: svData.map((e, idx) => [START_YEAR + idx, e] satisfies [number, number | null]),
     };
 }
 
@@ -875,12 +884,12 @@ function buildSvMatrixTco3Zm({ modelList, data }: { modelList: string[]; data: P
  * @function
  */
 function generateTco3_ReturnSeries({
-                                       data,
-                                       modelsSlice,
-                                       xAxisRange,
-                                       yAxisRange,
-                                       state
-                                   }: {
+    data,
+    modelsSlice,
+    xAxisRange,
+    yAxisRange,
+    state,
+}: {
     data: ProcessedO3Data;
     modelsSlice: GlobalModelState['models'];
     xAxisRange: RegionBasedXRange;
@@ -894,20 +903,20 @@ function generateTco3_ReturnSeries({
     const boxPlotValues = calculateBoxPlotValues(data, modelsSlice, regions);
     const regionData = regions.map((region) => ({
         x: region.toString(),
-        y: boxPlotValues[region]
+        y: boxPlotValues[region],
     }));
     regionData.pop();
     regionData.push({
         // generate title according to custom min-max values
         x: formatLatitude(state.plot.generalSettings.location),
-        y: boxPlotValues[USER_REGION]
+        y: boxPlotValues[USER_REGION],
     });
 
     const boxPlot = {
         // removed name of box, so it doesn't show up in the legend!
         name: '',
         type: 'boxPlot',
-        data: regionData
+        data: regionData,
     } as const;
 
     const series: Series<ReturnSeriesRest> = {
@@ -915,8 +924,8 @@ function generateTco3_ReturnSeries({
         styling: {
             colors: [],
             width: [],
-            dashArray: []
-        }
+            dashArray: [],
+        },
     };
 
     // 2. build scatter plot
@@ -943,7 +952,7 @@ function generateTco3_ReturnSeries({
             const sortedData = regions.map((region) => ({
                 x: region.toString(),
                 // null as default if data is missing
-                y: filterOutOfRange(returnData[region], minY, maxY)
+                y: filterOutOfRange(returnData[region], minY, maxY),
             }));
             sortedData.pop();
             sortedData.push({
@@ -952,13 +961,13 @@ function generateTco3_ReturnSeries({
                 y:
                     returnData[USER_REGION] !== undefined
                         ? filterOutOfRange(returnData[USER_REGION], minY, maxY)
-                        : null
+                        : null,
             });
 
             series.data.push({
                 name: model,
                 data: sortedData,
-                type: 'scatter'
+                type: 'scatter',
             });
             // TODO: better way to handle no color?
             series.styling.colors.push(colorNameToHex(modelData.plotStyle?.color ?? NO_COLOR));
@@ -994,7 +1003,7 @@ function generateTco3_ReturnSeries({
 
     return {
         data: [boxPlot, ...combined.data],
-        styling: combined.styling
+        styling: combined.styling,
     };
 }
 
@@ -1019,12 +1028,12 @@ function generateSingleTco3ReturnSeries(
         if (index !== regions.length - 1) {
             return {
                 x: region,
-                y: svData[index]
+                y: svData[index],
             };
         } else {
             return {
                 x: formatLatitude(state.plot.generalSettings.location),
-                y: svData[index]
+                y: svData[index],
             };
         }
     });
@@ -1032,7 +1041,7 @@ function generateSingleTco3ReturnSeries(
     return {
         name: name,
         data: transformedData,
-        type: 'scatter'
+        type: 'scatter',
     };
 }
 
@@ -1051,10 +1060,10 @@ function generateSingleTco3ReturnSeries(
  * @function
  */
 function buildSvMatrixTco3Return({
-                                     modelList,
-                                     data,
-                                     regions
-                                 }: {
+    modelList,
+    data,
+    regions,
+}: {
     modelList: string[];
     data: ProcessedO3Data;
     regions: string[];
@@ -1158,8 +1167,8 @@ function buildStatisticalSeries<SeriesDataT extends ApexAxisChartSeries>(
         styling: {
             colors: [],
             width: [],
-            dashArray: []
-        }
+            dashArray: [],
+        },
     };
 
     const modelGroups = modelsSlice.modelGroups;
@@ -1183,13 +1192,10 @@ function buildStatisticalSeries<SeriesDataT extends ApexAxisChartSeries>(
             }
 
             if (
-
-                !(
-                    // @ts-expect-error TODO: this is a hack for percentiles, fix it
-                    groupData.visibleSV[sv] || // mean und median
-                    (sv.includes('std') && groupData.visibleSV[std]) ||
-                    (sv.toLowerCase().includes(percentile) && groupData.visibleSV[percentile])
-                )
+                // @ts-expect-error TODO: this is a hack for percentiles, fix it
+                !groupData.visibleSV[sv] && // mean und median
+                !(sv.includes('std') && groupData.visibleSV[std]) &&
+                !(sv.toLowerCase().includes(percentile) && groupData.visibleSV[percentile])
             ) {
                 continue;
             }
@@ -1246,7 +1252,7 @@ function calculateSvForModels(
         'mean-std': [],
 
         // gets removed
-        [stdMean]: []
+        [stdMean]: [],
     };
 
     for (const arr of matrix) {
@@ -1373,8 +1379,8 @@ export const preTransformApiData = (plotId: LEGAL_PLOT_ID, data: O3Data[]): Proc
                         minX: Math.min(...datum.x.map((x) => parseInt(x))),
                         maxX: Math.max(...datum.x.map((x) => parseInt(x))),
                         minY: Math.min(...(normalizedArray.filter((x) => x !== null) as number[])),
-                        maxY: Math.max(...(normalizedArray.filter((x) => x !== null) as number[]))
-                    }
+                        maxY: Math.max(...(normalizedArray.filter((x) => x !== null) as number[])),
+                    },
                 };
             }
             break;
@@ -1395,8 +1401,8 @@ export const preTransformApiData = (plotId: LEGAL_PLOT_ID, data: O3Data[]): Proc
                     data: data,
                     suggested: {
                         minY: Math.min(...yArray.filter((x) => x !== null)),
-                        maxY: Math.max(...yArray)
-                    }
+                        maxY: Math.max(...yArray),
+                    },
                 };
             }
         }
@@ -1420,7 +1426,7 @@ export function getSuggestedValues(data: ProcessedO3Data, modelSlice: GlobalMode
         minX: Infinity,
         maxX: -Infinity,
         minY: Infinity,
-        maxY: -Infinity
+        maxY: -Infinity,
     };
 
     for (const model of visibleModels) {
@@ -1585,7 +1591,7 @@ export function colorNameToHex(color: string) {
         white: '#ffffff',
         whitesmoke: '#f5f5f5',
         yellow: '#ffff00',
-        yellowgreen: '#9acd32'
+        yellowgreen: '#9acd32',
     } as const;
 
     if (typeof colors[color.toLowerCase() as keyof typeof colors] != 'undefined') {
@@ -1610,7 +1616,7 @@ export function convertToStrokeStyle(apiStyle: string) {
     const styles = {
         solid: 0,
         dotted: 1,
-        dashed: 3
+        dashed: 3,
     } as const;
 
     if (typeof styles[apiStyle.toLowerCase() as keyof typeof styles] != 'undefined') {
@@ -1639,8 +1645,8 @@ function combineSeries<DataT extends ApexAxisChartSeries>(
         styling: {
             colors: [...series1.styling.colors, ...series2.styling.colors],
             width: [...series1.styling.width, ...series2.styling.width],
-            dashArray: [...series1.styling.dashArray, ...series2.styling.dashArray]
-        }
+            dashArray: [...series1.styling.dashArray, ...series2.styling.dashArray],
+        },
     };
 }
 
@@ -1802,7 +1808,7 @@ export function parseSvName(name: string) {
     const info = name.match(regex);
     return {
         sv: info![1],
-        groupName: info![2].substring(1)
+        groupName: info![2].substring(1),
     };
 }
 
@@ -1819,11 +1825,11 @@ export function parseSvName(name: string) {
  * @function
  */
 export function customTooltipFormatter({
-                                           series,
-                                           seriesIndex,
-                                           dataPointIndex,
-                                           w
-                                       }: {
+    series,
+    seriesIndex,
+    dataPointIndex,
+    w,
+}: {
     series: Series<ApexAxisChartSeries>[];
     seriesIndex: number;
     dataPointIndex: number;
@@ -1837,8 +1843,8 @@ export function customTooltipFormatter({
         return `
                 <div>
                     <div style='margin:2px'><strong>${
-            w.globals.seriesX[seriesIndex][dataPointIndex]
-        }</strong></div>
+                        w.globals.seriesX[seriesIndex][dataPointIndex]
+                    }</strong></div>
                     <div>Reference ${displayName[1]}: <strong>${
             // @ts-expect-error TODO: type this somehow?
             series[seriesIndex][dataPointIndex].toFixed(numDecimalsInDatapoint)
@@ -1854,8 +1860,8 @@ export function customTooltipFormatter({
             return `
                 <div>
                     <div style='margin:2px'><strong>${
-                w.globals.seriesX[seriesIndex][dataPointIndex]
-            }</strong></div>
+                        w.globals.seriesX[seriesIndex][dataPointIndex]
+                    }</strong></div>
                     
                     <div>${sv}: <strong>${
                 // @ts-expect-error TODO: type this somehow?
@@ -1871,8 +1877,8 @@ export function customTooltipFormatter({
     return `
         <div>
             <div style='margin:2px'><strong>${
-        w.globals.seriesX[seriesIndex][dataPointIndex]
-    }</strong></div>
+                w.globals.seriesX[seriesIndex][dataPointIndex]
+            }</strong></div>
             <div>${name}: <strong>${
         // @ts-expect-error TODO: type this somehow?
         series[seriesIndex][dataPointIndex].toFixed(numDecimalsInDatapoint)
@@ -1924,7 +1930,7 @@ function calcRecoveryPoints(
     const dataName = [
         SV_DISPLAY_NAME.mean,
         SV_DISPLAY_NAME['mean+std'],
-        SV_DISPLAY_NAME['mean-std']
+        SV_DISPLAY_NAME['mean-std'],
     ];
 
     const yearIdx = 0;
@@ -1945,7 +1951,7 @@ function calcRecoveryPoints(
             if (svSeries.data[idx].data[i][valIdx] >= refValue) {
                 points.push([
                     svSeries.data[idx].data[i][yearIdx],
-                    svSeries.data[idx].data[i][valIdx]
+                    svSeries.data[idx].data[i][valIdx],
                 ]);
                 break;
             }
