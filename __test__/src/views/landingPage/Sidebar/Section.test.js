@@ -1,10 +1,10 @@
 import React from 'react';
-import Section from '../../../../../../src/views/landingPage/Sidebar/Section';
+import Section from '../../../../../src/views/landingPage/Sidebar/Section';
 import { render, screen } from '@testing-library/react';
-import defaultStructure from '../../../../../../src/config/defaultConfig.json';
+import defaultStructure from '../../../../../src/config/defaultConfig.json';
 import '@testing-library/jest-dom/extend-expect';
 import { Provider } from 'react-redux';
-import { createTestStore } from '../../../../../../src/store';
+import { createTestStore } from '../../../../../src/store';
 
 let store;
 describe('Section renders correclty', () => {

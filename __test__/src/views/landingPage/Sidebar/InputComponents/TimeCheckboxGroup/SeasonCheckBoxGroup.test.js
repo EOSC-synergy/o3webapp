@@ -1,7 +1,7 @@
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import SeasonCheckBoxGroup from '../../../../../../../../src/views/landingPage/Sidebar/InputComponents/TimeCheckboxGroup/SeasonCheckboxGroup';
-import { NUM_MONTHS_IN_SEASON } from '../../../../../../../../src/utils/constants';
+import SeasonCheckBoxGroup from '../../../../../../../src/views/landingPage/Sidebar/InputComponents/TimeCheckboxGroup/SeasonCheckboxGroup';
+import { NUM_MONTHS_IN_SEASON } from '../../../../../../../src/utils/constants';
 
 it('renders without crashing', () => {
     const dummyFunc = () => {};

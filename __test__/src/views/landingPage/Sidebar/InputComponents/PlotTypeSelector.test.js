@@ -1,11 +1,11 @@
-import { REQUEST_STATE } from '../../../../../../../src/services/API/apiSlice';
+import { REQUEST_STATE } from '../../../../../../src/services/API/apiSlice';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PlotTypeSelector from '../../../../../../../src/views/landingPage/Sidebar/InputComponents/PlotTypeSelector';
+import PlotTypeSelector from '../../../../../../src/views/landingPage/Sidebar/InputComponents/PlotTypeSelector';
 import { render, fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { act } from 'react-dom/test-utils';
-import { createTestStore } from '../../../../../../../src/store';
+import { createTestStore } from '../../../../../../src/store';
 import { Provider } from 'react-redux';
 
 let store;

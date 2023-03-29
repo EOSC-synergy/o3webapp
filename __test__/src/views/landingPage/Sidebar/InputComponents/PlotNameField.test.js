@@ -2,12 +2,12 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import PlotNameField, {
     PLOT_NAME_MAX_LEN,
-} from '../../../../../../../src/views/landingPage/Sidebar/InputComponents/PlotNameField';
+} from '../../../../../../src/views/landingPage/Sidebar/InputComponents/PlotNameField';
 import { render, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { createTestStore } from '../../../../../../../src/store';
+import { createTestStore } from '../../../../../../src/store';
 import { Provider } from 'react-redux';
-import { initialState } from '../../../../../../../src/store/plotSlice';
+import { initialState } from '../../../../../../src/store/plotSlice';
 
 let store;
 beforeEach(() => {
