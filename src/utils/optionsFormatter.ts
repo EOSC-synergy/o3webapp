@@ -27,12 +27,12 @@ import {
     USER_REGION
 } from './constants';
 import { convertModelName } from './ModelNameConverter';
-import { AppStore } from '../store/store';
+import { AppState } from '../store/store';
 import { LEGAL_PLOT_ID } from '../services/API/client';
 import { O3Data } from '../services/API/generated-client';
 import { RegionBasedXRange, YearsBasedXRange, YRange } from '../store/plotSlice';
 import { GlobalModelState, ModelGroup } from '../store/modelsSlice';
-import { Entry, EntryPlotStyle, ProcessedO3Data } from '../services/API/apiSlice/apiSlice';
+import { Entry, EntryPlotStyle, ProcessedO3Data, ZmData } from '../services/API/apiSlice/apiSlice';
 import { zipWith } from 'lodash';
 import { ApexOptions } from 'apexcharts';
 
@@ -151,26 +151,26 @@ export const FONT_FAMILY = [
 /**
  * Creates the subtitle based on location and time.
  *
- * @param getState A function to get the state of the redux store
+ * @param state redux store state
  * @returns The subtitle created based on the data stored in the redux store
  * @function
  */
-function createSubtitle(getState: AppStore['getState']) {
-    let stLocationText = findLatitudeBandByLocation(getState);
+function createSubtitle(state: AppState): string {
+    let stLocationText = findLatitudeBandByLocation(state);
 
     if (stLocationText === 'Custom') {
-        stLocationText = formatLatitude(getState().plot.generalSettings.location);
+        stLocationText = formatLatitude(state.plot.generalSettings.location);
     }
 
     let stMonths: string[] = [];
-    getState().plot.generalSettings.months.map((month) =>
+    state.plot.generalSettings.months.map((month) =>
         stMonths.push(months[month - 1].description!)
     );
     if (stMonths.length === NUM_MONTHS) {
         stMonths = ['All year'];
     }
 
-    if (getState().plot.plotId === 'tco3_zm') {
+    if (state.plot.plotId === 'tco3_zm') {
         return `${stLocationText} | ${stMonths.join(', ')}`;
     } else {
         return stMonths.join(', ');
@@ -498,7 +498,7 @@ type OptionsParams = {
     xAxisRange: YearsBasedXRange;
     yAxisRange: YRange;
     seriesNames: string[];
-    getState: AppStore['getState'];
+    state: AppState;
 };
 
 /**
@@ -525,7 +525,7 @@ export function getOptions({
                                xAxisRange,
                                yAxisRange,
                                seriesNames,
-                               getState
+                               state
                            }: OptionsParams): ApexOptions {
     const minY = roundDownToMultipleOfTen(yAxisRange.minY);
     const maxY = roundUpToMultipleOfTen(yAxisRange.maxY);
@@ -575,7 +575,7 @@ export function getOptions({
                     text: plotTitle
                 },
                 subtitle: {
-                    text: createSubtitle(getState)
+                    text: createSubtitle(state)
                 },
                 tooltip: {
                     custom: customTooltipFormatter
@@ -614,7 +614,7 @@ export function getOptions({
                     text: plotTitle
                 },
                 subtitle: {
-                    text: createSubtitle(getState)
+                    text: createSubtitle(state)
                 },
                 yaxis: [
                     ...seriesNames.map((name) =>
@@ -639,7 +639,7 @@ type GenerateSeriesParams = {
     modelsSlice: GlobalModelState['models'];
     yAxisRange: YRange;
     refLineVisible: boolean;
-    getState: AppStore['getState'];
+    state: AppState;
     // ignored for tco3_zm
     xAxisRange: RegionBasedXRange;
 };
@@ -673,7 +673,7 @@ export function generateSeries({
                                    xAxisRange,
                                    yAxisRange,
                                    refLineVisible,
-                                   getState
+                                   state
                                }: GenerateSeriesParams) {
     switch (plotId) {
         case 'tco3_return':
@@ -682,14 +682,14 @@ export function generateSeries({
                 modelsSlice,
                 xAxisRange,
                 yAxisRange,
-                getState
+                state
             });
         case 'tco3_zm':
             return generateTco3_ZmSeries({
                 data,
                 modelsSlice,
                 refLineVisible,
-                getState
+                state
             });
     }
 }
@@ -724,19 +724,19 @@ const NO_LINESTYLE = 'NO LINE STYLE';
  * @param modelsSlice the slice of the store containing information about the model groups
  * @param refLineVisible visibility status of the reference line
  * @returns A combination of data and statistical values series
- * @param getState store.getState
+ * @param state redux store state
  * @function
  */
 function generateTco3_ZmSeries({
                                    data,
                                    modelsSlice,
                                    refLineVisible,
-                                   getState
+                                   state
                                }: {
     data: ProcessedO3Data;
     modelsSlice: GlobalModelState['models'];
     refLineVisible: boolean;
-    getState: AppStore['getState'];
+    state: AppState;
 }): Series<ZmSeriesData> {
     const series: Series<ZmSeriesData> = {
         data: [],
@@ -756,7 +756,7 @@ function generateTco3_ZmSeries({
         });
         // TODO: better way to handle no color?
         series.styling.colors.push(colorNameToHex(data.reference_value.plotStyle?.color ?? NO_COLOR));
-        console.warn("ref has color", colorNameToHex(data.reference_value.plotStyle?.color ?? NO_COLOR), "because", data.reference_value.plotStyle);
+        console.warn('ref has color', colorNameToHex(data.reference_value.plotStyle?.color ?? NO_COLOR), 'because', data.reference_value.plotStyle);
         // TODO: better way to handle no line style?
         series.styling.dashArray.push(
             convertToStrokeStyle(data.reference_value.plotStyle?.linestyle ?? NO_LINESTYLE)
@@ -789,7 +789,7 @@ function generateTco3_ZmSeries({
             });
 
             series.styling.colors.push(colorNameToHex(modelData.plotStyle?.color ?? NO_COLOR));
-            console.warn(model, "has color", colorNameToHex(modelData.plotStyle?.color ?? NO_COLOR), "because", modelData.plotStyle);
+            console.warn(model, 'has color', colorNameToHex(modelData.plotStyle?.color ?? NO_COLOR), 'because', modelData.plotStyle);
             series.styling.dashArray.push(convertToStrokeStyle(modelData.plotStyle?.linestyle ?? NO_LINESTYLE)); // default line thickness
             series.styling.width.push(MODEL_LINE_THICKNESS);
         }
@@ -801,11 +801,11 @@ function generateTco3_ZmSeries({
         modelsSlice,
         buildSvMatrixTco3Zm,
         generateSingleTco3ZmSeries,
-        getState
+        state
     );
 
     return Object.assign(combineSeries<ZmSeriesData>(series, svSeries), {
-        points: refLineVisible ? calcRecoveryPoints(getState, data.reference_value, svSeries) : []
+        points: refLineVisible ? calcRecoveryPoints(state, data.reference_value, svSeries) : []
     });
 }
 
@@ -879,13 +879,13 @@ function generateTco3_ReturnSeries({
                                        modelsSlice,
                                        xAxisRange,
                                        yAxisRange,
-                                       getState
+                                       state
                                    }: {
     data: ProcessedO3Data;
     modelsSlice: GlobalModelState['models'];
     xAxisRange: RegionBasedXRange;
     yAxisRange: YRange;
-    getState: AppStore['getState'];
+    state: AppState;
 }): Series<ReturnSeriesData> {
     // grab first key to extract regions from api response
     const firstKey = Object.keys(data)[0];
@@ -899,7 +899,7 @@ function generateTco3_ReturnSeries({
     regionData.pop();
     regionData.push({
         // generate title according to custom min-max values
-        x: formatLatitude(getState().plot.generalSettings.location),
+        x: formatLatitude(state.plot.generalSettings.location),
         y: boxPlotValues[USER_REGION]
     });
 
@@ -947,7 +947,7 @@ function generateTco3_ReturnSeries({
             }));
             sortedData.pop();
             sortedData.push({
-                x: formatLatitude(getState().plot.generalSettings.location),
+                x: formatLatitude(state.plot.generalSettings.location),
                 // null as default if data is missing
                 y:
                     returnData[USER_REGION] !== undefined
@@ -972,7 +972,7 @@ function generateTco3_ReturnSeries({
         //yAxisRange,
         buildSvMatrixTco3Return,
         generateSingleTco3ReturnSeries,
-        getState,
+        state,
         regions
     );
 
@@ -1004,15 +1004,15 @@ function generateTco3_ReturnSeries({
  *
  * @param name of the series
  * @param svData array of plaint numbers
- * @param getState
- * @param regions
+ * @param state redux store state
+ * @param regions tco3_return regions
  * @returns a series matching the tco3_return style for apexcharts.
  * @function
  */
 function generateSingleTco3ReturnSeries(
     name: string,
     svData: number[],
-    getState: AppStore['getState'],
+    state: AppState,
     regions: string[]
 ) {
     const transformedData = regions.map((region, index) => {
@@ -1023,7 +1023,7 @@ function generateSingleTco3ReturnSeries(
             };
         } else {
             return {
-                x: formatLatitude(getState().plot.generalSettings.location),
+                x: formatLatitude(state.plot.generalSettings.location),
                 y: svData[index]
             };
         }
@@ -1138,7 +1138,7 @@ function calculateBoxPlotValues(
  * @param modelsSlice the slice of the store containing information about the model groups
  * @param buildMatrix either buildSvMatrixTco3Zm | buildSvMatrixTco3Return, specifies how the data should be transformed
  * @param generateSingleSvSeries either generateSingleTco3ZmSeries | generateSingleTco3ReturnSeries, specifies how the series should be generated
- * @param getState
+ * @param state redux store state
  * @param regions
  * @returns {Array} An array holding all statistical series for the given modelSlice
  * @function
@@ -1150,7 +1150,7 @@ function buildStatisticalSeries<SeriesDataT extends ApexAxisChartSeries>(
     generateSingleSvSeries:
         | typeof generateSingleTco3ReturnSeries
         | typeof generateSingleTco3ZmSeries,
-    getState: AppStore['getState'],
+    state: AppState,
     regions: string[] = []
 ): Series<SeriesDataT> {
     const svSeries: Series<SeriesDataT> = {
@@ -1197,7 +1197,7 @@ function buildStatisticalSeries<SeriesDataT extends ApexAxisChartSeries>(
                 generateSingleSvSeries(
                     `${SV_DISPLAY_NAME[sv]} (${groupData.name})`,
                     svData,
-                    getState,
+                    state,
                     regions
                 )
             );
@@ -1905,21 +1905,21 @@ export function getIncludedModels(modelsSlice: GlobalModelState['models']) {
 /**
  * Calculates the points when the mean, mean+std, mean-std reach the value of the reference year.
  *
- * @param getState store.getState
+ * @param state redux store state
  * @param referenceValue an object with an array with the values for the reference line among other things
  * @param svSeries an object with an array with the values for the statistical values lines among other things
  */
 function calcRecoveryPoints(
-    getState: AppStore['getState'],
+    state: AppState,
     referenceValue: Entry,
     svSeries: Series<ZmSeriesData>
 ) {
     const points = [];
 
-    const refYear = getState().reference.settings.year;
-    const maxYear = getState().plot.plotSpecificSettings.tco3_zm.displayXRange.years.maxX;
+    const refYear = state.reference.settings.year;
+    const maxYear = state.plot.plotSpecificSettings.tco3_zm.displayXRange.years.maxX;
     // TODO: see Entry["data"] in apiSlice.ts
-    const refValue = Math.max(...(referenceValue.data as number[]));
+    const refValue = Math.max(...(referenceValue.data as ZmData));
 
     const dataName = [
         SV_DISPLAY_NAME.mean,
@@ -1977,12 +1977,12 @@ export const formatLatitude = (locationValue: Latitude) => {
 
 /**
  * Finds the latitude band by the currently selected location
- * @param {function} getState   A function to get the state
- * @returns {String} The found Latitude Band
+ * @param state redux state
+ * @returns The found Latitude Band
  * @function
  */
-const findLatitudeBandByLocation = (getState: AppStore['getState']) => {
-    const selectedLocation = getState().plot.generalSettings.location;
+const findLatitudeBandByLocation = (state: AppState): string | undefined | null => {
+    const selectedLocation = state.plot.generalSettings.location;
     if (typeof selectedLocation === 'undefined') {
         return null;
     }

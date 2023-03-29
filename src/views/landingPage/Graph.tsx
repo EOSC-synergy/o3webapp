@@ -155,7 +155,7 @@ const Graph: FC<GraphProps> = ({ reportError }) => {
             xAxisRange: xAxisRange as RegionBasedXRange,
             yAxisRange,
             refLineVisible,
-            getState: store.getState,
+            state: store.getState(),
         });
         const seriesNames = data.map((series) => series.name);
         const options = getOptions({
@@ -166,7 +166,7 @@ const Graph: FC<GraphProps> = ({ reportError }) => {
             xAxisRange: xAxisRange as YearsBasedXRange,
             yAxisRange,
             seriesNames,
-            getState: store.getState,
+            state: store.getState(),
         });
         const uniqueNumber = Date.now(); // forces apexcharts to re-render correctly!
         const HEIGHT =
