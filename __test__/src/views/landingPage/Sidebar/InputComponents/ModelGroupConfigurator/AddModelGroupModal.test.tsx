@@ -141,10 +141,8 @@ describe('test addModelGroupModal functionality', () => {
     it('calls props.reportError if fetching models failed', async () => {
         const errorMessage = 'blob';
         const mock = jest.fn();
-        mockedClient.getModels.mockImplementation((): Promise<AxiosResponse> => {
-            return Promise.reject({
-                message: errorMessage,
-            });
+        mockedClient.getModels.mockRejectedValue({
+            message: errorMessage,
         });
 
         const { rerender } = render(
@@ -182,9 +180,7 @@ let rendered: RenderResult;
 describe('test addModelGroupModal functionality without model group id', () => {
     beforeEach(async () => {
         store = createTestStore();
-        mockedClient.getModels.mockImplementation(() => {
-            return Promise.resolve(fakeAxiosResponse(modelsResponse as string[]));
-        });
+        mockedClient.getModels.mockResolvedValue(fakeAxiosResponse(modelsResponse));
         await store.dispatch(fetchModels());
 
         rendered = render(
@@ -305,9 +301,7 @@ describe('test addModelGroupModal functionality without model group id', () => {
 describe('test addModelGroupModal functionality with model group id', () => {
     beforeEach(async () => {
         store = createTestStore();
-        mockedClient.getModels.mockImplementation(() => {
-            return Promise.resolve(fakeAxiosResponse(modelsResponse));
-        });
+        mockedClient.getModels.mockResolvedValue(fakeAxiosResponse(modelsResponse));
         await store.dispatch(fetchModels());
 
         rendered = render(
@@ -344,9 +338,7 @@ describe('test addModelGroupModal functionality with model group id', () => {
     });
 
     it('changes the model name and updates the store on edit', () => {
-        mockedClient.getPlotData.mockImplementation(() =>
-            Promise.resolve(fakeAxiosResponse(tco3zmResponse))
-        );
+        mockedClient.getPlotData.mockResolvedValue(fakeAxiosResponse(tco3zmResponse));
         const { getByTestId } = rendered;
         const nameField = getByTestId('AddModelGroupModal-card-group-name');
         const title = 'New Title';
@@ -388,9 +380,7 @@ describe('test addModelGroupModal functionality with model group id', () => {
 describe('test error handling', () => {
     beforeEach(async () => {
         store = createTestStore();
-        mockedClient.getModels.mockImplementation(() => {
-            return Promise.resolve(fakeAxiosResponse(modelsResponse));
-        });
+        mockedClient.getModels.mockResolvedValue(fakeAxiosResponse(modelsResponse));
         await act(async () => {
             await store.dispatch(fetchModels());
         });
