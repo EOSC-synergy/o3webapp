@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { getOptions, generateSeries } from 'utils/optionsFormatter';
+import { generateSeries, getOptions } from 'utils/optionsFormatter';
 import { useSelector } from 'react-redux';
 import {
     RegionBasedXRange,
@@ -11,38 +11,35 @@ import {
 } from 'store/plotSlice';
 import { selectVisibility } from 'store/referenceSlice';
 import { REQUEST_STATE, selectActivePlotData } from 'services/API/apiSlice';
-import { Typography, CircularProgress } from '@mui/material';
-import { Alert, Link } from '@mui/material';
-import { O3AS_PLOTS } from 'utils/constants';
-import { NO_MONTH_SELECTED } from 'utils/constants';
+import { Alert, CircularProgress, Link, Typography } from '@mui/material';
+import { NO_MONTH_SELECTED, O3AS_PLOTS } from 'utils/constants';
 import dynamic from 'next/dynamic';
 import { debounce } from 'lodash';
 import { AppState, useAppStore } from 'store';
-const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 import type { Props as ApexProps } from 'react-apexcharts';
 import { LEGAL_PLOT_ID } from '../../services/API/client';
+
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 type GraphProps = {
     reportError: (error: string) => void;
 };
 /**
  * The Graph component. The input parameters are taken from the Redux Store.
+ *
+ * @param {object} props Specified in propTypes
+ * @returns A svg rendered element that represents a graph, this is done by the apexcharts library
  * @component
- * @param {object} props specified in propTypes
- * @returns a svg rendered element that represents a graph, this is done by
- *          the apexcharts library
  */
 const Graph: FC<GraphProps> = ({ reportError }) => {
     const store = useAppStore();
 
     /**
      * Maps the plots provided by the API to their apexcharts plot type.
+     *
      * @constant {Object}
-     * @default
-     * {
-        tco3_zm: "line",
-        tco3_return: "boxPlot"
-
+     * @default { tco3_zm: "line",
+     *         tco3_return: "boxPlot"
      */
     const APEXCHARTS_PLOT_TYPE: Record<LEGAL_PLOT_ID, ApexProps['type']> = {
         tco3_zm: 'line',
@@ -51,8 +48,9 @@ const Graph: FC<GraphProps> = ({ reportError }) => {
 
     /**
      * How large the loading spinner should appear.
+     *
      * @constant {string}
-     * @default "300px"
+     * @default '300px'
      */
     const HEIGHT_LOADING_SPINNER = '300px';
 
@@ -66,6 +64,7 @@ const Graph: FC<GraphProps> = ({ reportError }) => {
 
     /**
      * State to keep track of the current dimensions of the Graph
+     *
      * @constant {Array}
      * @default [window.innerHeight, window.innerWidth]
      */

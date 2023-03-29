@@ -10,19 +10,22 @@ type ModelGroupConfiguratorProps = {
     reportError: ErrorReporter;
 };
 /**
- * Enables the user to configure models that should be visible in the plot clustered as model groups.
- * Compromised of {@link EditModelGroupModal}, {@link ModelGroupCard} and {@link AddModelGroupModal}.
+ * Enables the user to configure models that should be visible in the plot clustered as model
+ * groups. Compromised of {@link EditModelGroupModal}, {@link ModelGroupCard} and
+ * {@link AddModelGroupModal}.
  */
 const ModelGroupConfigurator: FC<ModelGroupConfiguratorProps> = ({ reportError }) => {
     /**
      * Label that is displayed in the add model group button
+     *
      * @constant {String}
-     * @default "Add Model Group"
+     * @default 'Add Model Group'
      */
     const addModelGroupButtonLabel = 'Add Model Group';
 
     /**
      * Ids of all existing modelGroups
+     *
      * @constant {Array}
      * @see {@link selectAllGroupIds}
      */
@@ -30,6 +33,7 @@ const ModelGroupConfigurator: FC<ModelGroupConfiguratorProps> = ({ reportError }
 
     /**
      * State that tracks whether the addModelGroupModal is visible or not
+     *
      * @constant {Array}
      */
     const [isAddModalVisible, setAddModalVisible] = useState(false);
@@ -37,6 +41,7 @@ const ModelGroupConfigurator: FC<ModelGroupConfiguratorProps> = ({ reportError }
 
     /**
      * Function to close addModelGroupModal
+     *
      * @function
      */
     const closeAddModal = () => {
@@ -45,6 +50,7 @@ const ModelGroupConfigurator: FC<ModelGroupConfiguratorProps> = ({ reportError }
 
     /**
      * Function to open addModelGroupModal
+     *
      * @function
      */
     const openAddModal = (refresh: boolean) => {

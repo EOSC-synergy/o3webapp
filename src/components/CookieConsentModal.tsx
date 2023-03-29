@@ -12,15 +12,22 @@ type CookieConsentModalProps = {
 /**
  * A modal that asks the user to accept the cookies provieded by the website.
  *
+ * @param isOpen Whether the cookie consent modal should be displayed
+ * @param onClose Handles closing of the modal
  * @component
- * @param isOpen whether the cookie consent modal should be displayed
- * @param onClose handles closing of the modal
  */
 const CookieConsentModal: React.FC<CookieConsentModalProps> = ({ isOpen, onClose }) => {
     /**
      * An object holding the styling information about the modal.
      *
-     * @type {{boxShadow: number, transform: string, top: string, bgColor: *, left: string, position: string}}
+     * @type {{
+     *     boxShadow: number;
+     *     transform: string;
+     *     top: string;
+     *     bgColor: any;
+     *     left: string;
+     *     position: string;
+     * }}
      */
     const style = {
         position: 'absolute',
@@ -33,11 +40,13 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({ isOpen, onClose
 
     /**
      * Function that is called when the user agrees to cookies
+     *
      * @function
      */
     const agreeToCookies = () => onClose();
     /**
      * Function that is called when the user disagrees to cookies
+     *
      * @function
      */
     const disagreeToCookies = () => onClose();
@@ -90,13 +99,9 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({ isOpen, onClose
 };
 
 CookieConsentModal.propTypes = {
-    /**
-     * Tracks whether the cookie consent modal should be displayed
-     */
+    /** Tracks whether the cookie consent modal should be displayed */
     isOpen: PropTypes.bool.isRequired,
-    /**
-     * Handles closing of the modal
-     */
+    /** Handles closing of the modal */
     onClose: PropTypes.func.isRequired,
 };
 

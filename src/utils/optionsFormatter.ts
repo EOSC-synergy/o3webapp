@@ -40,11 +40,12 @@ import { ApexOptions } from 'apexcharts';
  * A module containing functions to format the data given or stored in the redux store into a format
  * that is used and accepted by the corresponding target library/module/function (e.g. apexcharts).
  *
- *
- * @module OptionsFormatter */ // used for auto generation of JSDocs with better-docs
+ * @module OptionsFormatter
+ */ // used for auto generation of JSDocs with better-docs
 
 /**
  * This array provides a list from start to end year with each year as a string
+ *
  * @constant {Array}
  */
 export const IMPLICIT_YEAR_LIST = [...Array(END_YEAR - START_YEAR + 1).keys()].map(
@@ -53,19 +54,22 @@ export const IMPLICIT_YEAR_LIST = [...Array(END_YEAR - START_YEAR + 1).keys()].m
 
 /**
  * This parameter specifies how thick the line of plotted models should appear.
+ *
  * @constant {number}
  */
 export const MODEL_LINE_THICKNESS = 2;
 
 /**
  * This parameter specifies how thick the line of plotted statistical values should appear.
+ *
  * @constant {number}
  */
 const STATISTICAL_VALUE_LINE_THICKNESS = 2;
 
 /**
- * This object maps each statistical value that should be calculated
- * to a corresponding function describing HOW it should be calculated.
+ * This object maps each statistical value that should be calculated to a corresponding function
+ * describing HOW it should be calculated.
+ *
  * @constant {Object}
  */
 const SV_CALCULATION = {
@@ -80,8 +84,8 @@ const SV_CALCULATION = {
 };
 
 /**
- * This object maps each statistical value that should be calculated
- * to a color it should appear in.
+ * This object maps each statistical value that should be calculated to a color it should appear in.
+ *
  * @constant {Object}
  */
 const SV_COLORING = {
@@ -96,12 +100,11 @@ const SV_COLORING = {
 };
 
 /**
- * This object maps each statistical value that should be calculated
- * to its line dashing allowing an easy customization if e.g. the
- * mean should be dashed too.
+ * This object maps each statistical value that should be calculated to its line dashing allowing an
+ * easy customization if e.g. the mean should be dashed too.
  *
- * The integer values correspond to the dashing format that is
- * expected by apexcharts.
+ * The integer values correspond to the dashing format that is expected by apexcharts.
+ *
  * @constant {Object}
  */
 const SV_DASHING = {
@@ -115,9 +118,9 @@ const SV_DASHING = {
 };
 
 /**
- * This object maps each statistical value to its corresponding name that
- * should be displayed in the legend of the plot and inside the tooltip when
- * hovering over a datapoint.
+ * This object maps each statistical value to its corresponding name that should be displayed in the
+ * legend of the plot and inside the tooltip when hovering over a datapoint.
+ *
  * @constant {Object}
  */
 const SV_DISPLAY_NAME = {
@@ -151,9 +154,9 @@ export const FONT_FAMILY = [
 /**
  * Creates the subtitle based on location and time.
  *
- * @param state redux store state
- * @returns The subtitle created based on the data stored in the redux store
  * @function
+ * @param state Redux store state
+ * @returns The subtitle created based on the data stored in the redux store
  */
 function createSubtitle(state: AppState): string {
     let stLocationText = findLatitudeBandByLocation(state);
@@ -178,10 +181,11 @@ function createSubtitle(state: AppState): string {
 /**
  * The default settings for the tco3_zm plot.
  *
- * colors, width, dashArray have to be filled.
+ * Colors, width, dashArray have to be filled.
  *
- * This gigantic object allows us to communicate with the apexcharts library.
- * More can be found here: {@link https://apexcharts.com/docs/installation/}
+ * This gigantic object allows us to communicate with the apexcharts library. More can be found
+ * here: {@link https://apexcharts.com/docs/installation/}
+ *
  * @constant {Object}
  */
 export const defaultTCO3_zm: ApexOptions = {
@@ -275,18 +279,19 @@ export const defaultTCO3_zm: ApexOptions = {
 };
 
 /**
- * This function is a factory method to provide objects that are fitted in the y-axis of the tco3_zm plot to
- * show another y-axis on the right side.
+ * This function is a factory method to provide objects that are fitted in the y-axis of the tco3_zm
+ * plot to show another y-axis on the right side.
  *
- * @param seriesName the name of the series
- * @param minY the minimum y value (to adjust to the zoom)
- * @param maxY the maximum y value (to adjust to the zoom)
- * @param show whether the y-axis should be hidden (default is false)
- * @param opposite whether to show the y-axis on the right side (default is false)
- * @param offsetX how many px the y-axis should be adjusted
- * @param tickAmount how many ticks (on the y-axis) should be displayed (should be calculated by functions to provide a nice formatting)
- * @returns The defaults for the YAxis of Tco3Zm plot
  * @function
+ * @param seriesName The name of the series
+ * @param minY The minimum y value (to adjust to the zoom)
+ * @param maxY The maximum y value (to adjust to the zoom)
+ * @param show Whether the y-axis should be hidden (default is false)
+ * @param opposite Whether to show the y-axis on the right side (default is false)
+ * @param offsetX How many px the y-axis should be adjusted
+ * @param tickAmount How many ticks (on the y-axis) should be displayed (should be calculated by
+ *   functions to provide a nice formatting)
+ * @returns The defaults for the YAxis of Tco3Zm plot
  */
 export function getDefaultYAxisTco3Zm(
     seriesName: string | undefined,
@@ -331,18 +336,19 @@ export function getDefaultYAxisTco3Zm(
 }
 
 /**
- * This function is a factory method to provide objects that are fitted in the y-axis of the tco3_return plot to
- * show another y-axis on the right side.
+ * This function is a factory method to provide objects that are fitted in the y-axis of the
+ * tco3_return plot to show another y-axis on the right side.
  *
- * @param seriesName the name of the series
- * @param minY the minimum y value (to adjust to the zoom)
- * @param maxY the maximum y value (to adjust to the zoom)
- * @param show whether the y-axis should be hidden (default is false)
- * @param opposite whether to show the y-axis on the right side (default is false)
- * @param offsetX how many px the y-axis should be adjusted
- * @param tickAmount how many ticks (on the y-axis) should be displayed (should be calculated by functions to provide a nice formatting)
- * @returns The defaults for the YAxis of Tco3Zm return
  * @function
+ * @param seriesName The name of the series
+ * @param minY The minimum y value (to adjust to the zoom)
+ * @param maxY The maximum y value (to adjust to the zoom)
+ * @param show Whether the y-axis should be hidden (default is false)
+ * @param opposite Whether to show the y-axis on the right side (default is false)
+ * @param offsetX How many px the y-axis should be adjusted
+ * @param tickAmount How many ticks (on the y-axis) should be displayed (should be calculated by
+ *   functions to provide a nice formatting)
+ * @returns The defaults for the YAxis of Tco3Zm return
  */
 export function getDefaultYAxisTco3Return(
     seriesName: string | undefined,
@@ -395,10 +401,11 @@ export type Styling = {
 /**
  * The default settings for the tco3_return plot.
  *
- * colors have to be filled.
+ * Colors have to be filled.
  *
- * This gigantic object allows us to communicate with the apexcharts library.
- * More can be found here: {@link https://apexcharts.com/docs/installation/}
+ * This gigantic object allows us to communicate with the apexcharts library. More can be found
+ * here: {@link https://apexcharts.com/docs/installation/}
+ *
  * @constant {Object}
  */
 export const default_TCO3_return: ApexOptions = {
@@ -501,21 +508,23 @@ type OptionsParams = {
 };
 
 /**
- * The interface the graph component accesses to generate the options for the plot
- * given the plot id, the styling (depends on plot type) and the plot title.
+ * The interface the graph component accesses to generate the options for the plot given the plot
+ * id, the styling (depends on plot type) and the plot title.
  *
- * @param plotId an element of O3AS_PLOTS
- * @param styling the styling
- * @param styling.colors an array of strings with hex code. Has to match the length of the given series
- * @param styling.width (tco3_zm only!): array of integer defining the line width
- * @param styling.dashArray (tco3_zm only!): array of integer defining if the line is solid or dashed
- * @param plotTitle contains the plot title
- * @param xAxisRange the range of the x-axis
- * @param yAxisRange the range of the y-axis
- * @param seriesNames the names of the series
- * @param getState store.getState
- * @returns An default_TCO3_plotId object formatted with the given data
  * @function
+ * @param plotId An element of O3AS_PLOTS
+ * @param styling The styling
+ * @param styling.colors An array of strings with hex code. Has to match the length of the given
+ *   series
+ * @param styling.width (tco3_zm only!): array of integer defining the line width
+ * @param styling.dashArray (tco3_zm only!): array of integer defining if the line is solid or
+ *   dashed
+ * @param plotTitle Contains the plot title
+ * @param xAxisRange The range of the x-axis
+ * @param yAxisRange The range of the y-axis
+ * @param seriesNames The names of the series
+ * @param getState Store.getState
+ * @returns An default_TCO3_plotId object formatted with the given data
  */
 export function getOptions({
     plotId,
@@ -666,24 +675,24 @@ type GenerateSeriesParams = {
 /**
  * The interface the graph component accesses to generate the series for the plot.
  *
- * This function generates data structures that can directly be passed to apexcharts.
- * It accepts the plotId because series are generated according to the type of plot.
- * Furthermore, the data object holds all plot data for the selected options
- * and modelsSlice is a slice from the redux store which contains information
- * about what model groups exist, which of them are visible or should be included in the
- * statistical value calculation.
+ * This function generates data structures that can directly be passed to apexcharts. It accepts the
+ * plotId because series are generated according to the type of plot. Furthermore, the data object
+ * holds all plot data for the selected options and modelsSlice is a slice from the redux store
+ * which contains information about what model groups exist, which of them are visible or should be
+ * included in the statistical value calculation.
  *
- * It additionally generates a styling object which contains colors (and width/dashArray for tco3_zm).
+ * It additionally generates a styling object which contains colors (and width/dashArray for
+ * tco3_zm).
  *
- * @param plotId the id of the currently selected plot
- * @param data the raw data from the api for the current options
- * @param modelsSlice the slice of the store containing information about the model groups
- * @param xAxisRange the range of the x-axis
- * @param yAxisRange the range of the y-axis
- * @param refLineVisible visibility status of the reference line
- * @param getState function to access the redux store
- * @returns series object which includes a subdivision into a data and a styling object.
  * @function
+ * @param plotId The id of the currently selected plot
+ * @param data The raw data from the api for the current options
+ * @param modelsSlice The slice of the store containing information about the model groups
+ * @param xAxisRange The range of the x-axis
+ * @param yAxisRange The range of the y-axis
+ * @param refLineVisible Visibility status of the reference line
+ * @param getState Function to access the redux store
+ * @returns Series object which includes a subdivision into a data and a styling object.
  */
 export function generateSeries({
     plotId,
@@ -736,15 +745,15 @@ const NO_COLOR = '#000000';
 const NO_LINESTYLE = 0;
 
 /**
- * This method generates the data series for tco3_zm for all models that should be displayed (specified via groups).
- * It furthermore adds the statistical values also as series at the end.
+ * This method generates the data series for tco3_zm for all models that should be displayed
+ * (specified via groups). It furthermore adds the statistical values also as series at the end.
  *
- * @param data the raw data from the api for the current options
- * @param modelsSlice the slice of the store containing information about the model groups
- * @param refLineVisible visibility status of the reference line
- * @returns A combination of data and statistical values series
- * @param state redux store state
  * @function
+ * @param data The raw data from the api for the current options
+ * @param modelsSlice The slice of the store containing information about the model groups
+ * @param refLineVisible Visibility status of the reference line
+ * @param state Redux store state
+ * @returns A combination of data and statistical values series
  */
 function generateTco3_ZmSeries({
     data,
@@ -836,13 +845,13 @@ function generateTco3_ZmSeries({
 }
 
 /**
- * This plugin-method is used to specify how series for tco3_zm should be build inside
- * the buildStatisticalValues-function.
+ * This plugin-method is used to specify how series for tco3_zm should be build inside the
+ * buildStatisticalValues-function.
  *
- * @param name   of the series
- * @param svData array of plaint numbers
- * @returns A series matching the tco3_zm style for apexcharts.
  * @function
+ * @param name Of the series
+ * @param svData Array of plaint numbers
+ * @returns A series matching the tco3_zm style for apexcharts.
  */
 function generateSingleTco3ZmSeries(name: string, svData: (number | null)[]) {
     return {
@@ -852,18 +861,16 @@ function generateSingleTco3ZmSeries(name: string, svData: (number | null)[]) {
 }
 
 /**
- * This plug-in method is used to specify how the data should be parsed and
- * arranged so that the generic buildStatisticalValues-Function can
- * take care of the calculation.
+ * This plug-in method is used to specify how the data should be parsed and arranged so that the
+ * generic buildStatisticalValues-Function can take care of the calculation.
  *
- * The data arrangement is basically a transposition.
- * The first datapoint of each model ist grouped into the first array.
- * and so on...
+ * The data arrangement is basically a transposition. The first datapoint of each model ist grouped
+ * into the first array. and so on...
  *
- * @param modelList list of models of a group that should be included
- * @param data an object holding all the data from the api
- * @returns A 2D array containing all the data (transpose matrix of given data)
  * @function
+ * @param modelList List of models of a group that should be included
+ * @param data An object holding all the data from the api
+ * @returns A 2D array containing all the data (transpose matrix of given data)
  */
 function buildSvMatrixTco3Zm({ modelList, data }: { modelList: string[]; data: ProcessedO3Data }) {
     const SERIES_LENGTH = data[modelList[0]].data.length; // grab length of first model, should all be same
@@ -887,15 +894,15 @@ function buildSvMatrixTco3Zm({ modelList, data }: { modelList: string[]; data: P
 }
 
 /**
- * This method generates the data series for the tco3_return for all models that should be displayed (specified via groups).
- * It furthermore adds the statistical values also as series at the end.
+ * This method generates the data series for the tco3_return for all models that should be displayed
+ * (specified via groups). It furthermore adds the statistical values also as series at the end.
  *
- * @param data the raw data from the api for the current options
- * @param modelsSlice the slice of the store containing information about the model groups
- * @param xAxisRange the range of the x-axis
- * @param yAxisRange the range of the y-axis
- * @returns A combination of data and statistical values series
  * @function
+ * @param data The raw data from the api for the current options
+ * @param modelsSlice The slice of the store containing information about the model groups
+ * @param xAxisRange The range of the x-axis
+ * @param yAxisRange The range of the y-axis
+ * @returns A combination of data and statistical values series
  */
 function generateTco3_ReturnSeries({
     data,
@@ -1024,15 +1031,15 @@ function generateTco3_ReturnSeries({
 }
 
 /**
- * This plugin-method is used to specify how series for tco3_return should be build inside
- * the buildStatisticalValues-function.
+ * This plugin-method is used to specify how series for tco3_return should be build inside the
+ * buildStatisticalValues-function.
  *
- * @param name of the series
- * @param svData array of plaint numbers
- * @param state redux store state
- * @param regions tco3_return regions
- * @returns a series matching the tco3_return style for apexcharts.
  * @function
+ * @param name Of the series
+ * @param svData Array of plaint numbers
+ * @param state Redux store state
+ * @param regions Tco3_return regions
+ * @returns A series matching the tco3_return style for apexcharts.
  */
 function generateSingleTco3ReturnSeries(
     name: string,
@@ -1062,18 +1069,16 @@ function generateSingleTco3ReturnSeries(
 }
 
 /**
- * This plug-in method is used to specify how the data should be parsed and
- * arranged so that the generic buildStatisticalValues-Function can
- * take care of the calculation.
+ * This plug-in method is used to specify how the data should be parsed and arranged so that the
+ * generic buildStatisticalValues-Function can take care of the calculation.
  *
- * The data arrangement is basically a transposition.
- * The first datapoint of each model ist grouped into the first array.
- * and so on...
+ * The data arrangement is basically a transposition. The first datapoint of each model ist grouped
+ * into the first array. and so on...
  *
- * @param modelList list of models of a group that should be included
- * @param data an object holding all the data from the api
- * @returns A 2D array containing all the data (transpose matrix of given data)
  * @function
+ * @param modelList List of models of a group that should be included
+ * @param data An object holding all the data from the api
+ * @returns A 2D array containing all the data (transpose matrix of given data)
  */
 function buildSvMatrixTco3Return({
     modelList,
@@ -1102,15 +1107,15 @@ function buildSvMatrixTco3Return({
 }
 
 /**
- * This method calculates the boxplot values for the tco3_return plot.
- * For each region an array of 5 values is calculated: min, q1, median, q3, max
- * which is sufficient to render the desired box plot.
+ * This method calculates the boxplot values for the tco3_return plot. For each region an array of 5
+ * values is calculated: min, q1, median, q3, max which is sufficient to render the desired box
+ * plot.
  *
- * @param data contains the region data from the api
- * @param modelsSlice the slice of the store containing information about the model groups
+ * @function
+ * @param data Contains the region data from the api
+ * @param modelsSlice The slice of the store containing information about the model groups
  * @param regions
  * @returns Object holding an array of 5 values (min, q1, median, q3, max) for each region
- * @function
  */
 function calculateBoxPlotValues(
     data: ProcessedO3Data,
@@ -1154,19 +1159,20 @@ function calculateBoxPlotValues(
 }
 
 /**
- * This method builds the statistical series using the passed buildMatrix method
- * that brings the data into the desired format and uses the
- * passed generateSingleSvSeries function to transform each generated series into
- * the correct format.
+ * This method builds the statistical series using the passed buildMatrix method that brings the
+ * data into the desired format and uses the passed generateSingleSvSeries function to transform
+ * each generated series into the correct format.
  *
- * @param data the raw data from the api for the current options
- * @param modelsSlice the slice of the store containing information about the model groups
- * @param buildMatrix either buildSvMatrixTco3Zm | buildSvMatrixTco3Return, specifies how the data should be transformed
- * @param generateSingleSvSeries either generateSingleTco3ZmSeries | generateSingleTco3ReturnSeries, specifies how the series should be generated
- * @param state redux store state
+ * @function
+ * @param data The raw data from the api for the current options
+ * @param modelsSlice The slice of the store containing information about the model groups
+ * @param buildMatrix Either buildSvMatrixTco3Zm | buildSvMatrixTco3Return, specifies how the data
+ *   should be transformed
+ * @param generateSingleSvSeries Either generateSingleTco3ZmSeries | generateSingleTco3ReturnSeries,
+ *   specifies how the series should be generated
+ * @param state Redux store state
  * @param regions
  * @returns {Array} An array holding all statistical series for the given modelSlice
- * @function
  */
 function buildStatisticalSeries<SeriesDataT extends ApexAxisChartSeries>(
     data: ProcessedO3Data,
@@ -1235,16 +1241,17 @@ function buildStatisticalSeries<SeriesDataT extends ApexAxisChartSeries>(
 }
 
 /**
- * Calculates the statistical values for the given modelList (from a certain model group).
- * Takes into account the groupData object which stores information about the models.
+ * Calculates the statistical values for the given modelList (from a certain model group). Takes
+ * into account the groupData object which stores information about the models.
  *
- * @param modelList a list of all models of a specific model group.
- * @param data the raw data from the api for the current options
- * @param groupData the modelsSlice data narrowed down for a specific model group
- * @param buildMatrix either buildSvMatrixTco3Zm | buildSvMatrixTco3Return, specifies how the data should be transformed
+ * @function
+ * @param modelList A list of all models of a specific model group.
+ * @param data The raw data from the api for the current options
+ * @param groupData The modelsSlice data narrowed down for a specific model group
+ * @param buildMatrix Either buildSvMatrixTco3Zm | buildSvMatrixTco3Return, specifies how the data
+ *   should be transformed
  * @param regions
  * @returns An object containing the calculated values for the statistical values
- * @function
  */
 function calculateSvForModels(
     modelList: string[],
@@ -1313,13 +1320,15 @@ function calculateSvForModels(
 // API FORMATTING:
 
 /**
- * Iterates through the x and y data returned from the api for the tco3_zm and fills the corresponding years with
- * either data points, if they are present or with `null`. The first index corresponds to START_YEAR
+ * Iterates through the x and y data returned from the api for the tco3_zm and fills the
+ * corresponding years with either data points, if they are present or with `null`. The first index
+ * corresponds to START_YEAR
  *
- * @param {Array} xValues an array holding the years
- * @param {Array} yValues an array of the same length holding the data points for the corresponding years
- * @returns {Array} The normalized array
  * @function
+ * @param {Array} xValues An array holding the years
+ * @param {Array} yValues An array of the same length holding the data points for the corresponding
+ *   years
+ * @returns {Array} The normalized array
  */
 export function normalizeArray(xValues: string[], yValues: number[]): number[] {
     const values: [string, number][] = zipWith(xValues, yValues, (x, y) => [x, y]);
@@ -1336,37 +1345,22 @@ export function normalizeArray(xValues: string[], yValues: number[]): number[] {
  * into a format that (hopefully) speeds up the computation of certain things.
  *
  * The TCO3_ZM data is transformed from an x and y array into one single array whose first index
- * represents the START_YEAR. It contains either data points or null.
- * x = ['1960', '1963', '1965', '1966']
- * y = [0, 1, 2, 3]
- * normalized: [0, null (1961), null (1962), 1, null (1964), 2, 3, null (1967), ...]
+ * represents the START_YEAR. It contains either data points or null. x = ['1960', '1963', '1965',
+ * '1966'] y = [0, 1, 2, 3] normalized: [0, null (1961), null (1962), 1, null (1964), 2, 3, null
+ * (1967), ...]
  *
- * The TCO3_RETURN data is transformed from an x and y array into a lookup table with the given region:
+ * The TCO3_RETURN data is transformed from an x and y array into a lookup table with the given
+ * region:
  *
- *   "x": [
- *     "Antarctic(Oct)",
- *     "SH mid-lat",
- *     "Tropics",
- *     "Arctic(Mar)",              {
- *     "Near global",               "Antarctic(Oct)": 2064,
- *     "Global",                    "SH mid-lat": 2051,
- *     "User region"                "Tropics": 2060,
- *   ],                     =>      "Tropics": 2041,
- *   "y": [                             ...
- *     2064,                       }
- *     2051,
- *     2060,
- *     2041,
- *     2040,
- *     2049,
- *     2052,
- *     2052
- *   ]
+ * "x": [ "Antarctic(Oct)", "SH mid-lat", "Tropics", "Arctic(Mar)", { "Near global",
+ * "Antarctic(Oct)": 2064, "Global", "SH mid-lat": 2051, "User region" "Tropics": 2060, ], =>
+ * "Tropics": 2041, "y": [ ... 2064, } 2051, 2060, 2041, 2040, 2049, 2052, 2052 ]
  *
- * @param plotId A string specifying the plot (to perform different transformations, according to the data format)
+ * @function
+ * @param plotId A string specifying the plot (to perform different transformations, according to
+ *   the data format)
  * @param data An object holding the data as it was returned from the API
  * @returns The pre transformed API data
- * @function
  */
 export const preTransformApiData = (plotId: LEGAL_PLOT_ID, data: O3Data[]): ProcessedO3Data => {
     const lookUpTable: ProcessedO3Data = {} as ProcessedO3Data;
@@ -1422,13 +1416,13 @@ export const preTransformApiData = (plotId: LEGAL_PLOT_ID, data: O3Data[]): Proc
 };
 
 /**
- * Gets the suggested values for the y-axis and x-axis so that the displayed models are all
- * visible in the resulting range and the scaling of the x-axis is properly formatted.
+ * Gets the suggested values for the y-axis and x-axis so that the displayed models are all visible
+ * in the resulting range and the scaling of the x-axis is properly formatted.
  *
+ * @function
  * @param {Object} data The data for all models displayed
  * @param {Object} modelSlice The modelSlice object
  * @returns {Object} An object containing the suggested values for the x- and y-axis
- * @function
  */
 export function getSuggestedValues(data: ProcessedO3Data, modelSlice: GlobalModelState['models']) {
     const visibleModels = getIncludedModels(modelSlice);
@@ -1456,9 +1450,9 @@ export function getSuggestedValues(data: ProcessedO3Data, modelSlice: GlobalMode
 /**
  * Converts the given color name to its corresponding hex code.
  *
- * @param {string} color    The name of the color as a string
- * @returns {Object}        The hex code corresponding to the given color name
  * @function
+ * @param {string} color The name of the color as a string
+ * @returns {Object} The hex code corresponding to the given color name
  */
 export function colorNameToHex(color: string) {
     const colors = {
@@ -1619,9 +1613,9 @@ export function colorNameToHex(color: string) {
 /**
  * Converts the stroke style given by the API into the format supported by apexcharts.
  *
- * @param apiStyle     The stroke style specified by the API
- * @returns            The stroke style for the apexcharts library
  * @function
+ * @param apiStyle The stroke style specified by the API
+ * @returns The stroke style for the apexcharts library
  */
 export function convertToStrokeStyle(apiStyle: string) {
     const styles = {
@@ -1638,14 +1632,14 @@ export function convertToStrokeStyle(apiStyle: string) {
 }
 
 /**
- * Combines 2 data series objects into a new one.
- * The copied elements of series2 get appended to a copy of series1.
- * A series object has the following structure: { data: Array, colors: Array, width: Array, dashArray: Array}
+ * Combines 2 data series objects into a new one. The copied elements of series2 get appended to a
+ * copy of series1. A series object has the following structure: { data: Array, colors: Array,
+ * width: Array, dashArray: Array}
  *
- * @param {Object} series1     The first data series object
- * @param {Object} series2     The second data series object
- * @returns {Object}            New series containing series1 and series2
  * @function
+ * @param {Object} series1 The first data series object
+ * @param {Object} series2 The second data series object
+ * @returns {Object} New series containing series1 and series2
  */
 function combineSeries<DataT extends ApexAxisChartSeries>(
     series1: Series<DataT>,
@@ -1664,22 +1658,23 @@ function combineSeries<DataT extends ApexAxisChartSeries>(
 /**
  * Utility function to create an array of size i with empty arrays inside it.
  *
- * @param length    The size of the array containing the empty arrays
- * @returns        The array of size 'length' containing empty arrays
  * @function
+ * @param length The size of the array containing the empty arrays
+ * @returns The array of size 'length' containing empty arrays
  */
 function create2dArray<T>(length: T): T[][] {
     return Array.from(Array(length), () => []);
 }
 
 /**
- * Checks if a model is included in the statistical value calculation of a given SV-Type by using the groupData as the reference data.
+ * Checks if a model is included in the statistical value calculation of a given SV-Type by using
+ * the groupData as the reference data.
  *
- * @param model        The model that should be checked
- * @param groupData    The data of the group which will be used as reference for the check
- * @param svType       The statistical value type that should be checked for
- * @returns            True if the given model should be included in the SV calculation of the given SV-Type
  * @function
+ * @param model The model that should be checked
+ * @param groupData The data of the group which will be used as reference for the check
+ * @param svType The statistical value type that should be checked for
+ * @returns True if the given model should be included in the SV calculation of the given SV-Type
  */
 function isIncludedInSv(model: string, groupData: ModelGroup, svType: PROCESS_SV_WITH_PERCENTILE) {
     if (svType === 'stdMean') {
@@ -1692,14 +1687,14 @@ function isIncludedInSv(model: string, groupData: ModelGroup, svType: PROCESS_SV
 }
 
 /**
- * Determines the optimal tick amount for a given max and min year for the x-axis.
- * Takes into account the current screen width, uses a heuristic approach
- * (all values are determined through experimentation).
+ * Determines the optimal tick amount for a given max and min year for the x-axis. Takes into
+ * account the current screen width, uses a heuristic approach (all values are determined through
+ * experimentation).
  *
- * @param min      The selected min. year of the plot
- * @param max      The selected max. year of the plot
- * @returns        The optimal tick amount according to those values
  * @function
+ * @param min The selected min. year of the plot
+ * @param max The selected max. year of the plot
+ * @returns The optimal tick amount according to those values
  */
 export function getOptimalTickAmount(min: number, max: number) {
     const width =
@@ -1738,10 +1733,10 @@ export function getOptimalTickAmount(min: number, max: number) {
 /**
  * Determines the optimal tick amount for a given max and min year for the y-axis.
  *
- * @param min      The selected min. year of the plot
- * @param max      The selected max. year of the plot
- * @returns        The optimal tick amount according to those values
  * @function
+ * @param min The selected min. year of the plot
+ * @param max The selected max. year of the plot
+ * @returns The optimal tick amount according to those values
  */
 export function getTickAmountYAxis(min: number, max: number) {
     const diff = max - min;
@@ -1759,60 +1754,60 @@ export function getTickAmountYAxis(min: number, max: number) {
 }
 
 /**
- * Rounds a number up to a multiple of ten. If the number already is a multiple of
- * ten the number stays the same.
+ * Rounds a number up to a multiple of ten. If the number already is a multiple of ten the number
+ * stays the same.
  *
- * @param min  The minY value that will be rounded to a multiple of 10
- * @returns    Number rounded down to a multiple of ten
  * @function
+ * @param min The minY value that will be rounded to a multiple of 10
+ * @returns Number rounded down to a multiple of ten
  */
 export function roundDownToMultipleOfTen(min: number) {
     return min - (min % 10);
 }
 
 /**
- * Rounds a number up to a multiple of ten. If the number already is a multiple of
- * ten the number stays the same.
+ * Rounds a number up to a multiple of ten. If the number already is a multiple of ten the number
+ * stays the same.
  *
- * @param max   The maxY value that will be rounded to a multiple of 10
- * @returns     Number rounded up to a multiple of ten
  * @function
+ * @param max The maxY value that will be rounded to a multiple of 10
+ * @returns Number rounded up to a multiple of ten
  */
 export function roundUpToMultipleOfTen(max: number) {
     return max % 10 ? max + (10 - (max % 10)) : max;
 }
 
 /**
- * This function aims to filter out values that are outside the provided range.
- * If the value is outside of range it is replaced with null.
+ * This function aims to filter out values that are outside the provided range. If the value is
+ * outside of range it is replaced with null.
  *
- * @param value The value that could be filtered out
- * @param min   The minimum allowed value
- * @param max   The maximum allowed value
- * @returns     The value or null if the value is outside the allowed range
  * @function
+ * @param value The value that could be filtered out
+ * @param min The minimum allowed value
+ * @param max The maximum allowed value
+ * @returns The value or null if the value is outside the allowed range
  */
 export function filterOutOfRange(value: number, min: number, max: number) {
     return min <= value && value <= max ? value : null;
 }
 
 /**
- * Function to format the labels on the y-axis nicely.
- * It hides all labels that are not a multiple of ten (i.e. all multiples of five and NOT ten).
+ * Function to format the labels on the y-axis nicely. It hides all labels that are not a multiple
+ * of ten (i.e. all multiples of five and NOT ten).
  *
- * @param value    The label value
- * @returns       The value if it is a multiple of ten or an empty string to hide the label
  * @function
+ * @param value The label value
+ * @returns The value if it is a multiple of ten or an empty string to hide the label
  */
 export const formatYLabelsNicely = (value: number): string => (value % 10 ? '' : value.toString());
 
 /**
- * This function parses the auto-generated sv names to separate
- * them into the sv type (e.g. mean, median) and the group.
+ * This function parses the auto-generated sv names to separate them into the sv type (e.g. mean,
+ * median) and the group.
  *
+ * @function
  * @param name The name of the data series (e.g. mean+std(Example Group))
  * @returns An object holding the sv type and the group name
- * @function
  */
 export function parseSvName(name: string) {
     const regex = new RegExp('([^(]+)([^)]+)');
@@ -1824,16 +1819,15 @@ export function parseSvName(name: string) {
 }
 
 /**
- * A plugin-method for apexcharts to provide a custom tooltip.
- * In this case the tooltip is for the OCTS line chart. It provides
- * a richer tooltip and shows the data points correctly.
+ * A plugin-method for apexcharts to provide a custom tooltip. In this case the tooltip is for the
+ * OCTS line chart. It provides a richer tooltip and shows the data points correctly.
  *
+ * @function
  * @param series An array of series
  * @param seriesIndex The index of the hovered data series
  * @param dataPointIndex The index of the data point in the hovered data series
- * @param w    Global apexcharts object
- * @returns          The desired html tooltip formatted with the correct information
- * @function
+ * @param w Global apexcharts object
+ * @returns The desired html tooltip formatted with the correct information
  */
 export function customTooltipFormatter({
     series,
@@ -1903,9 +1897,9 @@ export function customTooltipFormatter({
 /**
  * Gets all included models from the modelsSlice.
  *
- * @param  modelsSlice The modelsSlice needed to get the models from the model groups
- * @returns            All included models from all model groups
  * @function
+ * @param modelsSlice The modelsSlice needed to get the models from the model groups
+ * @returns All included models from all model groups
  */
 export function getIncludedModels(modelsSlice: GlobalModelState['models']) {
     const visible = [];
@@ -1922,9 +1916,11 @@ export function getIncludedModels(modelsSlice: GlobalModelState['models']) {
 /**
  * Calculates the points when the mean, mean+std, mean-std reach the value of the reference year.
  *
- * @param state redux store state
- * @param referenceValue an object with an array with the values for the reference line among other things
- * @param svSeries an object with an array with the values for the statistical values lines among other things
+ * @param state Redux store state
+ * @param referenceValue An object with an array with the values for the reference line among other
+ *   things
+ * @param svSeries An object with an array with the values for the statistical values lines among
+ *   other things
  */
 function calcRecoveryPoints(
     state: AppState,
@@ -1975,14 +1971,15 @@ function calcRecoveryPoints(
 }
 
 /**
- * This method formats a latitude object into a good-looking string.
- * E.g. {minLat: -20, maxLat: 20} ==> '(20°S-20°N)'
+ * This method formats a latitude object into a good-looking string. E.g. {minLat: -20, maxLat: 20}
+ * ==> '(20°S-20°N)'
  *
- * @example formatLatitude({minLat: -20, maxLat: 20});
+ * @example
+ *     formatLatitude({ minLat: -20, maxLat: 20 });
  *
- * @param locationValue The minLat and maxLat values
- * @return              The formatted latitude band
  * @function
+ * @param locationValue The minLat and maxLat values
+ * @returns The formatted latitude band
  */
 export const formatLatitude = (locationValue: Latitude) => {
     const hemisphereExtensionMin = locationValue.minLat < 0 && locationValue.maxLat > 0 ? '°S' : '';
@@ -1994,9 +1991,10 @@ export const formatLatitude = (locationValue: Latitude) => {
 
 /**
  * Finds the latitude band by the currently selected location
- * @param state redux state
- * @returns The found Latitude Band
+ *
  * @function
+ * @param state Redux state
+ * @returns The found Latitude Band
  */
 const findLatitudeBandByLocation = (state: AppState): string | undefined | null => {
     const selectedLocation = state.plot.generalSettings.location;

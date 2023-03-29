@@ -1,7 +1,7 @@
 import React, { type ChangeEvent, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { setDisplayYRange, selectPlotYRange, selectPlotId } from 'store/plotSlice';
-import { Typography, Grid, FormControl, TextField } from '@mui/material';
+import { selectPlotId, selectPlotYRange, setDisplayYRange } from 'store/plotSlice';
+import { FormControl, Grid, TextField, Typography } from '@mui/material';
 import { O3AS_PLOTS } from 'utils/constants';
 import { useAppDispatch, useAppStore } from 'store';
 
@@ -11,35 +11,37 @@ type YAxisFieldProps = {
 
 /**
  * Enables the user to choose the range that should be visible on the y-axis of the plot.
+ *
+ * @param reportError Function for error handling
+ * @returns {JSX.Element} A jsx containing two text-fields and labels
  * @component
- * @param reportError function for error handling
- * @returns {JSX.Element} a jsx containing two text-fields and labels
  */
 const YAxisField: React.FC<YAxisFieldProps> = ({ reportError = () => undefined }) => {
     const store = useAppStore();
 
-    /**
-     * A dispatch function to dispatch actions to the redux store.
-     */
+    /** A dispatch function to dispatch actions to the redux store. */
     const dispatch = useAppDispatch();
 
     /**
      * An object containing the minY and maxY values for the y-axis.
-     * @see {@link selectPlotYRange}
+     *
      * @constant {Object}
+     * @see {@link selectPlotYRange}
      */
     const { minY, maxY } = useSelector(selectPlotYRange);
 
     /**
      * A string containing the active plot type.
-     * @see {@link selectPlotId}
+     *
      * @constant {String}
+     * @see {@link selectPlotId}
      */
     const plotId = useSelector(selectPlotId);
 
     /**
-     * Stores the minY and maxY values for tco3_zm
-     * and checks their validation before sending it to the Redux store.
+     * Stores the minY and maxY values for tco3_zm and checks their validation before sending it to
+     * the Redux store.
+     *
      * @constant {Array}
      */
     const [stateY_zm, setStateY_zm] = React.useState(
@@ -47,8 +49,9 @@ const YAxisField: React.FC<YAxisFieldProps> = ({ reportError = () => undefined }
     );
 
     /**
-     * Stores the minY and maxY values for tco3_return
-     * and checks their validation before sending it to the Redux store.
+     * Stores the minY and maxY values for tco3_return and checks their validation before sending it
+     * to the Redux store.
+     *
      * @constant {Array}
      */
     const [stateY_return, setStateY_return] = React.useState(
@@ -57,6 +60,7 @@ const YAxisField: React.FC<YAxisFieldProps> = ({ reportError = () => undefined }
 
     /**
      * The maximum y-axis difference the apexcharts library can handle.
+     *
      * @constant {number}
      */
     const maxDiff = 400;
@@ -64,8 +68,8 @@ const YAxisField: React.FC<YAxisFieldProps> = ({ reportError = () => undefined }
     /**
      * Handles the change of the minimum value.
      *
-     * @param event {Event} event that triggered the call of this function
      * @function
+     * @param event {Event} event that triggered the call of this function
      * @see {@link setStateY_zm}
      * @see {@link setStateY_return}
      */
@@ -76,8 +80,8 @@ const YAxisField: React.FC<YAxisFieldProps> = ({ reportError = () => undefined }
     /**
      * Handles the change of the maximum value.
      *
-     * @param event {Event} event that triggered the call of this function
      * @function
+     * @param event {Event} event that triggered the call of this function
      * @see {@link setStateY_zm}
      * @see {@link setStateY_return}
      */
@@ -88,9 +92,10 @@ const YAxisField: React.FC<YAxisFieldProps> = ({ reportError = () => undefined }
     /**
      * Handles the change of the minimum and the maximum value.
      *
-     * @param event {Event} event that triggered the {@link handleChangeMin} or the {@link handleChangeMax} function
-     * @param extremum 'minY' or 'maxY', depending on the function that called this function
      * @function
+     * @param event {Event} event that triggered the {@link handleChangeMin} or the
+     *   {@link handleChangeMax} function
+     * @param extremum 'minY' or 'maxY', depending on the function that called this function
      * @see {@link setStateY_zm}
      * @see {@link setStateY_return}
      */
@@ -182,8 +187,8 @@ const YAxisField: React.FC<YAxisFieldProps> = ({ reportError = () => undefined }
     /**
      * Evaluates, whether the input of the minimum input is valid or not.
      *
-     * @return {boolean} true=valid, false=not valid
      * @function
+     * @returns {boolean} True=valid, false=not valid
      */
     const errorMin = () => {
         if (plotId === O3AS_PLOTS.tco3_zm) {
@@ -218,8 +223,8 @@ const YAxisField: React.FC<YAxisFieldProps> = ({ reportError = () => undefined }
     /**
      * Returns the corresponding error message if the input value is not valid.
      *
-     * @return {string} the error message
      * @function
+     * @returns {string} The error message
      */
     const helperTextMin = () => {
         if (plotId === O3AS_PLOTS.tco3_zm) {
@@ -268,8 +273,8 @@ const YAxisField: React.FC<YAxisFieldProps> = ({ reportError = () => undefined }
     /**
      * Evaluates, whether the input of the maximum input is valid or not.
      *
-     * @return {boolean} true=valid, false=not valid
      * @function
+     * @returns {boolean} True=valid, false=not valid
      */
     const errorMax = () => {
         if (plotId === O3AS_PLOTS.tco3_zm) {
@@ -304,8 +309,8 @@ const YAxisField: React.FC<YAxisFieldProps> = ({ reportError = () => undefined }
     /**
      * Returns the corresponding error message if the input value is not valid.
      *
-     * @return {string} the error message
      * @function
+     * @returns {string} The error message
      */
     const helperTextMax = () => {
         if (plotId === O3AS_PLOTS.tco3_zm) {

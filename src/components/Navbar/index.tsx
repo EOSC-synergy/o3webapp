@@ -11,6 +11,7 @@ type NavBarProps = {
 };
 /**
  * A component for the navigation of the website.
+ *
  * @component
  */
 const NavBar: React.FC<NavBarProps> = ({ openSidebar = () => undefined }) => {

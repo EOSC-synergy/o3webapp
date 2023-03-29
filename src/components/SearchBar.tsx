@@ -1,17 +1,16 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { InputBase } from '@mui/material';
-import { styled, alpha } from '@mui/material/styles';
+import { alpha, styled } from '@mui/material/styles';
 import React, { FC } from 'react';
 import { performSearch } from 'utils/textSearch';
 import PropTypes from 'prop-types';
 import useId from '@mui/utils/useId';
 
 /**
- * A JSX Element containing a wrapper for a SearchIcon.
- * Wrapped by {@link SearchBar.Search}.
+ * A JSX Element containing a wrapper for a SearchIcon. Wrapped by {@link SearchBar.Search}.
  *
- * @constant {JSX.Element}
  * @memberof SearchBar
+ * @constant {JSX.Element}
  */
 const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2),
@@ -24,10 +23,11 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 }));
 
 /**
- * A JSX Element that wraps the [SearchIconWrapper]{@link SearchBar.SearchIconWrapper} and the [StyledInputBase]{@link SearchBar.StyledInputBase}.
+ * A JSX Element that wraps the [SearchIconWrapper]{@link SearchBar.SearchIconWrapper} and the
+ * [StyledInputBase]{@link SearchBar.StyledInputBase}.
  *
- * @constant {JSX.Element}
  * @memberof SearchBar
+ * @constant {JSX.Element}
  */
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -50,11 +50,10 @@ const Search = styled('div')(({ theme }) => ({
 }));
 
 /**
- * A JSX Element that contains a styled Input Base.
- * Wrapped by {@link SearchBar.Search}.
+ * A JSX Element that contains a styled Input Base. Wrapped by {@link SearchBar.Search}.
  *
- * @constant {JSX.Element}
  * @memberof SearchBar
+ * @constant {JSX.Element}
  */
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
@@ -76,12 +75,12 @@ type SearchBarProps = {
     foundIndicesCallback: (indices: unknown[]) => void;
 };
 /**
- * A searchbar component that is used for searching a string in a data array
- * that either contains strings or objects. If the array contains objects the
- * values of these objects are searched.
+ * A searchbar component that is used for searching a string in a data array that either contains
+ * strings or objects. If the array contains objects the values of these objects are searched.
+ *
+ * @param {Object} props Further specified in propTypes
+ * @returns {JSX} A pretty searchbar component
  * @component
- * @param {Object} props further specified in propTypes
- * @returns {JSX} a pretty searchbar component
  */
 const SearchBar: FC<SearchBarProps> = ({
     shouldReturnValues = false,
@@ -89,9 +88,10 @@ const SearchBar: FC<SearchBarProps> = ({
     foundIndicesCallback,
 }) => {
     /**
-     * handles the change of the input -> performs the search
+     * Handles the change of the input -> performs the search
+     *
+     * @param newInput New text in the input
      * @see {@link module:TextSearch.performSearch}
-     * @param newInput new text in the input
      */
     const handleInputChange = (newInput: string) => {
         foundIndicesCallback(performSearch(inputArray, newInput, shouldReturnValues));

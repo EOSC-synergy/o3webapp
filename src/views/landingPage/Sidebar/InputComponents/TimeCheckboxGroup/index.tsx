@@ -1,7 +1,7 @@
 import React, { type FC, useState } from 'react';
 import SeasonCheckBoxGroup from './SeasonCheckBoxGroup';
 import { Alert, Checkbox, Divider, FormControlLabel, Grid } from '@mui/material';
-import { NUM_MONTHS_IN_SEASON, NUM_MONTHS } from 'utils/constants';
+import { NUM_MONTHS, NUM_MONTHS_IN_SEASON } from 'utils/constants';
 import Typography from '@mui/material/Typography';
 import { fetchPlotDataForCurrentModels } from 'services/API/apiSlice';
 import { useSelector } from 'react-redux';
@@ -9,45 +9,46 @@ import { selectPlotMonths, setMonths } from 'store/plotSlice';
 import { useAppDispatch } from 'store';
 
 /**
- * Stores the season Winter and its corresponding months.
- * Used in {@link SEASONS_ARRAY}.
- * @constant {Object}
+ * Stores the season Winter and its corresponding months. Used in {@link SEASONS_ARRAY}.
+ *
  * @memberof TimeCheckBoxGroup
- * @default {name: Symbol("Winter"), months: [12, 1, 2], seasonId: 0}
+ * @constant {Object}
+ * @default {name: Symbol('Winter'), months: [12, 1, 2], seasonId: 0}
  */
 const Winter = { name: Symbol('Winter'), months: [12, 1, 2], seasonId: 0 };
 
 /**
- * Stores the season Spring and its corresponding months.
- * Used in {@link SEASONS_ARRAY}.
- * @constant {Object}
+ * Stores the season Spring and its corresponding months. Used in {@link SEASONS_ARRAY}.
+ *
  * @memberof TimeCheckBoxGroup
- * @default {name: Symbol("Spring"), months: [3, 4, 5], seasonId: 1}
+ * @constant {Object}
+ * @default {name: Symbol('Spring'), months: [3, 4, 5], seasonId: 1}
  */
 const Spring = { name: Symbol('Spring'), months: [3, 4, 5], seasonId: 1 };
 
 /**
- * Stores the season Summer and its corresponding months.
- * Used in {@link SEASONS_ARRAY}.
- * @constant {Object}
+ * Stores the season Summer and its corresponding months. Used in {@link SEASONS_ARRAY}.
+ *
  * @memberof TimeCheckBoxGroup
- * @default {name: Symbol("Summer"), months: [6, 7, 8], seasonId: 2}
+ * @constant {Object}
+ * @default {name: Symbol('Summer'), months: [6, 7, 8], seasonId: 2}
  */
 const Summer = { name: Symbol('Summer'), months: [6, 7, 8], seasonId: 2 };
 
 /**
- * Stores the season Autumn and its corresponding months.
- * Used in {@link SEASONS_ARRAY}.
- * @constant {Object}
+ * Stores the season Autumn and its corresponding months. Used in {@link SEASONS_ARRAY}.
+ *
  * @memberof TimeCheckBoxGroup
- * @default {name: Symbol("Autumn"), months: [9, 10, 11], seasonId: 3}
+ * @constant {Object}
+ * @default {name: Symbol('Autumn'), months: [9, 10, 11], seasonId: 3}
  */
 const Autumn = { name: Symbol('Autumn'), months: [9, 10, 11], seasonId: 3 };
 
 /**
  * Array containing all season indext with the corresponding seasonId
- * @constant {Array}
+ *
  * @memberof TimeCheckBoxGroup
+ * @constant {Array}
  * @default [Winter, Spring, Summer, Autumn]
  * @see {@link TimeCheckBoxGroup.Winter}
  * @see {@link TimeCheckBoxGroup.Spring}
@@ -56,28 +57,25 @@ const Autumn = { name: Symbol('Autumn'), months: [9, 10, 11], seasonId: 3 };
  */
 const SEASONS_ARRAY = [Winter, Spring, Summer, Autumn];
 
-/**
- * enables the user to select a month, season or the whole year
- */
+/** Enables the user to select a month, season or the whole year */
 const TimeCheckBoxGroup: FC = () => {
     /**
-     * keeps track of the selection a user did. Notifies the user if he did perform
-     * an incorrect selection i.e. selecting no month at all.
+     * Keeps track of the selection a user did. Notifies the user if he did perform an incorrect
+     * selection i.e. selecting no month at all.
+     *
      * @constant {Array}
      */
     const [correctSelection, setCorrectSelection] = useState(true);
 
-    /**
-     * A dispatch function to dispatch actions to the redux store.
-     */
+    /** A dispatch function to dispatch actions to the redux store. */
     const dispatch = useAppDispatch();
 
     /**
      * An array containing the selected months.
      *
-     * Examples:
-     * If e.g. January is selected the array would have the following form: [1]
-     * If e.g. February and December are selected the array would look as follows: [2, 12]
+     * Examples: If e.g. January is selected the array would have the following form: [1] If e.g.
+     * February and December are selected the array would look as follows: [2, 12]
+     *
      * @constant {Array}
      */
     const selectedMonths = useSelector(selectPlotMonths);
@@ -85,8 +83,8 @@ const TimeCheckBoxGroup: FC = () => {
     /**
      * Checks if every month is selected.
      *
-     * @returns {boolean} True if all months are selected
      * @function
+     * @returns {boolean} True if all months are selected
      */
     const isEveryMonthChecked = () => {
         let isChecked = true;
@@ -101,8 +99,8 @@ const TimeCheckBoxGroup: FC = () => {
     /**
      * Checks if the "All Year"-Checkbox should be displayed as indeterminate.
      *
-     * @returns {boolean} True if the checkbox should be displayed as indeterminate
      * @function
+     * @returns {boolean} True if the checkbox should be displayed as indeterminate
      */
     const isIndeterminate = () => {
         let indetCount = 0;
@@ -115,14 +113,13 @@ const TimeCheckBoxGroup: FC = () => {
     };
 
     /**
-     * This method is called in the end whenever a data change is handled.
-     * It takes care of dispatching the months, fetching the plot data
-     * and checking whether the selection of the months was correct or not
-     * to adjust the stateful variable that decides whether a warning message
-     * gets displayed or not.
+     * This method is called in the end whenever a data change is handled. It takes care of
+     * dispatching the months, fetching the plot data and checking whether the selection of the
+     * months was correct or not to adjust the stateful variable that decides whether a warning
+     * message gets displayed or not.
      *
-     * @param monthCpy an array of months that should be dispatched against the store
      * @function
+     * @param monthCpy An array of months that should be dispatched against the store
      */
     const updateDataProcedure = (monthCpy: number[]) => {
         if (monthCpy.length === 0) {
@@ -138,6 +135,7 @@ const TimeCheckBoxGroup: FC = () => {
 
     /**
      * Handles the change if the "All Year"-Checkbox is clicked (selected/deselected).
+     *
      * @function
      */
     const handleYearChecked = () => {
@@ -160,8 +158,8 @@ const TimeCheckBoxGroup: FC = () => {
     /**
      * Handles the change if a season is clicked (selected/deselected).
      *
-     * @param seasonId The id of the season that was clicked
      * @function
+     * @param seasonId The id of the season that was clicked
      */
     const handleSeasonChecked = (seasonId: number) => {
         let monthCpy = [...selectedMonths];
@@ -194,8 +192,8 @@ const TimeCheckBoxGroup: FC = () => {
     /**
      * Handles the change if a month is clicked (selected/deselected).
      *
-     * @param monthId - The id of the month that was clicked
      * @function
+     * @param monthId - The id of the month that was clicked
      */
     const handleMonthChecked = (monthId: number) => {
         let monthCpy = [...selectedMonths];
@@ -217,11 +215,11 @@ const TimeCheckBoxGroup: FC = () => {
     /**
      * Constructs a SeasonCheckbox for a given season
      *
-     * @param  name - The season name
-     * @param months - An array of monthId's of the months included in this season
-     * @param  seasonId - The id of this season
-     * @returns         A preconfigured SeasonCheckbox
      * @function
+     * @param name - The season name
+     * @param months - An array of monthId's of the months included in this season
+     * @param seasonId - The id of this season
+     * @returns A preconfigured SeasonCheckbox
      */
     const toSeasonCheckbox = ({
         name,

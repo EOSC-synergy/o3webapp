@@ -1,9 +1,9 @@
 import React, { type ChangeEvent } from 'react';
-import { Grid, Typography, FormControl, TextField, Checkbox } from '@mui/material';
+import { Checkbox, FormControl, Grid, TextField, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { END_YEAR, START_YEAR, O3AS_PLOTS } from 'utils/constants';
+import { END_YEAR, O3AS_PLOTS, START_YEAR } from 'utils/constants';
 import { fetchPlotDataForCurrentModels } from 'services/API/apiSlice';
-import { setYear, setVisibility, selectRefYear, selectVisibility } from 'store/referenceSlice';
+import { selectRefYear, selectVisibility, setVisibility, setYear } from 'store/referenceSlice';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import MuiVisibilityIcon from '@mui/icons-material/Visibility';
 import { selectPlotId } from 'store/plotSlice';
@@ -11,31 +11,36 @@ import { useAppDispatch } from 'store';
 
 /**
  * Enables the user to select a reference year.
+ *
+ * @returns {JSX.Element} A jsx containing a text field to select the reference year
  * @component
- * @returns {JSX.Element} a jsx containing a text field to select the reference year
  */
 const ReferenceYearField: React.FC = () => {
     /**
      * A dispatch function to dispatch actions to the redux store.
+     *
      * @constant {function}
      */
     const dispatch = useAppDispatch();
 
     /**
      * The selected reference year from the redux store.
-     * @see {@link selectRefYear}
+     *
      * @constant {int}
+     * @see {@link selectRefYear}
      */
     const selectedYear = useSelector(selectRefYear);
 
     /**
      * Whether the reference line is visble. Taken from the redux store.
+     *
      * @constant {int}
      * @see {@link selectVisibility}
      */
     const refLineVisibility = useSelector(selectVisibility);
     /**
      * The id of the current plot. Taken from the redux store.
+     *
      * @constant {String}
      * @see {@link selectPlotId}
      */
@@ -43,9 +48,10 @@ const ReferenceYearField: React.FC = () => {
 
     /**
      * Handles the change of the reference year field if it is modified.
+     *
      * @function
+     * @param {Event} event The event that triggered the call of this function.
      * @see {@link fetchPlotDataForCurrentModels}
-     * @param {Event} event the event that triggered the call of this function.
      */
     const handleChangeForRefYear = (event: ChangeEvent<HTMLInputElement>) => {
         if (!isNaN(event.target.valueAsNumber)) {
@@ -62,8 +68,9 @@ const ReferenceYearField: React.FC = () => {
 
     /**
      * Handles the change of the reference line visibility field if it is modified.
+     *
      * @function
-     * @param {Event} event the event that triggered the call of this function
+     * @param {Event} event The event that triggered the call of this function
      */
     const handleShowRefLineClicked = (event: ChangeEvent<HTMLInputElement>) => {
         dispatch(setVisibility({ visible: event.target.checked }));

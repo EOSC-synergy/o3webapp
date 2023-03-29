@@ -11,18 +11,26 @@ type ErrorMessageModalProps = {
 };
 /**
  * Displays a given error message.
- * @component
  *
  * @param isOpen -> whether the error message modal should be displayed
  * @param onClose -> handles closing of the modal
  * @param message -> error message
- * @returns a jsx file containing a modal with the given error message
+ * @returns A jsx file containing a modal with the given error message
+ * @component
  */
 const ErrorMessageModal: React.FC<ErrorMessageModalProps> = ({ isOpen, onClose, message }) => {
     /**
      * The style of the modal.
      *
-     * @constant {{boxShadow: number, transform: string, top: string, bgColor: *, left: string, minWidth: string, position: string}}
+     * @constant {{
+     *     boxShadow: number;
+     *     transform: string;
+     *     top: string;
+     *     bgColor: any;
+     *     left: string;
+     *     minWidth: string;
+     *     position: string;
+     * }}
      */
     const style = {
         position: 'absolute',

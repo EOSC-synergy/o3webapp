@@ -10,12 +10,15 @@ import { useAppDispatch } from '../../../../../store';
 
 /**
  * Enables the user to choose minimum and maximum latitude
+ *
+ * @returns A JSX containing a dropdown and if "individual latitude band" is selected a number input
+ *   field
  * @component
- * @returns a JSX containing a dropdown and if "individual latitude band" is selected a number input field
  */
 const LatitudeBandSelector: FC = () => {
     /**
      * An object containing the current minLat and maxLat Values.
+     *
      * @memberof LatitudeBandSelector
      * @type {Object}
      * @see {@link selectPlotLocation}
@@ -23,22 +26,22 @@ const LatitudeBandSelector: FC = () => {
     const selectedLocation = useSelector(selectPlotLocation);
 
     /**
-     * whether the user selected to enter a custom latitude band
+     * Whether the user selected to enter a custom latitude band
+     *
      * @memberof LatitudeBandSelector
-     * @type {Array}
      * @default [null, null]
+     * @type {Array}
      */
     const [isCustomizable, setIsCustomizable] = useState(false);
 
-    /**
-     * A dispatch function to dispatch actions to the redux store.
-     */
+    /** A dispatch function to dispatch actions to the redux store. */
     const dispatch = useAppDispatch();
 
     /**
-     * handles the change when the user clicked on a new latitude band option
-     * if the user selected custom sets isCustomizable to true
-     * @param {event} event the event that triggered this function call
+     * Handles the change when the user clicked on a new latitude band option if the user selected
+     * custom sets isCustomizable to true
+     *
+     * @param {event} event The event that triggered this function call
      */
     const handleChangeLatitudeBand = (event: SelectChangeEvent<Latitude>) => {
         if (event.target.value === 'custom') {
@@ -108,13 +111,14 @@ export default LatitudeBandSelector;
 /**
  * Finds selectedLocation in latitudeBands.
  *
+ * @memberof LatitudeBandSelector
+ * @function
  * @param isCustomizable
  * @param setIsCustomizable
  * @param selectedLocation
- * @param {boolean} forceCustomizable if true, acts like isCustomizable is true - if false, does nothing
- * @returns the location
- * @memberof LatitudeBandSelector
- * @function
+ * @param {boolean} forceCustomizable If true, acts like isCustomizable is true - if false, does
+ *   nothing
+ * @returns The location
  */
 const findLatitudeBandByLocation = (
     isCustomizable: boolean,

@@ -20,79 +20,98 @@ import { type ErrorReporter } from 'utils/reportError';
 
 /**
  * Stores the name of the CustomLatitudeSelector component as a Symbol.
- * @constant {String}
+ *
  * @memberof Section
+ * @constant {String}
  */
 const CLS_Symbol = Symbol('CustomLatitudeSelector');
 
 /**
  * Stores the name of the LatitudeBandSelector component as a Symbol.
- * @constant {String}
+ *
  * @memberof Section
+ * @constant {String}
  */
 const LBS_Symbol = Symbol('LatitudeBandSelector');
 
 /**
  * Stores the name of the LocationSelector component as a Symbol.
- * @constant {String}
+ *
  * @memberof Section
+ * @constant {String}
  */
 const LS_Symbol = Symbol('LocationSelector');
 
 /**
  * Stores the name of the ModelGroupConfigurator component as a Symbol.
- * @constant {String}
+ *
  * @memberof Section
+ * @constant {String}
  */
 const MGC_Symbol = Symbol('ModelGroupConfigurator');
 
-/** Stores the name of the PlotNameField component as a Symbol.
- * @constant {String}
+/**
+ * Stores the name of the PlotNameField component as a Symbol.
+ *
  * @memberof Section
+ * @constant {String}
  */
 const PNF_Symbol = Symbol('PlotNameField');
 
-/** Stores the name of the ReferenceModelSelector component as a Symbol.
- * @constant {String}
+/**
+ * Stores the name of the ReferenceModelSelector component as a Symbol.
+ *
  * @memberof Section
+ * @constant {String}
  */
 const RMS_Symbol = Symbol('ReferenceModelSelector');
 
-/** Stores the name of the ReferenceYearField component as a Symbol.
- * @constant {String}
+/**
+ * Stores the name of the ReferenceYearField component as a Symbol.
+ *
  * @memberof Section
+ * @constant {String}
  */
 const RYF_Symbol = Symbol('ReferenceYearField');
 
-/** Stores the name of the RegionSelector component as a Symbol.
- * @constant {String}
+/**
+ * Stores the name of the RegionSelector component as a Symbol.
+ *
  * @memberof Section
+ * @constant {String}
  */
 const RS_Symbol = Symbol('RegionSelector');
 
-/** Stores the name of the TimeCheckBoxGroup component as a Symbol.
- * @constant {String}
+/**
+ * Stores the name of the TimeCheckBoxGroup component as a Symbol.
+ *
  * @memberof Section
+ * @constant {String}
  */
 const TCG_Symbol = Symbol('TimeCheckBoxGroup');
 
-/** Stores the name of the XAxisField component as a Symbol.
- * @constant {String}
+/**
+ * Stores the name of the XAxisField component as a Symbol.
+ *
  * @memberof Section
+ * @constant {String}
  */
 const XAF_Symbol = Symbol('XAxisField');
 
-/** Stores the name of the YAxisField component as a Symbol.
- * @constant {String}
+/**
+ * Stores the name of the YAxisField component as a Symbol.
+ *
  * @memberof Section
+ * @constant {String}
  */
 const YAF_Symbol = Symbol('YAxisField');
 
 /**
- * Custom Accordion component
- * inspired by: {@link https://mui.com/components/accordion/#customization}
- * @constant {JSX.Element}
+ * Custom Accordion component inspired by:
+ * {@link https://mui.com/components/accordion/#customization}
+ *
  * @memberof Section
+ * @constant {JSX.Element}
  */
 const Accordion = styled((props: Parameters<typeof MuiAccordion>[0] /* type of props param */) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -107,9 +126,10 @@ const Accordion = styled((props: Parameters<typeof MuiAccordion>[0] /* type of p
 }));
 
 /**
- * custom Accordion summary component
- * @const {JSX.Element}
+ * Custom Accordion summary component
+ *
  * @memberof Section
+ * @constant {JSX.Element}
  */
 const AccordionSummary = styled(
     (props: Parameters<typeof MuiAccordionSummary>[0] /* type of props param */) => (
@@ -134,9 +154,10 @@ const AccordionSummary = styled(
 }));
 
 /**
- * custom AccordionDetails component
- * @const {JSX.Element}
+ * Custom AccordionDetails component
+ *
  * @memberof Section
+ * @constant {JSX.Element}
  */
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
     padding: theme.spacing(2),
@@ -150,21 +171,25 @@ type SectionProps = {
 };
 
 /**
- * an expandable section containing a list of inputComponents as well as a name
- * @component
- * @param components -> an array containing a string representation of all components that should be plotted
+ * An expandable section containing a list of inputComponents as well as a name
+ *
+ * @param components -> an array containing a string representation of all components that should be
+ *   plotted
  * @param name -> the name of the section
  * @param reportError -> used for error handling
- * @returns an accordion that once expanded displays the components specified by the config files and the API doc
+ * @returns An accordion that once expanded displays the components specified by the config files
+ *   and the API doc
+ * @component
  */
 const Section: React.FC<SectionProps> = ({ components, name, reportError }) => {
     /**
-     * maps a given name to a corresponding component from the ./InputComponents folder
-     * if there is no component with the given name, calls the props.reportError function
+     * Maps a given name to a corresponding component from the ./InputComponents folder if there is
+     * no component with the given name, calls the props.reportError function
+     *
+     * @param name_ The name of the component
+     * @param key A unique key for the given input component
+     * @returns {JSX.Element} A component from './InputComponents
      * @public
-     * @param name_ the name of the component
-     * @param key a unique key for the given input component
-     * @returns {JSX.Element} a component from './InputComponents
      */
     function mapNameToComponent(name_: string, key: number) {
         if (reportError !== undefined) {

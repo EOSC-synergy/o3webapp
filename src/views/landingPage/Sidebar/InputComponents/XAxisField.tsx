@@ -1,33 +1,37 @@
 import React, { type ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setDisplayXRange, selectPlotXRange, type YearsBasedXRange } from 'store/plotSlice';
-import { Typography, Grid, TextField, FormControl } from '@mui/material';
-import { START_YEAR, END_YEAR } from 'utils/constants';
+import { selectPlotXRange, setDisplayXRange, type YearsBasedXRange } from 'store/plotSlice';
+import { FormControl, Grid, TextField, Typography } from '@mui/material';
+import { END_YEAR, START_YEAR } from 'utils/constants';
 
 /**
  * Enables the user to choose the range that should be visible on the x-axis of the plot.
+ *
+ * @returns {JSX.Element} A jsx containing two text-fields and labels
  * @component
- * @returns {JSX.Element} a jsx containing two text-fields and labels
  */
 const XAxisField: React.FC = () => {
     /**
      * A dispatch function to dispatch actions to the redux store.
+     *
      * @constant {function}
      */
     const dispatch = useDispatch();
 
     /**
      * An object containing the minX and maxX values for the x-axis.
-     * @see {@link selectPlotXRange}
+     *
      * @constant {Object}
+     * @see {@link selectPlotXRange}
      */
     const {
         years: { minX, maxX },
     } = useSelector(selectPlotXRange) as YearsBasedXRange;
 
     /**
-     * Stores the minX and maxX values
-     * and checks their validation before sending it to the Redux store.
+     * Stores the minX and maxX values and checks their validation before sending it to the Redux
+     * store.
+     *
      * @constant {Array}
      */
     const [stateX, setStateX] = React.useState({ minX, maxX });
@@ -35,9 +39,9 @@ const XAxisField: React.FC = () => {
     /**
      * Handles the change of the minimum value.
      *
+     * @param event {Event} event that triggered the call of this function
      * @see {@link setStateX}
      * @see {@link setDisplayXRange}
-     * @param event {Event} event that triggered the call of this function
      */
     const handleChangeMin = (event: ChangeEvent<HTMLInputElement>) => {
         if (!isNaN(event.target.valueAsNumber)) {

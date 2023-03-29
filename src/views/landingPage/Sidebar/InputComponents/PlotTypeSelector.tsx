@@ -18,22 +18,25 @@ type PlotTypeSelectorProps = {
 };
 /**
  * Enables the user to select a different plot type.
- * @component
+ *
  * @param {Object} props
- * @param {function} props.reportError - function for error handling
- * @returns {JSX.Element} a jsx containing a dropdown to select the plot type
+ * @param {function} props.reportError - Function for error handling
+ * @returns {JSX.Element} A jsx containing a dropdown to select the plot type
+ * @component
  */
 const PlotTypeSelector: FC<PlotTypeSelectorProps> = (props) => {
     const dispatch = useAppDispatch();
 
     /**
      * Get the requested data from the redux store
+     *
      * @constant {Object}
      */
     const plotTypesRequestData = useSelector((state: AppState) => state.api.plotTypes);
 
     /**
      * Currently selected plot type. Taken from the redux store.
+     *
      * @constant {String}
      * @see {@link selectPlotId}
      */
@@ -41,8 +44,9 @@ const PlotTypeSelector: FC<PlotTypeSelectorProps> = (props) => {
 
     /**
      * Calls the redux store to change the plot type
-     * @param event the event that called this function
+     *
      * @function
+     * @param event The event that called this function
      */
     const changePlotType = (event: SelectChangeEvent) => {
         dispatch(setActivePlotId({ plotId: event.target.value as O3AS_PLOTS }));

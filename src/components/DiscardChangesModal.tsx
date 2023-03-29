@@ -18,14 +18,15 @@ type DiscardChangesModalProps = {
 };
 /**
  * Opens a non-closable discard changes modal to ask whether the users want to discard their changes
- * @component
- * @param isOpen whether the dialog modal should be opened or not
- * @param saveChanges function to save changes
- * @param discardChanges function to discard changes
- * @param onClose function to close the dialog, called after saveChanges or discardChanges
+ *
+ * @param isOpen Whether the dialog modal should be opened or not
+ * @param saveChanges Function to save changes
+ * @param discardChanges Function to discard changes
+ * @param onClose Function to close the dialog, called after saveChanges or discardChanges
  * @param closeDialog
- * @returns containing a Dialog that asks the user whether to save or discard changes
- * can only be closed via clicking save or discard changes button
+ * @returns Containing a Dialog that asks the user whether to save or discard changes can only be
+ *   closed via clicking save or discard changes button
+ * @component
  */
 const DiscardChangesModal: React.FC<DiscardChangesModalProps> = ({
     isOpen,
@@ -36,6 +37,7 @@ const DiscardChangesModal: React.FC<DiscardChangesModalProps> = ({
 }) => {
     /**
      * A function to discard changes and close the modal.
+     *
      * @function
      */
     const discardChangesAndCloseDialog = () => {
@@ -45,6 +47,7 @@ const DiscardChangesModal: React.FC<DiscardChangesModalProps> = ({
 
     /**
      * A function to save changes and close the modal.
+     *
      * @function
      */
     const saveChangesAndCloseDialog = () => {
@@ -54,24 +57,28 @@ const DiscardChangesModal: React.FC<DiscardChangesModalProps> = ({
 
     /**
      * Title of the dialog
+     *
      * @constant {string}
      */
     const heading = 'Discard Changes';
 
     /**
      * Question string that is displayed to the user, if the Modal is shown.
+     *
      * @constant {string}
      */
     const dialog = 'Are you sure you want to discard all changes?';
 
     /**
      * Label for the discard changes button.
+     *
      * @constant {string}
      */
     const discardButtonLabel = 'Discard Changes';
 
     /**
      * Label for the save changes button.
+     *
      * @constant {string}
      */
     const saveButtonLabel = 'Save Changes';
@@ -122,22 +129,14 @@ const DiscardChangesModal: React.FC<DiscardChangesModalProps> = ({
 };
 
 DiscardChangesModal.propTypes = {
-    /**
-     * Tracks whether the dialog modal should be opened or not
-     */
+    /** Tracks whether the dialog modal should be opened or not */
     isOpen: PropTypes.bool.isRequired,
-    /**
-     * A function to save changes
-     */
+    /** A function to save changes */
     saveChanges: PropTypes.func.isRequired,
     discardChanges: PropTypes.func.isRequired,
-    /**
-     * A function to discard changes
-     */
+    /** A function to discard changes */
     onClose: PropTypes.func.isRequired,
-    /**
-     * A function to close the dialog, called after saveChanges or discardChanges
-     */
+    /** A function to close the dialog, called after saveChanges or discardChanges */
     closeDialog: PropTypes.func.isRequired,
 };
 

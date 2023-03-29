@@ -3,36 +3,36 @@
 /**
  * This functions accepts an array, sorts it in-place and returns a reference to the same array.
  *
- * @param arr Array of numbers
- * @returns the array sorted ascending
  * @function
+ * @param arr Array of numbers
+ * @returns The array sorted ascending
  */
 export const asc = (arr: number[]) => arr.sort((a, b) => a - b);
 
 /**
  * This function accepts an array of numbers and sums over its elements.
  *
- * @param arr Array of numbers
- * @returns the sum of all elements
  * @function
+ * @param arr Array of numbers
+ * @returns The sum of all elements
  */
 export const sum = (arr: number[]) => arr.reduce((a, b) => a + b, 0);
 
 /**
  * This function calculates the mean of a given array of numbers
  *
- * @param arr Array of numbers
- * @returns the mean of all elements in the given array
  * @function
+ * @param arr Array of numbers
+ * @returns The mean of all elements in the given array
  */
 export const mean = (arr: number[]) => sum(arr) / arr.length;
 
 /**
  * This function calculates the standard deviation of a given array.
  *
- * @param arr Array of numbers
- * @returns the standard deviation of the given array
  * @function
+ * @param arr Array of numbers
+ * @returns The standard deviation of the given array
  */
 export const std = (arr: number[]) => {
     const mu = mean(arr);
@@ -41,13 +41,13 @@ export const std = (arr: number[]) => {
 };
 
 /**
- * Calculate quantiles so, that the calculation of
- * quartiles are based on method 1: {@link https://en.wikipedia.org/wiki/Quartile}
+ * Calculate quantiles so, that the calculation of quartiles are based on method 1:
+ * {@link https://en.wikipedia.org/wiki/Quartile}
  *
- * @param arr the array to calculate the quantile of
- * @param q the quantile
- * @returns the number corresponding to the given quantile
  * @function
+ * @param arr The array to calculate the quantile of
+ * @param q The quantile
+ * @returns The number corresponding to the given quantile
  */
 export const quantile = (arr: number[], q: number) => {
     const sorted = asc(arr);
@@ -62,35 +62,35 @@ export const quantile = (arr: number[], q: number) => {
 /**
  * Returns the lower quartile of the given array
  *
- * @param arr the given array
- * @returns the lower quartile
  * @function
+ * @param arr The given array
+ * @returns The lower quartile
  */
 export const q25 = (arr: number[]) => quantile(arr, 0.25);
 
 /**
  * Returns the middle quartile of the given array
  *
- * @param arr the given array
- * @returns the middle quartile
  * @function
+ * @param arr The given array
+ * @returns The middle quartile
  */
 const q50 = (arr: number[]) => quantile(arr, 0.5);
 
 /**
  * Returns the upper quartile of the given array
  *
- * @param arr the given array
- * @returns the upper quartile
  * @function
+ * @param arr The given array
+ * @returns The upper quartile
  */
 export const q75 = (arr: number[]) => quantile(arr, 0.75);
 
 /**
  * Returns the median of the given array
  *
- * @param arr the given array
- * @returns the median
  * @function
+ * @param arr The given array
+ * @returns The median
  */
 export const median = (arr: number[]) => q50(arr);

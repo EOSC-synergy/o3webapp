@@ -1,16 +1,18 @@
 /**
  * A module for the generation of CSV files containing the plot data in the CSV format.
- * @module CSV */ // used for auto generation of JSDocs with better-docs
+ *
+ * @module CSV
+ */ // used for auto generation of JSDocs with better-docs
 
 /**
- * This function translates a javascript object or a json into a string formatted
- * as in csv file format.
+ * This function translates a javascript object or a json into a string formatted as in csv file
+ * format.
  *
  * Example input format: An array with objects where each element represents a line in the csv file
  * and each key with corresponding value represents a column.
  *
- * @param {Array.<Object>} objArray contains the data that should be converted to csv
- * @returns a string containing the csv formatted data
+ * @param {Object[]} objArray Contains the data that should be converted to csv
+ * @returns A string containing the csv formatted data
  */
 export function generateCsv(objArray: Record<string, unknown>[] | string) {
     const array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;

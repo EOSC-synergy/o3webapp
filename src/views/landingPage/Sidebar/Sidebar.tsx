@@ -8,7 +8,7 @@ import DownloadModal from './DownloadModal';
 import { selectPlotId } from 'store/plotSlice';
 import { useSelector } from 'react-redux';
 import PlotTypeSelector from './InputComponents/PlotTypeSelector';
-import { Button, Typography, Divider, SwipeableDrawer, Drawer } from '@mui/material';
+import { Button, Divider, Drawer, SwipeableDrawer, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
@@ -17,16 +17,18 @@ import { type ErrorReporter } from 'utils/reportError';
 
 /**
  * The default width of the sidebar / drawer in pixels.
- * @constant {int}
+ *
  * @memberof Sidebar
+ * @constant {int}
  * @default 400
  */
 const DRAWER_WIDTH = 400;
 
 /**
  * Defining a drawer-header section at the beginning of a drawer
- * @constant {JSX.Element}
+ *
  * @memberof Sidebar
+ * @constant {JSX.Element}
  */
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -43,36 +45,42 @@ type SidebarProps = {
     onOpen: () => void;
 };
 /**
- * Contains all input components responsible for the modification
- * of the plot settings.
- * @component
+ * Contains all input components responsible for the modification of the plot settings.
+ *
  * @param {Object} props
- * @param {boolean} props.isOpen -  whether sideBar should be open
- * @param {function} props.onClose - handles closing of the sidebar
- * @param {function} props.reportError - enables component to report an error
- * @param {function} props.onOpen - handles opening of the sidebar
- * @returns {JSX.Element} a jsx containing a sidebar with sections containing input components, a download button and a plotType dropdown
+ * @param {boolean} props.isOpen - Whether sideBar should be open
+ * @param {function} props.onClose - Handles closing of the sidebar
+ * @param {function} props.reportError - Enables component to report an error
+ * @param {function} props.onOpen - Handles opening of the sidebar
+ * @returns {JSX.Element} A jsx containing a sidebar with sections containing input components, a
+ *   download button and a plotType dropdown
+ * @component
  */
 const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, reportError, onOpen }) => {
     /**
-     * The theme used in this sideBar provided by Material UI's [createTheme]{@link https://mui.com/customization/theming/}.
+     * The theme used in this sideBar provided by Material UI's
+     * [createTheme]{@link https://mui.com/customization/theming/}.
+     *
      * @constant {Object}
      */
     const theme = useTheme();
 
     /**
      * State to track whether the download modal is visible
+     *
      * @constant {Array}
      */
     const [isDownloadModalVisible, setDownloadModalVisible] = useState(false);
     /**
      * State to track which section is currently expanded
+     *
      * @constant {Array}
      */
     const [expandedSection, setExpandedSection] = useState<number | null>(null); // -> idx of sections array
 
     /**
-     * closes the download modal
+     * Closes the download modal
+     *
      * @function
      */
     const closeDownloadModal = () => {
@@ -80,7 +88,8 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, reportError, onOpen }) => 
     };
 
     /**
-     * shows the download modal
+     * Shows the download modal
+     *
      * @function
      */
     const openDownloadModal = () => {
@@ -88,7 +97,8 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, reportError, onOpen }) => 
     };
 
     /**
-     * collapses all sections
+     * Collapses all sections
+     *
      * @function
      */
     const collapseSection = () => {
@@ -96,10 +106,11 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, reportError, onOpen }) => 
     };
 
     /**
-     * expands section with id (index in section array) 'i'
-     * collapses all other currently expanded sections
-     * @param {int} i the section that should be expanded
+     * Expands section with id (index in section array) 'i' collapses all other currently expanded
+     * sections
+     *
      * @function
+     * @param {int} i The section that should be expanded
      */
     const expandSection = (i: number) => {
         setExpandedSection(i);
@@ -107,6 +118,7 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, reportError, onOpen }) => 
 
     /**
      * The id of the selected plot.
+     *
      * @function
      * @see {@link selectPlotId}
      */
@@ -114,6 +126,7 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, reportError, onOpen }) => 
 
     /**
      * Creates the structure of the sections depending on the type of plot and the config file.
+     *
      * @function
      */
     const createSectionStructure = () => {

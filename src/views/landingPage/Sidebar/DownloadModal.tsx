@@ -1,17 +1,17 @@
 import React from 'react';
 import {
+    Button,
+    Card,
+    CardContent,
     FormControl,
+    IconButton,
     InputLabel,
     MenuItem,
     Modal,
     Select,
+    type SelectChangeEvent,
     Typography,
-    Card,
-    Button,
-    IconButton,
-    CardContent,
 } from '@mui/material';
-import { type SelectChangeEvent } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { downloadGraphAsPDF } from 'services/downloading/pdf/pdfCreator';
 import {
@@ -21,7 +21,7 @@ import {
 } from 'services/downloading/otherFormats';
 import { useSelector } from 'react-redux';
 import { selectPlotId, selectPlotTitle } from 'store/plotSlice';
-import { selectActivePlotData, REQUEST_STATE } from 'services/API/apiSlice';
+import { REQUEST_STATE, selectActivePlotData } from 'services/API/apiSlice';
 import { type GlobalModelState, selectAllModelGroups } from 'store/modelsSlice';
 import CloseIcon from '@mui/icons-material/Close';
 import CardHeader from '@mui/material/CardHeader';
@@ -31,8 +31,9 @@ import { type ErrorReporter } from 'utils/reportError';
 
 /**
  * The file formats which can be selected in the dropdown menu.
- * @constant {Array}
+ *
  * @memberof DownloadModal
+ * @constant {Array}
  */
 const fileFormats = [Symbol('CSV'), Symbol('PDF'), Symbol('PNG'), Symbol('SVG')];
 
@@ -44,46 +45,53 @@ type DownloadModalProps = {
 
 /**
  * Opens a modal where the user can select the file format and download the plot.
+ *
+ * @param isOpen Whether modal should be visible
+ * @param onClose Handles closing the modal
+ * @param reportError Enabling to report an error
+ * @returns {JSX.Element} A jsx containing a modal with a dropdown to choose the file type and a
+ *   download button
  * @component
- * @param isOpen whether modal should be visible
- * @param onClose handles closing the modal
- * @param reportError enabling to report an error
- * @returns {JSX.Element} a jsx containing a modal with a dropdown to choose the file type and a download button
  */
 const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose, reportError }) => {
     /**
      * An array containing all model groups.
+     *
      * @constant {Array}
      */
     const modelGroups = useSelector((state: GlobalModelState) => selectAllModelGroups(state));
 
     /**
      * The plot id of the graph (tco3_zm, tco3_return etc.).
+     *
      * @constant {string}
      */
     const plotId = useSelector(selectPlotId);
 
     /**
      * The active data of the current plot which contains information about the models.
-     * @constant {Object}
      *
+     * @constant {Object}
      */
     const activeData = useSelector((state: AppState) => selectActivePlotData(state, plotId));
 
     /**
      * The plot title which is shown above the graph.
+     *
      * @constant {string}
      */
     const plotTitle = useSelector(selectPlotTitle);
 
     /**
      * The selected file format.
+     *
      * @constant {string}
      */
     const [selectedFileFormat, setSelectedFileFormat] = React.useState('');
 
     /**
      * An object containing the information about the style of the DownloadModal.
+     *
      * @constant {Object}
      */
     const style = {
@@ -99,6 +107,7 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose, reportEr
 
     /**
      * Handles the download of the plot, if the download button is clicked.
+     *
      * @function
      */
     const handleDownloadPlot = () => {
@@ -120,8 +129,8 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose, reportEr
     /**
      * Changes the selected file format.
      *
-     * @param {Object} event    The event object given by the dropdown menu.
      * @function
+     * @param {Object} event The event object given by the dropdown menu.
      */
     const changeFileFormat = (event: SelectChangeEvent) => {
         setSelectedFileFormat(event.target.value);

@@ -26,21 +26,20 @@ import { isEmpty } from 'lodash';
 import { AppDispatch, AppState } from 'store';
 
 /**
- * This method uses the big-integer library
- * to convert a number in string format
- * from one base to another.
+ * This method uses the big-integer library to convert a number in string format from one base to
+ * another.
  *
- * (The primitive type BigInt is not being used, since it is not supported in React
- * and common workarounds like
+ * (The primitive type BigInt is not being used, since it is not supported in React and common
+ * workarounds like
  *
- * if (typeof BigInt === 'undefined') global.BigInt = require('big-integer');
+ * If (typeof BigInt === 'undefined') global.BigInt = require('big-integer');
  *
- * didn't work.)
+ * Didn't work.)
  *
- * @param str the input number as a string
- * @param baseFrom the base of the input number
- * @param baseTo the base of the output number
- * @returns {string} the output number as a string
+ * @param str The input number as a string
+ * @param baseFrom The base of the input number
+ * @param baseTo The base of the output number
+ * @returns {string} The output number as a string
  */
 function parseBigInt(str: string, baseFrom: number, baseTo: number) {
     let bigint = bigInt(0);
@@ -123,7 +122,7 @@ export function generateNewUrl(state: AppState) {
  *
  * @param dispatch
  * @param state
- * @param query a object with the query parameters
+ * @param query A object with the query parameters
  */
 export function updateStoreWithQuery(
     dispatch: AppDispatch,

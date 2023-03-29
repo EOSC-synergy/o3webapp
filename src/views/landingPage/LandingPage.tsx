@@ -5,15 +5,18 @@ import { styled } from '@mui/material/styles';
 
 /**
  * The width of the Drawer.
- * @see {@link Sidebar}
+ *
+ * @memberof LandingPage
  * @constant {int}
  * @default 400
- * @memberof LandingPage
+ * @see {@link Sidebar}
  */
 const drawerWidth = 400;
 
 /**
- * Main component, that can be collapsed in order to see both the sidebar and the landing page next to each other.
+ * Main component, that can be collapsed in order to see both the sidebar and the landing page next
+ * to each other.
+ *
  * @memberof LandingPage
  * @constant {JSX.Element}
  */
@@ -45,12 +48,13 @@ type LandingPageProps = {
 
 /**
  * Main view of web page. Wrapper for all other components on the landing PAge.
+ *
+ * @param reportError Function to report an error
+ * @param openSidebar Function to open the sidebar
+ * @param closeSidebar Function to close the sidebar
+ * @param isSidebarOpen Boolean to indicate whether the sidebar is open or not
+ * @returns {JSX.Element} A jsx containing all main components
  * @component
- * @param reportError function to report an error
- * @param openSidebar function to open the sidebar
- * @param closeSidebar function to close the sidebar
- * @param isSidebarOpen boolean to indicate whether the sidebar is open or not
- * @returns {JSX.Element} a jsx containing all main components
  */
 const LandingPage: React.FC<LandingPageProps> = ({
     reportError,
@@ -59,8 +63,9 @@ const LandingPage: React.FC<LandingPageProps> = ({
     isSidebarOpen,
 }) => {
     /**
-     * state to keep track of the current height of the landing Page.
-     * @const {Array}
+     * State to keep track of the current height of the landing Page.
+     *
+     * @constant {Array}
      * @default 0
      */
     const [landingPageHeight, setLandingPageHeight] = React.useState(0);

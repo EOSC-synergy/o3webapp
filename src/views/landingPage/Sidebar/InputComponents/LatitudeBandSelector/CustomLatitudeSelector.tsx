@@ -1,6 +1,6 @@
 import React, { type FC, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Grid, TextField, FormControl } from '@mui/material';
+import { FormControl, Grid, TextField } from '@mui/material';
 import { selectPlotLocation, setLocation } from 'store/plotSlice';
 import { fetchPlotDataForCurrentModels } from 'services/API/apiSlice';
 import { type Latitude } from 'utils/constants';
@@ -8,53 +8,59 @@ import { useAppDispatch } from 'store';
 
 /**
  * A component to select the specific min and max latitude values for the custom region.
+ *
  * @memberof LatitudeBandSelector
- * @returns    JSX with the component
+ * @returns JSX with the component
  */
 const CustomLatitudeSelector: FC = () => {
     /**
      * The biggest possible latitude value.
+     *
      * @memberof CustomLatitudeSelector
      */
     const LATITUDE_BAND_MAX_VALUE = 90;
 
     /**
      * The smallest possible latitude value.
+     *
      * @memberof CustomLatitudeSelector
      */
     const LATITUDE_BAND_MIN_VALUE = -90;
 
-    /**
-     * A dispatch function to dispatch actions to the redux store.
-     */
+    /** A dispatch function to dispatch actions to the redux store. */
     const dispatch = useAppDispatch();
 
     /**
      * An object containing the current minLat and maxLat Values.
+     *
      * @constant {Object}
      */
     const selectedLocation = useSelector(selectPlotLocation) as Latitude;
 
     /**
      * The currently selected minLat value.
+     *
      * @constant {number}
      */
     const minLat = selectedLocation.minLat;
 
     /**
      * The currently selected maxLat value.
+     *
      * @constant {number}
      */
     const maxLat = selectedLocation.maxLat;
 
     /**
      * A state variable to store the state of the min. latitude box.
+     *
      * @constant
      */
     const [minLatState, setMinLatState] = useState(minLat);
 
     /**
      * A state variable to store the state of the max. latitude box.
+     *
      * @constant
      */
     const [maxLatState, setMaxLatState] = useState(maxLat);
@@ -62,8 +68,8 @@ const CustomLatitudeSelector: FC = () => {
     /**
      * Handles the change if the min. latitude box is changed.
      *
-     * @param event The event object holding the new value of the text box
      * @function
+     * @param event The event object holding the new value of the text box
      */
     const handleChangeMin = (event: React.ChangeEvent<HTMLInputElement>) => {
         const selectedLocationCopy = { ...selectedLocation };
@@ -90,8 +96,8 @@ const CustomLatitudeSelector: FC = () => {
     /**
      * Handles the change if the max. latitude box is changed.
      *
-     * @param event The event object holding the new value of the text box
      * @function
+     * @param event The event object holding the new value of the text box
      */
     const handleChangeMax = (event: React.ChangeEvent<HTMLInputElement>) => {
         const selectedLocationCopy = { ...selectedLocation };
@@ -118,8 +124,8 @@ const CustomLatitudeSelector: FC = () => {
     /**
      * A function to generate the helper text for the min. latitude box.
      *
-     * @returns Text that should be displayed in the helper text
      * @function
+     * @returns Text that should be displayed in the helper text
      */
     const generateHelperTextMin = () => {
         if (typeof minLatState === 'string') {
@@ -142,8 +148,8 @@ const CustomLatitudeSelector: FC = () => {
     /**
      * A function to generate the helper text for the max. latitude box.
      *
-     * @returns {String}     Text that should be displayed in the helper text
      * @function
+     * @returns {String} Text that should be displayed in the helper text
      */
     const generateHelperTextMax = () => {
         if (typeof maxLatState === 'string') {

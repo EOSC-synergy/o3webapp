@@ -12,14 +12,14 @@ type SeasonCheckBoxGroupProps = {
 /**
  * Enables the user to select/deselect seasons.
  *
+ * @param label - Label of this season
+ * @param seasonId - The id of the season
+ * @param months - Array containing the months with monthId and selected status.
+ * @param handleSeasonClicked - Function to handle if the whole season got selected / deselected
+ * @param handleMonthClicked - Function to handle if a month got selected / deselected
+ * @param reportError - A function to report an error
+ * @returns {JSX.Element} A jsx containing a checkbox-group with given months and label
  * @component
- * @param label - label of this season
- * @param seasonId - the id of the season
- * @param months - array containing the months with monthId and selected status.
- * @param handleSeasonClicked - function to handle if the whole season got selected / deselected
- * @param handleMonthClicked - function to handle if a month got selected / deselected
- * @param reportError - a function to report an error
- * @returns {JSX.Element} a jsx containing a checkbox-group with given months and label
  */
 const SeasonCheckBoxGroup: FC<SeasonCheckBoxGroupProps> = ({
     label,
@@ -38,7 +38,8 @@ const SeasonCheckBoxGroup: FC<SeasonCheckBoxGroupProps> = ({
     };
 
     /**
-     * Checks if the SeasonCheckbox should be displayed as indeterminate, i.e. neither none nor all months are selected.
+     * Checks if the SeasonCheckbox should be displayed as indeterminate, i.e. neither none nor all
+     * months are selected.
      *
      * @returns True if the SeasonCheckbox should be displayed as indeterminate
      */

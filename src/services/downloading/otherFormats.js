@@ -4,16 +4,16 @@ import { generateCsv } from '../csvParser';
 /**
  * This module is responsible for providing functions to download the plot as png, svg or csv.
  *
- * @see [PdfCreator]{@link module:PdfCreator} for pdf download
  * @module DownloadNotPdf
- * */ // used for auto generation of JSDocs with better-docs
+ * @see [PdfCreator]{@link module:PdfCreator} for pdf download
+ */ // used for auto generation of JSDocs with better-docs
 
 /**
  * Downloads the graph as a PNG file.
  *
- * @param {string} fileName the file name of the PNG
- * @returns a promise which provides the user to download the PNG file, if it was successful.
  * @function
+ * @param {string} fileName The file name of the PNG
+ * @returns A promise which provides the user to download the PNG file, if it was successful.
  */
 export const downloadGraphAsPNG = (fileName) => {
     return new Promise((resolve, reject) => {
@@ -42,9 +42,9 @@ export const downloadGraphAsPNG = (fileName) => {
 /**
  * Downloads the graph as an SVG file.
  *
- * @param {string} fileName the File name of the SVG
- * @returns a promise which provides the user to download the SVG file, if it was successful.
  * @function
+ * @param {string} fileName The File name of the SVG
+ * @returns A promise which provides the user to download the SVG file, if it was successful.
  */
 export const downloadGraphAsSVG = (fileName) => {
     return new Promise((resolve) => {
@@ -58,9 +58,10 @@ export const downloadGraphAsSVG = (fileName) => {
 
 /**
  * Downloads the graph as a CSV file.
- * @param {string} plotTitle - the title of the plot
- * @param {string} plotId - the current id of the plot
+ *
  * @function
+ * @param {string} plotTitle - The title of the plot
+ * @param {string} plotId - The current id of the plot
  */
 export const downloadGraphAsCSV = (plotTitle, plotId, reportError) => {
     let series, seriesX, categoryLabels, seriesNames;
@@ -113,9 +114,9 @@ export const downloadGraphAsCSV = (plotTitle, plotId, reportError) => {
 /**
  * Downloads a given string interpreted as CSV.
  *
- * @param {string} fileName name of the downloadable file
- * @param {string} csvString the content of this file
  * @function
+ * @param {string} fileName Name of the downloadable file
+ * @param {string} csvString The content of this file
  */
 const downloadCsvFile = ({ fileName, csvString }) => {
     const blob = new Blob([csvString]);
@@ -133,9 +134,9 @@ const downloadCsvFile = ({ fileName, csvString }) => {
 /**
  * Downloads the Base64 file to the specified Base64 data.
  *
- * @param {string} base64Data the given Base64 data
- * @param {string} fileName the file name
  * @function
+ * @param {string} base64Data The given Base64 data
+ * @param {string} fileName The file name
  */
 const downloadBase64File = (base64Data, fileName) => {
     const downloadLink = document.createElement('a');

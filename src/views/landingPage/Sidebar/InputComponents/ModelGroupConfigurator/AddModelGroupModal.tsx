@@ -1,57 +1,60 @@
 import React, { type ChangeEvent, type FC, useEffect, useState } from 'react';
-import { type GlobalModelState, type ModelId, setModelsOfModelGroup } from 'store/modelsSlice';
+import {
+    type GlobalModelState,
+    type ModelId,
+    selectModelDataOfGroup,
+    selectNameOfGroup,
+    setModelsOfModelGroup,
+} from 'store/modelsSlice';
 import { useTheme } from '@mui/material/styles';
-import { CardContent, Divider, IconButton, ListItemButton, Modal, TextField } from '@mui/material';
+import {
+    Card,
+    CardContent,
+    Divider,
+    IconButton,
+    ListItemButton,
+    Modal,
+    TextField,
+    Typography,
+} from '@mui/material';
 import { Box } from '@mui/system';
-import { Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import List from '@mui/material/List';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
-import { Card } from '@mui/material';
 import CardActions from '@mui/material/CardActions';
 import CircularProgress from '@mui/material/CircularProgress';
 import CardHeader from '@mui/material/CardHeader';
 import Searchbar from 'components/SearchBar';
 import { convertModelName } from 'utils/ModelNameConverter';
-import { union, not, intersection } from 'utils/arrayOperations';
+import { intersection, not, union } from 'utils/arrayOperations';
 import CloseIcon from '@mui/icons-material/Close';
 import Alert from '@mui/material/Alert';
 import DiscardChangesModal from 'components/DiscardChangesModal';
 import { useSelector } from 'react-redux';
 import { fetchPlotDataForCurrentModels, REQUEST_STATE } from 'services/API/apiSlice';
-import { selectNameOfGroup, selectModelDataOfGroup } from 'store/modelsSlice';
 import { type AppState, useAppDispatch, useAppStore } from 'store';
 import { type ErrorReporter } from 'utils/reportError';
 
 type AddModelGroupModalProps = {
-    /**
-     * Function for error handling
-     */
+    /** Function for error handling */
     reportError: ErrorReporter;
     onClose: () => void;
     isOpen: boolean;
-    /**
-     * Function to call if modal should be closed
-     */
+    /** Function to call if modal should be closed */
     setOpen: (open: boolean) => void;
-    /**
-     * Boolean whether the modal should be visible
-     */
+    /** Boolean whether the modal should be visible */
     refresh: boolean;
     /**
-     * Number identifying the model group,
-     * if this model should be used to edit an existing model group
+     * Number identifying the model group, if this model should be used to edit an existing model
+     * group
      */
     modelGroupId?: number;
 };
 
-/**
- * Opens a modal where the user can add a new model group.
- * Used in {@link ModelGroupConfigurator}.
- */
+/** Opens a modal where the user can add a new model group. Used in {@link ModelGroupConfigurator}. */
 const AddModelGroupModal: FC<AddModelGroupModalProps> = ({
     modelGroupId = -1,
     onClose,
@@ -64,24 +67,28 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = ({
 
     /**
      * True if the Modal is open in the "Edit Mode".
+     *
      * @constant {boolean}
      */
     const isEditMode = modelGroupId !== -1;
 
     /**
      * The label in the card heading.
+     *
      * @constant {string}
      */
     const addModelLabel = isEditMode ? 'Edit Model Group Members' : 'Add Model Group';
 
     /**
      * A function to dispatch actions to the redux store.
+     *
      * @function
      */
     const dispatch = useAppDispatch();
 
     /**
      * Selected modelList data.
+     *
      * @constant {Object}
      */
     const modelListRequestedData = useSelector((state: AppState) => state.api.models);
@@ -100,13 +107,15 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = ({
 
     /**
      * Array containing all currently checked models.
+     *
      * @constant {Array}
      */
     const [checked, setChecked] = useState<ModelId[]>([]);
 
     /**
-     * Array containing all models, that are currently plotted in the right transfer list
-     * -> models that should eventually be added
+     * Array containing all models, that are currently plotted in the right transfer list -> models
+     * that should eventually be added
+     *
      * @constant {Array}
      */
     const storeRight = Object.keys(
@@ -115,13 +124,15 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = ({
     const [right, setRight] = useState<ModelId[]>(storeRight);
 
     /**
-     * Array containing all models that should currently be visibile
-     * because of the search function those might differ from all models.
+     * Array containing all models that should currently be visibile because of the search function
+     * those might differ from all models.
+     *
      * @constant {Array}
      */
     const [visible, setVisible] = useState<ModelId[]>([]);
     /**
      * The currently enetered group name.
+     *
      * @constant {string}
      */
     const storeGroupName = useSelector((state: AppState) => selectNameOfGroup(state, modelGroupId));
@@ -129,12 +140,14 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = ({
 
     /**
      * Stores the error message if an error occured.
+     *
      * @constant {string}
      */
     const [errorMessage, setErrorMessage] = useState('');
 
     /**
      * The object containing the information about the theming of the webapp
+     *
      * @constant {Object}
      */
     const theme = useTheme();
@@ -167,50 +180,57 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = ({
 
     /**
      * Returns how many models in the provided array are currently checked
-     * @param {Array} models models to check
-     * @returns the number of checked models in models
+     *
      * @function
+     * @param {Array} models Models to check
+     * @returns The number of checked models in models
      */
     const numberOfChecked = (models: ModelId[]) => intersection(checked, models).length;
     /**
-     * All models that are currently on the left side
-     * -> all models that are not currently on the right side are on the left side
+     * All models that are currently on the left side -> all models that are not currently on the
+     * right side are on the left side
+     *
      * @constant {Array}
      */
     const left = not(allModels, right);
     /**
      * An array containing all models that are currently on the left side and are checked
+     *
      * @constant {Array}
      */
     const leftChecked = intersection(checked, left);
     /**
      * An array containing all models that are currently on the right side and are checked
+     *
      * @constant {Array}
      */
     const rightChecked = intersection(checked, right);
     /**
      * An array containing all models that are currently on the left side and are visible
+     *
      * @constant {Array}
      */
     const leftVisible = intersection(visible, left);
     /**
      * An array containing all models that are currently on the right side and are visible
+     *
      * @constant {Array}
      */
     const rightVisible = intersection(visible, right);
 
     /**
      * This state tracks whether the discard changes modal is currently visible.
+     *
      * @default false
      */
     const [discardChangesOpen, setDiscardChangesOpen] = useState(false);
 
     /**
-     * Toggles one element
-     * i.e. checks the element if it had not been checked before
-     * and unchecks it if it has been checked
-     * @param {String} modelId the id of the model that has been clicked
+     * Toggles one element i.e. checks the element if it had not been checked before and unchecks it
+     * if it has been checked
+     *
      * @function
+     * @param {String} modelId The id of the model that has been clicked
      */
     const handleChangeElement = (modelId: ModelId) => () => {
         const currentIndex = checked.indexOf(modelId);
@@ -225,11 +245,11 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = ({
     };
 
     /**
-     * Toggles whole list of elements
-     * i.e. checks all if one element in items has not been checked before
-     * and unchecks all if all elements in items have been checked
-     * @param {Array} modelIds array containing model ids to check / uncheck
+     * Toggles whole list of elements i.e. checks all if one element in items has not been checked
+     * before and unchecks all if all elements in items have been checked
+     *
      * @function
+     * @param {Array} modelIds Array containing model ids to check / uncheck
      */
     const handleToggleAll = (modelIds: ModelId[]) => () => {
         if (numberOfChecked(modelIds) === modelIds.length) {
@@ -240,8 +260,9 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = ({
     };
 
     /**
-     * Moves all checked models from the right list to the left and unchecks them
-     * -> Appends all leftChecked models to the right array and removes them from the checked array
+     * Moves all checked models from the right list to the left and unchecks them -> Appends all
+     * leftChecked models to the right array and removes them from the checked array
+     *
      * @function
      */
     const handleCheckedRight = () => {
@@ -250,8 +271,9 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = ({
     };
 
     /**
-     * Moves all checked models from the left to right and unchecks them
-     * -> Removes all rightChecked models from the right and checked array
+     * Moves all checked models from the left to right and unchecks them -> Removes all rightChecked
+     * models from the right and checked array
+     *
      * @function
      */
     const handleCheckedLeft = () => {
@@ -260,8 +282,9 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = ({
     };
 
     /**
-     * Function that is called if the the changes of a existing model group need to be applied
-     * or a new model group has to be added.#d3d3d3
+     * Function that is called if the the changes of a existing model group need to be applied or a
+     * new model group has to be added.#d3d3d3
+     *
      * @function
      */
     const addOrEditGroup = () => {
@@ -286,18 +309,20 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = ({
     };
 
     /**
-     * Sets the currently visible models by a provided array of indices.
-     * It also overwrites old visibilities.
-     * @param {Array} visibleModels array of models that should be currently visible
+     * Sets the currently visible models by a provided array of indices. It also overwrites old
+     * visibilities.
+     *
      * @function
+     * @param {Array} visibleModels Array of models that should be currently visible
      */
     const setCurrentlyVisibleModels = (visibleModels: ModelId[]) => {
         setVisible(visibleModels);
     };
 
     /**
-     * Tries to safe the current made changes, if this fails it re-opens the modal once again
-     * to enable the user to correct the mistake
+     * Tries to safe the current made changes, if this fails it re-opens the modal once again to
+     * enable the user to correct the mistake
+     *
      * @function
      */
     const saveChanges = () => {
@@ -309,11 +334,13 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = ({
 
     /**
      * Renders a custom transfer list component with provided lists
-     * @param models array of modelIDs that belong to the list
-     * @param modelsChecked array of modelIDs that are currently checked
-     * @param modelsVisible array of modelIDS that are currently visible
-     * @returns a Card containing a custom transfer list and a warning if checked models are currently not visible
+     *
      * @function
+     * @param models Array of modelIDs that belong to the list
+     * @param modelsChecked Array of modelIDs that are currently checked
+     * @param modelsVisible Array of modelIDS that are currently visible
+     * @returns A Card containing a custom transfer list and a warning if checked models are
+     *   currently not visible
      */
     const customList = (models: ModelId[], modelsChecked: ModelId[], modelsVisible: ModelId[]) => {
         const modelsCheckedInvisible = intersection(not(models, modelsVisible), modelsChecked);
@@ -395,6 +422,7 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = ({
 
     /**
      * Style of the modal.
+     *
      * @constant {Object}
      */
     const style = {
@@ -414,18 +442,20 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = ({
 
     /**
      * Updates the current group name.
-     * @param {Object} event    The event that called this function
+     *
      * @function
+     * @param {Object} event The event that called this function
      */
     const updateGroupName = (event: ChangeEvent<HTMLInputElement>) => {
         setGroupName(event.target.value);
     };
 
     /**
-     * This function is called if the modal is closed and the changes have to be discarded.
-     * Discards all changes made since the modal was last opened.
-     * @returns {boolean} whether the user made changes to the current model group
+     * This function is called if the modal is closed and the changes have to be discarded. Discards
+     * all changes made since the modal was last opened.
+     *
      * @function
+     * @returns {boolean} Whether the user made changes to the current model group
      */
     const hasChanges = () => {
         if (!isEditMode) {
@@ -453,8 +483,9 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = ({
     };
 
     /**
-     * Default handler that is called when the modal is closed when clicking outside of the modal
-     * or by clicking the close icon.
+     * Default handler that is called when the modal is closed when clicking outside of the modal or
+     * by clicking the close icon.
+     *
      * @function
      */
     const closeModal = () => {
