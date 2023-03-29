@@ -1,26 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { type FC, FocusEventHandler, KeyboardEventHandler, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { selectPlotId, setTitle, selectPlotTitle } from '../../../../../store/plotSlice';
+import { selectPlotId, setTitle, selectPlotTitle } from 'store/plotSlice';
 import { Divider, Typography, Box, FormControl, TextField } from '@mui/material';
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 
 /**
  * The max. length of the plot name. Exported due to testing reasons.
- * @constant {int}
  * @memberof PlotNameField
- * @default 40
  */
 export const PLOT_NAME_MAX_LEN = 40;
 
 /**
  * Enables the user to rename and change the plot title.
- * @component
- * @param {Object} props
- * @param {function} props.reportError - function for error handling
- * @returns {JSX.Element} a jsx containing a text-field to change the plot name
+
+ * @returns a jsx containing a text-field to change the plot name
  */
-function PlotNameField() {
+const PlotNameField: FC = () => {
     /**
      * The title that should be displayed above the TextField.
      * @constant {String}
@@ -57,7 +52,9 @@ function PlotNameField() {
 
     useEffect(() => {
         // this might be done better but a controlled state throws a (yet) unsolvable redux error
-        const textField = document.getElementById('standard-basic-plot-title-input');
+        const textField = document.getElementById(
+            'standard-basic-plot-title-input'
+        ) as HTMLInputElement;
         textField.value = plotTitle;
     }, [plotId, plotTitle]);
 
@@ -66,7 +63,8 @@ function PlotNameField() {
      * @function
      * @param {Event} event the event that triggered the call of this event
      */
-    const updatePlotName = (event) => {
+    const updatePlotName: FocusEventHandler<HTMLInputElement> &
+        KeyboardEventHandler<HTMLInputElement> = (event) => {
         if (event.target.value.length > PLOT_NAME_MAX_LEN) {
             event.target.value = event.target.value.slice(0, PLOT_NAME_MAX_LEN);
         }
@@ -95,7 +93,8 @@ function PlotNameField() {
                         onBlur={updatePlotName}
                         onKeyUp={(event) => {
                             if (event.key === 'Enter') {
-                                updatePlotName(event);
+                                // TODO: why is this keyboardevent for a div by default?
+                                updatePlotName(event as React.KeyboardEvent<HTMLInputElement>);
                             }
                         }}
                     />
@@ -103,10 +102,6 @@ function PlotNameField() {
             </Box>
         </>
     );
-}
-
-PlotNameField.propTypes = {
-    reportError: PropTypes.func.isRequired,
 };
 
 export default PlotNameField;

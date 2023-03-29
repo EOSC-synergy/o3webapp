@@ -7,7 +7,7 @@ import tco3_return from 'config/tco3_return.json';
 import DownloadModal from './DownloadModal';
 import { selectPlotId } from 'store/plotSlice';
 import { useSelector } from 'react-redux';
-import PlotTypeSelector from './InputComponents/PlotTypeSelector/PlotTypeSelector.js';
+import PlotTypeSelector from './InputComponents/PlotTypeSelector';
 import { Button, Typography, Divider, SwipeableDrawer, Drawer } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';

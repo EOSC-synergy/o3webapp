@@ -6,14 +6,14 @@ import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CustomLatitudeSelector from './InputComponents/LatitudeBandSelector/CustomLatitudeSelector';
-import LatitudeBandSelector from './InputComponents/LatitudeBandSelector/LatitudeBandSelector';
-import LocationSelector from './InputComponents/LatitudeBandSelector/LatitudeBandSelector';
+import LatitudeBandSelector from './InputComponents/LatitudeBandSelector';
+import LocationSelector from './InputComponents/LatitudeBandSelector';
 import ModelGroupConfigurator from './InputComponents/ModelGroupConfigurator';
-import PlotNameField from './InputComponents/PlotNameField/PlotNameField';
-import ReferenceModelSelector from './InputComponents/ReferenceModelSelector/ReferenceModelSelector';
+import PlotNameField from './InputComponents/PlotNameField';
+import ReferenceModelSelector from './InputComponents/ReferenceModelSelector';
 import ReferenceYearField from './InputComponents/ReferenceYearField';
 import RegionSelector from './InputComponents/RegionSelector';
-import TimeCheckBoxGroup from './InputComponents/TimeCheckboxGroup/TimeCheckboxGroup';
+import TimeCheckBoxGroup from './InputComponents/TimeCheckboxGroup';
 import XAxisField from './InputComponents/XAxisField';
 import YAxisField from './InputComponents/YAxisField';
 import { ErrorReporter } from '../../../utils/reportError';
@@ -178,7 +178,7 @@ const Section: React.FC<SectionProps> = ({ components, name, reportError }) => {
                 case MGC_Symbol.description:
                     return <ModelGroupConfigurator key={key} reportError={reportError} />;
                 case PNF_Symbol.description:
-                    return <PlotNameField key={key} reportError={reportError} />;
+                    return <PlotNameField key={key} />;
                 case RMS_Symbol.description:
                     return <ReferenceModelSelector key={key} reportError={reportError} />;
                 case RYF_Symbol.description:
@@ -186,7 +186,7 @@ const Section: React.FC<SectionProps> = ({ components, name, reportError }) => {
                 case RS_Symbol.description:
                     return <RegionSelector key={key} />;
                 case TCG_Symbol.description:
-                    return <TimeCheckBoxGroup key={key} reportError={reportError} />;
+                    return <TimeCheckBoxGroup key={key} />;
                 case XAF_Symbol.description:
                     return <XAxisField key={key} />;
                 case YAF_Symbol.description:

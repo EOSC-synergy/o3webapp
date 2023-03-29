@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
@@ -6,10 +6,17 @@ import InputLabel from '@mui/material/InputLabel';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectPlotId, setActivePlotId } from '../../../../../store/plotSlice';
-import { REQUEST_STATE } from '../../../../../services/API/apiSlice/apiSlice';
+import { useSelector } from 'react-redux';
+import { selectPlotId, setActivePlotId } from 'store/plotSlice';
+import { REQUEST_STATE } from 'services/API/apiSlice/apiSlice';
+import { AppState, useAppDispatch } from 'store/store';
+import { ErrorReporter } from 'utils/reportError';
+import { SelectChangeEvent } from '@mui/material';
+import { O3AS_PLOTS } from '../../../../utils/constants';
 
+type PlotTypeSelectorProps = {
+    reportError: ErrorReporter;
+};
 /**
  * Enables the user to select a different plot type.
  * @component
@@ -17,14 +24,14 @@ import { REQUEST_STATE } from '../../../../../services/API/apiSlice/apiSlice';
  * @param {function} props.reportError - function for error handling
  * @returns {JSX.Element} a jsx containing a dropdown to select the plot type
  */
-function PlotTypeSelector(props) {
-    const dispatch = useDispatch();
+const PlotTypeSelector: FC<PlotTypeSelectorProps> = (props) => {
+    const dispatch = useAppDispatch();
 
     /**
      * Get the requested data from the redux store
      * @constant {Object}
      */
-    const plotTypesRequestData = useSelector((state) => state.api.plotTypes);
+    const plotTypesRequestData = useSelector((state: AppState) => state.api.plotTypes);
 
     /**
      * Currently selected plot type. Taken from the redux store.
@@ -35,15 +42,15 @@ function PlotTypeSelector(props) {
 
     /**
      * Calls the redux store to change the plot type
-     * @param {event} event the event that called this function
+     * @param event the event that called this function
      * @function
      */
-    const changePlotType = (event) => {
-        dispatch(setActivePlotId({ plotId: event.target.value }));
+    const changePlotType = (event: SelectChangeEvent) => {
+        dispatch(setActivePlotId({ plotId: event.target.value as O3AS_PLOTS }));
     };
 
     let dropdownData;
-    let plotTypeData = plotType;
+    let plotTypeData: O3AS_PLOTS | undefined = plotType;
     if (
         plotTypesRequestData.status === REQUEST_STATE.loading ||
         plotTypesRequestData.status === REQUEST_STATE.idle
@@ -59,7 +66,7 @@ function PlotTypeSelector(props) {
                 <CircularProgress data-testid="plotTypeSelectorLoading" />
             </Box>
         );
-        plotTypeData = '';
+        plotTypeData = undefined;
     } else if (plotTypesRequestData.status === REQUEST_STATE.success) {
         dropdownData = plotTypesRequestData.data.map((name, idx) => {
             return (
@@ -103,7 +110,7 @@ function PlotTypeSelector(props) {
             </FormControl>
         </>
     );
-}
+};
 
 PlotTypeSelector.propTypes = {
     reportError: PropTypes.func.isRequired,

@@ -1,37 +1,33 @@
-import React from 'react';
+import React, { FC, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Grid, TextField, FormControl } from '@mui/material';
 import { selectPlotLocation, setLocation } from 'store/plotSlice';
 import { fetchPlotDataForCurrentModels } from 'services/API/apiSlice/apiSlice';
-import PropTypes from 'prop-types';
-import { Latitude } from '../../../../../../utils/constants';
+import { Latitude } from 'utils/constants';
+import { useAppDispatch } from '../../../../../store/store';
 
 /**
  * A component to select the specific min and max latitude values for the custom region.
  * @memberof LatitudeBandSelector
- * @component
- * @returns {JSX.Element}    JSX with the component
+ * @returns    JSX with the component
  */
-const CustomLatitudeSelector: React.FC = () => {
+const CustomLatitudeSelector: FC = () => {
     /**
      * The biggest possible latitude value.
-     * @constant {number}
      * @memberof CustomLatitudeSelector
      */
     const LATITUDE_BAND_MAX_VALUE = 90;
 
     /**
      * The smallest possible latitude value.
-     * @constant {number}
      * @memberof CustomLatitudeSelector
      */
     const LATITUDE_BAND_MIN_VALUE = -90;
 
     /**
      * A dispatch function to dispatch actions to the redux store.
-     * @function
      */
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     /**
      * An object containing the current minLat and maxLat Values.
@@ -55,13 +51,13 @@ const CustomLatitudeSelector: React.FC = () => {
      * A state variable to store the state of the min. latitude box.
      * @constant
      */
-    const [minLatState, setMinLatState] = React.useState(minLat);
+    const [minLatState, setMinLatState] = useState(minLat);
 
     /**
      * A state variable to store the state of the max. latitude box.
      * @constant
      */
-    const [maxLatState, setMaxLatState] = React.useState(maxLat);
+    const [maxLatState, setMaxLatState] = useState(maxLat);
 
     /**
      * Handles the change if the min. latitude box is changed.
@@ -84,7 +80,6 @@ const CustomLatitudeSelector: React.FC = () => {
                     maxLat: selectedLocationCopy.maxLat,
                 })
             );
-            // @ts-expect-error TODO: dispatch typing
             dispatch(fetchPlotDataForCurrentModels());
             setMinLatState(val);
         } else {
@@ -113,7 +108,6 @@ const CustomLatitudeSelector: React.FC = () => {
                     maxLat: selectedLocationCopy.maxLat,
                 })
             );
-            // @ts-expect-error TODO: dispatch typing
             dispatch(fetchPlotDataForCurrentModels());
             setMaxLatState(val);
         } else {
@@ -234,13 +228,6 @@ const CustomLatitudeSelector: React.FC = () => {
             </div>
         </>
     );
-};
-
-CustomLatitudeSelector.propTypes = {
-    /**
-     * Function for error handling
-     */
-    reportError: PropTypes.func,
 };
 
 export default CustomLatitudeSelector;

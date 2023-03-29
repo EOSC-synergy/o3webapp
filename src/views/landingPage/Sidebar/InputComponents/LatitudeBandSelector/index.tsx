@@ -1,19 +1,18 @@
-import React from 'react';
+import React, { FC, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectPlotLocation, setLocation } from 'store/plotSlice';
 import { Box, Divider, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { Latitude, latitudeBands } from 'utils/constants';
-import PropTypes from 'prop-types';
 import { fetchPlotDataForCurrentModels } from 'services/API/apiSlice/apiSlice';
 import CustomLatitudeSelector from './CustomLatitudeSelector';
 
 /**
  * Enables the user to choose minimum and maximum latitude
  * @component
- * @returns {JSX.Element} a JSX containing a dropdown and if "individual latitude band" is selected a number input field
+ * @returns a JSX containing a dropdown and if "individual latitude band" is selected a number input field
  */
-const LatitudeBandSelector: React.FC = () => {
+const LatitudeBandSelector: FC = () => {
     /**
      * An object containing the current minLat and maxLat Values.
      * @memberof LatitudeBandSelector
@@ -28,7 +27,7 @@ const LatitudeBandSelector: React.FC = () => {
      * @type {Array}
      * @default [null, null]
      */
-    const [isCustomizable, setIsCustomizable] = React.useState(false);
+    const [isCustomizable, setIsCustomizable] = useState(false);
 
     /**
      * A dispatch function to dispatch actions to the redux store.
@@ -102,10 +101,6 @@ const LatitudeBandSelector: React.FC = () => {
             </Box>
         </>
     );
-};
-
-LatitudeBandSelector.propTypes = {
-    reportError: PropTypes.func,
 };
 
 export default LatitudeBandSelector;

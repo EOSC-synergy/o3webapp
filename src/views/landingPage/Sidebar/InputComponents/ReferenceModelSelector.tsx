@@ -1,50 +1,48 @@
-import React, { useEffect } from 'react';
+import React, { type FC, useEffect } from 'react';
 import { Autocomplete, TextField } from '@mui/material';
-import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { setModel, selectRefModel } from '../../../../../store/referenceSlice';
-import PropTypes from 'prop-types';
-import { fetchPlotDataForCurrentModels } from '../../../../../services/API/apiSlice/apiSlice';
-import { REQUEST_STATE } from '../../../../../services/API/apiSlice/apiSlice';
+import { setModel, selectRefModel } from 'store/referenceSlice';
+import { fetchPlotDataForCurrentModels } from 'services/API/apiSlice/apiSlice';
+import { REQUEST_STATE } from 'services/API/apiSlice/apiSlice';
+import { AppState, useAppDispatch } from 'store/store';
+import { ErrorReporter } from 'utils/reportError';
 
+type ReferenceModelSelectorProps = {
+    reportError: ErrorReporter;
+};
 /**
  * Enables the user to select a reference model.
- * @component
- * @param {Object} props
- * @param {function} props.reportError - function to handle errors
- * @returns {JSX.Element} a jsx containing a dropdown to select the reference model from all currently visible models
+ * @returns a jsx containing a dropdown to select the reference model from all currently visible models
  */
-function ReferenceModelSelector(props) {
+const ReferenceModelSelector: FC<ReferenceModelSelectorProps> = ({ reportError }) => {
     /**
      * A dispatch function to dispatch actions to the Redux store.
      */
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     /**
      * Selects the model list from the Redux store.
      * @constant {Array}
      */
-    const modelListRequestedData = useSelector((state) => state.api.models);
+    const modelListRequestedData = useSelector((state: AppState) => state.api.models);
 
     /**
      * Selects the current reference model.
      * @see {@link selectRefModel}
-     * @constant {Array}
      */
     const selectedModel = useSelector(selectRefModel);
 
     /**
      * Array with all the models.
-     * @type {Array.<String>}
      */
-    let allModels = [];
+    let allModels: string[] = [];
     if (modelListRequestedData.status === REQUEST_STATE.success) {
         allModels = modelListRequestedData.data;
     }
 
     useEffect(() => {
         if (modelListRequestedData.status === REQUEST_STATE.error) {
-            props.reportError('API not responding: ' + modelListRequestedData.error);
+            reportError('API not responding: ' + modelListRequestedData.error);
         }
     });
 
@@ -53,7 +51,7 @@ function ReferenceModelSelector(props) {
      * @see {@link fetchPlotDataForCurrentModels}
      * @function
      */
-    const handleChangeForRefModel = (_, value) => {
+    const handleChangeForRefModel = (_: unknown, value: string | null) => {
         if (value !== null) {
             dispatch(setModel({ model: value }));
             // fetch for tco3_zm and tco3_return
@@ -72,10 +70,6 @@ function ReferenceModelSelector(props) {
             data-testid="ReferenceModelSelector-reference-model"
         />
     );
-}
-
-ReferenceModelSelector.propTypes = {
-    reportError: PropTypes.func,
 };
 
 export default ReferenceModelSelector;
