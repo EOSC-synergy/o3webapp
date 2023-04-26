@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { Button, Card, Grid, Modal, Typography } from '@mui/material';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
@@ -18,7 +18,7 @@ type ErrorMessageModalProps = {
  * @returns A jsx file containing a modal with the given error message
  * @component
  */
-const ErrorMessageModal: React.FC<ErrorMessageModalProps> = ({ isOpen, onClose, message }) => {
+const ErrorMessageModal: FC<ErrorMessageModalProps> = ({ isOpen, onClose, message }) => {
     /**
      * The style of the modal.
      *

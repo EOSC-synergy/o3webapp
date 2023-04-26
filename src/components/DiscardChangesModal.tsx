@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -28,7 +28,7 @@ type DiscardChangesModalProps = {
  *   closed via clicking save or discard changes button
  * @component
  */
-const DiscardChangesModal: React.FC<DiscardChangesModalProps> = ({
+const DiscardChangesModal: FC<DiscardChangesModalProps> = ({
     isOpen,
     saveChanges,
     discardChanges,

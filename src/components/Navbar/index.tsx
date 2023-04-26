@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { AppBar, Button, Container, Grid, Toolbar } from '@mui/material';
 import Logo from './Logo';
 import EditIcon from '@mui/icons-material/Edit';
@@ -14,7 +14,7 @@ type NavBarProps = {
  *
  * @component
  */
-const NavBar: React.FC<NavBarProps> = ({ openSidebar = () => undefined }) => {
+const NavBar: FC<NavBarProps> = ({ openSidebar = () => undefined }) => {
     return (
         <div id="NavBar" style={{ flex: '0 1 auto' }}>
             <AppBar

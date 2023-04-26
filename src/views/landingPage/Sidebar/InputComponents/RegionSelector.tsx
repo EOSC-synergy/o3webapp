@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, Fragment } from 'react';
 import { Box, Checkbox, FormControlLabel, Grid, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { type RegionBasedXRange, selectPlotXRange, setDisplayXRange } from 'store/plotSlice';
@@ -12,7 +12,7 @@ import CustomLatitudeSelector from './LatitudeBandSelector/CustomLatitudeSelecto
  * @component
  * @see {@link LatitudeBandSelector}
  */
-const RegionSelector: React.FC = () => {
+const RegionSelector: FC = () => {
     /** A dispatch function to dispatch actions to the redux store. */
     const dispatch = useDispatch();
 
@@ -67,7 +67,7 @@ const RegionSelector: React.FC = () => {
                 }}
             >
                 {getDefaultRegions().map((region, idx) => (
-                    <React.Fragment key={idx}>
+                    <Fragment key={idx}>
                         <FormControlLabel
                             label={
                                 idx !== getDefaultRegions().length - 1 ? (
@@ -86,7 +86,7 @@ const RegionSelector: React.FC = () => {
                                 />
                             }
                         />
-                    </React.Fragment>
+                    </Fragment>
                 ))}
             </Box>
         </Grid>

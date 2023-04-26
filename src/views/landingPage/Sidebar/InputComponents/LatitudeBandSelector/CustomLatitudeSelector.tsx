@@ -1,4 +1,4 @@
-import React, { type FC, useState } from 'react';
+import React, { ChangeEventHandler, type FC, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { FormControl, Grid, TextField } from '@mui/material';
 import { selectPlotLocation, setLocation } from 'store/plotSlice';
@@ -71,7 +71,7 @@ const CustomLatitudeSelector: FC = () => {
      * @function
      * @param event The event object holding the new value of the text box
      */
-    const handleChangeMin = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChangeMin: ChangeEventHandler<HTMLInputElement> = (event) => {
         const selectedLocationCopy = { ...selectedLocation };
         const val = parseInt(event.target.value);
         if (!isNaN(val)) {
@@ -99,7 +99,7 @@ const CustomLatitudeSelector: FC = () => {
      * @function
      * @param event The event object holding the new value of the text box
      */
-    const handleChangeMax = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChangeMax: ChangeEventHandler<HTMLInputElement> = (event) => {
         const selectedLocationCopy = { ...selectedLocation };
         const val = parseInt(event.target.value);
         if (!isNaN(val)) {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, useState } from 'react';
 import {
     Button,
     Card,
@@ -53,7 +53,7 @@ type DownloadModalProps = {
  *   download button
  * @component
  */
-const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose, reportError }) => {
+const DownloadModal: FC<DownloadModalProps> = ({ isOpen, onClose, reportError }) => {
     /**
      * An array containing all model groups.
      *
@@ -87,7 +87,7 @@ const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose, reportEr
      *
      * @constant {string}
      */
-    const [selectedFileFormat, setSelectedFileFormat] = React.useState('');
+    const [selectedFileFormat, setSelectedFileFormat] = useState('');
 
     /**
      * An object containing the information about the style of the DownloadModal.

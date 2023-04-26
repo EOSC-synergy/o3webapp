@@ -1,4 +1,4 @@
-import React, { type FC } from 'react';
+import React, { type FC, Fragment } from 'react';
 import { Box, Checkbox, FormControlLabel, Grid } from '@mui/material';
 import { months as MONTHS, NUM_MONTHS_IN_SEASON } from 'utils/constants';
 
@@ -71,7 +71,7 @@ const SeasonCheckBoxGroup: FC<SeasonCheckBoxGroupProps> = ({
                     <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
                         {months.map(({ monthId, checked }) => {
                             return (
-                                <React.Fragment key={monthId}>
+                                <Fragment key={monthId}>
                                     <FormControlLabel
                                         label={MONTHS[monthId - 1].description}
                                         control={
@@ -85,7 +85,7 @@ const SeasonCheckBoxGroup: FC<SeasonCheckBoxGroupProps> = ({
                                             />
                                         }
                                     />
-                                </React.Fragment>
+                                </Fragment>
                             );
                         })}
                     </Box>

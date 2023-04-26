@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, memo, useEffect, useState } from 'react';
 import { generateSeries, getOptions } from 'utils/optionsFormatter';
 import { useSelector } from 'react-redux';
 import {
@@ -186,4 +186,4 @@ const Graph: FC<GraphProps> = ({ reportError }) => {
     return <Typography>{fatalErrorMessage}</Typography>;
 };
 
-export default React.memo(Graph, () => true); // prevent graph from re-rendering if sidebar is opened and closed
+export default memo(Graph, () => true); // prevent graph from re-rendering if sidebar is opened and closed

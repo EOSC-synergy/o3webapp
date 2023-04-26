@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import PropTypes from 'prop-types';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
@@ -34,7 +34,7 @@ type LogoProps = {
  * @returns {JSX.Element} JSX Element containing one image and one text wrapped in a Link component
  * @component
  */
-const Logo: React.FC<LogoProps> = ({ display }): JSX.Element => {
+const Logo: FC<LogoProps> = ({ display }): JSX.Element => {
     /**
      * Name of the webapp that should be displayed in the logo
      *

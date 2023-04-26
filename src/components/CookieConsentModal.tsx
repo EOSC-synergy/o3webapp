@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { Button, Card, Grid, Modal, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
@@ -16,7 +16,7 @@ type CookieConsentModalProps = {
  * @param onClose Handles closing of the modal
  * @component
  */
-const CookieConsentModal: React.FC<CookieConsentModalProps> = ({ isOpen, onClose }) => {
+const CookieConsentModal: FC<CookieConsentModalProps> = ({ isOpen, onClose }) => {
     /**
      * An object holding the styling information about the modal.
      *

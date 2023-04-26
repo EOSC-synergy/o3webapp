@@ -2,6 +2,7 @@ import React, {
     type FC,
     type FocusEventHandler,
     type KeyboardEventHandler,
+    type KeyboardEvent,
     useEffect,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -105,7 +106,7 @@ const PlotNameField: FC = () => {
                         onKeyUp={(event) => {
                             if (event.key === 'Enter') {
                                 // TODO: why is this keyboardevent for a div by default?
-                                updatePlotName(event as React.KeyboardEvent<HTMLInputElement>);
+                                updatePlotName(event as KeyboardEvent<HTMLInputElement>);
                             }
                         }}
                     />

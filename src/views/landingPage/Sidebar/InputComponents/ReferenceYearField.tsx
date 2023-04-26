@@ -1,4 +1,4 @@
-import React, { type ChangeEvent } from 'react';
+import React, { type ChangeEvent, FC } from 'react';
 import { Checkbox, FormControl, Grid, TextField, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { END_YEAR, O3AS_PLOTS, START_YEAR } from 'utils/constants';
@@ -15,7 +15,7 @@ import { useAppDispatch } from 'store';
  * @returns {JSX.Element} A jsx containing a text field to select the reference year
  * @component
  */
-const ReferenceYearField: React.FC = () => {
+const ReferenceYearField: FC = () => {
     /**
      * A dispatch function to dispatch actions to the redux store.
      *

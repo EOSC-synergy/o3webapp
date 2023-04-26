@@ -1,4 +1,4 @@
-import React, { type ChangeEvent, useEffect } from 'react';
+import React, { type ChangeEvent, FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectPlotXRange, setDisplayXRange, type YearsBasedXRange } from 'store/plotSlice';
 import { FormControl, Grid, TextField, Typography } from '@mui/material';
@@ -10,7 +10,7 @@ import { END_YEAR, START_YEAR } from 'utils/constants';
  * @returns {JSX.Element} A jsx containing two text-fields and labels
  * @component
  */
-const XAxisField: React.FC = () => {
+const XAxisField: FC = () => {
     /**
      * A dispatch function to dispatch actions to the redux store.
      *
@@ -34,7 +34,7 @@ const XAxisField: React.FC = () => {
      *
      * @constant {Array}
      */
-    const [stateX, setStateX] = React.useState({ minX, maxX });
+    const [stateX, setStateX] = useState({ minX, maxX });
 
     /**
      * Handles the change of the minimum value.

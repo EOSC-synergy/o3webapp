@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, Fragment } from 'react';
 import { styled } from '@mui/material/styles';
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
@@ -181,7 +181,7 @@ type SectionProps = {
  *   and the API doc
  * @component
  */
-const Section: React.FC<SectionProps> = ({ components, name, reportError }) => {
+const Section: FC<SectionProps> = ({ components, name, reportError }) => {
     /**
      * Maps a given name to a corresponding component from the ./InputComponents folder if there is
      * no component with the given name, calls the props.reportError function
@@ -255,12 +255,12 @@ const Section: React.FC<SectionProps> = ({ components, name, reportError }) => {
                 <>
                     {components.map((element, idx) => {
                         return (
-                            <React.Fragment key={idx}>
+                            <Fragment key={idx}>
                                 {mapNameToComponent(element, idx)}
                                 {idx !== components.length - 1 && (
                                     <div style={{ height: '20px' }} />
                                 )}
-                            </React.Fragment>
+                            </Fragment>
                         );
                     })}
                 </>

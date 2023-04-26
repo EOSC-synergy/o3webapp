@@ -1,4 +1,4 @@
-import React, { type ChangeEvent, useEffect } from 'react';
+import React, { type ChangeEvent, FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectPlotId, selectPlotYRange, setDisplayYRange } from 'store/plotSlice';
 import { FormControl, Grid, TextField, Typography } from '@mui/material';
@@ -16,7 +16,7 @@ type YAxisFieldProps = {
  * @returns {JSX.Element} A jsx containing two text-fields and labels
  * @component
  */
-const YAxisField: React.FC<YAxisFieldProps> = ({ reportError = () => undefined }) => {
+const YAxisField: FC<YAxisFieldProps> = ({ reportError = () => undefined }) => {
     const store = useAppStore();
 
     /** A dispatch function to dispatch actions to the redux store. */
@@ -44,7 +44,7 @@ const YAxisField: React.FC<YAxisFieldProps> = ({ reportError = () => undefined }
      *
      * @constant {Array}
      */
-    const [stateY_zm, setStateY_zm] = React.useState(
+    const [stateY_zm, setStateY_zm] = useState(
         store.getState().plot.plotSpecificSettings.tco3_zm.displayYRange
     );
 
@@ -54,7 +54,7 @@ const YAxisField: React.FC<YAxisFieldProps> = ({ reportError = () => undefined }
      *
      * @constant {Array}
      */
-    const [stateY_return, setStateY_return] = React.useState(
+    const [stateY_return, setStateY_return] = useState(
         store.getState().plot.plotSpecificSettings.tco3_return.displayYRange
     );
 
@@ -99,10 +99,7 @@ const YAxisField: React.FC<YAxisFieldProps> = ({ reportError = () => undefined }
      * @see {@link setStateY_zm}
      * @see {@link setStateY_return}
      */
-    const handleChange = (
-        event: React.ChangeEvent<HTMLInputElement>,
-        extremum: 'minY' | 'maxY'
-    ) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement>, extremum: 'minY' | 'maxY') => {
         if (isNaN(event.target.valueAsNumber)) {
             console.error('input is NaN');
             return;
