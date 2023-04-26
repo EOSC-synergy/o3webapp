@@ -1,6 +1,9 @@
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { O3AS_PLOTS } from '../../../utils/constants';
+import { O3AS_PLOTS } from 'utils/constants';
+import { ModelGroup, ModelId } from 'store/modelsSlice';
+import { ProcessedO3Data } from 'services/API/apiSlice';
+import { Content } from 'pdfmake/interfaces';
 
 /**
  * This module handles all functions to create a pdf that can be downloaded from the site.
@@ -12,12 +15,7 @@ import { O3AS_PLOTS } from '../../../utils/constants';
  * @see {@link module:DownloadNotPdf} for all other format downloads
  */ // used for auto generation of JSDocs with better-docs
 
-/**
- * The Legal Notice links which will be parsed into the PDF.
- *
- * @constant {Array}
- * @default [ "Terms of Use Link: https://o3as.data.kit.edu/policies/terms-of-use.html",
- */
+/** The Legal Notice links which will be parsed into the PDF. */
 const legalNoticeLinks = [
     'Terms of Use Link: https://o3as.data.kit.edu/policies/terms-of-use.html',
     'Privacy Policy Link: https://o3as.data.kit.edu/policies/privacy-policy.html',
@@ -47,18 +45,18 @@ pdfMake.fonts = {
 /**
  * Returns a Line presentation for the PDF concerning to the current line data.
  *
- * @param {Array} currentData The current Model data contains the properties of the models(color,
- *   line style, etc.)
- * @param {String} model The model name which the Line presentation belongs to
- * @returns {Object} The Line Presentation which will be shown in the PDF.
+ * @param currentData The current Model data contains the properties of the models(color, line
+ *   style, etc.)
+ * @param model The model name which the Line presentation belongs to
+ * @returns The Line Presentation which will be shown in the PDF.
  */
-function getLinePresentation(currentData, model) {
+const getLinePresentation = (currentData: ProcessedO3Data, model: string) => {
     let linePattern = '';
-    if (currentData[model].plotStyle.linestyle === 'solid') {
+    if (currentData[model].plotStyle?.linestyle === 'solid') {
         linePattern = `────`;
-    } else if (currentData[model].plotStyle.linestyle === 'dashed') {
+    } else if (currentData[model].plotStyle?.linestyle === 'dashed') {
         linePattern = `----`;
-    } else if (currentData[model].plotStyle.linestyle === 'dotted') {
+    } else if (currentData[model].plotStyle?.linestyle === 'dotted') {
         linePattern = `••••`;
     }
 
@@ -68,9 +66,9 @@ function getLinePresentation(currentData, model) {
         fontSize: 10,
         characterSpacing: 0,
         border: [false, false, false, false],
-        color: `${currentData[model].plotStyle.color}`,
+        color: `${currentData[model].plotStyle?.color}`,
     };
-}
+};
 
 /**
  * This Method adjusts the svg element in order to scale it right in the pdf file. the viewBox
@@ -78,83 +76,98 @@ function getLinePresentation(currentData, model) {
  * the following website for more details about the viewBox parameter:
  * {@link https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/viewBox}
  *
- * @param {svg} svgElement SvgElement element.
+ * @param svgElement SvgElement element.
  * @returns Returns the adjusted svg element.
  */
-function getAdjustedSVG(svgElement) {
-    let bBox = svgElement.getBBox();
-    let viewBoxParameters = '0 0 ' + bBox.width + ' ' + bBox.height;
-    let clone = svgElement.cloneNode(true);
-    clone.setAttribute('viewBox', viewBoxParameters);
+const getAdjustedSVG = (svgElement: SVGGraphicsElement) => {
+    const bBox = svgElement.getBBox();
+    const clone = svgElement.cloneNode(true) as SVGGraphicsElement;
+    clone.setAttribute('viewBox', `0 0 ${bBox.width} ${bBox.height}`);
     return clone.outerHTML;
-}
+};
 
 /**
  * Downloads the PDF which contains the Graph in SVG format and contains the List of models.
  *
  * @async
- * @param {string} plotId The plot id of the graph (tco3_zm, tco3_return etc.)
- * @param {string} fileName The File name of the PDF
- * @param {array} modelGroups The Model Groups which contains the names of the models
- * @param {array} currentData The current Model data contains the properties of the models (color,
- *   line style, etc.)
+ * @param plotId The plot id of the graph (tco3_zm, tco3_return etc.)
+ * @param fileName The File name of the PDF
+ * @param modelGroups The Model Groups which contains the names of the models
+ * @param currentData The current Model data contains the properties of the models (color, line
+ *   style, etc.)
  * @throws An Error if the given plotId is not supported. For available plot types check
  *   {@link O3AS_PLOTS}.
  */
-export async function downloadGraphAsPDF(plotId, fileName, modelGroups, currentData) {
-    let modelGroupsList = getListOfModelsForPdf(plotId, modelGroups, currentData);
+export const downloadGraphAsPDF = async (
+    plotId: O3AS_PLOTS,
+    fileName: string,
+    modelGroups: Record<ModelId, ModelGroup>,
+    currentData: ProcessedO3Data
+) => {
+    const modelGroupsList = getListOfModelsForPdf(plotId, modelGroups, currentData);
 
-    const svgElement = document.querySelector('.apexcharts-svg');
-
-    let docDefinition = null;
+    const svgElement = document.querySelector(
+        '.apexcharts-svg'
+    ) satisfies SVGGraphicsElement | null;
+    if (svgElement === null) {
+        throw new Error('could not find ApexCharts svg element');
+    }
 
     if (plotId === O3AS_PLOTS.tco3_zm || plotId === O3AS_PLOTS.tco3_return) {
-        docDefinition = {
-            info: {
-                title: fileName,
-            },
-            content: [
-                {
-                    svg: getAdjustedSVG(svgElement),
-                    fit: [500, 250],
-                    margin: 10,
+        pdfMake
+            .createPdf({
+                info: {
+                    title: fileName,
                 },
-                {
-                    text: 'List Of Used Models:',
-                    style: 'header',
-                    fontSize: 10,
-                    bold: true,
-                },
-                '\n',
-                {
-                    fontSize: 9,
-                    ol: modelGroupsList,
-                },
-                {
-                    fontSize: 9,
-                    ul: legalNoticeLinks,
-                    pageBreak: 'before',
-                    bold: true,
-                },
-            ],
-        };
+                content: [
+                    {
+                        svg: getAdjustedSVG(svgElement),
+                        //svg: svgElement.outerHTML,
+                        fit: [500, 250],
+                        margin: 10,
+                    },
+                    {
+                        text: 'List Of Used Models:',
+                        style: 'header',
+                        fontSize: 10,
+                        bold: true,
+                    },
+                    '\n',
+                    {
+                        fontSize: 9,
+                        ol: modelGroupsList,
+                    },
+                    {
+                        fontSize: 9,
+                        ul: legalNoticeLinks,
+                        pageBreak: 'before',
+                        bold: true,
+                    },
+                ],
+            })
+            .download(fileName);
     } else {
         throw new Error(`the given plot id "${plotId}" is not defined`);
     }
-    pdfMake.createPdf(docDefinition).download(fileName);
-}
+};
 
 /**
  * Returns the List of models in the format which the pdfMake library accepts.
  *
- * @param {string} plotId The plot id of the graph (tco3_zm, tco3_return etc.)
- * @param {array} modelGroups The Model Groups which contains the names of the models
- * @param {array} currentData The current Model data contains the properties of the models(color,
- *   line style, etc.)
- * @returns {object} The List of all Model Groups which will be shown at the PDF.
+ * @param plotId The plot id of the graph (tco3_zm, tco3_return etc.)
+ * @param modelGroups The Model Groups which contains the names of the models
+ * @param currentData The current Model data contains the properties of the models(color, line
+ *   style, etc.)
+ * @returns The List of all Model Groups which will be shown at the PDF.
  */
-function getListOfModelsForPdf(plotId, modelGroups, currentData) {
-    let modelGroupsList = [[{ text: '', style: 'header' }, { ul: [{ text: '', color: 'red' }] }]];
+const getListOfModelsForPdf = (
+    plotId: O3AS_PLOTS,
+    modelGroups: Record<ModelId, ModelGroup>,
+    currentData: ProcessedO3Data
+) => {
+    const modelGroupsList: Content = [
+        [{ text: '', style: 'header' }, { ul: [{ text: '', color: 'red' }] }],
+    ];
 
     for (const modelGroup of Object.values(modelGroups)) {
         // if the model group is invisible, it won't be shown in the PDF.
@@ -162,7 +175,7 @@ function getListOfModelsForPdf(plotId, modelGroups, currentData) {
             continue;
         }
 
-        let modelsInTheGroup = [];
+        const modelsInTheGroup = [];
 
         for (const [model, modelData] of Object.entries(modelGroup.models)) {
             // if the model is invisible, it won't be shown in the PDF.
@@ -212,4 +225,4 @@ function getListOfModelsForPdf(plotId, modelGroups, currentData) {
     modelGroupsList.shift();
 
     return modelGroupsList;
-}
+};
