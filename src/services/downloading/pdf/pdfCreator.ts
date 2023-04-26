@@ -80,9 +80,11 @@ const getLinePresentation = (currentData: ProcessedO3Data, model: string) => {
  * @returns Returns the adjusted svg element.
  */
 const getAdjustedSVG = (svgElement: SVGGraphicsElement) => {
-    const bBox = svgElement.getBBox();
     const clone = svgElement.cloneNode(true) as SVGGraphicsElement;
-    clone.setAttribute('viewBox', `0 0 ${bBox.width} ${bBox.height}`);
+    clone.setAttribute(
+        'viewBox',
+        `0 0 ${svgElement.getAttribute('width')} ${svgElement.getAttribute('height')}`
+    );
     return clone.outerHTML;
 };
 
@@ -123,7 +125,7 @@ export const downloadGraphAsPDF = async (
                     {
                         svg: getAdjustedSVG(svgElement),
                         //svg: svgElement.outerHTML,
-                        fit: [500, 250],
+                        fit: [500, 250], // ?
                         margin: 10,
                     },
                     {
