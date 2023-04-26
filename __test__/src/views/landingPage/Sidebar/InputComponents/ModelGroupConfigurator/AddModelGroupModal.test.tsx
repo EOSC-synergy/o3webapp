@@ -79,7 +79,9 @@ describe('test addModelGroupModal rendering', () => {
             </Provider>
         );
         const closeButton = getByTestId(/close-button/);
-        fireEvent.click(closeButton);
+        act(() => {
+            fireEvent.click(closeButton);
+        });
         expect(onClose).toHaveBeenCalled();
     });
 
@@ -354,10 +356,14 @@ describe('test addModelGroupModal functionality with model group id', () => {
     it('exits without changing', () => {
         const { getByTestId } = rendered;
 
-        userEvent.type(getByTestId('AddModelGroupModal-card-group-name'), 'blubblob');
+        act(() => {
+            userEvent.type(getByTestId('AddModelGroupModal-card-group-name'), 'blubblob');
+        });
 
         const oldName = store.getState().models.modelGroups['0'].name;
-        userEvent.click(getByTestId('addModelGroupModal-close-button')); // exit without closing
+        act(() => {
+            userEvent.click(getByTestId('addModelGroupModal-close-button')); // exit without closing
+        });
         expect(store.getState().models.modelGroups['0'].name).toEqual(oldName);
     });
 
@@ -365,7 +371,9 @@ describe('test addModelGroupModal functionality with model group id', () => {
         const { getByTestId, getAllByTestId, baseElement } = rendered;
 
         const selectAllLeft = getAllByTestId('AddModelGroupModal-select-all')[0];
-        userEvent.click(selectAllLeft);
+        act(() => {
+            userEvent.click(selectAllLeft);
+        });
 
         const partOfDynamicErrorMsg = 'hidden model';
         expect(baseElement).not.toHaveTextContent(partOfDynamicErrorMsg);
@@ -409,8 +417,10 @@ describe('test error handling', () => {
         const selectAllLeft = getAllByTestId('AddModelGroupModal-select-all')[0];
         const moveAllRight = getByTestId('AddModelGroupModal-button-move-allChecked-right');
 
-        userEvent.click(selectAllLeft);
-        userEvent.click(moveAllRight); // move everything to the right
+        act(() => {
+            userEvent.click(selectAllLeft);
+            userEvent.click(moveAllRight); // move everything to the right
+        });
 
         expect(baseElement).not.toHaveTextContent(expectedErrorMessage); // no error message
         act(() => {
@@ -426,7 +436,9 @@ describe('test error handling', () => {
         // make sure that a title is provided (=> error message can only regard the missing models)
         const nameField = getByTestId('AddModelGroupModal-card-group-name');
         const title = 'blub';
-        userEvent.type(nameField, title);
+        act(() => {
+            userEvent.type(nameField, title);
+        });
 
         expect(baseElement).not.toHaveTextContent(expectedErrorMessage); // no error message
         act(() => {

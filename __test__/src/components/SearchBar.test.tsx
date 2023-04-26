@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import SearchBar from 'components/SearchBar';
@@ -29,7 +29,9 @@ describe('test searchbar rendering', () => {
             <SearchBar inputArray={[]} foundIndicesCallback={callback} />
         );
         const input = getByTestId('SearchbarInput');
-        userEvent.type(input, 'abc{enter}');
+        act(() => {
+            userEvent.type(input, 'abc{enter}');
+        });
         expect(callback).toHaveBeenCalled();
     });
 });
@@ -42,7 +44,9 @@ describe('test searchbar functionality', () => {
             <SearchBar inputArray={inputArray} foundIndicesCallback={callback} />
         );
         const input = getByTestId('SearchbarInput');
-        userEvent.type(input, 'modelA{enter}');
+        act(() => {
+            userEvent.type(input, 'modelA{enter}');
+        });
         expect(callback.mock.calls[0][0]).toEqual([0, 3]); // expect the callback to be called with the correct indices
     });
 
@@ -53,7 +57,9 @@ describe('test searchbar functionality', () => {
             <SearchBar inputArray={inputArray} foundIndicesCallback={callback} />
         );
         const input = getByTestId('SearchbarInput');
-        userEvent.type(input, 'hello{enter}');
+        act(() => {
+            userEvent.type(input, 'hello{enter}');
+        });
         expect(callback.mock.calls[0][0]).toEqual([0, 2]); // expect the callback to be called with the correct indices
     });
 
@@ -68,7 +74,9 @@ describe('test searchbar functionality', () => {
             />
         );
         const input = getByTestId('SearchbarInput');
-        userEvent.type(input, 'hello{enter}');
+        act(() => {
+            userEvent.type(input, 'hello{enter}');
+        });
         expect(callback.mock.calls[0][0]).toEqual(['hello', '-hello-']); // expect the callback to be called with the correct indices
     });
 
@@ -83,7 +91,9 @@ describe('test searchbar functionality', () => {
             />
         );
         const input = getByTestId('SearchbarInput');
-        userEvent.type(input, 'modelA{enter}');
+        act(() => {
+            userEvent.type(input, 'modelA{enter}');
+        });
         expect(callback.mock.calls[0][0]).toEqual([{ model: 'modelA' }, { model: 'modelA+' }]);
     });
 });

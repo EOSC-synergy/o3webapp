@@ -4,6 +4,7 @@ exports[`renders correctly 1`] = `
 <DocumentFragment>
   <div
     id="NavBar"
+    style="flex: 0 1 auto;"
   >
     <header
       class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic css-18lypu8-MuiPaper-root-MuiAppBar-root"

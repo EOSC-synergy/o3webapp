@@ -566,17 +566,19 @@ const apiSlice = createSlice({
                     ...storageOrig,
                     status: 'success',
                     data: {
-                        ...storageOrig.data,
+                        ...(storageOrig !== undefined ? storageOrig.data : {}),
                         ...lookUpTable,
                     },
                 });
 
                 // update loaded / loading
                 const fetchedModels = Object.keys(lookUpTable);
-                storage.loadingModels = storage.loadingModels.filter(
-                    (model) => !fetchedModels.includes(model)
-                ); // remove all models that are now fetched
-                storage.loadedModels = [...storage.loadedModels, ...fetchedModels];
+                storage.loadingModels =
+                    storage.loadingModels?.filter((model) => !fetchedModels.includes(model)) ?? []; // remove all models that are now fetched
+                storage.loadedModels = [
+                    ...(storage.loadedModels !== undefined ? storage.loadedModels : []),
+                    ...fetchedModels,
+                ];
 
                 if (storage.loadingModels.length === 0) {
                     storage.status = REQUEST_STATE.success; // display models

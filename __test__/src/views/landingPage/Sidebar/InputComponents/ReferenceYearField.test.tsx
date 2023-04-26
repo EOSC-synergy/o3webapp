@@ -1,6 +1,6 @@
 import React from 'react';
 import ReferenceYearField from 'views/landingPage/Sidebar/InputComponents/ReferenceYearField';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { AppStore, createTestStore } from 'store';
 import { Provider } from 'react-redux';
@@ -44,7 +44,9 @@ describe('tests redux functionality', () => {
             </Provider>
         );
         const inputField = getByTestId('ReferenceYearField-year');
-        fireEvent.change(inputField, { target: { value: newValue } }); // change input
+        act(() => {
+            fireEvent.change(inputField, { target: { value: newValue } }); // change input
+        });
         expect(store.getState().reference.settings.year).toEqual(newValue);
     });
 
@@ -57,7 +59,9 @@ describe('tests redux functionality', () => {
             </Provider>
         );
         const toggleButton = getByTestId('ReferenceYearField-toggleVisibility');
-        userEvent.click(toggleButton); // toggle visibility
+        act(() => {
+            userEvent.click(toggleButton); // toggle visibility
+        });
         expect(store.getState().reference.settings.visible).toEqual(!startValue);
     });
 });
@@ -70,9 +74,13 @@ describe('tests error handling', () => {
             </Provider>
         );
         const inputField = getByTestId('ReferenceYearField-year');
-        fireEvent.change(inputField, { target: { value: END_YEAR + 1 } }); // change input (not valid)
+        act(() => {
+            fireEvent.change(inputField, { target: { value: END_YEAR + 1 } }); // change input (not valid)
+        });
         expect(container).toHaveTextContent(`>${END_YEAR}`);
-        fireEvent.change(inputField, { target: { value: START_YEAR - 1 } }); // change input (not valid)
+        act(() => {
+            fireEvent.change(inputField, { target: { value: START_YEAR - 1 } }); // change input (not valid)
+        });
         expect(container).toHaveTextContent(`<${START_YEAR}`);
     });
 });

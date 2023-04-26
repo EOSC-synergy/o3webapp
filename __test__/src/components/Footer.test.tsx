@@ -5,8 +5,7 @@ import { render, screen, within } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
 it('renders without crashing', () => {
-    const div = document.createElement('div');
-    ReactDOM.render(<Footer />, div);
+    render(<Footer />);
 });
 
 // Snapshot test

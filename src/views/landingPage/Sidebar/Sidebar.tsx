@@ -47,13 +47,12 @@ type SidebarProps = {
 /**
  * Contains all input components responsible for the modification of the plot settings.
  *
- * @param {Object} props
- * @param {boolean} props.isOpen - Whether sideBar should be open
- * @param {function} props.onClose - Handles closing of the sidebar
- * @param {function} props.reportError - Enables component to report an error
- * @param {function} props.onOpen - Handles opening of the sidebar
- * @returns {JSX.Element} A jsx containing a sidebar with sections containing input components, a
- *   download button and a plotType dropdown
+ * @param isOpen - Whether sideBar should be open
+ * @param onClose - Handles closing of the sidebar
+ * @param reportError - Enables component to report an error
+ * @param onOpen - Handles opening of the sidebar
+ * @returns A jsx containing a sidebar with sections containing input components, a download button
+ *   and a plotType dropdown
  * @component
  */
 const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, reportError, onOpen }) => {

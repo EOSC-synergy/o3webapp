@@ -70,7 +70,9 @@ describe('test EditModelGroupModal rendering', () => {
             </Provider>
         );
         const closeButton = getByTestId(/DiscardButton/);
-        fireEvent.click(closeButton);
+        act(() => {
+            fireEvent.click(closeButton);
+        });
         expect(onClose).toHaveBeenCalled();
     });
 
@@ -88,7 +90,9 @@ describe('test EditModelGroupModal rendering', () => {
             </Provider>
         );
         const closeButton = getByTestId(/ApplyButton/);
-        fireEvent.click(closeButton);
+        act(() => {
+            fireEvent.click(closeButton);
+        });
         expect(onClose).toHaveBeenCalled();
     });
 });
@@ -130,7 +134,9 @@ describe('test the functionality of EditModelGroupModal', () => {
         );
         const input = getByTestId('SearchbarInput');
         expect(queryByText('ACCESS-CCM-refC2')).toBeInTheDocument(); // If this fails, the default store might have been modified.
-        userEvent.type(input, 'ACCESS-CCM-refC2{enter}');
+        act(() => {
+            userEvent.type(input, 'ACCESS-CCM-refC2{enter}');
+        });
         expect(queryByText('ACCESS-CCM-refC2')).toBeInTheDocument();
     });
 
@@ -151,13 +157,17 @@ describe('test the functionality of EditModelGroupModal', () => {
         expect(queryByTestId('ColumnCheckboxCheckedTypeMedian')).toBeInTheDocument();
         expect(input.querySelector('input[type="checkbox"]')).toBeChecked();
 
-        fireEvent.click(input.querySelector('input[type="checkbox"]'));
+        act(() => {
+            fireEvent.click(input.querySelector('input[type="checkbox"]'));
+        });
 
         expect(input.querySelector('input[type="checkbox"]')).not.toBeChecked();
         expect(queryByTestId('ColumnCheckboxIntermediateTypeMedian')).toBeInTheDocument();
         expect(queryByTestId('ColumnCheckboxCheckedTypeMedian')).toBeNull();
 
-        fireEvent.click(input.querySelector('input[type="checkbox"]'));
+        act(() => {
+            fireEvent.click(input.querySelector('input[type="checkbox"]'));
+        });
 
         expect(queryByTestId('ColumnCheckboxCheckedTypeMedian')).toBeInTheDocument();
         expect(queryByTestId('ColumnCheckboxIntermediateTypeMedian')).toBeNull();
@@ -182,7 +192,9 @@ describe('test the functionality of EditModelGroupModal', () => {
             const input = getByTestId(`CellCheckboxRow${i}TypeMedian`);
             expect(input.querySelector('input[type="checkbox"]')).toBeChecked();
 
-            fireEvent.click(input.querySelector('input[type="checkbox"]'));
+            act(() => {
+                fireEvent.click(input.querySelector('input[type="checkbox"]'));
+            });
 
             expect(input.querySelector('input[type="checkbox"]')).not.toBeChecked();
         }
@@ -206,7 +218,9 @@ describe('test the functionality of EditModelGroupModal', () => {
         const columnCheckbox = queryByTestId('ColumnCheckboxCheckedTypeMedian');
         expect(queryByTestId('ColumnCheckboxCheckedTypeMedian')).toBeInTheDocument();
 
-        fireEvent.click(columnCheckbox);
+        act(() => {
+            fireEvent.click(columnCheckbox);
+        });
 
         expect(queryByTestId('ColumnCheckboxUncheckedTypeMedian')).toBeInTheDocument();
         expect(queryByTestId('ColumnCheckboxCheckedTypeMedian')).toBeNull();

@@ -97,8 +97,10 @@ describe('test sidebar component', () => {
                 />
             </Provider>
         );
-        userEvent.click(getByTestId('Section-Summary-Appearance'));
-        userEvent.click(getByTestId('Section-Summary-Appearance'));
+        act(() => {
+            userEvent.click(getByTestId('Section-Summary-Appearance'));
+            userEvent.click(getByTestId('Section-Summary-Appearance'));
+        });
     });
 
     it('opens and closes the download modal without crashing', () => {

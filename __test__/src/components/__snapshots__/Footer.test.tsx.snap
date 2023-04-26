@@ -3,7 +3,7 @@
 exports[`renders correctly 1`] = `
 <DocumentFragment>
   <div
-    style="width: 100%;"
+    style="width: 100%; flex: 0 1 auto;"
   >
     <div
       class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-17ipc21-MuiGrid-root"

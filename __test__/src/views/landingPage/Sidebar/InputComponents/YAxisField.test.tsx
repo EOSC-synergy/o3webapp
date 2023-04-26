@@ -1,4 +1,4 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
 import YAxisField from 'views/landingPage/Sidebar/InputComponents/YAxisField';
@@ -14,21 +14,17 @@ describe('tests basic rendering', () => {
 
     it('renders without crashing', () => {
         render(
-            <>
-                <Provider store={store}>
-                    <YAxisField reportError={() => undefined} />
-                </Provider>
-            </>
+            <Provider store={store}>
+                <YAxisField reportError={() => undefined} />
+            </Provider>
         );
     });
 
     it('renders correctly', () => {
         const { container } = render(
-            <>
-                <Provider store={store}>
-                    <YAxisField reportError={() => undefined} />
-                </Provider>
-            </>
+            <Provider store={store}>
+                <YAxisField reportError={() => undefined} />
+            </Provider>
         );
 
         expect(container).toMatchSnapshot();
@@ -57,7 +53,9 @@ describe('test functionality redux for tco3_zm', () => {
             </Provider>
         );
         const inputField = getByTestId('YAxisField-left-input');
-        fireEvent.change(inputField, { target: { value: newValue } }); // change input
+        act(() => {
+            fireEvent.change(inputField, { target: { value: newValue } }); // change input
+        });
         expect(store.getState().plot.plotSpecificSettings.tco3_zm.displayYRange.minY).toEqual(
             newValue
         );
@@ -73,7 +71,9 @@ describe('test functionality redux for tco3_zm', () => {
             </Provider>
         );
         const inputField = getByTestId('YAxisField-right-input');
-        fireEvent.change(inputField, { target: { value: newValue } }); // change input
+        act(() => {
+            fireEvent.change(inputField, { target: { value: newValue } }); // change input
+        });
         expect(store.getState().plot.plotSpecificSettings.tco3_zm.displayYRange.maxY).toEqual(
             newValue
         );
@@ -104,7 +104,9 @@ describe('test functionality redux for tco3_return', () => {
             </Provider>
         );
         const inputField = getByTestId('YAxisField-left-input');
-        fireEvent.change(inputField, { target: { value: newValue } }); // change input
+        act(() => {
+            fireEvent.change(inputField, { target: { value: newValue } }); // change input
+        });
         expect(store.getState().plot.plotSpecificSettings.tco3_return.displayYRange.minY).toEqual(
             newValue
         );
@@ -121,7 +123,9 @@ describe('test functionality redux for tco3_return', () => {
             </Provider>
         );
         const inputField = getByTestId('YAxisField-right-input');
-        fireEvent.change(inputField, { target: { value: newValue } }); // change input
+        act(() => {
+            fireEvent.change(inputField, { target: { value: newValue } }); // change input
+        });
         expect(store.getState().plot.plotSpecificSettings.tco3_return.displayYRange.maxY).toEqual(
             newValue
         );
@@ -150,8 +154,10 @@ describe('test error handling functionality', () => {
         );
         const inputFieldLeft = getByTestId('YAxisField-left-input');
         const inputFieldRight = getByTestId('YAxisField-right-input');
-        fireEvent.change(inputFieldLeft, { target: { value: 300 } }); // change input
-        fireEvent.change(inputFieldRight, { target: { value: 300 } }); // change input (should have no effect)
+        act(() => {
+            fireEvent.change(inputFieldLeft, { target: { value: 300 } }); // change input
+            fireEvent.change(inputFieldRight, { target: { value: 300 } }); // change input (should have no effect)
+        });
         expect(store.getState().plot.plotSpecificSettings.tco3_zm.displayYRange.minY).toEqual(300); // assure left got updated correctly
         expect(store.getState().plot.plotSpecificSettings.tco3_zm.displayYRange.maxY).toEqual(
             previousState
@@ -168,7 +174,9 @@ describe('test error handling functionality', () => {
             </Provider>
         );
         const inputFieldRight = getByTestId('YAxisField-left-input');
-        fireEvent.change(inputFieldRight, { target: { value: '-42' } }); // change input (should have no effect)
+        act(() => {
+            fireEvent.change(inputFieldRight, { target: { value: '-42' } }); // change input (should have no effect)
+        });
         expect(store.getState().plot.plotSpecificSettings.tco3_zm.displayYRange.minY).toEqual(
             previousState
         ); // no update took place

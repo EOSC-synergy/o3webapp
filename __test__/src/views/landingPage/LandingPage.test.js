@@ -1,7 +1,7 @@
 import React from 'react';
 import NavBar from '../../../../src/components/Navbar';
 import LandingPage from '../../../../src/views/landingPage/LandingPage';
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
@@ -65,7 +65,9 @@ describe('test LandingPage component rendering', () => {
                 />
             </Provider>
         );
-        userEvent.click(getByTestId(/landingPage-not-sidebar/));
+        act(() => {
+            userEvent.click(getByTestId(/landingPage-not-sidebar/));
+        });
         expect(closeSidebar).toHaveBeenCalled();
     });
 });

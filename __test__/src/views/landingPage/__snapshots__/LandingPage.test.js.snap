@@ -4,6 +4,7 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
 <div>
   <div
     id="NavBar"
+    style="flex: 0 1 auto;"
   >
     <header
       class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic css-18lypu8-MuiPaper-root-MuiAppBar-root"
@@ -81,7 +82,7 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
   </div>
   <div
     data-testid="landingPage"
-    style="width: 100%; height: 100%;"
+    style="width: 100%; height: 100%; flex: 1 1 auto;"
   >
     <div
       class="MuiDrawer-root MuiDrawer-docked css-fvsm27-MuiDrawer-docked"
@@ -1991,7 +1992,7 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
     </div>
     <div
       data-testid="landingPage-not-sidebar"
-      style="display: flex; justify-content: center; align-items: center; height: 768px;"
+      style="display: flex; justify-content: center; align-items: center;"
     >
       <main
         class="css-1dvhq4y"
