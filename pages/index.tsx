@@ -17,34 +17,37 @@ import { isEmpty } from 'lodash';
 import { GetStaticProps, NextPage } from 'next';
 
 /**
- * Main container of the Webapp.
- * Contains all GUI elements.
- * @component
+ * Main container of the Webapp. Contains all GUI elements.
+ *
  * @returns {JSX.Element} A jsx containing all main components
+ * @component
  */
 const App: NextPage<IndexProps> = () => {
     const store = useAppStore();
 
     /**
      * State that holds the boolean whether the ErrorMessageModal is currently visible or not.
+     *
      * @constant {boolean}
      */
     const [isErrorModalVisible, setErrorModalVisible] = useState(false);
     /**
-     * The error message if an error has occured.
-     * If no error occured the state is set to null.
+     * The error message if an error has occured. If no error occured the state is set to null.
+     *
      * @constant {string}
      */
     const [errorMessage, setErrorMessage] = useState<string | null>(null); // if errorMessage null no error
 
     /**
      * A queue holding all incoming and unprocessed error messages.
+     *
      * @constant {Array}
      */
     const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
     /**
      * State that holds the boolean whether the Sidebar is currently open or not.
+     *
      * @constant {boolean}
      */
     const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -59,6 +62,7 @@ const App: NextPage<IndexProps> = () => {
 
     /**
      * Function to open sidebar
+     *
      * @function
      */
     const openSidebar = () => {
@@ -66,8 +70,8 @@ const App: NextPage<IndexProps> = () => {
     };
 
     /**
-     * Function to close sidebar,
-     * if the user does not currently try to navigate the sidebar
+     * Function to close sidebar, if the user does not currently try to navigate the sidebar
+     *
      * @function
      */
     // TODO: event?
@@ -83,10 +87,10 @@ const App: NextPage<IndexProps> = () => {
     };
 
     /**
-     * Function to report an error from other components.
-     * Automatically opens errorModal
-     * @param message the message of the reported error
+     * Function to report an error from other components. Automatically opens errorModal
+     *
      * @function
+     * @param message The message of the reported error
      */
     const reportError = (message: string) => {
         for (let i = 0; i < errorMessages.length; i++) {
@@ -104,6 +108,7 @@ const App: NextPage<IndexProps> = () => {
 
     /**
      * Closes the error modal
+     *
      * @function
      */
     const closeErrorModal = () => {
@@ -112,6 +117,7 @@ const App: NextPage<IndexProps> = () => {
 
     /**
      * Object containing the theming information about the webapp.
+     *
      * @constant {Object}
      */
     const theme = createTheme({
@@ -167,7 +173,13 @@ const App: NextPage<IndexProps> = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+            <div
+                style={{
+                    minHeight: '100svh',
+                    display: 'flex',
+                    flexDirection: 'column',
+                }}
+            >
                 <Navbar openSidebar={openSidebar} />
                 {ready && (
                     <LandingPage

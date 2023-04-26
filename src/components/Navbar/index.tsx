@@ -16,7 +16,7 @@ type NavBarProps = {
  */
 const NavBar: React.FC<NavBarProps> = ({ openSidebar = () => undefined }) => {
     return (
-        <div id="NavBar">
+        <div id="NavBar" style={{ flex: '0 1 auto' }}>
             <AppBar
                 position="static"
                 sx={{ margin: 0, bgcolor: BACKGROUND_BASE_COLOR }}

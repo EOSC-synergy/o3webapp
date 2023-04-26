@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Graph from './Graph';
 import Sidebar from './Sidebar/Sidebar';
 import { styled } from '@mui/material/styles';
@@ -56,28 +56,14 @@ type LandingPageProps = {
  * @returns {JSX.Element} A jsx containing all main components
  * @component
  */
-const LandingPage: React.FC<LandingPageProps> = ({
+const LandingPage: FC<LandingPageProps> = ({
     reportError,
     openSidebar,
     closeSidebar,
     isSidebarOpen,
 }) => {
-    /**
-     * State to keep track of the current height of the landing Page.
-     *
-     * @constant {Array}
-     * @default 0
-     */
-    const [landingPageHeight, setLandingPageHeight] = React.useState(0);
-
-    React.useEffect(() => {
-        setLandingPageHeight(
-            window.innerHeight - (document.getElementById('Navbar')?.offsetHeight ?? 0)
-        );
-    }, []);
-
     return (
-        <div data-testid="landingPage" style={{ width: '100%', height: '100%' }}>
+        <div data-testid="landingPage" style={{ width: '100%', height: '100%', flex: '1 1 auto' }}>
             <Sidebar
                 reportError={reportError}
                 onOpen={openSidebar}
@@ -89,7 +75,6 @@ const LandingPage: React.FC<LandingPageProps> = ({
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    height: landingPageHeight,
                 }}
                 data-testid="landingPage-not-sidebar"
                 onClick={closeSidebar}

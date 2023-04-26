@@ -164,7 +164,8 @@ const Graph: FC<GraphProps> = ({ reportError }) => {
             // TODO: fix typing (assertion because xAxisRange only used for zm here)
             xAxisRange: xAxisRange as YearsBasedXRange,
             yAxisRange,
-            seriesNames,
+            // TODO: fix typing
+            seriesNames: seriesNames as string[],
             state: store.getState(),
         });
         const uniqueNumber = Date.now(); // forces apexcharts to re-render correctly!
@@ -177,7 +178,6 @@ const Graph: FC<GraphProps> = ({ reportError }) => {
                 series={data}
                 type={APEXCHARTS_PLOT_TYPE[plotId]}
                 height={HEIGHT}
-                style={{ marginTop: '2%' }}
             />
         );
     }

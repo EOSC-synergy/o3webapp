@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Typography from '@mui/material/Typography';
 import { Grid, Link } from '@mui/material';
 import { BACKGROUND_BASE_COLOR } from 'utils/constants';
@@ -24,11 +24,12 @@ export const links: {
  *
  * @component
  */
-const Footer: React.FC = () => {
+const Footer: FC = () => {
     return (
         <div
             style={{
                 width: '100%',
+                flex: '0 1 auto',
             }}
         >
             <Grid
