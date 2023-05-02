@@ -125,7 +125,7 @@ export const downloadGraphAsPDF = async (
                     {
                         svg: getAdjustedSVG(svgElement),
                         //svg: svgElement.outerHTML,
-                        fit: [500, 250], // ?
+                        fit: [500, 500], // ?
                         margin: 10,
                     },
                     {
