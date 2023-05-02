@@ -1,13 +1,10 @@
 version: '3.7'
 services:
-    app:
+    o3webapp:
         build:
             context: .
             target: production
-        volumes:
-            - .:/o3webapp
         ports:
             - 3000:3000
-        image: app:react
-        container_name: react_container
-        command: npm start
+        image: o3webapp
+        container_name: o3webapp
