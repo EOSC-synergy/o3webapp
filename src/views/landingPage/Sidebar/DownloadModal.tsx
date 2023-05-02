@@ -28,6 +28,7 @@ import CardHeader from '@mui/material/CardHeader';
 import CardActions from '@mui/material/CardActions';
 import { type AppState } from 'store';
 import { type ErrorReporter } from 'utils/reportError';
+import { Box } from '@mui/system';
 
 /**
  * The file formats which can be selected in the dropdown menu.
@@ -99,7 +100,7 @@ const DownloadModal: FC<DownloadModalProps> = ({ isOpen, onClose, reportError })
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: '30%',
+        width: '50%',
         bgColor: useTheme().palette.grey[200],
         boxShadow: 24,
         p: 5,
@@ -152,6 +153,16 @@ const DownloadModal: FC<DownloadModalProps> = ({ isOpen, onClose, reportError })
                     }
                 />
                 <CardContent>
+                    {(selectedFileFormat === 'PDF' ||
+                        selectedFileFormat === 'PNG' ||
+                        selectedFileFormat === 'SVG') && (
+                        <Box sx={{ mb: 4 }}>
+                            <Typography>
+                                The exported graph will have the same aspect ratio as the currently
+                                visible graph in your browser window.
+                            </Typography>
+                        </Box>
+                    )}
                     <FormControl style={{ width: '100%', minWidth: 150 }}>
                         <InputLabel id="formatSelectLabel">Format</InputLabel>
                         <Select
