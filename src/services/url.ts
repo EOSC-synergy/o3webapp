@@ -241,6 +241,9 @@ export function updateStoreWithQuery(
             const dataCpy = JSON.parse(JSON.stringify(state.models.modelGroups[i].models));
             for (let j = 0; j < groups[i].models.length; j++) {
                 const model = groups[i].models[j];
+                if (!(model in dataCpy)) {
+                    dataCpy[model] = {};
+                }
                 dataCpy[model]['isVisible'] = groups[i].modelSettings[dataPerModel * j];
                 dataCpy[model][mean] = groups[i].modelSettings[dataPerModel * j + 1];
                 dataCpy[model][std] = groups[i].modelSettings[dataPerModel * j + 2];
