@@ -7,12 +7,17 @@ import {
 import { HYDRATE } from 'next-redux-wrapper';
 import { pick } from 'lodash';
 
+type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
+
 type ModelData = {
     // single model
     color: string | null; // if not set it defaults to standard value from api
     isVisible: boolean; // show/hide individual models from a group
     // init statistical values dynamically with for-loop
-} & Record<PROCESS_SV_WITH_PERCENTILE, boolean>;
+} & Optional<
+    Record<PROCESS_SV_WITH_PERCENTILE, boolean>,
+    'lowerPercentile' | 'upperPercentile' | 'stdMean'
+>;
 /**
  * This object serves as a template, whenever a new model is added to a group this object describes
  * the default settings of the freshly added model.

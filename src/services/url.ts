@@ -22,7 +22,7 @@ import {
     updatePropertiesOfModelGroup,
 } from 'store/modelsSlice';
 import bigInt from 'big-integer';
-import { isEmpty } from 'lodash';
+import { cloneDeep, isEmpty } from 'lodash';
 import { AppDispatch, AppState } from 'store';
 
 /**
@@ -220,37 +220,37 @@ export function updateStoreWithQuery(
                 modelSettings: modelSettings2,
             };
         });
-        for (let i = 0; i < groups.length; i++) {
+        groups.forEach((group, index) => {
             dispatch(
                 setModelsOfModelGroup({
-                    groupId: i,
-                    groupName: groups[i].name,
-                    modelList: groups[i].models,
+                    groupId: index,
+                    groupName: group.name,
+                    modelList: group.models,
                 })
             );
-            dispatch(setVisibilityForGroup({ groupId: i, isVisible: groups[i].visibilities[0] }));
-            for (let j = 1; j < groups[i].visibilities.length; j++) {
+            dispatch(setVisibilityForGroup({ groupId: index, isVisible: group.visibilities[0] }));
+            for (let j = 1; j < group.visibilities.length; j++) {
                 dispatch(
                     setStatisticalValueForGroup({
-                        groupId: i,
+                        groupId: index,
                         svType: STATISTICAL_VALUES_LIST[j - 1],
-                        isIncluded: groups[i].visibilities[j],
+                        isIncluded: group.visibilities[j],
                     })
                 );
             }
-            const dataCpy = JSON.parse(JSON.stringify(state.models.modelGroups[i].models));
-            for (let j = 0; j < groups[i].models.length; j++) {
-                const model = groups[i].models[j];
-                if (!(model in dataCpy)) {
-                    dataCpy[model] = {};
-                }
-                dataCpy[model]['isVisible'] = groups[i].modelSettings[dataPerModel * j];
-                dataCpy[model][mean] = groups[i].modelSettings[dataPerModel * j + 1];
-                dataCpy[model][std] = groups[i].modelSettings[dataPerModel * j + 2];
-                dataCpy[model][median] = groups[i].modelSettings[dataPerModel * j + 3];
-                dataCpy[model][percentile] = groups[i].modelSettings[dataPerModel * j + 4];
+            const dataCpy = cloneDeep(state.models.modelGroups[index].models);
+            for (let j = 0; j < group.models.length; j++) {
+                const model = group.models[j];
+                dataCpy[model] = {
+                    isVisible: group.modelSettings[dataPerModel * j],
+                    [mean]: group.modelSettings[dataPerModel * j + 1],
+                    [std]: group.modelSettings[dataPerModel * j + 2],
+                    [median]: group.modelSettings[dataPerModel * j + 3],
+                    [percentile]: group.modelSettings[dataPerModel * j + 4],
+                    color: null,
+                };
             }
-            dispatch(updatePropertiesOfModelGroup({ groupId: i, data: dataCpy }));
-        }
+            dispatch(updatePropertiesOfModelGroup({ groupId: index, data: dataCpy }));
+        });
     }
 }

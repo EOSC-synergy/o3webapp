@@ -1301,14 +1301,14 @@ function calculateSvForModels(
     svHolder['mean+std'] = [];
     svHolder['mean-std'] = [];
     for (let i = 0; i < svHolder[std].length; ++i) {
-        if (svHolder[stdMean][i] == null || svHolder[std][i] == null) {
+        const mean = svHolder[stdMean][i];
+        const std_ = svHolder[std][i];
+        if (mean == null || std_ == null) {
             svHolder['mean+std'].push(null);
             svHolder['mean-std'].push(null);
         } else {
-            // @ts-expect-error TODO: find out how to tell typescript this is not null since we checked
-            svHolder['mean+std'].push(svHolder[stdMean][i] + svHolder[std][i]);
-            // @ts-expect-error TODO: find out how to tell typescript this is not null since we checked
-            svHolder['mean-std'].push(svHolder[stdMean][i] - svHolder[std][i]);
+            svHolder['mean+std'].push(mean + std_);
+            svHolder['mean-std'].push(mean - std_);
         }
     }
 
@@ -1637,9 +1637,9 @@ export function convertToStrokeStyle(apiStyle: string) {
  * width: Array, dashArray: Array}
  *
  * @function
- * @param {Object} series1 The first data series object
- * @param {Object} series2 The second data series object
- * @returns {Object} New series containing series1 and series2
+ * @param series1 The first data series object
+ * @param series2 The second data series object
+ * @returns New series containing series1 and series2
  */
 function combineSeries<DataT extends ApexAxisChartSeries>(
     series1: Series<DataT>,
@@ -1677,9 +1677,10 @@ function create2dArray<T>(length: T): T[][] {
  * @returns True if the given model should be included in the SV calculation of the given SV-Type
  */
 function isIncludedInSv(model: string, groupData: ModelGroup, svType: PROCESS_SV_WITH_PERCENTILE) {
+    // the std mean should only be calculated if the std is necessary
     if (svType === 'stdMean') {
         return groupData.models[model][std];
-    } // the std mean should only be calculated if the std is necessary
+    }
     if (svType.toLowerCase().includes(percentile)) {
         return groupData.models[model][percentile];
     }
