@@ -1811,6 +1811,7 @@ export const formatYLabelsNicely = (value: number): string => (value % 10 ? '' :
  * @returns An object holding the sv type and the group name
  */
 export function parseSvName(name: string) {
+    // `${string}(${string})` ?
     const regex = new RegExp('([^(]+)([^)]+)');
     const info = name.match(regex);
     return {
@@ -1854,7 +1855,7 @@ export function customTooltipFormatter({
                     <div>Reference ${displayName[1]}: <strong>${
             // @ts-expect-error TODO: type this somehow?
             series[seriesIndex][dataPointIndex].toFixed(numDecimalsInDatapoint)
-        }}</strong></div>
+        }</strong></div>
                 </div>
             `;
     }
@@ -1872,7 +1873,7 @@ export function customTooltipFormatter({
                     <div>${sv}: <strong>${
                 // @ts-expect-error TODO: type this somehow?
                 series[seriesIndex][dataPointIndex].toFixed(numDecimalsInDatapoint)
-            }}</strong></div>
+            }</strong></div>
                     <div>Group: ${groupName}</div>
                 </div>
                 `;
