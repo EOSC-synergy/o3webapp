@@ -5,9 +5,9 @@ import { HYDRATE } from 'next-redux-wrapper';
  * The string identifying the default reference model used in the webApp
  *
  * @category ReferenceSlice
- * @default 'SBUV_GSFC_merged-SAT-ozone'
+ * @default 'SBUV_GSFC_observed-merged-SAT-ozone'
  */
-export const DEFAULT_REF_MODEL = 'SBUV_GSFC_merged-SAT-ozone';
+export const DEFAULT_REF_MODEL = 'SBUV_GSFC_observed-merged-SAT-ozone';
 
 /**
  * The default year of the reference year
