@@ -4,3 +4,16 @@ body,
     width: 100%;
     margin: 0;
 }
+
+/*
+    Hack: hide arrows on number selects which apparently appeared in nextjs port
+    TODO: fix properly? number field without arrows is desired
+ */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+}
