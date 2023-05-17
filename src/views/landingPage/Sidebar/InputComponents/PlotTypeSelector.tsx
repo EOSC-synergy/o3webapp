@@ -52,34 +52,6 @@ const PlotTypeSelector: FC<PlotTypeSelectorProps> = (props) => {
         dispatch(setActivePlotId({ plotId: event.target.value as O3AS_PLOTS }));
     };
 
-    let dropdownData;
-    let plotTypeData: O3AS_PLOTS | undefined = plotType;
-    if (
-        plotTypesRequestData.status === REQUEST_STATE.loading ||
-        plotTypesRequestData.status === REQUEST_STATE.idle
-    ) {
-        dropdownData = (
-            <Box
-                sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}
-            >
-                <CircularProgress data-testid="plotTypeSelectorLoading" />
-            </Box>
-        );
-        plotTypeData = undefined;
-    } else if (plotTypesRequestData.status === REQUEST_STATE.success) {
-        dropdownData = plotTypesRequestData.data.map((name, idx) => {
-            return (
-                <MenuItem key={idx} value={name}>
-                    {name}
-                </MenuItem>
-            );
-        });
-    }
-
     useEffect(() => {
         if (plotTypesRequestData.status === REQUEST_STATE.error) {
             props.reportError('API not responding: ' + plotTypesRequestData.error);
@@ -101,15 +73,33 @@ const PlotTypeSelector: FC<PlotTypeSelectorProps> = (props) => {
                 <InputLabel id="plotTypeLabel" data-testid="plotTypeSelector">
                     Plot Type
                 </InputLabel>
-                <Select
-                    labelId="plotTypeLabel"
-                    id="plotType"
-                    value={plotTypeData}
-                    label="Plot Type"
-                    onChange={changePlotType}
-                >
-                    {dropdownData}
-                </Select>
+                {(plotTypesRequestData.status === REQUEST_STATE.loading ||
+                    plotTypesRequestData.status === REQUEST_STATE.idle) && (
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <CircularProgress data-testid="plotTypeSelectorLoading" />
+                    </Box>
+                )}
+                {plotTypesRequestData.status === REQUEST_STATE.success && (
+                    <Select
+                        labelId="plotTypeLabel"
+                        id="plotType"
+                        value={plotType}
+                        label="Plot Type"
+                        onChange={changePlotType}
+                    >
+                        {plotTypesRequestData.data.map((name, idx) => (
+                            <MenuItem key={idx} value={name}>
+                                {name}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                )}
             </FormControl>
         </>
     );
