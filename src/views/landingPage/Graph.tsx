@@ -17,12 +17,13 @@ import dynamic from 'next/dynamic';
 import { debounce } from 'lodash';
 import { AppState, useAppStore } from 'store';
 import type { Props as ApexProps } from 'react-apexcharts';
-import { LEGAL_PLOT_ID } from '../../services/API/client';
+import { LEGAL_PLOT_ID } from 'services/API/client';
+import { ErrorReporter } from 'utils/reportError';
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 type GraphProps = {
-    reportError: (error: string) => void;
+    reportError: ErrorReporter;
 };
 /**
  * The Graph component. The input parameters are taken from the Redux Store.
@@ -171,14 +172,18 @@ const Graph: FC<GraphProps> = ({ reportError }) => {
         const uniqueNumber = Date.now(); // forces apexcharts to re-render correctly!
         const HEIGHT =
             (window.innerHeight - document.getElementById('NavBar')!.offsetHeight) * 0.975;
+        console.log(seriesNames, options.yaxis);
         return (
-            <Chart
-                key={uniqueNumber}
-                options={options}
-                series={data}
-                type={APEXCHARTS_PLOT_TYPE[plotId]}
-                height={HEIGHT}
-            />
+            <div key={uniqueNumber}>
+                {uniqueNumber}
+                <Chart
+                    key={uniqueNumber}
+                    options={options}
+                    series={data}
+                    type={APEXCHARTS_PLOT_TYPE[plotId]}
+                    height={HEIGHT}
+                />
+            </div>
         );
     }
 

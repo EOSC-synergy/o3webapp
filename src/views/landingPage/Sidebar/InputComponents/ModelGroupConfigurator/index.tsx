@@ -16,14 +16,6 @@ type ModelGroupConfiguratorProps = {
  */
 const ModelGroupConfigurator: FC<ModelGroupConfiguratorProps> = ({ reportError }) => {
     /**
-     * Label that is displayed in the add model group button
-     *
-     * @constant {String}
-     * @default 'Add Model Group'
-     */
-    const addModelGroupButtonLabel = 'Add Model Group';
-
-    /**
      * Ids of all existing modelGroups
      *
      * @constant {Array}
@@ -60,16 +52,16 @@ const ModelGroupConfigurator: FC<ModelGroupConfiguratorProps> = ({ reportError }
 
     return (
         <>
-            {allGroupIds.map((id, idx) => {
-                return <ModelGroupCard key={idx} modelGroupId={id} reportError={reportError} />;
-            })}
+            {allGroupIds.map((id) => (
+                <ModelGroupCard key={id} modelGroupId={id} reportError={reportError} />
+            ))}
             <Button
                 sx={{ width: '100%' }}
                 variant="contained"
                 onClick={() => openAddModal(true)}
                 data-testid="ModelGroupConfigurator-addModelGroup-button"
             >
-                {addModelGroupButtonLabel}
+                Add Model Group
             </Button>
             <AddModelGroupModal
                 isOpen={isAddModalVisible}

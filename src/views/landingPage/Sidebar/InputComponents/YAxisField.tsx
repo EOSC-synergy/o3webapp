@@ -4,9 +4,10 @@ import { selectPlotId, selectPlotYRange, setDisplayYRange } from 'store/plotSlic
 import { FormControl, Grid, TextField, Typography } from '@mui/material';
 import { O3AS_PLOTS } from 'utils/constants';
 import { useAppDispatch, useAppStore } from 'store';
+import { ErrorReporter } from 'utils/reportError';
 
 type YAxisFieldProps = {
-    reportError?: (error: string) => void;
+    reportError: ErrorReporter;
 };
 
 /**
@@ -16,7 +17,7 @@ type YAxisFieldProps = {
  * @returns {JSX.Element} A jsx containing two text-fields and labels
  * @component
  */
-const YAxisField: FC<YAxisFieldProps> = ({ reportError = () => undefined }) => {
+const YAxisField: FC<YAxisFieldProps> = ({ reportError }) => {
     const store = useAppStore();
 
     /** A dispatch function to dispatch actions to the redux store. */

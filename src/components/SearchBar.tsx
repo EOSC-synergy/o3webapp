@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import useId from '@mui/utils/useId';
 
 /**
- * A JSX Element containing a wrapper for a SearchIcon. Wrapped by {@link SearchBar.Search}.
+ * A JSX Element containing a wrapper for a SearchIcon.
  *
  * @memberof SearchBar
  * @constant {JSX.Element}

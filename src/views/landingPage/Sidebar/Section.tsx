@@ -164,8 +164,11 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
     borderTop: '1px solid rgba(0, 0, 0, .125)',
 }));
 
+type SectionComponentProps = {
+    reportError: ErrorReporter;
+};
 type SectionProps = {
-    components: string[];
+    components: FC<SectionComponentProps>[];
     name: string;
     reportError: ErrorReporter;
 };
@@ -182,57 +185,6 @@ type SectionProps = {
  * @component
  */
 const Section: FC<SectionProps> = ({ components, name, reportError }) => {
-    /**
-     * Maps a given name to a corresponding component from the ./InputComponents folder if there is
-     * no component with the given name, calls the props.reportError function
-     *
-     * @param name_ The name of the component
-     * @param key A unique key for the given input component
-     * @returns {JSX.Element} A component from './InputComponents
-     * @public
-     */
-    function mapNameToComponent(name_: string, key: number) {
-        if (reportError !== undefined) {
-            switch (name_) {
-                case CLS_Symbol.description:
-                    return <CustomLatitudeSelector key={key} />;
-                case LBS_Symbol.description:
-                    return <LatitudeBandSelector key={key} />;
-                case LS_Symbol.description:
-                    return <LocationSelector key={key} />;
-                case MGC_Symbol.description:
-                    return <ModelGroupConfigurator key={key} reportError={reportError} />;
-                case PNF_Symbol.description:
-                    return <PlotNameField key={key} />;
-                case RMS_Symbol.description:
-                    return <ReferenceModelSelector key={key} reportError={reportError} />;
-                case RYF_Symbol.description:
-                    return <ReferenceYearField key={key} />;
-                case RS_Symbol.description:
-                    return <RegionSelector key={key} />;
-                case TCG_Symbol.description:
-                    return <TimeCheckBoxGroup key={key} />;
-                case XAF_Symbol.description:
-                    return <XAxisField key={key} />;
-                case YAF_Symbol.description:
-                    return <YAxisField key={key} reportError={reportError} />;
-                default:
-                    reportError(`Section ${name} found no match for an input component ${name_}`);
-            }
-        } else {
-            return <> `props.ReportError` not defined </>;
-        }
-    }
-
-    if (!components || components.length === 0) {
-        if (reportError !== undefined) {
-            reportError(`Section ${name} was provided with no components`);
-            return <></>;
-        } else {
-            return <> `props.ReportError` not defined </>;
-        }
-    }
-
     return (
         <Accordion
             data-testid={`Section-${name}`}
@@ -253,13 +205,14 @@ const Section: FC<SectionProps> = ({ components, name, reportError }) => {
 
             <AccordionDetails>
                 <>
-                    {components.map((element, idx) => {
+                    {components.map((element) => {
+                        const Element = element;
                         return (
-                            <Fragment key={idx}>
-                                {mapNameToComponent(element, idx)}
-                                {idx !== components.length - 1 && (
+                            <Fragment key={element.name}>
+                                <Element reportError={reportError} />
+                                {/*idx !== components.length - 1 && (
                                     <div style={{ height: '20px' }} />
-                                )}
+                                )*/}
                             </Fragment>
                         );
                     })}

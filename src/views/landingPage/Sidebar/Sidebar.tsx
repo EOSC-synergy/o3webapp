@@ -1,9 +1,9 @@
-import React, { type FC, useState } from 'react';
+import React, { type FC, useMemo, useState } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Section from './Section';
-import defaultStructure from 'config/defaultConfig.json';
-import tco3_zm from 'config/tco3_zm.json';
-import tco3_return from 'config/tco3_return.json';
+import defaultStructure from 'config/defaultSections';
+import tco3_zm from 'config/tco3_zm';
+import tco3_return from 'config/tco3_return';
 import DownloadModal from './DownloadModal';
 import { selectPlotId } from 'store/plotSlice';
 import { useSelector } from 'react-redux';
@@ -128,7 +128,7 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, reportError, onOpen }) => 
      *
      * @function
      */
-    const createSectionStructure = () => {
+    const sectionStructure = useMemo(() => {
         const sections = [...defaultStructure['sections']];
         let specificSections;
         switch (selectedPlot) {
@@ -142,21 +142,16 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, reportError, onOpen }) => 
                 reportError('Invalid plot type.');
                 return [];
         }
-        for (let i = 0; i < specificSections.length; i++) {
-            let foundMatch = false;
-            for (let j = 0; j < sections.length; j++) {
-                if (specificSections[i].name === sections[j].name) {
-                    sections[j] = specificSections[i];
-                    foundMatch = true;
-                    break;
-                }
-            }
-            if (!foundMatch) {
-                sections.push(specificSections[i]);
+        for (const specific of specificSections) {
+            const index = sections.findIndex((section) => section.name === specific.name);
+            if (index === -1) {
+                sections.push(specific);
+            } else {
+                sections[index] = specific;
             }
         }
         return sections;
-    };
+    }, [selectedPlot]);
 
     return (
         <SwipeableDrawer
@@ -206,9 +201,9 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, reportError, onOpen }) => 
                     </Divider>
                 </div>
 
-                {createSectionStructure().map((s, idx) => (
+                {sectionStructure.map((s) => (
                     <div
-                        key={idx}
+                        key={s.name}
                         style={{
                             width: '95%',
                             marginBottom: '2%',
@@ -218,7 +213,6 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, reportError, onOpen }) => 
                     >
                         <Section
                             name={s.name}
-                            key={idx}
                             //isExpanded={idx === expandedSection}
                             components={s.components}
                             //onCollapse={() => collapseSection()}

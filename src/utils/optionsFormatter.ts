@@ -549,13 +549,13 @@ export function getOptions({
                 { ...defaultTCO3_zm },
                 {
                     yaxis: [
-                        ...seriesNames.map((name) =>
-                            getDefaultYAxisTco3Zm(name, minY, maxY, false, false, 0, tickAmount)
-                        ),
                         // on left side
                         getDefaultYAxisTco3Zm(undefined, minY, maxY, true, false, -1, tickAmount),
                         // on right side
                         getDefaultYAxisTco3Zm(undefined, minY, maxY, true, true, 0, tickAmount),
+                        ...seriesNames.map((name) =>
+                            getDefaultYAxisTco3Zm(name, minY, maxY, false, false, 0, tickAmount)
+                        ),
                     ],
                     xaxis: {
                         min: xAxisMin,

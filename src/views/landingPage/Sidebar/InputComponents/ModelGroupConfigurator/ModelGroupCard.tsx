@@ -38,14 +38,11 @@ type ModelGroupCardProps = {
 /**
  * A card containing information about a model group. Used in {@link ModelGroupConfigurator}.
  *
- * @param {Object} props
- * @param {String} props.reportError - Error function
- * @param {int} props.modelGroupId -> id of the model group
- * @returns {JSX.Element} A jsx containing a modal with a data grid with all models from the model
- *   group
+ * @param reportError - Error function
+ * @param modelGroupId -> id of the model group
  * @component
  */
-const ModelGroupCard: FC<ModelGroupCardProps> = (props) => {
+const ModelGroupCard: FC<ModelGroupCardProps> = ({ modelGroupId, reportError }) => {
     const dispatch = useAppDispatch();
 
     /**
@@ -54,9 +51,7 @@ const ModelGroupCard: FC<ModelGroupCardProps> = (props) => {
      * @constant {Array}
      * @see {@link selectNameOfGroup}
      */
-    const modelGroupName = useSelector((state: AppState) =>
-        selectNameOfGroup(state, props.modelGroupId)
-    );
+    const modelGroupName = useSelector((state: AppState) => selectNameOfGroup(state, modelGroupId));
 
     /**
      * Gets the statisticalVales of the model Group. Retrieved from the Redux Store.
@@ -65,7 +60,7 @@ const ModelGroupCard: FC<ModelGroupCardProps> = (props) => {
      * @see {@link selectStatisticalValueSettingsOfGroup}
      */
     const modelGroupStatisticalValue = useSelector((state: AppState) =>
-        selectStatisticalValueSettingsOfGroup(state, props.modelGroupId)
+        selectStatisticalValueSettingsOfGroup(state, modelGroupId)
     );
 
     /**
@@ -75,7 +70,7 @@ const ModelGroupCard: FC<ModelGroupCardProps> = (props) => {
      * @see {@link selectVisibilityOfGroup}
      */
     const isModelGroupVisible = useSelector((state: AppState) =>
-        selectVisibilityOfGroup(state, props.modelGroupId)
+        selectVisibilityOfGroup(state, modelGroupId)
     );
 
     /**
@@ -92,7 +87,7 @@ const ModelGroupCard: FC<ModelGroupCardProps> = (props) => {
     ) => {
         dispatch(
             setStatisticalValueForGroup({
-                groupId: props.modelGroupId,
+                groupId: modelGroupId,
                 svType: statisticalValue,
                 isIncluded: event.target.checked,
             })
@@ -106,9 +101,7 @@ const ModelGroupCard: FC<ModelGroupCardProps> = (props) => {
      * @function
      */
     const toggleModelGroupVisibility = () => {
-        dispatch(
-            setVisibilityForGroup({ groupId: props.modelGroupId, isVisible: !isModelGroupVisible })
-        );
+        dispatch(setVisibilityForGroup({ groupId: modelGroupId, isVisible: !isModelGroupVisible }));
         /*
         // This de-/activates all statistical values when toggling the group visibility.
         for (const key in STATISTICAL_VALUES) {
@@ -220,7 +213,7 @@ const ModelGroupCard: FC<ModelGroupCardProps> = (props) => {
      */
     const deleteGroup = () => {
         toggleDeleteRequest();
-        dispatch(deleteModelGroup({ groupId: props.modelGroupId }));
+        dispatch(deleteModelGroup({ groupId: modelGroupId }));
     };
 
     if (!isDeleteRequest) {
@@ -230,17 +223,17 @@ const ModelGroupCard: FC<ModelGroupCardProps> = (props) => {
                 elevation={2}
             >
                 <EditModelGroupModal
-                    modelGroupId={props.modelGroupId}
+                    modelGroupId={modelGroupId}
                     isOpen={isEditModalVisible}
                     onClose={closeEditModal}
                     setOpen={showEditModal}
                     refresh={refreshEditModalGroupModalState}
                 />
                 <AddModelGroupModal
-                    modelGroupId={props.modelGroupId}
+                    modelGroupId={modelGroupId}
                     isOpen={isAddModalVisible}
                     onClose={closeAddModal}
-                    reportError={props.reportError}
+                    reportError={reportError}
                     setOpen={showAddModal}
                     refresh={refreshAddModelGroupModalState}
                 />
@@ -270,30 +263,25 @@ const ModelGroupCard: FC<ModelGroupCardProps> = (props) => {
                 </Grid>
                 <Divider />
                 <Grid container sx={{ paddingTop: '0.5em' }}>
-                    {STATISTICAL_VALUES_LIST.map((key, idx) => {
-                        return (
-                            <Grid item key={idx} xs={6} sx={{ paddingLeft: '1em' }}>
-                                <FormControlLabel
-                                    label={key}
-                                    id={`ModelGroupCard-toggle-${key}-label`}
-                                    control={
-                                        <Checkbox
-                                            onChange={(event) =>
-                                                toggleModelGroupStatisticalValueVisibility(
-                                                    event,
-                                                    key
-                                                )
-                                            }
-                                            checked={modelGroupStatisticalValue[key]}
-                                            id={`ModelGroupCard-toggle-${key}-checkbox`}
-                                            //labelid={`ModelGroupCard-toggle-${key}-label`}
-                                            data-testid={`ModelGroupCard-toggle-${key}-checkbox`}
-                                        />
-                                    }
-                                />
-                            </Grid>
-                        );
-                    })}
+                    {STATISTICAL_VALUES_LIST.map((key) => (
+                        <Grid item key={key} xs={6} sx={{ paddingLeft: '1em' }}>
+                            <FormControlLabel
+                                label={key}
+                                id={`ModelGroupCard-toggle-${key}-label`}
+                                control={
+                                    <Checkbox
+                                        onChange={(event) =>
+                                            toggleModelGroupStatisticalValueVisibility(event, key)
+                                        }
+                                        checked={modelGroupStatisticalValue[key]}
+                                        id={`ModelGroupCard-toggle-${key}-checkbox`}
+                                        //labelid={`ModelGroupCard-toggle-${key}-label`}
+                                        data-testid={`ModelGroupCard-toggle-${key}-checkbox`}
+                                    />
+                                }
+                            />
+                        </Grid>
+                    ))}
                 </Grid>
                 <Divider />
                 <CardActions>
