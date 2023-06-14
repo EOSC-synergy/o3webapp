@@ -77,10 +77,10 @@ const PlotNameField: FC = () => {
      */
     const updatePlotName: FocusEventHandler<HTMLInputElement> &
         KeyboardEventHandler<HTMLInputElement> = (event) => {
-        if (event.target.value.length > PLOT_NAME_MAX_LEN) {
-            event.target.value = event.target.value.slice(0, PLOT_NAME_MAX_LEN);
+        if (event.currentTarget.value.length > PLOT_NAME_MAX_LEN) {
+            event.currentTarget.value = event.currentTarget.value.slice(0, PLOT_NAME_MAX_LEN);
         }
-        dispatch(setTitle({ title: event.target.value }));
+        dispatch(setTitle({ title: event.currentTarget.value }));
     };
     return (
         <>

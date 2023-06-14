@@ -49,7 +49,7 @@ describe('test functionality redux for tco3_zm', () => {
 
         const { getByTestId } = render(
             <Provider store={store}>
-                <YAxisField />
+                <YAxisField reportError={() => undefined} />
             </Provider>
         );
         const inputField = getByTestId('YAxisField-left-input');
@@ -67,7 +67,7 @@ describe('test functionality redux for tco3_zm', () => {
 
         const { getByTestId } = render(
             <Provider store={store}>
-                <YAxisField />
+                <YAxisField reportError={() => undefined} />
             </Provider>
         );
         const inputField = getByTestId('YAxisField-right-input');
@@ -100,7 +100,7 @@ describe('test functionality redux for tco3_return', () => {
 
         const { getByTestId } = render(
             <Provider store={store}>
-                <YAxisField />
+                <YAxisField reportError={() => undefined} />
             </Provider>
         );
         const inputField = getByTestId('YAxisField-left-input');
@@ -119,7 +119,7 @@ describe('test functionality redux for tco3_return', () => {
 
         const { getByTestId } = render(
             <Provider store={store}>
-                <YAxisField />
+                <YAxisField reportError={() => undefined} />
             </Provider>
         );
         const inputField = getByTestId('YAxisField-right-input');
@@ -149,7 +149,7 @@ describe('test error handling functionality', () => {
 
         const { container, getByTestId } = render(
             <Provider store={store}>
-                <YAxisField />
+                <YAxisField reportError={() => undefined} />
             </Provider>
         );
         const inputFieldLeft = getByTestId('YAxisField-left-input');
@@ -170,7 +170,7 @@ describe('test error handling functionality', () => {
 
         const { container, getByTestId } = render(
             <Provider store={store}>
-                <YAxisField />
+                <YAxisField reportError={() => undefined} />
             </Provider>
         );
         const inputFieldRight = getByTestId('YAxisField-left-input');
