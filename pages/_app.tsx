@@ -11,9 +11,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
                 <title>O3AS Webapp</title>
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
-            <React.StrictMode>
-                <Component {...pageProps} />
-            </React.StrictMode>
+            <Component {...pageProps} />
         </>
     );
 };

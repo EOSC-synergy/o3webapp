@@ -1,5 +1,4 @@
-FROM node:18 as base
-# new base because we don't want .git
+FROM node:18-alpine as base
 
 WORKDIR /app
 
@@ -13,16 +12,32 @@ COPY styles styles
 COPY pages pages
 COPY src src
 
-FROM base as production
+FROM base as prod-build
+# relative
+ARG BACKEND_URL=api/v1
+ENV NEXT_PUBLIC_API_HOST=${BACKEND_URL}
+
+RUN yarn build
+
+FROM node:18-alpine as production
 ENV NODE_ENV=production
 
+WORKDIR /app
+COPY --from=prod-build /app/package.json .
+COPY --from=prod-build /app/yarn.lock .
+COPY --from=prod-build /app/next.config.js .
+COPY --from=prod-build /app/public ./public
+COPY --from=prod-build /app/.next/static ./.next/static
+COPY --from=prod-build /app/.next/standalone ./
+
 EXPOSE 3000
-#RUN npm run build
-# move build command into CMD to take into account run-time env vars for static pages
-CMD ["/bin/sh", "-c", "yarn build && yarn start"]
+CMD ["node", "server.js"]
 
 FROM base as development
 ENV NODE_ENV=development
+# relative
+ARG BACKEND_URL=api/v1
+ENV NEXT_PUBLIC_API_HOST=${BACKEND_URL}
 
 EXPOSE 3000
 CMD [ "yarn", "dev" ]
