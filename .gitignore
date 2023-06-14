@@ -32,6 +32,4 @@ dist/
 .next/
 .idea/
 
-/.env
-
 tsconfig.tsbuildinfo
