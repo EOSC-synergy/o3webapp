@@ -116,7 +116,6 @@ const YAxisField: FC<YAxisFieldProps> = ({ reportError }) => {
                     value < parseInt(stateY_zm.maxY.toString()) &&
                     parseInt(stateY_zm.maxY.toString()) - value <= maxDiff
                 ) {
-                    console.info('dispatch growing minY', value);
                     dispatch(
                         setDisplayYRange({
                             minY: value,

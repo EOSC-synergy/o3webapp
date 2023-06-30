@@ -172,10 +172,8 @@ const Graph: FC<GraphProps> = ({ reportError }) => {
         const uniqueNumber = Date.now(); // forces apexcharts to re-render correctly!
         const HEIGHT =
             (window.innerHeight - document.getElementById('NavBar')!.offsetHeight) * 0.975;
-        console.log(seriesNames, options.yaxis);
         return (
             <div key={uniqueNumber}>
-                {uniqueNumber}
                 <Chart
                     key={uniqueNumber}
                     options={options}

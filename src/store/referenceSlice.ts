@@ -138,7 +138,6 @@ const referenceSlice = createSlice({
     },
     extraReducers: {
         [HYDRATE]: (state: ReferenceState, action) => {
-            console.log('HYDRATE', state, action.payload);
             return {
                 ...state,
                 ...action.payload.subject,

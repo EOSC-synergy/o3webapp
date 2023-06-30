@@ -130,7 +130,6 @@ export function updateStoreWithQuery(
     query: Record<string, string>
 ) {
     if (!isEmpty(query)) {
-        console.log(query);
         const latMin = parseInt(query.lat_min);
         const latMax = parseInt(query.lat_max);
         dispatch(setLocation({ minLat: latMin, maxLat: latMax }));
