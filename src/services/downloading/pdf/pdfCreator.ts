@@ -1,7 +1,7 @@
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { O3AS_PLOTS } from 'utils/constants';
-import { ModelGroup, ModelId } from 'store/modelsSlice';
+import { ModelGroup, ModelGroupId } from 'store/modelsSlice';
 import { ProcessedO3Data } from 'services/API/apiSlice';
 import { Content } from 'pdfmake/interfaces';
 
@@ -103,7 +103,7 @@ const getAdjustedSVG = (svgElement: SVGGraphicsElement) => {
 export const downloadGraphAsPDF = async (
     plotId: O3AS_PLOTS,
     fileName: string,
-    modelGroups: Record<ModelId, ModelGroup>,
+    modelGroups: Record<ModelGroupId, ModelGroup>,
     currentData: ProcessedO3Data
 ) => {
     const modelGroupsList = getListOfModelsForPdf(plotId, modelGroups, currentData);
@@ -164,7 +164,7 @@ export const downloadGraphAsPDF = async (
  */
 const getListOfModelsForPdf = (
     plotId: O3AS_PLOTS,
-    modelGroups: Record<ModelId, ModelGroup>,
+    modelGroups: Record<ModelGroupId, ModelGroup>,
     currentData: ProcessedO3Data
 ) => {
     const modelGroupsList: Content = [

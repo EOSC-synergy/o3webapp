@@ -67,32 +67,16 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = ({
 }) => {
     const store = useAppStore();
 
-    /**
-     * True if the Modal is open in the "Edit Mode".
-     *
-     * @constant {boolean}
-     */
+    /** True if the Modal is open in the "Edit Mode". */
     const isEditMode = modelGroupId !== -1;
 
-    /**
-     * The label in the card heading.
-     *
-     * @constant {string}
-     */
+    /** The label in the card heading. */
     const addModelLabel = isEditMode ? 'Edit Model Group Members' : 'Add Model Group';
 
-    /**
-     * A function to dispatch actions to the redux store.
-     *
-     * @function
-     */
+    /** A function to dispatch actions to the redux store. */
     const dispatch = useAppDispatch();
 
-    /**
-     * Selected modelList data.
-     *
-     * @constant {Object}
-     */
+    /** Selected modelList data. */
     const modelListRequestedData = useSelector((state: AppState) => state.api.models);
 
     let isLoading = true;
@@ -107,51 +91,32 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = ({
         isLoading = false;
     }
 
-    /**
-     * Array containing all currently checked models.
-     *
-     * @constant {Array}
-     */
+    /** Array containing all currently checked models. */
     const [checked, setChecked] = useState<ModelId[]>([]);
 
     /**
      * Array containing all models, that are currently plotted in the right transfer list -> models
      * that should eventually be added
-     *
-     * @constant {Array}
      */
     const storeRight = Object.keys(
         useSelector((state: GlobalModelState) => selectModelDataOfGroup(state, modelGroupId))
     );
-    const [right, setRight] = useState<ModelId[]>(storeRight);
+    const [right, setRight] = useState<string[]>(storeRight);
 
     /**
      * Array containing all models that should currently be visibile because of the search function
      * those might differ from all models.
-     *
-     * @constant {Array}
      */
     const [visible, setVisible] = useState<ModelId[]>([]);
-    /**
-     * The currently enetered group name.
-     *
-     * @constant {string}
-     */
+
+    /** The currently enetered group name. */
     const storeGroupName = useSelector((state: AppState) => selectNameOfGroup(state, modelGroupId));
     const [groupName, setGroupName] = useState(storeGroupName);
 
-    /**
-     * Stores the error message if an error occured.
-     *
-     * @constant {string}
-     */
+    /** Stores the error message if an error occured. */
     const [errorMessage, setErrorMessage] = useState('');
 
-    /**
-     * The object containing the information about the theming of the webapp
-     *
-     * @constant {Object}
-     */
+    /** The object containing the information about the theming of the webapp */
     const theme = useTheme();
 
     const openDiscardChangesDialog = () => setDiscardChangesOpen(true);
@@ -188,6 +153,7 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = ({
      * @returns The number of checked models in models
      */
     const numberOfChecked = (models: ModelId[]) => intersection(checked, models).length;
+
     /**
      * All models that are currently on the left side -> all models that are not currently on the
      * right side are on the left side
@@ -195,29 +161,17 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = ({
      * @constant {Array}
      */
     const left = not(allModels, right);
-    /**
-     * An array containing all models that are currently on the left side and are checked
-     *
-     * @constant {Array}
-     */
+
+    /** An array containing all models that are currently on the left side and are checked */
     const leftChecked = intersection(checked, left);
-    /**
-     * An array containing all models that are currently on the right side and are checked
-     *
-     * @constant {Array}
-     */
+
+    /** An array containing all models that are currently on the right side and are checked */
     const rightChecked = intersection(checked, right);
-    /**
-     * An array containing all models that are currently on the left side and are visible
-     *
-     * @constant {Array}
-     */
+
+    /** An array containing all models that are currently on the left side and are visible */
     const leftVisible = intersection(visible, left);
-    /**
-     * An array containing all models that are currently on the right side and are visible
-     *
-     * @constant {Array}
-     */
+
+    /** An array containing all models that are currently on the right side and are visible */
     const rightVisible = intersection(visible, right);
 
     /**
@@ -231,8 +185,7 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = ({
      * Toggles one element i.e. checks the element if it had not been checked before and unchecks it
      * if it has been checked
      *
-     * @function
-     * @param {String} modelId The id of the model that has been clicked
+     * @param modelId The id of the model that has been clicked
      */
     const handleChangeElement = (modelId: ModelId) => () => {
         const currentIndex = checked.indexOf(modelId);
@@ -264,8 +217,6 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = ({
     /**
      * Moves all checked models from the right list to the left and unchecks them -> Appends all
      * leftChecked models to the right array and removes them from the checked array
-     *
-     * @function
      */
     const handleCheckedRight = () => {
         setRight(right.concat(leftChecked));
@@ -275,8 +226,6 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = ({
     /**
      * Moves all checked models from the left to right and unchecks them -> Removes all rightChecked
      * models from the right and checked array
-     *
-     * @function
      */
     const handleCheckedLeft = () => {
         setRight(not(right, rightChecked));
@@ -286,8 +235,6 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = ({
     /**
      * Function that is called if the the changes of a existing model group need to be applied or a
      * new model group has to be added.#d3d3d3
-     *
-     * @function
      */
     const addOrEditGroup = () => {
         if (groupName === '') {
@@ -314,8 +261,7 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = ({
      * Sets the currently visible models by a provided array of indices. It also overwrites old
      * visibilities.
      *
-     * @function
-     * @param {Array} visibleModels Array of models that should be currently visible
+     * @param visibleModels Array of models that should be currently visible
      */
     const setCurrentlyVisibleModels = (visibleModels: ModelId[]) => {
         setVisible(visibleModels);

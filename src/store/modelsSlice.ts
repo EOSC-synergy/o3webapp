@@ -35,9 +35,11 @@ export const MODEL_DATA_TEMPLATE: ModelData = {
     }, {}) as Record<PROCESS_SV_WITH_PERCENTILE, boolean>),
 };
 
+export type ModelId = string;
+
 export type ModelGroup = {
     name: string;
-    models: Record<string, ModelData>;
+    models: Record<ModelId, ModelData>;
     isVisible: boolean;
     visibleSV: Record<STATISTICAL_VALUES, boolean>;
 };
@@ -63,11 +65,10 @@ const MODEL_GROUP_TEMPLATE: ModelGroup = {
     }, {}) as Record<STATISTICAL_VALUES, boolean>,
 };
 
-export type ModelId = string;
-
+export type ModelGroupId = number;
 export type ModelState = {
     idCounter: number;
-    modelGroups: Record<ModelId, ModelGroup>;
+    modelGroups: Record<ModelGroupId, ModelGroup>;
 };
 
 export type GlobalModelState = {
@@ -132,11 +133,9 @@ const modelsSlice = createSlice({
          *     );
          *
          * @param {object} state The current store state of: state/models
-         * @param {object} action Accepts the action returned from updateModelGroup()
-         * @param {object} action.payload The payload is an object containing the given data
-         * @param {int} action.payload.groupId The name of the group to set
-         * @param {string} action.payload.groupName The name of the group
-         * @param {string} action.payload.modelList The list of models the group should have
+         * @param {int} groupId The name of the group to set
+         * @param {string} groupName The name of the group
+         * @param {string} modelList The list of models the group should have
          */
         setModelsOfModelGroup(
             state: ModelState,
@@ -192,7 +191,7 @@ const modelsSlice = createSlice({
          */
         deleteModelGroup(
             state: ModelState,
-            { payload: { groupId } }: Payload<{ groupId: number | string }>
+            { payload: { groupId } }: Payload<{ groupId: number }>
         ) {
             if (!(groupId in state.modelGroups)) {
                 // no group with this name in store
@@ -220,9 +219,7 @@ const modelsSlice = createSlice({
          */
         updatePropertiesOfModelGroup(
             state: ModelState,
-            {
-                payload: { groupId, data },
-            }: Payload<{ groupId: number | string; data: ModelGroup['models'] }>
+            { payload: { groupId, data } }: Payload<{ groupId: number; data: ModelGroup['models'] }>
         ) {
             if (!(groupId in state.modelGroups)) {
                 // no group with this name in store
@@ -253,19 +250,17 @@ const modelsSlice = createSlice({
          *         })
          *     );
          *
-         * @param {object} state The current store state of: state/models
-         * @param {object} action Accepts the action returned from updateModelGroup()
-         * @param {object} action.payload The payload is an object containing the given data
-         * @param {int} action.payload.groupId A string specifying the group
-         * @param {string} action.payload.svType The SV as a string
-         * @param {boolean} action.payload.isIncluded Should the SV be displayed for the given group
+         * @param state The current store state of: state/models
+         * @param groupId A string specifying the group
+         * @param svType The SV as a string
+         * @param isIncluded Should the SV be displayed for the given group
          */
         setStatisticalValueForGroup(
             state: ModelState,
             {
                 payload: { groupId, svType, isIncluded },
             }: Payload<{
-                groupId: number | string;
+                groupId: number;
                 svType: STATISTICAL_VALUES;
                 isIncluded: boolean;
             }>
@@ -303,9 +298,7 @@ const modelsSlice = createSlice({
          */
         setVisibilityForGroup(
             state: ModelState,
-            {
-                payload: { groupId, isVisible },
-            }: Payload<{ groupId: number | string; isVisible: boolean }>
+            { payload: { groupId, isVisible } }: Payload<{ groupId: number; isVisible: boolean }>
         ) {
             if (!(groupId in state.modelGroups)) {
                 throw new Error(`tried to access "${groupId}" which is not a valid group`);
