@@ -37,22 +37,6 @@ export function intersection<T>(a: T[], b: T[]): T[] {
 }
 
 /**
- * Calculates and returns A u B (The union of the sets A and B)
- *
- * @example
- *     //returns [1, 2, 3, 4]
- *     union([1, 2], [3, 4]);
- *
- * @function
- * @param {Array} a An array to create the union from
- * @param {Array} b An array to create the union from
- * @returns An array containing all elements that are in A or in B
- */
-export function union<T>(a: T[], b: T[]): T[] {
-    return [...a, ...not(b, a)];
-}
-
-/**
  * Compares to arrays based on their elements (shallow equality compare).
  *
  * @category Utils

@@ -1,42 +1,6 @@
-import { union, not, intersection, arraysEqual } from 'utils/arrayOperations';
+import { not, intersection, arraysEqual } from 'utils/arrayOperations';
 
 let a: number[], b: number[];
-describe('union works expectedly', () => {
-    it('handles no intersection', () => {
-        // no intersection
-        a = [1, 2, 3];
-        b = [4, 5, 6];
-        expect(union(a, b)).toStrictEqual([1, 2, 3, 4, 5, 6]);
-    });
-
-    it('handles some intersection', () => {
-        // some intersection
-        a = [1, 2, 3];
-        b = [2, 3, 4];
-        expect(union(a, b)).toStrictEqual([1, 2, 3, 4]);
-    });
-
-    it('handles full intersection', () => {
-        // full intersection
-        a = [1, 2, 3];
-        b = [1, 2, 3];
-        expect(union(a, b)).toStrictEqual([1, 2, 3]);
-    });
-
-    it('handles empty array', () => {
-        // empty array
-        a = [1, 2, 3];
-        b = [];
-        expect(union(a, b)).toStrictEqual([1, 2, 3]);
-    });
-
-    it('handles double elements', () => {
-        // double elements
-        a = [1, 2, 3];
-        b = [1, 1, 1];
-        expect(union(a, b)).toStrictEqual([1, 2, 3]);
-    });
-});
 
 describe('intersection works expectedly', () => {
     it('works with no intersection', () => {
