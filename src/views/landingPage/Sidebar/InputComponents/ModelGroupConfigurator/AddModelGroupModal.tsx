@@ -543,9 +543,7 @@ const AddModelGroupModal: FC<AddModelGroupModalProps> = ({
                         <Box id="modal-modal-description" sx={{ mt: 2 }}>
                             <Searchbar
                                 inputArray={allModels}
-                                // @ts-expect-error TODO: Searchbar foundIndicesCallback jank
-                                foundIndicesCallback={setCurrentlyVisibleModels}
-                                shouldReturnValues={true}
+                                onFilteredItems={setCurrentlyVisibleModels}
                             />
                             <Grid
                                 container

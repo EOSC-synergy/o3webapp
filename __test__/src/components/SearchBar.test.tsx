@@ -6,7 +6,7 @@ import SearchBar from 'components/SearchBar';
 describe('test searchbar rendering', () => {
     it('renders the input of the sarchbar', () => {
         const { getByTestId } = render(
-            <SearchBar inputArray={[]} foundIndicesCallback={() => undefined} />
+            <SearchBar inputArray={[]} onFilteredItems={() => undefined} />
         );
         const input = getByTestId('SearchbarInput');
         expect(input).toBeInTheDocument();
@@ -14,9 +14,7 @@ describe('test searchbar rendering', () => {
 
     it('calls the handleInputChange method which should delegate to the correct methods', () => {
         const callback = jest.fn();
-        const { getByTestId } = render(
-            <SearchBar inputArray={[]} foundIndicesCallback={callback} />
-        );
+        const { getByTestId } = render(<SearchBar inputArray={[]} onFilteredItems={callback} />);
         const input = getByTestId('SearchbarInput');
         act(() => {
             userEvent.type(input, 'abc{enter}');
@@ -26,41 +24,11 @@ describe('test searchbar rendering', () => {
 });
 
 describe('test searchbar functionality', () => {
-    it('returns the correct indices after searching for a string (obj array)', () => {
-        const callback = jest.fn();
-        const inputArray = [{ model: 'modelA' }, { model: 'modelB' }, {}, { model: 'modelA+' }];
-        const { getByTestId } = render(
-            <SearchBar inputArray={inputArray} foundIndicesCallback={callback} />
-        );
-        const input = getByTestId('SearchbarInput');
-        act(() => {
-            userEvent.type(input, 'modelA{enter}');
-        });
-        expect(callback.mock.calls[0][0]).toEqual([0, 3]); // expect the callback to be called with the correct indices
-    });
-
-    it('returns the correct indices after searching for a string (string array)', () => {
-        const callback = jest.fn();
-        const inputArray = ['hello', 'world', '-hello-', 'hell'];
-        const { getByTestId } = render(
-            <SearchBar inputArray={inputArray} foundIndicesCallback={callback} />
-        );
-        const input = getByTestId('SearchbarInput');
-        act(() => {
-            userEvent.type(input, 'hello{enter}');
-        });
-        expect(callback.mock.calls[0][0]).toEqual([0, 2]); // expect the callback to be called with the correct indices
-    });
-
     it('returns the correct values after searching for a string (string array)', () => {
         const callback = jest.fn();
         const inputArray = ['hello', 'world', '-hello-', 'hell'];
         const { getByTestId } = render(
-            <SearchBar
-                inputArray={inputArray}
-                foundIndicesCallback={callback}
-                shouldReturnValues={true}
-            />
+            <SearchBar inputArray={inputArray} onFilteredItems={callback} />
         );
         const input = getByTestId('SearchbarInput');
         act(() => {
@@ -73,11 +41,7 @@ describe('test searchbar functionality', () => {
         const callback = jest.fn();
         const inputArray = [{ model: 'modelA' }, { model: 'modelB' }, {}, { model: 'modelA+' }];
         const { getByTestId } = render(
-            <SearchBar
-                inputArray={inputArray}
-                foundIndicesCallback={callback}
-                shouldReturnValues={true}
-            />
+            <SearchBar inputArray={inputArray} onFilteredItems={callback} />
         );
         const input = getByTestId('SearchbarInput');
         act(() => {

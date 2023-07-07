@@ -288,13 +288,12 @@ const EditModelGroupModal: FC<EditModelGroupModalProps> = ({
     /**
      * Applies the filtered rows by the Searchbar to the filteredRows component state.
      *
-     * @function
-     * @param indexArray Array of the filtered indexes of the search result that identify the
-     *   filtered rows.
+     * @param newItems Array of the filtered indexes of the search result that identify the filtered
+     *   rows.
      * @see setFilteredRows
      */
-    const foundIndices = (indexArray: number[]) => {
-        setFilteredRows(indexArray.map((idx) => rows[idx])); // translates indices into selected rows
+    const onFilteredItems = (newItems: (typeof rows)[number][]) => {
+        setFilteredRows(newItems);
     };
 
     /**
@@ -662,11 +661,7 @@ const EditModelGroupModal: FC<EditModelGroupModalProps> = ({
                         }
                     />
                     <div style={{ width: '95%' }}>
-                        <SearchBar
-                            inputArray={rows}
-                            // @ts-expect-error TODO: foundIndicesCallback typing
-                            foundIndicesCallback={foundIndices}
-                        />
+                        <SearchBar inputArray={rows} onFilteredItems={onFilteredItems} />
                     </div>
                     <StyledDataGrid
                         rows={filteredRows}

@@ -1,9 +1,7 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { InputBase } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
-import React, { FC } from 'react';
-import { performSearch } from 'utils/textSearch';
-import PropTypes from 'prop-types';
+import React from 'react';
 import useId from '@mui/utils/useId';
 
 /**
@@ -69,32 +67,39 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-type SearchBarProps = {
-    shouldReturnValues?: boolean;
-    inputArray: (string | object)[];
-    foundIndicesCallback: (indices: unknown[]) => void;
-};
+type SearchableObject = string | Record<string | number | symbol, unknown>;
+
 /**
- * A searchbar component that is used for searching a string in a data array that either contains
- * strings or objects. If the array contains objects the values of these objects are searched.
+ * Performs a simple full text search on the given element and looks for the given search string.
  *
- * @param {Object} props Further specified in propTypes
- * @returns {JSX} A pretty searchbar component
- * @component
+ * @category Utils
+ * @param elem Single nested object or a string
+ * @param searchStr What shall be searched for
+ * @returns True if the object contains the string somewhere
  */
-const SearchBar: FC<SearchBarProps> = ({
-    shouldReturnValues = false,
-    inputArray,
-    foundIndicesCallback,
-}) => {
-    /**
-     * Handles the change of the input -> performs the search
-     *
-     * @param newInput New text in the input
-     * @see {@link module:TextSearch.performSearch}
-     */
+function objectContainsString(elem: SearchableObject, searchStr: string) {
+    const lowerSearchStr = searchStr.toLowerCase();
+    if (typeof elem === 'string') {
+        return elem.toLowerCase().includes(lowerSearchStr);
+    } else {
+        const elemValues = Object.values(elem);
+
+        for (const value of elemValues) {
+            if (String(value).toLowerCase().includes(lowerSearchStr)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+type SearchBarProps<T extends SearchableObject> = {
+    inputArray: T[];
+    onFilteredItems: (indices: T[]) => void;
+};
+function SearchBar<T extends SearchableObject>({ inputArray, onFilteredItems }: SearchBarProps<T>) {
     const handleInputChange = (newInput: string) => {
-        foundIndicesCallback(performSearch(inputArray, newInput, shouldReturnValues));
+        onFilteredItems(inputArray.filter((entry) => objectContainsString(entry, newInput)));
     };
 
     const id = useId();
@@ -128,11 +133,6 @@ const SearchBar: FC<SearchBarProps> = ({
             />
         </Search>
     );
-};
-
-SearchBar.propTypes = {
-    inputArray: PropTypes.array.isRequired,
-    foundIndicesCallback: PropTypes.func.isRequired,
-};
+}
 
 export default SearchBar;
