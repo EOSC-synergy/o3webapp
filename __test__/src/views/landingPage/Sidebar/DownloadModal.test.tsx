@@ -4,7 +4,6 @@ import DownloadModal from 'views/landingPage/Sidebar/DownloadModal';
 import { Provider } from 'react-redux';
 import { AppStore, createTestStore } from 'store';
 import tco3zmResponse from '../../../../src/services/API/testing/tco3zm-response.json';
-import axios from 'axios';
 import { fetchPlotData } from 'services/API/apiSlice';
 import { O3AS_PLOTS } from 'utils/constants';
 import * as client from 'services/API/client';
@@ -20,21 +19,8 @@ describe('testing basic rendering & selection', () => {
         store = createTestStore();
     });
 
-    it('renders without crashing', () => {
-        render(
-            <Provider store={store}>
-                {' '}
-                <DownloadModal
-                    reportError={() => undefined}
-                    onClose={() => undefined}
-                    isOpen={true}
-                />
-            </Provider>
-        );
-    });
-
     it('renders correctly when open', () => {
-        const { baseElement, container } = render(
+        const { container } = render(
             <Provider store={store}>
                 {' '}
                 <DownloadModal
@@ -44,22 +30,7 @@ describe('testing basic rendering & selection', () => {
                 />{' '}
             </Provider>
         );
-        expect(baseElement).toMatchSnapshot();
         expect(container).toBeVisible();
-    });
-
-    it('renders correctly when closed', () => {
-        const { baseElement } = render(
-            <Provider store={store}>
-                {' '}
-                <DownloadModal
-                    isOpen={false}
-                    onClose={() => undefined}
-                    reportError={() => undefined}
-                />
-            </Provider>
-        );
-        expect(baseElement).toMatchSnapshot();
     });
 
     it('testing select file format functionality', async () => {

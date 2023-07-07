@@ -20,22 +20,8 @@ describe('test addModelGroupModal rendering', () => {
         store = createTestStore();
     });
 
-    it('renders without crashing', () => {
-        render(
-            <Provider store={store}>
-                <AddModelGroupModal
-                    isOpen={true}
-                    onClose={() => undefined}
-                    reportError={() => undefined}
-                    setOpen={() => undefined}
-                    refresh={true}
-                />
-            </Provider>
-        );
-    });
-
     /*it('renders correctly when open', () => {
-        let { baseElement, container } = render(
+        let { container } = render(
             <Provider store={store}>
                 <AddModelGroupModal
                     isOpen={true}
@@ -46,23 +32,7 @@ describe('test addModelGroupModal rendering', () => {
                 />
             </Provider>
         );
-        expect(baseElement).toMatchSnapshot();
         expect(container).toBeVisible();
-    });*/
-
-    /*it('renders correctly when closed', () => {
-        let { baseElement } = render(
-            <Provider store={store}>
-                <AddModelGroupModal
-                    isOpen={false}
-                    onClose={() => {}}
-                    reportError={() => {}}
-                    setOpen={() => {}}
-                    refresh={true}
-                />
-            </Provider>
-        );
-        expect(baseElement).toMatchSnapshot();
     });*/
 
     it('fires props.onClose when clicking on the closing icon button', () => {

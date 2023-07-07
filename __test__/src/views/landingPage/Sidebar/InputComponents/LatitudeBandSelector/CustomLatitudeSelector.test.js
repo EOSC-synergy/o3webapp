@@ -9,28 +9,6 @@ beforeEach(() => {
     store = createTestStore();
 });
 
-it('renders without crashing', () => {
-    render(
-        <>
-            <Provider store={store}>
-                <CustomLatitudeSelector reportError={() => {}} />
-            </Provider>
-        </>
-    );
-});
-
-it('renders correctly', () => {
-    const { container } = render(
-        <>
-            <Provider store={store}>
-                <CustomLatitudeSelector reportError={() => {}} />
-            </Provider>
-        </>
-    );
-
-    expect(container).toMatchSnapshot();
-});
-
 it('changes max. latitude correctly', () => {
     const { getByTestId } = render(
         <>

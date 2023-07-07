@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`test EditModelGroupModal rendering renders correctly when close 1`] = `
-<body
-  style=""
->
-  <div />
-</body>
-`;

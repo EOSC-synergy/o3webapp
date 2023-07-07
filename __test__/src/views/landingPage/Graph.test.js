@@ -28,23 +28,6 @@ describe('tests graph component rendering', () => {
         store = createTestStore();
     });
 
-    it('renders without crashing', () => {
-        render(
-            <Provider store={store}>
-                <Graph />
-            </Provider>
-        );
-    });
-
-    /*it('renders with loading spinner if no data present', () => {
-        const { container } = render(
-            <Provider store={store}>
-                <Graph />
-            </Provider>
-        );
-        expect(container).toMatchSnapshot();
-    });*/
-
     it('renders the chart component if request was successfully', () => {
         mockSelector
             .mockReturnValueOnce('tco3_zm')

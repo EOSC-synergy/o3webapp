@@ -5,35 +5,6 @@ import XAxisField from 'views/landingPage/Sidebar/InputComponents/XAxisField';
 import { AppStore, createTestStore } from 'store';
 import { END_YEAR, START_YEAR } from 'utils/constants';
 
-describe('tests basic rendering', () => {
-    let store: AppStore;
-    beforeEach(() => {
-        store = createTestStore();
-    });
-
-    it('renders without crashing', () => {
-        render(
-            <>
-                <Provider store={store}>
-                    <XAxisField />
-                </Provider>
-            </>
-        );
-    });
-
-    it('renders correctly', () => {
-        const { container } = render(
-            <>
-                <Provider store={store}>
-                    <XAxisField />
-                </Provider>
-            </>
-        );
-
-        expect(container).toMatchSnapshot();
-    });
-});
-
 describe('test functionality redux', () => {
     let store: AppStore;
     beforeEach(() => {

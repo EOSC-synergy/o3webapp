@@ -21,25 +21,6 @@ describe('test ModelGroupCard rendering', () => {
         reportError = jest.fn();
     });
 
-    it('renders without crashing', () => {
-        render(
-            <Provider store={store}>
-                <ModelGroupCard reportError={reportError} modelGroupId={groupId} />
-            </Provider>
-        );
-    });
-
-    /*
-    it('renders correctly', () => {
-        const { container } = render(
-            <Provider store={store}>
-                <ModelGroupCard reportError={reportError} modelGroupId={groupId} />
-            </Provider>
-        );
-        expect(container).toMatchSnapshot();
-    });
-    */
-
     it('renders modelGroup name', () => {
         const { getByTestId } = render(
             <Provider store={store}>

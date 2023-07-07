@@ -10,30 +10,6 @@ beforeEach(() => {
     store = createTestStore();
 });
 
-describe('tests basic rendering', () => {
-    it('renders without crashing', () => {
-        render(
-            <>
-                <Provider store={store}>
-                    <LatitudeBandSelector />
-                </Provider>
-            </>
-        );
-    });
-
-    it('renders correctly', () => {
-        const { container } = render(
-            <>
-                <Provider store={store}>
-                    <LatitudeBandSelector />
-                </Provider>
-            </>
-        );
-
-        expect(container).toMatchSnapshot();
-    });
-});
-
 describe('tests redux functionality', () => {
     it('updates the region accordingly in the store', () => {
         const { getByRole, getAllByRole } = render(

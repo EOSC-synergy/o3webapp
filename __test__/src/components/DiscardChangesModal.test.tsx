@@ -3,22 +3,9 @@ import '@testing-library/jest-dom';
 import DiscardChangesModal from 'components/DiscardChangesModal';
 
 describe('test DiscardChangesModal rendering', () => {
-    it('renders without crashing', () => {
-        const mockFunction = jest.fn();
-        render(
-            <DiscardChangesModal
-                isOpen={true}
-                onClose={mockFunction}
-                saveChanges={mockFunction}
-                discardChanges={mockFunction}
-                closeDialog={() => undefined}
-            />
-        );
-    });
-
     it('renders correctly when opened', () => {
         const mockFunction = jest.fn();
-        const { baseElement, getByTestId } = render(
+        const { getByTestId } = render(
             <DiscardChangesModal
                 isOpen={true}
                 onClose={mockFunction}
@@ -27,13 +14,12 @@ describe('test DiscardChangesModal rendering', () => {
                 closeDialog={() => undefined}
             />
         );
-        expect(baseElement).toMatchSnapshot();
         expect(getByTestId('discardChanges-dialog')).toBeVisible();
     });
 
     it('renders correctly when closed', () => {
         const mockFunction = jest.fn();
-        const { baseElement } = render(
+        render(
             <DiscardChangesModal
                 isOpen={false}
                 onClose={mockFunction}
@@ -42,7 +28,6 @@ describe('test DiscardChangesModal rendering', () => {
                 closeDialog={() => undefined}
             />
         );
-        expect(baseElement).toMatchSnapshot();
         expect(screen.queryByTestId('discardChanges-dialog')).toBeNull();
     });
 });

@@ -13,26 +13,6 @@ describe('plot type selector test', () => {
         store = createTestStore();
     });
 
-    it('PlotTypeSelector renders without crashing', () => {
-        render(
-            <Provider store={store}>
-                <PlotTypeSelector reportError={() => undefined} />
-            </Provider>
-        );
-    });
-
-    // Snapshot test
-    /*it('PlotTypeSelector renders correctly', () => {
-        const { asFragment } = render(
-            <Provider store={store}>
-                <PlotTypeSelector reportError={() => {}} />
-            </Provider>
-        );
-        expect(asFragment()).toMatchSnapshot();
-        userEvent.tab(); // focuses select
-        expect(asFragment()).toMatchSnapshot();
-    });*/
-
     it('PlotTypeSelector reports error if an error occurred in the fetching of plotTypes', async () => {
         const message = 'Error Message';
         const testStore = createTestStore({

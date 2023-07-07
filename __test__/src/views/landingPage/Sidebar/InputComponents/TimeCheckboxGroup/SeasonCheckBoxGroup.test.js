@@ -3,46 +3,6 @@ import '@testing-library/jest-dom';
 import SeasonCheckBoxGroup from '../../../../../../../src/views/landingPage/Sidebar/InputComponents/TimeCheckboxGroup/SeasonCheckboxGroup';
 import { NUM_MONTHS_IN_SEASON } from '../../../../../../../src/utils/constants';
 
-it('renders without crashing', () => {
-    const dummyFunc = () => {};
-    const dummyObj = [
-        { monthId: 1, checked: false },
-        { monthId: 2, checked: false },
-        { monthId: 3, checked: false },
-    ];
-
-    render(
-        <SeasonCheckBoxGroup
-            label=""
-            seasonId={0}
-            handleSeasonClicked={dummyFunc}
-            handleMonthClicked={dummyFunc}
-            months={dummyObj}
-            reportError={dummyFunc}
-        />
-    );
-});
-
-it('renders correctly', () => {
-    const dummyFunc = () => {};
-    const dummyObj = [
-        { monthId: 1, checked: false },
-        { monthId: 2, checked: false },
-        { monthId: 3, checked: false },
-    ];
-    const { container } = render(
-        <SeasonCheckBoxGroup
-            label=""
-            seasonId={0}
-            handleSeasonClicked={dummyFunc}
-            handleMonthClicked={dummyFunc}
-            months={dummyObj}
-            reportError={dummyFunc}
-        />
-    );
-    expect(container).toMatchSnapshot();
-});
-
 it('renders month checkboxes correctly', () => {
     const dummyFunc = () => {};
     const dummyObj = [

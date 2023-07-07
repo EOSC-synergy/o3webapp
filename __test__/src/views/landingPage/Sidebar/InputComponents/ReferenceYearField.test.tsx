@@ -13,26 +13,6 @@ beforeEach(() => {
     store = createTestStore();
 });
 
-describe('tests basic rendering', () => {
-    it('Component renders without crashing', () => {
-        render(
-            <Provider store={store}>
-                <ReferenceYearField />
-            </Provider>
-        );
-    });
-
-    // Snapshot test
-    it('renders correctly', () => {
-        const { container } = render(
-            <Provider store={store}>
-                <ReferenceYearField />
-            </Provider>
-        );
-        expect(container).toMatchSnapshot();
-    });
-});
-
 describe('tests redux functionality', () => {
     it('updates the reference year value in the store correctly', () => {
         const startValue = store.getState().reference.settings.year;

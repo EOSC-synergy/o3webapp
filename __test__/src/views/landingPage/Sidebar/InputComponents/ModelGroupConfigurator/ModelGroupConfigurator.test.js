@@ -12,23 +12,6 @@ describe('test ModelGroupCard rendering', () => {
         store = createTestStore();
     });
 
-    it('renders without crashing', () => {
-        render(
-            <Provider store={store}>
-                <ModelGroupConfigurator reportError={jest.fn()} />
-            </Provider>
-        );
-    });
-
-    /*it('renders correctly', () => {
-        const { container } = render(
-            <Provider store={store}>
-                <ModelGroupConfigurator reportError={jest.fn()} />
-            </Provider>
-        );
-        expect(container).toMatchSnapshot();
-    });*/
-
     it('renders add model group button', () => {
         const { getByTestId } = render(
             <Provider store={store}>

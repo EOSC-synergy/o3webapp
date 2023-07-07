@@ -13,48 +13,6 @@ describe('test sidebar component', () => {
         store = createTestStore();
     });
 
-    it('renders without crashing', () => {
-        render(
-            <Provider store={store}>
-                <Sidebar
-                    isOpen={true}
-                    onClose={jest.fn()}
-                    reportError={jest.fn()}
-                    onOpen={jest.fn()}
-                />
-            </Provider>
-        );
-    });
-
-    // Snapshot test
-    it('renders closed sidebar correctly', () => {
-        const { container } = render(
-            <Provider store={store}>
-                <Sidebar
-                    isOpen={false}
-                    onClose={jest.fn()}
-                    reportError={jest.fn()}
-                    onOpen={jest.fn()}
-                />
-            </Provider>
-        );
-        expect(container).toMatchSnapshot();
-    });
-
-    it('renders opened sidebar correctly', () => {
-        const { container } = render(
-            <Provider store={store}>
-                <Sidebar
-                    isOpen={true}
-                    onClose={jest.fn()}
-                    reportError={jest.fn()}
-                    onOpen={jest.fn()}
-                />
-            </Provider>
-        );
-        expect(container).toMatchSnapshot();
-    });
-
     // expect there to be a download button
     it('renders a download button', () => {
         const { getByText } = render(

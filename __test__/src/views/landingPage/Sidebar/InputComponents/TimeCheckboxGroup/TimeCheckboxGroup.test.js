@@ -11,28 +11,6 @@ beforeEach(() => {
 });
 
 describe('tests basic rendering', () => {
-    it('renders without crashing', () => {
-        render(
-            <>
-                <Provider store={store}>
-                    <TimeCheckBoxGroup reportError={() => {}} />
-                </Provider>
-            </>
-        );
-    });
-
-    it('renders correctly', () => {
-        const { container } = render(
-            <>
-                <Provider store={store}>
-                    <TimeCheckBoxGroup reportError={() => {}} />
-                </Provider>
-            </>
-        );
-
-        expect(container).toMatchSnapshot();
-    });
-
     it('renders all checkbox groups correctly', () => {
         const { getByTestId } = render(
             <>

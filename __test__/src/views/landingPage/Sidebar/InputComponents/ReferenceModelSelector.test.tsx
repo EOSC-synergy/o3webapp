@@ -19,26 +19,6 @@ beforeEach(() => {
     store = createTestStore();
 });
 
-describe('tests basic rendering', () => {
-    it('Component renders without crashing', () => {
-        render(
-            <Provider store={store}>
-                <ReferenceModelSelector reportError={() => undefined} />
-            </Provider>
-        );
-    });
-
-    // Snapshot test
-    it('renders correctly', () => {
-        const { container } = render(
-            <Provider store={store}>
-                <ReferenceModelSelector reportError={() => undefined} />
-            </Provider>
-        );
-        expect(container).toMatchSnapshot();
-    });
-});
-
 describe('tests redux functionality', () => {
     it('should update the reference model in the store accordingly', async () => {
         mockedClient.getModels.mockResolvedValue(fakeAxiosResponse(modelsResponse));

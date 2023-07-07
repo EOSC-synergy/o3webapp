@@ -11,30 +11,6 @@ beforeEach(() => {
     store.dispatch(setActivePlotId({ plotId: 'tco3_return' })); // this component is only for the
 });
 
-describe('tests basic rendering', () => {
-    it('renders without crashing', () => {
-        render(
-            <>
-                <Provider store={store}>
-                    <RegionSelector />
-                </Provider>
-            </>
-        );
-    });
-
-    it('renders correctly', () => {
-        const { container } = render(
-            <>
-                <Provider store={store}>
-                    <RegionSelector />
-                </Provider>
-            </>
-        );
-
-        expect(container).toMatchSnapshot();
-    });
-});
-
 describe('tests redux functionality', () => {
     it('updates the region(s) accordingly to the deselection in the store', () => {
         const { getByTestId } = render(

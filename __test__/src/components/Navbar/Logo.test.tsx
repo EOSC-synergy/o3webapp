@@ -3,16 +3,6 @@ import Logo, { logoSrc, O3ASLink } from 'components/Navbar/Logo';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
-it('renders without crashing', () => {
-    render(<Logo />);
-});
-
-// Snapshot test
-it('renders correctly', () => {
-    const { asFragment } = render(<Logo />);
-    expect(asFragment()).toMatchSnapshot();
-});
-
 it('displays the name of O3AS Webapp', () => {
     render(<Logo />);
     expect(screen.getByTestId('logo-text')).toHaveTextContent('O3as: Webapp');

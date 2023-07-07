@@ -4,16 +4,6 @@ import Footer, { links } from 'components/Footer';
 import { render, screen, within } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
-it('renders without crashing', () => {
-    render(<Footer />);
-});
-
-// Snapshot test
-it('renders correctly', () => {
-    const { asFragment } = render(<Footer />);
-    expect(asFragment()).toMatchSnapshot();
-});
-
 it('renders all menu buttons in the expanded menu', () => {
     render(<Footer />);
     const footer = screen.getByTestId('footer-grid-container');

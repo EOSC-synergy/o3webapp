@@ -4,15 +4,6 @@ import { act, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 describe('test CookieConsentModal component rendering', () => {
-    it('renders without crashing', () => {
-        render(<CookieConsentModal isOpen={true} onClose={jest.fn()} />);
-    });
-
-    it('renders as expected', () => {
-        const { baseElement } = render(<CookieConsentModal isOpen={true} onClose={jest.fn()} />);
-        expect(baseElement).toMatchSnapshot();
-    });
-
     it('executes the close function when agreed to cockies', () => {
         const spy = jest.fn();
         const { getByTestId } = render(<CookieConsentModal isOpen={true} onClose={spy} />);

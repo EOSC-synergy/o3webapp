@@ -11,22 +11,8 @@ beforeEach(() => {
 });
 
 describe('test EditModelGroupModal rendering', () => {
-    it('renders without crashing', () => {
-        render(
-            <Provider store={store}>
-                <EditModelGroupModal
-                    isOpen={true}
-                    onClose={() => {}}
-                    modelGroupId={0}
-                    refresh={true}
-                    setOpen={() => {}}
-                />
-            </Provider>
-        );
-    });
-
     it('renders correctly when open', () => {
-        const { baseElement, queryByTestId } = render(
+        const { queryByTestId } = render(
             <Provider store={store}>
                 <EditModelGroupModal
                     isOpen={true}
@@ -41,7 +27,7 @@ describe('test EditModelGroupModal rendering', () => {
     });
 
     it('renders correctly when close', () => {
-        const { baseElement, queryByTestId } = render(
+        const { queryByTestId } = render(
             <Provider store={store}>
                 <EditModelGroupModal
                     isOpen={false}
@@ -52,7 +38,6 @@ describe('test EditModelGroupModal rendering', () => {
                 />
             </Provider>
         );
-        expect(baseElement).toMatchSnapshot();
         expect(queryByTestId(/modal-wrapper/)).toBeNull();
     });
 

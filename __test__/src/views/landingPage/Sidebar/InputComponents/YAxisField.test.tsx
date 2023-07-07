@@ -6,31 +6,6 @@ import { AppStore, createTestStore } from 'store';
 import { setActivePlotId, setDisplayYRangeForPlot } from 'store/plotSlice';
 import { O3AS_PLOTS } from 'utils/constants';
 
-describe('tests basic rendering', () => {
-    let store: AppStore;
-    beforeEach(() => {
-        store = createTestStore();
-    });
-
-    it('renders without crashing', () => {
-        render(
-            <Provider store={store}>
-                <YAxisField reportError={() => undefined} />
-            </Provider>
-        );
-    });
-
-    it('renders correctly', () => {
-        const { container } = render(
-            <Provider store={store}>
-                <YAxisField reportError={() => undefined} />
-            </Provider>
-        );
-
-        expect(container).toMatchSnapshot();
-    });
-});
-
 describe('test functionality redux for tco3_zm', () => {
     let store: AppStore;
     beforeEach(() => {

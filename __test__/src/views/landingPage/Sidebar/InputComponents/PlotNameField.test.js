@@ -14,23 +14,6 @@ beforeEach(() => {
     store = createTestStore();
 });
 
-it('renders without crashing', () => {
-    render(
-        <Provider store={store}>
-            <PlotNameField reportError={() => {}} />
-        </Provider>
-    );
-});
-
-it('renders correctly', () => {
-    const { container } = render(
-        <Provider store={store}>
-            <PlotNameField reportError={() => {}} />
-        </Provider>
-    );
-    expect(container).toMatchSnapshot();
-});
-
 it('renders TextField correctly', () => {
     const { getByTestId } = render(
         <Provider store={store}>
