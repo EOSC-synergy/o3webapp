@@ -21,22 +21,6 @@ export function not<T>(a: T[], b: T[]): T[] {
 }
 
 /**
- * Calculates and returns A^B (The intersection of the sets A and B)
- *
- * @example
- *     //returns [3]
- *     intersection([1, 2, 3], [3, 4, 5]);
- *
- * @function
- * @param {Array} a An array to take the intersection from
- * @param {Array} b An array to take the intersection from
- * @returns An array containing all elements that are both in A and B
- */
-export function intersection<T>(a: T[], b: T[]): T[] {
-    return a.filter((value) => b.includes(value));
-}
-
-/**
  * Compares to arrays based on their elements (shallow equality compare).
  *
  * @category Utils

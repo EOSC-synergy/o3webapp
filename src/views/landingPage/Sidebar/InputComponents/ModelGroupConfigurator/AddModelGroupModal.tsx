@@ -29,7 +29,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import CardHeader from '@mui/material/CardHeader';
 import Searchbar from 'components/SearchBar';
 import { convertModelName } from 'utils/ModelNameConverter';
-import { intersection, not } from 'utils/arrayOperations';
+import { not } from 'utils/arrayOperations';
 import CloseIcon from '@mui/icons-material/Close';
 import Alert from '@mui/material/Alert';
 import DiscardChangesModal from 'components/DiscardChangesModal';
@@ -38,7 +38,7 @@ import { fetchPlotDataForCurrentModels, REQUEST_STATE } from 'services/API/apiSl
 import { type AppState, useAppDispatch, useAppStore } from 'store';
 import { type ErrorReporter } from 'utils/reportError';
 
-import { union } from 'lodash';
+import { intersection, union } from 'lodash';
 
 type AddModelGroupModalProps = {
     /** Function for error handling */

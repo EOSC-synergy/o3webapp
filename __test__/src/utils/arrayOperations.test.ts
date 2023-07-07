@@ -1,38 +1,6 @@
-import { not, intersection, arraysEqual } from 'utils/arrayOperations';
+import { not, arraysEqual } from 'utils/arrayOperations';
 
 let a: number[], b: number[];
-
-describe('intersection works expectedly', () => {
-    it('works with no intersection', () => {
-        const a = [1, 2, 3];
-        const b = [4, 5, 6];
-        expect(intersection(a, b)).toStrictEqual([]);
-    });
-
-    it('works with some intersection', () => {
-        a = [1, 2, 3];
-        b = [2, 3, 4];
-        expect(intersection(a, b)).toStrictEqual([2, 3]);
-    });
-
-    it('works with full intersection', () => {
-        a = [1, 2, 3];
-        b = [1, 2, 3];
-        expect(intersection(a, b)).toStrictEqual([1, 2, 3]);
-    });
-
-    it('works  with an empty array', () => {
-        a = [1, 2, 3];
-        b = [];
-        expect(intersection(a, b)).toStrictEqual([]);
-    });
-
-    it('works with double elements', () => {
-        a = [1, 2, 3];
-        b = [1, 1, 1];
-        expect(intersection(a, b)).toStrictEqual([1]);
-    });
-});
 
 describe('not works expectedly', () => {
     it('works with no intersection', () => {
