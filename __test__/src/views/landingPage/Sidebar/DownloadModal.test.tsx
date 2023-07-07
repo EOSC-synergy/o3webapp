@@ -38,15 +38,8 @@ describe('testing basic rendering & selection', () => {
         const mock = jest.fn();
         // mock api => data
         // simpler, but less powerful: axios.post.mockResolvedValue({data: tco3zmResponse});
-        mockedClient.getPlotData.mockResolvedValue(fakeAxiosResponse(tco3zmResponse));
-        await store.dispatch(
-            fetchPlotData({
-                plotId: O3AS_PLOTS.tco3_zm,
-                models: ['CCMI-1_ACCESS_ACCESS-CCM-refC2'],
-                // TODO: what is suggest for
-                suggest: false,
-            })
-        );
+        mockedClient.getFormattedPlotData.mockResolvedValue(fakeAxiosResponse(tco3zmResponse));
+        await store.dispatch(fetchPlotData(O3AS_PLOTS.tco3_zm, ['CCMI-1_ACCESS_ACCESS-CCM-refC2']));
 
         const { getByTestId } = render(
             <Provider store={store}>

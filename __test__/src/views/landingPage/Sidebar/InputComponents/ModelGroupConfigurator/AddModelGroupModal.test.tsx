@@ -309,7 +309,7 @@ describe('test addModelGroupModal functionality with model group id', () => {
     });
 
     it('changes the model name and updates the store on edit', () => {
-        mockedClient.getPlotData.mockResolvedValue(fakeAxiosResponse(tco3zmResponse));
+        mockedClient.getFormattedPlotData.mockResolvedValue(fakeAxiosResponse(tco3zmResponse));
         const { getByTestId } = rendered;
         const nameField = getByTestId('AddModelGroupModal-card-group-name');
         const title = 'New Title';

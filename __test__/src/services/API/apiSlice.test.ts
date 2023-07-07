@@ -191,7 +191,13 @@ describe('tests fetchPlotData api interaction (integration)', () => {
         refModel: 'SBUV_GSFC_observed-merged-SAT-ozone',
         refYear: 1980,
     };
-    const exampleCacheKey = generateCacheKey(exampleRequestData);
+    const exampleCacheKey = generateCacheKey(
+        exampleRequestData.latMax,
+        exampleRequestData.latMin,
+        exampleRequestData.months,
+        exampleRequestData.refModel,
+        exampleRequestData.refYear
+    );
 
     beforeEach(() => {
         store = createTestStore();
@@ -199,15 +205,9 @@ describe('tests fetchPlotData api interaction (integration)', () => {
     });
 
     it('should generate the correct cacheKey', () => {
-        expect(
-            generateCacheKey({
-                latMin: -90,
-                latMax: 90,
-                months: [1, 2],
-                refModel: 'modelRef',
-                refYear: 420,
-            })
-        ).toEqual('lat_min=-90&lat_max=90&months=1,2&ref_meas=modelRef&ref_year=420');
+        expect(generateCacheKey(-90, 90, [1, 2], 'modelRef', 420)).toEqual(
+            'lat_min=-90&lat_max=90&months=1,2&ref_meas=modelRef&ref_year=420'
+        );
     });
 
     /*
@@ -260,14 +260,8 @@ describe('tests fetchPlotData api interaction (integration)', () => {
     */
 
     it('should add loaded models to the list, update the status and save the transformed data for tco3_zm', async () => {
-        mockedClient.getPlotData.mockResolvedValue(fakeAxiosResponse(tco3zmResponse));
-        await store.dispatch(
-            fetchPlotData({
-                plotId: O3AS_PLOTS.tco3_zm,
-                models: ['CCMI-1_ACCESS_ACCESS-CCM-refC2'],
-                suggest: false,
-            })
-        );
+        mockedClient.getFormattedPlotData.mockResolvedValue(fakeAxiosResponse(tco3zmResponse));
+        await store.dispatch(fetchPlotData(O3AS_PLOTS.tco3_zm, ['CCMI-1_ACCESS_ACCESS-CCM-refC2']));
 
         const plotSpecificSection = store.getState().api.plotSpecific['tco3_zm'];
         expect(plotSpecificSection.active).toEqual(exampleCacheKey);
@@ -286,10 +280,8 @@ describe('tests fetchPlotData api interaction (integration)', () => {
     });
 
     it('should add loaded models to the list, update the status and save the transformed data for tco3_return', async () => {
-        mockedClient.getPlotData.mockResolvedValue(fakeAxiosResponse(tco3returnResponse));
-        await store.dispatch(
-            fetchPlotData({ plotId: O3AS_PLOTS.tco3_return, models: modelsInGroup, suggest: false })
-        );
+        mockedClient.getFormattedPlotData.mockResolvedValue(fakeAxiosResponse(tco3returnResponse));
+        await store.dispatch(fetchPlotData(O3AS_PLOTS.tco3_return, modelsInGroup));
 
         const plotSpecificSection = store.getState().api.plotSpecific[O3AS_PLOTS.tco3_return];
         expect(plotSpecificSection.active).toEqual(exampleCacheKey);
@@ -310,10 +302,8 @@ describe('tests fetchPlotData api interaction (integration)', () => {
 
     it('should set an error accordingly', async () => {
         const errorMessage = 'This is an error message [500]';
-        mockedClient.getPlotData.mockRejectedValue({ message: errorMessage });
-        await store.dispatch(
-            fetchPlotData({ plotId: O3AS_PLOTS.tco3_return, models: modelsInGroup, suggest: false })
-        );
+        mockedClient.getFormattedPlotData.mockRejectedValue({ message: errorMessage });
+        await store.dispatch(fetchPlotData(O3AS_PLOTS.tco3_return, modelsInGroup));
 
         const plotSpecificSection = store.getState().api.plotSpecific[O3AS_PLOTS.tco3_return];
         expect(plotSpecificSection.active).toEqual(exampleCacheKey);
@@ -370,7 +360,7 @@ describe('testing utils functions', () => {
     });
 
     test('getAllSelectedModels selects all models', () => {
-        const selectedModels = getAllSelectedModels(store.getState);
+        const selectedModels = getAllSelectedModels(store.getState());
         expect(selectedModels).toEqual([
             'CCMI-1_ACCESS_ACCESS-CCM-refC2',
             'CCMI-1_ACCESS_ACCESS-CCM-senC2fGHG',

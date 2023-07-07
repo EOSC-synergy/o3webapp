@@ -22,7 +22,7 @@ beforeEach(() => {
 describe('tests redux functionality', () => {
     it('should update the reference model in the store accordingly', async () => {
         mockedClient.getModels.mockResolvedValue(fakeAxiosResponse(modelsResponse));
-        mockedClient.getPlotData.mockResolvedValue(fakeAxiosResponse(tco3zmResponse));
+        mockedClient.getFormattedPlotData.mockResolvedValue(fakeAxiosResponse(tco3zmResponse));
         await store.dispatch(fetchModels()); // fetch models
         const { getByRole, getAllByRole } = render(
             <Provider store={store}>

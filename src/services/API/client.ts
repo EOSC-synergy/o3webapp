@@ -1,5 +1,6 @@
 import { NO_MONTH_SELECTED } from 'utils/constants';
 import { ApiApi, Configuration, DataApi, ModelsApi, O3Data, PlotsApi } from './generated-client';
+import { ModelId } from '../../store/modelsSlice';
 
 /**
  * This module is responsible for the communication with the
@@ -11,48 +12,26 @@ import { ApiApi, Configuration, DataApi, ModelsApi, O3Data, PlotsApi } from './g
  * @module API
  */ // used for auto generation of JSDocs with better-docs
 
-/**
- * The base URL of the API. It is used as the destination address for all API requests.
- *
- * @constant {string}
- */
-const baseURL = process.env.NEXT_PUBLIC_API_HOST ?? 'https://api.o3as.fedcloud.eu/api/v1';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_HOST ?? 'https://api.o3as.fedcloud.eu/api/v1';
 
-/**
- * The timeout value at which an error is thrown and fetching data stops in milliseconds
- *
- * @constant {number}
- */
-const timeoutVal = 5 * 60 * 1000; // 5 min at least (fetching the models took 29s)
+/** Timeout in milliseconds */
+const TIMEOUT = 5 * 60 * 1000; // 5 min at least (fetching the models took 29s)
 
 const DEFAULT_CONFIG = {
-    basePath: baseURL,
+    basePath: API_BASE_URL,
     baseOptions: {
-        timeout: timeoutVal,
+        timeout: TIMEOUT,
     },
 };
 
-/*
-const useModelApi = buildApi(ModelsApi);
-const useDataApi = buildApi(DataApi);
-const useApiApi = buildApi(ApiApi);
-const usePlotsApi = buildApi(PlotsApi);
- */
 const _configuration = new Configuration(DEFAULT_CONFIG);
 export const modelsApi = new ModelsApi(_configuration);
 export const dataApi = new DataApi(_configuration);
 export const apiApi = new ApiApi(_configuration);
 export const plotsApi = new PlotsApi(_configuration);
 
-/**
- * Gets the plot types from the API.
- *
- * @function
- * @returns The request promise from axios
- */
-export const getPlotTypes = () => {
-    return plotsApi.o3apiApiGetPlotTypes();
-};
+/** Gets the plot types from the API. */
+export const getPlotTypes = () => plotsApi.o3apiApiGetPlotTypes();
 
 /**
  * Gets the models from the API.
@@ -63,30 +42,17 @@ export const getPlotTypes = () => {
  * @function
  * @param plotType The plot type for which the models should be fetched
  * @param select A selection of specific models
- * @returns The request promise from axios
  */
-export const getModels = async (plotType?: string, select?: string) => {
-    return await modelsApi.o3apiApiGetModelsList({
+export const getModels = async (plotType?: string, select?: string) =>
+    modelsApi.o3apiApiGetModelsList({
         ptype: plotType,
         select,
     });
-};
 
-export const postModelsPlotStyle = async (plotType: string) => {
-    /**
-     * Gets the plot style via a post request.
-     *
-     * @example
-     *     postModelsPlotStyle('tco3_zm');
-     *
-     * @function
-     * @param plotType The plot type for which the plot style should be fetched
-     * @returns The request promise from axios
-     */
-    return await modelsApi.o3apiApiGetPlotStyle({
+export const postModelsPlotStyle = async (plotType: LEGAL_PLOT_ID) =>
+    modelsApi.o3apiApiGetPlotStyle({
         ptype: plotType,
     });
-};
 
 export type LEGAL_PLOT_ID = 'tco3_zm' | 'tco3_return';
 
@@ -119,27 +85,17 @@ export type LEGAL_PLOT_ID = 'tco3_zm' | 'tco3_return';
  * @param refYear The reference year to "normalize the data"
  * @returns The request promise from axios
  */
-export const getPlotData = async ({
-    plotId,
-    latMin,
-    latMax,
-    months,
-    modelList,
-    startYear,
-    endYear,
-    refModel,
-    refYear,
-}: {
-    plotId: LEGAL_PLOT_ID;
-    latMin: number;
-    latMax: number;
-    months: number[];
-    modelList: string[];
-    startYear: number;
-    endYear: number;
-    refModel: string;
-    refYear: number;
-}) => {
+export const getFormattedPlotData = async (
+    plotId: LEGAL_PLOT_ID,
+    latMin: number,
+    latMax: number,
+    months: number[],
+    modelList: ModelId[],
+    startYear: number,
+    endYear: number,
+    refModel: string,
+    refYear: number
+) => {
     if (months.length === 0) {
         return Promise.reject(new Error(NO_MONTH_SELECTED));
     }
@@ -148,7 +104,7 @@ export const getPlotData = async ({
     }
 
     if (plotId === 'tco3_zm') {
-        return await plotsApi.o3apiApiPlotTco3Zm({
+        return plotsApi.o3apiApiPlotTco3Zm({
             begin: startYear,
             end: endYear,
             // TODO: typing? API spec says array number, old code did string join
@@ -160,7 +116,7 @@ export const getPlotData = async ({
             models: modelList,
         });
     }
-    return await plotsApi.o3apiApiPlotTco3Return({
+    return plotsApi.o3apiApiPlotTco3Return({
         month: months,
         latMin,
         latMax,

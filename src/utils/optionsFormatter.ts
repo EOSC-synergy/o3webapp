@@ -1420,9 +1420,9 @@ export const preTransformApiData = (plotId: LEGAL_PLOT_ID, data: O3Data[]): Proc
  * in the resulting range and the scaling of the x-axis is properly formatted.
  *
  * @function
- * @param {Object} data The data for all models displayed
- * @param {Object} modelSlice The modelSlice object
- * @returns {Object} An object containing the suggested values for the x- and y-axis
+ * @param data The data for all models displayed
+ * @param modelSlice The modelSlice object
+ * @returns The suggested values for the x- and y-axis
  */
 export function getSuggestedValues(data: ProcessedO3Data, modelSlice: GlobalModelState['models']) {
     const visibleModels = getIncludedModels(modelSlice);
