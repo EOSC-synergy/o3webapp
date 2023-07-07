@@ -14,21 +14,8 @@ type CookieConsentModalProps = {
  *
  * @param isOpen Whether the cookie consent modal should be displayed
  * @param onClose Handles closing of the modal
- * @component
  */
 const CookieConsentModal: FC<CookieConsentModalProps> = ({ isOpen, onClose }) => {
-    /**
-     * An object holding the styling information about the modal.
-     *
-     * @type {{
-     *     boxShadow: number;
-     *     transform: string;
-     *     top: string;
-     *     bgColor: any;
-     *     left: string;
-     *     position: string;
-     * }}
-     */
     const style = {
         position: 'absolute',
         top: '50%',
@@ -38,18 +25,8 @@ const CookieConsentModal: FC<CookieConsentModalProps> = ({ isOpen, onClose }) =>
         boxShadow: 24,
     };
 
-    /**
-     * Function that is called when the user agrees to cookies
-     *
-     * @function
-     */
-    const agreeToCookies = () => onClose();
-    /**
-     * Function that is called when the user disagrees to cookies
-     *
-     * @function
-     */
-    const disagreeToCookies = () => onClose();
+    const agreeToCookies = onClose;
+    const disagreeToCookies = onClose;
 
     return (
         <Modal disableEscapeKeyDown={true} open={isOpen} onClose={onClose}>

@@ -4,24 +4,10 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-/**
- * The link that provides the image logo
- *
- * @memberof Logo
- * @constant {String}
- * @default 'https://o3as.data.kit.edu/img/logos/o3as-logo.svg'
- */
-export const logoSrc =
+export const LOGO_SOURCE =
     process.env.NEXT_PUBLIC_LOGO_SRC ?? 'https://o3as.data.kit.edu/img/logos/o3as-logo.svg';
-
-/**
- * The link to the O3AS Webapp
- *
- * @memberof Logo
- * @constant {String}
- * @default '#page-top'
- */
-export const O3ASLink = '#page-top';
+export const LOGO_NAVIGATION = '#page-top';
+const LOGO_TEXT = 'O3as: Webapp';
 
 type LogoProps = {
     // TODO: Object typing? see https://mui.com/system/display/
@@ -31,21 +17,11 @@ type LogoProps = {
  * Returns a logo from O3AS and the text "O3AS Webapp".
  *
  * @param display See https://mui.com/system/display/
- * @returns {JSX.Element} JSX Element containing one image and one text wrapped in a Link component
- * @component
  */
-const Logo: FC<LogoProps> = ({ display }): JSX.Element => {
-    /**
-     * Name of the webapp that should be displayed in the logo
-     *
-     * @constant {String}
-     * @default 'O3as: Webapp'
-     */
-    const logoName = 'O3as: Webapp';
-
+const Logo: FC<LogoProps> = ({ display }) => {
     return (
         <Link
-            href={O3ASLink}
+            href={LOGO_NAVIGATION}
             sx={{
                 flexGrow: 1,
                 textDecoration: 'inherit',
@@ -59,8 +35,8 @@ const Logo: FC<LogoProps> = ({ display }): JSX.Element => {
                 <img
                     data-testid="logo-image"
                     style={{ height: '4em', margin: '0.5em' }}
-                    src={logoSrc}
-                    alt={'logo'}
+                    src={LOGO_SOURCE}
+                    alt="logo"
                 />
                 <Typography
                     variant="h6"
@@ -74,7 +50,7 @@ const Logo: FC<LogoProps> = ({ display }): JSX.Element => {
                         fontSize: '28px',
                     }}
                 >
-                    {logoName}
+                    {LOGO_TEXT}
                 </Typography>
             </Grid>
         </Link>

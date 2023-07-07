@@ -5,7 +5,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import Alert from '@mui/material/Alert';
 import { Card, IconButton } from '@mui/material';
-import PropTypes from 'prop-types';
 import CardHeader from '@mui/material/CardHeader';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -35,52 +34,19 @@ const DiscardChangesModal: FC<DiscardChangesModalProps> = ({
     onClose,
     closeDialog,
 }) => {
-    /**
-     * A function to discard changes and close the modal.
-     *
-     * @function
-     */
     const discardChangesAndCloseDialog = () => {
         discardChanges();
         closeDialog();
     };
 
-    /**
-     * A function to save changes and close the modal.
-     *
-     * @function
-     */
     const saveChangesAndCloseDialog = () => {
         closeDialog();
         saveChanges();
     };
 
-    /**
-     * Title of the dialog
-     *
-     * @constant {string}
-     */
-    const heading = 'Discard Changes';
-
-    /**
-     * Question string that is displayed to the user, if the Modal is shown.
-     *
-     * @constant {string}
-     */
-    const dialog = 'Are you sure you want to discard all changes?';
-
-    /**
-     * Label for the discard changes button.
-     *
-     * @constant {string}
-     */
+    const dialogTitle = 'Discard Changes';
+    const dialogContent = 'Are you sure you want to discard all changes?';
     const discardButtonLabel = 'Discard Changes';
-
-    /**
-     * Label for the save changes button.
-     *
-     * @constant {string}
-     */
     const saveButtonLabel = 'Save Changes';
 
     return (
@@ -92,7 +58,7 @@ const DiscardChangesModal: FC<DiscardChangesModalProps> = ({
         >
             <Card sx={{ backgroundColor: 'theme.palette.background.default' }}>
                 <CardHeader
-                    title={heading}
+                    title={dialogTitle}
                     action={
                         <IconButton
                             onClick={onClose}
@@ -105,7 +71,7 @@ const DiscardChangesModal: FC<DiscardChangesModalProps> = ({
                 />
                 <DialogContent>
                     <Alert severity="warning" variant="standard" id="alert-dialog-description">
-                        {dialog}
+                        {dialogContent}
                     </Alert>
                 </DialogContent>
                 <DialogActions>
@@ -126,18 +92,6 @@ const DiscardChangesModal: FC<DiscardChangesModalProps> = ({
             </Card>
         </Dialog>
     );
-};
-
-DiscardChangesModal.propTypes = {
-    /** Tracks whether the dialog modal should be opened or not */
-    isOpen: PropTypes.bool.isRequired,
-    /** A function to save changes */
-    saveChanges: PropTypes.func.isRequired,
-    discardChanges: PropTypes.func.isRequired,
-    /** A function to discard changes */
-    onClose: PropTypes.func.isRequired,
-    /** A function to close the dialog, called after saveChanges or discardChanges */
-    closeDialog: PropTypes.func.isRequired,
 };
 
 export default DiscardChangesModal;

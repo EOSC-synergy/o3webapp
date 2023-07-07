@@ -4,12 +4,7 @@ import { alpha, styled } from '@mui/material/styles';
 import React from 'react';
 import useId from '@mui/utils/useId';
 
-/**
- * A JSX Element containing a wrapper for a SearchIcon.
- *
- * @memberof SearchBar
- * @constant {JSX.Element}
- */
+/** A JSX Element containing a wrapper for a SearchIcon. */
 const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2),
     height: '100%',
@@ -21,11 +16,8 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
 }));
 
 /**
- * A JSX Element that wraps the [SearchIconWrapper]{@link SearchBar.SearchIconWrapper} and the
- * [StyledInputBase]{@link SearchBar.StyledInputBase}.
- *
- * @memberof SearchBar
- * @constant {JSX.Element}
+ * A JSX Element that wraps the [SearchIconWrapper]{@link SearchIconWrapper} and the
+ * [StyledInputBase]{@link StyledInputBase}.
  */
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -47,12 +39,7 @@ const Search = styled('div')(({ theme }) => ({
     margin: '3px',
 }));
 
-/**
- * A JSX Element that contains a styled Input Base. Wrapped by {@link SearchBar.Search}.
- *
- * @memberof SearchBar
- * @constant {JSX.Element}
- */
+/** A JSX Element that contains a styled Input Base. Wrapped by {@link Search}. */
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {

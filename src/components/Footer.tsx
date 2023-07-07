@@ -14,11 +14,7 @@ const DEFAULT_LINKS = [
     },
 ];
 
-/**
- * The links on the right-hand side in the footer with label and href. Exported due to testing
- * reasons.
- */
-export const links: {
+export const FOOTER_LINKS: {
     label: string;
     href: string;
 }[] =
@@ -26,12 +22,6 @@ export const links: {
         ? JSON.parse(process.env.NEXT_PUBLIC_FOOTER_LINKS)
         : DEFAULT_LINKS;
 
-/**
- * A container for copyright text and important links at the bottom of the Website. Contains links
- * to home page, privacy policy, terms of use and how to acknowledge
- *
- * @component
- */
 const Footer: FC = () => {
     return (
         <div
@@ -109,7 +99,7 @@ const Footer: FC = () => {
                     }}
                     key="links"
                 >
-                    {links.map((link) => {
+                    {FOOTER_LINKS.map((link) => {
                         return (
                             <Grid
                                 item

@@ -3,17 +3,12 @@ import { AppBar, Button, Container, Grid, Toolbar } from '@mui/material';
 import Logo from './Logo';
 import EditIcon from '@mui/icons-material/Edit';
 import Typography from '@mui/material/Typography';
-import { BACKGROUND_BASE_COLOR } from '../../utils/constants';
-import PropTypes from 'prop-types';
+import { BACKGROUND_BASE_COLOR } from 'utils/constants';
 
 type NavBarProps = {
     openSidebar?: () => void;
 };
-/**
- * A component for the navigation of the website.
- *
- * @component
- */
+/** A component for the navigation of the website. */
 const NavBar: FC<NavBarProps> = ({ openSidebar = () => undefined }) => {
     return (
         <div id="NavBar" style={{ flex: '0 1 auto' }}>
@@ -57,10 +52,6 @@ const NavBar: FC<NavBarProps> = ({ openSidebar = () => undefined }) => {
             </AppBar>
         </div>
     );
-};
-
-NavBar.propTypes = {
-    openSidebar: PropTypes.func,
 };
 
 export default NavBar;
