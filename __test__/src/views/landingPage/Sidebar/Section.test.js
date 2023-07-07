@@ -24,7 +24,8 @@ describe('Section renders correclty', () => {
     });
 
     // report error if invalid components are entered
-    it('reports error if invalid component is entered', () => {
+    // obsolete since components are not passed directly instead of by name
+    it.skip('reports error if invalid component is entered', () => {
         const reportError = jest.fn();
         const name = '1';
         const compName = 'blob';

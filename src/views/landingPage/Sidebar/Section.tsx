@@ -185,6 +185,11 @@ type SectionProps = {
  * @component
  */
 const Section: FC<SectionProps> = ({ components, name, reportError }) => {
+    // expected by test
+    if (components.length === 0) {
+        reportError(`Section ${name} was provided with no components`);
+    }
+
     return (
         <Accordion
             data-testid={`Section-${name}`}

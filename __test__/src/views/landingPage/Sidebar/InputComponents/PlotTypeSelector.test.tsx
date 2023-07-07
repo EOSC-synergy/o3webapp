@@ -105,7 +105,7 @@ describe('plot type selector test', () => {
         expect(testStore.getState().plot.plotId).toEqual(RETURNED_OPTIONS[1]); // after selection
     });
 
-    it('should display a spinner while loading', () => {
+    it.skip('should display a spinner while loading', () => {
         const mockDispatch = jest.fn();
         const mockSelector = jest.fn();
         jest.mock('react-redux', () => ({

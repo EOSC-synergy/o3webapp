@@ -27,7 +27,7 @@ it('renders TextField correctly', () => {
 it('changes the name correctly', () => {
     const { getByTestId } = render(
         <Provider store={store}>
-            <PlotNameField reportError={() => {}} />
+            <PlotNameField reportError={() => undefined} />
         </Provider>
     );
 

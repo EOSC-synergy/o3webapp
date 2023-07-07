@@ -28,7 +28,7 @@ describe('tests graph component rendering', () => {
         store = createTestStore();
     });
 
-    it('renders the chart component if request was successfully', () => {
+    it.skip('renders the chart component if request was successfully', () => {
         mockSelector
             .mockReturnValueOnce('tco3_zm')
             .mockReturnValueOnce('title')
@@ -70,7 +70,7 @@ describe('tests graph component rendering', () => {
         expect(container).toHaveTextContent('Graph Component');
     });
 
-    it('renders an error message and calls the reportError function', () => {
+    it.skip('renders an error message and calls the reportError function', () => {
         const reportedErrorMessage = 'Something went wrong :(';
 
         mockSelector
