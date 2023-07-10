@@ -1,7 +1,7 @@
 import React, { type ChangeEvent, ChangeEventHandler, FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectPlotId, selectPlotYRange, setDisplayYRange } from 'store/plotSlice';
-import { FormControl, Grid, TextField, Typography } from '@mui/material';
+import { Box, FormControl, Grid, TextField, Typography } from '@mui/material';
 import { O3AS_PLOTS } from 'utils/constants';
 import { useAppDispatch, useAppStore } from 'store';
 import { ErrorReporter } from 'utils/reportError';
@@ -32,7 +32,7 @@ const YAxisField: FC<YAxisFieldProps> = ({ reportError }) => {
     const handleChangeMin: ChangeEventHandler<HTMLInputElement> = (event) => {
         const value = event.target.valueAsNumber;
         if (Number.isNaN(value)) {
-            console.error('got NaN from min change event handler');
+            reportError('got NaN from min change event handler');
             return;
         }
         if (plotId === O3AS_PLOTS.tco3_zm) {
@@ -61,7 +61,7 @@ const YAxisField: FC<YAxisFieldProps> = ({ reportError }) => {
     const handleChangeMax: ChangeEventHandler<HTMLInputElement> = (event) => {
         const value = event.target.valueAsNumber;
         if (Number.isNaN(value)) {
-            console.error('got NaN from max change event handler');
+            reportError('got NaN from max change event handler');
             return;
         }
         if (plotId === O3AS_PLOTS.tco3_zm) {
@@ -109,140 +109,40 @@ const YAxisField: FC<YAxisFieldProps> = ({ reportError }) => {
         }
     };
 
-    /**
-     * Returns the corresponding error message if the input value is not valid.
-     *
-     * @function
-     * @returns {string} The error message
-     */
     const helperTextMin = () => {
-        if (plotId === O3AS_PLOTS.tco3_zm) {
-            if (isNaN(parseInt(stateY_zm.minY.toString()))) {
-                return '';
-            }
-            if (isNaN(parseInt(stateY_zm.maxY.toString()))) {
-                return '';
-            }
-            if (parseInt(stateY_zm.minY.toString()) < 0) {
-                return `<0`;
-            } else if (parseInt(stateY_zm.minY.toString()) >= parseInt(stateY_zm.maxY.toString())) {
-                return `min>=max`;
-            } else if (
-                parseInt(stateY_zm.maxY.toString()) - parseInt(stateY_zm.minY.toString()) >
-                maxDiff
-            ) {
-                return `ΔY>${maxDiff}`;
-            } else {
-                return '';
-            }
-        } else {
-            if (isNaN(parseInt(stateY_return.minY.toString()))) {
-                return '';
-            }
-            if (isNaN(parseInt(stateY_return.maxY.toString()))) {
-                return '';
-            }
-            if (parseInt(stateY_return.minY.toString()) < 0) {
-                return `<0`;
-            } else if (
-                parseInt(stateY_return.minY.toString()) >= parseInt(stateY_return.maxY.toString())
-            ) {
-                return `min>=max`;
-            } else if (
-                parseInt(stateY_return.maxY.toString()) - parseInt(stateY_return.minY.toString()) >
-                maxDiff
-            ) {
-                return `ΔY>${maxDiff}`;
-            } else {
-                return '';
-            }
+        const { minY, maxY } = plotId === O3AS_PLOTS.tco3_zm ? stateY_zm : stateY_return;
+        if (Number.isNaN(minY)) {
+            return '';
+        } else if (minY < 0) {
+            return `must be positive`;
+        } else if (minY >= maxY) {
+            return `must be lower than maximum`;
+        } else if (maxY - minY > maxDiff) {
+            return `the difference must be lower than ${maxDiff}`;
         }
+        return '';
     };
 
-    /**
-     * Evaluates, whether the input of the maximum input is valid or not.
-     *
-     * @function
-     * @returns {boolean} True=valid, false=not valid
-     */
     const errorMax = () => {
-        if (plotId === O3AS_PLOTS.tco3_zm) {
-            if (isNaN(parseInt(stateY_zm.maxY.toString()))) {
-                return true;
-            }
-            if (isNaN(parseInt(stateY_zm.minY.toString()))) {
-                return false;
-            }
-            return (
-                parseInt(stateY_zm.maxY.toString()) < 0 ||
-                parseInt(stateY_zm.minY.toString()) >= parseInt(stateY_zm.maxY.toString()) ||
-                parseInt(stateY_zm.maxY.toString()) - parseInt(stateY_zm.minY.toString()) > maxDiff
-            );
-        } else {
-            if (isNaN(parseInt(stateY_return.maxY.toString()))) {
-                return true;
-            }
-            if (isNaN(parseInt(stateY_return.minY.toString()))) {
-                return false;
-            }
-            return (
-                parseInt(stateY_return.maxY.toString()) < 0 ||
-                parseInt(stateY_return.minY.toString()) >=
-                    parseInt(stateY_return.maxY.toString()) ||
-                parseInt(stateY_return.maxY.toString()) - parseInt(stateY_return.minY.toString()) >
-                    maxDiff
-            );
+        const { minY, maxY } = plotId === O3AS_PLOTS.tco3_zm ? stateY_zm : stateY_return;
+        if (isNaN(maxY)) {
+            return true;
         }
+        return maxY < 0 || minY >= maxY || maxY - minY > maxDiff;
     };
 
-    /**
-     * Returns the corresponding error message if the input value is not valid.
-     *
-     * @function
-     * @returns {string} The error message
-     */
-    const helperTextMax = () => {
-        if (plotId === O3AS_PLOTS.tco3_zm) {
-            if (isNaN(parseInt(stateY_zm.minY.toString()))) {
-                return '';
-            }
-            if (isNaN(parseInt(stateY_zm.maxY.toString()))) {
-                return '';
-            }
-            if (parseInt(stateY_zm.maxY.toString()) < 0) {
-                return `<0`;
-            } else if (parseInt(stateY_zm.minY.toString()) >= parseInt(stateY_zm.maxY.toString())) {
-                return `min>=max`;
-            } else if (
-                parseInt(stateY_zm.maxY.toString()) - parseInt(stateY_zm.minY.toString()) >
-                maxDiff
-            ) {
-                return `ΔY>${maxDiff}`;
-            } else {
-                return '';
-            }
-        } else {
-            if (isNaN(parseInt(stateY_return.minY.toString()))) {
-                return '';
-            }
-            if (isNaN(parseInt(stateY_return.maxY.toString()))) {
-                return '';
-            }
-            if (parseInt(stateY_return.maxY.toString()) < 0) {
-                return `<0`;
-            } else if (
-                parseInt(stateY_return.minY.toString()) >= parseInt(stateY_return.maxY.toString())
-            ) {
-                return `min>=max`;
-            } else if (
-                parseInt(stateY_return.maxY.toString()) - parseInt(stateY_return.minY.toString()) >
-                maxDiff
-            ) {
-                return `ΔY>${maxDiff}`;
-            } else {
-                return '';
-            }
+    const maxHelperText = () => {
+        const { minY, maxY } = plotId === O3AS_PLOTS.tco3_zm ? stateY_zm : stateY_return;
+        if (Number.isNaN(maxY)) {
+            return '';
+        } else if (maxY < 0) {
+            return `must be positive`;
+        } else if (minY >= maxY) {
+            return `must be higher than minimum`;
+        } else if (maxY - minY > maxDiff) {
+            return `the difference must be lower than ${maxDiff}`;
         }
+        return '';
     };
 
     useEffect(() => {
@@ -254,42 +154,36 @@ const YAxisField: FC<YAxisFieldProps> = ({ reportError }) => {
     }, [plotId, minY, maxY]);
 
     return (
-        <Grid container sx={{ width: '90%', marginLeft: 'auto', marginRight: 'auto' }}>
-            <Grid item xs={3}>
-                <Typography>Y-Axis:</Typography>
+        <Grid container sx={{ justifyContent: 'center', marginTop: '.5rem' }}>
+            <Grid xs={5}>
+                <TextField
+                    size="small"
+                    variant="outlined"
+                    value={plotId === 'tco3_zm' ? stateY_zm.minY : stateY_return.minY}
+                    onChange={handleChangeMin}
+                    error={isMinValid()}
+                    helperText={helperTextMin()}
+                    inputProps={{ 'data-testid': 'YAxisField-left-input' }}
+                    type="number"
+                    label="Y Minimum"
+                />
             </Grid>
-            <Grid item xs={3} sx={{ mt: '-8px' }}>
-                <FormControl sx={{ width: '85%' }}>
-                    <TextField
-                        variant="outlined"
-                        id="outlined-basic"
-                        size="small"
-                        value={plotId === 'tco3_zm' ? stateY_zm.minY : stateY_return.minY}
-                        onChange={handleChangeMin}
-                        error={isMinValid()}
-                        helperText={helperTextMin()}
-                        inputProps={{ 'data-testid': 'YAxisField-left-input' }}
-                        type="number"
-                    />
-                </FormControl>
+            <Grid xs={1} sx={{ display: 'flex', justifyContent: 'center', marginTop: '.5rem' }}>
+                -
             </Grid>
-            <Grid item xs={1} sx={{ mt: '-5px' }}>
-                <h2 style={{ display: 'inline' }}> - </h2>
-            </Grid>
-            <Grid item xs={3} sx={{ mt: '-8px' }}>
-                <FormControl sx={{ width: '85%' }}>
-                    <TextField
-                        variant="outlined"
-                        id="outlined-basic"
-                        size="small"
-                        value={plotId === O3AS_PLOTS.tco3_zm ? stateY_zm.maxY : stateY_return.maxY}
-                        onChange={handleChangeMax}
-                        error={errorMax()}
-                        helperText={helperTextMax()}
-                        inputProps={{ 'data-testid': 'YAxisField-right-input' }}
-                        type="number"
-                    />
-                </FormControl>
+            <Grid xs={5}>
+                <TextField
+                    size="small"
+                    variant="outlined"
+                    id="outlined-basic"
+                    value={plotId === O3AS_PLOTS.tco3_zm ? stateY_zm.maxY : stateY_return.maxY}
+                    onChange={handleChangeMax}
+                    error={errorMax()}
+                    helperText={maxHelperText()}
+                    inputProps={{ 'data-testid': 'YAxisField-right-input' }}
+                    type="number"
+                    label="Y Maximum"
+                />
             </Grid>
         </Grid>
     );

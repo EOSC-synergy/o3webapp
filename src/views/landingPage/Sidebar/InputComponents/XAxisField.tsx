@@ -1,7 +1,7 @@
 import React, { ChangeEventHandler, FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectPlotId, selectPlotXRange, setDisplayXRangeForPlot } from 'store/plotSlice';
-import { FormControl, Grid, TextField, Typography } from '@mui/material';
+import { Grid, TextField } from '@mui/material';
 import { END_YEAR, START_YEAR } from 'utils/constants';
 import invariant from 'tiny-invariant';
 
@@ -63,66 +63,62 @@ const XAxisField: FC = () => {
     };
 
     return (
-        <Grid container sx={{ width: '90%', marginLeft: 'auto', marginRight: 'auto' }}>
-            <Grid item xs={3}>
-                <Typography>X-Axis:</Typography>
+        <Grid container sx={{ justifyContent: 'center' }}>
+            <Grid xs={5}>
+                <TextField
+                    variant="outlined"
+                    size="small"
+                    value={xRange.minX}
+                    onChange={handleChangeMin}
+                    error={
+                        xRange.minX < START_YEAR || xRange.minX > END_YEAR || xRange.minX >= maxX
+                    }
+                    helperText={
+                        xRange.minX < START_YEAR
+                            ? `must be >${START_YEAR}`
+                            : xRange.minX > END_YEAR
+                            ? `must be <${END_YEAR}`
+                            : xRange.minX >= maxX
+                            ? `must be lower than maximum`
+                            : ''
+                    }
+                    inputProps={{ 'data-testid': 'XAxisField-left-input' }}
+                    type="number"
+                    label="X Minimum"
+                />
             </Grid>
-            <Grid item xs={3} sx={{ mt: '-8px' }}>
-                <FormControl sx={{ width: '85%' }}>
-                    <TextField
-                        variant="outlined"
-                        id="outlined-basic"
-                        size="small"
-                        value={xRange.minX}
-                        onChange={handleChangeMin}
-                        error={
-                            xRange.minX < START_YEAR ||
-                            xRange.minX > END_YEAR ||
-                            xRange.minX >= maxX
-                        }
-                        helperText={
-                            xRange.minX < START_YEAR
-                                ? `<${START_YEAR}`
-                                : xRange.minX > END_YEAR
-                                ? `>${END_YEAR}`
-                                : xRange.minX >= maxX
-                                ? `min>=max`
-                                : ''
-                        }
-                        inputProps={{ 'data-testid': 'XAxisField-left-input' }}
-                        type="number"
-                    />
-                </FormControl>
+            <Grid
+                xs={1}
+                sx={{
+                    marginTop: '.5rem',
+                    display: 'flex',
+                    justifyContent: 'center',
+                }}
+            >
+                -
             </Grid>
-            <Grid item xs={1} sx={{ mt: '-5px' }}>
-                <h2 style={{ display: 'inline' }}> - </h2>
-            </Grid>
-            <Grid item xs={3} sx={{ mt: '-8px' }}>
-                <FormControl sx={{ width: '85%' }}>
-                    <TextField
-                        variant="outlined"
-                        id="outlined-basic"
-                        size="small"
-                        value={xRange.maxX}
-                        onChange={handleChangeMax}
-                        error={
-                            xRange.maxX < START_YEAR ||
-                            xRange.maxX > END_YEAR ||
-                            minX >= xRange.maxX
-                        }
-                        helperText={
-                            xRange.maxX < START_YEAR
-                                ? `<${START_YEAR}`
-                                : xRange.maxX > END_YEAR
-                                ? `>${END_YEAR}`
-                                : minX >= xRange.maxX
-                                ? `min>=max`
-                                : ''
-                        }
-                        inputProps={{ 'data-testid': 'XAxisField-right-input' }}
-                        type="number"
-                    />
-                </FormControl>
+            <Grid xs={5}>
+                <TextField
+                    variant="outlined"
+                    size="small"
+                    value={xRange.maxX}
+                    onChange={handleChangeMax}
+                    error={
+                        xRange.maxX < START_YEAR || xRange.maxX > END_YEAR || minX >= xRange.maxX
+                    }
+                    helperText={
+                        xRange.maxX < START_YEAR
+                            ? `must be >${START_YEAR}`
+                            : xRange.maxX > END_YEAR
+                            ? `must be <${END_YEAR}`
+                            : minX >= xRange.maxX
+                            ? `must be higher than minimum`
+                            : ''
+                    }
+                    inputProps={{ 'data-testid': 'XAxisField-right-input' }}
+                    type="number"
+                    label="X Maximum"
+                />
             </Grid>
         </Grid>
     );
