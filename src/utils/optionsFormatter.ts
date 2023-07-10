@@ -104,8 +104,6 @@ const SV_COLORING = {
  * easy customization if e.g. the mean should be dashed too.
  *
  * The integer values correspond to the dashing format that is expected by apexcharts.
- *
- * @constant {Object}
  */
 const SV_DASHING = {
     mean: 0,
@@ -133,11 +131,6 @@ const SV_DISPLAY_NAME = {
     upperPercentile: 'Upper %',
 };
 
-/**
- * A string containing a list of used font families seperated by a comma.
- *
- * @constant {string}
- */
 export const FONT_FAMILY = [
     '-apple-system',
     'BlinkMacSystemFont',
@@ -178,17 +171,7 @@ function createSubtitle(state: AppState): string {
     }
 }
 
-/**
- * The default settings for the tco3_zm plot.
- *
- * Colors, width, dashArray have to be filled.
- *
- * This gigantic object allows us to communicate with the apexcharts library. More can be found
- * here: {@link https://apexcharts.com/docs/installation/}
- *
- * @constant {Object}
- */
-export const defaultTCO3_zm: ApexOptions = {
+export const DEFAULT_TCO3_ZM: ApexOptions = {
     xaxis: {
         type: 'numeric',
         min: START_YEAR,
@@ -398,17 +381,7 @@ export type Styling = {
     points?: [number, number | null][];
 };
 
-/**
- * The default settings for the tco3_return plot.
- *
- * Colors have to be filled.
- *
- * This gigantic object allows us to communicate with the apexcharts library. More can be found
- * here: {@link https://apexcharts.com/docs/installation/}
- *
- * @constant {Object}
- */
-export const default_TCO3_return: ApexOptions = {
+export const DEFAULT_TCO3_RETURN: ApexOptions = {
     xaxis: {
         title: {
             text: 'Region',
@@ -497,229 +470,144 @@ export const default_TCO3_return: ApexOptions = {
     },
 };
 
-type OptionsParams = {
-    plotId: LEGAL_PLOT_ID;
-    styling: Styling;
-    plotTitle: string;
-    xAxisRange: YearsBasedXRange;
-    yAxisRange: YRange;
-    seriesNames: string[];
-    state: AppState;
-};
+export function getOptionsZm(
+    styling: Styling,
+    plotTitle: string,
+    xAxisRange: YearsBasedXRange,
+    yAxisRange: YRange,
+    seriesNames: string[],
+    state: AppState
+): ApexOptions {
+    const minY = roundDownToMultipleOfTen(yAxisRange.minY);
+    const maxY = roundUpToMultipleOfTen(yAxisRange.maxY);
+
+    const tickAmount = getTickAmountYAxis(minY, maxY);
+
+    // dirt simple and not overly horrible
+    const xAxisMin = roundDownToMultipleOfTen(xAxisRange.years.minX);
+    const xAxisMax = roundUpToMultipleOfTen(xAxisRange.years.maxX);
+    return merge(
+        // copy because merge mutates
+        { ...DEFAULT_TCO3_ZM },
+        {
+            yaxis: [
+                // on left side
+                getDefaultYAxisTco3Zm(undefined, minY, maxY, true, false, -1, tickAmount),
+                // on right side
+                getDefaultYAxisTco3Zm(undefined, minY, maxY, true, true, 0, tickAmount),
+                ...seriesNames.map((name) =>
+                    getDefaultYAxisTco3Zm(name, minY, maxY, false, false, 0, tickAmount)
+                ),
+            ],
+            xaxis: {
+                min: xAxisMin,
+                max: xAxisMax,
+                tickAmount: getOptimalTickAmount(xAxisMin, xAxisMax),
+            },
+            // TODO: no corresponding points are generated in generateSeries, what's up with this?
+
+            annotations: {
+                points: styling.points?.map((point) => ({
+                    x: point[0],
+                    y: point[1],
+                    marker: {
+                        size: 4,
+                    },
+                    // label: {text: point[xIdx]}
+                })),
+            },
+
+            colors: styling.colors,
+            stroke: {
+                width: styling.width,
+                dashArray: styling.dashArray,
+            },
+            title: {
+                text: plotTitle,
+            },
+            subtitle: {
+                text: createSubtitle(state),
+            },
+            tooltip: {
+                custom: customTooltipFormatter,
+            },
+            legend: {
+                markers: {
+                    width: 0,
+                },
+                customLegendItems: seriesNames.map((name, i) => {
+                    const color = styling.colors[i];
+                    const dashing = styling.dashArray[i];
+                    let linePattern;
+                    let fontSize = 20;
+                    if (dashing <= 0) {
+                        linePattern = '<b>───</b>';
+                    } else if (dashing <= 2) {
+                        linePattern = '••••';
+                        fontSize = 12;
+                    } else {
+                        linePattern = '<b>---</b>';
+                    }
+                    return `
+                    <span style='color:${color};font-family:Consolas, monaco, monospace;font-size:${fontSize}px;'>
+                        ${linePattern}
+                    </span>
+                    <span style='font-size: 16px'>${name}</span>`;
+                }),
+            },
+        }
+    );
+}
 
 /**
  * The interface the graph component accesses to generate the options for the plot given the plot
  * id, the styling (depends on plot type) and the plot title.
  *
  * @function
- * @param plotId An element of O3AS_PLOTS
  * @param styling The styling
  * @param styling.colors An array of strings with hex code. Has to match the length of the given
  *   series
- * @param styling.width (tco3_zm only!): array of integer defining the line width
- * @param styling.dashArray (tco3_zm only!): array of integer defining if the line is solid or
- *   dashed
  * @param plotTitle Contains the plot title
- * @param xAxisRange The range of the x-axis
  * @param yAxisRange The range of the y-axis
  * @param seriesNames The names of the series
- * @param getState Store.getState
+ * @param state
  * @returns An default_TCO3_plotId object formatted with the given data
  */
-export function getOptions({
-    plotId,
-    styling,
-    plotTitle,
-    xAxisRange,
-    yAxisRange,
-    seriesNames,
-    state,
-}: OptionsParams): ApexOptions {
+export function getOptionsReturn(
+    styling: Styling,
+    plotTitle: string,
+    yAxisRange: YRange,
+    seriesNames: string[],
+    state: AppState
+): ApexOptions {
     const minY = roundDownToMultipleOfTen(yAxisRange.minY);
     const maxY = roundUpToMultipleOfTen(yAxisRange.maxY);
 
     const tickAmount = getTickAmountYAxis(minY, maxY);
 
-    switch (plotId) {
-        case O3AS_PLOTS.tco3_zm: {
-            // dirt simple and not overly horrible
-            const xAxisMin = roundDownToMultipleOfTen(xAxisRange.years.minX);
-            const xAxisMax = roundUpToMultipleOfTen(xAxisRange.years.maxX);
-            return merge(
-                { ...defaultTCO3_zm },
-                {
-                    yaxis: [
-                        // on left side
-                        getDefaultYAxisTco3Zm(undefined, minY, maxY, true, false, -1, tickAmount),
-                        // on right side
-                        getDefaultYAxisTco3Zm(undefined, minY, maxY, true, true, 0, tickAmount),
-                        ...seriesNames.map((name) =>
-                            getDefaultYAxisTco3Zm(name, minY, maxY, false, false, 0, tickAmount)
-                        ),
-                    ],
-                    xaxis: {
-                        min: xAxisMin,
-                        max: xAxisMax,
-                        tickAmount: getOptimalTickAmount(xAxisMin, xAxisMax),
-                    },
-                    // TODO: no corresponding points are generated in generateSeries, what's up with this?
-
-                    annotations: {
-                        points: styling.points?.map((point) => ({
-                            x: point[0],
-                            y: point[1],
-                            marker: {
-                                size: 4,
-                            },
-                            // label: {text: point[xIdx]}
-                        })),
-                    },
-
-                    colors: styling.colors,
-                    stroke: {
-                        width: styling.width,
-                        dashArray: styling.dashArray,
-                    },
-                    title: {
-                        text: plotTitle,
-                    },
-                    subtitle: {
-                        text: createSubtitle(state),
-                    },
-                    tooltip: {
-                        custom: customTooltipFormatter,
-                    },
-                    legend: {
-                        markers: {
-                            width: 0,
-                        },
-                        customLegendItems: seriesNames.map((name, i) => {
-                            const color = styling.colors[i];
-                            const dashing = styling.dashArray[i];
-                            let linePattern;
-                            let fontSize = 20;
-                            if (dashing <= 0) {
-                                linePattern = '<b>───</b>';
-                            } else if (dashing <= 2) {
-                                linePattern = '••••';
-                                fontSize = 12;
-                            } else {
-                                linePattern = '<b>---</b>';
-                            }
-                            return `
-                    <span style='color:${color};font-family:Consolas, monaco, monospace;font-size:${fontSize}px;'>
-                        ${linePattern}
-                    </span>
-                    <span style='font-size: 16px'>${name}</span>`;
-                        }),
-                    },
-                }
-            );
+    return merge(
+        {
+            ...DEFAULT_TCO3_RETURN,
+        },
+        {
+            colors: styling.colors,
+            title: {
+                text: plotTitle,
+            },
+            subtitle: {
+                text: createSubtitle(state),
+            },
+            yaxis: [
+                ...seriesNames.map((name) =>
+                    getDefaultYAxisTco3Return(name, minY, maxY, false, false, 0, tickAmount)
+                ),
+                // on left side
+                getDefaultYAxisTco3Return(undefined, minY, maxY, true, false, 3, tickAmount),
+                // on right side
+                getDefaultYAxisTco3Return(undefined, minY, maxY, true, true, -3, tickAmount),
+            ],
         }
-        case O3AS_PLOTS.tco3_return: {
-            return merge(
-                {
-                    ...default_TCO3_return,
-                },
-                {
-                    colors: styling.colors,
-                    title: {
-                        text: plotTitle,
-                    },
-                    subtitle: {
-                        text: createSubtitle(state),
-                    },
-                    yaxis: [
-                        ...seriesNames.map((name) =>
-                            getDefaultYAxisTco3Return(name, minY, maxY, false, false, 0, tickAmount)
-                        ),
-                        // on left side
-                        getDefaultYAxisTco3Return(
-                            undefined,
-                            minY,
-                            maxY,
-                            true,
-                            false,
-                            3,
-                            tickAmount
-                        ),
-                        // on right side
-                        getDefaultYAxisTco3Return(
-                            undefined,
-                            minY,
-                            maxY,
-                            true,
-                            true,
-                            -3,
-                            tickAmount
-                        ),
-                    ],
-                }
-            );
-        }
-    }
-    // tco3_return
-}
-
-type GenerateSeriesParams = {
-    plotId: LEGAL_PLOT_ID;
-    data: ProcessedO3Data;
-    modelsSlice: GlobalModelState['models'];
-    yAxisRange: YRange;
-    refLineVisible: boolean;
-    state: AppState;
-    // ignored for tco3_zm
-    xAxisRange: RegionBasedXRange;
-};
-
-/**
- * The interface the graph component accesses to generate the series for the plot.
- *
- * This function generates data structures that can directly be passed to apexcharts. It accepts the
- * plotId because series are generated according to the type of plot. Furthermore, the data object
- * holds all plot data for the selected options and modelsSlice is a slice from the redux store
- * which contains information about what model groups exist, which of them are visible or should be
- * included in the statistical value calculation.
- *
- * It additionally generates a styling object which contains colors (and width/dashArray for
- * tco3_zm).
- *
- * @function
- * @param plotId The id of the currently selected plot
- * @param data The raw data from the api for the current options
- * @param modelsSlice The slice of the store containing information about the model groups
- * @param xAxisRange The range of the x-axis
- * @param yAxisRange The range of the y-axis
- * @param refLineVisible Visibility status of the reference line
- * @param getState Function to access the redux store
- * @returns Series object which includes a subdivision into a data and a styling object.
- */
-export function generateSeries({
-    plotId,
-    data,
-    modelsSlice,
-    xAxisRange,
-    yAxisRange,
-    refLineVisible,
-    state,
-}: GenerateSeriesParams) {
-    switch (plotId) {
-        case 'tco3_return':
-            return generateTco3_ReturnSeries({
-                data,
-                modelsSlice,
-                xAxisRange,
-                yAxisRange,
-                state,
-            });
-        case 'tco3_zm':
-            return generateTco3_ZmSeries({
-                data,
-                modelsSlice,
-                refLineVisible,
-                state,
-            });
-    }
+    );
 }
 
 type ReturnSeriesFirst = { name: ''; type: 'boxPlot'; data: { x: string; y: number[] }[] };
@@ -755,17 +643,12 @@ const NO_LINESTYLE = 0;
  * @param state Redux store state
  * @returns A combination of data and statistical values series
  */
-function generateTco3_ZmSeries({
-    data,
-    modelsSlice,
-    refLineVisible,
-    state,
-}: {
-    data: ProcessedO3Data;
-    modelsSlice: GlobalModelState['models'];
-    refLineVisible: boolean;
-    state: AppState;
-}): Series<ZmSeriesData> {
+export function generateTco3_ZmSeries(
+    data: ProcessedO3Data,
+    modelsSlice: GlobalModelState['models'],
+    refLineVisible: boolean,
+    state: AppState
+): Series<ZmSeriesData> {
     const series: Series<ZmSeriesData> = {
         data: [],
         styling: {
@@ -785,7 +668,9 @@ function generateTco3_ZmSeries({
         });
         // TODO: better way to handle no color?
         series.styling.colors.push(
-            colorNameToHex(data.reference_value.plotStyle?.color ?? NO_COLOR) || '#000000'
+            data.reference_value.plotStyle?.color
+                ? colorNameToHex(data.reference_value.plotStyle.color)
+                : '#000000'
         );
         // TODO: better way to handle no line style?
         series.styling.dashArray.push(
@@ -872,7 +757,7 @@ function generateSingleTco3ZmSeries(name: string, svData: (number | null)[]) {
  * @param data An object holding all the data from the api
  * @returns A 2D array containing all the data (transpose matrix of given data)
  */
-function buildSvMatrixTco3Zm({ modelList, data }: { modelList: string[]; data: ProcessedO3Data }) {
+function buildSvMatrixTco3Zm(modelList: string[], data: ProcessedO3Data) {
     const SERIES_LENGTH = data[modelList[0]].data.length; // grab length of first model, should all be same
 
     const matrix = create2dArray<number>(SERIES_LENGTH); // for arr of matrix: mean(arr), etc.
@@ -904,19 +789,13 @@ function buildSvMatrixTco3Zm({ modelList, data }: { modelList: string[]; data: P
  * @param yAxisRange The range of the y-axis
  * @returns A combination of data and statistical values series
  */
-function generateTco3_ReturnSeries({
-    data,
-    modelsSlice,
-    xAxisRange,
-    yAxisRange,
-    state,
-}: {
-    data: ProcessedO3Data;
-    modelsSlice: GlobalModelState['models'];
-    xAxisRange: RegionBasedXRange;
-    yAxisRange: YRange;
-    state: AppState;
-}): Series<ReturnSeriesData> {
+export function generateTco3_ReturnSeries(
+    data: ProcessedO3Data,
+    modelsSlice: GlobalModelState['models'],
+    xAxisRange: RegionBasedXRange,
+    yAxisRange: YRange,
+    state: AppState
+): Series<ReturnSeriesData> {
     // grab first key to extract regions from api response
     const firstKey = Object.keys(data)[0];
     const regions: string[] = firstKey ? Object.keys(data[firstKey].data) : [];
@@ -1080,15 +959,7 @@ function generateSingleTco3ReturnSeries(
  * @param data An object holding all the data from the api
  * @returns A 2D array containing all the data (transpose matrix of given data)
  */
-function buildSvMatrixTco3Return({
-    modelList,
-    data,
-    regions,
-}: {
-    modelList: string[];
-    data: ProcessedO3Data;
-    regions: string[];
-}) {
+function buildSvMatrixTco3Return(modelList: string[], data: ProcessedO3Data, regions: string[]) {
     const matrix = create2dArray<number>(regions.length);
 
     for (const index in regions) {
@@ -1263,7 +1134,7 @@ function calculateSvForModels(
     // pass group data
     // only mean at beginning
 
-    const matrix = buildMatrix({ modelList, data, regions }); // function supplied by caller
+    const matrix = buildMatrix(modelList, data, regions); // function supplied by caller
 
     const svHolder: Record<PROCESSED_SV | typeof stdMean, (number | null)[]> = {
         lowerPercentile: [],
@@ -1446,190 +1317,176 @@ export function getSuggestedValues(data: ProcessedO3Data, modelSlice: GlobalMode
 }
 
 // UTILITY:
+export const COLORS = {
+    aliceblue: '#f0f8ff',
+    antiquewhite: '#faebd7',
+    aqua: '#00ffff',
+    aquamarine: '#7fffd4',
+    azure: '#f0ffff',
+    beige: '#f5f5dc',
+    bisque: '#ffe4c4',
+    black: '#000000',
+    blanchedalmond: '#ffebcd',
+    blue: '#0000ff',
+    blueviolet: '#8a2be2',
+    brown: '#a52a2a',
+    burlywood: '#deb887',
+    cadetblue: '#5f9ea0',
+    chartreuse: '#7fff00',
+    chocolate: '#d2691e',
+    coral: '#ff7f50',
+    cornflowerblue: '#6495ed',
+    cornsilk: '#fff8dc',
+    crimson: '#dc143c',
+    cyan: '#00ffff',
+    darkblue: '#00008b',
+    darkcyan: '#008b8b',
+    darkgoldenrod: '#b8860b',
+    darkgray: '#a9a9a9',
+    darkgreen: '#006400',
+    darkkhaki: '#bdb76b',
+    darkmagenta: '#8b008b',
+    darkolivegreen: '#556b2f',
+    darkorange: '#ff8c00',
+    darkorchid: '#9932cc',
+    darkred: '#8b0000',
+    darksalmon: '#e9967a',
+    darkseagreen: '#8fbc8f',
+    darkslateblue: '#483d8b',
+    darkslategray: '#2f4f4f',
+    darkturquoise: '#00ced1',
+    darkviolet: '#9400d3',
+    deeppink: '#ff1493',
+    deepskyblue: '#00bfff',
+    dimgray: '#696969',
+    dodgerblue: '#1e90ff',
+    firebrick: '#b22222',
+    floralwhite: '#fffaf0',
+    forestgreen: '#228b22',
+    fuchsia: '#ff00ff',
+    gainsboro: '#dcdcdc',
+    ghostwhite: '#f8f8ff',
+    gold: '#ffd700',
+    goldenrod: '#daa520',
+    gray: '#808080',
+    green: '#008000',
+    greenyellow: '#adff2f',
+    honeydew: '#f0fff0',
+    hotpink: '#ff69b4',
+    'indianred ': '#cd5c5c',
+    indigo: '#4b0082',
+    ivory: '#fffff0',
+    khaki: '#f0e68c',
+    lavender: '#e6e6fa',
+    lavenderblush: '#fff0f5',
+    lawngreen: '#7cfc00',
+    lemonchiffon: '#fffacd',
+    lightblue: '#add8e6',
+    lightcoral: '#f08080',
+    lightcyan: '#e0ffff',
+    lightgoldenrodyellow: '#fafad2',
+    lightgrey: '#d3d3d3',
+    lightgreen: '#90ee90',
+    lightpink: '#ffb6c1',
+    lightsalmon: '#ffa07a',
+    lightseagreen: '#20b2aa',
+    lightskyblue: '#87cefa',
+    lightslategray: '#778899',
+    lightsteelblue: '#b0c4de',
+    lightyellow: '#ffffe0',
+    lime: '#00ff00',
+    limegreen: '#32cd32',
+    linen: '#faf0e6',
+    magenta: '#ff00ff',
+    maroon: '#800000',
+    mediumaquamarine: '#66cdaa',
+    mediumblue: '#0000cd',
+    mediumorchid: '#ba55d3',
+    mediumpurple: '#9370d8',
+    mediumseagreen: '#3cb371',
+    mediumslateblue: '#7b68ee',
+    mediumspringgreen: '#00fa9a',
+    mediumturquoise: '#48d1cc',
+    mediumvioletred: '#c71585',
+    midnightblue: '#191970',
+    mintcream: '#f5fffa',
+    mistyrose: '#ffe4e1',
+    moccasin: '#ffe4b5',
+    navajowhite: '#ffdead',
+    navy: '#000080',
+    oldlace: '#fdf5e6',
+    olive: '#808000',
+    olivedrab: '#6b8e23',
+    orange: '#ffa500',
+    orangered: '#ff4500',
+    orchid: '#da70d6',
+    palegoldenrod: '#eee8aa',
+    palegreen: '#98fb98',
+    paleturquoise: '#afeeee',
+    palevioletred: '#d87093',
+    papayawhip: '#ffefd5',
+    peachpuff: '#ffdab9',
+    peru: '#cd853f',
+    pink: '#ffc0cb',
+    plum: '#dda0dd',
+    powderblue: '#b0e0e6',
+    purple: '#800080',
+    rebeccapurple: '#663399',
+    red: '#ff0000',
+    rosybrown: '#bc8f8f',
+    royalblue: '#4169e1',
+    saddlebrown: '#8b4513',
+    salmon: '#fa8072',
+    sandybrown: '#f4a460',
+    seagreen: '#2e8b57',
+    seashell: '#fff5ee',
+    sienna: '#a0522d',
+    silver: '#c0c0c0',
+    skyblue: '#87ceeb',
+    slateblue: '#6a5acd',
+    slategray: '#708090',
+    snow: '#fffafa',
+    springgreen: '#00ff7f',
+    steelblue: '#4682b4',
+    tan: '#d2b48c',
+    teal: '#008080',
+    thistle: '#d8bfd8',
+    tomato: '#ff6347',
+    turquoise: '#40e0d0',
+    violet: '#ee82ee',
+    wheat: '#f5deb3',
+    white: '#ffffff',
+    whitesmoke: '#f5f5f5',
+    yellow: '#ffff00',
+    yellowgreen: '#9acd32',
+} as const;
 
 /**
  * Converts the given color name to its corresponding hex code.
  *
- * @function
- * @param {string} color The name of the color as a string
- * @returns {Object} The hex code corresponding to the given color name
+ * @param color The name of the color as a string
+ * @returns The hex code corresponding to the given color name
  */
-export function colorNameToHex(color: string) {
-    const colors = {
-        aliceblue: '#f0f8ff',
-        antiquewhite: '#faebd7',
-        aqua: '#00ffff',
-        aquamarine: '#7fffd4',
-        azure: '#f0ffff',
-        beige: '#f5f5dc',
-        bisque: '#ffe4c4',
-        black: '#000000',
-        blanchedalmond: '#ffebcd',
-        blue: '#0000ff',
-        blueviolet: '#8a2be2',
-        brown: '#a52a2a',
-        burlywood: '#deb887',
-        cadetblue: '#5f9ea0',
-        chartreuse: '#7fff00',
-        chocolate: '#d2691e',
-        coral: '#ff7f50',
-        cornflowerblue: '#6495ed',
-        cornsilk: '#fff8dc',
-        crimson: '#dc143c',
-        cyan: '#00ffff',
-        darkblue: '#00008b',
-        darkcyan: '#008b8b',
-        darkgoldenrod: '#b8860b',
-        darkgray: '#a9a9a9',
-        darkgreen: '#006400',
-        darkkhaki: '#bdb76b',
-        darkmagenta: '#8b008b',
-        darkolivegreen: '#556b2f',
-        darkorange: '#ff8c00',
-        darkorchid: '#9932cc',
-        darkred: '#8b0000',
-        darksalmon: '#e9967a',
-        darkseagreen: '#8fbc8f',
-        darkslateblue: '#483d8b',
-        darkslategray: '#2f4f4f',
-        darkturquoise: '#00ced1',
-        darkviolet: '#9400d3',
-        deeppink: '#ff1493',
-        deepskyblue: '#00bfff',
-        dimgray: '#696969',
-        dodgerblue: '#1e90ff',
-        firebrick: '#b22222',
-        floralwhite: '#fffaf0',
-        forestgreen: '#228b22',
-        fuchsia: '#ff00ff',
-        gainsboro: '#dcdcdc',
-        ghostwhite: '#f8f8ff',
-        gold: '#ffd700',
-        goldenrod: '#daa520',
-        gray: '#808080',
-        green: '#008000',
-        greenyellow: '#adff2f',
-        honeydew: '#f0fff0',
-        hotpink: '#ff69b4',
-        'indianred ': '#cd5c5c',
-        indigo: '#4b0082',
-        ivory: '#fffff0',
-        khaki: '#f0e68c',
-        lavender: '#e6e6fa',
-        lavenderblush: '#fff0f5',
-        lawngreen: '#7cfc00',
-        lemonchiffon: '#fffacd',
-        lightblue: '#add8e6',
-        lightcoral: '#f08080',
-        lightcyan: '#e0ffff',
-        lightgoldenrodyellow: '#fafad2',
-        lightgrey: '#d3d3d3',
-        lightgreen: '#90ee90',
-        lightpink: '#ffb6c1',
-        lightsalmon: '#ffa07a',
-        lightseagreen: '#20b2aa',
-        lightskyblue: '#87cefa',
-        lightslategray: '#778899',
-        lightsteelblue: '#b0c4de',
-        lightyellow: '#ffffe0',
-        lime: '#00ff00',
-        limegreen: '#32cd32',
-        linen: '#faf0e6',
-        magenta: '#ff00ff',
-        maroon: '#800000',
-        mediumaquamarine: '#66cdaa',
-        mediumblue: '#0000cd',
-        mediumorchid: '#ba55d3',
-        mediumpurple: '#9370d8',
-        mediumseagreen: '#3cb371',
-        mediumslateblue: '#7b68ee',
-        mediumspringgreen: '#00fa9a',
-        mediumturquoise: '#48d1cc',
-        mediumvioletred: '#c71585',
-        midnightblue: '#191970',
-        mintcream: '#f5fffa',
-        mistyrose: '#ffe4e1',
-        moccasin: '#ffe4b5',
-        navajowhite: '#ffdead',
-        navy: '#000080',
-        oldlace: '#fdf5e6',
-        olive: '#808000',
-        olivedrab: '#6b8e23',
-        orange: '#ffa500',
-        orangered: '#ff4500',
-        orchid: '#da70d6',
-        palegoldenrod: '#eee8aa',
-        palegreen: '#98fb98',
-        paleturquoise: '#afeeee',
-        palevioletred: '#d87093',
-        papayawhip: '#ffefd5',
-        peachpuff: '#ffdab9',
-        peru: '#cd853f',
-        pink: '#ffc0cb',
-        plum: '#dda0dd',
-        powderblue: '#b0e0e6',
-        purple: '#800080',
-        rebeccapurple: '#663399',
-        red: '#ff0000',
-        rosybrown: '#bc8f8f',
-        royalblue: '#4169e1',
-        saddlebrown: '#8b4513',
-        salmon: '#fa8072',
-        sandybrown: '#f4a460',
-        seagreen: '#2e8b57',
-        seashell: '#fff5ee',
-        sienna: '#a0522d',
-        silver: '#c0c0c0',
-        skyblue: '#87ceeb',
-        slateblue: '#6a5acd',
-        slategray: '#708090',
-        snow: '#fffafa',
-        springgreen: '#00ff7f',
-        steelblue: '#4682b4',
-        tan: '#d2b48c',
-        teal: '#008080',
-        thistle: '#d8bfd8',
-        tomato: '#ff6347',
-        turquoise: '#40e0d0',
-        violet: '#ee82ee',
-        wheat: '#f5deb3',
-        white: '#ffffff',
-        whitesmoke: '#f5f5f5',
-        yellow: '#ffff00',
-        yellowgreen: '#9acd32',
-    } as const;
+export const colorNameToHex = (color: string) => {
+    const lowercase = color.toLowerCase();
+    return lowercase in COLORS ? COLORS[lowercase as keyof typeof COLORS] : COLORS.black;
+};
 
-    if (typeof colors[color.toLowerCase() as keyof typeof colors] != 'undefined') {
-        if (colors[color.toLowerCase() as keyof typeof colors] == undefined) {
-            throw new Error(`Color ${color} is not supported`);
-        }
-        return colors[color.toLowerCase() as keyof typeof colors];
-    }
-
-    // TODO: sane default?
-    return false;
-}
-
+export const STYLES = {
+    solid: 0,
+    dotted: 1,
+    dashed: 3,
+} as const;
 /**
  * Converts the stroke style given by the API into the format supported by apexcharts.
  *
- * @function
  * @param apiStyle The stroke style specified by the API
  * @returns The stroke style for the apexcharts library
  */
-export function convertToStrokeStyle(apiStyle: string) {
-    const styles = {
-        solid: 0,
-        dotted: 1,
-        dashed: 3,
-    } as const;
-
-    if (typeof styles[apiStyle.toLowerCase() as keyof typeof styles] != 'undefined') {
-        return styles[apiStyle.toLowerCase() as keyof typeof styles];
-    }
-    // TODO: is there a sane fallback?
-    return false;
-}
+export const convertToStrokeStyle = (apiStyle: string) => {
+    const lowercase = apiStyle.toLowerCase();
+    return lowercase in STYLES ? STYLES[lowercase as keyof typeof STYLES] : STYLES.solid;
+};
 
 /**
  * Combines 2 data series objects into a new one. The copied elements of series2 get appended to a

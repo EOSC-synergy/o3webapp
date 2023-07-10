@@ -13,7 +13,7 @@ import { setModelsOfModelGroup } from 'store/modelsSlice';
 import { DEFAULT_MODEL_GROUP } from 'utils/constants';
 import { connect } from 'react-redux';
 import { useAppDispatch, useAppStore, wrapper } from 'store';
-import { isEmpty } from 'lodash';
+import { debounce, isEmpty } from 'lodash';
 import { GetStaticProps, NextPage } from 'next';
 
 /**
@@ -157,15 +157,17 @@ const App: NextPage<IndexProps> = () => {
             });
             */
 
-            store.subscribe(() => {
-                router.push(
-                    {
-                        query: generateNewUrl(store.getState()),
-                    },
-                    undefined,
-                    { shallow: true }
-                );
-            });
+            store.subscribe(
+                debounce(() => {
+                    router.replace(
+                        {
+                            query: generateNewUrl(store.getState()),
+                        },
+                        undefined,
+                        { shallow: true }
+                    );
+                }, 1000)
+            );
 
             setReady(true);
         }

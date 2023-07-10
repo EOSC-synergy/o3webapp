@@ -364,10 +364,12 @@ export const selectPlotLocation = (state: GlobalPlotState) => state.plot.general
  * @param plotId Plot type (needed for typing)
  * @returns Holds the current x range that includes minX and maxX
  */
-export const selectPlotXRange =
+const _selectPlotXRange =
     <T extends O3AS_PLOTS>(plotId: T) =>
     (state: GlobalPlotState): PlotSpecific[T]['displayXRange'] =>
         state.plot.plotSpecificSettings[plotId].displayXRange;
+export const selectPlotXRangeZm = _selectPlotXRange(O3AS_PLOTS.tco3_zm);
+export const selectPlotXRangeReturn = _selectPlotXRange(O3AS_PLOTS.tco3_return);
 
 /**
  * This selector allows components to select the current y range from the store.

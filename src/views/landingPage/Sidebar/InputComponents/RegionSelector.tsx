@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     type RegionBasedXRange,
     selectPlotId,
-    selectPlotXRange,
+    selectPlotXRangeReturn,
     setDisplayXRangeForPlot,
 } from 'store/plotSlice';
 import { ALL_REGIONS_ORDERED } from 'utils/constants';
@@ -28,7 +28,7 @@ const RegionSelector: FC = () => {
         'RegionSelector is only available for tco3_return plot'
     );
 
-    const xRangeRegions = useSelector(selectPlotXRange(activePlot));
+    const xRangeRegions = useSelector(selectPlotXRangeReturn);
 
     const handleRegionChecked = (regionIdx: number) => {
         let regionCpy = [...xRangeRegions.regions];

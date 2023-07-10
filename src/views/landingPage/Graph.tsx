@@ -1,13 +1,17 @@
-import React, { FC, memo, useEffect, useState } from 'react';
-import { generateSeries, getOptions } from 'utils/optionsFormatter';
+import React, { FC, useEffect, useState } from 'react';
+import {
+    generateTco3_ReturnSeries,
+    generateTco3_ZmSeries,
+    getOptionsReturn,
+    getOptionsZm,
+} from 'utils/optionsFormatter';
 import { useSelector } from 'react-redux';
 import {
-    RegionBasedXRange,
     selectPlotId,
     selectPlotTitle,
-    selectPlotXRange,
+    selectPlotXRangeReturn,
+    selectPlotXRangeZm,
     selectPlotYRange,
-    YearsBasedXRange,
 } from 'store/plotSlice';
 import { selectVisibility } from 'store/referenceSlice';
 import { REQUEST_STATE, selectActivePlotData } from 'services/API/apiSlice';
@@ -19,8 +23,113 @@ import { AppState, useAppStore } from 'store';
 import type { Props as ApexProps } from 'react-apexcharts';
 import { LEGAL_PLOT_ID } from 'services/API/client';
 import { ErrorReporter } from 'utils/reportError';
+import invariant from 'tiny-invariant';
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
+
+const HEIGHT_LOADING_SPINNER = '300px';
+
+const APEXCHARTS_PLOT_TYPE: Record<LEGAL_PLOT_ID, ApexProps['type']> = {
+    tco3_zm: 'line',
+    tco3_return: 'boxPlot',
+};
+
+const useSharedChartData = () => {
+    const modelsSlice = useSelector((state: AppState) => state.models);
+    const plotTitle = useSelector(selectPlotTitle);
+    const yAxisRange = useSelector(selectPlotYRange);
+
+    return {
+        modelsSlice,
+        plotTitle,
+        yAxisRange,
+    };
+};
+
+const ZmChart: FC = () => {
+    const store = useAppStore();
+
+    const xAxisRange = useSelector(selectPlotXRangeZm);
+    const activeData = useSelector((state: AppState) =>
+        selectActivePlotData(state, O3AS_PLOTS.tco3_zm)
+    );
+    invariant(
+        activeData.status === REQUEST_STATE.success,
+        'can only render chart with successful data fetch'
+    );
+    const { modelsSlice, plotTitle, yAxisRange } = useSharedChartData();
+    const refLineVisible = useSelector(selectVisibility);
+
+    const { data, styling } = generateTco3_ZmSeries(
+        activeData.data,
+        modelsSlice,
+        refLineVisible,
+        store.getState()
+    );
+    const seriesNames = data.map((series) => series.name);
+    const options = getOptionsZm(
+        styling,
+        plotTitle,
+        xAxisRange,
+        yAxisRange,
+        // TODO: fix typing
+        seriesNames as string[],
+        store.getState()
+    );
+    const uniqueNumber = Date.now(); // forces apexcharts to re-render correctly!
+    const HEIGHT = (window.innerHeight - document.getElementById('NavBar')!.offsetHeight) * 0.975;
+    return (
+        <Chart
+            key={uniqueNumber}
+            options={options}
+            series={data}
+            type={APEXCHARTS_PLOT_TYPE[O3AS_PLOTS.tco3_zm]}
+            height={HEIGHT}
+        />
+    );
+};
+
+const ReturnChart: FC = () => {
+    const store = useAppStore();
+
+    const xAxisRange = useSelector(selectPlotXRangeReturn);
+    const activeData = useSelector((state: AppState) =>
+        selectActivePlotData(state, O3AS_PLOTS.tco3_return)
+    );
+    invariant(
+        activeData.status === REQUEST_STATE.success,
+        'can only render chart with successful data fetch'
+    );
+    const { modelsSlice, plotTitle, yAxisRange } = useSharedChartData();
+
+    const { data, styling } = generateTco3_ReturnSeries(
+        activeData.data,
+        modelsSlice,
+        xAxisRange,
+        yAxisRange,
+        store.getState()
+    );
+    const seriesNames = data.map((series) => series.name);
+    const options = getOptionsReturn(
+        styling,
+        plotTitle,
+        yAxisRange,
+        // TODO: fix typing
+        seriesNames as string[],
+        store.getState()
+    );
+    const uniqueNumber = Date.now(); // forces apexcharts to re-render correctly!
+    const HEIGHT = (window.innerHeight - document.getElementById('NavBar')!.offsetHeight) * 0.975;
+    return (
+        <Chart
+            key={uniqueNumber}
+            options={options}
+            series={data}
+            type={APEXCHARTS_PLOT_TYPE[O3AS_PLOTS.tco3_return]}
+            height={HEIGHT}
+        />
+    );
+};
 
 type GraphProps = {
     reportError: ErrorReporter;
@@ -33,35 +142,8 @@ type GraphProps = {
  * @component
  */
 const Graph: FC<GraphProps> = ({ reportError }) => {
-    const store = useAppStore();
-
-    /**
-     * Maps the plots provided by the API to their apexcharts plot type.
-     *
-     * @constant {Object}
-     * @default { tco3_zm: "line",
-     *         tco3_return: "boxPlot"
-     */
-    const APEXCHARTS_PLOT_TYPE: Record<LEGAL_PLOT_ID, ApexProps['type']> = {
-        tco3_zm: 'line',
-        tco3_return: 'boxPlot',
-    };
-
-    /**
-     * How large the loading spinner should appear.
-     *
-     * @constant {string}
-     * @default '300px'
-     */
-    const HEIGHT_LOADING_SPINNER = '300px';
-
     const plotId = useSelector(selectPlotId);
-    const plotTitle = useSelector(selectPlotTitle);
-    const xAxisRange = useSelector(selectPlotXRange(plotId));
-    const yAxisRange = useSelector(selectPlotYRange);
     const activeData = useSelector((state: AppState) => selectActivePlotData(state, plotId));
-    const modelsSlice = useSelector((state: AppState) => state.models);
-    const refLineVisible = useSelector(selectVisibility);
 
     /**
      * State to keep track of the current dimensions of the Graph
@@ -147,46 +229,15 @@ const Graph: FC<GraphProps> = ({ reportError }) => {
             </Typography>
         );
     } else if (activeData.status === REQUEST_STATE.success) {
-        const { data, styling } = generateSeries({
-            plotId,
-            data: activeData.data,
-            modelsSlice,
-            // TODO: fix typing (assertion because xAxisRange only used for return here)
-            xAxisRange: xAxisRange as RegionBasedXRange,
-            yAxisRange,
-            refLineVisible,
-            state: store.getState(),
-        });
-        const seriesNames = data.map((series) => series.name);
-        const options = getOptions({
-            plotId,
-            styling,
-            plotTitle,
-            // TODO: fix typing (assertion because xAxisRange only used for zm here)
-            xAxisRange: xAxisRange as YearsBasedXRange,
-            yAxisRange,
-            // TODO: fix typing
-            seriesNames: seriesNames as string[],
-            state: store.getState(),
-        });
-        const uniqueNumber = Date.now(); // forces apexcharts to re-render correctly!
-        const HEIGHT =
-            (window.innerHeight - document.getElementById('NavBar')!.offsetHeight) * 0.975;
-        return (
-            <div key={uniqueNumber}>
-                <Chart
-                    key={uniqueNumber}
-                    options={options}
-                    series={data}
-                    type={APEXCHARTS_PLOT_TYPE[plotId]}
-                    height={HEIGHT}
-                />
-            </div>
-        );
+        if (plotId === 'tco3_zm') {
+            return <ZmChart />;
+        } else if (plotId === 'tco3_return') {
+            return <ReturnChart />;
+        }
     }
 
     // this "case" should not happen
     return <Typography>{fatalErrorMessage}</Typography>;
 };
 
-export default memo(Graph, () => true); // prevent graph from re-rendering if sidebar is opened and closed
+export default Graph;

@@ -1,6 +1,6 @@
 import React, { ChangeEventHandler, FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectPlotId, selectPlotXRange, setDisplayXRangeForPlot } from 'store/plotSlice';
+import { selectPlotId, selectPlotXRangeZm, setDisplayXRangeForPlot } from 'store/plotSlice';
 import { Grid, TextField } from '@mui/material';
 import { END_YEAR, START_YEAR } from 'utils/constants';
 import invariant from 'tiny-invariant';
@@ -13,7 +13,7 @@ const XAxisField: FC = () => {
 
     const {
         years: { minX, maxX },
-    } = useSelector(selectPlotXRange(activePlot));
+    } = useSelector(selectPlotXRangeZm);
 
     const [xRange, setXRange] = useState({ minX, maxX });
 

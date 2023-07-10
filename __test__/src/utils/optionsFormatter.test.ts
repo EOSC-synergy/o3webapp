@@ -1,13 +1,11 @@
-import { AppStore, createTestStore } from '../../../src/store';
-import { O3AS_PLOTS, START_YEAR } from '../../../src/utils/constants';
+import { AppStore, createTestStore } from 'store';
+import { O3AS_PLOTS, START_YEAR } from 'utils/constants';
 import {
     colorNameToHex,
     convertToStrokeStyle,
-    generateSeries,
-    getOptions,
     normalizeArray,
     preTransformApiData,
-    default_TCO3_return,
+    DEFAULT_TCO3_RETURN,
     getDefaultYAxisTco3Return,
     getOptimalTickAmount,
     getTickAmountYAxis,
@@ -21,9 +19,12 @@ import {
     IMPLICIT_YEAR_LIST,
     MODEL_LINE_THICKNESS,
     Styling,
-} from '../../../src/utils/optionsFormatter';
-import { GlobalModelState } from '../../../src/store/modelsSlice';
-import { Entry, ProcessedO3Data } from '../../../src/services/API/apiSlice';
+    generateTco3_ZmSeries,
+    generateTco3_ReturnSeries,
+    getOptionsReturn,
+} from 'utils/optionsFormatter';
+import { GlobalModelState } from 'store/modelsSlice';
+import { Entry, ProcessedO3Data } from 'services/API/apiSlice';
 
 describe('testing optionsFormatter functionality', () => {
     const spacedYearArray = [...Array(10).keys()].map((number) => `${START_YEAR + 2 * number}`);
@@ -167,16 +168,7 @@ describe('testing optionsFormatter functionality', () => {
                     data: Array(141).fill(0),
                 } as Entry;
             });
-            const series = generateSeries({
-                plotId: O3AS_PLOTS.tco3_zm,
-                data: data,
-                modelsSlice: modelsSlice,
-                refLineVisible: true,
-                state: store.getState(),
-                // not used for zm but still needed in type
-                xAxisRange: { regions: [] },
-                yAxisRange: { maxY: -1, minY: -1 },
-            });
+            const series = generateTco3_ZmSeries(data, modelsSlice, true, store.getState());
             expect(series).toEqual(dataExpected);
         });
 
@@ -265,17 +257,14 @@ describe('testing optionsFormatter functionality', () => {
                 },
             };
 
-            const series = generateSeries({
-                plotId: O3AS_PLOTS.tco3_return,
-                data: data,
-                modelsSlice: modelsSlice,
-                state: store.getState(),
-                // TODO: region sometimes number sometimes string?
-                xAxisRange: { regions: ['Global'] as unknown as number[] },
-                yAxisRange: { minY: 270, maxY: 330 },
-                // needed for typing
-                refLineVisible: false,
-            });
+            const series = generateTco3_ReturnSeries(
+                data,
+                modelsSlice,
+                // TODO: typing?
+                { regions: ['Global' as unknown as number] },
+                { minY: 270, maxY: 330 },
+                store.getState()
+            );
             expect(series).toEqual(dataExpected);
         });
     });
@@ -288,7 +277,7 @@ describe('testing optionsFormatter functionality', () => {
         });
 
         it('returns the correct options formatted correctly for tco3_return', () => {
-            const expected = JSON.parse(JSON.stringify(default_TCO3_return));
+            const expected = JSON.parse(JSON.stringify(DEFAULT_TCO3_RETURN));
             const yaxis = [
                 getDefaultYAxisTco3Return(undefined, 0, 10, true, false, 3, 2),
                 getDefaultYAxisTco3Return(undefined, 0, 10, true, true, -3, 2),
@@ -298,17 +287,14 @@ describe('testing optionsFormatter functionality', () => {
 
             expected.yaxis.push(...yaxis);
 
-            const xAxisRange = { years: { minX: 0, maxX: 10 } };
             const yAxisRange = { minY: 0, maxY: 10 };
-            const result = getOptions({
-                plotId: O3AS_PLOTS.tco3_return,
-                styling: {} as Styling,
-                plotTitle: 'title',
-                xAxisRange,
+            const result = getOptionsReturn(
+                {} as Styling,
+                'title',
                 yAxisRange,
-                seriesNames: [],
-                state: store.getState(),
-            });
+                [],
+                store.getState()
+            );
             expect(JSON.stringify(result)).toEqual(JSON.stringify(expected)); // stringify results to not mess with anonymous functions
         });
     });
