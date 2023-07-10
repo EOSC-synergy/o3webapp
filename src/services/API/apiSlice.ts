@@ -5,7 +5,7 @@ import { END_YEAR, O3AS_PLOTS, START_YEAR, USER_REGION } from 'utils/constants';
 import { setDisplayXRangeForPlot, setDisplayYRangeForPlot } from 'store/plotSlice';
 import { AppDispatch, AppState, AppStore } from 'store';
 import { O3Data } from './generated-client';
-import { ModelId } from '../../store/modelsSlice';
+import { ModelId } from 'store/modelsSlice';
 
 export const REQUEST_STATE = {
     idle: 'idle',
@@ -212,12 +212,16 @@ export const updateDataAndDisplaySuggestions = (
             dispatch(
                 setDisplayYRangeForPlot({
                     plotId,
-                    minY: Math.floor(minY / 10) * 10,
-                    maxY: Math.ceil(maxY / 10) * 10,
+                    displayYRange: {
+                        minY: Math.floor(minY / 10) * 10,
+                        maxY: Math.ceil(maxY / 10) * 10,
+                    },
                 })
             );
             if (plotId === O3AS_PLOTS.tco3_zm) {
-                dispatch(setDisplayXRangeForPlot({ plotId, years: { minX, maxX } }));
+                dispatch(
+                    setDisplayXRangeForPlot({ plotId, displayXRange: { years: { minX, maxX } } })
+                );
             }
         }
     };
@@ -294,12 +298,19 @@ export const fetchPlotData = (plotId: LEGAL_PLOT_ID, models: ModelId[], suggest 
                     dispatch(
                         setDisplayYRangeForPlot({
                             plotId,
-                            minY: Math.floor(minY / 10) * 10,
-                            maxY: Math.ceil(maxY / 10) * 10,
+                            displayYRange: {
+                                minY: Math.floor(minY / 10) * 10,
+                                maxY: Math.ceil(maxY / 10) * 10,
+                            },
                         })
                     );
                     if (plotId === O3AS_PLOTS.tco3_zm) {
-                        dispatch(setDisplayXRangeForPlot({ plotId, years: { minX, maxX } }));
+                        dispatch(
+                            setDisplayXRangeForPlot({
+                                plotId,
+                                displayXRange: { years: { minX, maxX } },
+                            })
+                        );
                     }
                 }
                 return Promise.resolve(); // request is already satisfied

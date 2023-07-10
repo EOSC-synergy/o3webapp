@@ -11,10 +11,16 @@ describe('test functionality redux for tco3_zm', () => {
     beforeEach(() => {
         store = createTestStore();
         store.dispatch(
-            setDisplayYRangeForPlot({ plotId: O3AS_PLOTS.tco3_zm, minY: 270, maxY: 330 })
+            setDisplayYRangeForPlot({
+                plotId: O3AS_PLOTS.tco3_zm,
+                displayYRange: { minY: 270, maxY: 330 },
+            })
         );
         store.dispatch(
-            setDisplayYRangeForPlot({ plotId: O3AS_PLOTS.tco3_return, minY: 2000, maxY: 2100 })
+            setDisplayYRangeForPlot({
+                plotId: O3AS_PLOTS.tco3_return,
+                displayYRange: { minY: 2000, maxY: 2100 },
+            })
         );
     });
 
@@ -61,10 +67,16 @@ describe('test functionality redux for tco3_return', () => {
         store = createTestStore();
         store.dispatch(setActivePlotId({ plotId: O3AS_PLOTS.tco3_return }));
         store.dispatch(
-            setDisplayYRangeForPlot({ plotId: O3AS_PLOTS.tco3_zm, minY: 270, maxY: 330 })
+            setDisplayYRangeForPlot({
+                plotId: O3AS_PLOTS.tco3_zm,
+                displayYRange: { minY: 270, maxY: 330 },
+            })
         );
         store.dispatch(
-            setDisplayYRangeForPlot({ plotId: O3AS_PLOTS.tco3_return, minY: 2000, maxY: 2100 })
+            setDisplayYRangeForPlot({
+                plotId: O3AS_PLOTS.tco3_return,
+                displayYRange: { minY: 2000, maxY: 2100 },
+            })
         );
     });
 
@@ -112,10 +124,16 @@ describe('test error handling functionality', () => {
     beforeEach(() => {
         store = createTestStore();
         store.dispatch(
-            setDisplayYRangeForPlot({ plotId: O3AS_PLOTS.tco3_zm, minY: 270, maxY: 330 })
+            setDisplayYRangeForPlot({
+                plotId: O3AS_PLOTS.tco3_zm,
+                displayYRange: { minY: 270, maxY: 330 },
+            })
         );
         store.dispatch(
-            setDisplayYRangeForPlot({ plotId: O3AS_PLOTS.tco3_return, minY: 2000, maxY: 2100 })
+            setDisplayYRangeForPlot({
+                plotId: O3AS_PLOTS.tco3_return,
+                displayYRange: { minY: 2000, maxY: 2100 },
+            })
         );
     });
 

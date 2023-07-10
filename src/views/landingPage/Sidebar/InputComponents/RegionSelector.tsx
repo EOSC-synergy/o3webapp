@@ -1,9 +1,15 @@
 import React, { FC, Fragment } from 'react';
 import { Box, Checkbox, FormControlLabel, Grid, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { type RegionBasedXRange, selectPlotXRange, setDisplayXRange } from 'store/plotSlice';
+import {
+    type RegionBasedXRange,
+    selectPlotId,
+    selectPlotXRange,
+    setDisplayXRangeForPlot,
+} from 'store/plotSlice';
 import { ALL_REGIONS_ORDERED } from 'utils/constants';
 import CustomLatitudeSelector from './LatitudeBandSelector/CustomLatitudeSelector';
+import invariant from 'tiny-invariant';
 
 /**
  * Enables the user to select / deselect regions as well as entering a custom region.
@@ -16,25 +22,16 @@ const RegionSelector: FC = () => {
     /** A dispatch function to dispatch actions to the redux store. */
     const dispatch = useDispatch();
 
-    /**
-     * An array containing the selected regions.
-     *
-     * Examples: If the first region is selected the array would have the following form: [0] If the
-     * second and fifth region are selected the array would have the following form: [1, 4]
-     *
-     * @constant {Array}
-     * @see {@link selectPlotXRange}
-     */
-    const xRangeRegions = useSelector(selectPlotXRange);
+    const activePlot = useSelector(selectPlotId);
+    invariant(
+        activePlot === 'tco3_return',
+        'RegionSelector is only available for tco3_return plot'
+    );
 
-    /**
-     * Handles the change if a region is clicked (selected/deselected). *
-     *
-     * @function
-     * @param {number} regionIdx The index of the region that was clicked.
-     */
+    const xRangeRegions = useSelector(selectPlotXRange(activePlot));
+
     const handleRegionChecked = (regionIdx: number) => {
-        let regionCpy = [...(xRangeRegions as RegionBasedXRange).regions];
+        let regionCpy = [...xRangeRegions.regions];
         if (regionCpy.includes(regionIdx)) {
             regionCpy = regionCpy.filter((m) => m !== regionIdx);
         } else {
@@ -42,16 +39,12 @@ const RegionSelector: FC = () => {
         }
         // Dispatch region checked
         regionCpy.sort();
-        dispatch(setDisplayXRange({ regions: regionCpy })); // TODO
-    };
-
-    /**
-     * Gets default regions that are available in the return recovery plot.
-     *
-     * @function
-     */
-    const getDefaultRegions = () => {
-        return ALL_REGIONS_ORDERED;
+        dispatch(
+            setDisplayXRangeForPlot({
+                plotId: activePlot,
+                displayXRange: { regions: regionCpy },
+            })
+        );
     };
 
     return (
@@ -66,11 +59,11 @@ const RegionSelector: FC = () => {
                     flexDirection: 'column',
                 }}
             >
-                {getDefaultRegions().map((region, idx) => (
+                {ALL_REGIONS_ORDERED.map((region, idx) => (
                     <Fragment key={idx}>
                         <FormControlLabel
                             label={
-                                idx !== getDefaultRegions().length - 1 ? (
+                                idx !== ALL_REGIONS_ORDERED.length - 1 ? (
                                     region
                                 ) : (
                                     <CustomLatitudeSelector />

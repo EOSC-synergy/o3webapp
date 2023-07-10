@@ -2,12 +2,12 @@ import reducer, {
     setActivePlotId,
     setTitle,
     setLocation,
-    setDisplayXRange,
     setDisplayYRange,
     setMonths,
-    initialState,
     PlotState,
+    setDisplayXRangeForPlot,
 } from 'store/plotSlice';
+import { O3AS_PLOTS } from 'utils/constants';
 
 /*test('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual(
@@ -117,7 +117,10 @@ test('should update the display x range of the current active plot', () => {
     expect(
         reducer(
             previousState, // use initial state
-            setDisplayXRange({ years: { minX: 200, maxX: 400 } })
+            setDisplayXRangeForPlot({
+                plotId: O3AS_PLOTS.tco3_zm,
+                displayXRange: { years: { minX: 200, maxX: 400 } },
+            })
         )
     ).toEqual(expected);
 });

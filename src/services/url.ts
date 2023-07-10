@@ -8,7 +8,7 @@ import {
 } from 'utils/constants';
 import {
     setActivePlotId,
-    setDisplayXRange,
+    setDisplayXRangeForPlot,
     setDisplayYRange,
     setLocation,
     setMonths,
@@ -134,9 +134,7 @@ export function updateStoreWithQuery(
         const latMax = parseInt(query.lat_max);
         dispatch(setLocation({ minLat: latMin, maxLat: latMax }));
 
-        const months = query.months.split(',').map((item) => {
-            return parseInt(item);
-        });
+        const months = query.months.split(',').map((item) => parseInt(item));
         dispatch(setMonths({ months }));
 
         const refModel = state.api.models.data[parseInt(query.ref_meas)];
@@ -148,40 +146,40 @@ export function updateStoreWithQuery(
         const refVisible = Boolean(parseInt(query.ref_visible));
         dispatch(setVisibility({ visible: refVisible }));
 
-        const xZM = query.x_zm.split('-').map((item) => {
-            return parseInt(item);
-        });
-        dispatch(setDisplayXRange({ years: { minX: xZM[0], maxX: xZM[1] } }));
+        const plotId = query.plot as O3AS_PLOTS;
 
-        const yZM = query.y_zm.split('-').map((item) => {
-            return parseInt(item);
-        });
+        const xZM = query.x_zm.split('-').map((item) => parseInt(item));
+        dispatch(
+            setDisplayXRangeForPlot({
+                plotId: O3AS_PLOTS.tco3_zm,
+                displayXRange: { years: { minX: xZM[0], maxX: xZM[1] } },
+            })
+        );
+        dispatch(
+            setDisplayXRangeForPlot({
+                plotId: O3AS_PLOTS.tco3_return,
+                displayXRange: {
+                    regions: query.x_return.split(',').map((item) => parseInt(item)),
+                },
+            })
+        );
+
+        const yZM = query.y_zm.split('-').map((item) => parseInt(item));
         dispatch(setDisplayYRange({ minY: yZM[0], maxY: yZM[1] }));
 
         query.title_zm && dispatch(setTitle({ title: query.title_zm.split('"')[1] }));
 
         dispatch(setActivePlotId({ plotId: O3AS_PLOTS.tco3_return }));
 
-        dispatch(
-            setDisplayXRange({
-                regions: query.x_return.split(',').map((item) => {
-                    return parseInt(item);
-                }),
-            })
-        );
-
-        const yReturn = query.y_return.split('-').map((item) => {
-            return parseInt(item);
-        });
+        const yReturn = query.y_return.split('-').map((item) => parseInt(item));
         dispatch(setDisplayYRange({ minY: yReturn[0], maxY: yReturn[1] }));
 
         dispatch(setTitle({ title: query.title_return.split('"')[1] }));
 
-        const plotId = query.plot as O3AS_PLOTS;
         dispatch(setActivePlotId({ plotId: plotId }));
 
         const groupStrings = [];
-        const groupIds = [...Object.keys(query)]
+        const groupIds = Object.keys(query)
             .filter((x) => x.includes('group'))
             .map((x) => parseInt(x.replace('group', '')));
         for (const id of groupIds) {
@@ -194,24 +192,18 @@ export function updateStoreWithQuery(
                 .split('"')[2]
                 .split(',')[1]
                 .split('')
-                .map((elem) => {
-                    return Boolean(parseInt(elem));
-                });
+                .map((elem) => Boolean(parseInt(elem)));
             const models = elem
                 .split('"')[2]
                 .split(',')
                 .slice(2, -1)
-                .map((e) => {
-                    return state.api.models.data[parseInt(e)];
-                });
+                .map((e) => state.api.models.data[parseInt(e)]);
             const modelSettings = elem.split('"')[2].split(',').slice(-1)[0];
             const binary = parseBigInt(modelSettings, 36, 2);
             const modelSettings2 = binary
                 .padStart(models.length * dataPerModel, '0')
                 .split('')
-                .map((e) => {
-                    return Boolean(parseInt(e));
-                });
+                .map((e) => Boolean(parseInt(e)));
             return {
                 name: name,
                 visibilities: visibilities,

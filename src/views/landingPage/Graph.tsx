@@ -57,7 +57,7 @@ const Graph: FC<GraphProps> = ({ reportError }) => {
 
     const plotId = useSelector(selectPlotId);
     const plotTitle = useSelector(selectPlotTitle);
-    const xAxisRange = useSelector(selectPlotXRange);
+    const xAxisRange = useSelector(selectPlotXRange(plotId));
     const yAxisRange = useSelector(selectPlotYRange);
     const activeData = useSelector((state: AppState) => selectActivePlotData(state, plotId));
     const modelsSlice = useSelector((state: AppState) => state.models);

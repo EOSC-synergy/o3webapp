@@ -31,30 +31,44 @@ export type YRange = {
     maxY: number;
 };
 
+export type PlotSpecific = {
+    // initial settings for tco3_zm
+    [O3AS_PLOTS.tco3_zm]: {
+        // the title shown in the apexcharts generated chart
+        title: string;
+        displayXRange: YearsBasedXRange;
+        // gets adjusted automatically on each request
+        displayYRange: YRange;
+    };
+    // initial settings for tco3_return
+    [O3AS_PLOTS.tco3_return]: {
+        title: string;
+        displayXRange: RegionBasedXRange;
+        // gets adjusted automatically on each request
+        displayYRange: YRange;
+        userRegionName?: string;
+    };
+};
+
+type PlotSpecifics<
+    Id extends O3AS_PLOTS,
+    P extends keyof PlotSpecific[O3AS_PLOTS]
+> = Id extends O3AS_PLOTS
+    ? {
+          plotId: Id;
+      } & {
+          [key in P]: PlotSpecific[Id][key];
+      }
+    : never;
+type PickPlotSpecific<P extends keyof PlotSpecific[O3AS_PLOTS]> = PlotSpecifics<O3AS_PLOTS, P>;
+
 export type PlotState = {
     plotId: O3AS_PLOTS;
     generalSettings: {
         location: Latitude;
         months: number[];
     };
-    plotSpecificSettings: {
-        // initial settings for tco3_zm
-        [O3AS_PLOTS.tco3_zm]: {
-            // the title shown in the apexcharts generated chart
-            title: string;
-            displayXRange: YearsBasedXRange;
-            // gets adjusted automatically on each request
-            displayYRange: YRange;
-        };
-        // initial settings for tco3_return
-        [O3AS_PLOTS.tco3_return]: {
-            title: string;
-            displayXRange: RegionBasedXRange;
-            // gets adjusted automatically on each request
-            displayYRange: YRange;
-            userRegionName?: string;
-        };
-    };
+    plotSpecificSettings: PlotSpecific;
 };
 
 export type GlobalPlotState = {
@@ -131,20 +145,9 @@ const plotSlice = createSlice({
             { payload: { plotId } }: Payload<{ plotId: O3AS_PLOTS }>
         ) {
             state.plotId = plotId;
+            console.log('active plot', plotId);
         },
 
-        /**
-         * This reducer accepts an action object returned from setTitle() and calculates the new
-         * state based on the action and the action data given in action.payload.
-         *
-         * In this case the current plot title is set to the given string.
-         *
-         * @example
-         *     dispatch(setTitle({ title: 'OCTS Plot Title' }));
-         *
-         * @param state The current store state of: state/plot
-         * @param title A string that contains the new plot title
-         */
         setTitle(state: PlotState, { payload: { title } }: Payload<{ title: string }>) {
             state.plotSpecificSettings[state.plotId].title = title;
         },
@@ -163,41 +166,6 @@ const plotSlice = createSlice({
          */
         setLocation(state: PlotState, { payload }: Payload<Latitude>) {
             state.generalSettings.location = payload;
-        },
-
-        //TODO: update following JSDoc
-        /**
-         * This reducer accepts an action object returned from setDisplayXRange() and calculates the
-         * new state based on the action and the action data given in action.payload.
-         *
-         * For the tco3_zm the current displayXRange is updated with the given min and max x values,
-         * i.e. you have to pass {years: {minX: 1960, maxX: 2100}} as payload.
-         *
-         * For the tco3_return the current displayXRange is updated with the given regions values,
-         * i.e. you have to pass {regions: [0, 1, 2]} as payload.
-         *
-         * @example
-         *     dispatch(setDisplayXRange({ years: { minX: 1960, maxX: 2100 } }));
-         *
-         * @example
-         *     dispatch(setDisplayXRange({ regions: [0, 1, 2] }));
-         *
-         * @param state The current store state of: state/plot
-         * @param payload The payload is an object containing the given data
-         */
-        setDisplayXRange(state: PlotState, { payload }: { payload: XRange }) {
-            const currentPlotId = state.plotId;
-            if (currentPlotId === O3AS_PLOTS.tco3_zm) {
-                state.plotSpecificSettings[currentPlotId].displayXRange =
-                    payload as unknown as YearsBasedXRange;
-            } else if (currentPlotId === O3AS_PLOTS.tco3_return) {
-                state.plotSpecificSettings[currentPlotId].displayXRange =
-                    payload as unknown as RegionBasedXRange;
-            } else {
-                throw new Error(
-                    `Illegal internal state, a non valid plot is current plot: "${currentPlotId}"`
-                );
-            }
         },
 
         /**
@@ -225,23 +193,18 @@ const plotSlice = createSlice({
          */
         setDisplayXRangeForPlot(
             state: PlotState,
-            { payload }: { payload: { plotId: O3AS_PLOTS } & XRange }
+            { payload }: { payload: PickPlotSpecific<'displayXRange'> }
         ) {
-            const { plotId } = payload;
-            if (plotId === O3AS_PLOTS.tco3_zm) {
+            if (payload.plotId === 'tco3_zm') {
                 const {
                     years: { minX, maxX },
-                } = payload as unknown as YearsBasedXRange;
-                const xRange = state.plotSpecificSettings[plotId].displayXRange;
+                } = payload.displayXRange;
+                const xRange = state.plotSpecificSettings[payload.plotId].displayXRange;
                 xRange.years.minX = minX;
                 xRange.years.maxX = maxX;
-            } else if (plotId === O3AS_PLOTS.tco3_return) {
-                const { regions } = payload as unknown as RegionBasedXRange;
-                state.plotSpecificSettings[plotId].displayXRange.regions = regions;
-            } else {
-                throw new Error(
-                    `Illegal internal state, a non valid plot is chosen plot: "${plotId}"`
-                );
+            } else if (payload.plotId === O3AS_PLOTS.tco3_return) {
+                const { regions } = payload.displayXRange;
+                state.plotSpecificSettings[payload.plotId].displayXRange.regions = regions;
             }
         },
 
@@ -292,16 +255,17 @@ const plotSlice = createSlice({
          */
         setDisplayYRangeForPlot(
             state: PlotState,
-            { payload }: { payload: YRange & { plotId: O3AS_PLOTS } }
+            { payload }: { payload: PickPlotSpecific<'displayYRange'> }
         ) {
-            const { plotId, minY, maxY } = payload;
+            const {
+                plotId,
+                displayYRange: { minY, maxY },
+            } = payload;
             if (minY === null || maxY === null) {
                 return;
             }
             if (!Number.isFinite(minY) || !Number.isFinite(maxY)) {
-                {
-                    return;
-                }
+                return;
             }
             if (isNaN(minY) || isNaN(maxY)) {
                 return;
@@ -347,7 +311,6 @@ export const {
     setActivePlotId,
     setTitle,
     setLocation,
-    setDisplayXRange,
     setDisplayXRangeForPlot,
     setDisplayYRange,
     setDisplayYRangeForPlot,
@@ -398,11 +361,13 @@ export const selectPlotLocation = (state: GlobalPlotState) => state.plot.general
  *
  * @category PlotSlice
  * @function
- * @param state The global redux state
+ * @param plotId Plot type (needed for typing)
  * @returns Holds the current x range that includes minX and maxX
  */
-export const selectPlotXRange = (state: GlobalPlotState) =>
-    state.plot.plotSpecificSettings[state.plot.plotId].displayXRange;
+export const selectPlotXRange =
+    <T extends O3AS_PLOTS>(plotId: T) =>
+    (state: GlobalPlotState): PlotSpecific[T]['displayXRange'] =>
+        state.plot.plotSpecificSettings[plotId].displayXRange;
 
 /**
  * This selector allows components to select the current y range from the store.
