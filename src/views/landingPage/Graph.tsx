@@ -46,13 +46,13 @@ const useSharedChartData = () => {
     };
 };
 
+const zmPlotSelector = (state: AppState) => selectActivePlotData(state, O3AS_PLOTS.tco3_zm);
+
 const ZmChart: FC = () => {
     const store = useAppStore();
 
     const xAxisRange = useSelector(selectPlotXRangeZm);
-    const activeData = useSelector((state: AppState) =>
-        selectActivePlotData(state, O3AS_PLOTS.tco3_zm)
-    );
+    const activeData = useSelector(zmPlotSelector);
     invariant(
         activeData.status === REQUEST_STATE.success,
         'can only render chart with successful data fetch'
@@ -89,13 +89,12 @@ const ZmChart: FC = () => {
     );
 };
 
+const returnPlotSelector = (state: AppState) => selectActivePlotData(state, O3AS_PLOTS.tco3_return);
 const ReturnChart: FC = () => {
     const store = useAppStore();
 
     const xAxisRange = useSelector(selectPlotXRangeReturn);
-    const activeData = useSelector((state: AppState) =>
-        selectActivePlotData(state, O3AS_PLOTS.tco3_return)
-    );
+    const activeData = useSelector(returnPlotSelector);
     invariant(
         activeData.status === REQUEST_STATE.success,
         'can only render chart with successful data fetch'
@@ -145,17 +144,6 @@ const Graph: FC<GraphProps> = ({ reportError }) => {
     const plotId = useSelector(selectPlotId);
     const activeData = useSelector((state: AppState) => selectActivePlotData(state, plotId));
 
-    /**
-     * State to keep track of the current dimensions of the Graph
-     *
-     * @constant {Array}
-     * @default [window.innerHeight, window.innerWidth]
-     */
-    const [dimensions, setDimensions] = useState({
-        height: 1280,
-        width: 720,
-    });
-
     const fatalErrorMessage = "CRITICAL: an internal error occurred that shouldn't happen!";
     const loadingMessage = 'Loading Data...';
 
@@ -168,19 +156,6 @@ const Graph: FC<GraphProps> = ({ reportError }) => {
             reportError(activeData.error);
         }
     }, [activeData, reportError]);
-
-    useEffect(() => {
-        const debouncedHandleResize = debounce(function handleResize() {
-            setDimensions({
-                height: window.innerHeight,
-                width: window.innerWidth,
-            });
-        }, 1000);
-
-        window.addEventListener('resize', debouncedHandleResize);
-
-        return () => window.removeEventListener('resize', debouncedHandleResize);
-    }, []);
 
     if (!(plotId in O3AS_PLOTS)) {
         const style = {

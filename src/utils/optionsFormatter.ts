@@ -606,11 +606,45 @@ type ZmSeriesData = {
 }[];
 export type Series<SeriesData extends ApexAxisChartSeries> = {
     data: SeriesData;
-
     styling: Styling;
 };
 
-const NO_LINESTYLE = 0;
+type ZmSeries = Series<ZmSeriesData>;
+const buildZmData = <T>(data: T[]): [number, T][] => data.map((y, x) => [START_YEAR + x, y]);
+
+const zmRefLine = (data: ProcessedO3Data): ZmSeries => {
+    const zmRefData = data.reference_value.data as ZmData;
+    return {
+        data: [
+            {
+                name: data.reference_value.plotStyle?.label,
+                data: buildZmData(zmRefData),
+            },
+        ],
+        styling: {
+            colors: [colorNameToHex(data.reference_value.plotStyle?.color ?? '')],
+            dashArray: [convertToStrokeStyle(data.reference_value.plotStyle?.linestyle ?? '')],
+            width: [MODEL_LINE_THICKNESS],
+        },
+    };
+};
+
+const zmModelSeries = (modelData: Entry, name: string): ZmSeries => {
+    const zmData = modelData.data as ZmData;
+    return {
+        data: [
+            {
+                name: name,
+                data: buildZmData(zmData),
+            },
+        ],
+        styling: {
+            colors: [colorNameToHex(modelData.plotStyle?.color ?? '')],
+            dashArray: [convertToStrokeStyle(modelData.plotStyle?.linestyle ?? '')], // default line thickness
+            width: [MODEL_LINE_THICKNESS],
+        },
+    };
+};
 
 /**
  * This method generates the data series for tco3_zm for all models that should be displayed
@@ -629,34 +663,11 @@ export function generateTco3_ZmSeries(
     refLineVisible: boolean,
     state: AppState
 ): Series<ZmSeriesData> {
-    const series: Series<ZmSeriesData> = {
-        data: [],
-        styling: {
-            colors: [],
-            width: [],
-            dashArray: [],
-            points: [],
-        },
-    };
-    if (refLineVisible) {
-        // TODO: see Entry["data"] in apiSlice.ts
-        const zmRefData = data.reference_value.data as number[];
-        series.data.push({
-            name: data.reference_value.plotStyle?.label,
+    const series: ZmSeries[] = [];
 
-            data: zmRefData.map((e, idx) => [START_YEAR + idx, e]),
-        });
-        // TODO: better way to handle no color?
-        series.styling.colors.push(
-            data.reference_value.plotStyle?.color
-                ? colorNameToHex(data.reference_value.plotStyle.color)
-                : '#000000'
-        );
-        // TODO: better way to handle no line style?
-        series.styling.dashArray.push(
-            convertToStrokeStyle(data.reference_value.plotStyle?.linestyle ?? '') || NO_LINESTYLE
-        );
-        series.styling.width.push(MODEL_LINE_THICKNESS);
+    // ref line
+    if (refLineVisible) {
+        series.push(zmRefLine(data));
     }
 
     // iterate over model groups  // don't remove 'id'
@@ -665,29 +676,19 @@ export function generateTco3_ZmSeries(
         if (!groupData.isVisible) {
             continue;
         }
-        for (const [model, modelInfo] of Object.entries(groupData.models)) {
-            // skip hidden models
+        for (const [modelName, modelInfo] of Object.entries(groupData.models)) {
+            // TODO: always generate data, but only once to avoid unnecessary calculations
             if (!modelInfo.isVisible) {
                 continue;
             }
-            // retrieve data (api)
-            const modelData = data[model];
+
+            const modelData = data[modelName];
             // skip model if it is not available
-            if (typeof modelData === 'undefined') {
+            if (modelData === undefined) {
                 continue;
             }
             // TODO: see Entry["data"] in apiSlice.ts
-            const zmData = modelData.data as number[];
-            series.data.push({
-                name: model,
-                data: zmData.map((e, idx) => [START_YEAR + idx, e]),
-            });
-
-            series.styling.colors.push(colorNameToHex(modelData.plotStyle?.color ?? ''));
-            series.styling.dashArray.push(
-                convertToStrokeStyle(modelData.plotStyle?.linestyle ?? '')
-            ); // default line thickness
-            series.styling.width.push(MODEL_LINE_THICKNESS);
+            series.push(zmModelSeries(modelData, modelName));
         }
     }
 
@@ -699,29 +700,19 @@ export function generateTco3_ZmSeries(
         generateSingleTco3ZmSeries,
         state
     );
+    series.push(svSeries);
 
-    return merge(combineSeries<ZmSeriesData>(series, svSeries), {
+    return merge(series.reduce(combineSeries), {
         styling: {
             points: refLineVisible ? calcRecoveryPoints(state, data.reference_value, svSeries) : [],
         },
     });
 }
 
-/**
- * This plugin-method is used to specify how series for tco3_zm should be build inside the
- * buildStatisticalValues-function.
- *
- * @function
- * @param name Of the series
- * @param svData Array of plaint numbers
- * @returns A series matching the tco3_zm style for apexcharts.
- */
-function generateSingleTco3ZmSeries(name: string, svData: (number | null)[]) {
-    return {
-        name: name,
-        data: svData.map((e, idx) => [START_YEAR + idx, e] satisfies [number, number | null]),
-    };
-}
+const generateSingleTco3ZmSeries = (name: string, svData: (number | null)[]) => ({
+    name: name,
+    data: buildZmData(svData),
+});
 
 /**
  * This plug-in method is used to specify how the data should be parsed and arranged so that the
@@ -857,7 +848,6 @@ export function generateTco3_ReturnSeries(
     const svSeries = buildStatisticalSeries<ReturnSeriesRest>(
         data,
         modelsSlice,
-        //yAxisRange,
         buildSvMatrixTco3Return,
         generateSingleTco3ReturnSeries,
         state,
@@ -903,18 +893,16 @@ function generateSingleTco3ReturnSeries(
     state: AppState,
     regions: string[]
 ) {
-    const transformedData = regions.map((region, index) => {
-        if (index !== regions.length - 1) {
-            return {
-                x: region,
-                y: svData[index],
-            };
-        } else {
-            return {
-                x: formatLatitude(state.plot.generalSettings.location),
-                y: svData[index],
-            };
-        }
+    const transformedData = regions
+        // skip last
+        .slice(0, -1)
+        .map((region, index) => ({
+            x: region,
+            y: svData[index],
+        }));
+    transformedData.push({
+        x: formatLatitude(state.plot.generalSettings.location),
+        y: svData[regions.length - 1],
     });
 
     return {
@@ -1032,23 +1020,17 @@ function buildStatisticalSeries<SeriesDataT extends ApexAxisChartSeries>(
     state: AppState,
     regions: string[] = []
 ): Series<SeriesDataT> {
-    const svSeries: Series<SeriesDataT> = {
-        data: [] as unknown as SeriesDataT,
-        styling: {
-            colors: [],
-            width: [],
-            dashArray: [],
-        },
-    };
+    const svSeries: Series<SeriesDataT>[] = [];
 
     const modelGroups = modelsSlice.modelGroups;
     for (const groupData of Object.values(modelGroups)) {
+        const modelList = Object.keys(groupData.models);
+        const matrix = buildMatrix(modelList, data, regions);
         const svHolder = calculateSvForModels(
             Object.keys(groupData.models),
             data,
             groupData,
-            buildMatrix,
-            regions
+            matrix
         );
 
         for (const [sv, svData] of Object.entries(svHolder) as [
@@ -1069,23 +1051,25 @@ function buildStatisticalSeries<SeriesDataT extends ApexAxisChartSeries>(
             ) {
                 continue;
             }
-            svSeries.data.push(
-                generateSingleSvSeries(
-                    `${SV_DISPLAY_NAME[sv]} (${groupData.name})`,
-                    svData,
-                    state,
-                    regions
-                )
-            );
-            if (!Object.hasOwn(SV_COLORING, sv) || SV_COLORING[sv] === undefined) {
-                throw new Error(`${sv} does not have a color`);
-            }
-            svSeries.styling.colors.push(SV_COLORING[sv]);
-            svSeries.styling.width.push(STATISTICAL_VALUE_LINE_THICKNESS);
-            svSeries.styling.dashArray.push(SV_DASHING[sv]);
+
+            svSeries.push({
+                data: [
+                    generateSingleSvSeries(
+                        `${SV_DISPLAY_NAME[sv]} (${groupData.name})`,
+                        svData,
+                        state,
+                        regions
+                    ),
+                ] as SeriesDataT,
+                styling: {
+                    colors: [SV_COLORING[sv]],
+                    width: [STATISTICAL_VALUE_LINE_THICKNESS],
+                    dashArray: [SV_DASHING[sv]],
+                },
+            });
         }
     }
-    return svSeries;
+    return svSeries.reduce(combineSeries);
 }
 
 /**
@@ -1096,22 +1080,16 @@ function buildStatisticalSeries<SeriesDataT extends ApexAxisChartSeries>(
  * @param modelList A list of all models of a specific model group.
  * @param data The raw data from the api for the current options
  * @param groupData The modelsSlice data narrowed down for a specific model group
- * @param buildMatrix Either buildSvMatrixTco3Zm | buildSvMatrixTco3Return, specifies how the data
- *   should be transformed
- * @param regions
+ * @param matrix
  * @returns An object containing the calculated values for the statistical values
  */
-function calculateSvForModels(
+const calculateSvForModels = (
     modelList: string[],
     data: ProcessedO3Data,
     groupData: ModelGroup,
-    buildMatrix: typeof buildSvMatrixTco3Return | typeof buildSvMatrixTco3Zm,
-    regions: string[]
-): Record<PROCESSED_SV, (number | null)[]> {
+    matrix: number[][]
+): Record<PROCESSED_SV, (number | null)[]> => {
     // pass group data
-    // only mean at beginning
-
-    const matrix = buildMatrix(modelList, data, regions); // function supplied by caller
 
     const svHolder: Record<PROCESSED_SV | typeof stdMean, (number | null)[]> = {
         lowerPercentile: [],
@@ -1163,7 +1141,7 @@ function calculateSvForModels(
     // @ts-expect-error TODO: intentionally delete this, reflect this in type somehow (stdMean should not be returned because Object.entries gets called)
     delete svHolder[stdMean];
     return svHolder;
-}
+};
 
 // API FORMATTING:
 
@@ -1350,7 +1328,7 @@ export const COLORS = {
     greenyellow: '#adff2f',
     honeydew: '#f0fff0',
     hotpink: '#ff69b4',
-    'indianred ': '#cd5c5c',
+    indianred: '#cd5c5c',
     indigo: '#4b0082',
     ivory: '#fffff0',
     khaki: '#f0e68c',
@@ -1444,7 +1422,7 @@ export const COLORS = {
  * @param color The name of the color as a string
  * @returns The hex code corresponding to the given color name
  */
-export const colorNameToHex = (color: string) => {
+export const colorNameToHex = (color: keyof typeof COLORS | string) => {
     const lowercase = color.toLowerCase();
     return lowercase in COLORS ? COLORS[lowercase as keyof typeof COLORS] : COLORS.black;
 };
@@ -1460,7 +1438,7 @@ export const STYLES = {
  * @param apiStyle The stroke style specified by the API
  * @returns The stroke style for the apexcharts library
  */
-export const convertToStrokeStyle = (apiStyle: string) => {
+export const convertToStrokeStyle = (apiStyle: keyof typeof STYLES | string) => {
     const lowercase = apiStyle.toLowerCase();
     return lowercase in STYLES ? STYLES[lowercase as keyof typeof STYLES] : STYLES.solid;
 };
@@ -1619,9 +1597,8 @@ export function roundUpToMultipleOfTen(max: number) {
  * @param max The maximum allowed value
  * @returns The value or null if the value is outside the allowed range
  */
-export function filterOutOfRange(value: number, min: number, max: number) {
-    return min <= value && value <= max ? value : null;
-}
+export const filterOutOfRange = (value: number, min: number, max: number) =>
+    min <= value && value <= max ? value : null;
 
 /**
  * Function to format the labels on the y-axis nicely. It hides all labels that are not a multiple
