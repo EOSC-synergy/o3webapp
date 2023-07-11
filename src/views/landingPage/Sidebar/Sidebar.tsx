@@ -8,21 +8,14 @@ import DownloadModal from './DownloadModal';
 import { selectPlotId } from 'store/plotSlice';
 import { useSelector } from 'react-redux';
 import PlotTypeSelector from './InputComponents/PlotTypeSelector';
-import { Button, Divider, Drawer, SwipeableDrawer, Typography } from '@mui/material';
+import { Button, Divider, SwipeableDrawer, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import { BACKGROUND_BASE_COLOR, O3AS_PLOTS } from 'utils/constants';
 import { type ErrorReporter } from 'utils/reportError';
 
-/**
- * The default width of the sidebar / drawer in pixels.
- *
- * @memberof Sidebar
- * @constant {int}
- * @default 400
- */
-const DRAWER_WIDTH = 400;
+export const DRAWER_WIDTH = 400;
 
 /**
  * Defining a drawer-header section at the beginning of a drawer
@@ -56,71 +49,27 @@ type SidebarProps = {
  * @component
  */
 const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, reportError, onOpen }) => {
-    /**
-     * The theme used in this sideBar provided by Material UI's
-     * [createTheme]{@link https://mui.com/customization/theming/}.
-     *
-     * @constant {Object}
-     */
     const theme = useTheme();
 
-    /**
-     * State to track whether the download modal is visible
-     *
-     * @constant {Array}
-     */
     const [isDownloadModalVisible, setDownloadModalVisible] = useState(false);
-    /**
-     * State to track which section is currently expanded
-     *
-     * @constant {Array}
-     */
     const [expandedSection, setExpandedSection] = useState<number | null>(null); // -> idx of sections array
 
-    /**
-     * Closes the download modal
-     *
-     * @function
-     */
     const closeDownloadModal = () => {
         setDownloadModalVisible(false);
     };
 
-    /**
-     * Shows the download modal
-     *
-     * @function
-     */
     const openDownloadModal = () => {
         setDownloadModalVisible(true);
     };
 
-    /**
-     * Collapses all sections
-     *
-     * @function
-     */
     const collapseSection = () => {
         setExpandedSection(null);
     };
 
-    /**
-     * Expands section with id (index in section array) 'i' collapses all other currently expanded
-     * sections
-     *
-     * @function
-     * @param {int} i The section that should be expanded
-     */
-    const expandSection = (i: number) => {
-        setExpandedSection(i);
+    const expandSection = (index: number) => {
+        setExpandedSection(index);
     };
 
-    /**
-     * The id of the selected plot.
-     *
-     * @function
-     * @see {@link selectPlotId}
-     */
     const selectedPlot = useSelector(selectPlotId);
 
     /**
@@ -156,72 +105,61 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, onClose, reportError, onOpen }) => 
     return (
         <SwipeableDrawer
             anchor="right"
+            variant="persistent"
             open={isOpen}
             onClose={onClose}
             onOpen={onOpen}
-            variant="persistent"
             sx={{
+                width: DRAWER_WIDTH,
+                flexShrink: 0,
                 '& .MuiDrawer-paper': {
                     width: DRAWER_WIDTH,
-                    maxWidth: '100%',
                     backgroundColor: BACKGROUND_BASE_COLOR,
+                    boxSizing: 'border-box',
                 },
             }}
             data-testid="sidebar"
         >
-            <Drawer
-                anchor="right"
-                open={true}
-                variant="persistent"
-                sx={{
-                    '& .MuiDrawer-paper': {
-                        height: '92%',
-                        backgroundColor: BACKGROUND_BASE_COLOR,
-                    },
-                }}
-                style={{ position: 'absolute' }}
-            >
-                <DrawerHeader>
-                    <IconButton onClick={onClose} data-testid="sidebarClose">
-                        <CloseIcon />
-                    </IconButton>
-                </DrawerHeader>
+            <DrawerHeader>
+                <IconButton onClick={onClose} data-testid="sidebarClose">
+                    <CloseIcon />
+                </IconButton>
+            </DrawerHeader>
 
-                <div>
-                    <Divider>
-                        <Typography>SELECT PLOT TYPE</Typography>
-                    </Divider>
+            <div>
+                <Divider>
+                    <Typography>SELECT PLOT TYPE</Typography>
+                </Divider>
+            </div>
+
+            <PlotTypeSelector reportError={reportError} />
+
+            <div style={{ marginBottom: '2%' }}>
+                <Divider>
+                    <Typography>CONFIGURE PLOT</Typography>
+                </Divider>
+            </div>
+
+            {sectionStructure.map((s) => (
+                <div
+                    key={s.name}
+                    style={{
+                        width: '95%',
+                        marginBottom: '2%',
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                    }}
+                >
+                    <Section
+                        name={s.name}
+                        //isExpanded={idx === expandedSection}
+                        components={s.components}
+                        //onCollapse={() => collapseSection()}
+                        //onExpand={() => expandSection(idx)}
+                        reportError={reportError}
+                    />
                 </div>
-
-                <PlotTypeSelector reportError={reportError} />
-
-                <div style={{ marginBottom: '2%' }}>
-                    <Divider>
-                        <Typography>CONFIGURE PLOT</Typography>
-                    </Divider>
-                </div>
-
-                {sectionStructure.map((s) => (
-                    <div
-                        key={s.name}
-                        style={{
-                            width: '95%',
-                            marginBottom: '2%',
-                            marginLeft: 'auto',
-                            marginRight: 'auto',
-                        }}
-                    >
-                        <Section
-                            name={s.name}
-                            //isExpanded={idx === expandedSection}
-                            components={s.components}
-                            //onCollapse={() => collapseSection()}
-                            //onExpand={() => expandSection(idx)}
-                            reportError={reportError}
-                        />
-                    </div>
-                ))}
-            </Drawer>
+            ))}
             <Button
                 startIcon={<FileDownloadIcon />}
                 variant="contained"

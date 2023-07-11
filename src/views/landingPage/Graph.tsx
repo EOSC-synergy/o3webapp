@@ -77,14 +77,14 @@ const ZmChart: FC = () => {
         store.getState()
     );
     const uniqueNumber = Date.now(); // forces apexcharts to re-render correctly!
-    const HEIGHT = (window.innerHeight - document.getElementById('NavBar')!.offsetHeight) * 0.975;
     return (
         <Chart
             key={uniqueNumber}
             options={options}
             series={data}
             type={APEXCHARTS_PLOT_TYPE[O3AS_PLOTS.tco3_zm]}
-            height={HEIGHT}
+            width="100%"
+            height="100%"
         />
     );
 };
@@ -119,14 +119,14 @@ const ReturnChart: FC = () => {
         store.getState()
     );
     const uniqueNumber = Date.now(); // forces apexcharts to re-render correctly!
-    const HEIGHT = (window.innerHeight - document.getElementById('NavBar')!.offsetHeight) * 0.975;
     return (
         <Chart
             key={uniqueNumber}
             options={options}
             series={data}
             type={APEXCHARTS_PLOT_TYPE[O3AS_PLOTS.tco3_return]}
-            height={HEIGHT}
+            width="100%"
+            height="100%"
         />
     );
 };

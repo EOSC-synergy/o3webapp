@@ -45,35 +45,20 @@ const App: NextPage<IndexProps> = () => {
      */
     const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
-    /**
-     * State that holds the boolean whether the Sidebar is currently open or not.
-     *
-     * @constant {boolean}
-     */
-    const [isSidebarOpen, setSidebarOpen] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(true);
 
     useEffect(() => {
-        if (isSidebarOpen) {
+        if (sidebarOpen) {
             disableBodyScroll(document.body);
         } else {
             enableBodyScroll(document.body);
         }
-    }, [isSidebarOpen]);
+    }, [sidebarOpen]);
 
-    /**
-     * Function to open sidebar
-     *
-     * @function
-     */
     const openSidebar = () => {
         setSidebarOpen(true);
     };
 
-    /**
-     * Function to close sidebar, if the user does not currently try to navigate the sidebar
-     *
-     * @function
-     */
     // TODO: event?
     const closeSidebar = (/*event*/) => {
         /*
@@ -86,40 +71,20 @@ const App: NextPage<IndexProps> = () => {
         setSidebarOpen(false);
     };
 
-    /**
-     * Function to report an error from other components. Automatically opens errorModal
-     *
-     * @function
-     * @param message The message of the reported error
-     */
     const reportError = (message: string) => {
-        for (let i = 0; i < errorMessages.length; i++) {
-            if (errorMessages[i] === message) {
-                return;
-            }
+        if (errorMessages.some((errorMessage) => errorMessage === message)) {
+            return;
         }
-        const copy = errorMessages;
-        copy.push(message);
-        setErrorMessages(copy);
+        setErrorMessages([...errorMessages, message]);
 
         setErrorMessage(message);
         setErrorModalVisible(true);
     };
 
-    /**
-     * Closes the error modal
-     *
-     * @function
-     */
     const closeErrorModal = () => {
         setErrorModalVisible(false);
     };
 
-    /**
-     * Object containing the theming information about the webapp.
-     *
-     * @constant {Object}
-     */
     const theme = createTheme({
         palette: {
             mode: 'dark',
@@ -149,13 +114,6 @@ const App: NextPage<IndexProps> = () => {
                 );
                 dispatch(fetchPlotDataForCurrentModels(isEmpty(router.query)));
             });
-            /*
-            fetchPlotTypes()
-            fetchModels().then(() => {
-                updateStoreWithQuery(store, router.query);
-                fetchPlotDataForCurrentModels(models, _.isEmpty(router.query));
-            });
-            */
 
             store.subscribe(
                 debounce(() => {
@@ -188,10 +146,16 @@ const App: NextPage<IndexProps> = () => {
                         reportError={reportError}
                         openSidebar={openSidebar}
                         closeSidebar={closeSidebar}
-                        isSidebarOpen={isSidebarOpen}
+                        isSidebarOpen={sidebarOpen}
                     />
                 )}
-                <Footer />
+                <div
+                    style={{
+                        flexGrow: 0,
+                    }}
+                >
+                    <Footer />
+                </div>
                 <ErrorMessageModal
                     isOpen={isErrorModalVisible}
                     message={errorMessage}

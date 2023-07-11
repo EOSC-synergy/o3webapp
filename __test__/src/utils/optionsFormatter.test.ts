@@ -8,7 +8,7 @@ import {
     DEFAULT_TCO3_RETURN,
     getDefaultYAxisTco3Return,
     getOptimalTickAmount,
-    getTickAmountYAxis,
+    calcOptimalYTickAmount,
     roundUpToMultipleOfTen,
     roundDownToMultipleOfTen,
     formatYLabelsNicely,
@@ -304,14 +304,17 @@ describe('testing optionsFormatter functionality', () => {
         const colorHex = '#00ff00';
         expect(colorNameToHex(colorName)).toEqual(colorHex);
 
-        expect(colorNameToHex('no color')).toEqual(false);
+        // expect default
+        expect(colorNameToHex('no color')).toEqual('black');
     });
 
     it('converts the stroke style to to apexcharts syntax', () => {
         const lineStyle = 'solid';
         const apexChartsLineStyle = 0;
         expect(convertToStrokeStyle(lineStyle)).toEqual(apexChartsLineStyle);
-        expect(convertToStrokeStyle('no valid line style')).toEqual(false);
+
+        // expect default
+        expect(convertToStrokeStyle('no valid line style')).toEqual(0);
     });
 
     it('should calculate the optimal tick amount for the x-axis for the tco3_zm', () => {
@@ -320,7 +323,7 @@ describe('testing optionsFormatter functionality', () => {
     });
 
     it('should calculate the optimal tick amount for the y-axis', () => {
-        expect(getTickAmountYAxis(0, 100)).toEqual(20);
+        expect(calcOptimalYTickAmount(0, 100)).toEqual(20);
     });
 
     it('should round up to a multiple of ten correctly', () => {

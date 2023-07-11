@@ -33,7 +33,7 @@ import { O3Data } from 'services/API/generated-client';
 import { RegionBasedXRange, YearsBasedXRange, YRange } from 'store/plotSlice';
 import { GlobalModelState, ModelGroup } from 'store/modelsSlice';
 import { Entry, EntryPlotStyle, ProcessedO3Data, ZmData } from 'services/API/apiSlice';
-import { merge, zipWith } from 'lodash';
+import { merge, range, zipWith } from 'lodash';
 import { ApexOptions } from 'apexcharts';
 
 /**
@@ -41,29 +41,11 @@ import { ApexOptions } from 'apexcharts';
  * that is used and accepted by the corresponding target library/module/function (e.g. apexcharts).
  *
  * @module OptionsFormatter
- */ // used for auto generation of JSDocs with better-docs
-
-/**
- * This array provides a list from start to end year with each year as a string
- *
- * @constant {Array}
  */
-export const IMPLICIT_YEAR_LIST = [...Array(END_YEAR - START_YEAR + 1).keys()].map(
-    (number) => `${START_YEAR + number}`
-);
 
-/**
- * This parameter specifies how thick the line of plotted models should appear.
- *
- * @constant {number}
- */
+export const IMPLICIT_YEAR_LIST = range(START_YEAR, END_YEAR + 1).map(String);
+
 export const MODEL_LINE_THICKNESS = 2;
-
-/**
- * This parameter specifies how thick the line of plotted statistical values should appear.
- *
- * @constant {number}
- */
 const STATISTICAL_VALUE_LINE_THICKNESS = 2;
 
 /**
@@ -97,7 +79,7 @@ const SV_COLORING = {
     upperPercentile: '#1e8509',
     'mean+std': '#0e4e78',
     'mean-std': '#0e4e78',
-};
+} as const;
 
 /**
  * This object maps each statistical value that should be calculated to its line dashing allowing an
@@ -113,7 +95,7 @@ const SV_DASHING = {
     'mean-std': 8,
     lowerPercentile: 4,
     upperPercentile: 4,
-};
+} as const;
 
 /**
  * This object maps each statistical value to its corresponding name that should be displayed in the
@@ -129,7 +111,7 @@ const SV_DISPLAY_NAME = {
     'mean-std': 'μ - σ',
     lowerPercentile: 'Lower %',
     upperPercentile: 'Upper %',
-};
+} as const;
 
 export const FONT_FAMILY = [
     '-apple-system',
@@ -158,11 +140,10 @@ function createSubtitle(state: AppState): string {
         stLocationText = formatLatitude(state.plot.generalSettings.location);
     }
 
-    let stMonths: string[] = [];
-    state.plot.generalSettings.months.map((month) => stMonths.push(months[month - 1].description!));
-    if (stMonths.length === NUM_MONTHS) {
-        stMonths = ['All year'];
-    }
+    const stMonths: string[] =
+        state.plot.generalSettings.months.length === NUM_MONTHS
+            ? state.plot.generalSettings.months.map((month) => months[month - 1].description ?? '')
+            : ['All year'];
 
     if (state.plot.plotId === 'tco3_zm') {
         return `${stLocationText} | ${stMonths.join(', ')}`;
@@ -481,7 +462,7 @@ export function getOptionsZm(
     const minY = roundDownToMultipleOfTen(yAxisRange.minY);
     const maxY = roundUpToMultipleOfTen(yAxisRange.maxY);
 
-    const tickAmount = getTickAmountYAxis(minY, maxY);
+    const tickAmount = calcOptimalYTickAmount(minY, maxY);
 
     // dirt simple and not overly horrible
     const xAxisMin = roundDownToMultipleOfTen(xAxisRange.years.minX);
@@ -583,7 +564,7 @@ export function getOptionsReturn(
     const minY = roundDownToMultipleOfTen(yAxisRange.minY);
     const maxY = roundUpToMultipleOfTen(yAxisRange.maxY);
 
-    const tickAmount = getTickAmountYAxis(minY, maxY);
+    const tickAmount = calcOptimalYTickAmount(minY, maxY);
 
     return merge(
         {
@@ -629,7 +610,6 @@ export type Series<SeriesData extends ApexAxisChartSeries> = {
     styling: Styling;
 };
 
-const NO_COLOR = '#000000';
 const NO_LINESTYLE = 0;
 
 /**
@@ -703,11 +683,9 @@ export function generateTco3_ZmSeries(
                 data: zmData.map((e, idx) => [START_YEAR + idx, e]),
             });
 
-            series.styling.colors.push(
-                colorNameToHex(modelData.plotStyle?.color ?? '') || NO_COLOR
-            );
+            series.styling.colors.push(colorNameToHex(modelData.plotStyle?.color ?? ''));
             series.styling.dashArray.push(
-                convertToStrokeStyle(modelData.plotStyle?.linestyle ?? '') || NO_LINESTYLE
+                convertToStrokeStyle(modelData.plotStyle?.linestyle ?? '')
             ); // default line thickness
             series.styling.width.push(MODEL_LINE_THICKNESS);
         }
@@ -787,6 +765,7 @@ function buildSvMatrixTco3Zm(modelList: string[], data: ProcessedO3Data) {
  * @param modelsSlice The slice of the store containing information about the model groups
  * @param xAxisRange The range of the x-axis
  * @param yAxisRange The range of the y-axis
+ * @param state
  * @returns A combination of data and statistical values series
  */
 export function generateTco3_ReturnSeries(
@@ -870,9 +849,7 @@ export function generateTco3_ReturnSeries(
                 type: 'scatter',
             });
             // TODO: better way to handle no color?
-            series.styling.colors.push(
-                colorNameToHex(modelData.plotStyle?.color ?? '') || NO_COLOR
-            );
+            series.styling.colors.push(colorNameToHex(modelData.plotStyle?.color ?? ''));
         }
     }
 
@@ -1519,9 +1496,7 @@ function combineSeries<DataT extends ApexAxisChartSeries>(
  * @param length The size of the array containing the empty arrays
  * @returns The array of size 'length' containing empty arrays
  */
-function create2dArray<T>(length: T): T[][] {
-    return Array.from(Array(length), () => []);
-}
+const create2dArray = <T>(length: T): T[][] => Array.from(Array(length), () => []);
 
 /**
  * Checks if a model is included in the statistical value calculation of a given SV-Type by using
@@ -1591,13 +1566,12 @@ export function getOptimalTickAmount(min: number, max: number) {
 /**
  * Determines the optimal tick amount for a given max and min year for the y-axis.
  *
- * @function
- * @param min The selected min. year of the plot
- * @param max The selected max. year of the plot
+ * @param minYear The selected min. year of the plot
+ * @param maxYear The selected max. year of the plot
  * @returns The optimal tick amount according to those values
  */
-export function getTickAmountYAxis(min: number, max: number) {
-    const diff = max - min;
+export function calcOptimalYTickAmount(minYear: number, maxYear: number) {
+    const diff = maxYear - minYear;
     if (diff <= 200) {
         return Math.floor(diff / 5);
     } else if (diff <= 400) {
@@ -1786,14 +1760,14 @@ function calcRecoveryPoints(
     referenceValue: Entry,
     svSeries: Series<ZmSeriesData>
 ) {
-    const points = [];
+    const points: ([number, number] | [null, null])[] = [];
 
     const refYear = state.reference.settings.year;
     const maxYear = state.plot.plotSpecificSettings.tco3_zm.displayXRange.years.maxX;
     // TODO: see Entry["data"] in apiSlice.ts
     const refValue = Math.max(...(referenceValue.data as ZmData));
 
-    const dataName = [
+    const dataName: string[] = [
         SV_DISPLAY_NAME.mean,
         SV_DISPLAY_NAME['mean+std'],
         SV_DISPLAY_NAME['mean-std'],
@@ -1802,27 +1776,29 @@ function calcRecoveryPoints(
     const yearIdx = 0;
     const valIdx = 1;
 
-    for (let idx = 0; idx < svSeries.data.length; idx++) {
-        if (!dataName.includes((svSeries.data[idx].name ?? '').split('(')[0].slice(0, -1))) {
+    for (const dataset of svSeries.data) {
+        if (
+            dataset.name !== undefined &&
+            !dataName.includes(dataset.name.split('(')[0].slice(0, -1))
+        ) {
             points.push([null, null]);
             continue;
         }
-        for (let i = 0; i < svSeries.data[idx].data.length; i++) {
-            if (svSeries.data[idx].data[i][yearIdx] <= refYear) {
+        let found = false;
+        for (const datapoint of dataset.data) {
+            if (datapoint[yearIdx] <= refYear) {
                 continue;
             }
-            if (svSeries.data[idx].data[i][yearIdx] > maxYear) {
+            if (datapoint[yearIdx] > maxYear) {
                 break;
             }
-            if (svSeries.data[idx].data[i][valIdx] >= refValue) {
-                points.push([
-                    svSeries.data[idx].data[i][yearIdx],
-                    svSeries.data[idx].data[i][valIdx],
-                ]);
+            if (datapoint[valIdx] >= refValue) {
+                points.push([datapoint[yearIdx], datapoint[valIdx]]);
+                found = true;
                 break;
             }
         }
-        if (points.length < idx + 1) {
+        if (!found) {
             points.push([null, null]);
         }
     }
@@ -1840,11 +1816,11 @@ function calcRecoveryPoints(
  * @param locationValue The minLat and maxLat values
  * @returns The formatted latitude band
  */
-export const formatLatitude = (locationValue: Latitude) => {
-    const hemisphereExtensionMin = locationValue.minLat < 0 && locationValue.maxLat > 0 ? '°S' : '';
-    const hemisphereExtensionMax = locationValue.maxLat <= 0 ? '°S' : '°N';
-    return `${Math.abs(locationValue.minLat)}${hemisphereExtensionMin}-${Math.abs(
-        locationValue.maxLat
+export const formatLatitude = ({ minLat, maxLat }: Latitude) => {
+    const hemisphereExtensionMin = minLat < 0 && maxLat > 0 ? '°S' : '';
+    const hemisphereExtensionMax = maxLat <= 0 ? '°S' : '°N';
+    return `${Math.abs(minLat)}${hemisphereExtensionMin}-${Math.abs(
+        maxLat
     )}${hemisphereExtensionMax}`;
 };
 

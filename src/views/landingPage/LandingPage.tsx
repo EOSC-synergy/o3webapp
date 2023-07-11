@@ -18,7 +18,6 @@ const drawerWidth = 400;
  * to each other.
  *
  * @memberof LandingPage
- * @constant {JSX.Element}
  */
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{ open?: boolean }>(
     ({ theme, open }) => ({
@@ -53,8 +52,6 @@ type LandingPageProps = {
  * @param openSidebar Function to open the sidebar
  * @param closeSidebar Function to close the sidebar
  * @param isSidebarOpen Boolean to indicate whether the sidebar is open or not
- * @returns {JSX.Element} A jsx containing all main components
- * @component
  */
 const LandingPage: FC<LandingPageProps> = ({
     reportError,
@@ -63,27 +60,17 @@ const LandingPage: FC<LandingPageProps> = ({
     isSidebarOpen,
 }) => {
     return (
-        <div data-testid="landingPage" style={{ width: '100%', height: '100%', flex: '1 1 auto' }}>
+        <>
             <Sidebar
                 reportError={reportError}
                 onOpen={openSidebar}
                 isOpen={isSidebarOpen}
                 onClose={closeSidebar}
             />
-            <div
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}
-                data-testid="landingPage-not-sidebar"
-                onClick={closeSidebar}
-            >
-                <Main open={isSidebarOpen}>
-                    <Graph reportError={reportError} />
-                </Main>
-            </div>
-        </div>
+            <Main open={isSidebarOpen}>
+                <Graph reportError={reportError} />
+            </Main>
+        </>
     );
 };
 
