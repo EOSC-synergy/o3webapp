@@ -6,7 +6,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://git.scc.kit.edu/synergy.o3as/o3webapp/-/blob/develop">
+  <a href="https://codebase.helmholtz.cloud/m-team/o3as/o3webapp/-/blob/develop">
     <img src="https://o3as.data.kit.edu/img/logos/o3as-logo.svg" alt="Logo" width="200" height="200">
   </a>
 
@@ -174,7 +174,7 @@ Developers which worked on this project:
 
 
 ## License
-This project is licensed under the [GNU License](https://git.scc.kit.edu/synergy.o3as/o3webapp/-/blob/develop/LICENSE).
+This project is licensed under the [GNU License](https://codebase.helmholtz.cloud/m-team/o3as/o3webapp/-/blob/develop/LICENSE).
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>

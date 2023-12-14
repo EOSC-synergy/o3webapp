@@ -2,7 +2,7 @@
     "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
     "@type": "SoftwareSourceCode",
     "license": "https://spdx.org/licenses/AGPL-3.0-or-later",
-    "codeRepository": "git+https://git.scc.kit.edu/synergy.o3as/o3api.git",
+    "codeRepository": "git+https://codebase.helmholtz.cloud/m-team/o3as/o3api.git",
     "issueTracker": "https://github.com/EOSC-Synergy/o3webapp/issues",
     "name": "o3webapp",
     "description": "O3webapp component of the O3as service to provide web GUI interface",

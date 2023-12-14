@@ -92,7 +92,7 @@ exports[`renders correctly 1`] = `
           <a
             class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-158h6db-MuiTypography-root-MuiLink-root"
             data-testid="footer-link-undefined"
-            href="https://git.scc.kit.edu/synergy.o3as/o3webapp"
+            href="https://codebase.helmholtz.cloud/m-team/o3as/o3webapp"
           >
             <p
               class="MuiTypography-root MuiTypography-body1 css-h0dnht-MuiTypography-root"

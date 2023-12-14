@@ -26,7 +26,7 @@ export const links = [
     },
     {
         label: "Gitlab",
-        href: "https://git.scc.kit.edu/synergy.o3as/o3webapp"
+        href: "https://codebase.helmholtz.cloud/m-team/o3as/o3webapp"
     },
     {
         label: "How to Acknowledge",
