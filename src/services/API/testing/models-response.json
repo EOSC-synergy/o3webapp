@@ -102,6 +102,6 @@
     "CCMI-1_U-NAGOYA_CHASER-MIROC-ESM-senC2fGHG",
     "CCMI-1_U-NAGOYA_CHASER-MIROC-ESM-senC2fN2O",
     "CCMI-1_U-NAGOYA_CHASER-MIROC-ESM-senC2fODS",
-    "ESACCI_DLR_merged-SAT-ozone",
-    "SBUV_GSFC_merged-SAT-ozone"
+    "ESACCI_DLR_observed-merged-SAT-ozone",
+    "SBUV_GSFC_observed-merged-SAT-ozone"
 ]

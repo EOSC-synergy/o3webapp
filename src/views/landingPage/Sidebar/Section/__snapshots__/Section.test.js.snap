@@ -1616,7 +1616,7 @@ exports[`Section renders correclty renders correctly from config file 4`] = `
                       role="combobox"
                       spellcheck="false"
                       type="text"
-                      value="SBUV_GSFC_merged-SAT-ozone"
+                      value="SBUV_GSFC_observed-merged-SAT-ozone"
                     />
                     <div
                       class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"

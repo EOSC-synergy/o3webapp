@@ -1,12 +1,15 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 /**
- * The string identifying the default reference model used in the webApp
+ * The string identifying the default reference model used in the webApp.
+ * Can be overridden at build time via the REACT_APP_DEFAULT_REF_MODEL
+ * environment variable (see Create React App docs).
  * @constant {string}
  * @category referenceSlice
- * @default "SBUV_GSFC_merged-SAT-ozone"
+ * @default "SBUV_GSFC_observed-merged-SAT-ozone"
  */
-export const DEFAULT_REF_MODEL = "SBUV_GSFC_merged-SAT-ozone";
+export const DEFAULT_REF_MODEL =
+    process.env.REACT_APP_DEFAULT_REF_MODEL || "SBUV_GSFC_observed-merged-SAT-ozone";
 /**
  * The default year of the reference year
  * @constant {number}

@@ -54,7 +54,7 @@ test("should update the reference model of the current refference settings.", ()
     const previousState = {
         settings: {
 
-            model: "SBUV_GSFC_merged-SAT-ozone",
+            model: "SBUV_GSFC_observed-merged-SAT-ozone",
 
         },
     };

@@ -199,7 +199,7 @@ describe('tests fetchPlotData api interaction (integration)', () => {
         startYear: 1959, 
         endYear: 2100, 
         modelList: ["CCMI-1_ACCESS_ACCESS-CCM-refC2"], 
-        refModel: "SBUV_GSFC_merged-SAT-ozone", 
+        refModel: "SBUV_GSFC_observed-merged-SAT-ozone", 
         refYear: 1980,
     };
     const exampleCacheKey = generateCacheKey(exampleRequestData);

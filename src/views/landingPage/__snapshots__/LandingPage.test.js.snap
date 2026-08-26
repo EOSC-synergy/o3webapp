@@ -1831,7 +1831,7 @@ exports[`test LandingPage component rendering LandingPage renders correctly 1`] 
                                   role="combobox"
                                   spellcheck="false"
                                   type="text"
-                                  value="SBUV_GSFC_merged-SAT-ozone"
+                                  value="SBUV_GSFC_observed-merged-SAT-ozone"
                                 />
                                 <div
                                   class="MuiAutocomplete-endAdornment css-1q60rmi-MuiAutocomplete-endAdornment"

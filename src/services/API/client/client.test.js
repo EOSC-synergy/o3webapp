@@ -42,10 +42,10 @@ describe("tests the getPlotData function", () => {
                 endYear: 2100, 
                 modelList: ["modelA", "modelB"], // not all models for faster testing!
                 refYear: 1980,
-                refModel: "SBUV_GSFC_merged-SAT-ozone",
+                refModel: "SBUV_GSFC_observed-merged-SAT-ozone",
         });
         url = axios.post.mock.calls[0][0];
-        expect(url).toEqual("https://api.o3as.fedcloud.eu/api/v1/plots/tco3_zm?begin=1960&end=2100&month=1,2,3&lat_min=-90&lat_max=90&ref_meas=SBUV_GSFC_merged-SAT-ozone&ref_year=1980");
+        expect(url).toEqual("https://api.o3as.fedcloud.eu/api/v1/plots/tco3_zm?begin=1960&end=2100&month=1,2,3&lat_min=-90&lat_max=90&ref_meas=SBUV_GSFC_observed-merged-SAT-ozone&ref_year=1980");
     });
     
     it('should throw an error if the month array is empty', async () => {
